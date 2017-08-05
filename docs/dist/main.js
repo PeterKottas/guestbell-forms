@@ -22743,7 +22743,7 @@ var Basic = (function (_super) {
         this.setState(this.initialState);
     };
     Basic.prototype.render = function () {
-        return React.createElement(index_1.Form, { className: "container" },
+        return React.createElement(index_1.Form, { className: "container mt-4" },
             React.createElement("div", { className: "row" },
                 React.createElement("div", { className: 'col-lg-6' },
                     React.createElement(index_1.TextInput, { required: true, label: "Username", value: this.state.name, onChange: this.handleNameChange })),
@@ -22774,8 +22774,7 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(__webpack_require__(85));
-var Form_1 = __webpack_require__(86);
-exports.Form = Form_1.Form;
+__export(__webpack_require__(86));
 __export(__webpack_require__(196));
 
 

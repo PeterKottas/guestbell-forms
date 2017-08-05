@@ -117,6 +117,15 @@
     outline: 0;
     border: none;
     width: 100%; }
+.text-input {
+  display: block;
+  margin-top: 20px; }
+  .text-input input {
+    padding: 10px 10px 10px 5px;
+    color: #555555;
+    outline: 0;
+    border: none;
+    width: 100%; }
 .select-input {
   display: block;
   border: none;
@@ -146,14 +155,5 @@
      -moz-appearance: none;
           appearance: none;
   padding: 10px 10px 10px 5px; }
-.text-input {
-  display: block;
-  margin-top: 20px; }
-  .text-input input {
-    padding: 10px 10px 10px 5px;
-    color: #555555;
-    outline: 0;
-    border: none;
-    width: 100%; }
 
 /*# sourceMappingURL=site.css.map*/
