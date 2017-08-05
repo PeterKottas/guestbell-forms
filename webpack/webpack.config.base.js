@@ -27,10 +27,7 @@ module.exports = {
                     use: [{
                         loader: "css-loader",
                         options: {
-                            modules: false,
                             sourceMap: true,
-                            importLoaders: 3,
-                            localIdentName: '[name]__[local]___[hash:base64:5]'
                         }
                     },
                     {
@@ -43,15 +40,16 @@ module.exports = {
                         loader: "sass-loader",
                         options: {
                             sourceMap: true,
-                            includePaths: [
-                                'node_modules', '.'
-                            ]
                         }
                     }],
                     // use style-loader in development
                     fallback: "style-loader"
                 })
-            }
+            },
+            {
+                test: /\.(png|jpg|jpeg|gif|svg)$/,
+                use: 'url-loader?limit=8192&name=images/[name]-[hash].[ext]'
+            },
         ]
     },
     output:

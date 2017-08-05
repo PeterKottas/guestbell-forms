@@ -13,7 +13,8 @@ export interface BaseInputProps {
     value?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void;
     required?: true;
-    validator?: "email" | "number" | "latitude" | "longitude";
+    customValidators?: Validators.IBaseValidator[];
+    validators?: ("email" | "number" | "latitude" | "longitude")[];
 }
 
 export interface BaseInputState {
@@ -55,6 +56,10 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
         this.context.unregister(this);
     }
 
+    componentWillMount() {
+        this.context.unregister(this);
+    }
+
     componentDidMount() {
         this.context.register(this);
     }
@@ -71,27 +76,55 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
         if (this.props.required && !value) {
             errors.push('Required');
             valid = false;
-        }
-        if (this.props.validator) {
-            valid = false;
-            switch (this.props.validator) {
-                case 'email':
-                    valid = Validators.EmailValidator.instance.Validate(value, this.props.required, (error) => errors.push(error));
-                    break;
-                case 'number':
-                    valid = Validators.NumberValidator.instance.Validate(value, this.props.required, (error) => errors.push(error));
-                    break;
-                case 'latitude':
-                    valid = Validators.LatitudeValidator.instance.Validate(value, this.props.required, (error) => errors.push(error));
-                    break;
-                case 'longitude':
-                    valid = Validators.LongitudeValidator.instance.Validate(value, this.props.required, (error) => errors.push(error));
-                    break;
-                default:
-                    throw new Error(`Validator ${this.props.validator} not implmeneted`);
+        } else {
+            if (!this.props.required && !value) {
+                valid = true;
             }
-            if (this.state.errors && this.state.errors.length > 0 && errors.length == 0) {
-                errors = errors.concat(this.state.errors);
+            else {
+                if (this.props.validators) {
+                    valid = true;
+                    this.props.validators.forEach(validator => {
+                        let validInner = false;
+                        switch (validator) {
+                            case 'email':
+                                validInner = Validators.EmailValidator.instance.Validate(value, this.props.required, (error) => errors.push(error));
+                                break;
+                            case 'number':
+                                validInner = Validators.NumberValidator.instance.Validate(value, this.props.required, (error) => errors.push(error));
+                                break;
+                            case 'latitude':
+                                validInner = Validators.LatitudeValidator.instance.Validate(value, this.props.required, (error) => errors.push(error));
+                                break;
+                            case 'longitude':
+                                validInner = Validators.LongitudeValidator.instance.Validate(value, this.props.required, (error) => errors.push(error));
+                                break;
+                            default:
+                                throw new Error(`Validator ${validator} not implmeneted`);
+                        }
+                        if (valid && !validInner) {
+                            valid = validInner;
+                        }
+                    });
+                    if (this.state.errors && this.state.errors.length > 0 && errors.length == 0) {
+                        errors = errors.concat(this.state.errors);
+                    }
+                }
+                if (this.props.customValidators) {
+                    this.props.customValidators.forEach(customValidator => {
+                        let validInner = false;
+                        try {
+                            validInner = customValidator.Validate(value, this.props.required, (error) => errors.push(error));
+                        } catch (e) {
+                            throw new Error(`Custom validator exception ${e} on input ${this.inputId}`);
+                        }
+                        if (valid && !validInner) {
+                            valid = validInner;
+                        }
+                    });
+                    if (this.state.errors && this.state.errors.length > 0 && errors.length == 0) {
+                        errors = errors.concat(this.state.errors);
+                    }
+                }
             }
         }
         this.setState(Object.assign({}, this.state, { value: value, valid: valid, validationValid: valid, errors: errors }));
@@ -106,6 +139,10 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
         this.setState(Object.assign({}, this.state, { value: value }));
     }
 
+    protected handleBlur(e: React.FocusEvent<HTMLSelectElement | HTMLInputElement>) {
+        this.handleValueChange(this.state.value);
+    }
+
     protected getValue() {
         return this.props.value ? this.props.value : this.state.value;
     }
@@ -118,6 +155,7 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
             validationValid: true
         } as S;
         this.handleChange = this.handleChange.bind(this);
+        this.handleBlur = this.handleBlur.bind(this);
     }
 }
 export default BaseInput;

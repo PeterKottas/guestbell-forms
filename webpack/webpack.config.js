@@ -23,5 +23,9 @@ module.exports = merge(require('./webpack.config.base'), {
                 NODE_ENV: JSON.stringify('production')
             }
         })
-    ]  
+    ],
+    externals: {
+        "react": "react",
+        "prop-types": "prop-types"
+    }
 });

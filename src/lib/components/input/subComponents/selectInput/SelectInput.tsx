@@ -35,14 +35,20 @@ export class SelectInput extends BaseInput.BaseInput<SelectInputProps, SelectInp
     }
 
     public render() {
-        return <div className="input__group select-input">
-            <select required={this.props.required} onChange={this.handleChange} value={this.getValue()} className={`select-input__select ${(this.getValue() != '' ? 'filled' : '')}`} >
+        return <div className={`input__group select-input ${this.getValidationClass()}`}>
+            <select
+                required={this.props.required}
+                onChange={this.handleChange}
+                value={this.getValue()}
+                className={`select-input__select ${(this.getValue() != '' ? 'filled' : '')}`}
+                onBlur={this.handleBlur}
+            >
                 {this.props.defaultEmpty && <option key={0} disabled value="" style={{ display: 'none' }}></option>}
                 {this.props.values && this.props.values.map((value, index) => <option key={index} value={value.value}>{value.label ? value.label : value.value}</option>)}
             </select>
             <span className="highlight"></span>
             <span className="bar"></span>
-            <span className="validation"></span>
+            {this.renderDefaultValidation()}
             {this.props.label && <label>{this.props.label}</label>}
         </div>;
     }

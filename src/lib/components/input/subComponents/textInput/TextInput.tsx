@@ -24,7 +24,14 @@ export class TextInput extends BaseInput.BaseInput<TextInputProps, TextInputStat
 
     public render() {
         return <div className={`input__group text-input ${this.getValidationClass()}`}>
-            <input type={this.props.type} required={this.props.required} className={this.getValue() ? 'filled' : ''} onChange={this.handleChange} value={this.getValue()} />
+            <input
+                type={this.props.type}
+                required={this.props.required}
+                className={this.getValue() ? 'filled' : ''}
+                onChange={this.handleChange}
+                value={this.getValue()}
+                onBlur={this.handleBlur}
+            />
             <span className="highlight"></span>
             <span className="bar"></span>
             {this.renderDefaultValidation()}

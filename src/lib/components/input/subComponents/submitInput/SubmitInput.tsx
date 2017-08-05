@@ -25,7 +25,6 @@ export class SubmitInput extends BaseInput.BaseInput<SubmitInputProps, SubmitInp
 
     private handleClick(e: React.MouseEvent<HTMLInputElement>) {
         e.preventDefault();
-        debugger;
         this.props.onClick && this.props.onClick(e);
     }
 
