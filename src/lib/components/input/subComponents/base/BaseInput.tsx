@@ -105,9 +105,6 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
                             valid = validInner;
                         }
                     });
-                    if (this.state.errors && this.state.errors.length > 0 && errors.length == 0) {
-                        errors = errors.concat(this.state.errors);
-                    }
                 }
                 if (this.props.customValidators) {
                     this.props.customValidators.forEach(customValidator => {
@@ -121,11 +118,11 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
                             valid = validInner;
                         }
                     });
-                    if (this.state.errors && this.state.errors.length > 0 && errors.length == 0) {
-                        errors = errors.concat(this.state.errors);
-                    }
                 }
             }
+        }
+        if (this.state.errors && this.state.errors.length > 0 && errors.length == 0) {
+            errors = errors.concat(this.state.errors);
         }
         this.setState(Object.assign({}, this.state, { value: value, valid: valid, validationValid: valid, errors: errors }));
         this.context.updateCallback(valid, this.inputId);

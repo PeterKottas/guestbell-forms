@@ -13,7 +13,7 @@
     position: absolute;
     top: 100%;
     right: 0;
-    color: red;
+    color: #ff5d5d;
     overflow: hidden;
     font-size: 12px; }
   .input__group .validation__ul {
@@ -27,7 +27,7 @@
     .input__group.validation__error .validation__ul {
       margin-top: 0; }
     .input__group.validation__error .bar:before, .input__group.validation__error .bar:after {
-      background: red; }
+      background: #ff5d5d; }
   .input__group label {
     color: #999999;
     font-size: 18px;

@@ -41,13 +41,13 @@
   },
   "name": "guestbell-forms",
   "scripts": {
-    "start": "webpack-dev-server --config webpack/webpack.config.dev.js --content-base docs --hot --inline --open --history-api-fallback",
+    "start": "xcopy src\\demo\\ClientApp\\assets\\favicon\\icons src\\demo\\wwwroot\\dist\\icons /e /i /h /y && webpack-dev-server --config webpack/webpack.config.dev.js --content-base src/demo/wwwroot --hot --inline --open --history-api-fallback",
     "build-clean": "rimraf build/",
     "build-code": "webpack --config ./webpack/webpack.config.js && webpack --config ./webpack/webpack.config.min.js",
     "build": "npm run build-clean && npm run build-code",
     "build-dev": "set NODE_ENV=development && npm run build",
     "build-prod": "set NODE_ENV=production && npm run build",
-    "build-gh-pages": "set NODE_ENV=production && xcopy  src\\demo\\wwwroot\\index.html docs /y /e /i /h && webpack --config ./webpack/webpack.config.gh-pages.js "
+    "build-gh-pages": "set NODE_ENV=production && xcopy src\\demo\\wwwroot\\index.html docs /y /e /i /h && webpack --config ./webpack/webpack.config.gh-pages.js && xcopy src\\demo\\ClientApp\\assets\\favicon\\icons docs\\dist\\icons /e /i /h /y"
   },
   "repository": {
     "type": "git",
