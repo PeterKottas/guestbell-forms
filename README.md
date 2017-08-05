@@ -4,7 +4,8 @@ Beautiful, lightweight react forms and form elements. Includes zero setup valida
 
 ## Important note 
 
-This library is actively used in our startup called GuestBell. This is therefore production code which will likely be maintained an improved on regular basis. All help is much welcome!
+This library is actively used in our startup called GuestBell. This is therefore production code which will be maintained an improved on regular basis. All help is much appreciated!
+The reason why we created is most simmilar libraries out there utilize either jQuery or some other huge libraries. This is a litweight solution which will guarantee your website speed and small size. 
 
 ## Installation
 
