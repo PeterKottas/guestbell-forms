@@ -4,7 +4,8 @@ Beautiful, lightweight react forms and form elements. Includes zero setup valida
 
 ## Important note 
 
-This library is actively used in our startup called GuestBell. This is therefore production code which will likely be maintained an improved on regular basis. All help is much welcome!
+This library is actively used in our startup called GuestBell. This is therefore production code which will be maintained an improved on regular basis. All help is much appreciated!
+The reason why we created is most simmilar libraries out there utilize either jQuery or some other huge libraries. This is a litweight solution which will guarantee your website speed and small size. 
 
 ## Installation
 
@@ -20,7 +21,7 @@ npm install
 npm start
 ```
 
-Check out [online demo](https://peterkottas.github.io/guestbell-forms/docs/index.html)
+Check out [online demo](https://peterkottas.github.io/guestbell-forms)
 
 ## Quick start
 
@@ -35,24 +36,46 @@ And use them in your react elements.
 Check out this simple example:
 ```
 <Form className="container">
-    <div className="row">
+	<div className="row">
 		<div className={'col-lg-6'}>
-			<TextInput required={true} label="Username" value={this.state.name} onChange={this.handleNameChange} />
+			<TextInput 
+				required={true} 
+				label="Username" 
+				value={this.state.name} 
+				onChange={this.handleNameChange} />
 		</div>
 		<div className={'col-lg-6'}>
-			<SelectInput required={true} label={'Gender'} values={[{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }]} onChange={this.handleGenderChange} value={this.state.gender} />
+			<SelectInput 
+				required={true} 
+				label={'Gender'} 
+				values={[{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }]} 
+				onChange={this.handleGenderChange} 
+				value={this.state.gender} />
 		</div>
-    </div>
-    <div className="row">
-        <div className={'col-lg-6'}>
-			<TextInput validators={["email"]} required={true} label="Email" value={this.state.email} onChange={this.handleEmailChange} />
-        </div>
-        <div className={'col-lg-6'}>
-			<TextInput customValidators={[AgeValidator.instance]} label="Age (optional)" value={this.state.age} onChange={this.handleAgeChange} />
+	</div>
+	<div className="row">
+		<div className={'col-lg-6'}>
+			<TextInput 
+				validators={["email"]} 
+				required={true} 
+				label="Email" 
+				value={this.state.email} 
+				onChange={this.handleEmailChange} />
 		</div>
-    </div>
-    <div className="row justify-content-center align-items-center">
-		<SubmitInput className="btn btn-primary btn-lg" onClick={this.submitForm}>Submit</SubmitInput>
+		<div className={'col-lg-6'}>
+			<TextInput 
+				customValidators={[AgeValidator.instance]} 
+				label="Age (optional)" 
+				value={this.state.age} 
+				onChange={this.handleAgeChange} />
+		</div>
+	</div>
+	<div className="row justify-content-center align-items-center">
+		<SubmitInput 
+			className="btn btn-primary btn-lg" 
+			onClick={this.submitForm}>
+				Submit
+		</SubmitInput>
 	</div>
 </Form>
 ```
@@ -61,25 +84,25 @@ Check out this simple example:
 3. Custom validators are easy to work with, take a look at this AgeValidator
 ```
 export class AgeValidator implements IBaseValidator {
-    public static instance = new AgeValidator();
-    public Validate(value: string, isRequired: boolean, addError: (error: string) => void): boolean {
-        let number = Number(value);
-        if (!isNaN(number)) {
-            if (number <= 0) {
-                addError('Not born yet?');
-                return false;
-            }
-            if (number > 122) {
-                addError('Older than Jeanne Calment? C\'mon');
-                return false;
-            }
-            return true;
-        }
-        else {
-            addError('Invalid age');
-        }
-        return false;
-    }
+	public static instance = new AgeValidator();
+	public Validate(value: string, isRequired: boolean, addError: (error: string) => void): boolean {
+		let number = Number(value);
+		if (!isNaN(number)) {
+			if (number <= 0) {
+				addError('Not born yet?');
+				return false;
+			}
+			if (number > 122) {
+				addError('Older than Jeanne Calment? C\'mon');
+				return false;
+			}
+			return true;
+		}
+		else {
+			addError('Invalid age');
+		}
+		return false;
+	}
 }
 ```
 Just a class with one method. We provide the static instance for simplicity.
