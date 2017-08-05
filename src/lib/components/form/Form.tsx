@@ -17,7 +17,7 @@ export interface FormProps {
     className?: string;
 }
 
-interface FormState {
+export interface FormState {
     isFormValid: boolean;
 }
 

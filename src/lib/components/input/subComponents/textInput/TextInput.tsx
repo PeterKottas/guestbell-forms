@@ -12,7 +12,7 @@ export interface TextInputProps extends BaseInput.BaseInputProps {
     type?: string;
 }
 
-interface TextInputState extends BaseInput.BaseInputState {
+export interface TextInputState extends BaseInput.BaseInputState {
 }
 
 export class TextInput extends BaseInput.BaseInput<TextInputProps, TextInputState>  {

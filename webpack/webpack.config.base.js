@@ -64,6 +64,23 @@ module.exports = {
         new webpack.SourceMapDevToolPlugin({
             filename: '[file].map', // Remove this line if you prefer inline source maps
             moduleFilenameTemplate: path.relative('../build', '[resourcePath]') // Point sourcemap entries to the original file locations on disk
-        })
+        }),
+        new DtsBundlePlugin()
     ]
+};
+
+
+function DtsBundlePlugin() { }
+DtsBundlePlugin.prototype.apply = function (compiler) {
+    compiler.plugin('done', function () {
+        var dts = require('dts-bundle');
+
+        dts.bundle({
+            name: 'guestbell-forms',
+            main: 'src/lib/index.d.ts',
+            out: '../index.d.ts',
+            //removeSource: true,
+            outputAsModuleFolder: true // to use npm in-package typings
+        });
+    });
 };

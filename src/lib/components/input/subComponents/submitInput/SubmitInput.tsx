@@ -12,7 +12,7 @@ export interface SubmitInputProps extends BaseInput.BaseInputProps {
     validateForm?: boolean;
 }
 
-interface SubmitInputState extends BaseInput.BaseInputState {
+export interface SubmitInputState extends BaseInput.BaseInputState {
 }
 
 export class SubmitInput extends BaseInput.BaseInput<SubmitInputProps, SubmitInputState>  {

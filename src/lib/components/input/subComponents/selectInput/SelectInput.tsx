@@ -17,7 +17,7 @@ export interface SelectInputProps extends BaseInput.BaseInputProps {
     defaultEmpty?: boolean;
 }
 
-interface SelectInputState extends BaseInput.BaseInputState {
+export interface SelectInputState extends BaseInput.BaseInputState {
 }
 
 export class SelectInput extends BaseInput.BaseInput<SelectInputProps, SelectInputState> {

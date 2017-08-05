@@ -77,7 +77,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
     }
 
     public render() {
-        return <Form className="container">
+        return <Form className="container mt-4">
             <div className="row">
                 <div className={'col-lg-6'}>
                     <TextInput required={true} label="Username" value={this.state.name} onChange={this.handleNameChange} />
