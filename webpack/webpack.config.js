@@ -5,11 +5,6 @@ const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 var isLocalBuild = process.env.NODE_ENV === 'local';
 const merge = require('webpack-merge');
 
-const extractSass = new ExtractTextPlugin({
-    filename: "site.css",
-    disable: isLocalBuild
-});
-
 module.exports = merge(require('./webpack.config.base'), {
     plugins: [
         new ExtractTextPlugin('site.css'),

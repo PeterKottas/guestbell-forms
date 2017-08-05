@@ -1,0 +1,159 @@
+.input__group {
+  position: relative;
+  margin-bottom: 35px;
+  border-bottom: 1px solid #eeeeee;
+  /* VALIDATION ======================================= */
+  /* LABEL ======================================= */
+  /* active state */
+  /* BOTTOM BARS ================================= */
+  /* active state */
+  /* HIGHLIGHTER ================================== */
+  /* active state */ }
+  .input__group .validation__container {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    color: red;
+    overflow: hidden;
+    font-size: 12px; }
+  .input__group .validation__ul {
+    padding: 0;
+    margin: 0;
+    position: relative;
+    margin-top: -20px;
+    transition: 0.5s; }
+  .input__group.validation__error {
+    border-bottom: 1px solid #ffbbbb; }
+    .input__group.validation__error .validation__ul {
+      margin-top: 0; }
+    .input__group.validation__error .bar:before, .input__group.validation__error .bar:after {
+      background: red; }
+  .input__group label {
+    color: #999999;
+    font-size: 18px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all; }
+  .input__group input:focus ~ label, .input__group input.filled ~ label, .input__group select:focus ~ label, .input__group select.filled ~ label {
+    top: -15px;
+    font-size: 14px;
+    color: #10bdc7; }
+  .input__group .bar {
+    display: block;
+    width: 100%; }
+  .input__group .bar:before, .input__group .bar:after {
+    content: '';
+    height: 2px;
+    width: 0;
+    bottom: 0px;
+    position: absolute;
+    background: #10bdc7;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all; }
+  .input__group .bar:before {
+    left: 50%; }
+  .input__group .bar:after {
+    right: 50%; }
+  .input__group input:focus ~ .bar:before, .input__group input:focus ~ .bar:after, .input__group select:focus ~ .bar:before, .input__group select:focus ~ .bar:after {
+    width: 50%; }
+  .input__group .highlight {
+    position: absolute;
+    height: 60%;
+    width: 100px;
+    top: 25%;
+    left: 0;
+    pointer-events: none;
+    opacity: 0.5; }
+  .input__group input:focus ~ .highlight, .input__group select:focus ~ .highlight {
+    -webkit-animation: inputHighlighter 0.3s ease;
+    animation: inputHighlighter 0.3s ease; }
+  .input__group input:focus {
+    outline: none; }
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+  from {
+    background: #10bdc7; }
+  to {
+    width: 0;
+    background: transparent; } }
+@keyframes inputHighlighter {
+  from {
+    background: #10bdc7; }
+  to {
+    width: 0;
+    background: transparent; } }
+.navbar {
+  height: 96px;
+  background-color: white;
+  z-index: 5;
+  background-color: #323232;
+  border-radius: 0;
+  border-bottom: 1px solid black; }
+
+.navbar__logo {
+  height: 100%;
+  display: inline-block; }
+
+@media only screen and (max-width: 529px) {
+  .navbar {
+    height: 60px; } }
+
+@media only screen and (min-width: 530px) and (max-width: 949px) {
+  .navbar {
+    height: 70px; } }
+.text-input {
+  display: block;
+  margin-top: 20px; }
+  .text-input input {
+    padding: 10px 10px 10px 5px;
+    color: #555555;
+    outline: 0;
+    border: none;
+    width: 100%; }
+.select-input {
+  display: block;
+  border: none;
+  border-bottom: 1px solid #eeeeee;
+  margin-top: 20px; }
+  .select-input::after {
+    position: absolute;
+    top: 18px;
+    right: 10px;
+    /* Styling the down arrow */
+    width: 0;
+    height: 0;
+    padding: 0;
+    content: '';
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid rgba(0, 0, 0, 0.12);
+    pointer-events: none; }
+
+.select-input__select {
+  color: #555555;
+  outline: 0;
+  border: none;
+  width: 100%;
+  max-height: 100px;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  padding: 10px 10px 10px 5px; }
+.text-input {
+  display: block;
+  margin-top: 20px; }
+  .text-input input {
+    padding: 10px 10px 10px 5px;
+    color: #555555;
+    outline: 0;
+    border: none;
+    width: 100%; }
+
+/*# sourceMappingURL=site.css.map*/

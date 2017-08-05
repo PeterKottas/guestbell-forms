@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
-var isLocalBuild = process.env.NODE_ENV === 'local';
+var isLocalBuild = false;
 
 const extractSass = new ExtractTextPlugin({
     filename: "site.css",
@@ -59,7 +59,7 @@ module.exports = {
         publicPath: '../build/' // Webpack dev middleware, if enabled, handles requests for this URL prefix
     },
     plugins: [
-        new ExtractTextPlugin('site.css'),
+        extractSass,
         new CheckerPlugin(),
         new webpack.SourceMapDevToolPlugin({
             filename: '[file].map', // Remove this line if you prefer inline source maps
