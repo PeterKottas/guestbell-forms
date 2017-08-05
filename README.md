@@ -20,7 +20,7 @@ npm install
 npm start
 ```
 
-Check out online demo on 
+Check out [online demo](https://peterkottas.github.io/guestbell-forms/docs/index.html)
 
 ## Quick start
 
