@@ -101,6 +101,12 @@
   height: 100%;
   display: inline-block; }
 
+.navbar__text {
+  color: white;
+  font-size: 66px;
+  line-height: 66px;
+  vertical-align: middle; }
+
 @media only screen and (max-width: 529px) {
   .navbar {
     height: 60px; } }
