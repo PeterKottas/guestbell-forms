@@ -23180,7 +23180,7 @@ var Header = (function (_super) {
     }
     Header.prototype.render = function () {
         return React.createElement("div", { className: "navbar z-depth-1 p-0" },
-            React.createElement("a", { href: "/", className: "navbar__logo text-center p-3" },
+            React.createElement("a", { href: "https://github.com/PeterKottas/guestbell-forms", className: "navbar__logo text-center p-3" },
                 React.createElement("img", { src: logo, className: "navbar__logo text-left", alt: "Logo" })));
     };
     return Header;
