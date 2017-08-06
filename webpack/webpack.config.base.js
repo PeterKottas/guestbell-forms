@@ -59,7 +59,8 @@ module.exports = {
     {
         path: path.join(__dirname, '../build'),
         filename: '[name].js',
-        publicPath: '../build/' // Webpack dev middleware, if enabled, handles requests for this URL prefix
+        publicPath: '../build/', // Webpack dev middleware, if enabled, handles requests for this URL prefix
+        libraryTarget: 'umd'
     },
     plugins: [
         extractSass,
