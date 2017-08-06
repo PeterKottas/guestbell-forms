@@ -100,6 +100,11 @@
 .navbar__logo {
   height: 100%;
   display: inline-block; }
+  .navbar__logo:hover .navbar__text {
+    text-decoration: none; }
+
+a:hover {
+  text-decoration: none !important; }
 
 .navbar__text {
   color: white;
