@@ -55,7 +55,8 @@
     "version:patch": "npm version patch",
     "push:git": "git push --tags origin HEAD:master",
     "conventional-github-releaser": "conventional-github-releaser -p angular",
-    "deploy:patch": ".env.bat && npm run build:gh-pages && npm run build:prod && git add . && git commit -m \"Deploy commit\" && npm run version:patch && npm run push:git && npm publish && npm run conventional-github-releaser"
+    "commit:build": "git add . && git commit -m \"Deploy commit\"",
+    "deploy:patch": ".env.bat && npm run build:gh-pages && npm run build:prod && npm run commit:build || true && npm run version:patch && npm run push:git && npm publish && npm run conventional-github-releaser"
   },
   "typings": "src/lib/index.d.ts",
   "repository": {
