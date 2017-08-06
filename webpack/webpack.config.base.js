@@ -5,7 +5,7 @@ const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 var isLocalBuild = false;
 
 const extractSass = new ExtractTextPlugin({
-    filename: "site.css",
+    filename: "[name].css",
     disable: isLocalBuild
 });
 
@@ -18,7 +18,7 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                include: /src/,
+                include: /src\\lib/,
                 use: 'awesome-typescript-loader?silent=true'
             },
             {
@@ -33,7 +33,10 @@ module.exports = {
                     {
                         loader: "postcss-loader",
                         options: {
-                            sourceMap: true
+                            sourceMap: true,
+                            plugins: (loader) => [
+                                require('autoprefixer')()
+                            ]
                         }
                     },
                     {
@@ -49,7 +52,7 @@ module.exports = {
             {
                 test: /\.(png|jpg|jpeg|gif|svg)$/,
                 use: 'url-loader?limit=8192&name=images/[name]-[hash].[ext]'
-            },
+            }
         ]
     },
     output:
@@ -78,8 +81,9 @@ DtsBundlePlugin.prototype.apply = function (compiler) {
         dts.bundle({
             name: 'guestbell-forms',
             main: 'src/lib/index.d.ts',
-            out: '../index.d.ts',
-            //removeSource: true,
+            out: '../../build/index.d.ts',
+            emitOnIncludedFileNotFound: true,
+            removeSource: true,
             outputAsModuleFolder: true // to use npm in-package typings
         });
     });
