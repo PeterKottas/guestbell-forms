@@ -20,7 +20,13 @@ module.exports = merge(require('./webpack.config.base'), {
         commonjs: 'react',
         amd: 'react',
         umd: 'react',
-      },
-        "prop-types": "prop-types"
+        },
+      propTypes: {
+          root: 'prop-types',
+          commonjs2: 'prop-types',
+          commonjs: 'prop-types',
+          amd: 'prop-types',
+          umd: 'prop-types',
+      }
     }
 });
