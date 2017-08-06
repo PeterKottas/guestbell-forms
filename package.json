@@ -71,6 +71,6 @@
   "homepage": "https://github.com/PeterKottas/guestbell-forms",
   "peerDependencies": {
     "react": "*",
-    "prop-type": "*"
+    "prop-types": "*"
   }
 }
