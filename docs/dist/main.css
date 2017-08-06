@@ -1,3 +1,12 @@
+.text-input {
+  display: block;
+  margin-top: 20px; }
+  .text-input input {
+    padding: 10px 10px 10px 5px;
+    color: #555555;
+    outline: 0;
+    border: none;
+    width: 100%; }
 .navbar {
   height: 96px;
   background-color: white;
@@ -28,15 +37,6 @@ a:hover {
 @media only screen and (min-width: 530px) and (max-width: 949px) {
   .navbar {
     height: 70px; } }
-.text-input {
-  display: block;
-  margin-top: 20px; }
-  .text-input input {
-    padding: 10px 10px 10px 5px;
-    color: #555555;
-    outline: 0;
-    border: none;
-    width: 100%; }
 .input__group {
   position: relative;
   margin-bottom: 35px;
