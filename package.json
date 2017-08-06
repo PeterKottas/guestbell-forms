@@ -46,7 +46,7 @@
   },
   "name": "guestbell-forms",
   "scripts": {
-    "start": "xcopy src\\demo\\ClientApp\\assets\\favicon\\icons src\\demo\\wwwroot\\dist\\icons /e /i /h /y && webpack-dev-server --config webpack/webpack.config.dev.js --content-base src/demo/wwwroot --hot --inline --open --history-api-fallback",
+    "start": "set NODE_ENV=local && xcopy src\\demo\\ClientApp\\assets\\favicon\\icons src\\demo\\wwwroot\\dist\\icons /e /i /h /y && webpack-dev-server --config webpack/webpack.config.dev.js --content-base src/demo/wwwroot --hot --inline --open --history-api-fallback",
     "build:clean": "rimraf build/",
     "build:lib": "webpack --config ./webpack/webpack.config.js && webpack --config ./webpack/webpack.config.min.js",
     "build": "npm run build:clean && npm run build:lib",
