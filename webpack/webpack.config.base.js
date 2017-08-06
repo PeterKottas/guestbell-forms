@@ -13,7 +13,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx']
     },
-    entry: { 'guestbell-forms-material': './src/lib/index.ts' },
+    entry: { 'guestbell-forms': './src/lib/index.ts' },
     module: {
         rules: [
             {
