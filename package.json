@@ -54,9 +54,9 @@
     "build:prod": "set NODE_ENV=production && npm run build",
     "build:gh-pages": "set NODE_ENV=production && xcopy src\\demo\\wwwroot\\index.html docs /y /e /i /h && webpack --config ./webpack/webpack.config.gh-pages.js && xcopy src\\demo\\ClientApp\\assets\\favicon\\icons docs\\dist\\icons /e /i /h /y",
     "version:patch": "npm version patch",
-    "push:git": "git push --tags origin",
+    "push:git": "git push --tags origin --quiet",
     "conventional-github-releaser": "conventional-github-releaser -p angular",
-    "commit:build": "git add . && git commit -m \"Deploy commit\" && npm run push:git",
+    "commit:build": "git add . && git commit -m \"Deploy commit\" --quiet && npm run push:git",
     "deploy:patch": ".env.bat && npm run build:gh-pages && npm run build:prod && npm run commit:build && npm run version:patch && npm run push:git && npm publish && npm run conventional-github-releaser"
   },
   "typings": "src/lib/index.d.ts",
