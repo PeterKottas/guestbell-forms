@@ -14,7 +14,13 @@ module.exports = merge(require('./webpack.config.base'), {
         })
     ],
     externals: {
-        "react": "React",
+      react: {
+        root: 'React',
+        commonjs2: 'react',
+        commonjs: 'react',
+        amd: 'react',
+        umd: 'react',
+      },
         "prop-types": "prop-types"
     }
 });
