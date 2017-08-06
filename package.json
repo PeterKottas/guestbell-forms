@@ -10,7 +10,7 @@
     "input validation",
     "react input"
   ],
-  "main": "/build/guestbell-forms.js",
+  "main": "build/guestbell-forms.js",
   "dependencies": {
     "prop-types": "15.5.10",
     "react": "15.6.1",
@@ -57,6 +57,7 @@
     "conventional-github-releaser": "conventional-github-releaser -p angular",
     "deploy:patch": ".env.bat && npm run version:patch && npm run build:gh-pages && npm run build:prod && npm run push:git && npm publish && npm run conventional-github-releaser"
   },
+  "typings": "src/lib/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/PeterKottas/guestbell-forms.git"

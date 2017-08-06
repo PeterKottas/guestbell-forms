@@ -68,7 +68,7 @@ module.exports = {
             filename: '[file].map', // Remove this line if you prefer inline source maps
             moduleFilenameTemplate: path.relative('../build', '[resourcePath]') // Point sourcemap entries to the original file locations on disk
         }),
-        new DtsBundlePlugin()
+        //new DtsBundlePlugin()
     ]
 };
 
@@ -81,9 +81,8 @@ DtsBundlePlugin.prototype.apply = function (compiler) {
         dts.bundle({
             name: 'guestbell-forms',
             main: 'src/lib/index.d.ts',
-            out: '../../build/index.d.ts',
-            emitOnIncludedFileNotFound: true,
-            removeSource: true,
+            out: '../index.d.ts',
+            //removeSource: true,
             outputAsModuleFolder: true // to use npm in-package typings
         });
     });
