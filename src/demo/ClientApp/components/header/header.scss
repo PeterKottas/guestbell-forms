@@ -33,10 +33,18 @@ a:hover {
     .navbar {
         height: 60px;
     }
+    .navbar__text {
+        font-size: 30px;
+        line-height: 30px;
+    }
 }
 
 @media only screen and (min-width: 530px) and (max-width: 949px) {
     .navbar {
         height: 70px;
+    }
+    .navbar__text {
+        font-size: 40px;
+        line-height: 40px;
     }
 }
