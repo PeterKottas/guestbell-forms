@@ -13,6 +13,7 @@ export declare class AgeValidator implements IBaseValidator {
     Validate(value: string, isRequired: boolean, addError: (error: string) => void): boolean;
 }
 export declare class Basic extends React.Component<BasicProps, BasicState> {
+    private form;
     private initialState;
     constructor();
     private handleNameChange(e);

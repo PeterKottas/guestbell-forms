@@ -15,6 +15,7 @@ export interface FormValue {
 
 export interface FormProps {
     className?: string;
+    noValidate?: boolean;
 }
 
 export interface FormState {
@@ -39,6 +40,7 @@ export class Form extends React.Component<FormProps, FormState> {
     private components: { [name: string]: BaseInput.BaseInput<BaseInput.BaseInputProps, BaseInput.BaseInputState> };
 
     public static defaultProps = {
+        noValidate: false
     }
 
     static childContextTypes = FormContextType;
@@ -52,13 +54,28 @@ export class Form extends React.Component<FormProps, FormState> {
         delete this.components[component.inputId];
     };
 
-    public getChildContext(): FormContext {
+    private getChildContext(): FormContext {
         return {
             register: this.register,
             unregister: this.unregister,
             isFormValid: () => this.state.isFormValid,
             updateCallback: this.updateCallback
         };
+    }
+
+    public touchAll()
+    {
+        Object.keys(this.components).forEach(key => {
+            const component = this.components[key];
+            component.touch();
+        });
+    }
+
+    public unTouchAll() {
+        Object.keys(this.components).forEach(key => {
+            const component = this.components[key];
+            component.unTouch();
+        });
     }
 
     private updateCallback(isComponentValid: boolean = true, inputId: string = '') {
@@ -87,7 +104,7 @@ export class Form extends React.Component<FormProps, FormState> {
     }
 
     public render() {
-        return <form role="form" className={`validation-form ${(this.props.className ? this.props.className : '')}`}>
+        return <form noValidate={true} role="form" className={`validation-form ${(this.props.className ? this.props.className : '')}`}>
             {this.props.children}
         </form>;
     }

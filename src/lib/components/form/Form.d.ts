@@ -7,6 +7,7 @@ export interface FormValue {
 }
 export interface FormProps {
     className?: string;
+    noValidate?: boolean;
 }
 export interface FormState {
     isFormValid: boolean;
@@ -25,7 +26,9 @@ export declare const FormContextType: {
 };
 export declare class Form extends React.Component<FormProps, FormState> {
     private components;
-    static defaultProps: {};
+    static defaultProps: {
+        noValidate: boolean;
+    };
     static childContextTypes: {
         register: any;
         unregister: any;
@@ -34,7 +37,9 @@ export declare class Form extends React.Component<FormProps, FormState> {
     };
     private register(component);
     private unregister(component);
-    getChildContext(): FormContext;
+    private getChildContext();
+    touchAll(): void;
+    unTouchAll(): void;
     private updateCallback(isComponentValid?, inputId?);
     constructor(props: FormProps);
     render(): JSX.Element;

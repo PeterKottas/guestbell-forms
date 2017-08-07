@@ -36,6 +36,8 @@ export class AgeValidator implements IBaseValidator {
 
 
 export class Basic extends React.Component<BasicProps, BasicState>{
+    private form: Form;
+
     private initialState = {
         gender: '',
         name: '',
@@ -77,7 +79,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
     }
 
     public render() {
-        return <Form className="container mt-4">
+        return <Form noValidate ref={form => this.form = form} className="container mt-4">
             <div className="row">
                 <div className={'col-lg-6'}>
                     <TextInput required={true} label="Username" value={this.state.name} onChange={this.handleNameChange} />
@@ -95,7 +97,9 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                 </div>
             </div>
             <div className="row justify-content-center align-items-center">
-                <SubmitInput className="btn btn-primary btn-lg" onClick={this.submitForm}>Submit</SubmitInput>
+                <SubmitInput className="btn btn-primary btn-lg ml-2" onClick={this.submitForm}>Submit</SubmitInput>
+                <button className="btn btn-secondary btn-lg mx-2" onClick={(e) => { e.preventDefault(); this.form.touchAll(); }}>Touch all</button>
+                <button className="btn btn-secondary btn-lg mr-2" onClick={(e) => { e.preventDefault(); this.form.unTouchAll(); }}>Un-touch all</button>
             </div>
         </Form>;
     }

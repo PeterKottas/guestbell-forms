@@ -9,13 +9,14 @@ export interface BaseInputProps {
     required?: true;
     customValidators?: Validators.IBaseValidator[];
     validators?: ("email" | "number" | "latitude" | "longitude")[];
+    noValidate?: boolean;
 }
 export interface BaseInputState {
     valid: boolean;
-    validationValid: boolean;
     value: string;
     errors: string[];
     validator: undefined;
+    touched: boolean;
 }
 export declare class BaseInput<P extends BaseInputProps, S extends BaseInputState> extends React.Component<P, S> {
     context: Form.FormContext;
@@ -36,9 +37,10 @@ export declare class BaseInput<P extends BaseInputProps, S extends BaseInputStat
     protected getValidationClass(): "validation__success" | "validation__error";
     protected renderDefaultValidation(): JSX.Element;
     componentWillUnmount(): void;
-    componentWillMount(): void;
     componentDidMount(): void;
     componentWillReceiveProps(nextProps: P): void;
+    touch(): void;
+    unTouch(): void;
     private handleValueChange(value);
     protected handleChange(event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>): void;
     protected handleBlur(e: React.FocusEvent<HTMLSelectElement | HTMLInputElement>): void;

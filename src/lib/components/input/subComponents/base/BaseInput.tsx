@@ -15,14 +15,15 @@ export interface BaseInputProps {
     required?: true;
     customValidators?: Validators.IBaseValidator[];
     validators?: ("email" | "number" | "latitude" | "longitude")[];
+    noValidate?: boolean;
 }
 
 export interface BaseInputState {
     valid: boolean;
-    validationValid: boolean;
     value: string;
     errors: string[];
     validator: undefined;
+    touched: boolean;
 }
 
 export class BaseInput<P extends BaseInputProps, S extends BaseInputState> extends React.Component<P, S> {
@@ -45,7 +46,7 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
     public static contextTypes = Form.FormContextType;
 
     protected getValidationClass() {
-        return this.state.validationValid ? 'validation__success' : 'validation__error';
+        return this.state.valid || !this.state.touched ? 'validation__success' : 'validation__error';
     }
 
     protected renderDefaultValidation() {
@@ -53,10 +54,6 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
     }
 
     componentWillUnmount() {
-        this.context.unregister(this);
-    }
-
-    componentWillMount() {
         this.context.unregister(this);
     }
 
@@ -68,6 +65,15 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
         if (nextProps.value != this.props.value) {
             this.handleValueChange(nextProps.value);
         }
+    }
+
+    public touch() {
+        this.setState({ touched: true });
+        this.handleValueChange(this.state.value);
+    }
+
+    public unTouch() {
+        this.setState({ touched: false });
     }
 
     private handleValueChange(value: string) {
@@ -124,7 +130,7 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
         if (this.state.errors && this.state.errors.length > 0 && errors.length == 0) {
             errors = errors.concat(this.state.errors);
         }
-        this.setState(Object.assign({}, this.state, { value: value, valid: valid, validationValid: valid, errors: errors }));
+        this.setState({ value: value, valid: valid, errors: errors });
         this.context.updateCallback(valid, this.inputId);
     }
 
@@ -133,10 +139,11 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
         if (this.props.onChange) {
             this.props.onChange(event);
         }
-        this.setState(Object.assign({}, this.state, { value: value }));
+        this.setState({ value: value });
     }
 
     protected handleBlur(e: React.FocusEvent<HTMLSelectElement | HTMLInputElement>) {
+        this.setState({ touched: true });
         this.handleValueChange(this.state.value);
     }
 
@@ -149,7 +156,7 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
         this.state = {
             valid: props.required ? false : true,
             value: '',
-            validationValid: true
+            touched: false
         } as S;
         this.handleChange = this.handleChange.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
