@@ -6648,7 +6648,7 @@ var BaseInput = (function (_super) {
         _this.state = {
             valid: props.required ? false : true,
             value: '',
-            validationValid: true
+            touched: false
         };
         _this.handleChange = _this.handleChange.bind(_this);
         _this.handleBlur = _this.handleBlur.bind(_this);
@@ -6659,16 +6659,13 @@ var BaseInput = (function (_super) {
         return s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4() + "-" + (s4() + s4() + s4());
     };
     BaseInput.prototype.getValidationClass = function () {
-        return this.state.validationValid ? 'validation__success' : 'validation__error';
+        return this.state.valid || !this.state.touched ? 'validation__success' : 'validation__error';
     };
     BaseInput.prototype.renderDefaultValidation = function () {
         return React.createElement("div", { className: "validation__container" },
             React.createElement("ul", { className: "validation__ul" }, this.state.errors && this.state.errors.map(function (item, index) { return React.createElement("span", { key: index, className: "validation__item" }, item); })));
     };
     BaseInput.prototype.componentWillUnmount = function () {
-        this.context.unregister(this);
-    };
-    BaseInput.prototype.componentWillMount = function () {
         this.context.unregister(this);
     };
     BaseInput.prototype.componentDidMount = function () {
@@ -6678,6 +6675,13 @@ var BaseInput = (function (_super) {
         if (nextProps.value != this.props.value) {
             this.handleValueChange(nextProps.value);
         }
+    };
+    BaseInput.prototype.touch = function () {
+        this.setState({ touched: true });
+        this.handleValueChange(this.state.value);
+    };
+    BaseInput.prototype.unTouch = function () {
+        this.setState({ touched: false });
     };
     BaseInput.prototype.handleValueChange = function (value) {
         var _this = this;
@@ -6736,7 +6740,7 @@ var BaseInput = (function (_super) {
         if (this.state.errors && this.state.errors.length > 0 && errors.length == 0) {
             errors = errors.concat(this.state.errors);
         }
-        this.setState(Object.assign({}, this.state, { value: value, valid: valid, validationValid: valid, errors: errors }));
+        this.setState({ value: value, valid: valid, errors: errors });
         this.context.updateCallback(valid, this.inputId);
     };
     BaseInput.prototype.handleChange = function (event) {
@@ -6744,9 +6748,10 @@ var BaseInput = (function (_super) {
         if (this.props.onChange) {
             this.props.onChange(event);
         }
-        this.setState(Object.assign({}, this.state, { value: value }));
+        this.setState({ value: value });
     };
     BaseInput.prototype.handleBlur = function (e) {
+        this.setState({ touched: true });
         this.handleValueChange(this.state.value);
     };
     BaseInput.prototype.getValue = function () {
@@ -10521,6 +10526,20 @@ var Form = (function (_super) {
             updateCallback: this.updateCallback
         };
     };
+    Form.prototype.touchAll = function () {
+        var _this = this;
+        Object.keys(this.components).forEach(function (key) {
+            var component = _this.components[key];
+            component.touch();
+        });
+    };
+    Form.prototype.unTouchAll = function () {
+        var _this = this;
+        Object.keys(this.components).forEach(function (key) {
+            var component = _this.components[key];
+            component.unTouch();
+        });
+    };
     Form.prototype.updateCallback = function (isComponentValid, inputId) {
         var _this = this;
         if (isComponentValid === void 0) { isComponentValid = true; }
@@ -10538,11 +10557,13 @@ var Form = (function (_super) {
         this.setState(Object.assign({}, this.state, { isFormValid: valid }));
     };
     Form.prototype.render = function () {
-        return React.createElement("form", { role: "form", className: "validation-form " + (this.props.className ? this.props.className : '') }, this.props.children);
+        return React.createElement("form", { noValidate: true, role: "form", className: "validation-form " + (this.props.className ? this.props.className : '') }, this.props.children);
     };
     return Form;
 }(React.Component));
-Form.defaultProps = {};
+Form.defaultProps = {
+    noValidate: false
+};
 Form.childContextTypes = exports.FormContextType;
 exports.Form = Form;
 exports.default = Form;
@@ -22753,7 +22774,8 @@ var Basic = (function (_super) {
         this.setState(this.initialState);
     };
     Basic.prototype.render = function () {
-        return React.createElement(index_1.Form, { className: "container mt-4" },
+        var _this = this;
+        return React.createElement(index_1.Form, { noValidate: true, ref: function (form) { return _this.form = form; }, className: "container mt-4" },
             React.createElement("div", { className: "row" },
                 React.createElement("div", { className: 'col-lg-6' },
                     React.createElement(index_1.TextInput, { required: true, label: "Username", value: this.state.name, onChange: this.handleNameChange })),
@@ -22765,7 +22787,9 @@ var Basic = (function (_super) {
                 React.createElement("div", { className: 'col-lg-6' },
                     React.createElement(index_1.TextInput, { customValidators: [AgeValidator.instance], label: "Age (optional)", value: this.state.age, onChange: this.handleAgeChange }))),
             React.createElement("div", { className: "row justify-content-center align-items-center" },
-                React.createElement(index_1.SubmitInput, { className: "btn btn-primary btn-lg", onClick: this.submitForm }, "Submit")));
+                React.createElement(index_1.SubmitInput, { className: "btn btn-primary btn-lg ml-2", onClick: this.submitForm }, "Submit"),
+                React.createElement("button", { className: "btn btn-secondary btn-lg mx-2", onClick: function (e) { e.preventDefault(); _this.form.touchAll(); } }, "Touch all"),
+                React.createElement("button", { className: "btn btn-secondary btn-lg mr-2", onClick: function (e) { e.preventDefault(); _this.form.unTouchAll(); } }, "Un-touch all")));
     };
     return Basic;
 }(React.Component));
