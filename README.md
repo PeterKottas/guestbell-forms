@@ -1,6 +1,19 @@
 # GuestBell forms
 
-Beautiful, lightweight react forms and form elements. Includes zero setup validation. 
+Beautiful, lightweight react forms and form elements. Includes zero setup validation. Entirely written in typescript therefore typings are always valid and up to date.
+
+## Demo
+
+Check out [online demo](https://peterkottas.github.io/guestbell-forms)
+
+or
+
+Clone this repo and 
+
+```
+npm install
+npm start
+```
 
 ## Important note 
 
@@ -10,24 +23,15 @@ The reason why we created is most simmilar libraries out there utilize either jQ
 ## Installation
 
 Using npm:
-**npm install guestbell-forms --save**
-
-## Demo
-
-Clone this repo and 
-
 ```
-npm install
-npm start
+npm install guestbell-forms --save
 ```
-
-Check out [online demo](https://peterkottas.github.io/guestbell-forms)
 
 ## Quick start
 
 Just import your components like this
 ```
-import { Form, TextInput, SelectInput, SubmitInput, IBaseValidator } from 'guestbell-forms';
+import { Form, Text, Select, Submit, DynamicSubmit, IBaseValidator, Checkbox, Radio, RadioContainer } from '../../../../lib/index';
 ```
 And use them in your react elements.
 
@@ -37,15 +41,15 @@ Check out this simple example:
 ```
 <Form className="container">
 	<div className="row">
-		<div className={'col-lg-6'}>
-			<TextInput 
+		<div className="col-lg-6">
+			<Text
 				required={true} 
 				label="Username" 
 				value={this.state.name} 
 				onChange={this.handleNameChange} />
 		</div>
-		<div className={'col-lg-6'}>
-			<SelectInput 
+		<div className="col-lg-6">
+			<Select
 				required={true} 
 				label={'Gender'} 
 				values={[{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }]} 
@@ -54,7 +58,7 @@ Check out this simple example:
 		</div>
 	</div>
 	<div className="row">
-		<div className={'col-lg-6'}>
+		<div className="col-lg-6">
 			<TextInput 
 				validators={["email"]} 
 				required={true} 
@@ -62,8 +66,8 @@ Check out this simple example:
 				value={this.state.email} 
 				onChange={this.handleEmailChange} />
 		</div>
-		<div className={'col-lg-6'}>
-			<TextInput 
+		<div className="col-lg-6">
+			<Text
 				customValidators={[AgeValidator.instance]} 
 				label="Age (optional)" 
 				value={this.state.age} 
@@ -71,11 +75,11 @@ Check out this simple example:
 		</div>
 	</div>
 	<div className="row justify-content-center align-items-center">
-		<SubmitInput 
+		<Submit
 			className="btn btn-primary btn-lg" 
 			onClick={this.submitForm}>
 				Submit
-		</SubmitInput>
+		</Submit>
 	</div>
 </Form>
 ```
@@ -83,12 +87,12 @@ Check out this simple example:
 2. See how we support built-in validators (validators={["email"]}) and even custom validators (customValidators={[AgeValidator.instance]})
 3. Custom validators are easy to work with, take a look at this AgeValidator
 ```
-export class AgeValidator implements IBaseValidator {
+class AgeValidator implements IBaseValidator {
 	public static instance = new AgeValidator();
 	public Validate(value: string, isRequired: boolean, addError: (error: string) => void): boolean {
 		let number = Number(value);
 		if (!isNaN(number)) {
-			if (number <= 0) {
+			if (number < 0) {
 				addError('Not born yet?');
 				return false;
 			}

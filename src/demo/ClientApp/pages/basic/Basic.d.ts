@@ -11,8 +11,9 @@ export interface BasicState {
     checkbox2: boolean;
     validateFormSubmit: boolean;
     food: string;
-    food2: string;
+    drink: string;
     touchOn: "blur" | "focus";
+    submitDisablesInputs: boolean;
 }
 export declare class AgeValidator implements IBaseValidator {
     static instance: AgeValidator;
@@ -22,13 +23,7 @@ export declare class Basic extends React.Component<BasicProps, BasicState> {
     private form;
     private initialState;
     constructor();
-    private handleNameChange(e);
-    private handleEmailChange(e);
-    private handleAgeChange(e);
-    private handleCheckbox1Check(e);
-    private handleCheckbox2Check(e);
     private handleGenderChange(e);
-    private handleValidateFormSubmitChecked(e);
     private submitForm(e);
     private dynamicSubmitSuccessForm(e, submiting, error, success, reset);
     private dynamicSubmitErrorForm(e, submiting, error, success, reset);
