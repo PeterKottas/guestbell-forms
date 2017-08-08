@@ -1,5 +1,5 @@
 ﻿//Styles
-import './submitInput.scss';
+import './submit.scss';
 
 //Libs
 import * as React from 'react';
@@ -7,15 +7,15 @@ import * as React from 'react';
 //Misc
 import * as BaseInput from '../base/BaseInput';
 
-export interface SubmitInputProps extends BaseInput.BaseInputProps {
+export interface SubmitProps extends BaseInput.BaseInputProps {
     onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
     validateForm?: boolean;
 }
 
-export interface SubmitInputState extends BaseInput.BaseInputState {
+export interface SubmitState extends BaseInput.BaseInputState {
 }
 
-export class SubmitInput extends BaseInput.BaseInput<SubmitInputProps, SubmitInputState>  {
+export class Submit extends BaseInput.BaseInput<SubmitProps, SubmitState>  {
     public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { validateForm: true });
 
     constructor(props) {
@@ -33,10 +33,10 @@ export class SubmitInput extends BaseInput.BaseInput<SubmitInputProps, SubmitInp
             type={"submit"}
             className={`${(this.props.className ? this.props.className : '')}${(this.getValue() ? 'filled' : '')}`}
             onClick={this.handleClick}
-            disabled={this.props.validateForm ? this.context.isFormValid && !this.context.isFormValid() : false}
+            disabled={this.getDisabled() ? this.getDisabled() : (this.props.validateForm ? this.context.isFormValid && !this.context.isFormValid() : false)}
         >
             {this.props.children}
         </button>;
     }
 }
-export default SubmitInput;
+export default Submit;

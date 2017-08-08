@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "outFile": "build/index2.d.ts",
     "baseUrl": ".",
     "moduleResolution": "node",
     "target": "es5",

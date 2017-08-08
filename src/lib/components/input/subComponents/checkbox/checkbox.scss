@@ -1,0 +1,70 @@
+﻿@import '../../variables.scss';
+$baseFontSize: 16;
+
+@function rem($val) {
+    @return #{$val / $baseFontSize}rem;
+}
+
+.checkbox-input {
+    display: block;
+    margin-top: 20px;
+    border: none;
+
+    &.validation__error {
+        border: none;
+    }
+
+    input {
+        position: relative;
+        padding: 10px 10px 10px 5px;
+        color: $input-text-color;
+        outline: 0;
+        border: none;
+        width: auto;
+        margin-right: 1rem;
+        top: -2px;
+
+        &:before {
+            transition: transform .4s cubic-bezier(.45,1.8,.5,.75);
+            transform: rotate(-45deg) scale(0, 0);
+            content: "";
+            position: absolute;
+            left: rem(3);
+            top: rem(2);
+            z-index: 1;
+            width: rem(14);
+            height: rem(7);
+            border: 2px solid $input-highlight-color;
+            border-top-style: none;
+            border-right-style: none;
+        }
+
+        &:checked {
+            &:before {
+                transform: rotate(-45deg) scale(1, 1);
+            }
+        }
+
+        &:after {
+            content: "";
+            position: absolute;
+            top: rem(-2);
+            left: 0;
+            width: 1.2rem;
+            height: 1.2rem;
+            background: #fff;
+            border: 2px solid $input-border-color;
+            cursor: pointer;
+        }
+    }
+
+    label {
+        top: 0;
+        user-select: none;
+        margin-bottom: 8px;
+        pointer-events: auto;
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+}

@@ -1,5 +1,5 @@
 ﻿//Styles
-import './textInput.scss';
+import './text.scss';
 
 //Libs
 import * as React from 'react';
@@ -7,15 +7,14 @@ import * as React from 'react';
 //Misc
 import * as BaseInput from '../base/BaseInput';
 
-export interface TextInputProps extends BaseInput.BaseInputProps {
+export interface TextProps extends BaseInput.BaseInputProps {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    type?: string;
 }
 
-export interface TextInputState extends BaseInput.BaseInputState {
+export interface TextState extends BaseInput.BaseInputState {
 }
 
-export class TextInput extends BaseInput.BaseInput<TextInputProps, TextInputState>  {
+export class Text extends BaseInput.BaseInput<TextProps, TextState>  {
     public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "text" });
 
     constructor(props) {
@@ -25,12 +24,13 @@ export class TextInput extends BaseInput.BaseInput<TextInputProps, TextInputStat
     public render() {
         return <div className={`input__group text-input ${this.getValidationClass()}`}>
             <input
-                type={this.props.type}
+                disabled={this.getDisabled()}
                 required={this.props.required}
                 className={this.getValue() ? 'filled' : ''}
                 onChange={this.handleChange}
                 value={this.getValue()}
                 onBlur={this.handleBlur}
+                onFocus={this.handleFocus}
             />
             <span className="highlight"></span>
             <span className="bar"></span>
@@ -39,4 +39,4 @@ export class TextInput extends BaseInput.BaseInput<TextInputProps, TextInputStat
         </div>;
     }
 }
-export default TextInput;
+export default Text;

@@ -17,12 +17,16 @@ export interface FormContext {
     unregister: (component: BaseInput.BaseInput<BaseInput.BaseInputProps, BaseInput.BaseInputState>) => void;
     isFormValid: () => boolean;
     updateCallback: (isComponentValid: boolean, inputId: string) => void;
+    disableInputs: () => void;
+    enableInputs: () => void;
 }
 export declare const FormContextType: {
     register: any;
     unregister: any;
     isFormValid: any;
     updateCallback: any;
+    enableInputs: any;
+    disableInputs: any;
 };
 export declare class Form extends React.Component<FormProps, FormState> {
     private components;
@@ -34,10 +38,14 @@ export declare class Form extends React.Component<FormProps, FormState> {
         unregister: any;
         isFormValid: any;
         updateCallback: any;
+        enableInputs: any;
+        disableInputs: any;
     };
     private register(component);
     private unregister(component);
     private getChildContext();
+    disableInputs(): void;
+    enableInputs(): void;
     touchAll(): void;
     unTouchAll(): void;
     private updateCallback(isComponentValid?, inputId?);

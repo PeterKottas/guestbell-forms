@@ -1,0 +1,8 @@
+﻿@import '../../variables.scss';
+
+.radio-input__container__header {
+    position: absolute;
+    top: -10px;
+    font-size: 14px;
+    color: $input-highlight-color;
+}

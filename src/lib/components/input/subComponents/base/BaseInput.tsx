@@ -8,14 +8,16 @@ import * as Validators from '../../../../validators/index';
 import * as Form from '../../../form/Form';
 
 export interface BaseInputProps {
+    disabled?: boolean;
     className?: string;
     label?: string;
     value?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void;
-    required?: true;
+    required?: boolean;
     customValidators?: Validators.IBaseValidator[];
     validators?: ("email" | "number" | "latitude" | "longitude")[];
     noValidate?: boolean;
+    touchOn?: "focus" | "blur";
 }
 
 export interface BaseInputState {
@@ -24,6 +26,8 @@ export interface BaseInputState {
     errors: string[];
     validator: undefined;
     touched: boolean;
+    disabled: boolean;
+    focused: boolean;
 }
 
 export class BaseInput<P extends BaseInputProps, S extends BaseInputState> extends React.Component<P, S> {
@@ -40,8 +44,10 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
         className: undefined,
         required: false,
         label: undefined,
-        errors: []
-    }
+        errors: [],
+        disabled: false,
+        touchOn: "focus"
+    } as BaseInputProps;
 
     public static contextTypes = Form.FormContextType;
 
@@ -74,6 +80,14 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
 
     public unTouch() {
         this.setState({ touched: false });
+    }
+
+    public disableInput() {
+        this.setState({ disabled: true });
+    }
+
+    public enableInput() {
+        this.setState({ disabled: false });
     }
 
     private handleValueChange(value: string) {
@@ -143,12 +157,37 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
     }
 
     protected handleBlur(e: React.FocusEvent<HTMLSelectElement | HTMLInputElement>) {
-        this.setState({ touched: true });
-        this.handleValueChange(this.state.value);
+        let state = { focused: false };
+        if (this.props.touchOn == "blur") {
+            state = Object.assign(state, { touched: true });
+            this.handleValueChange(this.state.value);
+        }
+        this.setState(state);
+    }
+
+    protected handleFocus(e: React.FocusEvent<HTMLSelectElement | HTMLInputElement>) {
+        let state = { focused: true };
+        if (this.props.touchOn == "focus") {
+            state = Object.assign(state, { touched: true });
+            this.handleValueChange(this.state.value);
+        }
+        this.setState(state);
     }
 
     protected getValue() {
         return this.props.value ? this.props.value : this.state.value;
+    }
+
+    protected getDisabled() {
+        return this.state.disabled ? this.state.disabled : this.props.disabled;
+    }
+
+    protected setValid() {
+        this.setState({ valid: true });
+    }
+
+    protected setInvalid() {
+        this.setState({ valid: false });
     }
 
     constructor(props) {
@@ -156,10 +195,15 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
         this.state = {
             valid: props.required ? false : true,
             value: '',
-            touched: false
+            touched: false,
+            disabled: false,
+            focused: false
         } as S;
         this.handleChange = this.handleChange.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
+        this.handleFocus = this.handleFocus.bind(this);
+        this.setValid = this.setValid.bind(this);
+        this.setInvalid = this.setInvalid.bind(this);
     }
 }
 export default BaseInput;

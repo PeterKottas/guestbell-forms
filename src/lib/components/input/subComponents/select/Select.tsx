@@ -1,5 +1,5 @@
 ﻿//Styles
-import './selectInput.scss';
+import './select.scss';
 
 //Libs
 import * as React from 'react';
@@ -7,23 +7,23 @@ import * as React from 'react';
 //Misc
 import * as BaseInput from '../base/BaseInput';
 
-export interface SelectInputValue {
+export interface SelectValue {
     value: number | string;
     label?: string;
 }
 
-export interface SelectInputProps extends BaseInput.BaseInputProps {
-    values?: SelectInputValue[];
+export interface SelectProps extends BaseInput.BaseInputProps {
+    values?: SelectValue[];
     defaultEmpty?: boolean;
 }
 
-export interface SelectInputState extends BaseInput.BaseInputState {
+export interface SelectState extends BaseInput.BaseInputState {
 }
 
-export class SelectInput extends BaseInput.BaseInput<SelectInputProps, SelectInputState> {
+export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
     public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { defaultEmpty: true });
 
-    constructor(props: SelectInputProps) {
+    constructor(props: SelectProps) {
         super(props);
         const val = props.defaultEmpty ?
             '' :
@@ -37,11 +37,13 @@ export class SelectInput extends BaseInput.BaseInput<SelectInputProps, SelectInp
     public render() {
         return <div className={`input__group select-input ${this.getValidationClass()}`}>
             <select
+                disabled={this.getDisabled()}
                 required={this.props.required}
                 onChange={this.handleChange}
                 value={this.getValue()}
                 className={`select-input__select ${(this.getValue() != '' ? 'filled' : '')}`}
                 onBlur={this.handleBlur}
+                onFocus={this.handleFocus}
             >
                 {this.props.defaultEmpty && <option key={0} disabled value="" style={{ display: 'none' }}></option>}
                 {this.props.values && this.props.values.map((value, index) => <option key={index} value={value.value}>{value.label ? value.label : value.value}</option>)}
