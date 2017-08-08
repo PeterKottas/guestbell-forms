@@ -58,7 +58,7 @@
     "conventional-github-releaser": "conventional-github-releaser -p angular",
     "commit:build": "git add . && git commit -m \"Deploy commit\" --quiet && npm run push:git || true",
     "create:patch": "npm run version:patch && npm run push:git",
-    "deploy:patch": ".env.bat && npm run build:gh-pages && npm run build:prod && npm run commit:build && npm publish && npm run conventional-github-releaser -p angular || true"
+    "deploy": ".env.bat && npm run build:gh-pages && npm run build:prod && npm run commit:build && npm publish && npm run conventional-github-releaser -p angular || true"
   },
   "typings": "src/lib/index.d.ts",
   "repository": {
