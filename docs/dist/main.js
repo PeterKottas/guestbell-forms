@@ -22793,45 +22793,22 @@ var Basic = (function (_super) {
             checkbox2: false,
             validateFormSubmit: true,
             food: 'breakfast',
-            food2: 'breakfast',
-            touchOn: 'focus'
+            drink: 'breakfast',
+            touchOn: 'focus',
+            submitDisablesInputs: true
         };
         _this.state = _this.initialState;
         _this.handleGenderChange = _this.handleGenderChange.bind(_this);
-        _this.handleNameChange = _this.handleNameChange.bind(_this);
-        _this.handleEmailChange = _this.handleEmailChange.bind(_this);
-        _this.handleAgeChange = _this.handleAgeChange.bind(_this);
         _this.submitForm = _this.submitForm.bind(_this);
-        _this.handleCheckbox1Check = _this.handleCheckbox1Check.bind(_this);
-        _this.handleCheckbox2Check = _this.handleCheckbox2Check.bind(_this);
         _this.dynamicSubmitSuccessForm = _this.dynamicSubmitSuccessForm.bind(_this);
         _this.dynamicSubmitErrorForm = _this.dynamicSubmitErrorForm.bind(_this);
-        _this.handleValidateFormSubmitChecked = _this.handleValidateFormSubmitChecked.bind(_this);
         return _this;
     }
-    Basic.prototype.handleNameChange = function (e) {
-        this.setState({ name: e.target.value });
-    };
-    Basic.prototype.handleEmailChange = function (e) {
-        this.setState({ email: e.target.value });
-    };
-    Basic.prototype.handleAgeChange = function (e) {
-        this.setState({ age: e.target.value });
-    };
-    Basic.prototype.handleCheckbox1Check = function (e) {
-        this.setState({ checkbox1: !this.state.checkbox1 });
-    };
-    Basic.prototype.handleCheckbox2Check = function (e) {
-        this.setState({ checkbox2: !this.state.checkbox2 });
-    };
     Basic.prototype.handleGenderChange = function (e) {
         var val = e.target.value;
         if (val == 'M' || val == 'F') {
             this.setState({ gender: val });
         }
-    };
-    Basic.prototype.handleValidateFormSubmitChecked = function (e) {
-        this.setState({ validateFormSubmit: !this.state.validateFormSubmit });
     };
     Basic.prototype.submitForm = function (e) {
         e.preventDefault();
@@ -22865,16 +22842,19 @@ var Basic = (function (_super) {
                             React.createElement(index_1.Form, { noValidate: true, ref: function (form) { return _this.form = form; } },
                                 React.createElement("div", { className: "row" },
                                     React.createElement("div", { className: 'col-lg-6' },
-                                        React.createElement(index_1.Checkbox, { label: "Validate form submit", onChecked: this.handleValidateFormSubmitChecked, checked: this.state.validateFormSubmit })),
+                                        React.createElement(index_1.Checkbox, { label: "Validate form submit", onChecked: function (e) { return _this.setState({ validateFormSubmit: !_this.state.validateFormSubmit }); }, checked: this.state.validateFormSubmit })),
                                     React.createElement("div", { className: 'col-lg-6' },
                                         React.createElement(index_1.RadioContainer, { label: "Touch on" },
                                             React.createElement(index_1.Radio, { name: "touch", value: "blur", label: "Blur", result: this.state.touchOn, onChecked: function (value) { return _this.setState({ touchOn: value }); } }),
-                                            React.createElement(index_1.Radio, { name: "touch", value: "focus", label: "Focus", result: this.state.touchOn, onChecked: function (value) { return _this.setState({ touchOn: value }); } }))))))))),
+                                            React.createElement(index_1.Radio, { name: "touch", value: "focus", label: "Focus", result: this.state.touchOn, onChecked: function (value) { return _this.setState({ touchOn: value }); } })))),
+                                React.createElement("div", { className: "row" },
+                                    React.createElement("div", { className: 'col-lg-6' },
+                                        React.createElement(index_1.Checkbox, { label: "Submit disables inputs", onChecked: function (e) { return _this.setState({ submitDisablesInputs: !_this.state.submitDisablesInputs }); }, checked: this.state.submitDisablesInputs })))))))),
             React.createElement("div", { className: "row my-5" },
                 React.createElement("div", { className: "col-lg-12" },
                     React.createElement("div", { className: "card" },
                         React.createElement("div", { className: "card-header" },
-                            React.createElement("h2", { className: "text-center" }, "Example form")),
+                            React.createElement("h2", { className: "text-center" }, "Example restaurant form")),
                         React.createElement("div", { className: "card-block" },
                             React.createElement(index_1.Form, { noValidate: true, ref: function (form) { return _this.form = form; } },
                                 React.createElement("div", { className: "row" },
@@ -22883,29 +22863,29 @@ var Basic = (function (_super) {
                                         React.createElement(index_1.Radio, { name: "food", value: "lunch", label: "Lunch", result: this.state.food, onChecked: function (value) { return _this.setState({ food: value }); } }),
                                         React.createElement(index_1.Radio, { name: "food", value: "dinner", label: "Dinner", result: this.state.food, onChecked: function (value) { return _this.setState({ food: value }); } })),
                                     React.createElement("div", { className: 'col-lg-6' },
-                                        React.createElement(index_1.RadioContainer, { label: "With container" },
-                                            React.createElement(index_1.Radio, { name: "food2", value: "breakfast", label: "Breakfast", result: this.state.food2, onChecked: function (value) { return _this.setState({ food2: value }); } }),
-                                            React.createElement(index_1.Radio, { name: "food2", value: "lunch", label: "Lunch", result: this.state.food2, onChecked: function (value) { return _this.setState({ food2: value }); } }),
-                                            React.createElement(index_1.Radio, { name: "food2", value: "dinner", label: "Dinner", result: this.state.food2, onChecked: function (value) { return _this.setState({ food2: value }); } })))),
+                                        React.createElement(index_1.RadioContainer, { label: "Drinks" },
+                                            React.createElement(index_1.Radio, { name: "drink", value: "wine", label: "Wine", result: this.state.drink, onChecked: function (value) { return _this.setState({ drink: value }); } }),
+                                            React.createElement(index_1.Radio, { name: "drink", value: "whiskey", label: "Whiskey", result: this.state.drink, onChecked: function (value) { return _this.setState({ drink: value }); } }),
+                                            React.createElement(index_1.Radio, { name: "drink", value: "watter", label: "Watter", result: this.state.drink, onChecked: function (value) { return _this.setState({ drink: value }); } })))),
                                 React.createElement("div", { className: "row" },
                                     React.createElement("div", { className: 'col-lg-6' },
-                                        React.createElement(index_1.Checkbox, { required: true, label: "Checkbox", onChecked: this.handleCheckbox1Check, checked: this.state.checkbox1 })),
+                                        React.createElement(index_1.Checkbox, { required: true, label: "Smart dress code", onChecked: function (e) { return _this.setState({ checkbox1: !_this.state.checkbox1 }); }, checked: this.state.checkbox1 })),
                                     React.createElement("div", { className: 'col-lg-6' },
-                                        React.createElement(index_1.Checkbox, { label: "Checkbox (optional)", onChecked: this.handleCheckbox2Check, checked: this.state.checkbox2 }))),
+                                        React.createElement(index_1.Checkbox, { label: "Wallet parking (optional)", onChecked: function (e) { return _this.setState({ checkbox2: !_this.state.checkbox2 }); }, checked: this.state.checkbox2 }))),
                                 React.createElement("div", { className: "row" },
                                     React.createElement("div", { className: 'col-lg-6' },
-                                        React.createElement(index_1.Text, { touchOn: this.state.touchOn, required: true, label: "Username", onChange: this.handleNameChange, value: this.state.name })),
+                                        React.createElement(index_1.Text, { touchOn: this.state.touchOn, required: true, label: "Name", onChange: function (e) { return _this.setState({ name: e.target.value }); }, value: this.state.name })),
                                     React.createElement("div", { className: 'col-lg-6' },
                                         React.createElement(index_1.Select, { touchOn: this.state.touchOn, required: false, label: 'Gender', values: [{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }], onChange: this.handleGenderChange, value: this.state.gender }))),
                                 React.createElement("div", { className: "row" },
                                     React.createElement("div", { className: 'col-lg-6' },
-                                        React.createElement(index_1.Text, { touchOn: this.state.touchOn, validators: ["email"], required: false, label: "Email", value: this.state.email, onChange: this.handleEmailChange })),
+                                        React.createElement(index_1.Text, { touchOn: this.state.touchOn, validators: ["email"], required: false, label: "Email", value: this.state.email, onChange: function (e) { return _this.setState({ email: e.target.value }); } })),
                                     React.createElement("div", { className: 'col-lg-6' },
-                                        React.createElement(index_1.Text, { touchOn: this.state.touchOn, customValidators: [AgeValidator.instance], label: "Age (optional)", value: this.state.age, onChange: this.handleAgeChange }))),
+                                        React.createElement(index_1.Text, { touchOn: this.state.touchOn, customValidators: [AgeValidator.instance], label: "Age (optional)", value: this.state.age, onChange: function (e) { return _this.setState({ age: e.target.value }); } }))),
                                 React.createElement("div", { className: "row justify-content-center align-items-center" },
                                     React.createElement(index_1.Submit, { className: "btn btn-primary btn-lg ml-2", onClick: this.submitForm, validateForm: this.state.validateFormSubmit }, "Submit"),
-                                    React.createElement(index_1.DynamicSubmit, { className: "btn btn-lg ml-2", normalClassName: "btn-primary", errorClassName: "btn-danger", submittingClassName: "btn-secondary", errorChildren: 'Error', submittingChildren: 'Working on it', onClick: this.dynamicSubmitSuccessForm, validateForm: this.state.validateFormSubmit }, "Ajax Error"),
-                                    React.createElement(index_1.DynamicSubmit, { className: "btn btn-lg ml-2", normalClassName: "btn-primary", submittingClassName: "btn-secondary", successClassName: "btn-success", submittingChildren: 'Working on it', successChildren: 'That worked', onClick: this.dynamicSubmitErrorForm, validateForm: this.state.validateFormSubmit }, "Ajax Success"),
+                                    React.createElement(index_1.DynamicSubmit, { submitDisablesInputs: this.state.submitDisablesInputs, className: "btn btn-lg ml-2", normalClassName: "btn-primary", errorClassName: "btn-danger", submittingClassName: "btn-secondary", errorChildren: 'Error', submittingChildren: 'Working on it', onClick: this.dynamicSubmitSuccessForm, validateForm: this.state.validateFormSubmit }, "Ajax Error"),
+                                    React.createElement(index_1.DynamicSubmit, { submitDisablesInputs: this.state.submitDisablesInputs, className: "btn btn-lg ml-2", normalClassName: "btn-primary", submittingClassName: "btn-secondary", successClassName: "btn-success", submittingChildren: 'Working on it', successChildren: 'That worked', onClick: this.dynamicSubmitErrorForm, validateForm: this.state.validateFormSubmit }, "Ajax Success"),
                                     React.createElement("button", { className: "btn btn-secondary btn-lg mx-2", onClick: function (e) { e.preventDefault(); _this.form.touchAll(); } }, "Touch all"),
                                     React.createElement("button", { className: "btn btn-secondary btn-lg mr-2", onClick: function (e) { e.preventDefault(); _this.form.unTouchAll(); } }, "Un-touch all"))))))));
     };
