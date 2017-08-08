@@ -13,6 +13,11 @@ module.exports = merge(
                 return b;
             }
 
+            if (key === 'output') {
+                // Custom merging
+                return b;
+            }
+
             // Fall back to default merging
             return undefined;
         }
