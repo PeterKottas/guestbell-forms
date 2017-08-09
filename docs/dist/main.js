@@ -3024,7 +3024,7 @@ var BaseInput = (function (_super) {
     };
     BaseInput.prototype.touch = function () {
         this.setState({ touched: true });
-        this.handleValueChange(this.state.value);
+        this.handleValueChange(this.state.value || '');
     };
     BaseInput.prototype.unTouch = function () {
         this.setState({ touched: false });
