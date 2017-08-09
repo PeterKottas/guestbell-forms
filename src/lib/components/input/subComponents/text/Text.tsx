@@ -26,9 +26,9 @@ export class Text extends BaseInput.BaseInput<TextProps, TextState>  {
             <input
                 disabled={this.getDisabled()}
                 required={this.props.required}
-                className={this.getValue() ? 'filled' : ''}
+                className={this.state.value ? 'filled' : ''}
                 onChange={this.handleChange}
-                value={this.getValue()}
+                value={this.state.value}
                 onBlur={this.handleBlur}
                 onFocus={this.handleFocus}
             />

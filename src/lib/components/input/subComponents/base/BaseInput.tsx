@@ -174,10 +174,6 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
         this.setState(state);
     }
 
-    protected getValue() {
-        return this.props.value ? this.props.value : this.state.value;
-    }
-
     protected getDisabled() {
         return this.state.disabled ? this.state.disabled : this.props.disabled;
     }

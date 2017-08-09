@@ -40,8 +40,8 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
                 disabled={this.getDisabled()}
                 required={this.props.required}
                 onChange={this.handleChange}
-                value={this.getValue()}
-                className={`select-input__select ${(this.getValue() != '' ? 'filled' : '')}`}
+                value={this.state.value}
+                className={`select-input__select ${(this.state.value != '' ? 'filled' : '')}`}
                 onBlur={this.handleBlur}
                 onFocus={this.handleFocus}
             >
