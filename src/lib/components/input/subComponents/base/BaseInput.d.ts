@@ -48,7 +48,6 @@ export declare class BaseInput<P extends BaseInputProps, S extends BaseInputStat
     protected handleChange(event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>): void;
     protected handleBlur(e: React.FocusEvent<HTMLSelectElement | HTMLInputElement>): void;
     protected handleFocus(e: React.FocusEvent<HTMLSelectElement | HTMLInputElement>): void;
-    protected getValue(): S["value"];
     protected getDisabled(): S["disabled"];
     protected setValid(): void;
     protected setInvalid(): void;

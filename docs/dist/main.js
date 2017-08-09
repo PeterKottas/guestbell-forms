@@ -3118,9 +3118,6 @@ var BaseInput = (function (_super) {
         }
         this.setState(state);
     };
-    BaseInput.prototype.getValue = function () {
-        return this.props.value ? this.props.value : this.state.value;
-    };
     BaseInput.prototype.getDisabled = function () {
         return this.state.disabled ? this.state.disabled : this.props.disabled;
     };
@@ -23264,7 +23261,7 @@ var Text = (function (_super) {
     }
     Text.prototype.render = function () {
         return React.createElement("div", { className: "input__group text-input " + this.getValidationClass() },
-            React.createElement("input", { disabled: this.getDisabled(), required: this.props.required, className: this.getValue() ? 'filled' : '', onChange: this.handleChange, value: this.getValue(), onBlur: this.handleBlur, onFocus: this.handleFocus }),
+            React.createElement("input", { disabled: this.getDisabled(), required: this.props.required, className: this.state.value ? 'filled' : '', onChange: this.handleChange, value: this.state.value, onBlur: this.handleBlur, onFocus: this.handleFocus }),
             React.createElement("span", { className: "highlight" }),
             React.createElement("span", { className: "bar" }),
             this.renderDefaultValidation(),
@@ -23321,7 +23318,7 @@ var Select = (function (_super) {
     }
     Select.prototype.render = function () {
         return React.createElement("div", { className: "input__group select-input " + this.getValidationClass() },
-            React.createElement("select", { disabled: this.getDisabled(), required: this.props.required, onChange: this.handleChange, value: this.getValue(), className: "select-input__select " + (this.getValue() != '' ? 'filled' : ''), onBlur: this.handleBlur, onFocus: this.handleFocus },
+            React.createElement("select", { disabled: this.getDisabled(), required: this.props.required, onChange: this.handleChange, value: this.state.value, className: "select-input__select " + (this.state.value != '' ? 'filled' : ''), onBlur: this.handleBlur, onFocus: this.handleFocus },
                 this.props.defaultEmpty && React.createElement("option", { key: 0, disabled: true, value: "", style: { display: 'none' } }),
                 this.props.values && this.props.values.map(function (value, index) { return React.createElement("option", { key: index, value: value.value }, value.label ? value.label : value.value); })),
             React.createElement("span", { className: "highlight" }),
@@ -23376,7 +23373,7 @@ var Submit = (function (_super) {
         this.props.onClick && this.props.onClick(e);
     };
     Submit.prototype.render = function () {
-        return React.createElement("button", { type: "submit", className: "" + (this.props.className ? this.props.className : '') + (this.getValue() ? 'filled' : ''), onClick: this.handleClick, disabled: this.getDisabled() ? this.getDisabled() : (this.props.validateForm ? this.context.isFormValid && !this.context.isFormValid() : false) }, this.props.children);
+        return React.createElement("button", { type: "submit", className: "" + (this.props.className ? this.props.className : ''), onClick: this.handleClick, disabled: this.getDisabled() ? this.getDisabled() : (this.props.validateForm ? this.context.isFormValid && !this.context.isFormValid() : false) }, this.props.children);
     };
     return Submit;
 }(BaseInput.BaseInput));

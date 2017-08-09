@@ -31,7 +31,7 @@ export class Submit extends BaseInput.BaseInput<SubmitProps, SubmitState>  {
     public render() {
         return <button
             type={"submit"}
-            className={`${(this.props.className ? this.props.className : '')}${(this.getValue() ? 'filled' : '')}`}
+            className={`${(this.props.className ? this.props.className : '')}`}
             onClick={this.handleClick}
             disabled={this.getDisabled() ? this.getDisabled() : (this.props.validateForm ? this.context.isFormValid && !this.context.isFormValid() : false)}
         >
