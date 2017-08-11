@@ -143,61 +143,6 @@ a:hover {
     outline: 0;
     border: none;
     width: 100%; }
-.checkbox-input {
-  display: block;
-  margin-top: 20px;
-  border: none; }
-  .checkbox-input.validation__error {
-    border: none; }
-  .checkbox-input input {
-    position: relative;
-    padding: 10px 10px 10px 5px;
-    color: #555555;
-    outline: 0;
-    border: none;
-    width: auto;
-    margin-right: 1rem;
-    top: -2px; }
-    .checkbox-input input:before {
-      transition: -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
-      transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
-      transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75), -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
-      -webkit-transform: rotate(-45deg) scale(0, 0);
-              transform: rotate(-45deg) scale(0, 0);
-      content: "";
-      position: absolute;
-      left: 0.1875rem;
-      top: 0.125rem;
-      z-index: 1;
-      width: 0.875rem;
-      height: 0.4375rem;
-      border: 2px solid #10bdc7;
-      border-top-style: none;
-      border-right-style: none; }
-    .checkbox-input input:checked:before {
-      -webkit-transform: rotate(-45deg) scale(1, 1);
-              transform: rotate(-45deg) scale(1, 1); }
-    .checkbox-input input:after {
-      content: "";
-      position: absolute;
-      top: -0.125rem;
-      left: 0;
-      width: 1.2rem;
-      height: 1.2rem;
-      background: #fff;
-      border: 2px solid #eeeeee;
-      cursor: pointer; }
-  .checkbox-input label {
-    top: 0;
-    -webkit-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
-    margin-bottom: 8px;
-    pointer-events: auto;
-    position: relative;
-    display: inline-block;
-    cursor: pointer; }
 .input__group.radio-input {
   display: inline-block;
   margin-top: 20px;
@@ -255,6 +200,70 @@ a:hover {
     position: relative;
     display: inline-block;
     cursor: pointer; }
+.checkbox-input {
+  display: block;
+  margin-top: 20px;
+  border: none; }
+  .checkbox-input.validation__error {
+    border: none; }
+  .checkbox-input input {
+    position: relative;
+    padding: 10px 10px 10px 5px;
+    color: #555555;
+    outline: 0;
+    border: none;
+    width: auto;
+    margin-right: 1rem;
+    top: -2px; }
+    .checkbox-input input:before {
+      transition: -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+      transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+      transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75), -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+      -webkit-transform: rotate(-45deg) scale(0, 0);
+              transform: rotate(-45deg) scale(0, 0);
+      content: "";
+      position: absolute;
+      left: 0.1875rem;
+      top: 0.125rem;
+      z-index: 1;
+      width: 0.875rem;
+      height: 0.4375rem;
+      border: 2px solid #10bdc7;
+      border-top-style: none;
+      border-right-style: none; }
+    .checkbox-input input:checked:before {
+      -webkit-transform: rotate(-45deg) scale(1, 1);
+              transform: rotate(-45deg) scale(1, 1); }
+    .checkbox-input input:after {
+      content: "";
+      position: absolute;
+      top: -0.125rem;
+      left: 0;
+      width: 1.2rem;
+      height: 1.2rem;
+      background: #fff;
+      border: 2px solid #eeeeee;
+      cursor: pointer; }
+  .checkbox-input label {
+    top: 0;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    margin-bottom: 8px;
+    pointer-events: auto;
+    position: relative;
+    display: inline-block;
+    cursor: pointer; }
+.text-input {
+  display: block;
+  margin-top: 20px; }
+  .text-input input {
+    padding: 10px 10px 10px 5px;
+    color: #555555;
+    outline: 0;
+    border: none;
+    width: 100%; }
 .text-input {
   display: block;
   margin-top: 20px; }
@@ -293,14 +302,5 @@ a:hover {
      -moz-appearance: none;
           appearance: none;
   padding: 10px 10px 10px 5px; }
-.text-input {
-  display: block;
-  margin-top: 20px; }
-  .text-input input {
-    padding: 10px 10px 10px 5px;
-    color: #555555;
-    outline: 0;
-    border: none;
-    width: 100%; }
 
 /*# sourceMappingURL=main.css.map*/
