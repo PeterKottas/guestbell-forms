@@ -1,3 +1,8 @@
+.radio-input__container__header {
+  position: absolute;
+  top: -10px;
+  font-size: 14px;
+  color: #10bdc7; }
 .navbar {
   height: 96px;
   background-color: white;
@@ -34,11 +39,6 @@ a:hover {
   .navbar__text {
     font-size: 40px;
     line-height: 40px; } }
-.radio-input__container__header {
-  position: absolute;
-  top: -10px;
-  font-size: 14px;
-  color: #10bdc7; }
 .input__group {
   position: relative;
   margin-bottom: 35px;
@@ -264,6 +264,15 @@ a:hover {
     outline: 0;
     border: none;
     width: 100%; }
+.text-input {
+  display: block;
+  margin-top: 20px; }
+  .text-input input {
+    padding: 10px 10px 10px 5px;
+    color: #555555;
+    outline: 0;
+    border: none;
+    width: 100%; }
 .select-input {
   display: block;
   border: none;
@@ -293,14 +302,5 @@ a:hover {
      -moz-appearance: none;
           appearance: none;
   padding: 10px 10px 10px 5px; }
-.text-input {
-  display: block;
-  margin-top: 20px; }
-  .text-input input {
-    padding: 10px 10px 10px 5px;
-    color: #555555;
-    outline: 0;
-    border: none;
-    width: 100%; }
 
 /*# sourceMappingURL=main.css.map*/
