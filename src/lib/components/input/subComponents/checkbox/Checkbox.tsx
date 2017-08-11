@@ -24,7 +24,7 @@ export class Checkbox extends BaseInput.BaseInput<CheckboxProps, CheckboxState> 
 
     constructor(props: CheckboxProps) {
         super(props);
-        this.state = Object.assign(this.state, { checked: props.checked });
+        this.state = Object.assign(this.state, { checked: props.checked, valid: props.required ? props.checked : true });
         this.handleChecked = this.handleChecked.bind(this);
     }
 
@@ -39,6 +39,10 @@ export class Checkbox extends BaseInput.BaseInput<CheckboxProps, CheckboxState> 
                 this.setInvalid();
             }
         }
+    }
+
+    componentDidMount() {
+        this.context.updateCallback(this.state.valid, this.inputId);
     }
 
     private renderInput() {

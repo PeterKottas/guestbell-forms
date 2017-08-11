@@ -48,6 +48,7 @@ export declare class Form extends React.Component<FormProps, FormState> {
     enableInputs(): void;
     touchAll(): void;
     unTouchAll(): void;
+    componentDidMount(): void;
     private updateCallback(isComponentValid?, inputId?);
     constructor(props: FormProps);
     render(): JSX.Element;

@@ -17,6 +17,7 @@ export interface BasicState {
     drink: string;
     touchOn: "blur" | "focus";
     submitDisablesInputs: boolean;
+    simulateUnmount: boolean;
 }
 
 export class AgeValidator implements IBaseValidator {
@@ -56,7 +57,8 @@ export class Basic extends React.Component<BasicProps, BasicState>{
         food: 'breakfast',
         drink: 'breakfast',
         touchOn: 'focus',
-        submitDisablesInputs: true
+        submitDisablesInputs: true,
+        simulateUnmount: false
     } as BasicState;
 
     constructor() {
@@ -142,6 +144,13 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             checked={this.state.submitDisablesInputs}
                                         />
                                     </div>
+                                    <div className={'col-lg-6'}>
+                                        <Checkbox
+                                            label="Simulate unmount"
+                                            onChecked={(e) => this.setState({ simulateUnmount: !this.state.simulateUnmount })}
+                                            checked={this.state.simulateUnmount}
+                                        />
+                                    </div>
                                 </div>
                             </Form>
                         </div>
@@ -155,7 +164,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                             <h2 className="text-center">Example restaurant form</h2>
                         </div>
                         <div className="card-block">
-                            <Form noValidate ref={form => this.form = form}>
+                            {!this.state.simulateUnmount && < Form noValidate ref={form => this.form = form}>
                                 <div className="row">
                                     <div className={'col-lg-6'}>
                                         <Radio
@@ -300,7 +309,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                         onClick={(e) => { e.preventDefault(); this.form.unTouchAll(); }}
                                     >Un-touch all</button>
                                 </div>
-                            </Form>
+                            </Form>}
                         </div>
                     </div>
                 </div>

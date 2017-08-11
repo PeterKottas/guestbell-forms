@@ -97,6 +97,10 @@ export class Form extends React.Component<FormProps, FormState> {
         });
     }
 
+    componentDidMount() {
+        setTimeout(() => this.updateCallback(), 1);
+    }
+
     private updateCallback(isComponentValid: boolean = true, inputId: string = '') {
         let valid = false;
         if (isComponentValid) {

@@ -14,6 +14,7 @@ export interface BasicState {
     drink: string;
     touchOn: "blur" | "focus";
     submitDisablesInputs: boolean;
+    simulateUnmount: boolean;
 }
 export declare class AgeValidator implements IBaseValidator {
     static instance: AgeValidator;
