@@ -3016,6 +3016,7 @@ var BaseInput = (function (_super) {
     };
     BaseInput.prototype.componentDidMount = function () {
         this.context.register(this);
+        this.handleValueChange(this.state.value);
     };
     BaseInput.prototype.componentWillReceiveProps = function (nextProps) {
         if (nextProps.value != this.props.value) {

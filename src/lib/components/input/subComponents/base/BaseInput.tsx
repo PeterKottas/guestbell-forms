@@ -65,6 +65,7 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
 
     componentDidMount() {
         this.context.register(this);
+        this.handleValueChange(this.state.value);
     }
 
     componentWillReceiveProps(nextProps: P) {
