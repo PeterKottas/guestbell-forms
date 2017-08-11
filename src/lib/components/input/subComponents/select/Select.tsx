@@ -25,12 +25,15 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
 
     constructor(props: SelectProps) {
         super(props);
-        const val = props.defaultEmpty ?
-            '' :
-            props.values && props.values.length > 0 ?
-                props.values[0]
-                :
-                '';
+        const val = !props.value ?
+            props.defaultEmpty ?
+                '' :
+                props.values && props.values.length > 0 ?
+                    props.values[0]
+                    :
+                    ''
+            :
+            props.value;
         this.state = Object.assign(this.state, { value: val });
     }
 

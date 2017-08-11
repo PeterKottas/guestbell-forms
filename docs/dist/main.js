@@ -23307,12 +23307,15 @@ var Select = (function (_super) {
     __extends(Select, _super);
     function Select(props) {
         var _this = _super.call(this, props) || this;
-        var val = props.defaultEmpty ?
-            '' :
-            props.values && props.values.length > 0 ?
-                props.values[0]
-                :
-                    '';
+        var val = !props.value ?
+            props.defaultEmpty ?
+                '' :
+                props.values && props.values.length > 0 ?
+                    props.values[0]
+                    :
+                        ''
+            :
+                props.value;
         _this.state = Object.assign(_this.state, { value: val });
         return _this;
     }
