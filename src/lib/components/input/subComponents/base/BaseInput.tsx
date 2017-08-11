@@ -75,7 +75,7 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
 
     public touch() {
         this.setState({ touched: true });
-        this.handleValueChange(this.state.value||'');
+        this.handleValueChange(this.state.value || '');
     }
 
     public unTouch() {
@@ -190,7 +190,7 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
         super();
         this.state = {
             valid: props.required ? false : true,
-            value: '',
+            value: props.value ? props.value : '',
             touched: false,
             disabled: false,
             focused: false
