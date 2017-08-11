@@ -2988,7 +2988,7 @@ var BaseInput = (function (_super) {
         _this.inputId = _this.guid();
         _this.state = {
             valid: props.required ? false : true,
-            value: '',
+            value: props.value ? props.value : '',
             touched: false,
             disabled: false,
             focused: false
