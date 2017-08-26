@@ -31,7 +31,7 @@ npm install guestbell-forms --save
 
 Just import your components like this
 ```
-import { Form, Text, Select, Submit, DynamicSubmit, IBaseValidator, Checkbox, Radio, RadioContainer } from '../../../../lib/index';
+import { Form, Text, Select, Submit, DynamicSubmit, IBaseValidator, Checkbox, Radio, RadioContainer } from 'guestbell-forms';
 ```
 And use them in your react elements.
 
