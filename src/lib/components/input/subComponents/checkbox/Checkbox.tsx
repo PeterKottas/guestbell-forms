@@ -58,7 +58,7 @@ export class Checkbox extends BaseInput.BaseInput<CheckboxProps, CheckboxState> 
     }
 
     public render() {
-        return <div className={`input__group checkbox-input ${this.getValidationClass()}`}>
+        return <div className={`input__group checkbox-input ${this.getValidationClass()} ${this.props.className?this.props.className:''}`}>
             {!this.props.label && this.renderInput()}
             {this.renderDefaultValidation()}
             {this.props.label && <label>{this.renderInput()}{this.props.label}</label>}

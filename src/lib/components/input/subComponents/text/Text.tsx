@@ -22,7 +22,7 @@ export class Text extends BaseInput.BaseInput<TextProps, TextState>  {
     }
 
     public render() {
-        return <div className={`input__group text-input ${this.getValidationClass()}`}>
+        return <div className={`input__group text-input ${this.getValidationClass()} ${this.props.className?this.props.className:''}`}>
             <input
                 disabled={this.getDisabled()}
                 required={this.props.required}
