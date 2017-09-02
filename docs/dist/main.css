@@ -1,8 +1,3 @@
-.radio-input__container__header {
-  position: absolute;
-  top: -10px;
-  font-size: 14px;
-  color: #10bdc7; }
 .navbar {
   height: 96px;
   background-color: white;
@@ -39,6 +34,11 @@ a:hover {
   .navbar__text {
     font-size: 40px;
     line-height: 40px; } }
+.radio-input__container__header {
+  position: absolute;
+  top: -10px;
+  font-size: 14px;
+  color: #10bdc7; }
 .input__group {
   position: relative;
   margin-bottom: 35px;
@@ -134,15 +134,6 @@ a:hover {
   to {
     width: 0;
     background: transparent; } }
-.text-input {
-  display: block;
-  margin-top: 20px; }
-  .text-input input {
-    padding: 10px 10px 10px 5px;
-    color: #555555;
-    outline: 0;
-    border: none;
-    width: 100%; }
 .input__group.radio-input {
   display: inline-block;
   margin-top: 20px;
@@ -200,6 +191,15 @@ a:hover {
     position: relative;
     display: inline-block;
     cursor: pointer; }
+.text-input {
+  display: block;
+  margin-top: 20px; }
+  .text-input input {
+    padding: 10px 10px 10px 5px;
+    color: #555555;
+    outline: 0;
+    border: none;
+    width: 100%; }
 .checkbox-input {
   display: block;
   margin-top: 20px;

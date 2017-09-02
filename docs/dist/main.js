@@ -23267,7 +23267,7 @@ var Text = (function (_super) {
         return _super.call(this, props) || this;
     }
     Text.prototype.render = function () {
-        return React.createElement("div", { className: "input__group text-input " + this.getValidationClass() },
+        return React.createElement("div", { className: "input__group text-input " + this.getValidationClass() + " " + (this.props.className ? this.props.className : '') },
             React.createElement("input", { disabled: this.getDisabled(), required: this.props.required, className: this.state.value ? 'filled' : '', onChange: this.handleChange, value: this.state.value, onBlur: this.handleBlur, onFocus: this.handleFocus }),
             React.createElement("span", { className: "highlight" }),
             React.createElement("span", { className: "bar" }),
@@ -23327,7 +23327,7 @@ var Select = (function (_super) {
         return _this;
     }
     Select.prototype.render = function () {
-        return React.createElement("div", { className: "input__group select-input " + this.getValidationClass() },
+        return React.createElement("div", { className: "input__group select-input " + this.getValidationClass() + " " + (this.props.className ? this.props.className : '') },
             React.createElement("select", { disabled: this.getDisabled(), required: this.props.required, onChange: this.handleChange, value: this.state.value, className: "select-input__select " + (this.state.value != '' ? 'filled' : ''), onBlur: this.handleBlur, onFocus: this.handleFocus },
                 this.props.defaultEmpty && React.createElement("option", { key: 0, disabled: true, value: "", style: { display: 'none' } }),
                 this.props.values && this.props.values.map(function (value, index) { return React.createElement("option", { key: index, value: value.value }, value.label ? value.label : value.value); })),
@@ -23448,7 +23448,7 @@ var Checkbox = (function (_super) {
         return React.createElement("input", { disabled: this.getDisabled(), type: "checkbox", required: this.props.required, checked: this.state.checked, onChange: this.handleChecked, onBlur: this.handleBlur, onFocus: this.handleFocus });
     };
     Checkbox.prototype.render = function () {
-        return React.createElement("div", { className: "input__group checkbox-input " + this.getValidationClass() },
+        return React.createElement("div", { className: "input__group checkbox-input " + this.getValidationClass() + " " + (this.props.className ? this.props.className : '') },
             !this.props.label && this.renderInput(),
             this.renderDefaultValidation(),
             this.props.label && React.createElement("label", null,
@@ -23506,7 +23506,7 @@ var Radio = (function (_super) {
         this.props.onChecked && this.props.onChecked(e.target.value);
     };
     Radio.prototype.render = function () {
-        return React.createElement("div", { className: "input__group radio-input " + this.getValidationClass() },
+        return React.createElement("div", { className: "input__group radio-input " + this.getValidationClass() + " " + (this.props.className ? this.props.className : '') },
             !this.props.label && this.renderInput(),
             this.renderDefaultValidation(),
             this.props.label && React.createElement("label", null,
