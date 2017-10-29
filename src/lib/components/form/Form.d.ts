@@ -43,7 +43,7 @@ export declare class Form extends React.Component<FormProps, FormState> {
     };
     private register(component);
     private unregister(component);
-    private getChildContext();
+    getChildContext(): FormContext;
     disableInputs(): void;
     enableInputs(): void;
     touchAll(): void;

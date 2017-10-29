@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "noUnusedLocals": true,    
     "declaration": true,
     "baseUrl": ".",
     "moduleResolution": "node",

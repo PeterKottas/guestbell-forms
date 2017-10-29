@@ -1,10 +1,10 @@
-﻿//Styles
+﻿// Styles
 import './form.scss';
 
-//Libs
+// Libs
 import * as React from 'react';
 
-//Misc
+// Misc
 import * as BaseInput from '../input/subComponents/base/BaseInput';
 import * as PropTypes from 'prop-types';
 
@@ -58,7 +58,7 @@ export class Form extends React.Component<FormProps, FormState> {
         delete this.components[component.inputId];
     };
 
-    private getChildContext(): FormContext {
+    public getChildContext(): FormContext {
         return {
             register: this.register,
             unregister: this.unregister,
