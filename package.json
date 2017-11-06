@@ -74,6 +74,8 @@
   "homepage": "https://github.com/PeterKottas/guestbell-forms",
   "peerDependencies": {
     "react": "*",
-    "prop-types": "*"
+    "prop-types": "*",
+    "moment": "*",
+    "react-day-picker": "*"
   }
 }
