@@ -1,4 +1,4 @@
-import { OpeningHoursWeekDayObj } from 'src/lib';
+import { OpeningHoursWeekDayObj } from '../../../../../index';
 export declare class OpeningHoursUtil {
     getTimeFromMidnight(time: Date): number;
     getTotalTimeString(times: Date[]): JSX.Element;

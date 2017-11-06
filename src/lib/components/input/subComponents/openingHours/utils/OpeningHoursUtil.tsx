@@ -1,6 +1,6 @@
 //Libs
 import * as React from 'react';
-import { OpeningHoursWeekDayObj } from 'src/lib';
+import { OpeningHoursWeekDayObj } from '../../../../../index';
 
 export class OpeningHoursUtil {
     public getTimeFromMidnight(time: Date) {
