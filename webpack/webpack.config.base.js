@@ -22,7 +22,7 @@ module.exports = {
                 use: 'awesome-typescript-loader?silent=true'
             },
             {
-                test: /\.scss$/,
+                test: /\.(scss|css)$/,
                 use: extractSass.extract({
                     use: [{
                         loader: "css-loader",

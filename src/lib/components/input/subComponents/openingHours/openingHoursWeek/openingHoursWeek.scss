@@ -1,0 +1,63 @@
+@import '../../../variables.scss';
+
+.openingHoursWeek-input {
+    border: none;
+
+    .collapsable{
+        overflow: hidden;
+        max-height: 1250px;
+        transition: 0.5s all;
+
+        &.collapsed {
+            max-height: 150px;
+            .openingHoursWeek-input__fade{
+                opacity: 1;
+            }
+        }
+
+        .openingHoursWeek-input__fade{
+            background: -moz-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255, 1));
+            background: -webkit-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255, 1));
+            position: absolute;
+            top:0;
+            left: 0;
+            right:0;
+            bottom: 0;
+            opacity: 0;
+            transition: 0.2s all;
+            pointer-events: none;
+        }
+    }
+    
+    .label__checkbox{
+        display: inline-block;
+        top: 3px;
+    }
+    .label-classname.label--focused{
+        pointer-events: auto;
+        width: 100%;
+    }
+
+    .openingHoursWeek-input__collapse-button{
+        margin: auto;
+        position: relative;
+        display: table;
+        padding: 10px 10px 10px 10px;
+        //background-color: $input-highlight-color;
+        opacity: 0.5;
+        transition: 0.2s all;
+        
+        &:hover{
+            opacity: 1;
+        }
+        img{
+            transition: 0.2s all;
+            transform: scaleY(-1)
+        }
+        &.collapsed {
+            img{
+                transform: scaleY(1)
+            }
+        }
+    }
+}

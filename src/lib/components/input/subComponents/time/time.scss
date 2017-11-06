@@ -1,0 +1,93 @@
+﻿@import '../../variables.scss';
+
+.time-input {
+    > div{
+        display: inline-block;
+        position: relative;
+    }
+    display: block;
+    margin-top: 20px;
+
+    .input-padding{
+        padding: 10px 5px 10px 5px;
+    }
+
+    input {
+        padding: 0;
+        color: $input-text-color;
+        outline: 0;
+        border: none;
+        width: 100%;
+        text-align: center;
+        border: 1px solid $input-border-color;
+        height: 26px;
+        line-height: 0;
+    }
+
+    .highlight {
+        width: 50px;
+    }
+
+    input[type=number] {
+        -webkit-appearance: textfield;
+        -moz-appearance: textfield;
+        appearance: textfield;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+    }
+
+    .time-input__arrows__container{
+        position: relative;
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+
+    input:focus ~ label, input.filled ~ label, select:focus ~ label, select.filled ~ label, label.label--focused {
+        top: -27px;
+        font-size: 14px;
+        color: $input-highlight-color;
+    }
+
+    button {
+        &.plus{
+            top: -12px;
+            img{
+                transform: rotate(180deg);
+            }
+        }
+        &.minus{
+            bottom: -12px; 
+        }
+        padding: 0 5px;
+        line-height: 0;
+        overflow: hidden;
+        border: none;
+        background: transparent;
+        position: absolute;
+        left: 1px;
+        /* Styling the down arrow */
+        border: none;
+        cursor:pointer;
+        &:focus{
+            border: none;
+            outline: 0;
+        }
+        img{
+            transition: 0.2s all;
+            opacity: 0.5;
+        }
+        &:hover{
+            img{
+                opacity: 1;
+            }
+        }
+    }
+
+    .time-input__time {
+        width: 26px;
+        display: inline-block;
+    }
+}

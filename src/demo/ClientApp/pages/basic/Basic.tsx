@@ -1,5 +1,8 @@
 import * as React from 'react';
-import { Form, Text, Select, Submit, DynamicSubmit, IBaseValidator, Checkbox, Radio, RadioContainer } from '../../../../lib/index';
+import {
+    Form, Time, Text, Select, Submit, DynamicSubmit, IBaseValidator, Checkbox, Radio,
+    RadioContainer, Money, OpeningHoursDay, MoneyWithCurrency, OpeningHoursDayObj, OpeningHoursWeek, OpeningHoursSpecialDayObj, OpeningHoursSpecial
+} from '../../../../lib/index';
 
 export interface BasicProps {
 
@@ -18,6 +21,14 @@ export interface BasicState {
     touchOn: "blur" | "focus";
     submitDisablesInputs: boolean;
     simulateUnmount: boolean;
+    prices1: MoneyWithCurrency[];
+    prices2: MoneyWithCurrency[];
+    time1: Date;
+    time2: Date;
+    openingHours: OpeningHoursDayObj;
+    openingHoursWeek: OpeningHoursDayObj[];
+    openingHoursWeekDay: OpeningHoursDayObj;
+    openingHoursSpecial: OpeningHoursSpecialDayObj[];
 }
 
 export class AgeValidator implements IBaseValidator {
@@ -46,7 +57,7 @@ export class AgeValidator implements IBaseValidator {
 export class Basic extends React.Component<BasicProps, BasicState>{
     private form: Form;
 
-    private initialState = {
+    private initialState: BasicState = {
         gender: '',
         name: '',
         email: '',
@@ -58,8 +69,20 @@ export class Basic extends React.Component<BasicProps, BasicState>{
         drink: 'breakfast',
         touchOn: 'focus',
         submitDisablesInputs: true,
-        simulateUnmount: false
-    } as BasicState;
+        simulateUnmount: false,
+        prices1: [],
+        prices2: [],
+        time1: new Date(),
+        time2: new Date(),
+        openingHours: {
+            times: []
+        },
+        openingHoursWeek: [],
+        openingHoursWeekDay: {
+            times: []
+        },
+        openingHoursSpecial: [],
+    };
 
     constructor() {
         super();
@@ -269,6 +292,98 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             label="Age (optional)"
                                             value={this.state.age}
                                             onChange={(e) => this.setState({ age: e.target.value })}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className={'col-lg-12'}>
+                                        <Money
+                                            currencies={[{ label: '£', value: 'GBP' }, { label: '€', value: 'EUR' }]}
+                                            prices={this.state.prices1}
+                                            touchOn={this.state.touchOn}
+                                            required={false}
+                                            label="Price"
+                                            onPricesChange={(prices) => this.setState({ prices1: prices })}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className={'col-lg-12'}>
+                                        <Money
+                                            currencies={[{ label: '£', value: 'GBP' }, { label: '€', value: 'EUR' }, { label: '$', value: 'USD' }]}
+                                            prices={this.state.prices2}
+                                            allowMultiple={true}
+                                            touchOn={this.state.touchOn}
+                                            required={false}
+                                            label="Price multiple"
+                                            onPricesChange={(prices) => this.setState({ prices2: prices })}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className={'col-lg-6'}>
+                                        <Time
+                                            touchOn={this.state.touchOn}
+                                            label="Time"
+                                            time={this.state.time1}
+                                            timeChange={(time) => this.setState({ time1: time })}
+                                        />
+                                    </div>
+                                    <div className={'col-lg-6'}>
+                                        <Time
+                                            max={(() => {
+                                                let time = new Date();
+                                                time.setHours(time.getHours() + 1);
+                                                time.setMinutes(time.getMinutes() + 5);
+                                                return time;
+                                            })()}
+                                            min={(() => {
+                                                let time = new Date();
+                                                time.setHours(time.getHours() - 1);
+                                                time.setMinutes(time.getMinutes() - 5);
+                                                return time;
+                                            })()}
+                                            touchOn={this.state.touchOn}
+                                            label="Time limits"
+                                            time={this.state.time2}
+                                            timeChange={(time) => this.setState({ time2: time })}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className={'col-lg-12'}>
+                                        <OpeningHoursDay
+                                            label={'Opening hours sample day'}
+                                            touchOn={this.state.touchOn}
+                                            required={false}
+                                            onOpeningHoursChange={(openingHours => this.setState({ openingHours: openingHours }))}
+                                            openingHours={this.state.openingHours}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className={'col-lg-12'}>
+                                        <h4 className="text-center">Opening hours</h4>
+                                        <OpeningHoursWeek
+                                            touchOn={this.state.touchOn}
+                                            required={false}
+                                            onDaysChange={(days => this.setState({ openingHoursWeek: days }))}
+                                            days={this.state.openingHoursWeek}
+                                            standardDay={this.state.openingHoursWeekDay}
+                                            onStandardDayChange={(day => this.setState({ openingHoursWeekDay: day }))}
+                                            collapsable={true}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className={'col-lg-12'}>
+                                        <h4 className="text-center">Special days opening hours</h4>
+                                        <OpeningHoursSpecial
+                                            touchOn={this.state.touchOn}
+                                            required={false}
+                                            onDaysChange={(days => this.setState({ openingHoursSpecial: days }))}
+                                            days={this.state.openingHoursSpecial}
                                         />
                                     </div>
                                 </div>

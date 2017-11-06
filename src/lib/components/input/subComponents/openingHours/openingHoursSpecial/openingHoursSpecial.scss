@@ -1,0 +1,60 @@
+@import '../../../variables.scss';
+
+.openingHoursSpecial-input {
+    border: none;
+    .label__checkbox{
+        display: inline-block;
+        top: 3px;
+    }
+    .label-classname.label--focused{
+        pointer-events: auto;
+        width: 100%;
+    }
+
+    .openingHoursSpecial-input__button{
+        margin: auto;
+        position: relative;
+        display: table;
+        padding: 10px 10px 10px 10px;
+        //background-color: $input-highlight-color;
+        opacity: 0.5;
+        transition: 0.2s all;
+        &:hover{
+            opacity: 1;
+        }
+        &.openingHoursSpecial-input__button--remove{
+            img{
+                transform: rotate(45deg);
+            }
+        }
+    }
+
+    .DayPickerInput{
+        > input {
+            padding: 0;
+            border: none;
+            color: $input-label-color;
+        }
+        .DayPickerInput-Overlay{
+            z-index: 1;
+        }
+    }
+
+    input:focus ~ label, input.filled ~ label, select:focus ~ label, select.filled ~ label, .label-classname.label--focused {
+        top: -22px;
+        font-size: 14px;
+        color: inherit;
+
+        .DayPickerInput > input {
+            width: 70px;
+            color: $input-highlight-color;
+            background-color: transparent;
+        }
+    }
+
+    .label-classname.label--focused.label--closed{
+        .DayPickerInput > input {
+            color: $input-label-color;
+        }
+    }
+}

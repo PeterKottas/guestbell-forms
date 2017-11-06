@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IBaseValidator } from '../../../../lib/index';
+import { IBaseValidator, MoneyWithCurrency, OpeningHoursDayObj, OpeningHoursSpecialDayObj } from '../../../../lib/index';
 export interface BasicProps {
 }
 export interface BasicState {
@@ -15,6 +15,14 @@ export interface BasicState {
     touchOn: "blur" | "focus";
     submitDisablesInputs: boolean;
     simulateUnmount: boolean;
+    prices1: MoneyWithCurrency[];
+    prices2: MoneyWithCurrency[];
+    time1: Date;
+    time2: Date;
+    openingHours: OpeningHoursDayObj;
+    openingHoursWeek: OpeningHoursDayObj[];
+    openingHoursWeekDay: OpeningHoursDayObj;
+    openingHoursSpecial: OpeningHoursSpecialDayObj[];
 }
 export declare class AgeValidator implements IBaseValidator {
     static instance: AgeValidator;

@@ -34,7 +34,7 @@
         border-bottom: 1px solid $input-validation-error-border-color;
     }
     /* LABEL ======================================= */
-    label {
+    label, span.label-classname {
         color: $input-label-color;
         font-size: 18px;
         font-weight: normal;
@@ -43,11 +43,9 @@
         left: 5px;
         top: 10px;
         transition: 0.2s ease all;
-        -moz-transition: 0.2s ease all;
-        -webkit-transition: 0.2s ease all;
     }
     /* active state */
-    input:focus ~ label, input.filled ~ label, select:focus ~ label, select.filled ~ label {
+    input:focus ~ label, input.filled ~ label, select:focus ~ label, select.filled ~ label, label.label--focused, span.label-classname.label--focused {
         top: -17px;
         font-size: 14px;
         color: $input-highlight-color;

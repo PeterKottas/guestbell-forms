@@ -1,0 +1,51 @@
+﻿@import '../../variables.scss';
+
+.money-input {
+    display: block;
+    margin-top: 20px;
+
+    input {
+        padding: 10px 10px 10px 5px;
+        color: $input-text-color;
+        outline: 0;
+        border: none;
+    }
+
+    .money-input__button{
+        display: inline-block;
+        padding: 10px 10px 10px 10px;
+        //background-color: $input-highlight-color;
+        opacity: 0.25;
+        transition: 0.2s all;
+        &:hover{
+            opacity: 0.5;
+        }
+    }
+
+    .money-input__button--remove {
+        img {
+            transform: rotate(45deg);
+        }
+    }
+
+    .money-input__select {
+        border:none;
+        display: inline-block;
+        select {
+            min-width: 40px;
+            width: initial;
+        }
+        &::after{
+            right: 4px;
+        }
+    }
+
+    .money-input__text {
+        border:none;
+        display: inline-block;
+        input {
+            min-width: 40px;
+            width: 100px;
+        }
+    }
+}

@@ -10,7 +10,7 @@ import * as Form from '../../../form/Form';
 export interface BaseInputProps {
     disabled?: boolean;
     className?: string;
-    label?: string;
+    label?: string | JSX.Element;
     value?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void;
     required?: boolean;
@@ -18,6 +18,8 @@ export interface BaseInputProps {
     validators?: ("email" | "number" | "latitude" | "longitude")[];
     noValidate?: boolean;
     touchOn?: "focus" | "blur";
+    ignoreContext?: boolean;
+    onTheFlightValidate?: (value: string) => boolean;
 }
 
 export interface BaseInputState {
@@ -40,14 +42,14 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
 
     public inputId = this.guid();
 
-    public static defaultProps = {
+    public static defaultProps: BaseInputProps = {
         className: undefined,
         required: false,
         label: undefined,
-        errors: [],
         disabled: false,
-        touchOn: "focus"
-    } as BaseInputProps;
+        touchOn: "focus",
+        ignoreContext: false,
+    };
 
     public static contextTypes = Form.FormContextType;
 
@@ -60,11 +62,15 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
     }
 
     componentWillUnmount() {
-        this.context.unregister(this);
+        if (!this.props.ignoreContext) {
+            this.context.unregister(this);
+        }
     }
 
     componentDidMount() {
-        this.context.register(this);
+        if (!this.props.ignoreContext) {
+            this.context.register(this);
+        }
         this.handleValueChange(this.state.value);
     }
 
@@ -146,15 +152,19 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
             errors = errors.concat(this.state.errors);
         }
         this.setState({ value: value, valid: valid, errors: errors });
-        this.context.updateCallback(valid, this.inputId);
+        if (!this.props.ignoreContext) {
+            this.context.updateCallback(valid, this.inputId);
+        }
     }
 
     protected handleChange(event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) {
         let value = event.target.value;
-        if (this.props.onChange) {
-            this.props.onChange(event);
+        if (!this.props.onTheFlightValidate || (this.props.onTheFlightValidate && this.props.onTheFlightValidate(value))) {
+            if (this.props.onChange) {
+                this.props.onChange(event);
+            }
+            this.setState({ value: value });
         }
-        this.setState({ value: value });
     }
 
     protected handleBlur(e: React.FocusEvent<HTMLSelectElement | HTMLInputElement>) {

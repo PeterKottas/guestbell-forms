@@ -4,7 +4,7 @@ import * as Form from '../../../form/Form';
 export interface BaseInputProps {
     disabled?: boolean;
     className?: string;
-    label?: string;
+    label?: string | JSX.Element;
     value?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void;
     required?: boolean;
@@ -12,6 +12,8 @@ export interface BaseInputProps {
     validators?: ("email" | "number" | "latitude" | "longitude")[];
     noValidate?: boolean;
     touchOn?: "focus" | "blur";
+    ignoreContext?: boolean;
+    onTheFlightValidate?: (value: string) => boolean;
 }
 export interface BaseInputState {
     valid: boolean;
@@ -48,7 +50,7 @@ export declare class BaseInput<P extends BaseInputProps, S extends BaseInputStat
     protected handleChange(event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>): void;
     protected handleBlur(e: React.FocusEvent<HTMLSelectElement | HTMLInputElement>): void;
     protected handleFocus(e: React.FocusEvent<HTMLSelectElement | HTMLInputElement>): void;
-    protected getDisabled(): S["disabled"];
+    protected getDisabled(): P["disabled"];
     protected setValid(): void;
     protected setInvalid(): void;
     constructor(props: any);

@@ -1,0 +1,76 @@
+﻿@import '../../../variables.scss';
+
+.openingHoursDay-input {
+    display: block;
+    margin-top: 20px;
+    border:none;
+
+    .time-input {
+        display: inline-block;
+        position:relative;
+        border: none;
+        border-width: 0px;
+    }
+
+    .openingHoursDay-input__time__container{
+        display: inline-block;
+    }
+
+    .openingHoursDay-input__button{
+        display: inline-block;
+        padding: 10px 10px 10px 10px;
+        //background-color: $input-highlight-color;
+        opacity: 0.5;
+        transition: 0.2s all;
+        &:hover{
+            opacity: 1;
+        }
+        img{
+            margin-top: -4px;
+        }
+
+        &.openingHoursDay-input__button-open-close{
+            opacity: 1;
+            color: $input-text-color;
+            &:hover{
+                color: $input-highlight-color;
+            }
+        }
+    }
+
+    input:focus ~ label, input.filled ~ label, select:focus ~ label, span.filled ~ label, span.label-classname.label--focused {
+        top: -27px;
+    }
+
+    .openingHoursDay-input__button--remove {
+        img {
+            transform: rotate(45deg);
+        }
+    }
+
+    .bottom-border {
+        display: inline-block;
+        height: 1px;
+        width: 0;
+        transition: 0.5s all;
+    }
+
+    .bottom-border__container {
+        margin-top: -1px;
+        height: 1px;
+        line-height: 0;
+        display: flex;
+    }
+
+    .bottom-border--open{
+        background-color: $input-highlight-color;
+    }
+
+    .bottom-border--closed{
+        background-color: $input-border-color;
+    }
+
+    .label-classname.label--focused.label--closed{
+        color: $input-label-color;
+    }
+}

@@ -1,5 +1,11 @@
+// Styles 
+import './main.scss';
+
+// Libs
 import * as React from 'react';
 import { render } from 'react-dom';
+
+// Misc
 import Basic from './pages/basic/Basic';
 import Header from './components/header/Header';
 
