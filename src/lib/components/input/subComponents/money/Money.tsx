@@ -81,7 +81,7 @@ export class Money extends BaseInput.BaseInput<MoneyProps, MoneyState>  {
                             this.props.onPricesChange(newPrices);
                         }}
                     />,
-                    this.props.prices.length > 1 && (
+                    this.props.prices.length > 0 && (
                         <div
                             role="button"
                             className="money-input__button money-input__button--remove"
@@ -93,7 +93,7 @@ export class Money extends BaseInput.BaseInput<MoneyProps, MoneyState>  {
                 unusedCurrencies = unusedCurrencies.filter(currency => currency.value != item.currency.value);
                 return retComponents;
             })}
-            {(this.props.allowMultiple || this.props.currencies && !this.props.currencies.length) && unusedCurrencies.length ?
+            {(this.props.allowMultiple || this.props.prices && !this.props.prices.length) && unusedCurrencies.length ?
                 (
                     <div
                         role="button"

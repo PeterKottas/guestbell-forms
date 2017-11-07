@@ -291,8 +291,10 @@ textarea {
             transform: rotate(45deg); }
   .money-input .money-input__select {
     border: none;
-    display: inline-block; }
+    display: inline-block;
+    text-align: center; }
     .money-input .money-input__select select {
+      padding-right: 20px;
       min-width: 40px;
       width: initial; }
     .money-input .money-input__select::after {

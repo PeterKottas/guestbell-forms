@@ -39789,10 +39789,10 @@ var Basic = /** @class */ (function (_super) {
                                     React.createElement(index_1.Text, { touchOn: this.state.touchOn, customValidators: [AgeValidator.instance], label: "Age (optional)", value: this.state.age, onChange: function (e) { return _this.setState({ age: e.target.value }); } }))),
                             React.createElement("div", { className: "row" },
                                 React.createElement("div", { className: 'col-lg-12' },
-                                    React.createElement(index_1.Money, { currencies: [{ label: '£', value: 'GBP' }, { label: '€', value: 'EUR' }], prices: this.state.prices1, touchOn: this.state.touchOn, required: false, label: "Price", onPricesChange: function (prices) { return _this.setState({ prices1: prices }); } }))),
+                                    React.createElement(index_1.Money, { currencies: [{ label: 'GBP', value: 'GBP' }, { label: 'EUR', value: 'EUR' }], prices: this.state.prices1, touchOn: this.state.touchOn, required: false, label: "Price", onPricesChange: function (prices) { return _this.setState({ prices1: prices }); } }))),
                             React.createElement("div", { className: "row" },
                                 React.createElement("div", { className: 'col-lg-12' },
-                                    React.createElement(index_1.Money, { currencies: [{ label: '£', value: 'GBP' }, { label: '€', value: 'EUR' }, { label: '$', value: 'USD' }], prices: this.state.prices2, allowMultiple: true, touchOn: this.state.touchOn, required: false, label: "Price multiple", onPricesChange: function (prices) { return _this.setState({ prices2: prices }); } }))),
+                                    React.createElement(index_1.Money, { currencies: [{ label: 'GBP', value: 'GBP' }, { label: 'EUR', value: 'EUR' }, { label: 'USD', value: 'USD' }], prices: this.state.prices2, allowMultiple: true, touchOn: this.state.touchOn, required: false, label: "Price multiple", onPricesChange: function (prices) { return _this.setState({ prices2: prices }); } }))),
                             React.createElement("div", { className: "row" },
                                 React.createElement("div", { className: 'col-lg-6' },
                                     React.createElement(index_1.Time, { touchOn: this.state.touchOn, label: "Time", time: this.state.time1, timeChange: function (time) { return _this.setState({ time1: time }); } })),
@@ -40444,13 +40444,13 @@ var Money = /** @class */ (function (_super) {
                             }
                             _this.props.onPricesChange(newPrices);
                         } }),
-                    _this.props.prices.length > 1 && (React.createElement("div", { role: "button", className: "money-input__button money-input__button--remove", onClick: function () { return _this.props.onPricesChange(_this.props.prices.filter(function (item, itemIndex) { return itemIndex !== index; })); } },
+                    _this.props.prices.length > 0 && (React.createElement("div", { role: "button", className: "money-input__button money-input__button--remove", onClick: function () { return _this.props.onPricesChange(_this.props.prices.filter(function (item, itemIndex) { return itemIndex !== index; })); } },
                         React.createElement("img", { src: plusIconSrc })))
                 ] : null;
                 unusedCurrencies = unusedCurrencies.filter(function (currency) { return currency.value != item.currency.value; });
                 return retComponents;
             }),
-            (this.props.allowMultiple || this.props.currencies && !this.props.currencies.length) && unusedCurrencies.length ?
+            (this.props.allowMultiple || this.props.prices && !this.props.prices.length) && unusedCurrencies.length ?
                 (React.createElement("div", { role: "button", className: "money-input__button", onClick: function () { return _this.props.onPricesChange(_this.props.prices.concat([{ value: 0, currency: unusedCurrencies[0] }])); } },
                     React.createElement("img", { src: plusIconSrc })))
                 :

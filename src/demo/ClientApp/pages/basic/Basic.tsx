@@ -298,7 +298,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                 <div className="row">
                                     <div className={'col-lg-12'}>
                                         <Money
-                                            currencies={[{ label: '£', value: 'GBP' }, { label: '€', value: 'EUR' }]}
+                                            currencies={[{ label: 'GBP', value: 'GBP' }, { label: 'EUR', value: 'EUR' }]}
                                             prices={this.state.prices1}
                                             touchOn={this.state.touchOn}
                                             required={false}
@@ -310,7 +310,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                 <div className="row">
                                     <div className={'col-lg-12'}>
                                         <Money
-                                            currencies={[{ label: '£', value: 'GBP' }, { label: '€', value: 'EUR' }, { label: '$', value: 'USD' }]}
+                                            currencies={[{ label: 'GBP', value: 'GBP' }, { label: 'EUR', value: 'EUR' }, { label: 'USD', value: 'USD' }]}
                                             prices={this.state.prices2}
                                             allowMultiple={true}
                                             touchOn={this.state.touchOn}
