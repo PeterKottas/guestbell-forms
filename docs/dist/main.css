@@ -65,7 +65,8 @@ textarea {
     left: 50%; }
   .input__group .bar:after {
     right: 50%; }
-  .input__group input:focus ~ .bar:before, .input__group input:focus ~ .bar:after, .input__group select:focus ~ .bar:before, .input__group select:focus ~ .bar:after, .input__group label:focus ~ .bar:before, .input__group label:focus ~ .bar:after {
+  .input__group input:focus ~ .bar:before, .input__group input:focus ~ .bar:after, .input__group select:focus ~ .bar:before, .input__group select:focus ~ .bar:after,
+  .input__group label:focus ~ .bar:before, .input__group label:focus ~ .bar:after, .input__group .bar.focused:before, .input__group .bar.focused:after {
     width: 50%; }
   .input__group .highlight {
     position: absolute;
@@ -279,6 +280,10 @@ textarea {
     color: #555555;
     outline: 0;
     border: none; }
+  .money-input .select-input .bar {
+    display: none; }
+  .money-input .text-input .bar {
+    display: none; }
   .money-input .money-input__button {
     display: inline-block;
     padding: 10px 10px 10px 10px;
@@ -312,7 +317,8 @@ textarea {
     display: inline-block;
     position: relative; }
   .time-input .input-padding {
-    padding: 10px 5px 10px 5px; }
+    padding: 10px 5px 10px 5px;
+    position: relative; }
   .time-input input {
     padding: 0;
     color: #555555;
@@ -324,7 +330,15 @@ textarea {
     height: 26px;
     line-height: 0; }
   .time-input .highlight {
-    width: 50px; }
+    position: absolute;
+    left: 5px;
+    right: 5px;
+    top: 10px;
+    bottom: 10px;
+    width: initial;
+    height: initial;
+    pointer-events: none;
+    opacity: 0.5; }
   .time-input input[type=number] {
     -webkit-appearance: textfield;
     -moz-appearance: textfield;
@@ -371,13 +385,14 @@ textarea {
     display: inline-block; }
 .openingHoursDay-input {
   display: block;
-  margin-top: 20px;
-  border: none; }
+  margin-top: 20px; }
   .openingHoursDay-input .time-input {
     display: inline-block;
     position: relative;
     border: none;
     border-width: 0px; }
+    .openingHoursDay-input .time-input .bar {
+      display: none; }
   .openingHoursDay-input .openingHoursDay-input__time__container {
     display: inline-block; }
   .openingHoursDay-input .openingHoursDay-input__button {
@@ -401,17 +416,18 @@ textarea {
             transform: rotate(45deg); }
   .openingHoursDay-input .bottom-border {
     display: inline-block;
-    height: 1px;
+    height: 0px;
     width: 0;
     transition: 0.5s all; }
   .openingHoursDay-input .bottom-border__container {
     margin-top: -1px;
-    height: 1px;
+    height: 2px;
     line-height: 0;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex; }
   .openingHoursDay-input .bottom-border--open {
+    height: 2px;
     background-color: #10bdc7; }
   .openingHoursDay-input .bottom-border--closed {
     background-color: #eeeeee; }

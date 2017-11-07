@@ -5905,6 +5905,7 @@ var BaseInput = /** @class */ (function (_super) {
         }
     };
     BaseInput.prototype.handleBlur = function (e) {
+        this.props.onBlur && this.props.onBlur();
         var state = { focused: false };
         if (this.props.touchOn == "blur") {
             state = Object.assign(state, { touched: true });
@@ -5913,6 +5914,7 @@ var BaseInput = /** @class */ (function (_super) {
         this.setState(state);
     };
     BaseInput.prototype.handleFocus = function (e) {
+        this.props.onFocus && this.props.onFocus();
         var state = { focused: true };
         if (this.props.touchOn == "focus") {
             state = Object.assign(state, { touched: true });
@@ -15921,7 +15923,7 @@ var Time = /** @class */ (function (_super) {
                     return mid;
                 })())),
             this.renderDefaultValidation(),
-            React.createElement("span", { className: "bar" }),
+            React.createElement("span", { className: 'bar ' + (this.state.focused ? 'focused' : '') }),
             this.props.label && React.createElement("label", { className: "label--focused" }, this.props.label));
     };
     Time.prototype.handleLimits = function (time) {
@@ -40420,12 +40422,12 @@ var Money = /** @class */ (function (_super) {
             this.props.prices && this.props.prices.map(function (item, index) {
                 var currentCurrencies = _this.props.currencies.filter(function (currency) { return _this.props.prices.filter(function (priceCurrency, priceIndex) { return priceIndex !== index && priceCurrency.currency.value === currency.value; }).length === 0; });
                 var retComponents = currentCurrencies.length ? [
-                    React.createElement(Select_1.Select, { className: 'money-input__select m-0', key: 1, values: currentCurrencies, onChange: function (e) {
+                    React.createElement(Select_1.Select, { onFocus: function () { return _this.setState({ focused: true }); }, onBlur: function () { return _this.setState({ focused: false }); }, className: 'money-input__select m-0', key: 1, values: currentCurrencies, onChange: function (e) {
                             var newPrices = [].concat(_this.props.prices);
                             newPrices[index].currency = currentCurrencies.filter(function (item) { return item.value === e.target.value; })[0];
                             _this.props.onPricesChange(newPrices);
                         }, value: item.currency.value.toString() }),
-                    React.createElement(Text_1.Text, { onTheFlightValidate: function (value) {
+                    React.createElement(Text_1.Text, { onFocus: function () { return _this.setState({ focused: true }); }, onBlur: function () { return _this.setState({ focused: false }); }, onTheFlightValidate: function (value) {
                             var number = Number(value);
                             var parts = value.split('.');
                             if (parts && parts.length > 1 && parts[parts.length - 1].length > 2) {
@@ -40456,7 +40458,7 @@ var Money = /** @class */ (function (_super) {
                 :
                     null,
             React.createElement("span", { className: "highlight" }),
-            React.createElement("span", { className: "bar" }),
+            React.createElement("span", { className: 'bar ' + (this.state.focused ? 'focused' : '') }),
             this.renderDefaultValidation(),
             this.props.label && React.createElement("label", { className: this.props.prices && this.props.prices ? 'label--focused' : '' }, this.props.label));
     };
