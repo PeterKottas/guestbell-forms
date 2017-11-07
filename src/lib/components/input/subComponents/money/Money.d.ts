@@ -21,7 +21,6 @@ export declare class Money extends BaseInput.BaseInput<MoneyProps, MoneyState> {
         allowMultiple: boolean;
     };
     constructor(props: MoneyProps);
-    componentWillMount(): void;
     render(): JSX.Element;
 }
 export default Money;

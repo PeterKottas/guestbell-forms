@@ -40413,11 +40413,6 @@ var Money = /** @class */ (function (_super) {
         }
         return _this;
     }
-    Money.prototype.componentWillMount = function () {
-        if (!this.props.prices || !this.props.prices.length) {
-            this.props.onPricesChange([{ currency: this.props.currencies[0], value: 0 }]);
-        }
-    };
     Money.prototype.render = function () {
         var _this = this;
         var unusedCurrencies = this.props.currencies;
@@ -40455,7 +40450,7 @@ var Money = /** @class */ (function (_super) {
                 unusedCurrencies = unusedCurrencies.filter(function (currency) { return currency.value != item.currency.value; });
                 return retComponents;
             }),
-            this.props.allowMultiple && unusedCurrencies.length ?
+            (this.props.allowMultiple || this.props.currencies && !this.props.currencies.length) && unusedCurrencies.length ?
                 (React.createElement("div", { role: "button", className: "money-input__button", onClick: function () { return _this.props.onPricesChange(_this.props.prices.concat([{ value: 0, currency: unusedCurrencies[0] }])); } },
                     React.createElement("img", { src: plusIconSrc })))
                 :
