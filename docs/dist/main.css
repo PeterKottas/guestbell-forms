@@ -435,24 +435,20 @@ textarea {
     color: #999999; }
 .openingHoursWeek-input {
   border: none; }
-  .openingHoursWeek-input .collapsable {
-    overflow: hidden;
-    max-height: 1250px;
-    transition: 0.5s all; }
-    .openingHoursWeek-input .collapsable.collapsed {
+  .openingHoursWeek-input .openingHoursWeek-input__fade {
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0), white);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    transition: 0.2s all;
+    pointer-events: none;
+    opacity: 0; }
+    .openingHoursWeek-input .openingHoursWeek-input__fade.collapsed {
+      opacity: 1;
       max-height: 150px; }
-      .openingHoursWeek-input .collapsable.collapsed .openingHoursWeek-input__fade {
-        opacity: 1; }
-    .openingHoursWeek-input .collapsable .openingHoursWeek-input__fade {
-      background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0), white);
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      opacity: 0;
-      transition: 0.2s all;
-      pointer-events: none; }
   .openingHoursWeek-input .label__checkbox {
     display: inline-block;
     top: 3px; }
