@@ -3,29 +3,21 @@
 .openingHoursWeek-input {
     border: none;
 
-    .collapsable{
-        overflow: hidden;
-        max-height: 1250px;
-        transition: 0.5s all;
-
-        &.collapsed {
+    .openingHoursWeek-input__fade{
+        background: -moz-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255, 1));
+        background: -webkit-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255, 1));
+        position: absolute;
+        top:0;
+        left: 0;
+        right:0;
+        bottom: 0;
+        opacity: 0;
+        transition: 0.2s all;
+        pointer-events: none;
+        opacity: 0;
+        &.collapsed{
+            opacity: 1;
             max-height: 150px;
-            .openingHoursWeek-input__fade{
-                opacity: 1;
-            }
-        }
-
-        .openingHoursWeek-input__fade{
-            background: -moz-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255, 1));
-            background: -webkit-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255, 1));
-            position: absolute;
-            top:0;
-            left: 0;
-            right:0;
-            bottom: 0;
-            opacity: 0;
-            transition: 0.2s all;
-            pointer-events: none;
         }
     }
     

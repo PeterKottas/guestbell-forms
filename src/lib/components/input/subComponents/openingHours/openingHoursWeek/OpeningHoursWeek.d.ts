@@ -26,5 +26,6 @@ export declare class OpeningHoursWeek extends BaseInput.BaseInput<OpeningHoursWe
     constructor(props: OpeningHoursWeekProps);
     componentWillMount(): void;
     render(): JSX.Element;
+    private renderContent();
 }
 export default OpeningHoursWeek;

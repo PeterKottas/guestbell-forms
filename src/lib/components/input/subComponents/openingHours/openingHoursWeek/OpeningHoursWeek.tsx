@@ -4,6 +4,7 @@ import * as plusIconSrc from '../../assets/images/ic_keyboard_arrow_down_black_2
 
 //Libs
 import * as React from 'react';
+import * as SmoothCollapse from 'react-smooth-collapse';
 
 //Misc
 import * as BaseInput from '../../base/BaseInput';
@@ -51,62 +52,75 @@ export class OpeningHoursWeek extends BaseInput.BaseInput<OpeningHoursWeekProps,
     }
 
     public render() {
+
         return <div className={`input__group openingHoursWeek-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}>
-            <div className={`collapsable pt-2 ${(this.state.collapsed ? 'collapsed' : '')}`}>
-                {this.props.standardDay && <OpeningHoursDay
-                    label={<span>
-                        Standard day {OpeningHoursUtil.getLabelSuffix(this.props.standardDay)}
-                    </span>}
-                    openingHours={{
-                        times: this.props.standardDay.times
-                    }}
-                    onOpeningHoursChange={(openingHours) => {
-                        this.props.onStandardDayChange(openingHours);
-                    }}
-                />}
-                {this.props.days.map((day, index) => (
-                    <OpeningHoursDay
-                        className={'mb-5'}
-                        key={index}
-                        label={this.props.standardDay ? <span>
-                            {day.dayLabel} {OpeningHoursUtil.getLabelSuffix(this.props.standardDay && day.isStandardDay ? this.props.standardDay : day)}
-                            <span className="float-right">
-                                Standard day?&nbsp;
-                            <Checkbox
-                                    className="label__checkbox m-0"
-                                    checked={day.isStandardDay}
-                                    onChecked={(checked) => {
-                                        let days = this.props.days.slice(0);
-                                        days[index] = { ...day, isStandardDay: checked.target.checked };
-                                        this.props.onDaysChange(days);
-                                    }}
-                                />
-                            </span>
-                        </span> : day.dayLabel}
-                        openingHours={{
-                            times: this.props.standardDay && day.isStandardDay ? this.props.standardDay.times : day.times
-                        }}
-                        onOpeningHoursChange={(openingHours) => {
-                            if (day.isStandardDay) {
-                                this.props.onStandardDayChange(openingHours);
-                            } else {
-                                let days = this.props.days.slice(0);
-                                days[index] = { ...day, ...openingHours };
-                                this.props.onDaysChange(days);
-                            }
-                        }}
-                    />
-                ))}
-                <span className="bar"></span>
-                {this.renderDefaultValidation()}
-                <div className="openingHoursWeek-input__fade" />
-            </div>
+            {this.props.collapsable ?
+                <div className="smooth-collapse__container">
+                    <SmoothCollapse expanded={!this.state.collapsed} collapsedHeight={'150px'}>
+                        {this.renderContent()}
+                    </SmoothCollapse>
+                </div>
+                :
+                this.renderContent()
+            }
             {this.props.collapsable && <div
                 role="button"
                 className={`openingHoursWeek-input__collapse-button ${(this.state.collapsed ? 'collapsed' : '')}`}
                 onClick={() => this.setState({ collapsed: !this.state.collapsed })}>
                 <img src={plusIconSrc} />
             </div>}
+        </div>;
+    }
+
+    private renderContent() {
+        return <div className={`pt-2`}>
+            {this.props.standardDay && <OpeningHoursDay
+                label={<span>
+                    Standard day {OpeningHoursUtil.getLabelSuffix(this.props.standardDay)}
+                </span>}
+                openingHours={{
+                    times: this.props.standardDay.times
+                }}
+                onOpeningHoursChange={(openingHours) => {
+                    this.props.onStandardDayChange(openingHours);
+                }}
+            />}
+            {this.props.days.map((day, index) => (
+                <OpeningHoursDay
+                    className={'mb-5'}
+                    key={index}
+                    label={this.props.standardDay ? <span>
+                        {day.dayLabel} {OpeningHoursUtil.getLabelSuffix(this.props.standardDay && day.isStandardDay ? this.props.standardDay : day)}
+                        <span className="float-right">
+                            Standard day?&nbsp;
+                            <Checkbox
+                                className="label__checkbox m-0"
+                                checked={day.isStandardDay}
+                                onChecked={(checked) => {
+                                    let days = this.props.days.slice(0);
+                                    days[index] = { ...day, isStandardDay: checked.target.checked };
+                                    this.props.onDaysChange(days);
+                                }}
+                            />
+                        </span>
+                    </span> : day.dayLabel}
+                    openingHours={{
+                        times: this.props.standardDay && day.isStandardDay ? this.props.standardDay.times : day.times
+                    }}
+                    onOpeningHoursChange={(openingHours) => {
+                        if (day.isStandardDay) {
+                            this.props.onStandardDayChange(openingHours);
+                        } else {
+                            let days = this.props.days.slice(0);
+                            days[index] = { ...day, ...openingHours };
+                            this.props.onDaysChange(days);
+                        }
+                    }}
+                />
+            ))}
+            <span className="bar"></span>
+            {this.renderDefaultValidation()}
+            <div className={'openingHoursWeek-input__fade ' + (this.props.collapsable && this.state.collapsed ? 'collapsed' : '')} />
         </div>;
     }
 }
