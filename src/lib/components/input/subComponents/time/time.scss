@@ -10,6 +10,7 @@
 
     .input-padding{
         padding: 10px 5px 10px 5px;
+        position: relative;
     }
 
     input {
@@ -25,7 +26,15 @@
     }
 
     .highlight {
-        width: 50px;
+        position: absolute;
+        left: 5px;
+        right: 5px;
+        top: 10px;
+        bottom: 10px;
+        width: initial;
+        height: initial;
+        pointer-events: none;
+        opacity: 0.5;
     }
 
     input[type=number] {

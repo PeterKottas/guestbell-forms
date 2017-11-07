@@ -20,6 +20,8 @@ export interface BaseInputProps {
     touchOn?: "focus" | "blur";
     ignoreContext?: boolean;
     onTheFlightValidate?: (value: string) => boolean;
+    onFocus?: () => void;
+    onBlur?: () => void;
 }
 
 export interface BaseInputState {
@@ -168,6 +170,7 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
     }
 
     protected handleBlur(e: React.FocusEvent<HTMLSelectElement | HTMLInputElement>) {
+        this.props.onBlur && this.props.onBlur();
         let state = { focused: false };
         if (this.props.touchOn == "blur") {
             state = Object.assign(state, { touched: true });
@@ -177,6 +180,7 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
     }
 
     protected handleFocus(e: React.FocusEvent<HTMLSelectElement | HTMLInputElement>) {
+        this.props.onFocus && this.props.onFocus();
         let state = { focused: true };
         if (this.props.touchOn == "focus") {
             state = Object.assign(state, { touched: true });

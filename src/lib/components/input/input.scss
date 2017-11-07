@@ -76,7 +76,8 @@
         right: 50%;
     }
     /* active state */
-    input:focus ~ .bar:before, input:focus ~ .bar:after, select:focus ~ .bar:before, select:focus ~ .bar:after, label:focus ~ .bar:before, label:focus ~ .bar:after {
+    input:focus ~ .bar:before, input:focus ~ .bar:after, select:focus ~ .bar:before, select:focus ~ .bar:after, 
+    label:focus ~ .bar:before, label:focus ~ .bar:after, .bar.focused:before, .bar.focused:after{
         width: 50%;
     }
     /* HIGHLIGHTER ================================== */

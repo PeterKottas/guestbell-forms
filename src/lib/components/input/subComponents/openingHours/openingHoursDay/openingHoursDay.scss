@@ -3,9 +3,12 @@
 .openingHoursDay-input {
     display: block;
     margin-top: 20px;
-    border:none;
+    //border:none;
 
     .time-input {
+        .bar {
+            display: none;
+        }
         display: inline-block;
         position:relative;
         border: none;
@@ -50,19 +53,20 @@
 
     .bottom-border {
         display: inline-block;
-        height: 1px;
+        height: 0px;
         width: 0;
         transition: 0.5s all;
     }
 
     .bottom-border__container {
         margin-top: -1px;
-        height: 1px;
+        height: 2px;
         line-height: 0;
         display: flex;
     }
 
     .bottom-border--open{
+        height: 2px;
         background-color: $input-highlight-color;
     }
 

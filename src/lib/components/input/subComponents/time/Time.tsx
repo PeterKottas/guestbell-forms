@@ -121,7 +121,7 @@ export class Time extends BaseInput.BaseInput<TimeProps, TimeState>  {
                 })()}</span>
             </div>
             {this.renderDefaultValidation()}
-            <span className="bar"></span>
+            <span className={'bar ' + (this.state.focused ? 'focused' : '')}></span>
             {this.props.label && <label className="label--focused">{this.props.label}</label>}
         </div>;
     }

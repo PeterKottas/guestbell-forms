@@ -14,6 +14,8 @@ export interface BaseInputProps {
     touchOn?: "focus" | "blur";
     ignoreContext?: boolean;
     onTheFlightValidate?: (value: string) => boolean;
+    onFocus?: () => void;
+    onBlur?: () => void;
 }
 export interface BaseInputState {
     valid: boolean;

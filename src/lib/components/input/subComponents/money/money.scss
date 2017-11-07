@@ -11,6 +11,18 @@
         border: none;
     }
 
+    .select-input{
+        .bar{
+            display: none;
+        }
+    }
+
+    .text-input{
+        .bar{
+            display: none;
+        }
+    }
+
     .money-input__button{
         display: inline-block;
         padding: 10px 10px 10px 10px;

@@ -44,6 +44,8 @@ export class Money extends BaseInput.BaseInput<MoneyProps, MoneyState>  {
                 let currentCurrencies = this.props.currencies.filter(currency => this.props.prices.filter((priceCurrency, priceIndex) => priceIndex !== index && priceCurrency.currency.value === currency.value).length === 0);
                 let retComponents = currentCurrencies.length ? [
                     <Select
+                        onFocus={() => this.setState({ focused: true })}
+                        onBlur={() => this.setState({ focused: false })}
                         className={'money-input__select m-0'}
                         key={1}
                         values={currentCurrencies}
@@ -55,6 +57,8 @@ export class Money extends BaseInput.BaseInput<MoneyProps, MoneyState>  {
                         value={item.currency.value.toString()}
                     />,
                     <Text
+                        onFocus={() => this.setState({ focused: true })}
+                        onBlur={() => this.setState({ focused: false })}
                         onTheFlightValidate={value => {
                             let number = Number(value);
                             const parts = value.split('.');
@@ -106,7 +110,7 @@ export class Money extends BaseInput.BaseInput<MoneyProps, MoneyState>  {
                 null
             }
             <span className="highlight"></span>
-            <span className="bar"></span>
+            <span className={'bar ' + (this.state.focused ? 'focused' : '')}></span>
             {this.renderDefaultValidation()}
             {this.props.label && <label className={this.props.prices && this.props.prices ? 'label--focused' : ''}>{this.props.label}</label>}
         </div>;
