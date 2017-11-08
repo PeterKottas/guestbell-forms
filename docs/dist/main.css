@@ -317,7 +317,7 @@ textarea {
     display: inline-block;
     position: relative; }
   .time-input .input-padding {
-    padding: 10px 5px 10px 5px;
+    margin: 10px 5px 10px 5px;
     position: relative; }
   .time-input input {
     padding: 0;
