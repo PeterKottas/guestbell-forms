@@ -84,8 +84,8 @@ export class Basic extends React.Component<BasicProps, BasicState>{
         openingHoursSpecial: [],
     };
 
-    constructor() {
-        super();
+    constructor(props: BasicProps) {
+        super(props);
         this.state = this.initialState;
         this.handleGenderChange = this.handleGenderChange.bind(this);
         this.submitForm = this.submitForm.bind(this);

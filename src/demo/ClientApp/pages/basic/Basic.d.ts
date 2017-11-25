@@ -31,7 +31,7 @@ export declare class AgeValidator implements IBaseValidator {
 export declare class Basic extends React.Component<BasicProps, BasicState> {
     private form;
     private initialState;
-    constructor();
+    constructor(props: BasicProps);
     private handleGenderChange(e);
     private submitForm(e);
     private dynamicSubmitSuccessForm(e, submiting, error, success, reset);
