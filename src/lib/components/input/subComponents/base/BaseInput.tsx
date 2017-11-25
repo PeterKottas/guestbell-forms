@@ -202,7 +202,7 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
     }
 
     constructor(props) {
-        super();
+        super(props);
         this.state = {
             valid: props.required ? false : true,
             value: props.value ? props.value : '',

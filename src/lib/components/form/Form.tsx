@@ -116,7 +116,7 @@ export class Form extends React.Component<FormProps, FormState> {
     }
 
     constructor(props: FormProps) {
-        super();
+        super(props);
         this.components = {};
         this.register = this.register.bind(this);
         this.unregister = this.unregister.bind(this);
