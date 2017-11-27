@@ -47,7 +47,7 @@ export class Money extends BaseInput.BaseInput<MoneyProps, MoneyState>  {
                         onFocus={() => this.setState({ focused: true })}
                         onBlur={() => this.setState({ focused: false })}
                         className={'money-input__select m-0'}
-                        key={1}
+                        key={index * 3}
                         values={currentCurrencies}
                         onChange={(e) => {
                             let newPrices: MoneyWithCurrency[] = [].concat(this.props.prices);
@@ -73,7 +73,7 @@ export class Money extends BaseInput.BaseInput<MoneyProps, MoneyState>  {
                         }}
                         placeholder={'0.00'}
                         className={'money-input__text m-0'}
-                        key={2}
+                        key={index * 3 + 1}
                         validators={["number"]}
                         value={item.value ? item.value.toString() : ''}
                         onChange={(e) => {
@@ -87,6 +87,7 @@ export class Money extends BaseInput.BaseInput<MoneyProps, MoneyState>  {
                     />,
                     this.props.prices.length > 0 && (
                         <div
+                            key={index * 3 + 2}
                             role="button"
                             className="money-input__button money-input__button--remove"
                             onClick={() => this.props.onPricesChange(this.props.prices.filter((item, itemIndex) => itemIndex !== index))}>

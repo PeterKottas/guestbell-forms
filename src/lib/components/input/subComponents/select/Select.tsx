@@ -48,7 +48,7 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
                 onBlur={this.handleBlur}
                 onFocus={this.handleFocus}
             >
-                {this.props.defaultEmpty && <option key={0} disabled value="" style={{ display: 'none' }}></option>}
+                {this.props.defaultEmpty && <option key={-1} disabled value="" style={{ display: 'none' }}></option>}
                 {this.props.values && this.props.values.map((value, index) => <option key={index} value={value.value}>{value.label ? value.label : value.value}</option>)}
             </select>
             <span className="highlight"></span>
