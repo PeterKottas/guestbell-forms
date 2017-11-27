@@ -6976,7 +6976,7 @@ var Select = /** @class */ (function (_super) {
     Select.prototype.render = function () {
         return React.createElement("div", { className: "input__group select-input " + this.getValidationClass() + " " + (this.props.className ? this.props.className : '') },
             React.createElement("select", { disabled: this.getDisabled(), required: this.props.required, onChange: this.handleChange, value: this.state.value, className: "select-input__select " + (this.state.value != '' ? 'filled' : ''), onBlur: this.handleBlur, onFocus: this.handleFocus },
-                this.props.defaultEmpty && React.createElement("option", { key: 0, disabled: true, value: "", style: { display: 'none' } }),
+                this.props.defaultEmpty && React.createElement("option", { key: -1, disabled: true, value: "", style: { display: 'none' } }),
                 this.props.values && this.props.values.map(function (value, index) { return React.createElement("option", { key: index, value: value.value }, value.label ? value.label : value.value); })),
             React.createElement("span", { className: "highlight" }),
             React.createElement("span", { className: "bar" }),
@@ -41289,7 +41289,7 @@ var Money = /** @class */ (function (_super) {
             this.props.prices && this.props.prices.map(function (item, index) {
                 var currentCurrencies = _this.props.currencies.filter(function (currency) { return _this.props.prices.filter(function (priceCurrency, priceIndex) { return priceIndex !== index && priceCurrency.currency.value === currency.value; }).length === 0; });
                 var retComponents = currentCurrencies.length ? [
-                    React.createElement(Select_1.Select, { onFocus: function () { return _this.setState({ focused: true }); }, onBlur: function () { return _this.setState({ focused: false }); }, className: 'money-input__select m-0', key: 1, values: currentCurrencies, onChange: function (e) {
+                    React.createElement(Select_1.Select, { onFocus: function () { return _this.setState({ focused: true }); }, onBlur: function () { return _this.setState({ focused: false }); }, className: 'money-input__select m-0', key: index * 3, values: currentCurrencies, onChange: function (e) {
                             var newPrices = [].concat(_this.props.prices);
                             newPrices[index].currency = currentCurrencies.filter(function (item) { return item.value === e.target.value; })[0];
                             _this.props.onPricesChange(newPrices);
@@ -41305,7 +41305,7 @@ var Money = /** @class */ (function (_super) {
                             }
                             if (number)
                                 return false;
-                        }, placeholder: '0.00', className: 'money-input__text m-0', key: 2, validators: ["number"], value: item.value ? item.value.toString() : '', onChange: function (e) {
+                        }, placeholder: '0.00', className: 'money-input__text m-0', key: index * 3 + 1, validators: ["number"], value: item.value ? item.value.toString() : '', onChange: function (e) {
                             var newPrices = [].concat(_this.props.prices);
                             var number = Number(e.target.value);
                             if (!isNaN(number)) {
@@ -41313,7 +41313,7 @@ var Money = /** @class */ (function (_super) {
                             }
                             _this.props.onPricesChange(newPrices);
                         } }),
-                    _this.props.prices.length > 0 && (React.createElement("div", { role: "button", className: "money-input__button money-input__button--remove", onClick: function () { return _this.props.onPricesChange(_this.props.prices.filter(function (item, itemIndex) { return itemIndex !== index; })); } },
+                    _this.props.prices.length > 0 && (React.createElement("div", { key: index * 3 + 2, role: "button", className: "money-input__button money-input__button--remove", onClick: function () { return _this.props.onPricesChange(_this.props.prices.filter(function (item, itemIndex) { return itemIndex !== index; })); } },
                         React.createElement("img", { src: plusIconSrc })))
                 ] : null;
                 unusedCurrencies = unusedCurrencies.filter(function (currency) { return currency.value != item.currency.value; });
