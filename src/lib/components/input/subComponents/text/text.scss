@@ -10,5 +10,14 @@
         outline: 0;
         border: none;
         width: 100%;
+        background-color: transparent;
     }
 }
+
+.guestbell-forms--dark{
+    .text-input {
+        input {
+            color: $input-text-color--dark;
+        }
+    }
+}    

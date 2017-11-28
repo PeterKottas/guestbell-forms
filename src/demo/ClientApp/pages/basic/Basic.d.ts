@@ -12,7 +12,8 @@ export interface BasicState {
     validateFormSubmit: boolean;
     food: string;
     drink: string;
-    touchOn: "blur" | "focus";
+    touchOn: 'blur' | 'focus';
+    theme: string;
     submitDisablesInputs: boolean;
     simulateUnmount: boolean;
     prices1: MoneyWithCurrency[];

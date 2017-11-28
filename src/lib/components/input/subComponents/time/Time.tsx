@@ -1,6 +1,7 @@
 //Styles
 import './time.scss';
-import * as arrowSrc from '../assets/images/ic_keyboard_arrow_down_black_24dp_1x.png';
+//import * as arrowSrc from '../assets/images/ic_keyboard_arrow_down_black_24dp_1x.png';
+import * as ArrowIcon from 'material-design-icons/hardware/svg/production/ic_keyboard_arrow_down_24px.svg';
 
 //Libs
 import * as React from 'react';
@@ -41,7 +42,7 @@ export class Time extends BaseInput.BaseInput<TimeProps, TimeState>  {
                             this.handleHoursChange((this.props.time.getHours() + 1).toString());
                         }}
                     >
-                        <img src={arrowSrc} />
+                        <ArrowIcon />
                     </button>
                     <div className="input-padding">
                         <input
@@ -64,7 +65,7 @@ export class Time extends BaseInput.BaseInput<TimeProps, TimeState>  {
                             this.handleHoursChange((this.props.time.getHours() - 1).toString());
                         }}
                     >
-                        <img src={arrowSrc} />
+                        <ArrowIcon />
                     </button>
                 </div>
             </div>
@@ -78,7 +79,7 @@ export class Time extends BaseInput.BaseInput<TimeProps, TimeState>  {
                             this.handleMinutesChange((this.props.time.getMinutes() + 1).toString());
                         }}
                     >
-                        <img src={arrowSrc} />
+                        <ArrowIcon />
                     </button>
                     <div className="input-padding">
                         <input
@@ -87,7 +88,10 @@ export class Time extends BaseInput.BaseInput<TimeProps, TimeState>  {
                             required={this.props.required}
                             className={'time-input__time ' + (this.state.value ? 'filled' : '')}
                             onChange={(e) => this.handleMinutesChange(e.target.value)}
-                            value={this.props.time.getMinutes()}
+                            value={this.props.time.getMinutes() < 10 ?
+                                '0' + this.props.time.getMinutes().toString()
+                                :
+                                this.props.time.getMinutes().toString()}
                             onBlur={this.handleBlur}
                             onFocus={this.handleFocus}
                             type="number"
@@ -101,12 +105,12 @@ export class Time extends BaseInput.BaseInput<TimeProps, TimeState>  {
                             this.handleMinutesChange((this.props.time.getMinutes() - 1).toString());
                         }}
                     >
-                        <img src={arrowSrc} />
+                        <ArrowIcon />
                     </button>
                 </div>
             </div>
             <div>
-                <span className="">{(() => {
+                <span className="time-input__am-pm">{(() => {
                     var hours = this.props.time.getHours();
                     var hours = (hours + 24) % 24;
                     var mid = 'AM';

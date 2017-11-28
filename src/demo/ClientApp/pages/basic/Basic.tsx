@@ -18,7 +18,8 @@ export interface BasicState {
     validateFormSubmit: boolean;
     food: string;
     drink: string;
-    touchOn: "blur" | "focus";
+    touchOn: 'blur' | 'focus';
+    theme: string;
     submitDisablesInputs: boolean;
     simulateUnmount: boolean;
     prices1: MoneyWithCurrency[];
@@ -68,6 +69,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
         food: 'breakfast',
         drink: 'breakfast',
         touchOn: 'focus',
+        theme: '',
         submitDisablesInputs: true,
         simulateUnmount: false,
         prices1: [],
@@ -160,6 +162,26 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                     </div>
                                 </div>
                                 <div className="row">
+                                    <div className={'col-lg-12'}>
+                                        <RadioContainer label="Theme">
+                                            <Radio
+                                                name="theme"
+                                                value="guestbell-forms--dark bg-dark"
+                                                label="Dark"
+                                                result={this.state.theme}
+                                                onChecked={(value) => this.setState({ theme: value })}
+                                            />
+                                            <Radio
+                                                name="theme"
+                                                value=""
+                                                label="Light"
+                                                result={this.state.theme}
+                                                onChecked={(value) => this.setState({ theme: value })}
+                                            />
+                                        </RadioContainer>
+                                    </div>
+                                </div>
+                                <div className="row">
                                     <div className={'col-lg-6'}>
                                         <Checkbox
                                             label="Submit disables inputs"
@@ -182,7 +204,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
             </div>
             <div className="row my-5">
                 <div className="col-lg-12">
-                    <div className="card">
+                    <div className={'card ' + this.state.theme}>
                         <div className="card-header">
                             <h2 className="text-center">Example restaurant form</h2>
                         </div>
@@ -230,8 +252,8 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             />
                                             <Radio
                                                 name="drink"
-                                                value="watter"
-                                                label="Watter"
+                                                value="water"
+                                                label="Water"
                                                 result={this.state.drink}
                                                 onChecked={(value) => this.setState({ drink: value })}
                                             />

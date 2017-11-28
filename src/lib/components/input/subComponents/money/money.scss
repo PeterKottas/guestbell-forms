@@ -23,19 +23,8 @@
         }
     }
 
-    .money-input__button{
-        display: inline-block;
-        padding: 10px 10px 10px 10px;
-        //background-color: $input-highlight-color;
-        opacity: 0.25;
-        transition: 0.2s all;
-        &:hover{
-            opacity: 0.5;
-        }
-    }
-
     .money-input__button--remove {
-        img {
+        .material-design-icon {
             transform: rotate(45deg);
         }
     }
@@ -57,9 +46,29 @@
     .money-input__text {
         border:none;
         display: inline-block;
+        
         input {
             min-width: 40px;
             width: 100px;
+            &::placeholder {
+                color: $input-label-color;
+            }
+        }
+    }
+}
+
+.guestbell-forms--dark{
+    .money-input {
+        input {
+            color: $input-text-color--dark;
+        }
+    
+        .money-input__text {
+            input {
+                &::placeholder {
+                    color: $input-label-color--dark;
+                }
+            }
         }
     }
 }

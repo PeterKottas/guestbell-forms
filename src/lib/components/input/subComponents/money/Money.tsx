@@ -1,6 +1,6 @@
 ﻿//Styles
 import './money.scss';
-import * as plusIconSrc from '../assets/images/ic_add_circle_outline_black_24dp_1x.png';
+import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_circle_outline_24px.svg';
 
 //Libs
 import * as React from 'react';
@@ -89,9 +89,9 @@ export class Money extends BaseInput.BaseInput<MoneyProps, MoneyState>  {
                         <div
                             key={index * 3 + 2}
                             role="button"
-                            className="money-input__button money-input__button--remove"
+                            className="input__button money-input__button--remove"
                             onClick={() => this.props.onPricesChange(this.props.prices.filter((item, itemIndex) => itemIndex !== index))}>
-                            <img src={plusIconSrc} />
+                            <PlusIcon />
                         </div>
                     )
                 ] : null;
@@ -102,9 +102,9 @@ export class Money extends BaseInput.BaseInput<MoneyProps, MoneyState>  {
                 (
                     <div
                         role="button"
-                        className="money-input__button"
+                        className="input__button"
                         onClick={() => this.props.onPricesChange(this.props.prices.concat([{ value: 0, currency: unusedCurrencies[0] }]))}>
-                        <img src={plusIconSrc} />
+                        <PlusIcon />
                     </div>
                 )
                 :

@@ -23,14 +23,15 @@
         border: 1px solid $input-border-color;
         height: 26px;
         line-height: 0;
+        background-color: transparent;
     }
 
     .highlight {
         position: absolute;
-        left: 5px;
-        right: 5px;
-        top: 10px;
-        bottom: 10px;
+        left: 3px;
+        right: 3px;
+        top: 3px;
+        bottom: 3px;
         width: initial;
         height: initial;
         pointer-events: none;
@@ -63,7 +64,7 @@
     button {
         &.plus{
             top: -12px;
-            img{
+            svg{
                 transform: rotate(180deg);
             }
         }
@@ -84,13 +85,13 @@
             border: none;
             outline: 0;
         }
-        img{
+        svg{
             transition: 0.2s all;
-            opacity: 0.5;
+            fill: $input-label-color;
         }
         &:hover{
-            img{
-                opacity: 1;
+            svg {
+                fill: $input-highlight-color;
             }
         }
     }
@@ -99,4 +100,21 @@
         width: 26px;
         display: inline-block;
     }
+
+    .time-input__am-pm{
+        color: $input-label-color;
+    }
 }
+
+.guestbell-forms--dark{
+    .time-input {
+        input {
+            color: $input-text-color--dark;
+            border: 1px solid $input-border-color--dark;
+        }
+    }
+
+    .time-input__am-pm{
+        color: $input-label-color--dark;
+    }
+}    

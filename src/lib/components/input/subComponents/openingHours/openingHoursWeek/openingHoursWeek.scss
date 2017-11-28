@@ -24,6 +24,7 @@
     .label__checkbox{
         display: inline-block;
         top: 3px;
+        border-bottom: none;
     }
     .label-classname.label--focused{
         pointer-events: auto;

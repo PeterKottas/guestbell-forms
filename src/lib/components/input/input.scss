@@ -1,6 +1,12 @@
 ﻿@import 'variables.scss';
 
 .input__group {
+
+    .material-design-icon{
+        width: 24px;
+        height: 24px;
+    }
+
     position: relative;
     margin-bottom: 35px;
     border-bottom: 1px solid $input-border-color;
@@ -106,12 +112,92 @@
         color: $input-label-color;
         background: transparent;
     }
+
+    .input__button{
+        display: inline-block;
+        //background-color: $input-highlight-color;
+        padding: 10px;
+        svg.material-design-icon, &{
+            font-weight: bold;
+            margin-top: -2px;
+            transition: 0.2s all;
+            color: $input-label-color;
+            fill: $input-label-color;
+            &:hover{
+                color: $input-highlight-color;
+                fill: $input-highlight-color;
+            }
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+}
+
+.guestbell-forms--dark{
+    .input__group {
+        border-bottom: 1px solid $input-border-color--dark;
+        /* VALIDATION ======================================= */
+        .validation__container {
+            color: $input-validation-color--dark;
+        }
+    
+        &.validation__error {   
+            .bar:before, .bar:after {
+                background: $input-validation-error-bar-color--dark;
+            }
+            border-bottom: 1px solid $input-validation-error-border-color--dark;
+        }
+        /* LABEL ======================================= */
+        label, span.label-classname {
+            color: $input-label-color--dark;
+        }
+        /* active state */
+        input:focus ~ label, input.filled ~ label, select:focus ~ label, select.filled ~ label, label.label--focused, span.label-classname.label--focused {
+            color: $input-highlight-color--dark;
+        }
+        /* BOTTOM BARS ================================= */
+        .bar:before, .bar:after {
+            background: $input-highlight-color--dark;
+        }
+    
+        /* active state */
+        input:focus ~ .highlight, select:focus ~ .highlight {
+            animation: inputHighlighter--dark 0.3s ease;
+        }
+
+        input:disabled, select:disabled {
+            color: $input-label-color--dark;
+        }
+    }
+    .input__button{
+        svg.material-design-icon, &{
+            fill: $input-text-color--dark;
+            color: $input-text-color--dark;
+            &:hover{
+                color: $input-highlight-color--dark;
+                fill: $input-highlight-color--dark;
+            }
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
 }
 
 /* ANIMATIONS ================ */
 @keyframes inputHighlighter {
     from {
         background: $input-highlight-color;
+    }
+
+    to {
+        width: 0;
+        background: transparent;
+    }
+}
+
+@keyframes inputHighlighter--dark {
+    from {
+        background: $input-highlight-color--dark;
     }
 
     to {

@@ -1,6 +1,6 @@
 //Styles
 import './openingHoursDay.scss';
-import * as plusIconSrc from '../../assets/images/ic_add_circle_outline_black_24dp_1x.png';
+import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_circle_outline_24px.svg';
 
 //Libs
 import * as React from 'react';
@@ -42,7 +42,7 @@ export class OpeningHoursDay extends BaseInput.BaseInput<OpeningHoursDayProps, O
                 const previousTime = index > 0 ? new Date(this.props.openingHours.times[index - 1]) : this.getTime(0, 0);
                 const nextTime = this.props.openingHours.times.length - 1 > index ? new Date(this.props.openingHours.times[index + 1]) : this.getTime(23, 59);
                 return <div className="openingHoursDay-input__time__container" key={index}>
-                    <span>{index % 2 === 0 ? 'Opens' : 'Closes'}</span>
+                    <span className="openingHoursDay-input__label">{index % 2 === 0 ? 'Opens' : 'Closes'}</span>
                     <Time
                         className={'openingHoursDay-input__time m-0'}
                         timeChange={(time) => {
@@ -56,15 +56,15 @@ export class OpeningHoursDay extends BaseInput.BaseInput<OpeningHoursDayProps, O
                     />
                     <div
                         role="button"
-                        className="openingHoursDay-input__button openingHoursDay-input__button--remove mr-5"
+                        className="input__button openingHoursDay-input__button--remove mr-5"
                         onClick={() => this.props.onOpeningHoursChange({ ...this.props.openingHours, times: this.props.openingHours.times.filter((item, itemIndex) => itemIndex !== index) })}>
-                        <img src={plusIconSrc} />
+                        <PlusIcon />
                     </div>
                 </div>;
             })}
             <div
                 role="button"
-                className="openingHoursDay-input__button openingHoursDay-input__button-open-close"
+                className="input__button openingHoursDay-input__button-open-close"
                 onClick={() => this.props.onOpeningHoursChange({ ...this.props.openingHours, times: this.props.openingHours.times.concat([newTime]) })}>
                 {this.props.openingHours && this.props.openingHours.times && this.props.openingHours.times.length % 2 === 0 ? 'Open' : 'Close'}
             </div>

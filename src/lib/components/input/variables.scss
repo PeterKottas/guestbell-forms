@@ -7,3 +7,12 @@ $input-validation-color: #ff5d5d;
 $input-validation-fontsize: 12px;
 $input-validation-error-bar-color: #ff5d5d;
 $input-validation-error-border-color: #ffbbbb;
+
+$input-highlight-color--dark: #10bdc7;
+$input-border-color--dark: darken(white, 30%);
+$input-label-color--dark: darken(white, 20%);
+$input-text-color--dark: darken(white, 0%);
+
+$input-validation-color--dark: #ff5d5d;
+$input-validation-error-bar-color--dark: #ff5d5d;
+$input-validation-error-border-color--dark: #ffbbbb;
