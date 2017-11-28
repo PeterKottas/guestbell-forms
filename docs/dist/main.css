@@ -5,6 +5,14 @@ optgroup,
 select,
 textarea {
   font-family: 'Montserrat', sans-serif; }
+
+.bg-dark {
+  background-color: gray;
+  color: white; }
+  .bg-dark .card-header {
+    background-color: #a3a3a3; }
+  .bg-dark .openingHoursWeek-input .openingHoursWeek-input__fade {
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0), gray); }
 .input__group {
   position: relative;
   margin-bottom: 35px;
@@ -16,6 +24,9 @@ textarea {
   /* active state */
   /* HIGHLIGHTER ================================== */
   /* active state */ }
+  .input__group .material-design-icon {
+    width: 24px;
+    height: 24px; }
   .input__group .validation__container {
     position: absolute;
     top: 100%;
@@ -85,6 +96,54 @@ textarea {
     cursor: not-allowed;
     color: #999999;
     background: transparent; }
+  .input__group .input__button {
+    display: inline-block;
+    padding: 10px; }
+    .input__group .input__button svg.material-design-icon, .input__group .input__button {
+      font-weight: bold;
+      margin-top: -2px;
+      transition: 0.2s all;
+      color: #999999;
+      fill: #999999;
+      display: inline-block;
+      vertical-align: middle; }
+      .input__group .input__button svg.material-design-icon:hover, .input__group .input__button:hover {
+        color: #10bdc7;
+        fill: #10bdc7; }
+
+.guestbell-forms--dark .input__group {
+  border-bottom: 1px solid #b3b3b3;
+  /* VALIDATION ======================================= */
+  /* LABEL ======================================= */
+  /* active state */
+  /* BOTTOM BARS ================================= */
+  /* active state */ }
+  .guestbell-forms--dark .input__group .validation__container {
+    color: #ff5d5d; }
+  .guestbell-forms--dark .input__group.validation__error {
+    border-bottom: 1px solid #ffbbbb; }
+    .guestbell-forms--dark .input__group.validation__error .bar:before, .guestbell-forms--dark .input__group.validation__error .bar:after {
+      background: #ff5d5d; }
+  .guestbell-forms--dark .input__group label, .guestbell-forms--dark .input__group span.label-classname {
+    color: #cccccc; }
+  .guestbell-forms--dark .input__group input:focus ~ label, .guestbell-forms--dark .input__group input.filled ~ label, .guestbell-forms--dark .input__group select:focus ~ label, .guestbell-forms--dark .input__group select.filled ~ label, .guestbell-forms--dark .input__group label.label--focused, .guestbell-forms--dark .input__group span.label-classname.label--focused {
+    color: #10bdc7; }
+  .guestbell-forms--dark .input__group .bar:before, .guestbell-forms--dark .input__group .bar:after {
+    background: #10bdc7; }
+  .guestbell-forms--dark .input__group input:focus ~ .highlight, .guestbell-forms--dark .input__group select:focus ~ .highlight {
+    -webkit-animation: inputHighlighter--dark 0.3s ease;
+            animation: inputHighlighter--dark 0.3s ease; }
+  .guestbell-forms--dark .input__group input:disabled, .guestbell-forms--dark .input__group select:disabled {
+    color: #cccccc; }
+
+.guestbell-forms--dark .input__button svg.material-design-icon, .guestbell-forms--dark .input__button {
+  fill: white;
+  color: white;
+  display: inline-block;
+  vertical-align: middle; }
+  .guestbell-forms--dark .input__button svg.material-design-icon:hover, .guestbell-forms--dark .input__button:hover {
+    color: #10bdc7;
+    fill: #10bdc7; }
 
 /* ANIMATIONS ================ */
 @-webkit-keyframes inputHighlighter {
@@ -99,6 +158,20 @@ textarea {
   to {
     width: 0;
     background: transparent; } }
+
+@-webkit-keyframes inputHighlighter--dark {
+  from {
+    background: #10bdc7; }
+  to {
+    width: 0;
+    background: transparent; } }
+
+@keyframes inputHighlighter--dark {
+  from {
+    background: #10bdc7; }
+  to {
+    width: 0;
+    background: transparent; } }
 .text-input {
   display: block;
   margin-top: 20px; }
@@ -116,7 +189,11 @@ textarea {
     color: #555555;
     outline: 0;
     border: none;
-    width: 100%; }
+    width: 100%;
+    background-color: transparent; }
+
+.guestbell-forms--dark .text-input input {
+  color: white; }
 .select-input {
   display: block;
   border: none;
@@ -135,17 +212,24 @@ textarea {
     border-right: 6px solid transparent;
     border-top: 6px solid rgba(0, 0, 0, 0.12);
     pointer-events: none; }
+  .select-input .select-input__select {
+    color: #555555;
+    outline: 0;
+    border: none;
+    width: 100%;
+    max-height: 100px;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    padding: 10px 10px 10px 5px;
+    background-color: transparent; }
 
-.select-input__select {
-  color: #555555;
-  outline: 0;
-  border: none;
-  width: 100%;
-  max-height: 100px;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  padding: 10px 10px 10px 5px; }
+.guestbell-forms--dark .select-input {
+  border-bottom: 1px solid #b3b3b3; }
+  .guestbell-forms--dark .select-input option {
+    background-color: #b3b3b3; }
+  .guestbell-forms--dark .select-input .select-input__select {
+    color: white; }
 .text-input {
   display: block;
   margin-top: 20px; }
@@ -284,14 +368,7 @@ textarea {
     display: none; }
   .money-input .text-input .bar {
     display: none; }
-  .money-input .money-input__button {
-    display: inline-block;
-    padding: 10px 10px 10px 10px;
-    opacity: 0.25;
-    transition: 0.2s all; }
-    .money-input .money-input__button:hover {
-      opacity: 0.5; }
-  .money-input .money-input__button--remove img {
+  .money-input .money-input__button--remove .material-design-icon {
     -webkit-transform: rotate(45deg);
             transform: rotate(45deg); }
   .money-input .money-input__select {
@@ -310,6 +387,24 @@ textarea {
     .money-input .money-input__text input {
       min-width: 40px;
       width: 100px; }
+      .money-input .money-input__text input::-webkit-input-placeholder {
+        color: #999999; }
+      .money-input .money-input__text input:-ms-input-placeholder {
+        color: #999999; }
+      .money-input .money-input__text input::placeholder {
+        color: #999999; }
+
+.guestbell-forms--dark .money-input input {
+  color: white; }
+
+.guestbell-forms--dark .money-input .money-input__text input::-webkit-input-placeholder {
+  color: #cccccc; }
+
+.guestbell-forms--dark .money-input .money-input__text input:-ms-input-placeholder {
+  color: #cccccc; }
+
+.guestbell-forms--dark .money-input .money-input__text input::placeholder {
+  color: #cccccc; }
 .time-input {
   display: block;
   margin-top: 20px; }
@@ -328,13 +423,14 @@ textarea {
     text-align: center;
     border: 1px solid #eeeeee;
     height: 26px;
-    line-height: 0; }
+    line-height: 0;
+    background-color: transparent; }
   .time-input .highlight {
     position: absolute;
-    left: 5px;
-    right: 5px;
-    top: 10px;
-    bottom: 10px;
+    left: 3px;
+    right: 3px;
+    top: 3px;
+    bottom: 3px;
     width: initial;
     height: initial;
     pointer-events: none;
@@ -367,7 +463,7 @@ textarea {
     cursor: pointer; }
     .time-input button.plus {
       top: -12px; }
-      .time-input button.plus img {
+      .time-input button.plus svg {
         -webkit-transform: rotate(180deg);
                 transform: rotate(180deg); }
     .time-input button.minus {
@@ -375,14 +471,23 @@ textarea {
     .time-input button:focus {
       border: none;
       outline: 0; }
-    .time-input button img {
+    .time-input button svg {
       transition: 0.2s all;
-      opacity: 0.5; }
-    .time-input button:hover img {
-      opacity: 1; }
+      fill: #999999; }
+    .time-input button:hover svg {
+      fill: #10bdc7; }
   .time-input .time-input__time {
     width: 26px;
     display: inline-block; }
+  .time-input .time-input__am-pm {
+    color: #999999; }
+
+.guestbell-forms--dark .time-input input {
+  color: white;
+  border: 1px solid #b3b3b3; }
+
+.guestbell-forms--dark .time-input__am-pm {
+  color: #cccccc; }
 .openingHoursDay-input {
   display: block;
   margin-top: 20px; }
@@ -395,23 +500,9 @@ textarea {
       display: none; }
   .openingHoursDay-input .openingHoursDay-input__time__container {
     display: inline-block; }
-  .openingHoursDay-input .openingHoursDay-input__button {
-    display: inline-block;
-    padding: 10px 10px 10px 10px;
-    opacity: 0.5;
-    transition: 0.2s all; }
-    .openingHoursDay-input .openingHoursDay-input__button:hover {
-      opacity: 1; }
-    .openingHoursDay-input .openingHoursDay-input__button img {
-      margin-top: -4px; }
-    .openingHoursDay-input .openingHoursDay-input__button.openingHoursDay-input__button-open-close {
-      opacity: 1;
-      color: #555555; }
-      .openingHoursDay-input .openingHoursDay-input__button.openingHoursDay-input__button-open-close:hover {
-        color: #10bdc7; }
   .openingHoursDay-input input:focus ~ label, .openingHoursDay-input input.filled ~ label, .openingHoursDay-input select:focus ~ label, .openingHoursDay-input span.filled ~ label, .openingHoursDay-input span.label-classname.label--focused {
     top: -27px; }
-  .openingHoursDay-input .openingHoursDay-input__button--remove img {
+  .openingHoursDay-input .openingHoursDay-input__button--remove svg {
     -webkit-transform: rotate(45deg);
             transform: rotate(45deg); }
   .openingHoursDay-input .bottom-border {
@@ -433,6 +524,26 @@ textarea {
     background-color: #eeeeee; }
   .openingHoursDay-input .label-classname.label--focused.label--closed {
     color: #999999; }
+  .openingHoursDay-input .openingHoursDay-input__label {
+    color: #999999; }
+
+.guestbell-forms--dark .openingHoursDay-input .openingHoursDay-input__button.openingHoursDay-input__button-open-close {
+  color: white; }
+  .guestbell-forms--dark .openingHoursDay-input .openingHoursDay-input__button.openingHoursDay-input__button-open-close:hover {
+    color: #10bdc7; }
+
+.guestbell-forms--dark .openingHoursDay-input .bottom-border--open {
+  height: 2px;
+  background-color: #10bdc7; }
+
+.guestbell-forms--dark .openingHoursDay-input .bottom-border--closed {
+  background-color: #b3b3b3; }
+
+.guestbell-forms--dark .openingHoursDay-input .label-classname.label--focused.label--closed {
+  color: #cccccc; }
+
+.guestbell-forms--dark .openingHoursDay-input .openingHoursDay-input__label {
+  color: #cccccc; }
 .openingHoursWeek-input {
   border: none; }
   .openingHoursWeek-input .openingHoursWeek-input__fade {
@@ -451,7 +562,8 @@ textarea {
       max-height: 150px; }
   .openingHoursWeek-input .label__checkbox {
     display: inline-block;
-    top: 3px; }
+    top: 3px;
+    border-bottom: none; }
   .openingHoursWeek-input .label-classname.label--focused {
     pointer-events: auto;
     width: 100%; }
