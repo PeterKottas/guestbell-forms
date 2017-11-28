@@ -13,9 +13,9 @@
   "main": "build/guestbell-forms.js",
   "style": "build/guestbell-forms.css",
   "dependencies": {
-    "material-design-icons": "^3.0.1"
   },
   "devDependencies": {
+    "material-design-icons": "^3.0.1",
     "@types/react": "16.0.25",
     "@types/react-dom": "16.0.3",
     "@types/webpack": "3.8.1",
@@ -64,7 +64,7 @@
     "conventional-github-releaser": "conventional-github-releaser -p angular",
     "commit:build": "git add . && git commit -m \"Deploy commit\" --quiet && npm run push:git || true",
     "create:patch": "npm run version:patch && npm run push:git",
-    "deploy": ".env.bat && npm run build:gh-pages && npm run build:prod && npm run commit:build && npm publish && npm run conventional-github-releaser -p angular || true"
+    "deploy": ".env.bat && npm run build:gh-pages && npm run build:prod && npm run commit:build && npm publish && npm run conventional-github-releaser -p angular && npm run create:patch"
   },
   "typings": "src/lib/index.d.ts",
   "repository": {
