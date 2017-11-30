@@ -1,0 +1,52 @@
+@import '../../../variables.scss';
+
+.input__header {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .row-header {
+        
+    }
+}
+
+.input__header__top{
+    border-top: 1px solid $input-border-color;
+    padding: 1rem 1rem 1rem 0;
+    background-color: $input-divider-color;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input__header__title{
+    text-align: right;
+    width: 10rem;
+    min-width: 10rem;
+    display: inline-block;
+    margin-left: 1rem;
+    margin-right: 1.6rem;
+    color: $input-text-color;
+}
+
+.input__header__top__button-container{
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1;
+    margin-right:40px;
+}
+
+.input__header__collapse-button {
+    margin-right: -40px;
+    svg{
+        transition: 0.2s all;
+        transform: scaleY(-1)
+    }
+    &.collapsed {
+        svg{
+            transform: scaleY(1)
+        }
+    }
+}

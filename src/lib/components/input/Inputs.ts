@@ -1,5 +1,4 @@
 ﻿//Styles
-import './input.scss';
 
 //Misc
 export { DynamicSubmit } from './subComponents/dynamicSubmit/DynamicSubmit';
@@ -14,5 +13,8 @@ export { Time } from './subComponents/time/Time';
 export { OpeningHoursDay, OpeningHoursDayObj } from './subComponents/openingHours/openingHoursDay/OpeningHoursDay';
 export { OpeningHoursWeek, OpeningHoursWeekDayObj } from './subComponents/openingHours/openingHoursWeek/OpeningHoursWeek';
 export { OpeningHoursSpecial, OpeningHoursSpecialDayObj } from './subComponents/openingHours/openingHoursSpecial/OpeningHoursSpecial';
+export { InputHeader } from './subComponents/inputHeader/InputHeader';
+
+
 
 

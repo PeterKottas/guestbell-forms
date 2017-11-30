@@ -3,12 +3,13 @@ import './radioContainer.scss';
 
 //Libs
 import * as React from 'react';
+import InputGroup from './../inputGroup/InputGroup';
 
 //Misc
 
 export interface RadioContainerProps {
     className?: string;
-    label?: string;
+    rowHeader?: string;
 }
 
 export interface RadioContainerState {
@@ -20,14 +21,11 @@ export class RadioContainer extends React.Component<RadioContainerProps, RadioCo
     }
 
     public render() {
-        return <div className={`radio-input__container ${(this.props.className ? this.props.className : '')}`}>
-            {this.props.label && <div className="radio-input__container__header">
-                {this.props.label}
-            </div>}
-            <div>
+        return <InputGroup rowHeader={this.props.rowHeader}>
+            <div className={`input__base radio-input__container ${(this.props.className ? this.props.className : '')}`}>
                 {this.props.children}
             </div>
-        </div>;
+        </InputGroup>;
     }
 }
 export default RadioContainer;

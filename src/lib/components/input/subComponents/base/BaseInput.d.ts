@@ -1,4 +1,5 @@
 import * as React from 'react';
+import './input.scss';
 import * as Validators from '../../../../validators/index';
 import * as Form from '../../../form/Form';
 export interface BaseInputProps {
@@ -16,6 +17,7 @@ export interface BaseInputProps {
     onTheFlightValidate?: (value: string) => boolean;
     onFocus?: () => void;
     onBlur?: () => void;
+    rowHeader?: string | JSX.Element;
 }
 export interface BaseInputState {
     valid: boolean;

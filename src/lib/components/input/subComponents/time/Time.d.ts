@@ -7,6 +7,7 @@ export interface TimeProps extends BaseInput.BaseInputProps {
     time: Date;
     min?: Date;
     max?: Date;
+    label?: never;
 }
 export interface TimeState extends BaseInput.BaseInputState {
 }

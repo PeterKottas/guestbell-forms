@@ -1,15 +1,47 @@
-﻿@import 'variables.scss';
+﻿@import '../../../variables.scss';
+
+.input__form{
+    >.input__group__border:first-child {
+        border-top: none;
+    }
+    .input__group__border{
+        border-top: 1px solid $input-border-color;
+    }
+}
 
 .input__group {
+    display: flex;
+    position: relative;
 
+    .row-header {
+        text-align: right;
+        width: 10rem;
+        min-width: 10rem;
+        display: inline-block;
+        margin-left: 1rem;
+        margin-right: 1.6rem;
+        margin-top: 1.6rem;
+        color: $input-text-color;
+    }
+}
+    
+.input__divider{
+    border-top: 1px solid $input-border-color;
+    padding: 1rem;
+    background-color: $input-divider-color;
+}
+    
+.input__base {
     .material-design-icon{
         width: 24px;
         height: 24px;
     }
 
     position: relative;
-    margin-bottom: 35px;
+    margin: 1rem 4rem 1.2rem 0;
     border-bottom: 1px solid $input-border-color;
+    width: 100%;
+
     /* VALIDATION ======================================= */
     .validation__container {
         position: absolute;
@@ -47,12 +79,12 @@
         position: absolute;
         pointer-events: none;
         left: 5px;
-        top: 10px;
+        top: 5px;
         transition: 0.2s ease all;
     }
     /* active state */
     input:focus ~ label, input.filled ~ label, select:focus ~ label, select.filled ~ label, label.label--focused, span.label-classname.label--focused {
-        top: -17px;
+        top: -1rem;
         font-size: 14px;
         color: $input-highlight-color;
     }
@@ -116,10 +148,9 @@
     .input__button{
         display: inline-block;
         //background-color: $input-highlight-color;
-        padding: 10px;
+        padding: 6px 10px 7px 10px;
         svg.material-design-icon, &{
             font-weight: bold;
-            margin-top: -2px;
             transition: 0.2s all;
             color: $input-label-color;
             fill: $input-label-color;
@@ -134,14 +165,14 @@
 }
 
 .guestbell-forms--dark{
-    .input__group {
+    .input__base {
         border-bottom: 1px solid $input-border-color--dark;
         /* VALIDATION ======================================= */
         .validation__container {
             color: $input-validation-color--dark;
         }
     
-        &.validation__error {   
+        .validation__error {   
             .bar:before, .bar:after {
                 background: $input-validation-error-bar-color--dark;
             }

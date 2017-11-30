@@ -12,10 +12,8 @@ export interface OpeningHoursWeekProps extends BaseInput.BaseInputProps {
     onDaysChange: (days: OpeningHoursWeekDayObj[]) => void;
     standardDay?: OpeningHoursWeekDayObj;
     onStandardDayChange?: (day: OpeningHoursWeekDayObj) => void;
-    collapsable?: boolean;
 }
 export interface OpeningHoursWeekState extends BaseInput.BaseInputState {
-    collapsed: boolean;
 }
 export declare class OpeningHoursWeek extends BaseInput.BaseInput<OpeningHoursWeekProps, OpeningHoursWeekState> {
     static defaultProps: BaseInput.BaseInputProps & {

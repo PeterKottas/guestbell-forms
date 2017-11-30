@@ -1,4 +1,4 @@
-﻿@import '../../variables.scss';
+﻿@import '../../../variables.scss';
 $baseFontSize: 16;
 
 @function rem($val) {
@@ -7,7 +7,7 @@ $baseFontSize: 16;
 
 .checkbox-input {
     display: block;
-    margin-top: 20px;
+    margin-top: 24px !important;
     border: none;
 
     &.validation__error {
@@ -16,13 +16,13 @@ $baseFontSize: 16;
 
     input {
         position: relative;
-        padding: 10px 10px 10px 5px;
+        padding: 10px 10px 5px 5px;
         color: $input-text-color;
         outline: 0;
         border: none;
         width: auto;
         margin-right: 1rem;
-        top: -2px;
+        top: 0;
 
         &:before {
             transition: transform .4s cubic-bezier(.45,1.8,.5,.75);
@@ -61,7 +61,7 @@ $baseFontSize: 16;
     label {
         top: 0;
         user-select: none;
-        margin-bottom: 8px;
+        margin-bottom: 4px;
         pointer-events: auto;
         position: relative;
         display: inline-block;

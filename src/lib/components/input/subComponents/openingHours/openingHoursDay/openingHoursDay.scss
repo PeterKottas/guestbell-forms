@@ -1,9 +1,26 @@
-﻿@import '../../../variables.scss';
+﻿@import '../../../../variables.scss';
 
+.input__group__openingHoursDay{
+    .row-header{
+        margin-top: 3.55rem;
+    }
+}
 .openingHoursDay-input {
-    display: block;
-    margin-top: 20px;
-    //border:none;
+    margin-top: 1.9rem;
+    position: relative;
+    min-height:77px;
+    border-bottom:none !important;
+    margin-bottom: 0;
+    //justify-content: center;
+    width: 100%;
+
+    .openingHoursDay-input__container {
+        flex-direction: row;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        height: 100%;
+    }
 
     .time-input {
         .bar {
@@ -16,7 +33,9 @@
     }
 
     .openingHoursDay-input__time__container{
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
     }
 
     input:focus ~ label, input.filled ~ label, select:focus ~ label, span.filled ~ label, span.label-classname.label--focused {
@@ -29,29 +48,6 @@
         }
     }
 
-    .bottom-border {
-        display: inline-block;
-        height: 0px;
-        width: 0;
-        transition: 0.5s all;
-    }
-
-    .bottom-border__container {
-        margin-top: -1px;
-        height: 2px;
-        line-height: 0;
-        display: flex;
-    }
-
-    .bottom-border--open{
-        height: 2px;
-        background-color: $input-highlight-color;
-    }
-
-    .bottom-border--closed{
-        background-color: $input-border-color;
-    }
-
     .label-classname.label--focused.label--closed{
         color: $input-label-color;
     }
@@ -59,6 +55,33 @@
     .openingHoursDay-input__label{
         color: $input-label-color;
     }
+}
+
+.openingHoursDay-input__bottom-border {
+    display: inline-block;
+    height: 0px;
+    width: 0;
+    transition: 0.5s all;
+}
+
+.openingHoursDay-input__bottom-border__container {
+    position: absolute;
+    bottom: 0;
+    left:0;
+    right:0;
+    margin-top: -1px;
+    height: 2px;
+    line-height: 0;
+    display: flex;
+}
+
+.openingHoursDay-input__bottom-border--open{
+    height: 2px;
+    background-color: $input-highlight-color;
+}
+
+.openingHoursDay-input__bottom-border--closed{
+    background-color: $input-border-color;
 }
 
 .guestbell-forms--dark{
@@ -72,15 +95,6 @@
             }
         }
 
-        .bottom-border--open{
-            height: 2px;
-            background-color: $input-highlight-color--dark;
-        }
-    
-        .bottom-border--closed{
-            background-color: $input-border-color--dark;
-        }
-    
         .label-classname.label--focused.label--closed{
             color: $input-label-color--dark;
         }
@@ -88,5 +102,13 @@
         .openingHoursDay-input__label{
             color: $input-label-color--dark;
         }
+    }
+    .openingHoursDay-input__bottom-border--open{
+        height: 2px;
+        background-color: $input-highlight-color--dark;
+    }
+
+    .openingHoursDay-input__bottom-border--closed{
+        background-color: $input-border-color--dark;
     }
 }

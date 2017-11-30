@@ -1,14 +1,1 @@
-﻿@import '../../variables.scss';
-
-.text-input {
-    display: block;
-    margin-top: 20px;
-
-    input {
-        padding: 10px 10px 10px 5px;
-        color: $input-text-color;
-        outline: 0;
-        border: none;
-        width: 100%;
-    }
-}
+﻿@import '../../../variables.scss';

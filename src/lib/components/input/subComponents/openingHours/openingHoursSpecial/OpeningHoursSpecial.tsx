@@ -1,6 +1,5 @@
 //Styles
 import './openingHoursSpecial.scss';
-import * as arrowIconSrc from '../../assets/images/ic_add_circle_outline_black_24dp_1x.png';
 import * as plusIconSrc from '../../assets/images/ic_add_circle_outline_black_24dp_1x.png';
 
 //Libs
@@ -37,31 +36,12 @@ export class OpeningHoursSpecial extends BaseInput.BaseInput<OpeningHoursSpecial
     }
 
     public render() {
-        return <div className={`input__group openingHoursSpecial-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}>
+        return <div className={`input__base openingHoursSpecial-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}>
             {this.props.days.map((day, index) => (
                 <OpeningHoursDay
                     key={index}
                     label={(
                         <span>
-                            <DayPickerInput
-                                placeholder={DAY_FORMAT}
-                                value={moment(day.date).format(DAY_FORMAT)}
-                                format={DAY_FORMAT}
-                                onDayChange={(date) => {
-                                    let days = this.props.days.slice(0);
-                                    days[index] = { ...day, date: date.toDate() };
-                                    this.props.onDaysChange(days);
-                                }}
-                                dayPickerProps={{
-                                    selectedDays: day.date,
-                                    disabledDays:
-                                    [
-                                        {
-                                            before: new Date()
-                                        }
-                                    ]
-                                }}
-                            />
                             {OpeningHoursUtil.getLabelSuffix(day)}
                             <span className="float-right">
                                 <div
@@ -81,14 +61,27 @@ export class OpeningHoursSpecial extends BaseInput.BaseInput<OpeningHoursSpecial
                         days[index] = { ...day, ...openingHours };
                         this.props.onDaysChange(days);
                     }}
+                    rowHeader={<DayPickerInput
+                        placeholder={DAY_FORMAT}
+                        value={moment(day.date).format(DAY_FORMAT)}
+                        format={DAY_FORMAT}
+                        onDayChange={(date) => {
+                            let days = this.props.days.slice(0);
+                            days[index] = { ...day, date: date.toDate() };
+                            this.props.onDaysChange(days);
+                        }}
+                        dayPickerProps={{
+                            selectedDays: day.date,
+                            disabledDays:
+                                [
+                                    {
+                                        before: new Date()
+                                    }
+                                ]
+                        }}
+                    />}
                 />
             ))}
-            <div
-                role="button"
-                className="openingHoursSpecial-input__button"
-                onClick={() => this.props.onDaysChange(this.props.days.concat([{ date: new Date(), times: [] }]))}>
-                <img src={arrowIconSrc} />
-            </div>
             <span className="bar"></span>
             {this.renderDefaultValidation()}
         </div>;

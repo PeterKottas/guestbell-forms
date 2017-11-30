@@ -6,6 +6,7 @@ import * as React from 'react';
 
 //Misc
 import * as BaseInput from '../base/BaseInput';
+import InputGroup from '../inputGroup/InputGroup';
 
 export interface TextProps extends BaseInput.BaseInputProps {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -25,22 +26,24 @@ export class Text extends BaseInput.BaseInput<TextProps, TextState>  {
     }
 
     public render() {
-        return <div className={`input__group text-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}>
-            <input
-                placeholder={this.props.placeholder}
-                disabled={this.getDisabled()}
-                required={this.props.required}
-                className={this.state.value ? 'filled' : ''}
-                onChange={this.handleChange}
-                value={this.state.value}
-                onBlur={this.handleBlur}
-                onFocus={this.handleFocus}
-            />
-            <span className="highlight"></span>
-            <span className="bar"></span>
-            {this.renderDefaultValidation()}
-            {this.props.label && <label>{this.props.label}</label>}
-        </div>;
+        return <InputGroup rowHeader={this.props.rowHeader}>
+            <div className={`input__base text-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}>
+                <input
+                    placeholder={this.props.placeholder}
+                    disabled={this.getDisabled()}
+                    required={this.props.required}
+                    className={this.state.value ? 'filled' : ''}
+                    onChange={this.handleChange}
+                    value={this.state.value}
+                    onBlur={this.handleBlur}
+                    onFocus={this.handleFocus}
+                />
+                <span className="highlight"></span>
+                <span className="bar"></span>
+                {this.renderDefaultValidation()}
+                {this.props.label && <label>{this.props.label}</label>}
+            </div>
+        </InputGroup>;
     }
 }
 export default Text;

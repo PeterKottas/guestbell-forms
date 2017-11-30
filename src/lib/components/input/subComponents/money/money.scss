@@ -1,11 +1,16 @@
-﻿@import '../../variables.scss';
+﻿@import '../../../variables.scss';
 
 .money-input {
-    display: block;
-    margin-top: 20px;
-
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin-top: 17px;
+    position: relative;
+    border-bottom: none !important;
+    margin-bottom: 16px;
+    min-height: 47px;
     input {
-        padding: 10px 10px 10px 5px;
+        padding: 10px 10px 5px 5px;
         color: $input-text-color;
         outline: 0;
         border: none;
@@ -33,6 +38,7 @@
         border:none;
         display: inline-block;
         text-align: center;
+        width: initial;
         select {
             padding-right: 20px;
             min-width: 40px;
@@ -46,6 +52,7 @@
     .money-input__text {
         border:none;
         display: inline-block;
+        width: initial;
         
         input {
             min-width: 40px;

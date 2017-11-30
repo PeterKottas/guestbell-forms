@@ -3,6 +3,9 @@
 //Libs
 import * as React from 'react';
 
+//Styles
+import './input.scss';
+
 //Misc
 import * as Validators from '../../../../validators/index';
 import * as Form from '../../../form/Form';
@@ -22,6 +25,7 @@ export interface BaseInputProps {
     onTheFlightValidate?: (value: string) => boolean;
     onFocus?: () => void;
     onBlur?: () => void;
+    rowHeader?: string|JSX.Element;
 }
 
 export interface BaseInputState {

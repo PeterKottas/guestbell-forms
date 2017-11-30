@@ -1,10 +1,8 @@
 //Styles
 import './openingHoursWeek.scss';
-import * as plusIconSrc from '../../assets/images/ic_keyboard_arrow_down_black_24dp_2x.png';
 
 //Libs
 import * as React from 'react';
-import * as SmoothCollapse from 'react-smooth-collapse';
 
 //Misc
 import * as BaseInput from '../../base/BaseInput';
@@ -22,11 +20,9 @@ export interface OpeningHoursWeekProps extends BaseInput.BaseInputProps {
     onDaysChange: (days: OpeningHoursWeekDayObj[]) => void;
     standardDay?: OpeningHoursWeekDayObj;
     onStandardDayChange?: (day: OpeningHoursWeekDayObj) => void;
-    collapsable?: boolean;
 }
 
 export interface OpeningHoursWeekState extends BaseInput.BaseInputState {
-    collapsed: boolean;
 }
 
 export class OpeningHoursWeek extends BaseInput.BaseInput<OpeningHoursWeekProps, OpeningHoursWeekState>  {
@@ -34,7 +30,7 @@ export class OpeningHoursWeek extends BaseInput.BaseInput<OpeningHoursWeekProps,
 
     constructor(props: OpeningHoursWeekProps) {
         super(props);
-        this.state = { ...this.state, collapsed: props.collapsable };
+        this.state = { ...this.state };
     }
 
     public componentWillMount() {
@@ -53,30 +49,16 @@ export class OpeningHoursWeek extends BaseInput.BaseInput<OpeningHoursWeekProps,
 
     public render() {
 
-        return <div className={`input__group openingHoursWeek-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}>
-            {this.props.collapsable ?
-                <div className="smooth-collapse__container">
-                    <SmoothCollapse expanded={!this.state.collapsed} collapsedHeight={'150px'}>
-                        {this.renderContent()}
-                    </SmoothCollapse>
-                </div>
-                :
-                this.renderContent()
-            }
-            {this.props.collapsable && <div
-                role="button"
-                className={`openingHoursWeek-input__collapse-button ${(this.state.collapsed ? 'collapsed' : '')}`}
-                onClick={() => this.setState({ collapsed: !this.state.collapsed })}>
-                <img src={plusIconSrc} />
-            </div>}
+        return <div className={`openingHoursWeek-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}>
+            {this.renderContent()}
         </div>;
     }
 
     private renderContent() {
-        return <div className={`pt-2`}>
+        return <div className={``}>
             {this.props.standardDay && <OpeningHoursDay
                 label={<span>
-                    Standard day {OpeningHoursUtil.getLabelSuffix(this.props.standardDay)}
+                    {OpeningHoursUtil.getLabelSuffix(this.props.standardDay)}
                 </span>}
                 openingHours={{
                     times: this.props.standardDay.times
@@ -84,13 +66,14 @@ export class OpeningHoursWeek extends BaseInput.BaseInput<OpeningHoursWeekProps,
                 onOpeningHoursChange={(openingHours) => {
                     this.props.onStandardDayChange(openingHours);
                 }}
+                rowHeader={'Standard day'}
             />}
             {this.props.days.map((day, index) => (
                 <OpeningHoursDay
-                    className={'mb-5'}
+                    className={''}
                     key={index}
                     label={this.props.standardDay ? <span>
-                        {day.dayLabel} {OpeningHoursUtil.getLabelSuffix(this.props.standardDay && day.isStandardDay ? this.props.standardDay : day)}
+                        {OpeningHoursUtil.getLabelSuffix(this.props.standardDay && day.isStandardDay ? this.props.standardDay : day)}
                         <span className="float-right">
                             Standard day?&nbsp;
                             <Checkbox
@@ -116,11 +99,11 @@ export class OpeningHoursWeek extends BaseInput.BaseInput<OpeningHoursWeekProps,
                             this.props.onDaysChange(days);
                         }
                     }}
+                    rowHeader={day.dayLabel}
                 />
             ))}
             <span className="bar"></span>
             {this.renderDefaultValidation()}
-            <div className={'openingHoursWeek-input__fade ' + (this.props.collapsable && this.state.collapsed ? 'collapsed' : '')} />
         </div>;
     }
 }

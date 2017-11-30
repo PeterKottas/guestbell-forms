@@ -25,20 +25,20 @@ export class OpeningHoursUtil {
         const hoursFormated = hours ? hours.toFixed(0) + ' hour' + (hours > 1 ? 's' : '') : '';
         const minutesFormated = minutes ? minutes.toFixed(0) + ' minute' + (minutes > 1 ? 's' : '') : '';
         if (hoursFormated && minutesFormated) {
-            return <span>- open {hoursFormated} and {minutesFormated}</span>;
+            return <span>Open {hoursFormated} and {minutesFormated}</span>;
         }
         if (hoursFormated) {
-            return <span>- open {hoursFormated}</span>;
+            return <span>Open {hoursFormated}</span>;
         }
         if (minutesFormated) {
-            return <span>- open {minutesFormated}</span>;
+            return <span>Oopen {minutesFormated}</span>;
         }
-        return <span>- closed</span>;
+        return <span>Closed</span>;
     }
 
     public getLabelSuffix(day: OpeningHoursWeekDayObj) {
         return day && day.times && day.times.length === 0 ?
-            '- Closed'
+            'Closed'
             :
             this.getTotalTimeString(day.times);
     }

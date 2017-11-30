@@ -6,6 +6,7 @@ import * as React from 'react';
 
 //Misc
 import * as BaseInput from '../base/BaseInput';
+import InputGroup from '../inputGroup/InputGroup';
 
 export interface CheckboxProps extends BaseInput.BaseInputProps {
     onChecked?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -58,11 +59,13 @@ export class Checkbox extends BaseInput.BaseInput<CheckboxProps, CheckboxState> 
     }
 
     public render() {
-        return <div className={`input__group checkbox-input ${this.getValidationClass()} ${this.props.className?this.props.className:''}`}>
-            {!this.props.label && this.renderInput()}
-            {this.renderDefaultValidation()}
-            {this.props.label && <label>{this.renderInput()}{this.props.label}</label>}
-        </div>;
+        return <InputGroup rowHeader={this.props.rowHeader}>
+            <div className={`input__base checkbox-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}>
+                {!this.props.label && this.renderInput()}
+                {this.renderDefaultValidation()}
+                {this.props.label && <label>{this.renderInput()}{this.props.label}</label>}
+            </div>
+        </InputGroup>;
     }
 }
 export default Checkbox;

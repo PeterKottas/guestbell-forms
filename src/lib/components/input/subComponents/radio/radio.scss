@@ -1,11 +1,11 @@
-﻿@import '../../variables.scss';
+﻿@import '../../../variables.scss';
 $baseFontSize: 16;
 
 @function rem($val) {
     @return #{$val / $baseFontSize}rem;
 }
 
-.input__group.radio-input {
+.radio-input {
     display: inline-block;
     margin-top: 20px;
     border: none;

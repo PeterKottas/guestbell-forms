@@ -6,6 +6,7 @@ import * as React from 'react';
 
 //Misc
 import * as BaseInput from '../base/BaseInput';
+import InputGroup from '../inputGroup/InputGroup';
 
 export interface SelectValue {
     value: number | string;
@@ -38,24 +39,26 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
     }
 
     public render() {
-        return <div className={`input__group select-input ${this.getValidationClass()} ${this.props.className?this.props.className:''}`}>
-            <select
-                disabled={this.getDisabled()}
-                required={this.props.required}
-                onChange={this.handleChange}
-                value={this.state.value}
-                className={`select-input__select ${(this.state.value != '' ? 'filled' : '')}`}
-                onBlur={this.handleBlur}
-                onFocus={this.handleFocus}
-            >
-                {this.props.defaultEmpty && <option key={-1} disabled value="" style={{ display: 'none' }}></option>}
-                {this.props.values && this.props.values.map((value, index) => <option key={index} value={value.value}>{value.label ? value.label : value.value}</option>)}
-            </select>
-            <span className="highlight"></span>
-            <span className="bar"></span>
-            {this.renderDefaultValidation()}
-            {this.props.label && <label>{this.props.label}</label>}
-        </div>;
+        return <InputGroup rowHeader={this.props.rowHeader}>
+            <div className={`input__base select-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}>
+                <select
+                    disabled={this.getDisabled()}
+                    required={this.props.required}
+                    onChange={this.handleChange}
+                    value={this.state.value}
+                    className={`select-input__select ${(this.state.value != '' ? 'filled' : '')}`}
+                    onBlur={this.handleBlur}
+                    onFocus={this.handleFocus}
+                >
+                    {this.props.defaultEmpty && <option key={-1} disabled value="" style={{ display: 'none' }}></option>}
+                    {this.props.values && this.props.values.map((value, index) => <option key={index} value={value.value}>{value.label ? value.label : value.value}</option>)}
+                </select>
+                <span className="highlight"></span>
+                <span className="bar"></span>
+                {this.renderDefaultValidation()}
+                {this.props.label && <label>{this.props.label}</label>}
+            </div>
+        </InputGroup>;
     }
 }
 

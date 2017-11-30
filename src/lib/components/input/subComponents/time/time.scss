@@ -1,12 +1,17 @@
-﻿@import '../../variables.scss';
+﻿@import '../../../variables.scss';
 
 .time-input {
-    > div{
+    > div, > span{
         display: inline-block;
         position: relative;
+        align-self: baseline;
     }
-    display: block;
-    margin-top: 20px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem !important;
+    border-bottom: none;
+    margin-bottom: 3px !important;
 
     .input-padding{
         margin: 10px 5px 10px 5px;

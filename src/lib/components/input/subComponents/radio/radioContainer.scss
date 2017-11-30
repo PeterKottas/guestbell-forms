@@ -1,8 +1,12 @@
-﻿@import '../../variables.scss';
+﻿@import '../../../variables.scss';
 
-.radio-input__container__header {
-    position: absolute;
-    top: -10px;
-    font-size: 14px;
-    color: $input-highlight-color;
+.radio-input__container {
+    border-bottom: none !important;
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.8rem !important;
+    margin-bottom: 0 !important;
+    .radio-input{
+        margin:0;
+    }
 }

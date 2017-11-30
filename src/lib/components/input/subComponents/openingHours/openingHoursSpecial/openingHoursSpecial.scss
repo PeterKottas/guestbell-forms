@@ -1,7 +1,22 @@
-@import '../../../variables.scss';
+@import '../../../../variables.scss';
 
-.openingHoursSpecial-input {
-    border: none;
+.input__group{
+    .row-header{
+        .DayPickerInput > input {
+            text-align: right;
+        }
+    }
+}
+
+.input__base.openingHoursSpecial-input {
+    >.input__group__border:first-child {
+        border-top: none;
+    }
+
+    border: none !important;
+
+    position: relative;
+    margin: 0;
     .label__checkbox{
         display: inline-block;
         top: 3px;

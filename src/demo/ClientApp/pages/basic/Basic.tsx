@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {
     Form, Time, Text, Select, Submit, DynamicSubmit, IBaseValidator, Checkbox, Radio,
-    RadioContainer, Money, OpeningHoursDay, MoneyWithCurrency, OpeningHoursDayObj, OpeningHoursWeek, OpeningHoursSpecialDayObj, OpeningHoursSpecial
+    RadioContainer, Money, OpeningHoursDay, MoneyWithCurrency, OpeningHoursDayObj, OpeningHoursWeek, OpeningHoursSpecialDayObj, OpeningHoursSpecial,
+    InputHeader
 } from '../../../../lib/index';
 
 export interface BasicProps {
@@ -133,70 +134,57 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                         <div className="card-header">
                             <h2 className="text-center">Lib options</h2>
                         </div>
-                        <div className="card-block">
-                            <Form noValidate ref={form => this.form = form}>
-                                <div className="row">
-                                    <div className={'col-lg-6'}>
-                                        <Checkbox
-                                            label="Validate form submit"
-                                            onChecked={(e) => this.setState({ validateFormSubmit: !this.state.validateFormSubmit })}
-                                            checked={this.state.validateFormSubmit}
-                                        />
-                                    </div>
-                                    <div className={'col-lg-6'}>
-                                        <RadioContainer label="Touch on">
-                                            <Radio
-                                                name="touch"
-                                                value="blur" label="Blur"
-                                                result={this.state.touchOn}
-                                                onChecked={(value) => this.setState({ touchOn: value as "blur" | "focus" })}
-                                            />
-                                            <Radio
-                                                name="touch"
-                                                value="focus"
-                                                label="Focus"
-                                                result={this.state.touchOn}
-                                                onChecked={(value) => this.setState({ touchOn: value as "blur" | "focus" })}
-                                            />
-                                        </RadioContainer>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className={'col-lg-12'}>
-                                        <RadioContainer label="Theme">
-                                            <Radio
-                                                name="theme"
-                                                value="guestbell-forms--dark bg-dark"
-                                                label="Dark"
-                                                result={this.state.theme}
-                                                onChecked={(value) => this.setState({ theme: value })}
-                                            />
-                                            <Radio
-                                                name="theme"
-                                                value=""
-                                                label="Light"
-                                                result={this.state.theme}
-                                                onChecked={(value) => this.setState({ theme: value })}
-                                            />
-                                        </RadioContainer>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className={'col-lg-6'}>
-                                        <Checkbox
-                                            label="Submit disables inputs"
-                                            onChecked={(e) => this.setState({ submitDisablesInputs: !this.state.submitDisablesInputs })}
-                                            checked={this.state.submitDisablesInputs}
-                                        />
-                                    </div>
-                                    <div className={'col-lg-6'}>
-                                        <Checkbox
-                                            label="Simulate unmount"
-                                            onChecked={(e) => this.setState({ simulateUnmount: !this.state.simulateUnmount })}
-                                            checked={this.state.simulateUnmount}
-                                        />
-                                    </div>
-                                </div>
+                        <div className="card-block p-0">
+                            <Form noValidate className="input__form" ref={form => this.form = form}>
+                                <Checkbox
+                                    label="Turn form validation on or off"
+                                    onChecked={(e) => this.setState({ validateFormSubmit: !this.state.validateFormSubmit })}
+                                    checked={this.state.validateFormSubmit}
+                                    rowHeader="Validate form submit"
+                                />
+                                <RadioContainer rowHeader="Touch on">
+                                    <Radio
+                                        name="touch"
+                                        value="blur" label="Blur"
+                                        result={this.state.touchOn}
+                                        onChecked={(value) => this.setState({ touchOn: value as "blur" | "focus" })}
+                                    />
+                                    <Radio
+                                        name="touch"
+                                        value="focus"
+                                        label="Focus"
+                                        result={this.state.touchOn}
+                                        onChecked={(value) => this.setState({ touchOn: value as "blur" | "focus" })}
+                                    />
+                                </RadioContainer>
+                                <RadioContainer rowHeader="Theme">
+                                    <Radio
+                                        name="theme"
+                                        value="guestbell-forms--dark bg-dark"
+                                        label="Dark"
+                                        result={this.state.theme}
+                                        onChecked={(value) => this.setState({ theme: value })}
+                                    />
+                                    <Radio
+                                        name="theme"
+                                        value=""
+                                        label="Light"
+                                        result={this.state.theme}
+                                        onChecked={(value) => this.setState({ theme: value })}
+                                    />
+                                </RadioContainer>
+                                <Checkbox
+                                    label="Disables inputs"
+                                    onChecked={(e) => this.setState({ submitDisablesInputs: !this.state.submitDisablesInputs })}
+                                    checked={this.state.submitDisablesInputs}
+                                    rowHeader="Submit"
+                                />
+                                <Checkbox
+                                    label="Unmount"
+                                    onChecked={(e) => this.setState({ simulateUnmount: !this.state.simulateUnmount })}
+                                    checked={this.state.simulateUnmount}
+                                    rowHeader="Simulate"
+                                />
                             </Form>
                         </div>
                     </div>
@@ -208,207 +196,168 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                         <div className="card-header">
                             <h2 className="text-center">Example restaurant form</h2>
                         </div>
-                        <div className="card-block">
-                            {!this.state.simulateUnmount && < Form noValidate ref={form => this.form = form}>
-                                <div className="row">
-                                    <div className={'col-lg-6'}>
-                                        <Radio
-                                            name="food"
-                                            value="breakfast"
-                                            label="Breakfast"
-                                            result={this.state.food}
-                                            onChecked={(value) => this.setState({ food: value })}
-                                        />
-                                        <Radio
-                                            name="food"
-                                            value="lunch"
-                                            label="Lunch"
-                                            result={this.state.food}
-                                            onChecked={(value) => this.setState({ food: value })}
-                                        />
-                                        <Radio
-                                            name="food"
-                                            value="dinner"
-                                            label="Dinner"
-                                            result={this.state.food}
-                                            onChecked={(value) => this.setState({ food: value })}
-                                        />
-                                    </div>
-                                    <div className={'col-lg-6'}>
-                                        <RadioContainer label="Drinks">
-                                            <Radio
-                                                name="drink"
-                                                value="wine"
-                                                label="Wine"
-                                                result={this.state.drink}
-                                                onChecked={(value) => this.setState({ drink: value })}
-                                            />
-                                            <Radio
-                                                name="drink"
-                                                value="whiskey"
-                                                label="Whiskey"
-                                                result={this.state.drink}
-                                                onChecked={(value) => this.setState({ drink: value })}
-                                            />
-                                            <Radio
-                                                name="drink"
-                                                value="water"
-                                                label="Water"
-                                                result={this.state.drink}
-                                                onChecked={(value) => this.setState({ drink: value })}
-                                            />
-                                        </RadioContainer>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className={'col-lg-6'}>
-                                        <Checkbox
-                                            required={true}
-                                            label="Smart dress code"
-                                            onChecked={(e) => this.setState({ checkbox1: !this.state.checkbox1 })}
-                                            checked={this.state.checkbox1}
-                                        />
-                                    </div>
-                                    <div className={'col-lg-6'}>
-                                        <Checkbox
-                                            label="Wallet parking (optional)"
-                                            onChecked={(e) => this.setState({ checkbox2: !this.state.checkbox2 })}
-                                            checked={this.state.checkbox2}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className={'col-lg-6'}>
-                                        <Text
-                                            touchOn={this.state.touchOn}
-                                            required={true} label="Name"
-                                            onChange={(e) => this.setState({ name: e.target.value })}
-                                            value={this.state.name}
-                                        />
-                                    </div>
-                                    <div className={'col-lg-6'}>
-                                        <Select
-                                            touchOn={this.state.touchOn}
-                                            required={false} label={'Gender'}
-                                            values={[{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }]}
-                                            onChange={this.handleGenderChange}
-                                            value={this.state.gender}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className={'col-lg-6'}>
-                                        <Text
-                                            touchOn={this.state.touchOn}
-                                            validators={["email"]}
-                                            required={false}
-                                            label="Email"
-                                            value={this.state.email}
-                                            onChange={(e) => this.setState({ email: e.target.value })}
-                                        />
-                                    </div>
-                                    <div className={'col-lg-6'}>
-                                        <Text
-                                            touchOn={this.state.touchOn}
-                                            customValidators={[AgeValidator.instance]}
-                                            label="Age (optional)"
-                                            value={this.state.age}
-                                            onChange={(e) => this.setState({ age: e.target.value })}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className={'col-lg-12'}>
-                                        <Money
-                                            currencies={[{ label: 'GBP', value: 'GBP' }, { label: 'EUR', value: 'EUR' }]}
-                                            prices={this.state.prices1}
-                                            touchOn={this.state.touchOn}
-                                            required={false}
-                                            label="Price"
-                                            onPricesChange={(prices) => this.setState({ prices1: prices })}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className={'col-lg-12'}>
-                                        <Money
-                                            currencies={[{ label: 'GBP', value: 'GBP' }, { label: 'EUR', value: 'EUR' }, { label: 'USD', value: 'USD' }]}
-                                            prices={this.state.prices2}
-                                            allowMultiple={true}
-                                            touchOn={this.state.touchOn}
-                                            required={false}
-                                            label="Price multiple"
-                                            onPricesChange={(prices) => this.setState({ prices2: prices })}
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="row">
-                                    <div className={'col-lg-6'}>
-                                        <Time
-                                            touchOn={this.state.touchOn}
-                                            label="Time"
-                                            time={this.state.time1}
-                                            timeChange={(time) => this.setState({ time1: time })}
-                                        />
-                                    </div>
-                                    <div className={'col-lg-6'}>
-                                        <Time
-                                            max={(() => {
-                                                let time = new Date();
-                                                time.setHours(time.getHours() + 1);
-                                                time.setMinutes(time.getMinutes() + 5);
-                                                return time;
-                                            })()}
-                                            min={(() => {
-                                                let time = new Date();
-                                                time.setHours(time.getHours() - 1);
-                                                time.setMinutes(time.getMinutes() - 5);
-                                                return time;
-                                            })()}
-                                            touchOn={this.state.touchOn}
-                                            label="Time limits"
-                                            time={this.state.time2}
-                                            timeChange={(time) => this.setState({ time2: time })}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className={'col-lg-12'}>
-                                        <OpeningHoursDay
-                                            label={'Opening hours sample day'}
-                                            touchOn={this.state.touchOn}
-                                            required={false}
-                                            onOpeningHoursChange={(openingHours => this.setState({ openingHours: openingHours }))}
-                                            openingHours={this.state.openingHours}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className={'col-lg-12'}>
-                                        <h4 className="text-center">Opening hours</h4>
-                                        <OpeningHoursWeek
-                                            touchOn={this.state.touchOn}
-                                            required={false}
-                                            onDaysChange={(days => this.setState({ openingHoursWeek: days }))}
-                                            days={this.state.openingHoursWeek}
-                                            standardDay={this.state.openingHoursWeekDay}
-                                            onStandardDayChange={(day => this.setState({ openingHoursWeekDay: day }))}
-                                            collapsable={true}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className={'col-lg-12'}>
-                                        <h4 className="text-center">Special days opening hours</h4>
-                                        <OpeningHoursSpecial
-                                            touchOn={this.state.touchOn}
-                                            required={false}
-                                            onDaysChange={(days => this.setState({ openingHoursSpecial: days }))}
-                                            days={this.state.openingHoursSpecial}
-                                        />
-                                    </div>
-                                </div>
+                        <div className="card-block px-0 pt-0">
+                            {!this.state.simulateUnmount && < Form className="input__form" noValidate ref={form => this.form = form}>
+                                <RadioContainer rowHeader="Drinks">
+                                    <Radio
+                                        name="drink"
+                                        value="wine"
+                                        label="Wine"
+                                        result={this.state.drink}
+                                        onChecked={(value) => this.setState({ drink: value })}
+                                    />
+                                    <Radio
+                                        name="drink"
+                                        value="whiskey"
+                                        label="Whiskey"
+                                        result={this.state.drink}
+                                        onChecked={(value) => this.setState({ drink: value })}
+                                    />
+                                    <Radio
+                                        name="drink"
+                                        value="water"
+                                        label="Water"
+                                        result={this.state.drink}
+                                        onChecked={(value) => this.setState({ drink: value })}
+                                    />
+                                </RadioContainer>
+                                <Checkbox
+                                    required={true}
+                                    label="Smart"
+                                    onChecked={(e) => this.setState({ checkbox1: !this.state.checkbox1 })}
+                                    checked={this.state.checkbox1}
+                                    rowHeader="Dress code"
+                                />
+                                <Checkbox
+                                    label="(optional)"
+                                    onChecked={(e) => this.setState({ checkbox2: !this.state.checkbox2 })}
+                                    checked={this.state.checkbox2}
+                                    rowHeader="Wallet parking"
+                                />
+                                <Text
+                                    touchOn={this.state.touchOn}
+                                    required={true} label="Your name"
+                                    onChange={(e) => this.setState({ name: e.target.value })}
+                                    value={this.state.name}
+                                    rowHeader="Name"
+                                />
+                                <Select
+                                    touchOn={this.state.touchOn}
+                                    required={false} label={'Your gender'}
+                                    values={[{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }]}
+                                    onChange={this.handleGenderChange}
+                                    value={this.state.gender}
+                                    rowHeader="Gender"
+                                />
+                                <Text
+                                    touchOn={this.state.touchOn}
+                                    validators={["email"]}
+                                    required={false}
+                                    label="Email"
+                                    value={this.state.email}
+                                    onChange={(e) => this.setState({ email: e.target.value })}
+                                    rowHeader="Your email"
+                                />
+                                <Text
+                                    touchOn={this.state.touchOn}
+                                    customValidators={[AgeValidator.instance]}
+                                    label="Your age (optional)"
+                                    value={this.state.age}
+                                    onChange={(e) => this.setState({ age: e.target.value })}
+                                    rowHeader="Age"
+                                />
+                                <Money
+                                    currencies={[{ label: 'GBP', value: 'GBP' }, { label: 'EUR', value: 'EUR' }]}
+                                    prices={this.state.prices1}
+                                    touchOn={this.state.touchOn}
+                                    required={false}
+                                    onPricesChange={(prices) => this.setState({ prices1: prices })}
+                                    rowHeader="Price"
+                                />
+                                <Money
+                                    currencies={[{ label: 'GBP', value: 'GBP' }, { label: 'EUR', value: 'EUR' }, { label: 'USD', value: 'USD' }]}
+                                    prices={this.state.prices2}
+                                    allowMultiple={true}
+                                    touchOn={this.state.touchOn}
+                                    required={false}
+                                    onPricesChange={(prices) => this.setState({ prices2: prices })}
+                                    rowHeader="Price"
+                                />
+                                <Time
+                                    touchOn={this.state.touchOn}
+                                    time={this.state.time1}
+                                    timeChange={(time) => this.setState({ time1: time })}
+                                    rowHeader="Time"
+                                />
+                                <Time
+                                    max={(() => {
+                                        let time = new Date();
+                                        time.setHours(time.getHours() + 1);
+                                        time.setMinutes(time.getMinutes() + 5);
+                                        return time;
+                                    })()}
+                                    min={(() => {
+                                        let time = new Date();
+                                        time.setHours(time.getHours() - 1);
+                                        time.setMinutes(time.getMinutes() - 5);
+                                        return time;
+                                    })()}
+                                    touchOn={this.state.touchOn}
+                                    time={this.state.time2}
+                                    timeChange={(time) => this.setState({ time2: time })}
+                                    rowHeader="With Min/Max"
+                                />
+                                <OpeningHoursDay
+                                    label={'Opening hours sample day'}
+                                    touchOn={this.state.touchOn}
+                                    required={false}
+                                    onOpeningHoursChange={(openingHours => this.setState({ openingHours: openingHours }))}
+                                    openingHours={this.state.openingHours}
+                                    rowHeader="Opening hours"
+                                />
+                                <InputHeader
+                                    title={'Opening hours'}
+                                    collapsable={true}
+                                    mainAction={{
+                                        action: () => console.log('click'),
+                                        name: 'Hero button'
+                                    }}
+                                    extraActions={[{
+                                        action: () => null,
+                                        name: 'Extra button 1'
+                                    },
+                                    {
+                                        action: () => null,
+                                        name: 'Extra button 2'
+                                    }]}
+                                >
+                                    <OpeningHoursWeek
+                                        touchOn={this.state.touchOn}
+                                        required={false}
+                                        onDaysChange={(days => this.setState({ openingHoursWeek: days }))}
+                                        days={this.state.openingHoursWeek}
+                                        standardDay={this.state.openingHoursWeekDay}
+                                        onStandardDayChange={(day => this.setState({ openingHoursWeekDay: day }))}
+                                    />
+                                </InputHeader>
+                                <InputHeader
+                                    className={'mb-4'}
+                                    title={'Special days opening hours'}
+                                    collapsable={true}
+                                    mainAction={{
+                                        action: () => this.setState({ 
+                                            openingHoursSpecial: this.state.openingHoursSpecial.concat([{ date: new Date(), times: [] }]) 
+                                        }),
+                                        name: 'Add'
+                                    }}
+                                >
+                                    <OpeningHoursSpecial
+                                        touchOn={this.state.touchOn}
+                                        required={false}
+                                        onDaysChange={(days => this.setState({ openingHoursSpecial: days }))}
+                                        days={this.state.openingHoursSpecial}
+                                    />
+                                </InputHeader>
                                 <div className="row justify-content-center align-items-center">
                                     <Submit
                                         className="btn btn-primary btn-lg ml-2"
@@ -451,7 +400,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                     </div>
                 </div>
             </div>
-        </div>;
+        </div >;
     }
 }
 

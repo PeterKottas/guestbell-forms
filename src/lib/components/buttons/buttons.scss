@@ -1,0 +1,46 @@
+@import '../variables.scss';
+
+.guestbell-btn{
+    position: relative;
+    padding: 0.5rem;
+    transition: 0.2s all;
+    color: $input-text-color;
+    fill: $input-text-color;
+    >svg{
+        pointer-events: none;
+    }
+}
+
+.guestbell-btn-blank{
+    &:hover{
+        color: $input-highlight-color;
+        fill: $input-highlight-color;
+    }
+}
+
+.guestbell-btn-dropdown{
+    &:hover{
+        color: $input-highlight-color;
+        fill: $input-highlight-color;
+        background-color: $input-divider-color;
+    }
+}
+
+.guestbell-btn-circular{
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.guestbell-btn:disabled {
+    box-shadow: none;
+}
+
+.guestbell-btn-hero{
+    background-color: $input-highlight-color;
+    fill: $input-text-color--dark;
+    color: $input-text-color--dark;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+    &:hover{
+        background-color: lighten($input-highlight-color, 2%);
+    }
+}

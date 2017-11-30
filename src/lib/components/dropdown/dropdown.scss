@@ -1,0 +1,88 @@
+﻿@import '../variables.scss';
+
+a.guestbell__dropdown-toggle {
+    cursor: pointer;
+    color: $input-text-color;
+    fill: $input-text-color;
+}
+
+.guestbell__dropdown {
+    display: flex;
+}
+
+.guestbell__dropdown-menu__container {
+    position: absolute;
+    top: 100%;
+    z-index: 1000;
+    display: block;
+    border-radius: 0;
+    transition: 0.5s;
+    right: 1px;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.16);
+}
+
+.guestbell__dropdown-menu {
+    //display: none;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    text-align: left;
+    list-style: none;
+    background-color: $input-bg-color;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid $input-border-color;
+    margin-top: 0;
+    white-space: nowrap;
+}
+
+.guestbell__dropdown-menu > li {
+    & > a, & > span {
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-weight: normal;
+        color: #333;
+        white-space: nowrap;
+    }
+}
+
+.guestbell__dropdown-menu .divider {
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+    background-color: #e5e5e5;
+}
+
+.guestbell__dropdown-toggle {
+    &:hover .label-count {
+        color: $input-highlight-color;
+    }
+    &.guestbell__dropdown-toggle__arrow--hidden::after{
+        display: none;
+    }
+}
+
+.guestbell__label-count {
+    position: absolute;
+    top: 55%;
+    left: 60%;
+    font-size: 10px;
+    line-height: 15px;
+    background-color: $input-bg-color;
+    color: $input-highlight-color;
+    padding: 0 4px;
+    border-radius: 3px;
+    margin-bottom: 0;
+}
+
+.guestbell__dropdown-menu > li > a i.material-icons {
+    float: left;
+    margin-right: 7px;
+    margin-top: 2px;
+    font-size: 20px;
+}
+
+.guestbell__dropdown-menu > li > a {
+    font-size: 14px;
+    line-height: 25px;
+}

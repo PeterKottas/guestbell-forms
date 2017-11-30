@@ -1,7 +1,7 @@
-﻿@import '../../variables.scss';
+﻿@import '../../../variables.scss';
 
 .select-input {
-    display: block;
+    display: inline-block;
     border: none;
     border-bottom: 1px solid $input-border-color;
     margin-top: 20px;
@@ -28,7 +28,7 @@
         width: 100%;
         max-height: 100px;
         appearance: none;
-        padding: 10px 10px 10px 5px;
+        padding: 10px 10px 5px 5px;
         background-color: transparent;
     }
 }
