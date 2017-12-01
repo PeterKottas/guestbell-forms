@@ -65,7 +65,7 @@ export class Form extends React.Component<FormProps, FormState> {
     private unregister(component: BaseInput.BaseInput<BaseInput.BaseInputProps, BaseInput.BaseInputState>) {
         if (component) {
             this.setState(previousState => {
-                let newComponents = Object.assign({}, previousState);
+                let newComponents = Object.assign({}, previousState.components);
                 delete newComponents[component.inputId];
                 return {
                     components: newComponents
@@ -118,17 +118,19 @@ export class Form extends React.Component<FormProps, FormState> {
     }
 
     private updateCallback(isComponentValid: boolean = true, inputId: string = '') {
-        let valid = false;
-        if (isComponentValid) {
-            valid = true;
-            Object.keys(this.state.components).forEach(key => {
-                const component = this.state.components[key];
-                if (component && component.inputId != inputId && component.state && !component.state.valid) {
-                    valid = false;
-                }
-            });
-        }
-        this.setState({ isFormValid: valid });
+        this.setState(previousState => {
+            let valid = false;
+            if (isComponentValid) {
+                valid = true;
+                Object.keys(previousState.components).forEach(key => {
+                    const component = previousState.components[key];
+                    if (component && component.inputId != inputId && component.state && !component.state.valid) {
+                        valid = false;
+                    }
+                });
+            }
+            return { isFormValid: valid }
+        });
     }
 
     constructor(props: FormProps) {
