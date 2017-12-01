@@ -6926,7 +6926,7 @@ var Form = /** @class */ (function (_super) {
     Form.prototype.unregister = function (component) {
         if (component) {
             this.setState(function (previousState) {
-                var newComponents = Object.assign({}, previousState);
+                var newComponents = Object.assign({}, previousState.components);
                 delete newComponents[component.inputId];
                 return {
                     components: newComponents
@@ -6979,20 +6979,21 @@ var Form = /** @class */ (function (_super) {
         setTimeout(function () { return _this.updateCallback(); }, 1);
     };
     Form.prototype.updateCallback = function (isComponentValid, inputId) {
-        var _this = this;
         if (isComponentValid === void 0) { isComponentValid = true; }
         if (inputId === void 0) { inputId = ''; }
-        var valid = false;
-        if (isComponentValid) {
-            valid = true;
-            Object.keys(this.state.components).forEach(function (key) {
-                var component = _this.state.components[key];
-                if (component && component.inputId != inputId && component.state && !component.state.valid) {
-                    valid = false;
-                }
-            });
-        }
-        this.setState({ isFormValid: valid });
+        this.setState(function (previousState) {
+            var valid = false;
+            if (isComponentValid) {
+                valid = true;
+                Object.keys(previousState.components).forEach(function (key) {
+                    var component = previousState.components[key];
+                    if (component && component.inputId != inputId && component.state && !component.state.valid) {
+                        valid = false;
+                    }
+                });
+            }
+            return { isFormValid: valid };
+        });
     };
     Form.prototype.render = function () {
         return React.createElement("form", { noValidate: true, role: "form", className: "validation-form " + (this.props.className ? this.props.className : '') }, this.props.children);
