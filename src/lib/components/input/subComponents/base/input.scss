@@ -32,10 +32,6 @@
 }
     
 .input__base {
-    .material-design-icon{
-        width: 24px;
-        height: 24px;
-    }
 
     position: relative;
     margin: 1rem 4rem 1.2rem 0;
@@ -165,6 +161,23 @@
 }
 
 .guestbell-forms--dark{
+    &.input__form, .input__form{
+        .input__group__border{
+            border-top: 1px solid $input-border-color--dark;
+        }
+    }
+
+    .input__group {
+        .row-header {
+            color: $input-text-color--dark;
+        }
+    }
+        
+    .input__divider{
+        border-top: 1px solid $input-border-color--dark;
+        background-color: $input-divider-color--dark;
+    }
+
     .input__base {
         border-bottom: 1px solid $input-border-color--dark;
         /* VALIDATION ======================================= */

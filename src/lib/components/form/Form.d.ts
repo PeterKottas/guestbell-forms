@@ -11,6 +11,9 @@ export interface FormProps {
 }
 export interface FormState {
     isFormValid: boolean;
+    components: {
+        [name: string]: BaseInput.BaseInput<BaseInput.BaseInputProps, BaseInput.BaseInputState>;
+    };
 }
 export interface FormContext {
     register: (component: BaseInput.BaseInput<BaseInput.BaseInputProps, BaseInput.BaseInputState>) => void;
@@ -29,9 +32,9 @@ export declare const FormContextType: {
     disableInputs: any;
 };
 export declare class Form extends React.Component<FormProps, FormState> {
-    private components;
     static defaultProps: {
         noValidate: boolean;
+        showExpandAll: boolean;
     };
     static childContextTypes: {
         register: any;

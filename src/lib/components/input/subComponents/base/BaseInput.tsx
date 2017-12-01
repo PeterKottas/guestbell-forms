@@ -9,6 +9,7 @@ import './input.scss';
 //Misc
 import * as Validators from '../../../../validators/index';
 import * as Form from '../../../form/Form';
+import guid from '../../../utils/Guid';
 
 export interface BaseInputProps {
     disabled?: boolean;
@@ -41,12 +42,7 @@ export interface BaseInputState {
 export class BaseInput<P extends BaseInputProps, S extends BaseInputState> extends React.Component<P, S> {
     context: Form.FormContext;
 
-    private guid() {
-        const s4 = () => Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-        return `${s4() + s4()}-${s4()}-${s4()}-${s4()}-${s4() + s4() + s4()}`;
-    }
-
-    public inputId = this.guid();
+    public inputId = guid();
 
     public static defaultProps: BaseInputProps = {
         className: undefined,

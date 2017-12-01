@@ -1,8 +1,9 @@
 import './submit.scss';
 import * as React from 'react';
 import * as BaseInput from '../base/BaseInput';
-export interface SubmitProps extends BaseInput.BaseInputProps {
-    onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
+import * as Button from '../../../buttons/Button';
+export interface SubmitProps extends BaseInput.BaseInputProps, Button.ButtonProps {
+    onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
     validateForm?: boolean;
 }
 export interface SubmitState extends BaseInput.BaseInputState {

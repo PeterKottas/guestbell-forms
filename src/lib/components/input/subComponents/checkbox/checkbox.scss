@@ -8,7 +8,7 @@ $baseFontSize: 16;
 .checkbox-input {
     display: block;
     margin-top: 24px !important;
-    border: none;
+    border: none !important;
 
     &.validation__error {
         border: none;

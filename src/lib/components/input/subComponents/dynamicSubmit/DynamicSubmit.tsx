@@ -6,6 +6,7 @@ import * as React from 'react';
 
 //Misc
 import * as BaseInput from '../base/BaseInput';
+import * as Button from '../../../buttons/Button';
 
 export enum ButtonState {
     Normal,
@@ -14,8 +15,8 @@ export enum ButtonState {
     Success
 }
 
-export interface DynamicSubmitProps extends BaseInput.BaseInputProps {
-    onClick?: (e: React.MouseEvent<HTMLInputElement>, submiting?: () => void, error?: () => void, success?: () => void, reset?: () => void) => void;
+export interface DynamicSubmitProps extends BaseInput.BaseInputProps, Button.ButtonProps {
+    onClick?: (e: React.MouseEvent<HTMLDivElement>, submiting?: () => void, error?: () => void, success?: () => void, reset?: () => void) => void;
     validateForm?: boolean;
     submittingChildren?: JSX.Element | string;
     errorChildren?: JSX.Element | string;
@@ -49,7 +50,7 @@ export class DynamicSubmit extends BaseInput.BaseInput<DynamicSubmitProps, Dynam
         this.reset = this.reset.bind(this);
     }
 
-    private handleClick(e: React.MouseEvent<HTMLInputElement>) {
+    private handleClick(e: React.MouseEvent<HTMLDivElement>) {
         e.preventDefault();
         this.props.submitDisablesInputs && this.context.disableInputs();
         this.props.onClick && this.props.onClick(e, this.submiting, this.error, this.success, this.reset);
@@ -99,14 +100,14 @@ export class DynamicSubmit extends BaseInput.BaseInput<DynamicSubmitProps, Dynam
     }
 
     public render() {
-        return <button
-            type={"submit"}
+        return <Button.Button
+            {...this.props}
             className={`${(this.props.className ? this.props.className : '')} ${this.renderClassName()}`}
             onClick={this.handleClick}
             disabled={this.getDisabled() ? this.getDisabled() : (this.props.validateForm ? this.context.isFormValid && !this.context.isFormValid() : false)}
         >
             {this.renderChildren()}
-        </button>;
+        </Button.Button>;
     }
 }
 export default DynamicSubmit;

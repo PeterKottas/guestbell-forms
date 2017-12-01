@@ -6,12 +6,14 @@
         position: relative;
         align-self: baseline;
     }
+
     display: flex !important;
     align-items: center;
     justify-content: center;
     margin-top: 1rem !important;
-    border-bottom: none;
+    border-bottom: none !important;
     margin-bottom: 3px !important;
+    width: initial !important;
 
     .input-padding{
         margin: 10px 5px 10px 5px;

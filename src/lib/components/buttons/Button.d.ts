@@ -6,6 +6,8 @@ export interface ButtonProps {
     disabled?: boolean;
     type?: 'hero' | 'blank' | 'dropdown';
     circular?: boolean;
+    noRipples?: boolean;
+    small?: boolean;
 }
 export interface ButtonState {
 }

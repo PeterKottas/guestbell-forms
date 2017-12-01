@@ -17,7 +17,7 @@
         content: '';
         border-left: 6px solid transparent;
         border-right: 6px solid transparent;
-        border-top: 6px solid rgba(0, 0, 0, 0.12);
+        border-top: 6px solid $input-text-color;
         pointer-events: none;
     }
     
@@ -43,6 +43,10 @@
         border-bottom: 1px solid $input-border-color--dark;
         .select-input__select {
             color: $input-text-color--dark;
+        }
+
+        &::after {
+            border-top: 6px solid $input-text-color--dark;
         }
     }
 }    

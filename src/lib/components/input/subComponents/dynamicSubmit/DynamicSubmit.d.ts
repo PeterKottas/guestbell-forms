@@ -1,14 +1,15 @@
 import './dynamicSubmit.scss';
 import * as React from 'react';
 import * as BaseInput from '../base/BaseInput';
+import * as Button from '../../../buttons/Button';
 export declare enum ButtonState {
     Normal = 0,
     Submitting = 1,
     Error = 2,
     Success = 3,
 }
-export interface DynamicSubmitProps extends BaseInput.BaseInputProps {
-    onClick?: (e: React.MouseEvent<HTMLInputElement>, submiting?: () => void, error?: () => void, success?: () => void, reset?: () => void) => void;
+export interface DynamicSubmitProps extends BaseInput.BaseInputProps, Button.ButtonProps {
+    onClick?: (e: React.MouseEvent<HTMLDivElement>, submiting?: () => void, error?: () => void, success?: () => void, reset?: () => void) => void;
     validateForm?: boolean;
     submittingChildren?: JSX.Element | string;
     errorChildren?: JSX.Element | string;

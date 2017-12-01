@@ -30,7 +30,6 @@ export interface BaseInputState {
 }
 export declare class BaseInput<P extends BaseInputProps, S extends BaseInputState> extends React.Component<P, S> {
     context: Form.FormContext;
-    private guid();
     inputId: string;
     static defaultProps: BaseInputProps;
     static contextTypes: {

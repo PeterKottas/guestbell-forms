@@ -128,7 +128,6 @@ export class Time extends BaseInput.BaseInput<TimeProps, TimeState>  {
                     })()}</span>
                 </div>
                 {this.renderDefaultValidation()}
-                <span className={'bar ' + (this.state.focused ? 'focused' : '')}></span>
             </div>
         </InputGroup>;
     }

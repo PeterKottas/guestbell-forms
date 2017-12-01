@@ -4,94 +4,267 @@ import './inputHeader.scss';
 //Libs
 import * as React from 'react';
 import * as SmoothCollapse from 'react-smooth-collapse';
+import * as PropTypes from 'prop-types';
 
 //Misc
 import Dropdown from '../../../dropdown/Dropdown';
 import * as MoreIcon from 'material-design-icons/navigation/svg/production/ic_more_vert_24px.svg';
 import * as PlusIcon from 'material-design-icons/hardware/svg/production/ic_keyboard_arrow_down_24px.svg';
 import Button from '../../../buttons/Button';
+import guid from '../../../utils/Guid';
 
-export type InputHeaderAction = {
-    action: () => void;
-    name: string | JSX.Element;
-}
+export type ActionParam = {
+    expand: () => void;
+    collapse: () => void;
+    toggle: () => void;
+};
 
 export type InputHeaderProps = {
     className?: string;
     title?: string | JSX.Element;
-    mainAction?: InputHeaderAction
-    extraActions?: InputHeaderAction[];
+    subTitle?: string | JSX.Element;
+    mainButton?: JSX.Element | ((param: ActionParam) => JSX.Element);
+    extraButtons?: JSX.Element[] | ((param: ActionParam) => JSX.Element[]);
     collapsable?: boolean;
+    collapsed?: boolean;
+    collapsedDefault?: boolean;
+    ignoreContext?: boolean;
+    showExpandAll?: boolean;
+    heroHeader?: boolean;
 }
 
 export interface InputHeaderState {
     collapsed: boolean;
+    inputHeaders: { [name: string]: InputHeader };
+    smoothCollapseDone: boolean;
+}
+
+export const InputHeaderContextType = {
+    registerInputHeader: PropTypes.func,
+    unregisterInputHeader: PropTypes.func,
+    stateChanged: PropTypes.func
+};
+
+
+export interface InputHeaderContext {
+    registerInputHeader: (component: InputHeader) => void;
+    unregisterInputHeader: (component: InputHeader) => void;
+    stateChanged: () => void;
 }
 
 export class InputHeader extends React.Component<InputHeaderProps, InputHeaderState>  {
+    public static defaultProps: InputHeaderProps = {
+        ignoreContext: false,
+        showExpandAll: false,
+        heroHeader: false,
+        collapsedDefault: true
+    };
+
+    public id = guid();
+    context: InputHeaderContext;
+    public static contextTypes = InputHeaderContextType;
+    public static childContextTypes = InputHeaderContextType;
+
     constructor(props: InputHeaderProps) {
         super(props);
         this.state = {
-            collapsed: props.collapsable
+            collapsed: props.collapsedDefault,
+            inputHeaders: {},
+            smoothCollapseDone: true
+        }
+        this.registerInputHeader = this.registerInputHeader.bind(this);
+        this.unregisterInputHeader = this.unregisterInputHeader.bind(this);
+        this.expand = this.expand.bind(this);
+        this.collapse = this.collapse.bind(this);
+        this.toggle = this.toggle.bind(this);
+    }
+
+    private registerInputHeader(component: InputHeader) {
+        this.setState(previousState => {
+            let newInputHeaders = Object.assign({}, previousState.inputHeaders);
+            newInputHeaders[component.id] = component;
+            return {
+                inputHeaders: newInputHeaders
+            };
+        });
+    };
+
+    private unregisterInputHeader(component: InputHeader) {
+        this.setState(previousState => {
+            let newInputHeaders = Object.assign({}, previousState.inputHeaders);
+            delete newInputHeaders[component.id];
+            return {
+                inputHeaders: newInputHeaders
+            };
+        });
+    };
+
+    public getChildContext(): InputHeaderContext {
+        return {
+            registerInputHeader: this.registerInputHeader,
+            unregisterInputHeader: this.unregisterInputHeader,
+            stateChanged: () => this.forceUpdate()
+        };
+    }
+
+    public componentWillUnmount() {
+        if (!this.props.ignoreContext) {
+            this.context.unregisterInputHeader && this.context.unregisterInputHeader(this);
         }
     }
 
+    public componentDidMount() {
+        if (!this.props.ignoreContext) {
+            this.context.registerInputHeader && this.context.registerInputHeader(this);
+        }
+    }
+
+    public expand() {
+        this.props.collapsable && this.setState({ collapsed: false, smoothCollapseDone: false }, () => this.context.stateChanged && this.context.stateChanged());
+    }
+
+    public collapse() {
+        this.props.collapsable && this.setState({ collapsed: true, smoothCollapseDone: false }, () => this.context.stateChanged && this.context.stateChanged());
+    }
+
+    public toggle() {
+        this.props.collapsable && this.setState({ collapsed: !this.state.collapsed, smoothCollapseDone: false }, () => this.context.stateChanged && this.context.stateChanged());
+    }
+
     public render() {
-        return <div className={`input__header ` + (this.props.className ? this.props.className : '')}>
+        return <div className={`input__header ` + (this.props.className ? this.props.className : '') + ' ' + (this.props.heroHeader ? 'input__header--hero' : '')}>
             <div
-                className="input__header__top"
+                className={'input__header__top ' + (this.props.showExpandAll ? 'input__header__top--tall' : '')}
             >
                 {this.props.title && <div className="input__header__title">
                     {this.props.title}
                 </div>}
                 <div className="input__header__top__button-container">
-                    {this.props.mainAction ? <Button 
-                        onClick={(e) => this.props.mainAction.action()}
-                        type={'hero'}
-                    >
-                        {this.props.mainAction.name}
-                    </Button> : null}
-                    {this.props.extraActions ?
+                    {this.props.subTitle &&
+                        <div className="input__header__sub-title">
+                            {this.props.subTitle}
+                        </div>
+                    }
+                    {this.renderMainButton()}
+                    {this.props.extraButtons ?
                         <Dropdown
-                            header={<Button type={'blank'}><MoreIcon /></Button>}
+                            header={<Button type={'blank'} circular={true}><MoreIcon /></Button>}
                             showArrow={false}
                             headerClassName={'line-height--0'}
                             className={''}
                         >
-                            {this.props.extraActions.map((extraAction, index) =>
-                                <li
-                                    key={index}
-                                >
-                                    <Button
-                                        onClick={() => extraAction.action()}
-                                        type={'dropdown'}
-                                    >
-                                        {extraAction.name}
-                                    </Button>
-                                </li>
-                            )}
+                            {this.renderExtraButtons()}
                         </Dropdown>
                         :
                         null
                     }
                     {this.props.collapsable &&
                         <Button
-                            onClick={() => this.props.collapsable && this.setState({ collapsed: !this.state.collapsed })}
+                            circular={true}
+                            onClick={() => this.toggle()}
                             className={`input__header__collapse-button line-height--0 ${(this.state.collapsed ? 'collapsed' : '')}`}
                             type={'blank'}
                         >
                             <PlusIcon />
                         </Button>}
                 </div>
+                {this.props.showExpandAll && Object.keys(this.state.inputHeaders).length > 0 &&
+                    this.renderCollapseExpandAll()}
             </div>
             <div className="input__header__bottom">
-                <div className="smooth-collapse__container">
-                    <SmoothCollapse expanded={!this.state.collapsed}>
-                        {this.props.children}
-                    </SmoothCollapse>
-                </div>
+                {
+                    this.props.collapsable ?
+                        <div className={(!this.state.collapsed && this.state.smoothCollapseDone ? 'smooth-collapse__container' : '')}>
+                            <SmoothCollapse
+                                collapsedHeight={'0.0001px'}
+                                expanded={this.props.collapsed !== undefined ? !this.props.collapsed : !this.state.collapsed}
+                                onChangeEnd={() => this.setState(previousState => ({ smoothCollapseDone: true }))}
+                            >
+                                {this.props.children}
+                            </SmoothCollapse>
+                        </div>
+                        :
+                        this.props.children
+                }
             </div>
         </div >;
+    }
+
+    private renderMainButton() {
+        let child = undefined;
+        if (typeof this.props.mainButton === 'function') {
+            child = this.props.mainButton({
+                expand: this.expand,
+                collapse: this.collapse,
+                toggle: this.toggle
+            });
+        } else {
+            child = this.props.mainButton;
+        }
+        return child;
+    }
+
+    private renderExtraButtons() {
+        let arr = [];
+        if (typeof this.props.extraButtons === 'function') {
+            arr = this.props.extraButtons({
+                expand: this.expand,
+                collapse: this.collapse,
+                toggle: this.toggle
+            });
+        } else {
+            arr = this.props.extraButtons;
+        }
+
+        return arr.map((extraButton, index) =>
+            <li
+                key={index}
+            >
+                {extraButton}
+            </li>
+        );
+    }
+
+    private renderCollapseExpandAll() {
+        let allCollapsed = true;
+        let allExpanded = true;
+        Object.keys(this.state.inputHeaders).forEach(key => {
+            const inputHeader = this.state.inputHeaders[key];
+            if (inputHeader) {
+                if (inputHeader.state.collapsed) {
+                    allExpanded = false;
+                }
+                else {
+                    allCollapsed = false;
+                }
+            }
+        });
+        return <div className="input__header__expand-collapse--all">
+            {(allCollapsed || !allExpanded) && <Button
+                noRipples={true}
+                small={true}
+                onClick={() => {
+                    Object.keys(this.state.inputHeaders).forEach(key => {
+                        const inputHeader = this.state.inputHeaders[key];
+                        inputHeader.expand();
+                    });
+                }}
+            >
+                Expand all
+            </Button>}
+            {(allExpanded || !allCollapsed) && <Button
+                noRipples={true}
+                small={true}
+                onClick={() => {
+                    Object.keys(this.state.inputHeaders).forEach(key => {
+                        const inputHeader = this.state.inputHeaders[key];
+                        inputHeader.collapse();
+                    });
+                }}
+            >
+                Collapse all
+            </Button>}
+        </div>;
     }
 }
 export default InputHeader;

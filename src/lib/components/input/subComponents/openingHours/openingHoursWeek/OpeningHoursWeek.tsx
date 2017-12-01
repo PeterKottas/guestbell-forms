@@ -47,6 +47,20 @@ export class OpeningHoursWeek extends BaseInput.BaseInput<OpeningHoursWeekProps,
         }
     }
 
+    public componentWillReceiveProps(newProps: OpeningHoursWeekProps) {
+        if (!newProps.days || !newProps.days.length) {
+            newProps.onDaysChange([
+                { dayLabel: 'Monday', times: [] },
+                { dayLabel: 'Tuesday', times: [] },
+                { dayLabel: 'Wednesday', times: [] },
+                { dayLabel: 'Thursday', times: [] },
+                { dayLabel: 'Friday', times: [] },
+                { dayLabel: 'Saturday', times: [] },
+                { dayLabel: 'Sunday', times: [] },
+            ]);
+        }
+    }
+
     public render() {
 
         return <div className={`openingHoursWeek-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}>

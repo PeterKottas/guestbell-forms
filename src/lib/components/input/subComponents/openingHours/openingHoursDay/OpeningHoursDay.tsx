@@ -21,13 +21,14 @@ export interface OpeningHoursDayProps extends BaseInput.BaseInputProps {
     onOpeningHoursChange: (openingHours: OpeningHoursDayObj) => void;
     openingHours: OpeningHoursDayObj;
     label?: JSX.Element | string;
+    maxOpenCloseTimes?: number;
 }
 
 export interface OpeningHoursState extends BaseInput.BaseInputState {
 }
 
 export class OpeningHoursDay extends BaseInput.BaseInput<OpeningHoursDayProps, OpeningHoursState>  {
-    public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "openingHours", allowMultiple: false });
+    public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "openingHours", allowMultiple: false, maxOpenCloseTimes: 10 });
     private fullDayMiliseconds: number = 24 * 60 * 60 * 1000;
 
     constructor(props: OpeningHoursDayProps) {
@@ -66,13 +67,15 @@ export class OpeningHoursDay extends BaseInput.BaseInput<OpeningHoursDayProps, O
                             </Button>
                         </div>;
                     })}
-                    <Button
-                        className="openingHoursDay-input__button-open-close"
-                        onClick={() => this.props.onOpeningHoursChange({ ...this.props.openingHours, times: this.props.openingHours.times.concat([newTime]) })}
-                        type={'hero'}
-                    >
-                        {this.props.openingHours && this.props.openingHours.times && this.props.openingHours.times.length % 2 === 0 ? 'Open' : 'Close'}
-                    </Button>
+                    {this.props.maxOpenCloseTimes > this.props.openingHours.times.length &&
+                        <Button
+                            className="openingHoursDay-input__button-open-close"
+                            onClick={() => this.props.onOpeningHoursChange({ ...this.props.openingHours, times: this.props.openingHours.times.concat([newTime]) })}
+                            type={'hero'}
+                        >
+                            {this.props.openingHours && this.props.openingHours.times && this.props.openingHours.times.length % 2 === 0 ? 'Open' : 'Close'}
+                        </Button>
+                    }
                 </div>
                 {this.renderDefaultValidation()}
                 {this.props.openingHours && this.props.label && <span className={'label-classname ' + (this.props.openingHours && this.props.openingHours.times

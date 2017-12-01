@@ -23,6 +23,7 @@ export declare class OpeningHoursWeek extends BaseInput.BaseInput<OpeningHoursWe
     };
     constructor(props: OpeningHoursWeekProps);
     componentWillMount(): void;
+    componentWillReceiveProps(newProps: OpeningHoursWeekProps): void;
     render(): JSX.Element;
     private renderContent();
 }

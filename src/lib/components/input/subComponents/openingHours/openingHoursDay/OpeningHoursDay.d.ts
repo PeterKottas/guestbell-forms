@@ -9,6 +9,7 @@ export interface OpeningHoursDayProps extends BaseInput.BaseInputProps {
     onOpeningHoursChange: (openingHours: OpeningHoursDayObj) => void;
     openingHours: OpeningHoursDayObj;
     label?: JSX.Element | string;
+    maxOpenCloseTimes?: number;
 }
 export interface OpeningHoursState extends BaseInput.BaseInputState {
 }
@@ -16,6 +17,7 @@ export declare class OpeningHoursDay extends BaseInput.BaseInput<OpeningHoursDay
     static defaultProps: BaseInput.BaseInputProps & {
         type: string;
         allowMultiple: boolean;
+        maxOpenCloseTimes: number;
     };
     private fullDayMiliseconds;
     constructor(props: OpeningHoursDayProps);

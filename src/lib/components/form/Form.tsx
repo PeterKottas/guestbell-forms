@@ -20,6 +20,7 @@ export interface FormProps {
 
 export interface FormState {
     isFormValid: boolean;
+    components: { [name: string]: BaseInput.BaseInput<BaseInput.BaseInputProps, BaseInput.BaseInputState> };
 }
 
 export interface FormContext {
@@ -41,21 +42,36 @@ export const FormContextType = {
 };
 
 export class Form extends React.Component<FormProps, FormState> {
-    private components: { [name: string]: BaseInput.BaseInput<BaseInput.BaseInputProps, BaseInput.BaseInputState> };
 
     public static defaultProps = {
-        noValidate: false
+        noValidate: false,
+        showExpandAll: true
     }
 
-    static childContextTypes = FormContextType;
+    public static childContextTypes = FormContextType;
 
     private register(component: BaseInput.BaseInput<BaseInput.BaseInputProps, BaseInput.BaseInputState>) {
-        this.components[component.inputId] = component;
-        this.updateCallback();
+        if (component) {
+            this.setState(previousState => {
+                let newComponents = Object.assign({}, previousState.components);
+                newComponents[component.inputId] = component;
+                return {
+                    components: newComponents
+                };
+            }, () => this.updateCallback());
+        }
     };
 
     private unregister(component: BaseInput.BaseInput<BaseInput.BaseInputProps, BaseInput.BaseInputState>) {
-        delete this.components[component.inputId];
+        if (component) {
+            this.setState(previousState => {
+                let newComponents = Object.assign({}, previousState);
+                delete newComponents[component.inputId];
+                return {
+                    components: newComponents
+                };
+            });
+        }
     };
 
     public getChildContext(): FormContext {
@@ -70,29 +86,29 @@ export class Form extends React.Component<FormProps, FormState> {
     }
 
     public disableInputs() {
-        Object.keys(this.components).forEach(key => {
-            const component = this.components[key];
+        Object.keys(this.state.components).forEach(key => {
+            const component = this.state.components[key];
             component.disableInput();
         });
     }
 
     public enableInputs() {
-        Object.keys(this.components).forEach(key => {
-            const component = this.components[key];
+        Object.keys(this.state.components).forEach(key => {
+            const component = this.state.components[key];
             component.enableInput();
         });
     }
 
     public touchAll() {
-        Object.keys(this.components).forEach(key => {
-            const component = this.components[key];
+        Object.keys(this.state.components).forEach(key => {
+            const component = this.state.components[key];
             component.touch();
         });
     }
 
     public unTouchAll() {
-        Object.keys(this.components).forEach(key => {
-            const component = this.components[key];
+        Object.keys(this.state.components).forEach(key => {
+            const component = this.state.components[key];
             component.unTouch();
         });
     }
@@ -105,9 +121,9 @@ export class Form extends React.Component<FormProps, FormState> {
         let valid = false;
         if (isComponentValid) {
             valid = true;
-            Object.keys(this.components).forEach(key => {
-                const component = this.components[key];
-                if (component.inputId != inputId && !component.state.valid) {
+            Object.keys(this.state.components).forEach(key => {
+                const component = this.state.components[key];
+                if (component && component.inputId != inputId && component.state && !component.state.valid) {
                     valid = false;
                 }
             });
@@ -117,14 +133,14 @@ export class Form extends React.Component<FormProps, FormState> {
 
     constructor(props: FormProps) {
         super(props);
-        this.components = {};
         this.register = this.register.bind(this);
         this.unregister = this.unregister.bind(this);
         this.updateCallback = this.updateCallback.bind(this);
         this.disableInputs = this.disableInputs.bind(this);
         this.enableInputs = this.enableInputs.bind(this);
         this.state = {
-            isFormValid: false
+            isFormValid: false,
+            components: {}
         };
     }
 

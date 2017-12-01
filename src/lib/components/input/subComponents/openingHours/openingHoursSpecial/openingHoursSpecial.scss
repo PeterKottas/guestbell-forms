@@ -45,7 +45,9 @@
     }
 
     .DayPickerInput{
+        width: 100%;
         > input {
+            width: 100%;
             padding: 0;
             border: none;
             color: $input-label-color;
