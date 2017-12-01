@@ -21,21 +21,6 @@ textarea {
 .input__form .input__group__border {
   border-top: 1px solid #eeeeee; }
 
-.input__group {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  position: relative; }
-  .input__group .row-header {
-    text-align: right;
-    width: 10rem;
-    min-width: 10rem;
-    display: inline-block;
-    margin-left: 1rem;
-    margin-right: 1.6rem;
-    margin-top: 1.6rem;
-    color: #555555; }
-
 .input__divider {
   border-top: 1px solid #eeeeee;
   padding: 1rem;
@@ -265,6 +250,37 @@ textarea {
 
 .guestbell-forms--dark .text-input input {
   color: white; }
+.input__group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative; }
+  .input__group .row-header {
+    text-align: right;
+    width: 10rem;
+    min-width: 10rem;
+    display: inline-block;
+    margin-left: 1rem;
+    margin-right: 1.6rem;
+    margin-top: 1.6rem;
+    color: #555555; }
+
+@media (max-width: 768px) {
+  .input__group {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: start !important;
+        -ms-flex-align: start !important;
+            align-items: flex-start !important;
+    padding-right: 1rem;
+    padding: 0 1rem 0 1rem; }
+    .input__group .row-header {
+      text-align: left;
+      margin-left: 0; }
+    .input__group > .input__base {
+      margin-right: 0; } }
 .select-input {
   display: inline-block;
   border: none;
@@ -428,6 +444,10 @@ textarea {
   margin-bottom: 0 !important; }
   .radio-input__container .radio-input {
     margin: 0; }
+
+@media (max-width: 768px) {
+  .radio-input__container {
+    margin-top: 0.5rem !important; } }
 .money-input {
   display: -webkit-box;
   display: -ms-flexbox;
