@@ -1,5 +1,5 @@
 //Styles
-//import './inputGroup.scss';
+import './inputGroup.scss';
 
 //Libs
 import * as React from 'react';

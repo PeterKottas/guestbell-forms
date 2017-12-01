@@ -14,6 +14,7 @@ export interface DropdownItemProps {
     wrapperTag?: string;
     shouldHandleClick?: boolean;
     showArrow?: boolean;
+    onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 export interface DropdownItemState {
@@ -58,10 +59,11 @@ export class Dropdown extends React.Component<DropdownItemProps, DropdownItemSta
     }
 
     public render() {
-        const Wrapper = this.props.wrapperTag;
+        //const Wrapper = this.props.wrapperTag;
         return (
-            <Wrapper
+            <div
                 className={'guestbell__dropdown ' + (!this.state.isDropdownVisible ? 'closed ' : 'open ') + (this.props.className ? this.props.className : ' ')}
+                onClick={e => this.props.onClick && this.props.onClick(e)}
             >
                 <a
                     className={`guestbell__dropdown-toggle ${(this.props.headerClassName ? this.props.headerClassName : '')} ${(this.props.showArrow ? '' : 'guestbell__dropdown-toggle__arrow--hidden')}`}
@@ -91,7 +93,7 @@ export class Dropdown extends React.Component<DropdownItemProps, DropdownItemSta
                         </ul>
                     </SmoothCollapse>
                 </div>
-            </Wrapper>
+            </div>
         );
     }
 }

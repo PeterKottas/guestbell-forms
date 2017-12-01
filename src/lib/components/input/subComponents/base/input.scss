@@ -8,22 +8,6 @@
         border-top: 1px solid $input-border-color;
     }
 }
-
-.input__group {
-    display: flex;
-    position: relative;
-
-    .row-header {
-        text-align: right;
-        width: 10rem;
-        min-width: 10rem;
-        display: inline-block;
-        margin-left: 1rem;
-        margin-right: 1.6rem;
-        margin-top: 1.6rem;
-        color: $input-text-color;
-    }
-}
     
 .input__divider{
     border-top: 1px solid $input-border-color;

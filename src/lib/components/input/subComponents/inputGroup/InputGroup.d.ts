@@ -1,3 +1,4 @@
+import './inputGroup.scss';
 import * as React from 'react';
 import * as BaseInput from '../base/BaseInput';
 export declare type InputGroupProps = Pick<BaseInput.BaseInputProps, 'rowHeader' | 'className'>;

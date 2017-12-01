@@ -10,3 +10,9 @@
         margin:0;
     }
 }
+
+@media (max-width: 768px) { 
+    .radio-input__container {
+        margin-top: 0.5rem !important;
+    }
+}

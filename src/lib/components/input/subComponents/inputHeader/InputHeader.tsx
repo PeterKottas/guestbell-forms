@@ -135,6 +135,7 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
         return <div className={`input__header ` + (this.props.className ? this.props.className : '') + ' ' + (this.props.heroHeader ? 'input__header--hero' : '')}>
             <div
                 className={'input__header__top ' + (this.props.showExpandAll ? 'input__header__top--tall' : '')}
+                onClick={() => this.toggle()}
             >
                 {this.props.title && <div className="input__header__title">
                     {this.props.title}
@@ -152,6 +153,7 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
                             showArrow={false}
                             headerClassName={'line-height--0'}
                             className={''}
+                            onClick={e => e.stopPropagation()}
                         >
                             {this.renderExtraButtons()}
                         </Dropdown>
@@ -161,7 +163,6 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
                     {this.props.collapsable &&
                         <Button
                             circular={true}
-                            onClick={() => this.toggle()}
                             className={`input__header__collapse-button line-height--0 ${(this.state.collapsed ? 'collapsed' : '')}`}
                             type={'blank'}
                         >
@@ -201,7 +202,7 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
         } else {
             child = this.props.mainButton;
         }
-        return child;
+        return <div onClick={e => e.stopPropagation()}>{child}</div>;
     }
 
     private renderExtraButtons() {
@@ -239,7 +240,10 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
                 }
             }
         });
-        return <div className="input__header__expand-collapse--all">
+        return <div
+            className="input__header__expand-collapse--all"
+            onClick={e => e.stopPropagation()}
+        >
             {(allCollapsed || !allExpanded) && <Button
                 noRipples={true}
                 small={true}
