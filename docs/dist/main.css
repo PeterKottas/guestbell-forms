@@ -240,7 +240,7 @@ textarea {
 .text-input {
   display: inline-block;
   margin-top: 20px;
-  max-width: 30rem; }
+  max-width: 37.5rem; }
   .text-input input {
     padding: 6px 10px 5px 5px;
     color: #555555;
@@ -288,7 +288,7 @@ textarea {
   border: none;
   border-bottom: 1px solid #eeeeee;
   margin-top: 20px;
-  max-width: 30rem; }
+  max-width: 37.5rem; }
   .select-input::after {
     position: absolute;
     top: 18px;
