@@ -8,6 +8,7 @@ export declare type ActionParam = {
 export declare type InputHeaderProps = {
     className?: string;
     title?: string | JSX.Element;
+    icon?: string | JSX.Element;
     subTitle?: string | JSX.Element;
     mainButton?: JSX.Element | ((param: ActionParam) => JSX.Element);
     extraButtons?: JSX.Element[] | ((param: ActionParam) => JSX.Element[]);

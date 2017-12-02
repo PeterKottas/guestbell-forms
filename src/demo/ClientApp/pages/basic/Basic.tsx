@@ -202,7 +202,9 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                     ref={form => this.form = form}
                                 >
                                     <InputHeader
+                                        icon={<i className="material-icons md-48">edit</i>}
                                         title={'Example form'}
+                                        subTitle={'And this is subtitle. There\'s also icon on the left'}
                                         showExpandAll={true}
                                         heroHeader={true}
                                         collapsable={true}

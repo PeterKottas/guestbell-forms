@@ -22,6 +22,7 @@ export type ActionParam = {
 export type InputHeaderProps = {
     className?: string;
     title?: string | JSX.Element;
+    icon?: string | JSX.Element;
     subTitle?: string | JSX.Element;
     mainButton?: JSX.Element | ((param: ActionParam) => JSX.Element);
     extraButtons?: JSX.Element[] | ((param: ActionParam) => JSX.Element[]);
@@ -137,15 +138,20 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
                 className={'input__header__top ' + (this.props.showExpandAll ? 'input__header__top--tall' : '')}
                 onClick={() => this.toggle()}
             >
-                {this.props.title && <div className="input__header__title">
-                    {this.props.title}
-                </div>}
-                <div className="input__header__top__button-container">
+                <div className="input__header__top__header-container">
+                    {this.props.icon && <div className="input__header__icon line-height--0">
+                        {this.props.icon}
+                    </div>}
+                    {this.props.title && <div className="input__header__title">
+                        {this.props.title}
+                    </div>}
                     {this.props.subTitle &&
                         <div className="input__header__sub-title">
                             {this.props.subTitle}
                         </div>
                     }
+                </div>
+                <div className="input__header__top__button-container">
                     {this.renderMainButton()}
                     {this.props.extraButtons ?
                         <Dropdown

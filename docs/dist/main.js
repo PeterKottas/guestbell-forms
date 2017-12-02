@@ -24588,7 +24588,7 @@ var Basic = /** @class */ (function (_super) {
                     React.createElement("div", { className: 'card ' + this.state.theme },
                         React.createElement("div", { className: "card-block p-0" }, !this.state.simulateUnmount &&
                             React.createElement(index_1.Form, { noValidate: true, ref: function (form) { return _this.form = form; } },
-                                React.createElement(index_1.InputHeader, { title: 'Example form', showExpandAll: true, heroHeader: true, collapsable: true, collapsedDefault: false, mainButton: React.createElement(index_1.Submit, { type: 'hero', onClick: this.submitForm, validateForm: this.state.validateFormSubmit }, "Submit"), extraButtons: [
+                                React.createElement(index_1.InputHeader, { icon: React.createElement("i", { className: "material-icons md-48" }, "edit"), title: 'Example form', subTitle: 'And this is subtitle. There\'s also icon on the left', showExpandAll: true, heroHeader: true, collapsable: true, collapsedDefault: false, mainButton: React.createElement(index_1.Submit, { type: 'hero', onClick: this.submitForm, validateForm: this.state.validateFormSubmit }, "Submit"), extraButtons: [
                                         React.createElement(index_1.Button, { className: "mx-2", onClick: function (e) { e.preventDefault(); _this.form.touchAll(); } }, "Touch all"),
                                         React.createElement(index_1.Button, { className: "mr-2", onClick: function (e) { e.preventDefault(); _this.form.unTouchAll(); } }, "Un-touch all")
                                     ] },
@@ -28450,10 +28450,12 @@ var InputHeader = /** @class */ (function (_super) {
         var _this = this;
         return React.createElement("div", { className: "input__header " + (this.props.className ? this.props.className : '') + ' ' + (this.props.heroHeader ? 'input__header--hero' : '') },
             React.createElement("div", { className: 'input__header__top ' + (this.props.showExpandAll ? 'input__header__top--tall' : ''), onClick: function () { return _this.toggle(); } },
-                this.props.title && React.createElement("div", { className: "input__header__title" }, this.props.title),
-                React.createElement("div", { className: "input__header__top__button-container" },
+                React.createElement("div", { className: "input__header__top__header-container" },
+                    this.props.icon && React.createElement("div", { className: "input__header__icon line-height--0" }, this.props.icon),
+                    this.props.title && React.createElement("div", { className: "input__header__title" }, this.props.title),
                     this.props.subTitle &&
-                        React.createElement("div", { className: "input__header__sub-title" }, this.props.subTitle),
+                        React.createElement("div", { className: "input__header__sub-title" }, this.props.subTitle)),
+                React.createElement("div", { className: "input__header__top__button-container" },
                     this.renderMainButton(),
                     this.props.extraButtons ?
                         React.createElement(Dropdown_1.default, { header: React.createElement(Button_1.default, { type: 'blank', circular: true },
