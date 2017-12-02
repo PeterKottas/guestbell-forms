@@ -4,8 +4,7 @@ import * as plusIconSrc from '../../assets/images/ic_add_circle_outline_black_24
 
 //Libs
 import * as React from 'react';
-import * as moment from 'moment';
-import * as DayPickerInput from 'react-day-picker/DayPickerInput';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 
 //Misc
@@ -36,7 +35,7 @@ export class OpeningHoursSpecial extends BaseInput.BaseInput<OpeningHoursSpecial
     }
 
     public render() {
-        return <div className={`input__base openingHoursSpecial-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}>
+        return <div className={'input__base openingHoursSpecial-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')}>
             {this.props.days.map((day, index) => (
                 <OpeningHoursDay
                     key={index}
@@ -61,13 +60,13 @@ export class OpeningHoursSpecial extends BaseInput.BaseInput<OpeningHoursSpecial
                         days[index] = { ...day, ...openingHours };
                         this.props.onDaysChange(days);
                     }}
-                    rowHeader={<DayPickerInput
+                    title={<DayPickerInput
                         placeholder={DAY_FORMAT}
-                        value={moment(day.date).format(DAY_FORMAT)}
+                        value={day.date}
                         format={DAY_FORMAT}
                         onDayChange={(date) => {
                             let days = this.props.days.slice(0);
-                            days[index] = { ...day, date: date.toDate() };
+                            days[index] = { ...day, date: date };
                             this.props.onDaysChange(days);
                         }}
                         dayPickerProps={{
@@ -88,7 +87,3 @@ export class OpeningHoursSpecial extends BaseInput.BaseInput<OpeningHoursSpecial
     }
 }
 export default OpeningHoursSpecial;
-
-if (!true) {
-    moment();
-}

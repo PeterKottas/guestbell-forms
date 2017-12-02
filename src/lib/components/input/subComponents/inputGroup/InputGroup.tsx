@@ -7,7 +7,7 @@ import * as React from 'react';
 //Misc
 import * as BaseInput from '../base/BaseInput';
 
-export type InputGroupProps = Pick<BaseInput.BaseInputProps, 'rowHeader' | 'className'>;
+export type InputGroupProps = Pick<BaseInput.BaseInputProps, 'title' | 'className'>;
 
 export interface InputGroupState extends BaseInput.BaseInputState {
 }
@@ -18,10 +18,10 @@ export class InputGroup extends BaseInput.BaseInput<InputGroupProps, InputGroupS
     }
 
     public render() {
-        return this.props.rowHeader ?
+        return this.props.title ?
             <div className={`input__group input__group__border ` + (this.props.className ? this.props.className : '')}>
-                {this.props.rowHeader && <div className="row-header">
-                    {this.props.rowHeader}
+                {this.props.title && <div className="row-header">
+                    {this.props.title}
                 </div>}
                 {this.props.children}
             </div> :

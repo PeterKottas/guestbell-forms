@@ -2,7 +2,7 @@ import './radioContainer.scss';
 import * as React from 'react';
 export interface RadioContainerProps {
     className?: string;
-    rowHeader?: string;
+    title?: string;
 }
 export interface RadioContainerState {
 }

@@ -17,7 +17,7 @@ export interface BaseInputProps {
     onTheFlightValidate?: (value: string) => boolean;
     onFocus?: () => void;
     onBlur?: () => void;
-    rowHeader?: string | JSX.Element;
+    title?: string | JSX.Element;
 }
 export interface BaseInputState {
     valid: boolean;

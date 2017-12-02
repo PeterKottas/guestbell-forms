@@ -34,7 +34,7 @@ export class Time extends BaseInput.BaseInput<TimeProps, TimeState>  {
     }
 
     public render() {
-        return <InputGroup rowHeader={this.props.rowHeader}>
+        return <InputGroup title={this.props.title}>
             <div className={`input__base time-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}>
                 <div className="">
                     <div className="time-input__arrows__container">

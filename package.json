@@ -29,7 +29,6 @@
     "file-loader": "1.1.5",
     "lodash": "4.17.4",
     "material-design-icons": "^3.0.1",
-    "moment": "2.19.3",
     "node-sass": "4.7.2",
     "postcss-loader": "2.0.9",
     "prop-types": "15.6.0",
@@ -79,7 +78,6 @@
   "peerDependencies": {
     "react": "*",
     "prop-types": "*",
-    "moment": "*",
     "react-day-picker": "*",
     "react-smooth-collapse": "*",
     "react-ink": "*"

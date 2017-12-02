@@ -80,7 +80,7 @@ export class OpeningHoursWeek extends BaseInput.BaseInput<OpeningHoursWeekProps,
                 onOpeningHoursChange={(openingHours) => {
                     this.props.onStandardDayChange(openingHours);
                 }}
-                rowHeader={'Standard day'}
+                title={'Standard day'}
             />}
             {this.props.days.map((day, index) => (
                 <OpeningHoursDay
@@ -113,7 +113,7 @@ export class OpeningHoursWeek extends BaseInput.BaseInput<OpeningHoursWeekProps,
                             this.props.onDaysChange(days);
                         }
                     }}
-                    rowHeader={day.dayLabel}
+                    title={day.dayLabel}
                 />
             ))}
             <span className="bar"></span>

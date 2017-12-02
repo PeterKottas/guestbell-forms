@@ -16,7 +16,6 @@ module.exports = merge(require('./webpack.config.base'), {
     externals: {
         "react": "react",
         "prop-types": "prop-types",
-        "moment": "moment",
         "react-day-picker": "react-day-picker",
         "react-day-picker/DayPickerInput": "react-day-picker/DayPickerInput",
         "react-smooth-collapse": "react-smooth-collapse"

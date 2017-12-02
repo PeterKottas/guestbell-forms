@@ -39,7 +39,7 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
     }
 
     public render() {
-        return <InputGroup rowHeader={this.props.rowHeader}>
+        return <InputGroup title={this.props.title}>
             <div className={`input__base select-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}>
                 <select
                     disabled={this.getDisabled()}

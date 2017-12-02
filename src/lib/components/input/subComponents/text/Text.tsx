@@ -26,7 +26,7 @@ export class Text extends BaseInput.BaseInput<TextProps, TextState>  {
     }
 
     public render() {
-        return <InputGroup rowHeader={this.props.rowHeader}>
+        return <InputGroup title={this.props.title}>
             <div className={`input__base text-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}>
                 <input
                     placeholder={this.props.placeholder}

@@ -142,9 +142,9 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                     label="Turn form validation on or off"
                                     onChecked={(e) => this.setState({ validateFormSubmit: !this.state.validateFormSubmit })}
                                     checked={this.state.validateFormSubmit}
-                                    rowHeader="Validate form submit"
+                                    title="Validate form submit"
                                 />
-                                <RadioContainer rowHeader="Touch on">
+                                <RadioContainer title="Touch on">
                                     <Radio
                                         name="touch"
                                         value="blur" label="Blur"
@@ -159,7 +159,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                         onChecked={(value) => this.setState({ touchOn: value as "blur" | "focus" })}
                                     />
                                 </RadioContainer>
-                                <RadioContainer rowHeader="Theme">
+                                <RadioContainer title="Theme">
                                     <Radio
                                         name="theme"
                                         value="guestbell-forms--dark bg-dark"
@@ -179,13 +179,13 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                     label="Disables inputs"
                                     onChecked={(e) => this.setState({ submitDisablesInputs: !this.state.submitDisablesInputs })}
                                     checked={this.state.submitDisablesInputs}
-                                    rowHeader="Submit"
+                                    title="Submit"
                                 />
                                 <Checkbox
                                     label="Unmount"
                                     onChecked={(e) => this.setState({ simulateUnmount: !this.state.simulateUnmount })}
                                     checked={this.state.simulateUnmount}
-                                    rowHeader="Simulate"
+                                    title="Simulate"
                                 />
                             </Form>
                         </div>
@@ -224,7 +224,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                                 onClick={(e) => { e.preventDefault(); this.form.unTouchAll(); }}
                                             >Un-touch all</Button>]}
                                     >
-                                        <RadioContainer rowHeader="Drinks">
+                                        <RadioContainer title="Drinks">
                                             <Radio
                                                 name="drink"
                                                 value="wine"
@@ -252,20 +252,20 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             label="Smart"
                                             onChecked={(e) => this.setState({ checkbox1: !this.state.checkbox1 })}
                                             checked={this.state.checkbox1}
-                                            rowHeader="Dress code"
+                                            title="Dress code"
                                         />
                                         <Checkbox
                                             label="(optional)"
                                             onChecked={(e) => this.setState({ checkbox2: !this.state.checkbox2 })}
                                             checked={this.state.checkbox2}
-                                            rowHeader="Wallet parking"
+                                            title="Wallet parking"
                                         />
                                         <Text
                                             touchOn={this.state.touchOn}
                                             required={true} label="Your name"
                                             onChange={(e) => this.setState({ name: e.target.value })}
                                             value={this.state.name}
-                                            rowHeader="Name"
+                                            title="Name"
                                         />
                                         <Select
                                             touchOn={this.state.touchOn}
@@ -273,7 +273,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             values={[{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }]}
                                             onChange={this.handleGenderChange}
                                             value={this.state.gender}
-                                            rowHeader="Gender"
+                                            title="Gender"
                                         />
                                         <InputHeader
                                             title={'Some collapsed stuff'}
@@ -287,7 +287,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                                 label="Email"
                                                 value={this.state.email}
                                                 onChange={(e) => this.setState({ email: e.target.value })}
-                                                rowHeader="Your email"
+                                                title="Your email"
                                             />
                                             <Text
                                                 touchOn={this.state.touchOn}
@@ -295,7 +295,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                                 label="Your age (optional)"
                                                 value={this.state.age}
                                                 onChange={(e) => this.setState({ age: e.target.value })}
-                                                rowHeader="Age"
+                                                title="Age"
                                             />
                                         </InputHeader>
                                         <Money
@@ -304,7 +304,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             touchOn={this.state.touchOn}
                                             required={false}
                                             onPricesChange={(prices) => this.setState({ prices1: prices })}
-                                            rowHeader="Price"
+                                            title="Price"
                                         />
                                         <Money
                                             currencies={[{ label: 'GBP', value: 'GBP' }, { label: 'EUR', value: 'EUR' }, { label: 'USD', value: 'USD' }]}
@@ -313,13 +313,13 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             touchOn={this.state.touchOn}
                                             required={false}
                                             onPricesChange={(prices) => this.setState({ prices2: prices })}
-                                            rowHeader="Price multiple"
+                                            title="Price multiple"
                                         />
                                         <Time
                                             touchOn={this.state.touchOn}
                                             time={this.state.time1}
                                             timeChange={(time) => this.setState({ time1: time })}
-                                            rowHeader="Time"
+                                            title="Time"
                                         />
                                         <Time
                                             max={(() => {
@@ -337,7 +337,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             touchOn={this.state.touchOn}
                                             time={this.state.time2}
                                             timeChange={(time) => this.setState({ time2: time })}
-                                            rowHeader="With Min/Max"
+                                            title="With Min/Max"
                                         />
                                         <OpeningHoursDay
                                             label={'Opening hours sample day'}
@@ -345,7 +345,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             required={false}
                                             onOpeningHoursChange={(openingHours => this.setState({ openingHours: openingHours }))}
                                             openingHours={this.state.openingHours}
-                                            rowHeader="Opening hours"
+                                            title="Opening hours"
                                         />
                                         <InputHeader
                                             title={'Opening hours'}

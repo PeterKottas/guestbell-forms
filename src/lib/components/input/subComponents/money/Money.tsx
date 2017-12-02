@@ -41,7 +41,7 @@ export class Money extends BaseInput.BaseInput<MoneyProps, MoneyState>  {
 
     public render() {
         let unusedCurrencies = this.props.currencies;
-        return <InputGroup rowHeader={this.props.rowHeader}>
+        return <InputGroup title={this.props.title}>
             <div className={'input__base money-input ' + this.getValidationClass() + (this.props.className ? ' ' + this.props.className : '')}>
                 {this.props.prices && this.props.prices.map((item, index) => {
                     let currentCurrencies = this.props.currencies.filter(currency => this.props.prices.filter((priceCurrency, priceIndex) => priceIndex !== index && priceCurrency.currency.value === currency.value).length === 0);
