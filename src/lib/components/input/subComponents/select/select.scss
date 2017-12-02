@@ -5,7 +5,8 @@
     border: none;
     border-bottom: 1px solid $input-border-color;
     margin-top: 20px;
-
+    max-width: 30rem;
+    
     &::after {
         position: absolute;
         top: 18px;

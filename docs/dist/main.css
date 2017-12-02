@@ -239,14 +239,16 @@ textarea {
     background-color: #11c6d0; }
 .text-input {
   display: inline-block;
-  margin-top: 20px; }
+  margin-top: 20px;
+  max-width: 30rem; }
   .text-input input {
     padding: 6px 10px 5px 5px;
     color: #555555;
     outline: 0;
     border: none;
     width: 100%;
-    background-color: transparent; }
+    background-color: transparent;
+    text-overflow: ellipsis; }
 
 .guestbell-forms--dark .text-input input {
   color: white; }
@@ -285,7 +287,8 @@ textarea {
   display: inline-block;
   border: none;
   border-bottom: 1px solid #eeeeee;
-  margin-top: 20px; }
+  margin-top: 20px;
+  max-width: 30rem; }
   .select-input::after {
     position: absolute;
     top: 18px;
