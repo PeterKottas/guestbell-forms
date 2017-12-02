@@ -2600,7 +2600,7 @@ var Form = /** @class */ (function (_super) {
         });
     };
     Form.prototype.render = function () {
-        return React.createElement("form", { noValidate: true, role: "form", className: "validation-form " + (this.props.className ? this.props.className : '') }, this.props.children);
+        return React.createElement("form", { noValidate: true, role: "form", className: "input__form validation-form " + (this.props.className ? this.props.className : '') }, this.props.children);
     };
     Form.defaultProps = {
         noValidate: false,
@@ -24587,7 +24587,7 @@ var Basic = /** @class */ (function (_super) {
                 React.createElement("div", { className: "col-lg-12" },
                     React.createElement("div", { className: 'card ' + this.state.theme },
                         React.createElement("div", { className: "card-block p-0" }, !this.state.simulateUnmount &&
-                            React.createElement(index_1.Form, { className: "input__form", noValidate: true, ref: function (form) { return _this.form = form; } },
+                            React.createElement(index_1.Form, { noValidate: true, ref: function (form) { return _this.form = form; } },
                                 React.createElement(index_1.InputHeader, { title: 'Example form', showExpandAll: true, heroHeader: true, collapsable: true, collapsedDefault: false, mainButton: React.createElement(index_1.Submit, { type: 'hero', onClick: this.submitForm, validateForm: this.state.validateFormSubmit }, "Submit"), extraButtons: [
                                         React.createElement(index_1.Button, { className: "mx-2", onClick: function (e) { e.preventDefault(); _this.form.touchAll(); } }, "Touch all"),
                                         React.createElement(index_1.Button, { className: "mr-2", onClick: function (e) { e.preventDefault(); _this.form.unTouchAll(); } }, "Un-touch all")

@@ -198,7 +198,6 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                         <div className="card-block p-0">
                             {!this.state.simulateUnmount &&
                                 <Form
-                                    className="input__form"
                                     noValidate
                                     ref={form => this.form = form}
                                 >

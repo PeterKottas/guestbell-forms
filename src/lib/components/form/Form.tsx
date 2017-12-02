@@ -147,7 +147,7 @@ export class Form extends React.Component<FormProps, FormState> {
     }
 
     public render() {
-        return <form noValidate={true} role="form" className={`validation-form ${(this.props.className ? this.props.className : '')}`}>
+        return <form noValidate={true} role="form" className={`input__form validation-form ${(this.props.className ? this.props.className : '')}`}>
             {this.props.children}
         </form>;
     }
