@@ -47,7 +47,7 @@ export class Button extends React.Component<ButtonProps, ButtonState>  {
             className={`guestbell-btn ${this.getButtonClassName()} ${(this.props.className ? this.props.className : '')} ${(this.props.disabled ? 'disabled' : '')} ${(this.props.circular ? 'guestbell-btn-circular' : '')} ${(this.props.small ? 'guestbell-btn-small' : '')}`}
             onClick={this.handleClick}
         >
-            {!this.props.noRipples && !this.props.disabled && <Ink />}
+            {!this.props.noRipples && !this.props.disabled && Ink && <Ink />}
             {this.props.children}
         </div>;
     }

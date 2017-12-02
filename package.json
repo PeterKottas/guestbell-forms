@@ -81,6 +81,7 @@
     "prop-types": "*",
     "moment": "*",
     "react-day-picker": "*",
-    "react-smooth-collapse": "*"
+    "react-smooth-collapse": "*",
+    "react-ink": "*"
   }
 }

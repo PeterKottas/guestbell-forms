@@ -5425,7 +5425,7 @@ var Button = /** @class */ (function (_super) {
     };
     Button.prototype.render = function () {
         return React.createElement("div", { role: "button", className: "guestbell-btn " + this.getButtonClassName() + " " + (this.props.className ? this.props.className : '') + " " + (this.props.disabled ? 'disabled' : '') + " " + (this.props.circular ? 'guestbell-btn-circular' : '') + " " + (this.props.small ? 'guestbell-btn-small' : ''), onClick: this.handleClick },
-            !this.props.noRipples && !this.props.disabled && React.createElement(Ink, null),
+            !this.props.noRipples && !this.props.disabled && Ink && React.createElement(Ink, null),
             this.props.children);
     };
     Button.prototype.getButtonClassName = function () {
