@@ -4,8 +4,6 @@
     position: relative;
     padding: 0.5rem;
     transition: 0.5s all;
-    color: $input-text-color;
-    fill: $input-text-color;
     >svg{
         pointer-events: none;
     }
@@ -19,6 +17,15 @@
     .guestbell-btn{
         color: $input-text-color--dark;
         fill: $input-text-color--dark;
+    }
+}
+
+.guestbell-btn-blank--light{
+    color: $input-text-color;
+    fill: $input-text-color;
+    &:not(.disabled):hover{
+        color: $input-highlight-color;
+        fill: $input-highlight-color;
     }
 }
 

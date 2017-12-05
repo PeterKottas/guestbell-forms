@@ -155,7 +155,7 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
                     {this.renderMainButton()}
                     {this.props.extraButtons ?
                         <Dropdown
-                            header={<Button type={'blank'} circular={true}><MoreIcon /></Button>}
+                            header={<Button type={'blank--light'} circular={true}><MoreIcon /></Button>}
                             showArrow={false}
                             headerClassName={'line-height--0'}
                             className={''}
@@ -170,7 +170,7 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
                         <Button
                             circular={true}
                             className={`input__header__collapse-button line-height--0 ${(this.state.collapsed ? 'collapsed' : '')}`}
-                            type={'blank'}
+                            type={'blank--light'}
                         >
                             <PlusIcon />
                         </Button>}

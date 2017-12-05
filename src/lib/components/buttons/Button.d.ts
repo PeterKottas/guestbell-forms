@@ -4,7 +4,7 @@ export interface ButtonProps {
     onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
     className?: string;
     disabled?: boolean;
-    type?: 'hero' | 'blank' | 'dropdown';
+    type?: 'hero' | 'blank' | 'blank--light' | 'dropdown';
     circular?: boolean;
     noRipples?: boolean;
     small?: boolean;

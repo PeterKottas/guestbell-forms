@@ -111,6 +111,10 @@
     .input__header__title{
         color: $input-text-color--dark;
     }
+
+    .input__header__sub-title{
+        color: $input-text-color--dark;
+    }
 }
 
 .smooth-collapse__container{
@@ -136,6 +140,7 @@
         margin-right:0;
         text-align: justify;
     }
+
     .input__header__sub-title{
         margin-bottom: 0.5rem;
         width: 100% !important;

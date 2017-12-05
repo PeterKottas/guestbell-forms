@@ -90,6 +90,7 @@ export class Money extends BaseInput.BaseInput<MoneyProps, MoneyState>  {
                         />,
                         this.props.prices.length > 0 && (
                             <Button
+                                type={'blank--light'}
                                 key={index * 3 + 2}
                                 onClick={() => this.props.onPricesChange(this.props.prices.filter((item, itemIndex) => itemIndex !== index))}
                                 className="money-input__button--remove line-height--0"
@@ -105,6 +106,7 @@ export class Money extends BaseInput.BaseInput<MoneyProps, MoneyState>  {
                 {(this.props.allowMultiple || this.props.prices && !this.props.prices.length) && unusedCurrencies.length ?
                     (
                         <Button
+                            type={'blank--light'}
                             className="line-height--0"
                             onClick={() => this.props.onPricesChange(this.props.prices.concat([{ value: 0, currency: unusedCurrencies[0] }]))}
                             circular={true}
