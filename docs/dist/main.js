@@ -912,6 +912,8 @@ var Button = /** @class */ (function (_super) {
                 return 'guestbell-btn-hero';
             case 'blank':
                 return 'guestbell-btn-blank';
+            case 'blank--light':
+                return 'guestbell-btn-blank--light';
             case 'dropdown':
                 return 'guestbell-btn-dropdown';
             default:
@@ -25812,14 +25814,14 @@ var Money = /** @class */ (function (_super) {
                                 }
                                 _this.props.onPricesChange(newPrices);
                             } }),
-                        _this.props.prices.length > 0 && (React.createElement(Button_1.default, { key: index * 3 + 2, onClick: function () { return _this.props.onPricesChange(_this.props.prices.filter(function (item, itemIndex) { return itemIndex !== index; })); }, className: "money-input__button--remove line-height--0", circular: true },
+                        _this.props.prices.length > 0 && (React.createElement(Button_1.default, { type: 'blank--light', key: index * 3 + 2, onClick: function () { return _this.props.onPricesChange(_this.props.prices.filter(function (item, itemIndex) { return itemIndex !== index; })); }, className: "money-input__button--remove line-height--0", circular: true },
                             React.createElement(PlusIcon, null)))
                     ] : null;
                     unusedCurrencies = unusedCurrencies.filter(function (currency) { return currency.value != item.currency.value; });
                     return retComponents;
                 }),
                 (this.props.allowMultiple || this.props.prices && !this.props.prices.length) && unusedCurrencies.length ?
-                    (React.createElement(Button_1.default, { className: "line-height--0", onClick: function () { return _this.props.onPricesChange(_this.props.prices.concat([{ value: 0, currency: unusedCurrencies[0] }])); }, circular: true },
+                    (React.createElement(Button_1.default, { type: 'blank--light', className: "line-height--0", onClick: function () { return _this.props.onPricesChange(_this.props.prices.concat([{ value: 0, currency: unusedCurrencies[0] }])); }, circular: true },
                         React.createElement(PlusIcon, null)))
                     :
                         null,
@@ -25928,7 +25930,7 @@ var OpeningHoursDay = /** @class */ (function (_super) {
                                     newOpeningHours.times[index] = time;
                                     _this.props.onOpeningHoursChange(newOpeningHours);
                                 }, time: item, min: previousTime, max: nextTime }),
-                            React.createElement(Button_1.default, { onClick: function () { return _this.props.onOpeningHoursChange(__assign({}, _this.props.openingHours, { times: _this.props.openingHours.times.filter(function (item, itemIndex) { return itemIndex !== index; }) })); }, className: "openingHoursDay-input__button--remove mr-5 line-height--0" },
+                            React.createElement(Button_1.default, { type: 'blank--light', onClick: function () { return _this.props.onOpeningHoursChange(__assign({}, _this.props.openingHours, { times: _this.props.openingHours.times.filter(function (item, itemIndex) { return itemIndex !== index; }) })); }, className: "openingHoursDay-input__button--remove mr-5 line-height--0" },
                                 React.createElement(PlusIcon, null)));
                     }),
                     this.props.maxOpenCloseTimes > this.props.openingHours.times.length &&
@@ -28458,12 +28460,12 @@ var InputHeader = /** @class */ (function (_super) {
                 React.createElement("div", { className: "input__header__top__button-container" },
                     this.renderMainButton(),
                     this.props.extraButtons ?
-                        React.createElement(Dropdown_1.default, { header: React.createElement(Button_1.default, { type: 'blank', circular: true },
+                        React.createElement(Dropdown_1.default, { header: React.createElement(Button_1.default, { type: 'blank--light', circular: true },
                                 React.createElement(MoreIcon, null)), showArrow: false, headerClassName: 'line-height--0', className: '', onClick: function (e) { return e.stopPropagation(); } }, this.renderExtraButtons())
                         :
                             null,
                     this.props.collapsable &&
-                        React.createElement(Button_1.default, { circular: true, className: "input__header__collapse-button line-height--0 " + (this.state.collapsed ? 'collapsed' : ''), type: 'blank' },
+                        React.createElement(Button_1.default, { circular: true, className: "input__header__collapse-button line-height--0 " + (this.state.collapsed ? 'collapsed' : ''), type: 'blank--light' },
                             React.createElement(PlusIcon, null))),
                 this.props.showExpandAll && Object.keys(this.state.inputHeaders).length > 0 &&
                     this.renderCollapseExpandAll()),

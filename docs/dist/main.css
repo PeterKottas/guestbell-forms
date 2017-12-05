@@ -207,9 +207,7 @@ textarea {
 .guestbell-btn {
   position: relative;
   padding: 0.5rem;
-  transition: 0.5s all;
-  color: #555555;
-  fill: #555555; }
+  transition: 0.5s all; }
   .guestbell-btn > svg {
     pointer-events: none; }
 
@@ -219,6 +217,13 @@ textarea {
 .guestbell-forms--dark .guestbell-btn {
   color: white;
   fill: white; }
+
+.guestbell-btn-blank--light {
+  color: #555555;
+  fill: #555555; }
+  .guestbell-btn-blank--light:not(.disabled):hover {
+    color: #10bdc7;
+    fill: #10bdc7; }
 
 .guestbell-btn-blank:not(.disabled):hover {
   color: #10bdc7;
@@ -1072,6 +1077,9 @@ textarea {
   background-color: #9f9f9f; }
 
 .guestbell-forms--dark .input__header__title {
+  color: white; }
+
+.guestbell-forms--dark .input__header__sub-title {
   color: white; }
 
 .smooth-collapse__container > div, .smooth-collapse__container > div > div {
