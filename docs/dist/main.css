@@ -207,7 +207,15 @@ textarea {
 .guestbell-btn {
   position: relative;
   padding: 0.5rem;
-  transition: 0.5s all; }
+  transition: 0.5s all;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
   .guestbell-btn > svg {
     pointer-events: none; }
 
