@@ -10,7 +10,7 @@ export interface BaseInputProps {
     onChange?: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void;
     required?: boolean;
     customValidators?: Validators.IBaseValidator[];
-    validators?: ("email" | "number" | "latitude" | "longitude")[];
+    validators?: ("email" | "number" | "latitude" | "longitude" | "url")[];
     noValidate?: boolean;
     touchOn?: "focus" | "blur";
     ignoreContext?: boolean;

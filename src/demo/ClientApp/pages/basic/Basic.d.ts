@@ -24,6 +24,7 @@ export interface BasicState {
     openingHoursWeek: OpeningHoursDayObj[];
     openingHoursWeekDay: OpeningHoursDayObj;
     openingHoursSpecial: OpeningHoursSpecialDayObj[];
+    website: string;
 }
 export declare class AgeValidator implements IBaseValidator {
     static instance: AgeValidator;

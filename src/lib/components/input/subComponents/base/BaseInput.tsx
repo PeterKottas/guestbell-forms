@@ -19,7 +19,7 @@ export interface BaseInputProps {
     onChange?: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void;
     required?: boolean;
     customValidators?: Validators.IBaseValidator[];
-    validators?: ("email" | "number" | "latitude" | "longitude")[];
+    validators?: ("email" | "number" | "latitude" | "longitude"| "url")[];
     noValidate?: boolean;
     touchOn?: "focus" | "blur";
     ignoreContext?: boolean;
@@ -126,6 +126,9 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
                                 break;
                             case 'longitude':
                                 validInner = new Validators.LongitudeValidator().Validate(value, this.props.required, (error) => errors.push(error));
+                                break;
+                            case 'url':
+                                validInner = new Validators.UrlValidator().Validate(value, this.props.required, (error) => errors.push(error));
                                 break;
                             default:
                                 throw new Error(`Validator ${validator} not implmeneted`);

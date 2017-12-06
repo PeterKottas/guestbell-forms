@@ -32,6 +32,7 @@ export interface BasicState {
     openingHoursWeek: OpeningHoursDayObj[];
     openingHoursWeekDay: OpeningHoursDayObj;
     openingHoursSpecial: OpeningHoursSpecialDayObj[];
+    website: string;
 }
 
 export class AgeValidator implements IBaseValidator {
@@ -86,6 +87,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
             times: []
         },
         openingHoursSpecial: [],
+        website: ''
     };
 
     constructor(props: BasicProps) {
@@ -289,6 +291,15 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                                 value={this.state.email}
                                                 onChange={(e) => this.setState({ email: e.target.value })}
                                                 title="Your email"
+                                            />
+                                            <Text
+                                                touchOn={this.state.touchOn}
+                                                validators={["url"]}
+                                                required={false}
+                                                label="Website"
+                                                value={this.state.website}
+                                                onChange={(e) => this.setState({ website: e.target.value })}
+                                                title="Your website"
                                             />
                                             <Text
                                                 touchOn={this.state.touchOn}
