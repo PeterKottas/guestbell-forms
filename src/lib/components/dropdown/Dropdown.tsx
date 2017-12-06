@@ -3,7 +3,11 @@ import './dropdown.scss';
 
 // Libs
 import * as React from 'react';
-import * as SmoothCollapse from 'react-smooth-collapse';
+try {
+    var SmoothCollapse = require('react-smooth-collapse');
+} catch {
+    SmoothCollapse = undefined;
+}
 
 export interface DropdownItemProps {
     header?: JSX.Element;
@@ -83,18 +87,29 @@ export class Dropdown extends React.Component<DropdownItemProps, DropdownItemSta
                 <div
                     className={'guestbell__dropdown-menu__container'}
                 >
-                    <SmoothCollapse
-                        expanded={this.state.isDropdownVisible}
-                    >
-                        <ul
-                            className={'guestbell__dropdown-menu ' + (this.props.submenuClassName ? this.props.submenuClassName : '')}
-                        >
-                            {this.props.children}
-                        </ul>
-                    </SmoothCollapse>
+                    {
+                        SmoothCollapse ?
+                            <SmoothCollapse
+                                expanded={this.state.isDropdownVisible}
+                            >
+                                {this.renderChildren()}
+                            </SmoothCollapse>
+                            :
+                            <div className={this.state.isDropdownVisible ? 'open' : 'close'}>
+                                {this.renderChildren()}
+                            </div>
+                    }
                 </div>
             </div>
         );
+    }
+
+    private renderChildren() {
+        return <ul
+            className={'guestbell__dropdown-menu ' + (this.props.submenuClassName ? this.props.submenuClassName : '')}
+        >
+            {this.props.children}
+        </ul>;
     }
 }
 

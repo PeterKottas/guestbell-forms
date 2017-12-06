@@ -1,6 +1,5 @@
 import './openingHoursSpecial.scss';
 import * as React from 'react';
-import 'react-day-picker/lib/style.css';
 import * as BaseInput from '../../base/BaseInput';
 import { OpeningHoursDayObj } from '../../../Inputs';
 export interface OpeningHoursSpecialDayObj extends OpeningHoursDayObj {

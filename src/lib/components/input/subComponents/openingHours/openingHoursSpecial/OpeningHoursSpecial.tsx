@@ -4,8 +4,12 @@ import * as plusIconSrc from '../../assets/images/ic_add_circle_outline_black_24
 
 //Libs
 import * as React from 'react';
-import DayPickerInput from 'react-day-picker/DayPickerInput';
-import 'react-day-picker/lib/style.css';
+try {
+    var DayPickerInput = require('react-day-picker/DayPickerInput').default;
+    require('react-day-picker/lib/style.css');
+} catch {
+    throw new Error('You need to install react-day-picker in order to use special day picker');
+}
 
 //Misc
 import * as BaseInput from '../../base/BaseInput';

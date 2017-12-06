@@ -7093,7 +7093,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __webpack_require__(193);
 // Libs
 var React = __webpack_require__(0);
-var SmoothCollapse = __webpack_require__(64);
+try {
+    var SmoothCollapse = __webpack_require__(64);
+}
+catch (_a) {
+    SmoothCollapse = undefined;
+}
 var Dropdown = /** @class */ (function (_super) {
     __extends(Dropdown, _super);
     function Dropdown(props) {
@@ -7135,9 +7140,13 @@ var Dropdown = /** @class */ (function (_super) {
                 } },
                 this.props.header,
                 this.props.notificationCount > 0 && React.createElement("span", { className: "guestbell__label-count" }, this.props.notificationCount)),
-            React.createElement("div", { className: 'guestbell__dropdown-menu__container' },
-                React.createElement(SmoothCollapse, { expanded: this.state.isDropdownVisible },
-                    React.createElement("ul", { className: 'guestbell__dropdown-menu ' + (this.props.submenuClassName ? this.props.submenuClassName : '') }, this.props.children)))));
+            React.createElement("div", { className: 'guestbell__dropdown-menu__container' }, SmoothCollapse ?
+                React.createElement(SmoothCollapse, { expanded: this.state.isDropdownVisible }, this.renderChildren())
+                :
+                    React.createElement("div", { className: this.state.isDropdownVisible ? 'open' : 'close' }, this.renderChildren()))));
+    };
+    Dropdown.prototype.renderChildren = function () {
+        return React.createElement("ul", { className: 'guestbell__dropdown-menu ' + (this.props.submenuClassName ? this.props.submenuClassName : '') }, this.props.children);
     };
     Dropdown.defaultProps = {
         shouldHandleClick: true,
@@ -26143,8 +26152,13 @@ __webpack_require__(128);
 var plusIconSrc = __webpack_require__(129);
 //Libs
 var React = __webpack_require__(0);
-var DayPickerInput_1 = __webpack_require__(130);
-__webpack_require__(139);
+try {
+    var DayPickerInput = __webpack_require__(130).default;
+    __webpack_require__(139);
+}
+catch (_a) {
+    throw new Error('You need to install react-day-picker in order to use special day picker');
+}
 //Misc
 var BaseInput = __webpack_require__(2);
 var Inputs_1 = __webpack_require__(32);
@@ -26168,7 +26182,7 @@ var OpeningHoursSpecial = /** @class */ (function (_super) {
                     var days = _this.props.days.slice(0);
                     days[index] = __assign({}, day, openingHours);
                     _this.props.onDaysChange(days);
-                }, title: React.createElement(DayPickerInput_1.default, { placeholder: DAY_FORMAT, value: day.date, format: DAY_FORMAT, onDayChange: function (date) {
+                }, title: React.createElement(DayPickerInput, { placeholder: DAY_FORMAT, value: day.date, format: DAY_FORMAT, onDayChange: function (date) {
                         var days = _this.props.days.slice(0);
                         days[index] = __assign({}, day, { date: date });
                         _this.props.onDaysChange(days);

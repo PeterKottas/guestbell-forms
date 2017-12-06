@@ -28,5 +28,6 @@ export declare class Dropdown extends React.Component<DropdownItemProps, Dropdow
     componentDidMount(): void;
     componentWillUnmount(): void;
     render(): JSX.Element;
+    private renderChildren();
 }
 export default Dropdown;
