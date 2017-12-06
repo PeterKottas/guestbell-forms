@@ -8,7 +8,7 @@ try {
     var DayPickerInput = require('react-day-picker/DayPickerInput').default;
     require('react-day-picker/lib/style.css');
 } catch {
-    throw new Error('You need to install react-day-picker in order to use special day picker');
+    DayPickerInput = undefined;
 }
 
 //Misc
@@ -39,6 +39,9 @@ export class OpeningHoursSpecial extends BaseInput.BaseInput<OpeningHoursSpecial
     }
 
     public render() {
+        if(!DayPickerInput){
+            throw new Error('You need to install react-day-picker in order to use special day picker');
+        }
         return <div className={'input__base openingHoursSpecial-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')}>
             {this.props.days.map((day, index) => (
                 <OpeningHoursDay

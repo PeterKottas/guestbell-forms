@@ -26157,7 +26157,7 @@ try {
     __webpack_require__(139);
 }
 catch (_a) {
-    throw new Error('You need to install react-day-picker in order to use special day picker');
+    DayPickerInput = undefined;
 }
 //Misc
 var BaseInput = __webpack_require__(2);
@@ -26171,6 +26171,9 @@ var OpeningHoursSpecial = /** @class */ (function (_super) {
     }
     OpeningHoursSpecial.prototype.render = function () {
         var _this = this;
+        if (!DayPickerInput) {
+            throw new Error('You need to install react-day-picker in order to use special day picker');
+        }
         return React.createElement("div", { className: 'input__base openingHoursSpecial-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '') },
             this.props.days.map(function (day, index) { return (React.createElement(Inputs_1.OpeningHoursDay, { key: index, label: (React.createElement("span", null,
                     OpeningHoursUtil_1.default.getLabelSuffix(day),
