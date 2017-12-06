@@ -116,16 +116,16 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
                         let validInner = false;
                         switch (validator) {
                             case 'email':
-                                validInner = Validators.EmailValidator.instance.Validate(value, this.props.required, (error) => errors.push(error));
+                                validInner = new Validators.EmailValidator().Validate(value, this.props.required, (error) => errors.push(error));
                                 break;
                             case 'number':
-                                validInner = Validators.NumberValidator.instance.Validate(value, this.props.required, (error) => errors.push(error));
+                                validInner = new Validators.NumberValidator().Validate(value, this.props.required, (error) => errors.push(error));
                                 break;
                             case 'latitude':
-                                validInner = Validators.LatitudeValidator.instance.Validate(value, this.props.required, (error) => errors.push(error));
+                                validInner = new Validators.LatitudeValidator().Validate(value, this.props.required, (error) => errors.push(error));
                                 break;
                             case 'longitude':
-                                validInner = Validators.LongitudeValidator.instance.Validate(value, this.props.required, (error) => errors.push(error));
+                                validInner = new Validators.LongitudeValidator().Validate(value, this.props.required, (error) => errors.push(error));
                                 break;
                             default:
                                 throw new Error(`Validator ${validator} not implmeneted`);

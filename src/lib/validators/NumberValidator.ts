@@ -9,7 +9,6 @@ export class NumberValidator implements IBaseValidator {
     constructor(config: NumberValidatorConfig = { min: undefined, max: undefined }) {
         this.config = config;
     }
-    public static instance = new NumberValidator();
     public Validate(value: string, isRequired: boolean, addError: (error: string) => void): boolean {
         let number = Number(value);
         if (!isNaN(number)) {
