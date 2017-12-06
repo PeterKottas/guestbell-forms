@@ -368,16 +368,16 @@ var BaseInput = /** @class */ (function (_super) {
                         var validInner = false;
                         switch (validator) {
                             case 'email':
-                                validInner = Validators.EmailValidator.instance.Validate(value, _this.props.required, function (error) { return errors.push(error); });
+                                validInner = new Validators.EmailValidator().Validate(value, _this.props.required, function (error) { return errors.push(error); });
                                 break;
                             case 'number':
-                                validInner = Validators.NumberValidator.instance.Validate(value, _this.props.required, function (error) { return errors.push(error); });
+                                validInner = new Validators.NumberValidator().Validate(value, _this.props.required, function (error) { return errors.push(error); });
                                 break;
                             case 'latitude':
-                                validInner = Validators.LatitudeValidator.instance.Validate(value, _this.props.required, function (error) { return errors.push(error); });
+                                validInner = new Validators.LatitudeValidator().Validate(value, _this.props.required, function (error) { return errors.push(error); });
                                 break;
                             case 'longitude':
-                                validInner = Validators.LongitudeValidator.instance.Validate(value, _this.props.required, function (error) { return errors.push(error); });
+                                validInner = new Validators.LongitudeValidator().Validate(value, _this.props.required, function (error) { return errors.push(error); });
                                 break;
                             default:
                                 throw new Error("Validator " + validator + " not implmeneted");
@@ -1677,17 +1677,24 @@ module.exports = ReactPropTypesSecret;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var NumberValidator = /** @class */ (function () {
-    function NumberValidator() {
+    function NumberValidator(config) {
+        if (config === void 0) { config = { min: undefined, max: undefined }; }
+        this.config = config;
     }
     NumberValidator.prototype.Validate = function (value, isRequired, addError) {
         var number = Number(value);
         if (!isNaN(number)) {
+            if (this.config.min && number <= this.config.min) {
+                return false;
+            }
+            if (this.config.max && number >= this.config.max) {
+                return false;
+            }
             return true;
         }
         addError('Invalid number');
         return false;
     };
-    NumberValidator.instance = new NumberValidator();
     return NumberValidator;
 }());
 exports.NumberValidator = NumberValidator;
@@ -24680,7 +24687,6 @@ var EmailValidator = /** @class */ (function () {
         addError('Invalid email');
         return false;
     };
-    EmailValidator.instance = new EmailValidator();
     return EmailValidator;
 }());
 exports.EmailValidator = EmailValidator;
@@ -24698,7 +24704,7 @@ var LatitudeValidator = /** @class */ (function () {
     function LatitudeValidator() {
     }
     LatitudeValidator.prototype.Validate = function (value, isRequired, addError) {
-        var validNumber = NumberValidator_1.NumberValidator.instance.Validate(value, isRequired, addError);
+        var validNumber = new NumberValidator_1.NumberValidator().Validate(value, isRequired, addError);
         if (validNumber) {
             var number = Number(value);
             if (-90 > number || number > 90) {
@@ -24709,7 +24715,6 @@ var LatitudeValidator = /** @class */ (function () {
         }
         return false;
     };
-    LatitudeValidator.instance = new LatitudeValidator();
     return LatitudeValidator;
 }());
 exports.LatitudeValidator = LatitudeValidator;
@@ -24727,7 +24732,7 @@ var LongitudeValidator = /** @class */ (function () {
     function LongitudeValidator() {
     }
     LongitudeValidator.prototype.Validate = function (value, isRequired, addError) {
-        var validNumber = NumberValidator_1.NumberValidator.instance.Validate(value, isRequired, addError);
+        var validNumber = new NumberValidator_1.NumberValidator().Validate(value, isRequired, addError);
         if (validNumber) {
             var number = Number(value);
             if (-180 > number || number > 180) {
@@ -24738,7 +24743,6 @@ var LongitudeValidator = /** @class */ (function () {
         }
         return false;
     };
-    LongitudeValidator.instance = new LongitudeValidator();
     return LongitudeValidator;
 }());
 exports.LongitudeValidator = LongitudeValidator;
