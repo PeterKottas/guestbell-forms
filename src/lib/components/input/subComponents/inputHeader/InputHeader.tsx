@@ -3,7 +3,12 @@ import './inputHeader.scss';
 
 //Libs
 import * as React from 'react';
-import * as SmoothCollapse from 'react-smooth-collapse';
+//import * as SmoothCollapse from 'react-smooth-collapse';
+try {
+    var SmoothCollapse = require('react-smooth-collapse');
+} catch {
+    SmoothCollapse = undefined;
+}
 import * as PropTypes from 'prop-types';
 
 //Misc
@@ -182,13 +187,13 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
                 {
                     this.props.collapsable ?
                         <div className={(!this.state.collapsed && this.state.smoothCollapseDone ? 'smooth-collapse__container' : '')}>
-                            <SmoothCollapse
+                            {SmoothCollapse ? <SmoothCollapse
                                 collapsedHeight={'0.0001px'}
                                 expanded={this.props.collapsed !== undefined ? !this.props.collapsed : !this.state.collapsed}
                                 onChangeEnd={() => this.setState(previousState => ({ smoothCollapseDone: true }))}
                             >
                                 {this.props.children}
-                            </SmoothCollapse>
+                            </SmoothCollapse> : this.props.children}
                         </div>
                         :
                         this.props.children

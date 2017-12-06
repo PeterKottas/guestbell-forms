@@ -28372,7 +28372,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __webpack_require__(141);
 //Libs
 var React = __webpack_require__(0);
-var SmoothCollapse = __webpack_require__(64);
+//import * as SmoothCollapse from 'react-smooth-collapse';
+try {
+    var SmoothCollapse = __webpack_require__(64);
+}
+catch (_a) {
+    SmoothCollapse = undefined;
+}
 var PropTypes = __webpack_require__(4);
 //Misc
 var Dropdown_1 = __webpack_require__(79);
@@ -28474,8 +28480,7 @@ var InputHeader = /** @class */ (function (_super) {
                 this.props.showExpandAll && Object.keys(this.state.inputHeaders).length > 0 &&
                     this.renderCollapseExpandAll()),
             React.createElement("div", { className: "input__header__bottom" }, this.props.collapsable ?
-                React.createElement("div", { className: (!this.state.collapsed && this.state.smoothCollapseDone ? 'smooth-collapse__container' : '') },
-                    React.createElement(SmoothCollapse, { collapsedHeight: '0.0001px', expanded: this.props.collapsed !== undefined ? !this.props.collapsed : !this.state.collapsed, onChangeEnd: function () { return _this.setState(function (previousState) { return ({ smoothCollapseDone: true }); }); } }, this.props.children))
+                React.createElement("div", { className: (!this.state.collapsed && this.state.smoothCollapseDone ? 'smooth-collapse__container' : '') }, SmoothCollapse ? React.createElement(SmoothCollapse, { collapsedHeight: '0.0001px', expanded: this.props.collapsed !== undefined ? !this.props.collapsed : !this.state.collapsed, onChangeEnd: function () { return _this.setState(function (previousState) { return ({ smoothCollapseDone: true }); }); } }, this.props.children) : this.props.children)
                 :
                     this.props.children));
     };
