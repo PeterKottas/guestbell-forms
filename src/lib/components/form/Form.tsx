@@ -33,12 +33,12 @@ export interface FormContext {
 }
 
 export const FormContextType = {
-    register: PropTypes.func.isRequired,
-    unregister: PropTypes.func.isRequired,
-    isFormValid: PropTypes.func.isRequired,
-    updateCallback: PropTypes.func.isRequired,
-    enableInputs: PropTypes.func.isRequired,
-    disableInputs: PropTypes.func.isRequired
+    register: PropTypes.func,
+    unregister: PropTypes.func,
+    isFormValid: PropTypes.func,
+    updateCallback: PropTypes.func,
+    enableInputs: PropTypes.func,
+    disableInputs: PropTypes.func
 };
 
 export class Form extends React.Component<FormProps, FormState> {
