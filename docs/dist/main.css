@@ -348,13 +348,13 @@ textarea {
     color: white; }
   .guestbell-forms--dark .select-input::after {
     border-top: 6px solid white; }
-.checkbox-input {
+.input__base.checkbox-input {
   display: block;
-  margin-top: 24px !important;
-  border: none !important; }
-  .checkbox-input.validation__error {
+  margin-top: 24px;
+  border: none; }
+  .input__base.checkbox-input.validation__error {
     border: none; }
-  .checkbox-input input {
+  .input__base.checkbox-input input {
     position: relative;
     padding: 10px 10px 5px 5px;
     color: #555555;
@@ -363,7 +363,7 @@ textarea {
     width: auto;
     margin-right: 1rem;
     top: 0; }
-    .checkbox-input input:before {
+    .input__base.checkbox-input input:before {
       transition: -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
       transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
       transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75), -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
@@ -379,10 +379,10 @@ textarea {
       border: 2px solid #10bdc7;
       border-top-style: none;
       border-right-style: none; }
-    .checkbox-input input:checked:before {
+    .input__base.checkbox-input input:checked:before {
       -webkit-transform: rotate(-45deg) scale(1, 1);
               transform: rotate(-45deg) scale(1, 1); }
-    .checkbox-input input:after {
+    .input__base.checkbox-input input:after {
       content: "";
       position: absolute;
       top: -0.125rem;
@@ -392,7 +392,7 @@ textarea {
       background: #fff;
       border: 2px solid #eeeeee;
       cursor: pointer; }
-  .checkbox-input label {
+  .input__base.checkbox-input label {
     top: 0;
     -webkit-user-select: none;
        -moz-user-select: none;

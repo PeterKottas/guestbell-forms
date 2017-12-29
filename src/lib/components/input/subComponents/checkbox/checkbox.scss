@@ -5,10 +5,10 @@ $baseFontSize: 16;
     @return #{$val / $baseFontSize}rem;
 }
 
-.checkbox-input {
+.input__base.checkbox-input {
     display: block;
-    margin-top: 24px !important;
-    border: none !important;
+    margin-top: 24px;
+    border: none;
 
     &.validation__error {
         border: none;
