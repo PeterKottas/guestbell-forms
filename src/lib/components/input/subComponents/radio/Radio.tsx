@@ -48,7 +48,6 @@ export class Radio extends BaseInput.BaseInput<RadioProps, RadioState>  {
     public render() {
         return <div className={`input__group radio-input ${this.getValidationClass()} ${this.props.className?this.props.className:''}`}>
             {!this.props.label && this.renderInput()}
-            {this.renderDefaultValidation()}
             {this.props.label && <label>{this.renderInput()}{this.props.label}</label>}
         </div>;
     }

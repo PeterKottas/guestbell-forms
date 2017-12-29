@@ -25730,7 +25730,6 @@ var Radio = /** @class */ (function (_super) {
     Radio.prototype.render = function () {
         return React.createElement("div", { className: "input__group radio-input " + this.getValidationClass() + " " + (this.props.className ? this.props.className : '') },
             !this.props.label && this.renderInput(),
-            this.renderDefaultValidation(),
             this.props.label && React.createElement("label", null,
                 this.renderInput(),
                 this.props.label));
