@@ -322,12 +322,12 @@ var BaseInput = /** @class */ (function (_super) {
     };
     BaseInput.prototype.componentWillUnmount = function () {
         if (!this.props.ignoreContext) {
-            this.context.unregister(this);
+            this.context && this.context.unregister && this.context.unregister(this);
         }
     };
     BaseInput.prototype.componentDidMount = function () {
         if (!this.props.ignoreContext) {
-            this.context.register(this);
+            this.context && this.context.register && this.context.register(this);
         }
         this.handleValueChange(this.state.value);
     };

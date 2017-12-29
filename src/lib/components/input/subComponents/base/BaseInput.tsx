@@ -65,13 +65,13 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
 
     componentWillUnmount() {
         if (!this.props.ignoreContext) {
-            this.context.unregister(this);
+            this.context && this.context.unregister && this.context.unregister(this);
         }
     }
 
     componentDidMount() {
         if (!this.props.ignoreContext) {
-            this.context.register(this);
+            this.context && this.context.register && this.context.register(this);
         }
         this.handleValueChange(this.state.value);
     }
