@@ -1,6 +1,5 @@
 ﻿@import '../../../variables.scss';
 $baseFontSize: 16;
-
 @function rem($val) {
     @return #{$val / $baseFontSize}rem;
 }
@@ -9,11 +8,14 @@ $baseFontSize: 16;
     display: block;
     margin-top: 24px;
     border: none;
-
     &.validation__error {
         border: none;
     }
-
+    &.checkbox-input--with-label {
+        input {
+            margin-right: 1rem;
+        }
+    }
     input {
         position: relative;
         padding: 10px 10px 5px 5px;
@@ -21,11 +23,9 @@ $baseFontSize: 16;
         outline: 0;
         border: none;
         width: auto;
-        margin-right: 1rem;
         top: 0;
-
         &:before {
-            transition: transform .4s cubic-bezier(.45,1.8,.5,.75);
+            transition: transform .4s cubic-bezier(.45, 1.8, .5, .75);
             transform: rotate(-45deg) scale(0, 0);
             content: "";
             position: absolute;
@@ -38,13 +38,11 @@ $baseFontSize: 16;
             border-top-style: none;
             border-right-style: none;
         }
-
         &:checked {
             &:before {
                 transform: rotate(-45deg) scale(1, 1);
             }
         }
-
         &:after {
             content: "";
             position: absolute;
@@ -57,7 +55,6 @@ $baseFontSize: 16;
             cursor: pointer;
         }
     }
-
     label {
         top: 0;
         user-select: none;

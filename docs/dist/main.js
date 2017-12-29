@@ -25674,7 +25674,7 @@ var Checkbox = /** @class */ (function (_super) {
     };
     Checkbox.prototype.render = function () {
         return React.createElement(InputGroup_1.default, { title: this.props.title },
-            React.createElement("div", { className: "input__base checkbox-input " + this.getValidationClass() + " " + (this.props.className ? this.props.className : '') },
+            React.createElement("div", { className: "input__base checkbox-input " + this.getValidationClass() + " " + (this.props.className ? this.props.className : '') + " " + (this.props.label ? 'checkbox-input--with-label' : '') },
                 !this.props.label && this.renderInput(),
                 this.renderDefaultValidation(),
                 this.props.label && React.createElement("label", null,

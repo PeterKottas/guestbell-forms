@@ -354,6 +354,8 @@ textarea {
   border: none; }
   .input__base.checkbox-input.validation__error {
     border: none; }
+  .input__base.checkbox-input.checkbox-input--with-label input {
+    margin-right: 1rem; }
   .input__base.checkbox-input input {
     position: relative;
     padding: 10px 10px 5px 5px;
@@ -361,7 +363,6 @@ textarea {
     outline: 0;
     border: none;
     width: auto;
-    margin-right: 1rem;
     top: 0; }
     .input__base.checkbox-input input:before {
       transition: -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
