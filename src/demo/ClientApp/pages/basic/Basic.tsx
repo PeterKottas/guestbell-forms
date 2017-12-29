@@ -250,6 +250,29 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                                 onChecked={(value) => this.setState({ drink: value })}
                                             />
                                         </RadioContainer>
+                                        <RadioContainer title="Drinks (horizontal)" horizontal={true}>
+                                            <Radio
+                                                name="drink"
+                                                value="wine"
+                                                label="Wine"
+                                                result={this.state.drink}
+                                                onChecked={(value) => this.setState({ drink: value })}
+                                            />
+                                            <Radio
+                                                name="drink"
+                                                value="whiskey"
+                                                label="Whiskey"
+                                                result={this.state.drink}
+                                                onChecked={(value) => this.setState({ drink: value })}
+                                            />
+                                            <Radio
+                                                name="drink"
+                                                value="water"
+                                                label="Water"
+                                                result={this.state.drink}
+                                                onChecked={(value) => this.setState({ drink: value })}
+                                            />
+                                        </RadioContainer>
                                         <Checkbox
                                             required={true}
                                             label="Smart"

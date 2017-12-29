@@ -3,6 +3,7 @@ import * as React from 'react';
 export interface RadioContainerProps {
     className?: string;
     title?: string;
+    horizontal?: boolean;
 }
 export interface RadioContainerState {
 }

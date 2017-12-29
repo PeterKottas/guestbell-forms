@@ -10,6 +10,7 @@ import InputGroup from './../inputGroup/InputGroup';
 export interface RadioContainerProps {
     className?: string;
     title?: string;
+    horizontal?: boolean;
 }
 
 export interface RadioContainerState {
@@ -22,7 +23,7 @@ export class RadioContainer extends React.Component<RadioContainerProps, RadioCo
 
     public render() {
         return <InputGroup title={this.props.title}>
-            <div className={`input__base radio-input__container ${(this.props.className ? this.props.className : '')}`}>
+            <div className={`input__base radio-input__container ${this.props.horizontal ? 'radio-input__container--horizontal' : ''} ${(this.props.className ? this.props.className : '')}`}>
                 {this.props.children}
             </div>
         </InputGroup>;

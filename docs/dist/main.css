@@ -469,10 +469,17 @@ textarea {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  margin-top: 1.8rem !important;
-  margin-bottom: 0 !important; }
+  margin-top: 1.6rem !important; }
   .radio-input__container .radio-input {
     margin: 0; }
+
+.radio-input__container--horizontal {
+  -webkit-box-orient: horizontal !important;
+  -webkit-box-direction: normal !important;
+      -ms-flex-direction: row !important;
+          flex-direction: row !important; }
+  .radio-input__container--horizontal > div {
+    margin-right: 1rem !important; }
 
 @media (max-width: 768px) {
   .radio-input__container {

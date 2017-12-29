@@ -24620,6 +24620,10 @@ var Basic = /** @class */ (function (_super) {
                                         React.createElement(index_1.Radio, { name: "drink", value: "wine", label: "Wine", result: this.state.drink, onChecked: function (value) { return _this.setState({ drink: value }); } }),
                                         React.createElement(index_1.Radio, { name: "drink", value: "whiskey", label: "Whiskey", result: this.state.drink, onChecked: function (value) { return _this.setState({ drink: value }); } }),
                                         React.createElement(index_1.Radio, { name: "drink", value: "water", label: "Water", result: this.state.drink, onChecked: function (value) { return _this.setState({ drink: value }); } })),
+                                    React.createElement(index_1.RadioContainer, { title: "Drinks (horizontal)", horizontal: true },
+                                        React.createElement(index_1.Radio, { name: "drink", value: "wine", label: "Wine", result: this.state.drink, onChecked: function (value) { return _this.setState({ drink: value }); } }),
+                                        React.createElement(index_1.Radio, { name: "drink", value: "whiskey", label: "Whiskey", result: this.state.drink, onChecked: function (value) { return _this.setState({ drink: value }); } }),
+                                        React.createElement(index_1.Radio, { name: "drink", value: "water", label: "Water", result: this.state.drink, onChecked: function (value) { return _this.setState({ drink: value }); } })),
                                     React.createElement(index_1.Checkbox, { required: true, label: "Smart", onChecked: function (e) { return _this.setState({ checkbox1: !_this.state.checkbox1 }); }, checked: this.state.checkbox1, title: "Dress code" }),
                                     React.createElement(index_1.Checkbox, { label: "(optional)", onChecked: function (e) { return _this.setState({ checkbox2: !_this.state.checkbox2 }); }, checked: this.state.checkbox2, title: "Wallet parking" }),
                                     React.createElement(index_1.Text, { touchOn: this.state.touchOn, required: true, label: "Your name", onChange: function (e) { return _this.setState({ name: e.target.value }); }, value: this.state.name, title: "Name" }),
@@ -25773,7 +25777,7 @@ var RadioContainer = /** @class */ (function (_super) {
     }
     RadioContainer.prototype.render = function () {
         return React.createElement(InputGroup_1.default, { title: this.props.title },
-            React.createElement("div", { className: "input__base radio-input__container " + (this.props.className ? this.props.className : '') }, this.props.children));
+            React.createElement("div", { className: "input__base radio-input__container " + (this.props.horizontal ? 'radio-input__container--horizontal' : '') + " " + (this.props.className ? this.props.className : '') }, this.props.children));
     };
     return RadioContainer;
 }(React.Component));
