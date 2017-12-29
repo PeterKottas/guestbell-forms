@@ -1,7 +1,7 @@
 import { IBaseValidator } from './base';
 export interface NumberValidatorConfig {
-    min: number;
-    max: number;
+    min?: number;
+    max?: number;
 }
 export declare class NumberValidator implements IBaseValidator {
     private config;
