@@ -43,7 +43,9 @@ export class Checkbox extends BaseInput.BaseInput<CheckboxProps, CheckboxState> 
     }
 
     componentDidMount() {
-        this.context.updateCallback(this.state.valid, this.inputId);
+        if (!this.props.ignoreContext) {
+            this.context && this.context.updateCallback && this.context.updateCallback(this.state.valid, this.inputId);
+        }
     }
 
     private renderInput() {

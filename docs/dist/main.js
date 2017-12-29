@@ -25665,7 +25665,9 @@ var Checkbox = /** @class */ (function (_super) {
         }
     };
     Checkbox.prototype.componentDidMount = function () {
-        this.context.updateCallback(this.state.valid, this.inputId);
+        if (!this.props.ignoreContext) {
+            this.context && this.context.updateCallback && this.context.updateCallback(this.state.valid, this.inputId);
+        }
     };
     Checkbox.prototype.renderInput = function () {
         return React.createElement("input", { disabled: this.getDisabled(), type: "checkbox", required: this.props.required, checked: this.state.checked, onChange: this.handleChecked, onBlur: this.handleBlur, onFocus: this.handleFocus });
