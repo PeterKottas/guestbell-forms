@@ -411,7 +411,7 @@ var BaseInput = /** @class */ (function (_super) {
         }
         this.setState({ value: value, valid: valid, errors: errors });
         if (!this.props.ignoreContext) {
-            this.context.updateCallback(valid, this.inputId);
+            this.context && this.context.updateCallback && this.context.updateCallback(valid, this.inputId);
         }
     };
     BaseInput.prototype.handleChange = function (event) {

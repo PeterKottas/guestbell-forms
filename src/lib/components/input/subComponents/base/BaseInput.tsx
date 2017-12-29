@@ -19,14 +19,14 @@ export interface BaseInputProps {
     onChange?: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void;
     required?: boolean;
     customValidators?: Validators.IBaseValidator[];
-    validators?: ("email" | "number" | "latitude" | "longitude"| "url")[];
+    validators?: ("email" | "number" | "latitude" | "longitude" | "url")[];
     noValidate?: boolean;
     touchOn?: "focus" | "blur";
     ignoreContext?: boolean;
     onTheFlightValidate?: (value: string) => boolean;
     onFocus?: () => void;
     onBlur?: () => void;
-    title?: string|JSX.Element;
+    title?: string | JSX.Element;
 }
 
 export interface BaseInputState {
@@ -158,7 +158,7 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
         }
         this.setState({ value: value, valid: valid, errors: errors });
         if (!this.props.ignoreContext) {
-            this.context.updateCallback(valid, this.inputId);
+            this.context && this.context.updateCallback && this.context.updateCallback(valid, this.inputId);
         }
     }
 
