@@ -60,6 +60,12 @@ export class Checkbox extends BaseInput.BaseInput<CheckboxProps, CheckboxState> 
         />;
     }
 
+    public componentWillReceiveProps(newProps: CheckboxProps) {
+        if (newProps.checked !== this.state.checked) {
+            this.setState({ checked: newProps.checked });
+        }
+    }
+
     public render() {
         return <InputGroup title={this.props.title}>
             <div className={`input__base checkbox-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''} ${this.props.label ? 'checkbox-input--with-label' : ''}`}>

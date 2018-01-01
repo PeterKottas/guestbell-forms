@@ -25681,6 +25681,11 @@ var Checkbox = /** @class */ (function (_super) {
     Checkbox.prototype.renderInput = function () {
         return React.createElement("input", { disabled: this.getDisabled(), type: "checkbox", required: this.props.required, checked: this.state.checked, onChange: this.handleChecked, onBlur: this.handleBlur, onFocus: this.handleFocus });
     };
+    Checkbox.prototype.componentWillReceiveProps = function (newProps) {
+        if (newProps.checked !== this.state.checked) {
+            this.setState({ checked: newProps.checked });
+        }
+    };
     Checkbox.prototype.render = function () {
         return React.createElement(InputGroup_1.default, { title: this.props.title },
             React.createElement("div", { className: "input__base checkbox-input " + this.getValidationClass() + " " + (this.props.className ? this.props.className : '') + " " + (this.props.label ? 'checkbox-input--with-label' : '') },
