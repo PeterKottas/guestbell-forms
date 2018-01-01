@@ -1,5 +1,6 @@
 import './dropdown.scss';
 import * as React from 'react';
+import { ButtonProps } from './../buttons/Button.d';
 export interface DropdownItemProps {
     header?: JSX.Element;
     className?: string;
@@ -10,6 +11,7 @@ export interface DropdownItemProps {
     shouldHandleClick?: boolean;
     showArrow?: boolean;
     onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+    headerProps?: ButtonProps;
 }
 export interface DropdownItemState {
     isDropdownVisible: boolean;

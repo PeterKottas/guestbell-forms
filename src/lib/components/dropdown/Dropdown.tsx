@@ -3,6 +3,8 @@ import './dropdown.scss';
 
 // Libs
 import * as React from 'react';
+import { Button } from './../buttons/Button';
+import { ButtonProps } from './../buttons/Button.d';
 try {
     var SmoothCollapse = require('react-smooth-collapse');
 } catch {
@@ -19,6 +21,7 @@ export interface DropdownItemProps {
     shouldHandleClick?: boolean;
     showArrow?: boolean;
     onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+    headerProps?: ButtonProps;
 }
 
 export interface DropdownItemState {
@@ -69,7 +72,8 @@ export class Dropdown extends React.Component<DropdownItemProps, DropdownItemSta
                 className={'guestbell__dropdown ' + (!this.state.isDropdownVisible ? 'closed ' : 'open ') + (this.props.className ? this.props.className : ' ')}
                 onClick={e => this.props.onClick && this.props.onClick(e)}
             >
-                <a
+                <Button
+                    {...this.props.headerProps}
                     className={`guestbell__dropdown-toggle ${(this.props.headerClassName ? this.props.headerClassName : '')} ${(this.props.showArrow ? '' : 'guestbell__dropdown-toggle__arrow--hidden')}`}
                     onClick={(event) => {
                         if (this.props.shouldHandleClick) {
@@ -83,7 +87,7 @@ export class Dropdown extends React.Component<DropdownItemProps, DropdownItemSta
                 >
                     {this.props.header}
                     {this.props.notificationCount > 0 && <span className="guestbell__label-count">{this.props.notificationCount}</span>}
-                </a>
+                </Button>
                 <div
                     className={'guestbell__dropdown-menu__container'}
                 >
