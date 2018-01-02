@@ -5,12 +5,15 @@ import * as Button from '../../../buttons/Button';
 export interface SubmitProps extends BaseInput.BaseInputProps, Button.ButtonProps {
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     validateForm?: boolean;
+    disableAfterClickMs?: number;
 }
 export interface SubmitState extends BaseInput.BaseInputState {
+    preventMultipleClick: boolean;
 }
 export declare class Submit extends BaseInput.BaseInput<SubmitProps, SubmitState> {
     static defaultProps: BaseInput.BaseInputProps & {
         validateForm: boolean;
+        disableAfterClickMs: number;
     };
     constructor(props: any);
     private handleClick(e);
