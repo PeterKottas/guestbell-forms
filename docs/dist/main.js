@@ -7146,8 +7146,8 @@ var Dropdown = /** @class */ (function (_super) {
         var _this = this;
         //const Wrapper = this.props.wrapperTag;
         return (React.createElement("div", { className: 'guestbell__dropdown ' + (!this.state.isDropdownVisible ? 'closed ' : 'open ') + (this.props.className ? this.props.className : ' '), onClick: function (e) { return _this.props.onClick && _this.props.onClick(e); } },
-            React.createElement("div", __assign({}, this.props.headerProps, { className: "guestbell__dropdown-toggle " + (this.props.headerClassName ? this.props.headerClassName : '') + " " + (this.props.showArrow ? '' : 'guestbell__dropdown-toggle__arrow--hidden') + " " + (this.props.headerProps.disabled ? 'disabled' : ''), onClick: function (event) {
-                    if (_this.props.shouldHandleClick && !_this.props.headerProps.disabled) {
+            React.createElement("div", __assign({}, this.props.headerProps, { className: "guestbell__dropdown-toggle \n                    " + (this.props.headerClassName ? this.props.headerClassName : '') + " \n                    " + (this.props.showArrow ? '' : 'guestbell__dropdown-toggle__arrow--hidden') + " \n                    " + (this.props.headerProps && this.props.headerProps.disabled ? 'disabled' : ''), onClick: function (event) {
+                    if (_this.props.shouldHandleClick && _this.props.headerProps && !_this.props.headerProps.disabled) {
                         event.preventDefault();
                         event.stopPropagation();
                         if (!_this.state.isDropdownVisible) {

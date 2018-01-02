@@ -73,9 +73,12 @@ export class Dropdown extends React.Component<DropdownItemProps, DropdownItemSta
             >
                 <div
                     {...this.props.headerProps}
-                    className={`guestbell__dropdown-toggle ${(this.props.headerClassName ? this.props.headerClassName : '')} ${(this.props.showArrow ? '' : 'guestbell__dropdown-toggle__arrow--hidden')} ${(this.props.headerProps.disabled ? 'disabled' : '')}`}
+                    className={`guestbell__dropdown-toggle 
+                    ${(this.props.headerClassName ? this.props.headerClassName : '')} 
+                    ${(this.props.showArrow ? '' : 'guestbell__dropdown-toggle__arrow--hidden')} 
+                    ${(this.props.headerProps && this.props.headerProps.disabled ? 'disabled' : '')}`}
                     onClick={(event) => {
-                        if (this.props.shouldHandleClick && !this.props.headerProps.disabled) {
+                        if (this.props.shouldHandleClick && this.props.headerProps && !this.props.headerProps.disabled) {
                             event.preventDefault();
                             event.stopPropagation();
                             if (!this.state.isDropdownVisible) {
