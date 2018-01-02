@@ -205,7 +205,7 @@ textarea {
     width: 0;
     background: transparent; } }
 .guestbell-btn {
-  background: none !important;
+  background: none;
   color: inherit;
   border: none;
   font: inherit;
