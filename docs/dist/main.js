@@ -25607,22 +25607,23 @@ var Submit = /** @class */ (function (_super) {
     __extends(Submit, _super);
     function Submit(props) {
         var _this = _super.call(this, props) || this;
-        _this.state = __assign({}, _this.state, { preventMultipleClick: false });
+        _this.preventMultipleClick = false;
         _this.handleClick = _this.handleClick.bind(_this);
         return _this;
     }
     Submit.prototype.handleClick = function (e) {
         var _this = this;
-        e.preventDefault();
-        this.setState({ preventMultipleClick: true }, function () {
-            _this.props.onClick && _this.props.onClick(e);
-            if (_this.props.disableAfterClickMs !== 0) {
-                setTimeout(function () { return _this.setState({ preventMultipleClick: false }); });
+        if (!this.preventMultipleClick) {
+            e.preventDefault();
+            this.props.onClick && this.props.onClick(e);
+            this.preventMultipleClick = true;
+            if (this.props.disableAfterClickMs !== 0) {
+                setTimeout(function () { return _this.preventMultipleClick = false; });
             }
-        });
+        }
     };
     Submit.prototype.render = function () {
-        return React.createElement(Button.Button, __assign({}, this.props, { buttonType: "submit", className: "" + (this.props.className ? this.props.className : ''), onClick: this.handleClick, disabled: this.state.preventMultipleClick || this.getDisabled() ? this.getDisabled() : (this.props.validateForm ? this.context.isFormValid && !this.context.isFormValid() : false) }), this.props.children);
+        return React.createElement(Button.Button, __assign({}, this.props, { buttonType: "submit", className: "" + (this.props.className ? this.props.className : ''), onClick: this.handleClick, disabled: this.getDisabled() ? this.getDisabled() : (this.props.validateForm ? this.context.isFormValid && !this.context.isFormValid() : false) }), this.props.children);
     };
     Submit.defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { validateForm: true, disableAfterClickMs: 500 });
     return Submit;

@@ -8,13 +8,13 @@ export interface SubmitProps extends BaseInput.BaseInputProps, Button.ButtonProp
     disableAfterClickMs?: number;
 }
 export interface SubmitState extends BaseInput.BaseInputState {
-    preventMultipleClick: boolean;
 }
 export declare class Submit extends BaseInput.BaseInput<SubmitProps, SubmitState> {
     static defaultProps: BaseInput.BaseInputProps & {
         validateForm: boolean;
         disableAfterClickMs: number;
     };
+    private preventMultipleClick;
     constructor(props: any);
     private handleClick(e);
     render(): JSX.Element;
