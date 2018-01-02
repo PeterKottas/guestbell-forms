@@ -25614,9 +25614,9 @@ var Submit = /** @class */ (function (_super) {
     Submit.prototype.handleClick = function (e) {
         var _this = this;
         if (!this.preventMultipleClick) {
+            this.preventMultipleClick = true;
             e.preventDefault();
             this.props.onClick && this.props.onClick(e);
-            this.preventMultipleClick = true;
             if (this.props.disableAfterClickMs !== 0) {
                 setTimeout(function () { return _this.preventMultipleClick = false; });
             }

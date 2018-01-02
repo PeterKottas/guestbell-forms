@@ -27,9 +27,9 @@ export class Submit extends BaseInput.BaseInput<SubmitProps, SubmitState>  {
 
     private handleClick(e: React.MouseEvent<HTMLButtonElement>) {
         if (!this.preventMultipleClick) {
+            this.preventMultipleClick = true;
             e.preventDefault();
             this.props.onClick && this.props.onClick(e);
-            this.preventMultipleClick = true;
             if (this.props.disableAfterClickMs !== 0) {
                 setTimeout(() => this.preventMultipleClick = false);
             }
