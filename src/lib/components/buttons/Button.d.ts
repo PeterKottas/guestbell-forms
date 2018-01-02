@@ -9,11 +9,13 @@ export interface ButtonProps {
     circular?: boolean;
     noRipples?: boolean;
     small?: boolean;
+    disableAfterClickMs?: number;
 }
 export interface ButtonState {
 }
 export declare class Button extends React.Component<ButtonProps, ButtonState> {
     static defaultProps: ButtonProps;
+    private preventMultipleClick;
     constructor(props: any);
     private handleClick(e);
     render(): JSX.Element;

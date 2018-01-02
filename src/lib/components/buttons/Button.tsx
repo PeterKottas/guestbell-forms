@@ -16,6 +16,7 @@ export interface ButtonProps {
     circular?: boolean;
     noRipples?: boolean;
     small?: boolean;
+    disableAfterClickMs?: number;
 }
 
 export interface ButtonState {
@@ -32,6 +33,7 @@ export class Button extends React.Component<ButtonProps, ButtonState>  {
         small: false,
         buttonType: 'button'
     }
+    private preventMultipleClick = false;
 
     constructor(props) {
         super(props);
@@ -39,8 +41,16 @@ export class Button extends React.Component<ButtonProps, ButtonState>  {
     }
 
     private handleClick(e: React.MouseEvent<HTMLButtonElement>) {
-        e.preventDefault();
-        !this.props.disabled && this.props.onClick && this.props.onClick(e);
+        if (!this.preventMultipleClick) {
+            this.preventMultipleClick = true;
+            e.preventDefault();
+            !this.props.disabled && this.props.onClick && this.props.onClick(e);
+            if (this.props.disableAfterClickMs !== 0) {
+                setTimeout(() => {
+                    this.preventMultipleClick = false;
+                }, this.props.disableAfterClickMs);
+            }
+        }
     }
 
     public render() {

@@ -897,12 +897,22 @@ var Button = /** @class */ (function (_super) {
     __extends(Button, _super);
     function Button(props) {
         var _this = _super.call(this, props) || this;
+        _this.preventMultipleClick = false;
         _this.handleClick = _this.handleClick.bind(_this);
         return _this;
     }
     Button.prototype.handleClick = function (e) {
-        e.preventDefault();
-        !this.props.disabled && this.props.onClick && this.props.onClick(e);
+        var _this = this;
+        if (!this.preventMultipleClick) {
+            this.preventMultipleClick = true;
+            e.preventDefault();
+            !this.props.disabled && this.props.onClick && this.props.onClick(e);
+            if (this.props.disableAfterClickMs !== 0) {
+                setTimeout(function () {
+                    _this.preventMultipleClick = false;
+                }, this.props.disableAfterClickMs);
+            }
+        }
     };
     Button.prototype.render = function () {
         return React.createElement("button", { type: this.props.buttonType, role: "button", className: "guestbell-btn " + this.getButtonClassName() + " " + (this.props.className ? this.props.className : '') + " " + (this.props.disabled ? 'disabled' : '') + " " + (this.props.circular ? 'guestbell-btn-circular' : '') + " " + (this.props.small ? 'guestbell-btn-small' : ''), onClick: this.handleClick },
@@ -25607,27 +25617,17 @@ var Submit = /** @class */ (function (_super) {
     __extends(Submit, _super);
     function Submit(props) {
         var _this = _super.call(this, props) || this;
-        _this.preventMultipleClick = false;
         _this.handleClick = _this.handleClick.bind(_this);
         return _this;
     }
     Submit.prototype.handleClick = function (e) {
-        var _this = this;
-        if (!this.preventMultipleClick) {
-            this.preventMultipleClick = true;
-            e.preventDefault();
-            this.props.onClick && this.props.onClick(e);
-            if (this.props.disableAfterClickMs !== 0) {
-                setTimeout(function () {
-                    _this.preventMultipleClick = false;
-                }, this.props.disableAfterClickMs);
-            }
-        }
+        e.preventDefault();
+        this.props.onClick && this.props.onClick(e);
     };
     Submit.prototype.render = function () {
         return React.createElement(Button.Button, __assign({}, this.props, { buttonType: "submit", className: "" + (this.props.className ? this.props.className : ''), onClick: this.handleClick, disabled: this.getDisabled() ? this.getDisabled() : (this.props.validateForm ? this.context.isFormValid && !this.context.isFormValid() : false) }), this.props.children);
     };
-    Submit.defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { validateForm: true, disableAfterClickMs: 800 });
+    Submit.defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { validateForm: true });
     return Submit;
 }(BaseInput.BaseInput));
 exports.Submit = Submit;

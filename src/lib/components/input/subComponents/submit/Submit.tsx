@@ -11,31 +11,22 @@ import * as Button from '../../../buttons/Button';
 export interface SubmitProps extends BaseInput.BaseInputProps, Button.ButtonProps {
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     validateForm?: boolean;
-    disableAfterClickMs?: number;
 }
 
 export interface SubmitState extends BaseInput.BaseInputState {
 }
 
 export class Submit extends BaseInput.BaseInput<SubmitProps, SubmitState>  {
-    public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { validateForm: true, disableAfterClickMs: 800 });
-    private preventMultipleClick = false;
+    public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { validateForm: true });
+
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
     }
 
     private handleClick(e: React.MouseEvent<HTMLButtonElement>) {
-        if (!this.preventMultipleClick) {
-            this.preventMultipleClick = true;
-            e.preventDefault();
-            this.props.onClick && this.props.onClick(e);
-            if (this.props.disableAfterClickMs !== 0) {
-                setTimeout(() => {
-                    this.preventMultipleClick = false;
-                }, this.props.disableAfterClickMs);
-            }
-        }
+        e.preventDefault();
+        this.props.onClick && this.props.onClick(e);
     }
 
     public render() {
