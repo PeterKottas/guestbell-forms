@@ -18,7 +18,7 @@ export interface SubmitState extends BaseInput.BaseInputState {
 }
 
 export class Submit extends BaseInput.BaseInput<SubmitProps, SubmitState>  {
-    public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { validateForm: true, disableAfterClickMs: 500 });
+    public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { validateForm: true, disableAfterClickMs: 800 });
     private preventMultipleClick = false;
     constructor(props) {
         super(props);
@@ -31,7 +31,9 @@ export class Submit extends BaseInput.BaseInput<SubmitProps, SubmitState>  {
             e.preventDefault();
             this.props.onClick && this.props.onClick(e);
             if (this.props.disableAfterClickMs !== 0) {
-                setTimeout(() => this.preventMultipleClick = false);
+                setTimeout(() => {
+                    this.preventMultipleClick = false;
+                }, this.props.disableAfterClickMs);
             }
         }
     }

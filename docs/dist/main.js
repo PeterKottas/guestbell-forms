@@ -25618,14 +25618,16 @@ var Submit = /** @class */ (function (_super) {
             e.preventDefault();
             this.props.onClick && this.props.onClick(e);
             if (this.props.disableAfterClickMs !== 0) {
-                setTimeout(function () { return _this.preventMultipleClick = false; });
+                setTimeout(function () {
+                    _this.preventMultipleClick = false;
+                }, this.props.disableAfterClickMs);
             }
         }
     };
     Submit.prototype.render = function () {
         return React.createElement(Button.Button, __assign({}, this.props, { buttonType: "submit", className: "" + (this.props.className ? this.props.className : ''), onClick: this.handleClick, disabled: this.getDisabled() ? this.getDisabled() : (this.props.validateForm ? this.context.isFormValid && !this.context.isFormValid() : false) }), this.props.children);
     };
-    Submit.defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { validateForm: true, disableAfterClickMs: 500 });
+    Submit.defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { validateForm: true, disableAfterClickMs: 800 });
     return Submit;
 }(BaseInput.BaseInput));
 exports.Submit = Submit;
