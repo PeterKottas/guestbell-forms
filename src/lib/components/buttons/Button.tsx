@@ -31,7 +31,8 @@ export class Button extends React.Component<ButtonProps, ButtonState>  {
         circular: false,
         noRipples: false,
         small: false,
-        buttonType: 'button'
+        buttonType: 'button',
+        disableAfterClickMs: 500
     }
     private preventMultipleClick = false;
 
@@ -41,9 +42,9 @@ export class Button extends React.Component<ButtonProps, ButtonState>  {
     }
 
     private handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+        e.preventDefault();
         if (!this.preventMultipleClick) {
             this.preventMultipleClick = true;
-            e.preventDefault();
             !this.props.disabled && this.props.onClick && this.props.onClick(e);
             if (this.props.disableAfterClickMs !== 0) {
                 setTimeout(() => {

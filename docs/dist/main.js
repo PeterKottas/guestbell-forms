@@ -903,9 +903,9 @@ var Button = /** @class */ (function (_super) {
     }
     Button.prototype.handleClick = function (e) {
         var _this = this;
+        e.preventDefault();
         if (!this.preventMultipleClick) {
             this.preventMultipleClick = true;
-            e.preventDefault();
             !this.props.disabled && this.props.onClick && this.props.onClick(e);
             if (this.props.disableAfterClickMs !== 0) {
                 setTimeout(function () {
@@ -941,7 +941,8 @@ var Button = /** @class */ (function (_super) {
         circular: false,
         noRipples: false,
         small: false,
-        buttonType: 'button'
+        buttonType: 'button',
+        disableAfterClickMs: 500
     };
     return Button;
 }(React.Component));
