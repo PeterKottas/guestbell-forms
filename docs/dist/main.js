@@ -762,73 +762,6 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ }),
 /* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-//Styles
-__webpack_require__(106);
-//Libs
-var React = __webpack_require__(0);
-var Ink = __webpack_require__(107);
-var Button = /** @class */ (function (_super) {
-    __extends(Button, _super);
-    function Button(props) {
-        var _this = _super.call(this, props) || this;
-        _this.handleClick = _this.handleClick.bind(_this);
-        return _this;
-    }
-    Button.prototype.handleClick = function (e) {
-        e.preventDefault();
-        !this.props.disabled && this.props.onClick && this.props.onClick(e);
-    };
-    Button.prototype.render = function () {
-        return React.createElement("div", { role: "button", className: "guestbell-btn " + this.getButtonClassName() + " " + (this.props.className ? this.props.className : '') + " " + (this.props.disabled ? 'disabled' : '') + " " + (this.props.circular ? 'guestbell-btn-circular' : '') + " " + (this.props.small ? 'guestbell-btn-small' : ''), onClick: this.handleClick },
-            !this.props.noRipples && !this.props.disabled && Ink && React.createElement(Ink, null),
-            this.props.children);
-    };
-    Button.prototype.getButtonClassName = function () {
-        switch (this.props.type) {
-            case 'hero':
-                return 'guestbell-btn-hero';
-            case 'blank':
-                return 'guestbell-btn-blank';
-            case 'blank--light':
-                return 'guestbell-btn-blank--light';
-            case 'dropdown':
-                return 'guestbell-btn-dropdown';
-            default:
-                return '';
-        }
-    };
-    Button.defaultProps = {
-        type: 'blank',
-        disabled: false,
-        className: '',
-        onClick: function () { return null; },
-        circular: false,
-        noRipples: false,
-        small: false
-    };
-    return Button;
-}(React.Component));
-exports.Button = Button;
-exports.default = Button;
-
-
-/***/ }),
-/* 11 */
 /***/ (function(module, exports) {
 
 var hasOwnProperty = {}.hasOwnProperty;
@@ -838,7 +771,7 @@ module.exports = function (it, key) {
 
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(21);
@@ -846,7 +779,7 @@ var IE8_DOM_DEFINE = __webpack_require__(68);
 var toPrimitive = __webpack_require__(39);
 var dP = Object.defineProperty;
 
-exports.f = __webpack_require__(13) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+exports.f = __webpack_require__(12) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
   anObject(O);
   P = toPrimitive(P, true);
   anObject(Attributes);
@@ -860,7 +793,7 @@ exports.f = __webpack_require__(13) ? Object.defineProperty : function definePro
 
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Thank's IE8 for his funny defineProperty
@@ -870,7 +803,7 @@ module.exports = !__webpack_require__(23)(function () {
 
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -937,6 +870,74 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = warning;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+//Styles
+__webpack_require__(106);
+//Libs
+var React = __webpack_require__(0);
+var Ink = __webpack_require__(107);
+var Button = /** @class */ (function (_super) {
+    __extends(Button, _super);
+    function Button(props) {
+        var _this = _super.call(this, props) || this;
+        _this.handleClick = _this.handleClick.bind(_this);
+        return _this;
+    }
+    Button.prototype.handleClick = function (e) {
+        e.preventDefault();
+        !this.props.disabled && this.props.onClick && this.props.onClick(e);
+    };
+    Button.prototype.render = function () {
+        return React.createElement("button", { type: this.props.buttonType, role: "button", className: "guestbell-btn " + this.getButtonClassName() + " " + (this.props.className ? this.props.className : '') + " " + (this.props.disabled ? 'disabled' : '') + " " + (this.props.circular ? 'guestbell-btn-circular' : '') + " " + (this.props.small ? 'guestbell-btn-small' : ''), onClick: this.handleClick },
+            !this.props.noRipples && !this.props.disabled && Ink && React.createElement(Ink, null),
+            this.props.children);
+    };
+    Button.prototype.getButtonClassName = function () {
+        switch (this.props.type) {
+            case 'hero':
+                return 'guestbell-btn-hero';
+            case 'blank':
+                return 'guestbell-btn-blank';
+            case 'blank--light':
+                return 'guestbell-btn-blank--light';
+            case 'dropdown':
+                return 'guestbell-btn-dropdown';
+            default:
+                return '';
+        }
+    };
+    Button.defaultProps = {
+        type: 'blank',
+        disabled: false,
+        className: '',
+        onClick: function () { return null; },
+        circular: false,
+        noRipples: false,
+        small: false,
+        buttonType: 'button'
+    };
+    return Button;
+}(React.Component));
+exports.Button = Button;
+exports.default = Button;
+
 
 /***/ }),
 /* 15 */
@@ -1009,9 +1010,9 @@ module.exports = $export;
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(12);
+var dP = __webpack_require__(11);
 var createDesc = __webpack_require__(28);
-module.exports = __webpack_require__(13) ? function (object, key, value) {
+module.exports = __webpack_require__(12) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
   object[key] = value;
@@ -1602,7 +1603,7 @@ module.exports = function (bitmap, value) {
 
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(5);
-  var warning = __webpack_require__(14);
+  var warning = __webpack_require__(13);
   var ReactPropTypesSecret = __webpack_require__(30);
   var loggedTypeFailures = {};
 }
@@ -2103,8 +2104,8 @@ module.exports = (
 /* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var def = __webpack_require__(12).f;
-var has = __webpack_require__(11);
+var def = __webpack_require__(11).f;
+var has = __webpack_require__(10);
 var TAG = __webpack_require__(18)('toStringTag');
 
 module.exports = function (it, tag, stat) {
@@ -2127,7 +2128,7 @@ var global = __webpack_require__(7);
 var core = __webpack_require__(8);
 var LIBRARY = __webpack_require__(41);
 var wksExt = __webpack_require__(47);
-var defineProperty = __webpack_require__(12).f;
+var defineProperty = __webpack_require__(11).f;
 module.exports = function (name) {
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
   if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
@@ -2616,7 +2617,8 @@ var Form = /** @class */ (function (_super) {
         });
     };
     Form.prototype.render = function () {
-        return React.createElement("form", { noValidate: true, role: "form", className: "input__form validation-form " + (this.props.className ? this.props.className : '') }, this.props.children);
+        var _this = this;
+        return React.createElement("form", { noValidate: true, role: "form", className: "input__form validation-form " + (this.props.className ? this.props.className : ''), onSubmit: function (e) { return e.preventDefault() || _this.props.onSubmit && _this.props.onSubmit(); } }, this.props.children);
     };
     Form.defaultProps = {
         noValidate: false,
@@ -3126,7 +3128,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has = __webpack_require__(11);
+var has = __webpack_require__(10);
 var toObject = __webpack_require__(65);
 var IE_PROTO = __webpack_require__(37)('IE_PROTO');
 var ObjectProto = Object.prototype;
@@ -3170,7 +3172,7 @@ module.exports = function (fn, that, length) {
 /* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = !__webpack_require__(13) && !__webpack_require__(23)(function () {
+module.exports = !__webpack_require__(12) && !__webpack_require__(23)(function () {
   return Object.defineProperty(__webpack_require__(69)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
@@ -3225,7 +3227,7 @@ var LIBRARY = __webpack_require__(41);
 var $export = __webpack_require__(15);
 var redefine = __webpack_require__(72);
 var hide = __webpack_require__(16);
-var has = __webpack_require__(11);
+var has = __webpack_require__(10);
 var Iterators = __webpack_require__(42);
 var $iterCreate = __webpack_require__(158);
 var setToStringTag = __webpack_require__(46);
@@ -3303,7 +3305,7 @@ module.exports = __webpack_require__(16);
 /* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has = __webpack_require__(11);
+var has = __webpack_require__(10);
 var toIObject = __webpack_require__(17);
 var arrayIndexOf = __webpack_require__(161)(false);
 var IE_PROTO = __webpack_require__(37)('IE_PROTO');
@@ -3361,11 +3363,11 @@ var pIE = __webpack_require__(49);
 var createDesc = __webpack_require__(28);
 var toIObject = __webpack_require__(17);
 var toPrimitive = __webpack_require__(39);
-var has = __webpack_require__(11);
+var has = __webpack_require__(10);
 var IE8_DOM_DEFINE = __webpack_require__(68);
 var gOPD = Object.getOwnPropertyDescriptor;
 
-exports.f = __webpack_require__(13) ? gOPD : function getOwnPropertyDescriptor(O, P) {
+exports.f = __webpack_require__(12) ? gOPD : function getOwnPropertyDescriptor(O, P) {
   O = toIObject(O);
   P = toPrimitive(P, true);
   if (IE8_DOM_DEFINE) try {
@@ -7108,7 +7110,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __webpack_require__(194);
 // Libs
 var React = __webpack_require__(0);
-var Button_1 = __webpack_require__(10);
 try {
     var SmoothCollapse = __webpack_require__(64);
 }
@@ -7145,7 +7146,7 @@ var Dropdown = /** @class */ (function (_super) {
         var _this = this;
         //const Wrapper = this.props.wrapperTag;
         return (React.createElement("div", { className: 'guestbell__dropdown ' + (!this.state.isDropdownVisible ? 'closed ' : 'open ') + (this.props.className ? this.props.className : ' '), onClick: function (e) { return _this.props.onClick && _this.props.onClick(e); } },
-            React.createElement(Button_1.Button, __assign({}, this.props.headerProps, { className: "guestbell__dropdown-toggle " + (this.props.headerClassName ? this.props.headerClassName : '') + " " + (this.props.showArrow ? '' : 'guestbell__dropdown-toggle__arrow--hidden'), onClick: function (event) {
+            React.createElement("div", __assign({}, this.props.headerProps, { className: "guestbell__dropdown-toggle " + (this.props.headerClassName ? this.props.headerClassName : '') + " " + (this.props.showArrow ? '' : 'guestbell__dropdown-toggle__arrow--hidden'), onClick: function (event) {
                     if (_this.props.shouldHandleClick) {
                         event.preventDefault();
                         event.stopPropagation();
@@ -7256,7 +7257,7 @@ if (process.env.NODE_ENV !== "production") {
 var _assign = __webpack_require__(9);
 var emptyObject = __webpack_require__(24);
 var invariant = __webpack_require__(5);
-var warning = __webpack_require__(14);
+var warning = __webpack_require__(13);
 var emptyFunction = __webpack_require__(3);
 var checkPropTypes = __webpack_require__(29);
 
@@ -8958,7 +8959,7 @@ if (process.env.NODE_ENV !== "production") {
 
 var React = __webpack_require__(0);
 var invariant = __webpack_require__(5);
-var warning = __webpack_require__(14);
+var warning = __webpack_require__(13);
 var ExecutionEnvironment = __webpack_require__(51);
 var _assign = __webpack_require__(9);
 var emptyFunction = __webpack_require__(3);
@@ -24582,7 +24583,7 @@ var Basic = /** @class */ (function (_super) {
         }
     };
     Basic.prototype.submitForm = function (e) {
-        e.preventDefault();
+        e && e.preventDefault();
         this.setState(this.initialState);
     };
     Basic.prototype.dynamicSubmitSuccessForm = function (e, submiting, error, success, reset) {
@@ -24622,7 +24623,7 @@ var Basic = /** @class */ (function (_super) {
                 React.createElement("div", { className: "col-lg-12" },
                     React.createElement("div", { className: 'card ' + this.state.theme },
                         React.createElement("div", { className: "card-block p-0" }, !this.state.simulateUnmount &&
-                            React.createElement(index_1.Form, { noValidate: true, ref: function (form) { return _this.form = form; } },
+                            React.createElement(index_1.Form, { noValidate: true, ref: function (form) { return _this.form = form; }, onSubmit: function () { return _this.submitForm(); } },
                                 React.createElement(index_1.InputHeader, { icon: React.createElement("i", { className: "material-icons md-48" }, "edit"), title: 'Example form', subTitle: 'And this is subtitle. There\'s also icon on the left', showExpandAll: true, heroHeader: true, collapsable: true, collapsedDefault: false, mainButton: React.createElement(index_1.Submit, { type: 'hero', onClick: this.submitForm, validateForm: this.state.validateFormSubmit }, "Submit"), extraButtons: [
                                         React.createElement(index_1.Button, { className: "mx-2", onClick: function (e) { e.preventDefault(); _this.form.touchAll(); } }, "Touch all"),
                                         React.createElement(index_1.Button, { className: "mr-2", onClick: function (e) { e.preventDefault(); _this.form.unTouchAll(); } }, "Un-touch all")
@@ -24692,7 +24693,7 @@ __export(__webpack_require__(57));
 __export(__webpack_require__(58));
 __export(__webpack_require__(32));
 __export(__webpack_require__(79));
-__export(__webpack_require__(10));
+__export(__webpack_require__(14));
 
 
 /***/ }),
@@ -24823,7 +24824,7 @@ exports.UrlValidator = UrlValidator;
 
 var emptyFunction = __webpack_require__(3);
 var invariant = __webpack_require__(5);
-var warning = __webpack_require__(14);
+var warning = __webpack_require__(13);
 var assign = __webpack_require__(9);
 
 var ReactPropTypesSecret = __webpack_require__(30);
@@ -25453,7 +25454,7 @@ __webpack_require__(104);
 var React = __webpack_require__(0);
 //Misc
 var BaseInput = __webpack_require__(2);
-var Button = __webpack_require__(10);
+var Button = __webpack_require__(14);
 var ButtonState;
 (function (ButtonState) {
     ButtonState[ButtonState["Normal"] = 0] = "Normal";
@@ -25601,7 +25602,7 @@ __webpack_require__(112);
 var React = __webpack_require__(0);
 //Misc
 var BaseInput = __webpack_require__(2);
-var Button = __webpack_require__(10);
+var Button = __webpack_require__(14);
 var Submit = /** @class */ (function (_super) {
     __extends(Submit, _super);
     function Submit(props) {
@@ -25614,7 +25615,7 @@ var Submit = /** @class */ (function (_super) {
         this.props.onClick && this.props.onClick(e);
     };
     Submit.prototype.render = function () {
-        return React.createElement(Button.Button, __assign({}, this.props, { className: "" + (this.props.className ? this.props.className : ''), onClick: this.handleClick, disabled: this.getDisabled() ? this.getDisabled() : (this.props.validateForm ? this.context.isFormValid && !this.context.isFormValid() : false) }), this.props.children);
+        return React.createElement(Button.Button, __assign({}, this.props, { buttonType: "submit", className: "" + (this.props.className ? this.props.className : ''), onClick: this.handleClick, disabled: this.getDisabled() ? this.getDisabled() : (this.props.validateForm ? this.context.isFormValid && !this.context.isFormValid() : false) }), this.props.children);
     };
     Submit.defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { validateForm: true });
     return Submit;
@@ -25835,7 +25836,7 @@ var BaseInput = __webpack_require__(2);
 var Select_1 = __webpack_require__(61);
 var Text_1 = __webpack_require__(60);
 var InputGroup_1 = __webpack_require__(6);
-var Button_1 = __webpack_require__(10);
+var Button_1 = __webpack_require__(14);
 var Money = /** @class */ (function (_super) {
     __extends(Money, _super);
     function Money(props) {
@@ -25966,7 +25967,7 @@ var BaseInput = __webpack_require__(2);
 var Time_1 = __webpack_require__(62);
 var OpeningHoursUtil_1 = __webpack_require__(33);
 var InputGroup_1 = __webpack_require__(6);
-var Button_1 = __webpack_require__(10);
+var Button_1 = __webpack_require__(14);
 var OpeningHoursDay = /** @class */ (function (_super) {
     __extends(OpeningHoursDay, _super);
     function OpeningHoursDay(props) {
@@ -28451,7 +28452,7 @@ var PropTypes = __webpack_require__(4);
 var Dropdown_1 = __webpack_require__(79);
 var MoreIcon = __webpack_require__(195);
 var PlusIcon = __webpack_require__(63);
-var Button_1 = __webpack_require__(10);
+var Button_1 = __webpack_require__(14);
 var Guid_1 = __webpack_require__(59);
 exports.InputHeaderContextType = {
     registerInputHeader: PropTypes.func,
@@ -28756,7 +28757,7 @@ module.exports = function defineProperty(it, key, desc) {
 
 var $export = __webpack_require__(15);
 // 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !__webpack_require__(13), 'Object', { defineProperty: __webpack_require__(12).f });
+$export($export.S + $export.F * !__webpack_require__(12), 'Object', { defineProperty: __webpack_require__(11).f });
 
 
 /***/ }),
@@ -28868,11 +28869,11 @@ module.exports = function (Constructor, NAME, next) {
 /* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(12);
+var dP = __webpack_require__(11);
 var anObject = __webpack_require__(21);
 var getKeys = __webpack_require__(44);
 
-module.exports = __webpack_require__(13) ? Object.defineProperties : function defineProperties(O, Properties) {
+module.exports = __webpack_require__(12) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
   var keys = getKeys(Properties);
   var length = keys.length;
@@ -29064,8 +29065,8 @@ module.exports = __webpack_require__(8).Symbol;
 
 // ECMAScript 6 symbols shim
 var global = __webpack_require__(7);
-var has = __webpack_require__(11);
-var DESCRIPTORS = __webpack_require__(13);
+var has = __webpack_require__(10);
+var DESCRIPTORS = __webpack_require__(12);
 var $export = __webpack_require__(15);
 var redefine = __webpack_require__(72);
 var META = __webpack_require__(172).KEY;
@@ -29085,7 +29086,7 @@ var createDesc = __webpack_require__(28);
 var _create = __webpack_require__(43);
 var gOPNExt = __webpack_require__(175);
 var $GOPD = __webpack_require__(77);
-var $DP = __webpack_require__(12);
+var $DP = __webpack_require__(11);
 var $keys = __webpack_require__(44);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
@@ -29303,8 +29304,8 @@ setToStringTag(global.JSON, 'JSON', true);
 
 var META = __webpack_require__(27)('meta');
 var isObject = __webpack_require__(22);
-var has = __webpack_require__(11);
-var setDesc = __webpack_require__(12).f;
+var has = __webpack_require__(10);
+var setDesc = __webpack_require__(11).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
   return true;
@@ -29603,7 +29604,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 var emptyFunction = __webpack_require__(3);
 var invariant = __webpack_require__(5);
-var warning = __webpack_require__(14);
+var warning = __webpack_require__(13);
 var assign = __webpack_require__(9);
 
 var ReactPropTypesSecret = __webpack_require__(50);
@@ -30153,7 +30154,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(5);
-  var warning = __webpack_require__(14);
+  var warning = __webpack_require__(13);
   var ReactPropTypesSecret = __webpack_require__(50);
   var loggedTypeFailures = {};
 }

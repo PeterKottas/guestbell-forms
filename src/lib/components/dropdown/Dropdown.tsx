@@ -3,7 +3,6 @@ import './dropdown.scss';
 
 // Libs
 import * as React from 'react';
-import { Button } from './../buttons/Button';
 import { ButtonProps } from './../buttons/Button.d';
 try {
     var SmoothCollapse = require('react-smooth-collapse');
@@ -72,7 +71,7 @@ export class Dropdown extends React.Component<DropdownItemProps, DropdownItemSta
                 className={'guestbell__dropdown ' + (!this.state.isDropdownVisible ? 'closed ' : 'open ') + (this.props.className ? this.props.className : ' ')}
                 onClick={e => this.props.onClick && this.props.onClick(e)}
             >
-                <Button
+                <div
                     {...this.props.headerProps}
                     className={`guestbell__dropdown-toggle ${(this.props.headerClassName ? this.props.headerClassName : '')} ${(this.props.showArrow ? '' : 'guestbell__dropdown-toggle__arrow--hidden')}`}
                     onClick={(event) => {
@@ -87,7 +86,7 @@ export class Dropdown extends React.Component<DropdownItemProps, DropdownItemSta
                 >
                     {this.props.header}
                     {this.props.notificationCount > 0 && <span className="guestbell__label-count">{this.props.notificationCount}</span>}
-                </Button>
+                </div>
                 <div
                     className={'guestbell__dropdown-menu__container'}
                 >

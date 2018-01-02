@@ -8,6 +8,7 @@ export interface FormValue {
 export interface FormProps {
     className?: string;
     noValidate?: boolean;
+    onSubmit?: () => void;
 }
 export interface FormState {
     isFormValid: boolean;

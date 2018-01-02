@@ -106,12 +106,12 @@ export class Basic extends React.Component<BasicProps, BasicState>{
         }
     }
 
-    private submitForm(e: React.MouseEvent<HTMLDivElement>) {
-        e.preventDefault();
+    private submitForm(e?: React.MouseEvent<HTMLButtonElement>) {
+        e && e.preventDefault();
         this.setState(this.initialState);
     }
 
-    private dynamicSubmitSuccessForm(e: React.MouseEvent<HTMLDivElement>, submiting: () => void, error: () => void, success: () => void, reset: () => void) {
+    private dynamicSubmitSuccessForm(e: React.MouseEvent<HTMLButtonElement>, submiting: () => void, error: () => void, success: () => void, reset: () => void) {
         e.preventDefault();
         submiting();
         setTimeout(() => {
@@ -120,7 +120,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
         }, 1000);
     }
 
-    private dynamicSubmitErrorForm(e: React.MouseEvent<HTMLDivElement>, submiting: () => void, error: () => void, success: () => void, reset: () => void) {
+    private dynamicSubmitErrorForm(e: React.MouseEvent<HTMLButtonElement>, submiting: () => void, error: () => void, success: () => void, reset: () => void) {
         e.preventDefault();
         submiting();
         setTimeout(() => {
@@ -202,6 +202,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                 <Form
                                     noValidate
                                     ref={form => this.form = form}
+                                    onSubmit={() => this.submitForm()}
                                 >
                                     <InputHeader
                                         icon={<i className="material-icons md-48">edit</i>}

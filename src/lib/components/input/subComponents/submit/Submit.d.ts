@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as BaseInput from '../base/BaseInput';
 import * as Button from '../../../buttons/Button';
 export interface SubmitProps extends BaseInput.BaseInputProps, Button.ButtonProps {
-    onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     validateForm?: boolean;
 }
 export interface SubmitState extends BaseInput.BaseInputState {

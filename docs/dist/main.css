@@ -205,6 +205,12 @@ textarea {
     width: 0;
     background: transparent; } }
 .guestbell-btn {
+  background: none !important;
+  color: inherit;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit !important;
   position: relative;
   padding: 0.5rem;
   transition: 0.5s all;
@@ -241,7 +247,7 @@ textarea {
 .guestbell-btn-dropdown:not(.disabled):hover {
   color: #10bdc7;
   fill: #10bdc7;
-  background-color: #f9f9f9; }
+  background-color: #f9f9f9 !important; }
 
 .guestbell-btn-circular {
   overflow: hidden;
@@ -257,7 +263,7 @@ textarea {
   color: #999999; }
 
 .guestbell-btn-hero {
-  background-color: #10bdc7;
+  background-color: #10bdc7 !important;
   fill: white;
   color: white;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; }
@@ -1155,7 +1161,7 @@ a.guestbell__dropdown-toggle {
 
 .guestbell__dropdown-menu {
   padding: 5px 0;
-  margin: 2px 0 0;
+  margin: 0;
   text-align: left;
   list-style: none;
   background-color: white;

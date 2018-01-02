@@ -1,10 +1,11 @@
 import './buttons.scss';
 import * as React from 'react';
 export interface ButtonProps {
-    onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     className?: string;
     disabled?: boolean;
     type?: 'hero' | 'blank' | 'blank--light' | 'dropdown';
+    buttonType?: 'button' | 'submit';
     circular?: boolean;
     noRipples?: boolean;
     small?: boolean;

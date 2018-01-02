@@ -16,6 +16,7 @@ export interface FormValue {
 export interface FormProps {
     className?: string;
     noValidate?: boolean;
+    onSubmit?: () => void;
 }
 
 export interface FormState {
@@ -147,7 +148,12 @@ export class Form extends React.Component<FormProps, FormState> {
     }
 
     public render() {
-        return <form noValidate={true} role="form" className={`input__form validation-form ${(this.props.className ? this.props.className : '')}`}>
+        return <form
+            noValidate={true}
+            role="form"
+            className={`input__form validation-form ${(this.props.className ? this.props.className : '')}`}
+            onSubmit={(e) => e.preventDefault() || this.props.onSubmit && this.props.onSubmit()}
+        >
             {this.props.children}
         </form>;
     }

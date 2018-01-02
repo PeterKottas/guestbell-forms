@@ -8,10 +8,11 @@ var Ink = require('react-ink');
 //Misc
 
 export interface ButtonProps {
-    onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     className?: string;
     disabled?: boolean;
     type?: 'hero' | 'blank' | 'blank--light' | 'dropdown';
+    buttonType?: 'button' | 'submit';
     circular?: boolean;
     noRipples?: boolean;
     small?: boolean;
@@ -28,7 +29,8 @@ export class Button extends React.Component<ButtonProps, ButtonState>  {
         onClick: () => null,
         circular: false,
         noRipples: false,
-        small: false
+        small: false,
+        buttonType: 'button'
     }
 
     constructor(props) {
@@ -36,20 +38,21 @@ export class Button extends React.Component<ButtonProps, ButtonState>  {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    private handleClick(e: React.MouseEvent<HTMLDivElement>) {
+    private handleClick(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
         !this.props.disabled && this.props.onClick && this.props.onClick(e);
     }
 
     public render() {
-        return <div
+        return <button
+            type={this.props.buttonType}
             role={"button"}
             className={`guestbell-btn ${this.getButtonClassName()} ${(this.props.className ? this.props.className : '')} ${(this.props.disabled ? 'disabled' : '')} ${(this.props.circular ? 'guestbell-btn-circular' : '')} ${(this.props.small ? 'guestbell-btn-small' : '')}`}
             onClick={this.handleClick}
         >
             {!this.props.noRipples && !this.props.disabled && Ink && <Ink />}
             {this.props.children}
-        </div>;
+        </button>;
     }
 
     private getButtonClassName() {
