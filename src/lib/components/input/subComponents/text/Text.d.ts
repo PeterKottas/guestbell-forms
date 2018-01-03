@@ -6,6 +6,7 @@ export interface TextProps extends BaseInput.BaseInputProps {
     mask?: string;
     reverse?: boolean;
     placeholder?: string;
+    stopClickPropagation?: boolean;
 }
 export interface TextState extends BaseInput.BaseInputState {
 }
@@ -13,6 +14,7 @@ export declare class Text extends BaseInput.BaseInput<TextProps, TextState> {
     static defaultProps: BaseInput.BaseInputProps & {
         type: string;
         placeholder: string;
+        stopClickPropagation: boolean;
     };
     constructor(props: any);
     render(): JSX.Element;

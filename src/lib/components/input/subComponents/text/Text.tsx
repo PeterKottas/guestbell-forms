@@ -13,13 +13,14 @@ export interface TextProps extends BaseInput.BaseInputProps {
     mask?: string;
     reverse?: boolean;
     placeholder?: string;
+    stopClickPropagation?: boolean;
 }
 
 export interface TextState extends BaseInput.BaseInputState {
 }
 
 export class Text extends BaseInput.BaseInput<TextProps, TextState>  {
-    public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "text", placeholder: '' });
+    public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "text", placeholder: '', stopClickPropagation: true });
 
     constructor(props) {
         super(props);
@@ -27,7 +28,10 @@ export class Text extends BaseInput.BaseInput<TextProps, TextState>  {
 
     public render() {
         return <InputGroup title={this.props.title}>
-            <div className={`input__base text-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}>
+            <div
+                className={`input__base text-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}
+                onClick={e => this.props.stopClickPropagation && e.stopPropagation()}
+            >
                 <input
                     placeholder={this.props.placeholder}
                     disabled={this.getDisabled()}

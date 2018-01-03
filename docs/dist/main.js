@@ -2686,15 +2686,16 @@ var Text = /** @class */ (function (_super) {
         return _super.call(this, props) || this;
     }
     Text.prototype.render = function () {
+        var _this = this;
         return React.createElement(InputGroup_1.default, { title: this.props.title },
-            React.createElement("div", { className: "input__base text-input " + this.getValidationClass() + " " + (this.props.className ? this.props.className : '') },
+            React.createElement("div", { className: "input__base text-input " + this.getValidationClass() + " " + (this.props.className ? this.props.className : ''), onClick: function (e) { return _this.props.stopClickPropagation && e.stopPropagation(); } },
                 React.createElement("input", { placeholder: this.props.placeholder, disabled: this.getDisabled(), required: this.props.required, className: this.state.value ? 'filled' : '', onChange: this.handleChange, value: this.state.value, onBlur: this.handleBlur, onFocus: this.handleFocus }),
                 React.createElement("span", { className: "highlight" }),
                 React.createElement("span", { className: "bar" }),
                 this.renderDefaultValidation(),
                 this.props.label && React.createElement("label", null, this.props.label)));
     };
-    Text.defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "text", placeholder: '' });
+    Text.defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "text", placeholder: '', stopClickPropagation: true });
     return Text;
 }(BaseInput.BaseInput));
 exports.Text = Text;
