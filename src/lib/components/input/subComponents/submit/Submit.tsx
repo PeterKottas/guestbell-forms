@@ -8,7 +8,7 @@ import * as React from 'react';
 import * as BaseInput from '../base/BaseInput';
 import * as Button from '../../../buttons/Button';
 
-export interface SubmitProps extends BaseInput.BaseInputProps, Button.ButtonProps {
+export type SubmitProps = BaseInput.BaseInputProps & Button.ButtonProps & {
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     validateForm?: boolean;
 }

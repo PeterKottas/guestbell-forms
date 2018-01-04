@@ -887,6 +887,14 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 //Styles
 __webpack_require__(106);
@@ -915,7 +923,7 @@ var Button = /** @class */ (function (_super) {
         }
     };
     Button.prototype.render = function () {
-        return React.createElement("button", { type: this.props.buttonType, role: "button", className: "guestbell-btn " + this.getButtonClassName() + " " + (this.props.className ? this.props.className : '') + " " + (this.props.disabled ? 'disabled' : '') + " " + (this.props.circular ? 'guestbell-btn-circular' : '') + " " + (this.props.small ? 'guestbell-btn-small' : ''), onClick: this.handleClick },
+        return React.createElement("button", __assign({}, (this.props.buttonProps ? this.props.buttonProps : {}), { type: this.props.buttonType, role: "button", className: "guestbell-btn " + this.getButtonClassName() + " " + (this.props.className ? this.props.className : '') + " " + (this.props.disabled ? 'disabled' : '') + " " + (this.props.circular ? 'guestbell-btn-circular' : '') + " " + (this.props.small ? 'guestbell-btn-small' : ''), onClick: this.handleClick }),
             !this.props.noRipples && !this.props.disabled && Ink && React.createElement(Ink, null),
             this.props.children);
     };

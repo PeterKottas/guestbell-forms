@@ -1,7 +1,7 @@
 import './buttons.scss';
 import * as React from 'react';
 export declare type ButtonTypes = 'hero' | 'blank' | 'blank--light' | 'dropdown' | 'success' | 'error' | 'warning' | 'info' | 'gray';
-export interface ButtonProps {
+export declare type ButtonProps = {
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     className?: string;
     disabled?: boolean;
@@ -11,7 +11,8 @@ export interface ButtonProps {
     noRipples?: boolean;
     small?: boolean;
     disableAfterClickMs?: number;
-}
+    buttonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
+};
 export interface ButtonState {
 }
 export declare class Button extends React.Component<ButtonProps, ButtonState> {

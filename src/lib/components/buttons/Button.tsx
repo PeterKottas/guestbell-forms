@@ -9,7 +9,7 @@ var Ink = require('react-ink');
 
 export type ButtonTypes = 'hero' | 'blank' | 'blank--light' | 'dropdown' | 'success' | 'error' | 'warning' | 'info' | 'gray';
 
-export interface ButtonProps {
+export type ButtonProps = {
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     className?: string;
     disabled?: boolean;
@@ -19,7 +19,8 @@ export interface ButtonProps {
     noRipples?: boolean;
     small?: boolean;
     disableAfterClickMs?: number;
-}
+    buttonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
+};
 
 export interface ButtonState {
 }
@@ -58,14 +59,16 @@ export class Button extends React.Component<ButtonProps, ButtonState>  {
 
     public render() {
         return <button
+            {...(this.props.buttonProps ? this.props.buttonProps : {}) }
             type={this.props.buttonType}
             role={"button"}
-            className={`guestbell-btn ${this.getButtonClassName()} ${(this.props.className ? this.props.className : '')} ${(this.props.disabled ? 'disabled' : '')} ${(this.props.circular ? 'guestbell-btn-circular' : '')} ${(this.props.small ? 'guestbell-btn-small' : '')}`}
+            className={`guestbell-btn ${this.getButtonClassName()} ${(this.props.className ? this.props.className : '')} ${(this.props.disabled ? 'disabled' : '')} ${(this.props.circular ? 'guestbell-btn-circular' : '')} ${(this.props.small ? 'guestbell-btn-small' : '')}`
+            }
             onClick={this.handleClick}
         >
             {!this.props.noRipples && !this.props.disabled && Ink && <Ink />}
             {this.props.children}
-        </button>;
+        </button >;
     }
 
     private getButtonClassName() {

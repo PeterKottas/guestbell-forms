@@ -11,7 +11,7 @@ import * as Validators from '../../../../validators/index';
 import * as Form from '../../../form/Form';
 import guid from '../../../utils/Guid';
 
-export interface BaseInputProps {
+export type BaseInputProps = {
     disabled?: boolean;
     className?: string;
     label?: string | JSX.Element;

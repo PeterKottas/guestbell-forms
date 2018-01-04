@@ -15,7 +15,7 @@ export enum ButtonState {
     Success
 }
 
-export interface DynamicSubmitProps extends BaseInput.BaseInputProps, Button.ButtonProps {
+export interface DynamicSubmitProps extends Button.ButtonProps, BaseInput.BaseInputProps {
     onClick?: (e: React.MouseEvent<HTMLButtonElement>, submiting?: () => void, error?: () => void, success?: () => void, reset?: () => void) => void;
     validateForm?: boolean;
     submittingChildren?: JSX.Element | string;

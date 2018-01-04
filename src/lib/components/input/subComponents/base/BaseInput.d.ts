@@ -2,7 +2,7 @@ import * as React from 'react';
 import './input.scss';
 import * as Validators from '../../../../validators/index';
 import * as Form from '../../../form/Form';
-export interface BaseInputProps {
+export declare type BaseInputProps = {
     disabled?: boolean;
     className?: string;
     label?: string | JSX.Element;
@@ -18,7 +18,7 @@ export interface BaseInputProps {
     onFocus?: () => void;
     onBlur?: () => void;
     title?: string | JSX.Element;
-}
+};
 export interface BaseInputState {
     valid: boolean;
     value: string;
