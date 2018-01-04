@@ -95,9 +95,7 @@ textarea {
     bottom: 0px;
     position: absolute;
     background: #10bdc7;
-    transition: 0.2s ease all;
-    -moz-transition: 0.2s ease all;
-    -webkit-transition: 0.2s ease all; }
+    transition: 0.2s ease all; }
   .input__base .bar:before {
     left: 50%; }
   .input__base .bar:after {
@@ -115,7 +113,7 @@ textarea {
     opacity: 0.5; }
   .input__base input:focus ~ .highlight, .input__base select:focus ~ .highlight {
     -webkit-animation: inputHighlighter 0.3s ease;
-    animation: inputHighlighter 0.3s ease; }
+            animation: inputHighlighter 0.3s ease; }
   .input__base input:focus {
     outline: none; }
   .input__base input:disabled, .input__base select:disabled {
@@ -316,6 +314,20 @@ textarea {
   display: inline-block;
   margin-top: 20px;
   max-width: 37.5rem; }
+  .text-input.text-input--readOnly {
+    border-bottom-color: transparent !important; }
+    .text-input.text-input--readOnly input:focus ~ .bar:before,
+    .text-input.text-input--readOnly input:focus ~ .bar:after,
+    .text-input.text-input--readOnly select:focus ~ .bar:before,
+    .text-input.text-input--readOnly select:focus ~ .bar:after,
+    .text-input.text-input--readOnly label:focus ~ .bar:before,
+    .text-input.text-input--readOnly label:focus ~ .bar:after,
+    .text-input.text-input--readOnly .bar.focused:before,
+    .text-input.text-input--readOnly .bar.focused:after {
+      width: initial; }
+    .text-input.text-input--readOnly input:focus ~ .highlight, .text-input.text-input--readOnly select:focus ~ .highlight {
+      -webkit-animation: none;
+              animation: none; }
   .text-input input {
     padding: 6px 10px 5px 5px;
     color: #555555;

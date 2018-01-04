@@ -14,13 +14,15 @@ export interface TextProps extends BaseInput.BaseInputProps {
     reverse?: boolean;
     placeholder?: string;
     stopClickPropagation?: boolean;
+    inputRef?: (input: HTMLInputElement) => void;
+    readOnly?: boolean;
 }
 
 export interface TextState extends BaseInput.BaseInputState {
 }
 
 export class Text extends BaseInput.BaseInput<TextProps, TextState>  {
-    public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "text", placeholder: '', stopClickPropagation: true });
+    public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "text", placeholder: '', stopClickPropagation: true, readOnly: false });
 
     constructor(props) {
         super(props);
@@ -29,10 +31,11 @@ export class Text extends BaseInput.BaseInput<TextProps, TextState>  {
     public render() {
         return <InputGroup title={this.props.title}>
             <div
-                className={`input__base text-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}
+                className={`input__base text-input ${this.getValidationClass()} ${(this.props.readOnly ? 'text-input--readOnly' : '')} ${this.props.className ? this.props.className : ''}`}
                 onClick={e => this.props.stopClickPropagation && e.stopPropagation()}
             >
                 <input
+                    ref={elem => this.props.inputRef && this.props.inputRef(elem)}
                     placeholder={this.props.placeholder}
                     disabled={this.getDisabled()}
                     required={this.props.required}
@@ -41,6 +44,7 @@ export class Text extends BaseInput.BaseInput<TextProps, TextState>  {
                     value={this.state.value}
                     onBlur={this.handleBlur}
                     onFocus={this.handleFocus}
+                    readOnly={this.props.readOnly}
                 />
                 <span className="highlight"></span>
                 <span className="bar"></span>

@@ -2677,14 +2677,14 @@ var Text = /** @class */ (function (_super) {
     Text.prototype.render = function () {
         var _this = this;
         return React.createElement(InputGroup_1.default, { title: this.props.title },
-            React.createElement("div", { className: "input__base text-input " + this.getValidationClass() + " " + (this.props.className ? this.props.className : ''), onClick: function (e) { return _this.props.stopClickPropagation && e.stopPropagation(); } },
-                React.createElement("input", { placeholder: this.props.placeholder, disabled: this.getDisabled(), required: this.props.required, className: this.state.value ? 'filled' : '', onChange: this.handleChange, value: this.state.value, onBlur: this.handleBlur, onFocus: this.handleFocus }),
+            React.createElement("div", { className: "input__base text-input " + this.getValidationClass() + " " + (this.props.readOnly ? 'text-input--readOnly' : '') + " " + (this.props.className ? this.props.className : ''), onClick: function (e) { return _this.props.stopClickPropagation && e.stopPropagation(); } },
+                React.createElement("input", { ref: function (elem) { return _this.props.inputRef && _this.props.inputRef(elem); }, placeholder: this.props.placeholder, disabled: this.getDisabled(), required: this.props.required, className: this.state.value ? 'filled' : '', onChange: this.handleChange, value: this.state.value, onBlur: this.handleBlur, onFocus: this.handleFocus, readOnly: this.props.readOnly }),
                 React.createElement("span", { className: "highlight" }),
                 React.createElement("span", { className: "bar" }),
                 this.renderDefaultValidation(),
                 this.props.label && React.createElement("label", null, this.props.label)));
     };
-    Text.defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "text", placeholder: '', stopClickPropagation: true });
+    Text.defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "text", placeholder: '', stopClickPropagation: true, readOnly: false });
     return Text;
 }(BaseInput.BaseInput));
 exports.Text = Text;
@@ -24647,6 +24647,7 @@ var Basic = /** @class */ (function (_super) {
                                     React.createElement(index_1.Select, { touchOn: this.state.touchOn, required: false, label: 'Your gender', values: [{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }], onChange: this.handleGenderChange, value: this.state.gender, title: "Gender" }),
                                     React.createElement(index_1.InputHeader, { title: 'Some collapsed stuff', collapsable: true, subTitle: 'Helpful text that describes what\'s collapsed here' },
                                         React.createElement(index_1.Text, { touchOn: this.state.touchOn, validators: ["email"], required: false, label: "Email", value: this.state.email, onChange: function (e) { return _this.setState({ email: e.target.value }); }, title: "Your email" }),
+                                        React.createElement(index_1.Text, { touchOn: this.state.touchOn, readOnly: true, value: 'You can select me but I am readonly', title: "Readonly" }),
                                         React.createElement(index_1.Text, { touchOn: this.state.touchOn, validators: ["url"], required: false, label: "Website", value: this.state.website, onChange: function (e) { return _this.setState({ website: e.target.value }); }, title: "Your website" }),
                                         React.createElement(index_1.Text, { touchOn: this.state.touchOn, customValidators: [AgeValidator.instance], label: "Your age (optional)", value: this.state.age, onChange: function (e) { return _this.setState({ age: e.target.value }); }, title: "Age" })),
                                     React.createElement(index_1.Money, { currencies: [{ label: 'GBP', value: 'GBP' }, { label: 'EUR', value: 'EUR' }], prices: this.state.prices1, touchOn: this.state.touchOn, required: false, onPricesChange: function (prices) { return _this.setState({ prices1: prices }); }, title: "Price" }),

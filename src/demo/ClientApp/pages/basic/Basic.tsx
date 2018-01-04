@@ -319,6 +319,12 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             />
                                             <Text
                                                 touchOn={this.state.touchOn}
+                                                readOnly={true}
+                                                value={'You can select me but I am readonly'}
+                                                title="Readonly"
+                                            />
+                                            <Text
+                                                touchOn={this.state.touchOn}
                                                 validators={["url"]}
                                                 required={false}
                                                 label="Website"

@@ -82,8 +82,6 @@
         position: absolute;
         background: $input-highlight-color;
         transition: 0.2s ease all;
-        -moz-transition: 0.2s ease all;
-        -webkit-transition: 0.2s ease all;
     }
 
     .bar:before {
@@ -110,8 +108,6 @@
     }
     /* active state */
     input:focus ~ .highlight, select:focus ~ .highlight {
-        -webkit-animation: inputHighlighter 0.3s ease;
-        -moz-animation: inputHighlighter 0.3s ease;
         animation: inputHighlighter 0.3s ease;
     }
 
