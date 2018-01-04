@@ -3,15 +3,17 @@ import './dropdown.scss';
 
 // Libs
 import * as React from 'react';
-import { ButtonProps } from './../buttons/Button.d';
 try {
     var SmoothCollapse = require('react-smooth-collapse');
 } catch {
     SmoothCollapse = undefined;
 }
 
+export type HeaderFunction = (onClick: (e: React.SyntheticEvent<{}>) => void) => JSX.Element;
+export type HeaderPlain = JSX.Element | string;
+
 export interface DropdownItemProps {
-    header?: JSX.Element;
+    header?:  HeaderPlain | HeaderFunction;
     className?: string;
     submenuClassName?: string;
     headerClassName?: string;
@@ -20,7 +22,8 @@ export interface DropdownItemProps {
     shouldHandleClick?: boolean;
     showArrow?: boolean;
     onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
-    headerProps?: ButtonProps;
+    disabled?: boolean;
+    inline?: boolean;
 }
 
 export interface DropdownItemState {
@@ -32,7 +35,8 @@ export class Dropdown extends React.Component<DropdownItemProps, DropdownItemSta
         shouldHandleClick: true,
         wrapperTag: 'div',
         notificationCount: 0,
-        showArrow: true
+        showArrow: true,
+        inline: true
     };
 
     constructor(props: DropdownItemProps) {
@@ -64,30 +68,42 @@ export class Dropdown extends React.Component<DropdownItemProps, DropdownItemSta
         document.removeEventListener('click', this.hideNavigation);
     }
 
+    private isFunction(functionToCheck) {
+        var getType = {};
+        return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+    }
+
+    private handleClick(e: React.SyntheticEvent<{}>) {
+        if (this.props.shouldHandleClick && !this.props.disabled) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (!this.state.isDropdownVisible) {
+                this.showNavigation();
+            }
+        }
+    }
+
     public render() {
         //const Wrapper = this.props.wrapperTag;
         return (
             <div
-                className={'guestbell__dropdown ' + (!this.state.isDropdownVisible ? 'closed ' : 'open ') + (this.props.className ? this.props.className : ' ')}
+                className={'guestbell__dropdown ' + 
+                    (!this.state.isDropdownVisible ? 'closed ' : 'open ') + 
+                    (!this.props.disabled ? 'disabled ' : '') + 
+                    (this.props.inline ? 'guestbell__dropdown--inline ' : '') + 
+                    (this.props.className ? this.props.className : ' ')}
                 onClick={e => this.props.onClick && this.props.onClick(e)}
             >
                 <div
-                    {...this.props.headerProps}
                     className={`guestbell__dropdown-toggle 
                     ${(this.props.headerClassName ? this.props.headerClassName : '')} 
                     ${(this.props.showArrow ? '' : 'guestbell__dropdown-toggle__arrow--hidden')} 
-                    ${(this.props.headerProps && this.props.headerProps.disabled ? 'disabled' : '')}`}
-                    onClick={(event) => {
-                        if (this.props.shouldHandleClick && this.props.headerProps && !this.props.headerProps.disabled) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                            if (!this.state.isDropdownVisible) {
-                                this.showNavigation();
-                            }
-                        }
+                    ${(this.props.disabled && this.props.disabled ? 'disabled' : '')}`}
+                    onClick={(e) => {
+                        this.handleClick(e);
                     }}
                 >
-                    {this.props.header}
+                    {this.isFunction(this.props.header) ? (this.props.header as HeaderFunction)((e) => this.handleClick(e)) : this.props.header as HeaderPlain}
                     {this.props.notificationCount > 0 && <span className="guestbell__label-count">{this.props.notificationCount}</span>}
                 </div>
                 <div

@@ -1,8 +1,9 @@
 import './dropdown.scss';
 import * as React from 'react';
-import { ButtonProps } from './../buttons/Button.d';
+export declare type HeaderFunction = (onClick: (e: React.SyntheticEvent<{}>) => void) => JSX.Element;
+export declare type HeaderPlain = JSX.Element | string;
 export interface DropdownItemProps {
-    header?: JSX.Element;
+    header?: HeaderPlain | HeaderFunction;
     className?: string;
     submenuClassName?: string;
     headerClassName?: string;
@@ -11,7 +12,8 @@ export interface DropdownItemProps {
     shouldHandleClick?: boolean;
     showArrow?: boolean;
     onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
-    headerProps?: ButtonProps;
+    disabled?: boolean;
+    inline?: boolean;
 }
 export interface DropdownItemState {
     isDropdownVisible: boolean;
@@ -22,6 +24,7 @@ export declare class Dropdown extends React.Component<DropdownItemProps, Dropdow
         wrapperTag: string;
         notificationCount: number;
         showArrow: boolean;
+        inline: boolean;
     };
     constructor(props: DropdownItemProps);
     handleClickOutside(): void;
@@ -29,6 +32,8 @@ export declare class Dropdown extends React.Component<DropdownItemProps, Dropdow
     showNavigation(): void;
     componentDidMount(): void;
     componentWillUnmount(): void;
+    private isFunction(functionToCheck);
+    private handleClick(e);
     render(): JSX.Element;
     private renderChildren();
 }

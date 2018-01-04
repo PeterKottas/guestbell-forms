@@ -7117,14 +7117,6 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 // Styles
 __webpack_require__(194);
@@ -7162,20 +7154,31 @@ var Dropdown = /** @class */ (function (_super) {
     Dropdown.prototype.componentWillUnmount = function () {
         document.removeEventListener('click', this.hideNavigation);
     };
+    Dropdown.prototype.isFunction = function (functionToCheck) {
+        var getType = {};
+        return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+    };
+    Dropdown.prototype.handleClick = function (e) {
+        if (this.props.shouldHandleClick && !this.props.disabled) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (!this.state.isDropdownVisible) {
+                this.showNavigation();
+            }
+        }
+    };
     Dropdown.prototype.render = function () {
         var _this = this;
         //const Wrapper = this.props.wrapperTag;
-        return (React.createElement("div", { className: 'guestbell__dropdown ' + (!this.state.isDropdownVisible ? 'closed ' : 'open ') + (this.props.className ? this.props.className : ' '), onClick: function (e) { return _this.props.onClick && _this.props.onClick(e); } },
-            React.createElement("div", __assign({}, this.props.headerProps, { className: "guestbell__dropdown-toggle \n                    " + (this.props.headerClassName ? this.props.headerClassName : '') + " \n                    " + (this.props.showArrow ? '' : 'guestbell__dropdown-toggle__arrow--hidden') + " \n                    " + (this.props.headerProps && this.props.headerProps.disabled ? 'disabled' : ''), onClick: function (event) {
-                    if (_this.props.shouldHandleClick && _this.props.headerProps && !_this.props.headerProps.disabled) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                        if (!_this.state.isDropdownVisible) {
-                            _this.showNavigation();
-                        }
-                    }
-                } }),
-                this.props.header,
+        return (React.createElement("div", { className: 'guestbell__dropdown ' +
+                (!this.state.isDropdownVisible ? 'closed ' : 'open ') +
+                (!this.props.disabled ? 'disabled ' : '') +
+                (this.props.inline ? 'guestbell__dropdown--inline ' : '') +
+                (this.props.className ? this.props.className : ' '), onClick: function (e) { return _this.props.onClick && _this.props.onClick(e); } },
+            React.createElement("div", { className: "guestbell__dropdown-toggle \n                    " + (this.props.headerClassName ? this.props.headerClassName : '') + " \n                    " + (this.props.showArrow ? '' : 'guestbell__dropdown-toggle__arrow--hidden') + " \n                    " + (this.props.disabled && this.props.disabled ? 'disabled' : ''), onClick: function (e) {
+                    _this.handleClick(e);
+                } },
+                this.isFunction(this.props.header) ? this.props.header(function (e) { return _this.handleClick(e); }) : this.props.header,
                 this.props.notificationCount > 0 && React.createElement("span", { className: "guestbell__label-count" }, this.props.notificationCount)),
             React.createElement("div", { className: 'guestbell__dropdown-menu__container' }, SmoothCollapse ?
                 React.createElement(SmoothCollapse, { expanded: this.state.isDropdownVisible }, this.renderChildren())
@@ -7189,7 +7192,8 @@ var Dropdown = /** @class */ (function (_super) {
         shouldHandleClick: true,
         wrapperTag: 'div',
         notificationCount: 0,
-        showArrow: true
+        showArrow: true,
+        inline: true
     };
     return Dropdown;
 }(React.Component));
@@ -24693,6 +24697,12 @@ var Basic = /** @class */ (function (_super) {
                                         React.createElement("div", { className: "p-3 buttons-row" },
                                             React.createElement("div", { className: "text-center" }, "Disabled"),
                                             this.renderButtons(true))),
+                                    React.createElement(index_1.InputHeader, { className: '', title: 'Dropdown', collapsable: true, collapsedDefault: false },
+                                        React.createElement("div", { className: "p-3 buttons-row" },
+                                            React.createElement(index_1.Dropdown, { className: "position-relative mr-3", header: 'Span' },
+                                                React.createElement("li", null, "Item")),
+                                            React.createElement(index_1.Dropdown, { className: "position-relative", header: function (clickHandler) { return React.createElement(index_1.Button, { onClick: function (e) { return clickHandler(e); }, type: "hero" }, "Button"); } },
+                                                React.createElement("li", null, "Item")))),
                                     React.createElement("div", { className: "row justify-content-center align-items-center my-2" },
                                         React.createElement(index_1.DynamicSubmit, { submitDisablesInputs: this.state.submitDisablesInputs, className: "ml-2", type: 'hero', normalClassName: "", errorClassName: "btn-danger", submittingClassName: "btn-secondary", errorChildren: 'Error', submittingChildren: 'Working on it', onClick: this.dynamicSubmitSuccessForm, validateForm: this.state.validateFormSubmit }, "Ajax Error"),
                                         React.createElement(index_1.DynamicSubmit, { submitDisablesInputs: this.state.submitDisablesInputs, className: "ml-2", normalClassName: "", type: 'hero', submittingClassName: "btn-secondary", successClassName: "btn-success", submittingChildren: 'Working on it', successChildren: 'That worked', onClick: this.dynamicSubmitErrorForm, validateForm: this.state.validateFormSubmit }, "Ajax Success")))))))));

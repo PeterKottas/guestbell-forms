@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-    Form, Time, Text, Select, Submit, DynamicSubmit, IBaseValidator, Checkbox, Radio,
+    Dropdown, Form, Time, Text, Select, Submit, DynamicSubmit, IBaseValidator, Checkbox, Radio,
     RadioContainer, Money, OpeningHoursDay, MoneyWithCurrency, OpeningHoursDayObj, OpeningHoursWeek, OpeningHoursSpecialDayObj, OpeningHoursSpecial,
     InputHeader,
     Button,
@@ -452,6 +452,31 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             <div className="p-3 buttons-row">
                                                 <div className="text-center">Disabled</div>
                                                 {this.renderButtons(true)}
+                                            </div>
+                                        </InputHeader>
+                                        <InputHeader
+                                            className={''}
+                                            title={'Dropdown'}
+                                            collapsable={true}
+                                            collapsedDefault={false}
+                                        >
+                                            <div className="p-3 buttons-row d-flex">
+                                                <Dropdown
+                                                    className="position-relative mr-3"
+                                                    header={'Span'}
+                                                >
+                                                    <li>
+                                                        Item
+                                                </li>
+                                                </Dropdown>
+                                                <Dropdown
+                                                    className="position-relative"
+                                                    header={(clickHandler) => <Button onClick={e => clickHandler(e)} type="hero">Button</Button>}
+                                                >
+                                                    <li>
+                                                        Item
+                                                </li>
+                                                </Dropdown>
                                             </div>
                                         </InputHeader>
                                         <div className="row justify-content-center align-items-center my-2">

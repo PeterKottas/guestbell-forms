@@ -9,7 +9,12 @@ a.guestbell__dropdown-toggle {
 .guestbell__dropdown {
     display: flex;
     position: relative;
+    &.guestbell__dropdown--inline {
+        display: inline-flex;
+    }
 }
+
+
 
 .guestbell__dropdown-menu__container {
     position: absolute;

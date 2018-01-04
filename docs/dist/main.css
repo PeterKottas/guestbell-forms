@@ -1179,6 +1179,10 @@ a.guestbell__dropdown-toggle {
   display: -ms-flexbox;
   display: flex;
   position: relative; }
+  .guestbell__dropdown.guestbell__dropdown--inline {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex; }
 
 .guestbell__dropdown-menu__container {
   position: absolute;
