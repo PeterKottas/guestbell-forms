@@ -1,6 +1,6 @@
 import './buttons.scss';
 import * as React from 'react';
-export declare type ButtonTypes = 'hero' | 'blank' | 'blank--light' | 'dropdown' | 'success' | 'error' | 'warning' | 'info';
+export declare type ButtonTypes = 'hero' | 'blank' | 'blank--light' | 'dropdown' | 'success' | 'error' | 'warning' | 'info' | 'gray';
 export interface ButtonProps {
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     className?: string;

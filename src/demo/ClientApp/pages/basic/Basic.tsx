@@ -515,7 +515,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
     }
 
     private renderButtons(disabled: boolean) {
-        const types: ButtonTypes[] = ['blank', 'blank--light', 'hero', 'warning', 'error', 'info', 'success'];
+        const types: ButtonTypes[] = ['blank', 'blank--light', 'hero', 'warning', 'error', 'info', 'success', 'gray'];
         return types.map((item, index) => <Button
             type={item}
             disabled={disabled}

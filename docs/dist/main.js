@@ -920,26 +920,7 @@ var Button = /** @class */ (function (_super) {
             this.props.children);
     };
     Button.prototype.getButtonClassName = function () {
-        switch (this.props.type) {
-            case 'hero':
-                return 'guestbell-btn-hero';
-            case 'blank':
-                return 'guestbell-btn-blank';
-            case 'blank--light':
-                return 'guestbell-btn-blank--light';
-            case 'dropdown':
-                return 'guestbell-btn-dropdown';
-            case 'success':
-                return 'guestbell-btn-success';
-            case 'info':
-                return 'guestbell-btn-info';
-            case 'error':
-                return 'guestbell-btn-error';
-            case 'warning':
-                return 'guestbell-btn-warning';
-            default:
-                return '';
-        }
+        return 'guestbell-btn-' + this.props.type;
     };
     Button.defaultProps = {
         type: 'blank',
@@ -24708,7 +24689,7 @@ var Basic = /** @class */ (function (_super) {
                                         React.createElement(index_1.DynamicSubmit, { submitDisablesInputs: this.state.submitDisablesInputs, className: "ml-2", normalClassName: "", type: 'hero', submittingClassName: "btn-secondary", successClassName: "btn-success", submittingChildren: 'Working on it', successChildren: 'That worked', onClick: this.dynamicSubmitErrorForm, validateForm: this.state.validateFormSubmit }, "Ajax Success")))))))));
     };
     Basic.prototype.renderButtons = function (disabled) {
-        var types = ['blank', 'blank--light', 'hero', 'warning', 'error', 'info', 'success'];
+        var types = ['blank', 'blank--light', 'hero', 'warning', 'error', 'info', 'success', 'gray'];
         return types.map(function (item, index) { return React.createElement(index_1.Button, { type: item, disabled: disabled, key: index }, item); });
     };
     return Basic;

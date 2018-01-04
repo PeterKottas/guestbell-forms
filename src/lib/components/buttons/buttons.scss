@@ -124,3 +124,15 @@ $warning-color: #f0ad4e;
         background-color: lighten($warning-color, 2%);
     }
 }
+
+
+$gray-color: #555555;
+.guestbell-btn-gray {
+    background-color: $gray-color !important;
+    fill: $input-text-color--dark;
+    color: $input-text-color--dark;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+    &:not(.disabled):hover {
+        background-color: lighten($gray-color, 2%);
+    }
+}
