@@ -463,7 +463,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             <div className="p-3 buttons-row d-flex">
                                                 <Dropdown
                                                     className="position-relative mr-3"
-                                                    header={'Span'}
+                                                    header={'String header'}
                                                 >
                                                     <li>
                                                         Item
@@ -471,7 +471,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                                 </Dropdown>
                                                 <Dropdown
                                                     className="position-relative"
-                                                    header={(clickHandler) => <Button onClick={e => clickHandler(e)} type="hero">Button</Button>}
+                                                    header={(clickHandler) => <Button onClick={e => clickHandler(e)} type="hero">Function header</Button>}
                                                 >
                                                     <li>
                                                         Item
