@@ -29,4 +29,10 @@ textarea {
     &.md-48 { font-size: 48px; }
 }
 
+.buttons-row {
+    > button {
+        margin-right: 1rem !important;
+    }
+}
+
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");

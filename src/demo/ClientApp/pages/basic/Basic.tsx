@@ -3,7 +3,8 @@ import {
     Form, Time, Text, Select, Submit, DynamicSubmit, IBaseValidator, Checkbox, Radio,
     RadioContainer, Money, OpeningHoursDay, MoneyWithCurrency, OpeningHoursDayObj, OpeningHoursWeek, OpeningHoursSpecialDayObj, OpeningHoursSpecial,
     InputHeader,
-    Button
+    Button,
+    ButtonTypes
 } from '../../../../lib/index';
 
 export interface BasicProps {
@@ -439,6 +440,20 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                                 days={this.state.openingHoursSpecial}
                                             />
                                         </InputHeader>
+                                        <InputHeader
+                                            className={''}
+                                            title={'Buttons'}
+                                            collapsable={true}
+                                            collapsedDefault={false}
+                                        >
+                                            <div className="p-3 buttons-row">
+                                                {this.renderButtons(false)}
+                                            </div>
+                                            <div className="p-3 buttons-row">
+                                                <div className="text-center">Disabled</div>
+                                                {this.renderButtons(true)}
+                                            </div>
+                                        </InputHeader>
                                         <div className="row justify-content-center align-items-center my-2">
                                             <DynamicSubmit
                                                 submitDisablesInputs={this.state.submitDisablesInputs}
@@ -472,6 +487,17 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                 </div>
             </div>
         </div >;
+    }
+
+    private renderButtons(disabled: boolean) {
+        const types: ButtonTypes[] = ['blank', 'blank--light', 'hero', 'warning', 'error', 'info', 'success'];
+        return types.map((item, index) => <Button
+            type={item}
+            disabled={disabled}
+            key={index}
+        >
+            {item}
+        </Button>);
     }
 }
 

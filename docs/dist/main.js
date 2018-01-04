@@ -929,6 +929,14 @@ var Button = /** @class */ (function (_super) {
                 return 'guestbell-btn-blank--light';
             case 'dropdown':
                 return 'guestbell-btn-dropdown';
+            case 'success':
+                return 'guestbell-btn-success';
+            case 'info':
+                return 'guestbell-btn-info';
+            case 'error':
+                return 'guestbell-btn-error';
+            case 'warning':
+                return 'guestbell-btn-warning';
             default:
                 return '';
         }
@@ -24680,9 +24688,18 @@ var Basic = /** @class */ (function (_super) {
                                                 }, function () { return param.expand(); }); } }, "Add");
                                         } },
                                         React.createElement(index_1.OpeningHoursSpecial, { touchOn: this.state.touchOn, required: false, onDaysChange: (function (days) { return _this.setState({ openingHoursSpecial: days }); }), days: this.state.openingHoursSpecial })),
+                                    React.createElement(index_1.InputHeader, { className: '', title: 'Buttons', collapsable: true, collapsedDefault: false },
+                                        React.createElement("div", { className: "p-3 buttons-row" }, this.renderButtons(false)),
+                                        React.createElement("div", { className: "p-3 buttons-row" },
+                                            React.createElement("div", { className: "text-center" }, "Disabled"),
+                                            this.renderButtons(true))),
                                     React.createElement("div", { className: "row justify-content-center align-items-center my-2" },
                                         React.createElement(index_1.DynamicSubmit, { submitDisablesInputs: this.state.submitDisablesInputs, className: "ml-2", type: 'hero', normalClassName: "", errorClassName: "btn-danger", submittingClassName: "btn-secondary", errorChildren: 'Error', submittingChildren: 'Working on it', onClick: this.dynamicSubmitSuccessForm, validateForm: this.state.validateFormSubmit }, "Ajax Error"),
                                         React.createElement(index_1.DynamicSubmit, { submitDisablesInputs: this.state.submitDisablesInputs, className: "ml-2", normalClassName: "", type: 'hero', submittingClassName: "btn-secondary", successClassName: "btn-success", submittingChildren: 'Working on it', successChildren: 'That worked', onClick: this.dynamicSubmitErrorForm, validateForm: this.state.validateFormSubmit }, "Ajax Success")))))))));
+    };
+    Basic.prototype.renderButtons = function (disabled) {
+        var types = ['blank', 'blank--light', 'hero', 'warning', 'error', 'info', 'success'];
+        return types.map(function (item, index) { return React.createElement(index_1.Button, { type: item, disabled: disabled, key: index }, item); });
     };
     return Basic;
 }(React.Component));

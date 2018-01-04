@@ -39,5 +39,6 @@ export declare class Basic extends React.Component<BasicProps, BasicState> {
     private dynamicSubmitSuccessForm(e, submiting, error, success, reset);
     private dynamicSubmitErrorForm(e, submiting, error, success, reset);
     render(): JSX.Element;
+    private renderButtons(disabled);
 }
 export default Basic;

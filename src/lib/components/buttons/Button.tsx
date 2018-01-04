@@ -7,11 +7,13 @@ var Ink = require('react-ink');
 
 //Misc
 
+export type ButtonTypes = 'hero' | 'blank' | 'blank--light' | 'dropdown' | 'success' | 'error' | 'warning' | 'info';
+
 export interface ButtonProps {
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     className?: string;
     disabled?: boolean;
-    type?: 'hero' | 'blank' | 'blank--light' | 'dropdown';
+    type?: ButtonTypes;
     buttonType?: 'button' | 'submit';
     circular?: boolean;
     noRipples?: boolean;
@@ -76,6 +78,14 @@ export class Button extends React.Component<ButtonProps, ButtonState>  {
                 return 'guestbell-btn-blank--light';
             case 'dropdown':
                 return 'guestbell-btn-dropdown';
+            case 'success':
+                return 'guestbell-btn-success';
+            case 'info':
+                return 'guestbell-btn-info';
+            case 'error':
+                return 'guestbell-btn-error';
+            case 'warning':
+                return 'guestbell-btn-warning';
             default:
                 return '';
         }
