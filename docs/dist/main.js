@@ -433,7 +433,7 @@ var BaseInput = /** @class */ (function (_super) {
         this.setState(state);
     };
     BaseInput.prototype.handleFocus = function (e) {
-        this.props.onFocus && this.props.onFocus();
+        this.props.onFocus && this.props.onFocus(e);
         var state = { focused: true };
         if (this.props.touchOn == "focus") {
             state = Object.assign(state, { touched: true });

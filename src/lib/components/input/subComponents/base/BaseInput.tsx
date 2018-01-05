@@ -24,7 +24,7 @@ export type BaseInputProps = {
     touchOn?: "focus" | "blur";
     ignoreContext?: boolean;
     onTheFlightValidate?: (value: string) => boolean;
-    onFocus?: () => void;
+    onFocus?: (e: React.SyntheticEvent<{}>) => void;
     onBlur?: () => void;
     title?: string | JSX.Element;
 }
@@ -183,7 +183,7 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
     }
 
     protected handleFocus(e: React.FocusEvent<HTMLSelectElement | HTMLInputElement>) {
-        this.props.onFocus && this.props.onFocus();
+        this.props.onFocus && this.props.onFocus(e);
         let state = { focused: true };
         if (this.props.touchOn == "focus") {
             state = Object.assign(state, { touched: true });

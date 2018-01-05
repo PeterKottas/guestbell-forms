@@ -15,7 +15,7 @@ export declare type BaseInputProps = {
     touchOn?: "focus" | "blur";
     ignoreContext?: boolean;
     onTheFlightValidate?: (value: string) => boolean;
-    onFocus?: () => void;
+    onFocus?: (e: React.SyntheticEvent<{}>) => void;
     onBlur?: () => void;
     title?: string | JSX.Element;
 };
