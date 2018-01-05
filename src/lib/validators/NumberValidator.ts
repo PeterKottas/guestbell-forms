@@ -12,10 +12,10 @@ export class NumberValidator implements IBaseValidator {
     public Validate(value: string, isRequired: boolean, addError: (error: string) => void): boolean {
         let number = Number(value);
         if (!isNaN(number)) {
-            if (this.config.min && number <= this.config.min) {
+            if (this.config.min !== undefined && number <= this.config.min) {
                 return false;
             }
-            if (this.config.max && number >= this.config.max) {
+            if (this.config.max !== undefined && number >= this.config.max) {
                 return false;
             }
             return true;
