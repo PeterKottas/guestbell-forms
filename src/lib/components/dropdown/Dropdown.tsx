@@ -95,6 +95,7 @@ export class Dropdown extends React.Component<DropdownItemProps, DropdownItemSta
                 onClick={e => this.props.onClick && this.props.onClick(e)}
             >
                 <div
+                    role="button"
                     className={`guestbell__dropdown-toggle 
                     ${(this.props.headerClassName ? this.props.headerClassName : '')} 
                     ${(this.props.showArrow ? '' : 'guestbell__dropdown-toggle__arrow--hidden')} 

@@ -7164,7 +7164,7 @@ var Dropdown = /** @class */ (function (_super) {
                 (!this.props.disabled ? 'disabled ' : '') +
                 (this.props.inline ? 'guestbell__dropdown--inline ' : '') +
                 (this.props.className ? this.props.className : ' '), onClick: function (e) { return _this.props.onClick && _this.props.onClick(e); } },
-            React.createElement("div", { className: "guestbell__dropdown-toggle \n                    " + (this.props.headerClassName ? this.props.headerClassName : '') + " \n                    " + (this.props.showArrow ? '' : 'guestbell__dropdown-toggle__arrow--hidden') + " \n                    " + (this.props.disabled && this.props.disabled ? 'disabled' : ''), onClick: function (e) {
+            React.createElement("div", { role: "button", className: "guestbell__dropdown-toggle \n                    " + (this.props.headerClassName ? this.props.headerClassName : '') + " \n                    " + (this.props.showArrow ? '' : 'guestbell__dropdown-toggle__arrow--hidden') + " \n                    " + (this.props.disabled && this.props.disabled ? 'disabled' : ''), onClick: function (e) {
                     _this.handleClick(e);
                 } },
                 this.isFunction(this.props.header) ? this.props.header(function (e) { return _this.handleClick(e); }) : this.props.header,
