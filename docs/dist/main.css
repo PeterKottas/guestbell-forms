@@ -280,12 +280,12 @@ textarea {
     background-color: #63bb63; }
 
 .guestbell-btn-info {
-  background-color: #5bc0de !important;
+  background-color: #A8DADC !important;
   fill: white;
   color: white;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; }
   .guestbell-btn-info:not(.disabled):hover {
-    background-color: #63c3e0; }
+    background-color: #afdddf; }
 
 .guestbell-btn-error {
   background-color: #d9534f !important;
