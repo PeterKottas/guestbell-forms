@@ -4,7 +4,8 @@ import {
     RadioContainer, Money, OpeningHoursDay, MoneyWithCurrency, OpeningHoursDayObj, OpeningHoursWeek, OpeningHoursSpecialDayObj, OpeningHoursSpecial,
     InputHeader,
     Button,
-    ButtonTypes
+    ButtonTypes,
+    Tags
 } from '../../../../lib/index';
 
 export interface BasicProps {
@@ -34,6 +35,9 @@ export interface BasicState {
     openingHoursWeekDay: OpeningHoursDayObj;
     openingHoursSpecial: OpeningHoursSpecialDayObj[];
     website: string;
+    tags: string[];
+    selectedValues: string[];
+    multipleValues: string[];
 }
 
 export class AgeValidator implements IBaseValidator {
@@ -88,7 +92,10 @@ export class Basic extends React.Component<BasicProps, BasicState>{
             times: []
         },
         openingHoursSpecial: [],
-        website: ''
+        website: '',
+        tags: [],
+        selectedValues: [],
+        multipleValues: ["One option", "Second option", "Third option", "one more option", "rly long last option"]
     };
 
     constructor(props: BasicProps) {
@@ -297,7 +304,8 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                         />
                                         <Select
                                             touchOn={this.state.touchOn}
-                                            required={false} label={'Your gender'}
+                                            required={false} 
+                                            label={'Your gender'}
                                             values={[{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }]}
                                             onChange={this.handleGenderChange}
                                             value={this.state.gender}
@@ -459,6 +467,32 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                                 <div className="text-center">Disabled</div>
                                                 {this.renderButtons(true)}
                                             </div>
+                                        </InputHeader>
+                                        <InputHeader
+                                            className={''}
+                                            title={'Multiple'}
+                                            collapsable={true}
+                                            collapsedDefault={false}
+                                        >
+                                            <Tags
+                                                title="Tags example"
+                                                tags={this.state.tags}
+                                                onTagsChanged={(tags: string[]) => this.setState({ tags })}
+                                            />
+                                            <Select
+                                                label="One or more"
+                                                title="Multiselect"
+                                                multiple={true}
+                                                selectedValues={this.state.selectedValues.map(item => ({
+                                                    value: item
+                                                }))}
+                                                values={this.state.multipleValues.map(item => ({
+                                                    value: item
+                                                }))}
+                                                onSelectedValuesChange={selectedValues => 
+                                                    this.setState({ selectedValues: selectedValues.map((item) => item.value as string) })
+                                                }
+                                            />
                                         </InputHeader>
                                         <InputHeader
                                             className={''}

@@ -29,7 +29,11 @@ textarea {
 .buttons-row > button {
   margin-right: 1rem !important; }
 .line-height--0 {
-  line-height: 0; }
+  line-height: 0 !important; }
+
+.transform-rotate--45 {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg); }
 .input__form > .input__group__border:first-child {
   border-top: none; }
 
@@ -253,7 +257,7 @@ textarea {
 .guestbell-btn-circular {
   overflow: hidden;
   border-radius: 50%;
-  display: table; }
+  display: inline-table; }
   .guestbell-btn-circular:not(.disabled):active {
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; }
 
@@ -376,9 +380,9 @@ textarea {
   border-bottom: 1px solid #eeeeee;
   margin-top: 20px;
   max-width: 37.5rem; }
-  .select-input::after {
+  .select-input .select-input__select__wrapper::after {
     position: absolute;
-    top: 18px;
+    bottom: 15px;
     right: 10px;
     /* Styling the down arrow */
     width: 0;
@@ -389,8 +393,9 @@ textarea {
     border-right: 6px solid transparent;
     border-top: 6px solid #555555;
     pointer-events: none; }
-  .select-input .select-input__select {
+  .select-input .select-input__select__wrapper .select-input__select {
     color: #555555;
+    display: inline-block;
     outline: 0;
     border: none;
     width: 100%;
@@ -400,6 +405,11 @@ textarea {
             appearance: none;
     padding: 10px 10px 5px 5px;
     background-color: transparent; }
+  .select-input .select-input__selectedValue {
+    display: inline-block;
+    padding: 0px 10px 5px 5px; }
+  .select-input .select-input__selectedValue__wrapper {
+    display: inline-block; }
 
 .guestbell-forms--dark .select-input {
   border-bottom: 1px solid #b3b3b3; }
@@ -1270,6 +1280,15 @@ a.guestbell__dropdown-toggle {
 .guestbell__dropdown-menu > li > a {
   font-size: 14px;
   line-height: 25px; }
+.tags-input__text-input {
+  width: initial; }
+  .tags-input__text-input input {
+    width: initial; }
+
+.tags-input {
+  border-bottom: 0;
+  margin: 0;
+  display: inline-block; }
 .navbar {
   height: 96px;
   background-color: white;

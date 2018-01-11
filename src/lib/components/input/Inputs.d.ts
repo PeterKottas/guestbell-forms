@@ -12,3 +12,4 @@ export { OpeningHoursWeek, OpeningHoursWeekDayObj } from './subComponents/openin
 export { OpeningHoursSpecial, OpeningHoursSpecialDayObj } from './subComponents/openingHours/openingHoursSpecial/OpeningHoursSpecial';
 export { InputHeader } from './subComponents/inputHeader/InputHeader';
 export { InputGroup } from './subComponents/inputGroup/InputGroup';
+export { Tags } from './subComponents/tags/Tags';
