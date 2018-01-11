@@ -2751,7 +2751,7 @@ var Select = /** @class */ (function (_super) {
             React.createElement("div", { className: 'input__base select-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '') },
                 this.renderSelectedValues(),
                 finalValues.length > 0 && React.createElement("div", { className: "select-input__select__wrapper" },
-                    React.createElement("select", { disabled: this.getDisabled(), required: this.props.required, onChange: this.handleChangeCustom, value: this.state.value, className: 'select-input__select ' + (this.state.value !== '' || (this.props.selectedValues && this.props.selectedValues.length > 0) ? 'filled' : ''), onBlur: this.handleBlur, onFocus: this.handleFocus },
+                    React.createElement("select", { ref: function (elem) { return _this.props.inputRef && _this.props.inputRef(elem); }, disabled: this.getDisabled(), required: this.props.required, onChange: this.handleChangeCustom, value: this.state.value, className: 'select-input__select ' + (this.state.value !== '' || (this.props.selectedValues && this.props.selectedValues.length > 0) ? 'filled' : ''), onBlur: this.handleBlur, onFocus: this.handleFocus },
                         this.props.defaultEmpty && React.createElement("option", { key: -1, disabled: true, value: "", style: { display: 'none' } }),
                         finalValues.map(function (value, index) { return React.createElement("option", { key: index, value: value.value }, value.label ? value.label : value.value); })),
                     React.createElement("span", { className: "highlight" }),
@@ -2776,10 +2776,14 @@ var Select = /** @class */ (function (_super) {
         var _this = this;
         return this.props.multiple && this.props.selectedValues.length > 0 && React.createElement("div", { className: "select-input__selectedValue__wrapper" }, this.props.selectedValues.map(function (item) { return (React.createElement("div", { className: "select-input__selectedValue" },
             item.label ? item.label : item.value,
-            React.createElement(Button_1.Button, { circular: true, type: 'blank--light', onClick: function () { return _this.props.onSelectedValuesChange && _this.props.onSelectedValuesChange(_this.props.selectedValues.filter(function (sv) { return sv.value !== item.value; })); }, className: "transform-rotate--45 mr-2 line-height--0" },
+            !_this.props.readOnly && React.createElement(Button_1.Button, { circular: true, type: 'blank--light', onClick: function () { return _this.props.onSelectedValuesChange && _this.props.onSelectedValuesChange(_this.props.selectedValues.filter(function (sv) { return sv.value !== item.value; })); }, className: "transform-rotate--45 mr-2 line-height--0" },
                 React.createElement(PlusIcon, null)))); }));
     };
-    Select.defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { defaultEmpty: true, multiple: false });
+    Select.defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, {
+        defaultEmpty: true,
+        multiple: false,
+        readOnly: false
+    });
     return Select;
 }(BaseInput.BaseInput));
 exports.Select = Select;

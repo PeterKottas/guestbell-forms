@@ -21,13 +21,19 @@ export interface SelectProps extends BaseInput.BaseInputProps {
     multiple?: boolean;
     selectedValues?: SelectValue[];
     onSelectedValuesChange?: (newValues: SelectValue[]) => void;
+    inputRef?: (input: HTMLSelectElement) => void;
+    readOnly?: boolean;
 }
 
 export interface SelectState extends BaseInput.BaseInputState {
 }
 
 export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
-    public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { defaultEmpty: true, multiple: false });
+    public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { 
+        defaultEmpty: true, 
+        multiple: false,
+        readOnly: false 
+    });
 
     constructor(props: SelectProps) {
         super(props);
@@ -51,6 +57,7 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
                 {this.renderSelectedValues()}
                 {finalValues.length > 0 && <div className="select-input__select__wrapper">
                     <select
+                        ref={elem => this.props.inputRef && this.props.inputRef(elem)}
                         disabled={this.getDisabled()}
                         required={this.props.required}
                         onChange={this.handleChangeCustom}
@@ -91,14 +98,14 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
                 className="select-input__selectedValue"
             >
                 {item.label ? item.label : item.value}
-                <Button
+                {!this.props.readOnly && <Button
                     circular={true}
                     type={'blank--light'}
                     onClick={() => this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(this.props.selectedValues.filter(sv => sv.value !== item.value))}
                     className="transform-rotate--45 mr-2 line-height--0"
                 >
                     <PlusIcon />
-                </Button>
+                </Button>}
             </div>
         ))}
         </div>
