@@ -2768,6 +2768,12 @@ var Select = /** @class */ (function (_super) {
         if (this.props.multiple) {
             var value_1 = event.target.value;
             var val = this.props.values.filter(function (item) { return item.value === value_1; })[0];
+            if (!val) {
+                if (Number(value_1)) {
+                    var valNumber_1 = new Number(value_1);
+                    val = this.props.values.filter(function (item) { return item.value === valNumber_1; })[0];
+                }
+            }
             if (val) {
                 this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(this.props.selectedValues.concat(val));
                 this.setState({ value: '' });

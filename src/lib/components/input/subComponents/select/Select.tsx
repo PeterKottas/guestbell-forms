@@ -94,6 +94,12 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
         if (this.props.multiple) {
             let value = event.target.value;
             let val = this.props.values.filter(item => item.value === value)[0];
+            if(!val) {
+                if(Number(value)) {
+                    let valNumber = new Number(value);
+                    val = this.props.values.filter(item => item.value === valNumber)[0];
+                }
+            }
             if (val) {
                 this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(this.props.selectedValues.concat(val));
                 this.setState({ value: '' });
