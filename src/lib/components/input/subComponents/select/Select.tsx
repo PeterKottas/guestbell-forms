@@ -57,34 +57,32 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
         return <InputGroup title={this.props.title}>
             <div className={'input__base select-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '') + ' ' + (this.props.readOnly ? 'readonly' : '')}>
                 {this.renderSelectedValues()}
-                {finalValues.length > 0 && ((this.props.multiple && !this.props.readOnly) || !this.props.multiple) ? <div className="select-input__select__wrapper">
-                    {((!this.props.multiple && !this.props.readOnly) || this.props.multiple) ?
-                        <select
-                            ref={elem => this.props.inputRef && this.props.inputRef(elem)}
-                            disabled={this.getDisabled()}
-                            required={this.props.required}
-                            onChange={this.handleChangeCustom}
-                            value={this.state.value}
-                            className={'select-input__select ' + (this.state.value !== '' || (this.props.selectedValues && this.props.selectedValues.length > 0) ? 'filled' : '')}
-                            onBlur={this.handleBlur}
-                            onFocus={this.handleFocus}
-                        >
-                            {this.props.defaultEmpty && <option key={-1} disabled value="" style={{ display: 'none' }}></option>}
-                            {finalValues.map((value, index) => <option key={index} value={value.value}>{value.label ? value.label : value.value}</option>)}
-                        </select>
-                        :
-                        <span className={'select-input__select ' + (this.state.value !== '' || (this.props.selectedValues && this.props.selectedValues.length > 0) ? 'filled' : '')}>
-                            {this.state.value}
-                        </span>
-                    }
-                    <span className="highlight"></span>
-                    <span className="bar"></span>
-                    {this.renderDefaultValidation()}
-                    {this.props.label && finalValues.length > 0 && <label>{this.props.label}</label>}
-                </div>
-                :
-                <span>
-                </span>
+                {finalValues.length > 0 && ((this.props.multiple && !this.props.readOnly) || !this.props.multiple) &&
+                    <div className="select-input__select__wrapper">
+                        {((!this.props.multiple && !this.props.readOnly) || this.props.multiple) ?
+                            <select
+                                ref={elem => this.props.inputRef && this.props.inputRef(elem)}
+                                disabled={this.getDisabled()}
+                                required={this.props.required}
+                                onChange={this.handleChangeCustom}
+                                value={this.state.value}
+                                className={'select-input__select ' + (this.state.value !== '' || (this.props.selectedValues && this.props.selectedValues.length > 0) ? 'filled' : '')}
+                                onBlur={this.handleBlur}
+                                onFocus={this.handleFocus}
+                            >
+                                {this.props.defaultEmpty && <option key={-1} disabled value="" style={{ display: 'none' }}></option>}
+                                {finalValues.map((value, index) => <option key={index} value={value.value}>{value.label ? value.label : value.value}</option>)}
+                            </select>
+                            :
+                            <span className={'select-input__select ' + (this.state.value !== '' || (this.props.selectedValues && this.props.selectedValues.length > 0) ? 'filled' : '')}>
+                                {this.state.value}
+                            </span>
+                        }
+                        <span className="highlight"></span>
+                        <span className="bar"></span>
+                        {this.renderDefaultValidation()}
+                        {this.props.label && finalValues.length > 0 && <label>{this.props.label}</label>}
+                    </div>
                 }
             </div>
         </InputGroup>;
@@ -94,8 +92,8 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
         if (this.props.multiple) {
             let value = event.target.value;
             let val = this.props.values.filter(item => item.value === value)[0];
-            if(!val) {
-                if(!isNaN(Number(value))) {
+            if (!val) {
+                if (!isNaN(Number(value))) {
                     let valNumber = Number(value);
                     val = this.props.values.filter(item => item.value === valNumber)[0];
                 }
@@ -110,23 +108,31 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
     }
 
     private renderSelectedValues() {
-        return this.props.multiple && this.props.selectedValues.length > 0 && <div className="select-input__selectedValue__wrapper">{this.props.selectedValues.map((item, index) => (
-            <div
-                className="select-input__selectedValue"
-                key={index}
-            >
-                {item.label ? item.label : item.value}
-                {!this.props.readOnly && <Button
-                    circular={true}
-                    type={'blank--light'}
-                    onClick={() => this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(this.props.selectedValues.filter(sv => sv.value !== item.value))}
-                    className="ml-1 transform-rotate--45 line-height--0 p-0"
+        return this.props.multiple && this.props.selectedValues.length > 0 ?
+            <div className="select-input__selectedValue__wrapper">{this.props.selectedValues.map((item, index) => (
+                <div
+                    className="select-input__selectedValue"
+                    key={index}
                 >
-                    <PlusIcon />
-                </Button>}
+                    {item.label ? item.label : item.value}
+                    {!this.props.readOnly && <Button
+                        circular={true}
+                        type={'blank--light'}
+                        onClick={() => this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(this.props.selectedValues.filter(sv => sv.value !== item.value))}
+                        className="ml-1 transform-rotate--45 line-height--0 p-0"
+                    >
+                        <PlusIcon />
+                    </Button>}
+                </div>
+            ))}
             </div>
-        ))}
-        </div>
+            :
+            this.props.readOnly && <div className="select-input__selectedValue__wrapper">
+                <div className="select-input__selectedValue">
+                    {this.props.reaondlyEmptyPlaceholder}
+                </div>
+            </div>
+            
     }
 }
 
