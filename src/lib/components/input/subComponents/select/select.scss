@@ -2,24 +2,10 @@
 .select-input {
     display: inline-block;
     border: none;
-    border-bottom: 1px solid $input-border-color;
     margin-top: 20px;
     max-width: 37.5rem;
+    border-bottom: 1px solid transparent;
     .select-input__select__wrapper {
-        &::after {
-            position: absolute;
-            bottom: 15px;
-            right: 10px;
-            /* Styling the down arrow */
-            width: 0;
-            height: 0;
-            padding: 0;
-            content: '';
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            border-top: 6px solid $input-text-color;
-            pointer-events: none;
-        }
         .select-input__select {
             color: $input-text-color;
             display: inline-block;
@@ -28,13 +14,36 @@
             width: 100%;
             max-height: 100px;
             appearance: none;
-            padding: 10px 10px 5px 5px;
+            padding: 7px 10px 5px 5px;
             background-color: transparent;
+        }
+        span.select-input__select {
+            min-height: calc( 1rem + 13px);
+        }
+    }
+    &:not(.readonly) {
+        border-bottom: 1px solid $input-border-color;
+        .select-input__select__wrapper {
+            &::after {
+                position: absolute;
+                bottom: 15px;
+                right: 10px;
+                /* Styling the down arrow */
+                width: 0;
+                height: 0;
+                padding: 0;
+                content: '';
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-top: 6px solid $input-text-color;
+                pointer-events: none;
+            }
         }
     }
     .select-input__selectedValue {
-        display: inline-block;
-        padding: 0px 10px 5px 5px;
+        display: inline-flex;
+        align-items: center;
+        padding: 7px 10px 5px 5px;
     }
     .select-input__selectedValue__wrapper {
         display: inline-block;

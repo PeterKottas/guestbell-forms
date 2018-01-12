@@ -63,7 +63,7 @@
         transition: 0.2s ease all;
     }
     /* active state */
-    input:focus ~ label, input.filled ~ label, select:focus ~ label, select.filled ~ label, label.label--focused, span.label-classname.label--focused {
+    input:focus ~ label, .filled ~ label, select:focus ~ label, label.label--focused, span.label-classname.label--focused {
         top: -1rem;
         font-size: 14px;
         color: $input-highlight-color;
@@ -99,9 +99,9 @@
     /* HIGHLIGHTER ================================== */
     .highlight {
         position: absolute;
-        height: 60%;
+        height: 24px;
         width: 100px;
-        top: 25%;
+        bottom: 5px;
         left: 0;
         pointer-events: none;
         opacity: 0.5;

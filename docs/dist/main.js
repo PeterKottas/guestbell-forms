@@ -2748,16 +2748,21 @@ var Select = /** @class */ (function (_super) {
         var _this = this;
         var finalValues = this.props.multiple ? this.props.values.filter(function (item) { return _this.props.selectedValues.findIndex(function (t) { return t.value === item.value; }) < 0; }) : this.props.values;
         return React.createElement(InputGroup_1.default, { title: this.props.title },
-            React.createElement("div", { className: 'input__base select-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '') },
+            React.createElement("div", { className: 'input__base select-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '') + ' ' + (this.props.readOnly ? 'readonly' : '') },
                 this.renderSelectedValues(),
-                finalValues.length > 0 && React.createElement("div", { className: "select-input__select__wrapper" },
-                    React.createElement("select", { ref: function (elem) { return _this.props.inputRef && _this.props.inputRef(elem); }, disabled: this.getDisabled(), required: this.props.required, onChange: this.handleChangeCustom, value: this.state.value, className: 'select-input__select ' + (this.state.value !== '' || (this.props.selectedValues && this.props.selectedValues.length > 0) ? 'filled' : ''), onBlur: this.handleBlur, onFocus: this.handleFocus },
-                        this.props.defaultEmpty && React.createElement("option", { key: -1, disabled: true, value: "", style: { display: 'none' } }),
-                        finalValues.map(function (value, index) { return React.createElement("option", { key: index, value: value.value }, value.label ? value.label : value.value); })),
+                finalValues.length > 0 && ((this.props.multiple && !this.props.readOnly) || !this.props.multiple) ? React.createElement("div", { className: "select-input__select__wrapper" },
+                    ((!this.props.multiple && !this.props.readOnly) || this.props.multiple) ?
+                        React.createElement("select", { ref: function (elem) { return _this.props.inputRef && _this.props.inputRef(elem); }, disabled: this.getDisabled(), required: this.props.required, onChange: this.handleChangeCustom, value: this.state.value, className: 'select-input__select ' + (this.state.value !== '' || (this.props.selectedValues && this.props.selectedValues.length > 0) ? 'filled' : ''), onBlur: this.handleBlur, onFocus: this.handleFocus },
+                            this.props.defaultEmpty && React.createElement("option", { key: -1, disabled: true, value: "", style: { display: 'none' } }),
+                            finalValues.map(function (value, index) { return React.createElement("option", { key: index, value: value.value }, value.label ? value.label : value.value); }))
+                        :
+                            React.createElement("span", { className: 'select-input__select ' + (this.state.value !== '' || (this.props.selectedValues && this.props.selectedValues.length > 0) ? 'filled' : '') }, this.state.value),
                     React.createElement("span", { className: "highlight" }),
                     React.createElement("span", { className: "bar" }),
                     this.renderDefaultValidation(),
-                    this.props.label && finalValues.length > 0 && React.createElement("label", null, this.props.label))));
+                    this.props.label && finalValues.length > 0 && React.createElement("label", null, this.props.label))
+                    :
+                        React.createElement("span", null)));
     };
     Select.prototype.handleChangeCustom = function (event) {
         if (this.props.multiple) {
@@ -2776,13 +2781,14 @@ var Select = /** @class */ (function (_super) {
         var _this = this;
         return this.props.multiple && this.props.selectedValues.length > 0 && React.createElement("div", { className: "select-input__selectedValue__wrapper" }, this.props.selectedValues.map(function (item) { return (React.createElement("div", { className: "select-input__selectedValue" },
             item.label ? item.label : item.value,
-            !_this.props.readOnly && React.createElement(Button_1.Button, { circular: true, type: 'blank--light', onClick: function () { return _this.props.onSelectedValuesChange && _this.props.onSelectedValuesChange(_this.props.selectedValues.filter(function (sv) { return sv.value !== item.value; })); }, className: "transform-rotate--45 mr-2 line-height--0" },
+            !_this.props.readOnly && React.createElement(Button_1.Button, { circular: true, type: 'blank--light', onClick: function () { return _this.props.onSelectedValuesChange && _this.props.onSelectedValuesChange(_this.props.selectedValues.filter(function (sv) { return sv.value !== item.value; })); }, className: "ml-1 transform-rotate--45 line-height--0 p-0" },
                 React.createElement(PlusIcon, null)))); }));
     };
     Select.defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, {
         defaultEmpty: true,
         multiple: false,
-        readOnly: false
+        readOnly: false,
+        reaondlyEmptyPlaceholder: 'N/A'
     });
     return Select;
 }(BaseInput.BaseInput));
@@ -24635,7 +24641,8 @@ var Basic = /** @class */ (function (_super) {
             website: '',
             tags: [],
             selectedValues: [],
-            multipleValues: ["One option", "Second option", "Third option", "one more option", "rly long last option"]
+            multipleValues: ["One option", "Second option", "Third option", "one more option", "rly long last option"],
+            multipleReadonly: false
         };
         _this.state = _this.initialState;
         _this.handleGenderChange = _this.handleGenderChange.bind(_this);
@@ -24744,7 +24751,12 @@ var Basic = /** @class */ (function (_super) {
                                             this.renderButtons(true))),
                                     React.createElement(index_1.InputHeader, { className: '', title: 'Multiple', collapsable: true, collapsedDefault: false },
                                         React.createElement(index_1.Tags, { title: "Tags example", tags: this.state.tags, onTagsChanged: function (tags) { return _this.setState({ tags: tags }); } }),
-                                        React.createElement(index_1.Select, { label: "One or more", title: "Multiselect", multiple: true, selectedValues: this.state.selectedValues.map(function (item) { return ({
+                                        React.createElement(index_1.Checkbox
+                                        //label="Multiple readonly"
+                                        , { 
+                                            //label="Multiple readonly"
+                                            onChecked: function (e) { return _this.setState({ multipleReadonly: !_this.state.multipleReadonly }); }, checked: this.state.multipleReadonly, title: "Multiple readonly" }),
+                                        React.createElement(index_1.Select, { label: "One or more", title: "Multiselect", multiple: true, readOnly: this.state.multipleReadonly, selectedValues: this.state.selectedValues.map(function (item) { return ({
                                                 value: item
                                             }); }), values: this.state.multipleValues.map(function (item) { return ({
                                                 value: item

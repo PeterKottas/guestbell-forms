@@ -38,6 +38,7 @@ export interface BasicState {
     tags: string[];
     selectedValues: string[];
     multipleValues: string[];
+    multipleReadonly: boolean;
 }
 
 export class AgeValidator implements IBaseValidator {
@@ -95,7 +96,8 @@ export class Basic extends React.Component<BasicProps, BasicState>{
         website: '',
         tags: [],
         selectedValues: [],
-        multipleValues: ["One option", "Second option", "Third option", "one more option", "rly long last option"]
+        multipleValues: ["One option", "Second option", "Third option", "one more option", "rly long last option"],
+        multipleReadonly: false
     };
 
     constructor(props: BasicProps) {
@@ -304,7 +306,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                         />
                                         <Select
                                             touchOn={this.state.touchOn}
-                                            required={false} 
+                                            required={false}
                                             label={'Your gender'}
                                             values={[{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }]}
                                             onChange={this.handleGenderChange}
@@ -479,17 +481,24 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                                 tags={this.state.tags}
                                                 onTagsChanged={(tags: string[]) => this.setState({ tags })}
                                             />
+                                            <Checkbox
+                                                //label="Multiple readonly"
+                                                onChecked={(e) => this.setState({ multipleReadonly: !this.state.multipleReadonly })}
+                                                checked={this.state.multipleReadonly}
+                                                title="Multiple readonly"
+                                            />
                                             <Select
                                                 label="One or more"
                                                 title="Multiselect"
                                                 multiple={true}
+                                                readOnly={this.state.multipleReadonly}
                                                 selectedValues={this.state.selectedValues.map(item => ({
                                                     value: item
                                                 }))}
                                                 values={this.state.multipleValues.map(item => ({
                                                     value: item
                                                 }))}
-                                                onSelectedValuesChange={selectedValues => 
+                                                onSelectedValuesChange={selectedValues =>
                                                     this.setState({ selectedValues: selectedValues.map((item) => item.value as string) })
                                                 }
                                             />

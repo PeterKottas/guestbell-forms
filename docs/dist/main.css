@@ -85,7 +85,7 @@ textarea {
     left: 5px;
     top: 5px;
     transition: 0.2s ease all; }
-  .input__base input:focus ~ label, .input__base input.filled ~ label, .input__base select:focus ~ label, .input__base select.filled ~ label, .input__base label.label--focused, .input__base span.label-classname.label--focused {
+  .input__base input:focus ~ label, .input__base .filled ~ label, .input__base select:focus ~ label, .input__base label.label--focused, .input__base span.label-classname.label--focused {
     top: -1rem;
     font-size: 14px;
     color: #10bdc7; }
@@ -109,9 +109,9 @@ textarea {
     width: 50%; }
   .input__base .highlight {
     position: absolute;
-    height: 60%;
+    height: 24px;
     width: 100px;
-    top: 25%;
+    bottom: 5px;
     left: 0;
     pointer-events: none;
     opacity: 0.5; }
@@ -377,22 +377,9 @@ textarea {
 .select-input {
   display: inline-block;
   border: none;
-  border-bottom: 1px solid #eeeeee;
   margin-top: 20px;
-  max-width: 37.5rem; }
-  .select-input .select-input__select__wrapper::after {
-    position: absolute;
-    bottom: 15px;
-    right: 10px;
-    /* Styling the down arrow */
-    width: 0;
-    height: 0;
-    padding: 0;
-    content: '';
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-top: 6px solid #555555;
-    pointer-events: none; }
+  max-width: 37.5rem;
+  border-bottom: 1px solid transparent; }
   .select-input .select-input__select__wrapper .select-input__select {
     color: #555555;
     display: inline-block;
@@ -403,11 +390,33 @@ textarea {
     -webkit-appearance: none;
        -moz-appearance: none;
             appearance: none;
-    padding: 10px 10px 5px 5px;
+    padding: 7px 10px 5px 5px;
     background-color: transparent; }
+  .select-input .select-input__select__wrapper span.select-input__select {
+    min-height: calc( 1rem + 13px); }
+  .select-input:not(.readonly) {
+    border-bottom: 1px solid #eeeeee; }
+    .select-input:not(.readonly) .select-input__select__wrapper::after {
+      position: absolute;
+      bottom: 15px;
+      right: 10px;
+      /* Styling the down arrow */
+      width: 0;
+      height: 0;
+      padding: 0;
+      content: '';
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 6px solid #555555;
+      pointer-events: none; }
   .select-input .select-input__selectedValue {
-    display: inline-block;
-    padding: 0px 10px 5px 5px; }
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    padding: 7px 10px 5px 5px; }
   .select-input .select-input__selectedValue__wrapper {
     display: inline-block; }
 
