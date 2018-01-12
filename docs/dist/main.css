@@ -418,7 +418,11 @@ textarea {
             align-items: center;
     padding: 7px 10px 5px 5px; }
   .select-input .select-input__selectedValue__wrapper {
-    display: inline-block; }
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap; }
 
 .guestbell-forms--dark .select-input {
   border-bottom: 1px solid #b3b3b3; }

@@ -46,7 +46,8 @@
         padding: 7px 10px 5px 5px;
     }
     .select-input__selectedValue__wrapper {
-        display: inline-block;
+        display: inline-flex;
+        flex-wrap: wrap;
     }
 }
 
