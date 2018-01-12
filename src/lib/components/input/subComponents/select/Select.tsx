@@ -95,8 +95,8 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
             let value = event.target.value;
             let val = this.props.values.filter(item => item.value === value)[0];
             if(!val) {
-                if(Number(value)) {
-                    let valNumber = new Number(value);
+                if(!isNaN(Number(value))) {
+                    let valNumber = Number(value);
                     val = this.props.values.filter(item => item.value === valNumber)[0];
                 }
             }
