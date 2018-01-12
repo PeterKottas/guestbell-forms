@@ -104,9 +104,10 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
     }
 
     private renderSelectedValues() {
-        return this.props.multiple && this.props.selectedValues.length > 0 && <div className="select-input__selectedValue__wrapper">{this.props.selectedValues.map(item => (
+        return this.props.multiple && this.props.selectedValues.length > 0 && <div className="select-input__selectedValue__wrapper">{this.props.selectedValues.map((item, index) => (
             <div
                 className="select-input__selectedValue"
+                key={index}
             >
                 {item.label ? item.label : item.value}
                 {!this.props.readOnly && <Button
