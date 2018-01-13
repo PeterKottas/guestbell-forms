@@ -2787,7 +2787,7 @@ var Select = /** @class */ (function (_super) {
         return this.props.multiple && this.props.selectedValues.length > 0 ?
             React.createElement("div", { className: "select-input__selectedValue__wrapper" }, this.props.selectedValues.map(function (item, index) { return (React.createElement("div", { className: "select-input__selectedValue", key: index },
                 item.label ? item.label : item.value,
-                !_this.props.readOnly && React.createElement(Button_1.Button, { circular: true, type: 'blank--light', onClick: function () { return _this.props.onSelectedValuesChange && _this.props.onSelectedValuesChange(_this.props.selectedValues.filter(function (sv) { return sv.value !== item.value; })); }, className: "ml-1 transform-rotate--45 line-height--0 p-0" },
+                !_this.props.readOnly && React.createElement(Button_1.Button, { disabled: item.forceSelected, circular: true, type: 'blank--light', onClick: function () { return _this.props.onSelectedValuesChange && _this.props.onSelectedValuesChange(_this.props.selectedValues.filter(function (sv) { return sv.value !== item.value; })); }, className: "ml-1 transform-rotate--45 line-height--0 p-0" },
                     React.createElement(PlusIcon, null)))); }))
             :
                 this.props.readOnly && React.createElement("div", { className: "select-input__selectedValue__wrapper" },

@@ -13,6 +13,7 @@ import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_c
 export interface SelectValue {
     value: number | string;
     label?: string;
+    forceSelected?: boolean;
 }
 
 export interface SelectProps extends BaseInput.BaseInputProps {
@@ -116,6 +117,7 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
                 >
                     {item.label ? item.label : item.value}
                     {!this.props.readOnly && <Button
+                        disabled={item.forceSelected}
                         circular={true}
                         type={'blank--light'}
                         onClick={() => this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(this.props.selectedValues.filter(sv => sv.value !== item.value))}

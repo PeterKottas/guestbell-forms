@@ -3,6 +3,7 @@ import * as BaseInput from '../base/BaseInput';
 export interface SelectValue {
     value: number | string;
     label?: string;
+    forceSelected?: boolean;
 }
 export interface SelectProps extends BaseInput.BaseInputProps {
     values?: SelectValue[];
