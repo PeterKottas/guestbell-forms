@@ -459,8 +459,14 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                         <InputHeader
                                             className={''}
                                             title={'Buttons'}
-                                            collapsable={true}
-                                            collapsedDefault={false}
+                                            mainButton={
+                                                <Button
+                                                    onClick={() => console.log('click')}
+                                                    type={'hero'}
+                                                >
+                                                    Hero button
+                                                </Button>
+                                            }
                                         >
                                             <div className="p-3 buttons-row">
                                                 {this.renderButtons(false)}

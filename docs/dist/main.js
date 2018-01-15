@@ -24753,7 +24753,7 @@ var Basic = /** @class */ (function (_super) {
                                                 }, function () { return param.expand(); }); } }, "Add");
                                         } },
                                         React.createElement(index_1.OpeningHoursSpecial, { touchOn: this.state.touchOn, required: false, onDaysChange: (function (days) { return _this.setState({ openingHoursSpecial: days }); }), days: this.state.openingHoursSpecial })),
-                                    React.createElement(index_1.InputHeader, { className: '', title: 'Buttons', collapsable: true, collapsedDefault: false },
+                                    React.createElement(index_1.InputHeader, { className: '', title: 'Buttons', mainButton: React.createElement(index_1.Button, { onClick: function () { return console.log('click'); }, type: 'hero' }, "Hero button") },
                                         React.createElement("div", { className: "p-3 buttons-row" }, this.renderButtons(false)),
                                         React.createElement("div", { className: "p-3 buttons-row" },
                                             React.createElement("div", { className: "text-center" }, "Disabled"),
