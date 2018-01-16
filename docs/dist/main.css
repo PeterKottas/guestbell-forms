@@ -1083,8 +1083,8 @@ textarea {
   margin-right: 1rem; }
 
 .input__header--small .input__header__top {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem; }
+  padding-top: 0rem;
+  padding-bottom: 0rem; }
 
 .input__header--small > .input__header__top .input__header__title {
   text-align: left;
