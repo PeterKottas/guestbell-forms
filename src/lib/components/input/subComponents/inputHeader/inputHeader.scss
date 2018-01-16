@@ -22,7 +22,7 @@
 
 .input__header--small {
     .input__header__top {
-        font-size: 100%;
+        font-size: 100% !important;
         padding-top: 0.25rem;
         padding-bottom: 0.25rem;
     }
@@ -43,7 +43,9 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-
+    &.input__header__top--no-bg{
+        background-color: transparent;
+    }
     &.input__header__top--tall{
         padding-bottom: 1rem;
     }

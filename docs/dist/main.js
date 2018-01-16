@@ -28624,7 +28624,7 @@ var InputHeader = /** @class */ (function (_super) {
     InputHeader.prototype.render = function () {
         var _this = this;
         return React.createElement("div", { className: "input__header " + (this.props.className ? this.props.className : '') + ' ' + (this.getTypeClass()) },
-            React.createElement("div", { className: 'input__header__top ' + (this.props.showExpandAll ? 'input__header__top--tall' : ''), onClick: function () { return _this.toggle(); } },
+            React.createElement("div", { className: 'input__header__top ' + (this.props.showExpandAll ? 'input__header__top--tall ' : '') + (this.props.noBg ? 'input__header__top--no-bg ' : ''), onClick: function () { return _this.toggle(); } },
                 React.createElement("div", { className: "input__header__top__header-container" },
                     this.props.icon && React.createElement("div", { className: "input__header__icon line-height--0" }, this.props.icon),
                     this.props.title && React.createElement("div", { className: "input__header__title" }, this.props.title),
@@ -28720,7 +28720,8 @@ var InputHeader = /** @class */ (function (_super) {
         ignoreContext: false,
         showExpandAll: false,
         collapsedDefault: true,
-        type: 'standard'
+        type: 'standard',
+        noBg: false
     };
     InputHeader.contextTypes = exports.InputHeaderContextType;
     InputHeader.childContextTypes = exports.InputHeaderContextType;

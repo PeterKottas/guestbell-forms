@@ -18,6 +18,7 @@ export declare type InputHeaderProps = {
     ignoreContext?: boolean;
     showExpandAll?: boolean;
     type?: 'hero' | 'standard' | 'small';
+    noBg?: boolean;
 };
 export interface InputHeaderState {
     collapsed: boolean;

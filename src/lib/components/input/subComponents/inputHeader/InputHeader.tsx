@@ -36,7 +36,8 @@ export type InputHeaderProps = {
     collapsedDefault?: boolean;
     ignoreContext?: boolean;
     showExpandAll?: boolean;
-    type?: 'hero'|'standard'|'small';
+    type?: 'hero' | 'standard' | 'small';
+    noBg?: boolean;
 }
 
 export interface InputHeaderState {
@@ -63,7 +64,8 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
         ignoreContext: false,
         showExpandAll: false,
         collapsedDefault: true,
-        type: 'standard'
+        type: 'standard',
+        noBg: false
     };
 
     public id = guid();
@@ -140,7 +142,7 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
     public render() {
         return <div className={`input__header ` + (this.props.className ? this.props.className : '') + ' ' + (this.getTypeClass())}>
             <div
-                className={'input__header__top ' + (this.props.showExpandAll ? 'input__header__top--tall' : '')}
+                className={'input__header__top ' + (this.props.showExpandAll ? 'input__header__top--tall ' : '') + (this.props.noBg ? 'input__header__top--no-bg ' : '')}
                 onClick={() => this.toggle()}
             >
                 <div className="input__header__top__header-container">
