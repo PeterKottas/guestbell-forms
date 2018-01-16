@@ -1082,7 +1082,7 @@ textarea {
 .input__header--hero .input__header__icon {
   margin-right: 1rem; }
 
-.input__header--small > .input__header__top .input__header__title {
+.input__header--small > .input__header__top {
   font-size: 100%;
   padding-top: 0;
   padding-bottom: 0; }
