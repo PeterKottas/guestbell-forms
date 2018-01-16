@@ -17,7 +17,7 @@ export declare type InputHeaderProps = {
     collapsedDefault?: boolean;
     ignoreContext?: boolean;
     showExpandAll?: boolean;
-    heroHeader?: boolean;
+    type?: 'hero' | 'standard' | 'small';
 };
 export interface InputHeaderState {
     collapsed: boolean;
@@ -60,6 +60,7 @@ export declare class InputHeader extends React.Component<InputHeaderProps, Input
     collapse(): void;
     toggle(): void;
     render(): JSX.Element;
+    private getTypeClass();
     private renderMainButton();
     private renderExtraButtons();
     private renderCollapseExpandAll();

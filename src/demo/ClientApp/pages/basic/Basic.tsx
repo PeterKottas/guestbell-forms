@@ -219,7 +219,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                         title={'Example form'}
                                         subTitle={'And this is subtitle. There\'s also icon on the left'}
                                         showExpandAll={true}
-                                        heroHeader={true}
+                                        type="hero"
                                         collapsable={true}
                                         collapsedDefault={false}
                                         mainButton={

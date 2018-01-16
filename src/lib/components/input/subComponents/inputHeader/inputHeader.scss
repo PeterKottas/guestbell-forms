@@ -20,6 +20,14 @@
     }
 }
 
+.input__header--small {
+    >.input__header__top .input__header__title{
+        font-size: 100%;
+        padding-top: 0;
+        padding-bottom: 0; 
+    }
+}
+
 .input__header__top{
     position: relative;
     border-top: 1px solid $input-border-color;

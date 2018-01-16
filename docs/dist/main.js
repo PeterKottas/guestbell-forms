@@ -24708,7 +24708,7 @@ var Basic = /** @class */ (function (_super) {
                     React.createElement("div", { className: 'card ' + this.state.theme },
                         React.createElement("div", { className: "card-block p-0" }, !this.state.simulateUnmount &&
                             React.createElement(index_1.Form, { noValidate: true, ref: function (form) { return _this.form = form; }, onSubmit: function () { return _this.submitForm(); } },
-                                React.createElement(index_1.InputHeader, { icon: React.createElement("i", { className: "material-icons md-48" }, "edit"), title: 'Example form', subTitle: 'And this is subtitle. There\'s also icon on the left', showExpandAll: true, heroHeader: true, collapsable: true, collapsedDefault: false, mainButton: React.createElement(index_1.Submit, { type: 'hero', onClick: this.submitForm, validateForm: this.state.validateFormSubmit }, "Submit"), extraButtons: [
+                                React.createElement(index_1.InputHeader, { icon: React.createElement("i", { className: "material-icons md-48" }, "edit"), title: 'Example form', subTitle: 'And this is subtitle. There\'s also icon on the left', showExpandAll: true, type: "hero", collapsable: true, collapsedDefault: false, mainButton: React.createElement(index_1.Submit, { type: 'hero', onClick: this.submitForm, validateForm: this.state.validateFormSubmit }, "Submit"), extraButtons: [
                                         React.createElement(index_1.Button, { className: "mx-2", onClick: function (e) { e.preventDefault(); _this.form.touchAll(); } }, "Touch all"),
                                         React.createElement(index_1.Button, { className: "mr-2", onClick: function (e) { e.preventDefault(); _this.form.unTouchAll(); } }, "Un-touch all")
                                     ] },
@@ -28623,7 +28623,7 @@ var InputHeader = /** @class */ (function (_super) {
     };
     InputHeader.prototype.render = function () {
         var _this = this;
-        return React.createElement("div", { className: "input__header " + (this.props.className ? this.props.className : '') + ' ' + (this.props.heroHeader ? 'input__header--hero' : '') },
+        return React.createElement("div", { className: "input__header " + (this.props.className ? this.props.className : '') + ' ' + (this.getTypeClass()) },
             React.createElement("div", { className: 'input__header__top ' + (this.props.showExpandAll ? 'input__header__top--tall' : ''), onClick: function () { return _this.toggle(); } },
                 React.createElement("div", { className: "input__header__top__header-container" },
                     this.props.icon && React.createElement("div", { className: "input__header__icon line-height--0" }, this.props.icon),
@@ -28646,6 +28646,16 @@ var InputHeader = /** @class */ (function (_super) {
                 React.createElement("div", { className: (!this.state.collapsed && this.state.smoothCollapseDone ? 'smooth-collapse__container' : '') }, SmoothCollapse ? React.createElement(SmoothCollapse, { collapsedHeight: '0.0001px', expanded: this.props.collapsed !== undefined ? !this.props.collapsed : !this.state.collapsed, onChangeEnd: function () { return _this.setState(function (previousState) { return ({ smoothCollapseDone: true }); }); } }, this.props.children) : this.props.children)
                 :
                     this.props.children));
+    };
+    InputHeader.prototype.getTypeClass = function () {
+        switch (this.props.type) {
+            case 'hero':
+                return 'input__header--hero';
+            case 'small':
+                return 'input__header--small';
+            default:
+                return '';
+        }
     };
     InputHeader.prototype.renderMainButton = function () {
         var child = undefined;
@@ -28709,8 +28719,8 @@ var InputHeader = /** @class */ (function (_super) {
     InputHeader.defaultProps = {
         ignoreContext: false,
         showExpandAll: false,
-        heroHeader: false,
-        collapsedDefault: true
+        collapsedDefault: true,
+        type: 'standard'
     };
     InputHeader.contextTypes = exports.InputHeaderContextType;
     InputHeader.childContextTypes = exports.InputHeaderContextType;

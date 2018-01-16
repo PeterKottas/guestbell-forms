@@ -36,7 +36,7 @@ export type InputHeaderProps = {
     collapsedDefault?: boolean;
     ignoreContext?: boolean;
     showExpandAll?: boolean;
-    heroHeader?: boolean;
+    type?: 'hero'|'standard'|'small';
 }
 
 export interface InputHeaderState {
@@ -62,8 +62,8 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
     public static defaultProps: InputHeaderProps = {
         ignoreContext: false,
         showExpandAll: false,
-        heroHeader: false,
-        collapsedDefault: true
+        collapsedDefault: true,
+        type: 'standard'
     };
 
     public id = guid();
@@ -138,7 +138,7 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
     }
 
     public render() {
-        return <div className={`input__header ` + (this.props.className ? this.props.className : '') + ' ' + (this.props.heroHeader ? 'input__header--hero' : '')}>
+        return <div className={`input__header ` + (this.props.className ? this.props.className : '') + ' ' + (this.getTypeClass())}>
             <div
                 className={'input__header__top ' + (this.props.showExpandAll ? 'input__header__top--tall' : '')}
                 onClick={() => this.toggle()}
@@ -200,6 +200,17 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
                 }
             </div>
         </div >;
+    }
+
+    private getTypeClass() {
+        switch (this.props.type) {
+            case 'hero':
+                return 'input__header--hero';
+            case 'small':
+                return 'input__header--small';
+            default:
+                return '';
+        }
     }
 
     private renderMainButton() {
