@@ -1082,10 +1082,16 @@ textarea {
 .input__header--hero .input__header__icon {
   margin-right: 1rem; }
 
-.input__header--small > .input__header__top {
+.input__header--small .input__header__top {
   font-size: 100%;
-  padding-top: 0;
-  padding-bottom: 0; }
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem; }
+
+.input__header--small .input__header__top__header-container {
+  padding: 0; }
+
+.input__header--small .input__header__top__button-container {
+  padding: 0; }
 
 .input__header__top {
   position: relative;
