@@ -7,6 +7,7 @@ export interface BasicState {
     gender: 'M' | 'F' | '';
     email: string;
     age: string;
+    min1: string;
     checkbox1: boolean;
     checkbox2: boolean;
     validateFormSubmit: boolean;

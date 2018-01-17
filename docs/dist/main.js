@@ -413,14 +413,15 @@ var BaseInput = /** @class */ (function (_super) {
         if (!this.props.ignoreContext) {
             this.context && this.context.updateCallback && this.context.updateCallback(valid, this.inputId);
         }
+        return valid;
     };
     BaseInput.prototype.handleChange = function (event) {
         var value = event.target.value;
         if (!this.props.onTheFlightValidate || (this.props.onTheFlightValidate && this.props.onTheFlightValidate(value))) {
+            var valid = this.handleValueChange(value);
             if (this.props.onChange) {
-                this.props.onChange(event);
+                this.props.onChange(event, valid);
             }
-            this.setState({ value: value });
         }
     };
     BaseInput.prototype.handleBlur = function (e) {
@@ -1697,9 +1698,11 @@ var NumberValidator = /** @class */ (function () {
         var number = Number(value);
         if (!isNaN(number)) {
             if (this.config.min !== undefined && number <= this.config.min) {
+                addError('Min: ' + this.config.min);
                 return false;
             }
             if (this.config.max !== undefined && number >= this.config.max) {
+                addError('Max: ' + this.config.max);
                 return false;
             }
             return true;
@@ -24626,6 +24629,7 @@ var Basic = /** @class */ (function (_super) {
             name: '',
             email: '',
             age: '',
+            min1: '',
             checkbox1: true,
             checkbox2: false,
             validateFormSubmit: true,
@@ -24728,7 +24732,8 @@ var Basic = /** @class */ (function (_super) {
                                         React.createElement(index_1.Text, { touchOn: this.state.touchOn, validators: ["email"], required: false, label: "Email", value: this.state.email, onChange: function (e) { return _this.setState({ email: e.target.value }); }, title: "Your email" }),
                                         React.createElement(index_1.Text, { touchOn: this.state.touchOn, readOnly: true, value: 'You can select me but I am readonly', title: "Readonly" }),
                                         React.createElement(index_1.Text, { touchOn: this.state.touchOn, validators: ["url"], required: false, label: "Website", value: this.state.website, onChange: function (e) { return _this.setState({ website: e.target.value }); }, title: "Your website" }),
-                                        React.createElement(index_1.Text, { touchOn: this.state.touchOn, customValidators: [AgeValidator.instance], label: "Your age (optional)", value: this.state.age, onChange: function (e) { return _this.setState({ age: e.target.value }); }, title: "Age" })),
+                                        React.createElement(index_1.Text, { touchOn: this.state.touchOn, customValidators: [AgeValidator.instance], label: "Your age (optional)", value: this.state.age, onChange: function (e) { return _this.setState({ age: e.target.value }); }, title: "Age" }),
+                                        React.createElement(index_1.Text, { touchOn: this.state.touchOn, customValidators: [new index_1.NumberValidator({ min: 0 })], label: "Min 1", value: this.state.min1, onChange: function (e) { return _this.setState({ min1: e.target.value }); }, title: "Number" })),
                                     React.createElement(index_1.Money, { currencies: [{ label: 'GBP', value: 'GBP' }, { label: 'EUR', value: 'EUR' }], prices: this.state.prices1, touchOn: this.state.touchOn, required: false, onPricesChange: function (prices) { return _this.setState({ prices1: prices }); }, title: "Price" }),
                                     React.createElement(index_1.Money, { currencies: [{ label: 'GBP', value: 'GBP' }, { label: 'EUR', value: 'EUR' }, { label: 'USD', value: 'USD' }], prices: this.state.prices2, allowMultiple: true, touchOn: this.state.touchOn, required: false, onPricesChange: function (prices) { return _this.setState({ prices2: prices }); }, title: "Price multiple" }),
                                     React.createElement(index_1.Time, { touchOn: this.state.touchOn, time: this.state.time1, timeChange: function (time) { return _this.setState({ time1: time }); }, title: "Time" }),

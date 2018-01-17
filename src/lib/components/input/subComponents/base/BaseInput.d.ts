@@ -7,7 +7,7 @@ export declare type BaseInputProps = {
     className?: string;
     label?: string | JSX.Element;
     value?: string;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>, isValid: boolean) => void;
     required?: boolean;
     customValidators?: Validators.IBaseValidator[];
     validators?: ("email" | "number" | "latitude" | "longitude" | "url")[];

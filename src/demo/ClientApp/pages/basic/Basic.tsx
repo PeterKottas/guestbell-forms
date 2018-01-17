@@ -5,7 +5,8 @@ import {
     InputHeader,
     Button,
     ButtonTypes,
-    Tags
+    Tags,
+    NumberValidator
 } from '../../../../lib/index';
 
 export interface BasicProps {
@@ -17,6 +18,7 @@ export interface BasicState {
     gender: 'M' | 'F' | '';
     email: string;
     age: string;
+    min1: string;
     checkbox1: boolean;
     checkbox2: boolean;
     validateFormSubmit: boolean;
@@ -72,6 +74,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
         name: '',
         email: '',
         age: '',
+        min1: '',
         checkbox1: true,
         checkbox2: false,
         validateFormSubmit: true,
@@ -349,6 +352,14 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                                 value={this.state.age}
                                                 onChange={(e) => this.setState({ age: e.target.value })}
                                                 title="Age"
+                                            />
+                                            <Text
+                                                touchOn={this.state.touchOn}
+                                                customValidators={[new NumberValidator({min: 0})]}
+                                                label="Min 1"
+                                                value={this.state.min1}
+                                                onChange={(e) => this.setState({ min1: e.target.value })}
+                                                title="Number"
                                             />
                                         </InputHeader>
                                         <Money

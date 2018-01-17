@@ -16,7 +16,7 @@ export type BaseInputProps = {
     className?: string;
     label?: string | JSX.Element;
     value?: string;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>, isValid: boolean) => void;
     required?: boolean;
     customValidators?: Validators.IBaseValidator[];
     validators?: ("email" | "number" | "latitude" | "longitude" | "url")[];
@@ -99,7 +99,7 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
         this.setState({ disabled: false });
     }
 
-    private handleValueChange(value: string) {
+    private handleValueChange(value: string) : boolean {
         var errors = [];
         var valid = true;
         if (this.props.required && !value) {
@@ -160,15 +160,16 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
         if (!this.props.ignoreContext) {
             this.context && this.context.updateCallback && this.context.updateCallback(valid, this.inputId);
         }
+        return valid;
     }
 
     protected handleChange(event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) {
         let value = event.target.value;
         if (!this.props.onTheFlightValidate || (this.props.onTheFlightValidate && this.props.onTheFlightValidate(value))) {
+            const valid = this.handleValueChange(value);
             if (this.props.onChange) {
-                this.props.onChange(event);
+                this.props.onChange(event, valid);
             }
-            this.setState({ value: value });
         }
     }
 
