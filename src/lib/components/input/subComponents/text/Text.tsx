@@ -9,7 +9,6 @@ import * as BaseInput from '../base/BaseInput';
 import InputGroup from '../inputGroup/InputGroup';
 
 export interface TextProps extends BaseInput.BaseInputProps {
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     mask?: string;
     reverse?: boolean;
     placeholder?: string;
