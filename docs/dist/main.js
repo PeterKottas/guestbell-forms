@@ -30592,6 +30592,8 @@ var Tags = /** @class */ (function (_super) {
                     React.createElement("div", { className: "tags-input__tags__wrapper" },
                         React.createElement(Text_1.Text, __assign({}, textProps, { className: "tags-input__text-input", onKeyDown: function (e) {
                                 if (e.key === 'Enter' && _this.state.value !== '' && _this.state.valid) {
+                                    e.preventDefault();
+                                    e.stopPropagation();
                                     _this.setState({
                                         value: ''
                                     });

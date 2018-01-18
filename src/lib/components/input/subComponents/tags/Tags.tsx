@@ -54,6 +54,8 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                                 className="tags-input__text-input"
                                 onKeyDown={e => {
                                     if (e.key === 'Enter' && this.state.value !== '' && this.state.valid) {
+                                        e.preventDefault();
+                                        e.stopPropagation();
                                         this.setState({
                                             value: ''
                                         });
