@@ -355,7 +355,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             />
                                             <Text
                                                 touchOn={this.state.touchOn}
-                                                customValidators={[new NumberValidator({min: 0})]}
+                                                customValidators={[new NumberValidator({ min: 0 })]}
                                                 label="Min 1"
                                                 value={this.state.min1}
                                                 onChange={(e) => this.setState({ min1: e.target.value })}
@@ -493,16 +493,34 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             collapsable={true}
                                             collapsedDefault={false}
                                         >
-                                            <Tags
-                                                title="Tags example"
-                                                tags={this.state.tags}
-                                                onTagsChanged={(tags: string[]) => this.setState({ tags })}
-                                            />
                                             <Checkbox
                                                 //label="Multiple readonly"
                                                 onChecked={(e) => this.setState({ multipleReadonly: !this.state.multipleReadonly })}
                                                 checked={this.state.multipleReadonly}
                                                 title="Multiple readonly"
+                                            />
+                                            <Tags
+                                                title="Tags example"
+                                                readOnly={this.state.multipleReadonly}
+                                                tags={this.state.tags}
+                                                onTagsChanged={(tags: string[]) => this.setState({ tags })}
+                                            />
+                                            <Tags
+                                                title="Tags max 3"
+                                                maxTags={2}
+                                                readOnly={this.state.multipleReadonly}
+                                                tags={this.state.tags}
+                                                onTagsChanged={(tags: string[]) => this.setState({ tags })}
+                                            />
+                                            <Tags
+                                                title="Tags only email"
+                                                maxTags={2}
+                                                readOnly={this.state.multipleReadonly}
+                                                tags={this.state.tags}
+                                                onTagsChanged={(tags: string[]) => this.setState({ tags })}
+                                                textProps={{
+                                                    validators:['email']
+                                                }}
                                             />
                                             <Select
                                                 label="One or more"

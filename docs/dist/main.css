@@ -1317,15 +1317,30 @@ a.guestbell__dropdown-toggle {
 .guestbell__dropdown-menu > li > a {
   font-size: 14px;
   line-height: 25px; }
-.tags-input__text-input {
-  width: initial; }
-  .tags-input__text-input input {
-    width: initial; }
-
 .tags-input {
-  border-bottom: 0;
-  margin: 0;
-  display: inline-block; }
+  display: inline-block;
+  border: none;
+  margin-top: 20px;
+  max-width: 37.5rem;
+  border-bottom: 0; }
+  .tags-input .tags-input__text-input {
+    margin: 0; }
+  .tags-input .tags-input__tag {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    padding: 7px 10px 5px 5px; }
+  .tags-input .tags-input__tag__wrapper {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap; }
+  .tags-input.readonly .tags-input__tag__wrapper {
+    min-height: 34px; }
 .navbar {
   height: 96px;
   background-color: white;

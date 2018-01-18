@@ -1,13 +1,31 @@
+@import '../../../variables.scss';
+
 .tags-input__text-input{
-    //border-bottom: 0;
-    width: initial;
-    input {
-        width: initial;
-    }
+
 }
 
 .tags-input {
-    border-bottom: 0;
-    margin: 0;
     display: inline-block;
+    border: none;
+    margin-top: 20px;
+    max-width: 37.5rem;
+    border-bottom: 0;
+    .tags-input__text-input {
+        margin: 0;
+    }
+
+    .tags-input__tag {
+        display: inline-flex;
+        align-items: center;
+        padding: 7px 10px 5px 5px;
+    }
+    .tags-input__tag__wrapper {
+        display: inline-flex;
+        flex-wrap: wrap;
+    }
+    &.readonly{
+        .tags-input__tag__wrapper{
+            min-height: 34px;
+        }
+    }
 }

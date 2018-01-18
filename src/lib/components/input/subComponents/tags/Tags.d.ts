@@ -1,16 +1,16 @@
 import './tags.scss';
 import * as BaseInput from '../base/BaseInput';
-export interface Tag {
-    value: string | number;
-    label: string;
-}
+import { TextProps } from './../text/Text.d';
 export declare type TagsProps = {
     className?: string;
     disabled?: boolean;
-    tags: (Tag | string)[];
-    onTagsChanged: (newTags: (Tag | string)[]) => void;
-    tagsOptions?: (Tag | string)[];
+    tags: string[];
+    onTagsChanged: (newTags: string[]) => void;
     allowNew?: boolean;
+    textProps?: TextProps;
+    readOnly?: boolean;
+    reaondlyEmptyPlaceholder?: string;
+    maxTags?: number;
 } & BaseInput.BaseInputProps;
 export interface TagsState extends BaseInput.BaseInputState {
 }
@@ -18,8 +18,7 @@ export declare class Tags extends BaseInput.BaseInput<TagsProps, TagsState> {
     static defaultProps: TagsProps;
     constructor(props: TagsProps);
     render(): JSX.Element;
-    private renderTag(tag);
-    private isTagType(tag);
-    private getTagLabel(tag);
+    private renderTag(tag, index);
+    private renderTags();
 }
 export default Tags;

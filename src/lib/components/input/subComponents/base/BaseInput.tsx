@@ -27,6 +27,7 @@ export type BaseInputProps = {
     onFocus?: (e: React.SyntheticEvent<{}>) => void;
     onBlur?: () => void;
     title?: string | JSX.Element;
+    onKeyDown?: (e: React.KeyboardEvent<HTMLElement>) => void;
 }
 
 export interface BaseInputState {

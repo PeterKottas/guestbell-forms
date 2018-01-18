@@ -44,6 +44,7 @@ export class Text extends BaseInput.BaseInput<TextProps, TextState>  {
                     onBlur={this.handleBlur}
                     onFocus={this.handleFocus}
                     readOnly={this.props.readOnly}
+                    onKeyDown={e=>this.props.onKeyDown && this.props.onKeyDown(e)}
                 />
                 <span className="highlight"></span>
                 <span className="bar"></span>
