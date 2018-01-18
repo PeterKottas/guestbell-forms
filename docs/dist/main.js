@@ -24771,7 +24771,7 @@ var Basic = /** @class */ (function (_super) {
                                             onChecked: function (e) { return _this.setState({ multipleReadonly: !_this.state.multipleReadonly }); }, checked: this.state.multipleReadonly, title: "Multiple readonly" }),
                                         React.createElement(index_1.Tags, { title: "Tags example", readOnly: this.state.multipleReadonly, tags: this.state.tags, onTagsChanged: function (tags) { return _this.setState({ tags: tags }); } }),
                                         React.createElement(index_1.Tags, { title: "Tags max 3", maxTags: 2, readOnly: this.state.multipleReadonly, tags: this.state.tags, onTagsChanged: function (tags) { return _this.setState({ tags: tags }); } }),
-                                        React.createElement(index_1.Tags, { title: "Tags only email", maxTags: 2, readOnly: this.state.multipleReadonly, tags: this.state.tags, onTagsChanged: function (tags) { return _this.setState({ tags: tags }); }, textProps: {
+                                        React.createElement(index_1.Tags, { title: "Tags only email", label: "With label", maxTags: 2, readOnly: this.state.multipleReadonly, tags: this.state.tags, onTagsChanged: function (tags) { return _this.setState({ tags: tags }); }, textProps: {
                                                 validators: ['email']
                                             } }),
                                         React.createElement(index_1.Select, { label: "One or more", title: "Multiselect", multiple: true, readOnly: this.state.multipleReadonly, selectedValues: this.state.selectedValues.map(function (item) { return ({
@@ -30578,7 +30578,9 @@ var PlusIcon = __webpack_require__(34);
 var Tags = /** @class */ (function (_super) {
     __extends(Tags, _super);
     function Tags(props) {
-        return _super.call(this, props) || this;
+        var _this = _super.call(this, props) || this;
+        _this.state = __assign({}, _this.state, { textIsFocused: false });
+        return _this;
     }
     Tags.prototype.render = function () {
         var _this = this;
@@ -30588,7 +30590,7 @@ var Tags = /** @class */ (function (_super) {
                 this.renderTags(),
                 (!this.props.maxTags || (this.props.maxTags > (this.props.tags && this.props.tags.length))) && !this.props.readOnly &&
                     React.createElement("div", { className: "tags-input__tags__wrapper" },
-                        React.createElement(Text_1.Text, __assign({}, textProps, { className: "tags-input__text-input", label: this.props.label, onKeyDown: function (e) {
+                        React.createElement(Text_1.Text, __assign({}, textProps, { className: "tags-input__text-input", onKeyDown: function (e) {
                                 if (e.key === 'Enter' && _this.state.value !== '' && _this.state.valid) {
                                     _this.setState({
                                         value: ''
@@ -30603,10 +30605,12 @@ var Tags = /** @class */ (function (_super) {
                                 else {
                                     _this.setValid();
                                 }
-                            }, value: this.state.value, readOnly: this.props.readOnly })),
+                            }, onFocus: function (e) { return _this.setState({ textIsFocused: true }); }, onBlur: function () { return _this.setState({ textIsFocused: false }); }, value: this.state.value, readOnly: this.props.readOnly })),
                         React.createElement("span", { className: "highlight" }),
                         React.createElement("span", { className: "bar" }),
-                        this.renderDefaultValidation()))));
+                        this.renderDefaultValidation()),
+                this.props.label && React.createElement("label", { className: ((this.props.tags && this.props.tags.length > 0) ||
+                        (this.state.value !== '') || (this.state.textIsFocused)) ? 'label--focused' : '' }, this.props.label))));
     };
     Tags.prototype.renderTag = function (tag, index) {
         var _this = this;

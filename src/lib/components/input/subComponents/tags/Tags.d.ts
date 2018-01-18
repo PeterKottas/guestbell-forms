@@ -13,6 +13,7 @@ export declare type TagsProps = {
     maxTags?: number;
 } & BaseInput.BaseInputProps;
 export interface TagsState extends BaseInput.BaseInputState {
+    textIsFocused: boolean;
 }
 export declare class Tags extends BaseInput.BaseInput<TagsProps, TagsState> {
     static defaultProps: TagsProps;

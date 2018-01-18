@@ -24,6 +24,7 @@ export type TagsProps = {
 } & BaseInput.BaseInputProps;
 
 export interface TagsState extends BaseInput.BaseInputState {
+    textIsFocused: boolean;
 }
 
 // unfisnished 
@@ -37,6 +38,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
 
     constructor(props: TagsProps) {
         super(props);
+        this.state = {...this.state, textIsFocused: false};
     }
 
     public render() {
@@ -50,7 +52,6 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                             <Text
                                 {...textProps}
                                 className="tags-input__text-input"
-                                label={this.props.label}
                                 onKeyDown={e => {
                                     if (e.key === 'Enter' && this.state.value !== '' && this.state.valid) {
                                         this.setState({
@@ -67,14 +68,19 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                                         this.setValid();
                                     }
                                 }}
+                                onFocus={e => this.setState({ textIsFocused: true })}
+                                onBlur={()=> this.setState({ textIsFocused: false })}
                                 value={this.state.value}
                                 readOnly={this.props.readOnly}
                             />
                             <span className="highlight"></span>
                             <span className="bar"></span>
+
                             {this.renderDefaultValidation()}
                         </div >
                     }
+                    {this.props.label && <label className={((this.props.tags && this.props.tags.length > 0) || 
+                        (this.state.value !== '') || (this.state.textIsFocused)) ? 'label--focused' : ''}>{this.props.label}</label>}
                 </div>
             </InputGroup >
         );

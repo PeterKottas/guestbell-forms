@@ -514,6 +514,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             />
                                             <Tags
                                                 title="Tags only email"
+                                                label="With label"
                                                 maxTags={2}
                                                 readOnly={this.state.multipleReadonly}
                                                 tags={this.state.tags}
