@@ -21,6 +21,7 @@ export type TagsProps = {
     readOnly?: boolean;
     reaondlyEmptyPlaceholder?: string;
     maxTags?: number;
+    pressEnterToAddText?: string;
 } & BaseInput.BaseInputProps;
 
 export interface TagsState extends BaseInput.BaseInputState {
@@ -33,12 +34,13 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
         disabled: false,
         className: '',
         tags: [],
+        pressEnterToAddText: ' - Press Enter to add',
         onTagsChanged: () => undefined
     }
 
     constructor(props: TagsProps) {
         super(props);
-        this.state = {...this.state, textIsFocused: false};
+        this.state = { ...this.state, textIsFocused: false };
     }
 
     public render() {
@@ -71,7 +73,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                                     }
                                 }}
                                 onFocus={e => this.setState({ textIsFocused: true })}
-                                onBlur={()=> this.setState({ textIsFocused: false })}
+                                onBlur={() => this.setState({ textIsFocused: false })}
                                 value={this.state.value}
                                 readOnly={this.props.readOnly}
                             />
@@ -81,8 +83,8 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                             {this.renderDefaultValidation()}
                         </div >
                     }
-                    {this.props.label && <label className={((this.props.tags && this.props.tags.length > 0) || 
-                        (this.state.value !== '') || (this.state.textIsFocused)) ? 'label--focused' : ''}>{this.props.label}</label>}
+                    {this.props.label && <label className={((this.props.tags && this.props.tags.length > 0) ||
+                        (this.state.value !== '') || (this.state.textIsFocused)) ? 'label--focused' : ''}>{this.props.label}{this.state.value !== '' && this.props.pressEnterToAddText}</label>}
                 </div>
             </InputGroup >
         );

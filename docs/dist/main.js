@@ -30612,7 +30612,9 @@ var Tags = /** @class */ (function (_super) {
                         React.createElement("span", { className: "bar" }),
                         this.renderDefaultValidation()),
                 this.props.label && React.createElement("label", { className: ((this.props.tags && this.props.tags.length > 0) ||
-                        (this.state.value !== '') || (this.state.textIsFocused)) ? 'label--focused' : '' }, this.props.label))));
+                        (this.state.value !== '') || (this.state.textIsFocused)) ? 'label--focused' : '' },
+                    this.props.label,
+                    this.state.value !== '' && this.props.pressEnterToAddText))));
     };
     Tags.prototype.renderTag = function (tag, index) {
         var _this = this;
@@ -30633,6 +30635,7 @@ var Tags = /** @class */ (function (_super) {
         disabled: false,
         className: '',
         tags: [],
+        pressEnterToAddText: ' - Press Enter to add',
         onTagsChanged: function () { return undefined; }
     };
     return Tags;
