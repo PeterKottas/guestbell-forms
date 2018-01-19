@@ -28,4 +28,12 @@
             min-height: 34px;
         }
     }
+
+    &.input__base label, &.input__base span.label-classname {
+        top: calc(100% - 32px);
+    }
+
+    &.input__base label.label--focused {
+        top: -1rem;
+    }
 }
