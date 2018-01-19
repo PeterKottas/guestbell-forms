@@ -30611,8 +30611,8 @@ var Tags = /** @class */ (function (_super) {
                         React.createElement("span", { className: "highlight" }),
                         React.createElement("span", { className: "bar" }),
                         this.renderDefaultValidation()),
-                this.props.label && React.createElement("label", { className: ((this.props.tags && this.props.tags.length > 0) ||
-                        (this.state.value !== '') || (this.state.textIsFocused)) ? 'label--focused' : '' },
+                this.props.label && React.createElement("label", { className: ((this.state.value !== '')
+                        || (this.state.textIsFocused)) ? 'label--focused' : '' },
                     this.props.label,
                     this.state.value !== '' && this.props.pressEnterToAddText))));
     };

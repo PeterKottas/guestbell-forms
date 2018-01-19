@@ -83,8 +83,9 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                             {this.renderDefaultValidation()}
                         </div >
                     }
-                    {this.props.label && <label className={((this.props.tags && this.props.tags.length > 0) ||
-                        (this.state.value !== '') || (this.state.textIsFocused)) ? 'label--focused' : ''}>{this.props.label}{this.state.value !== '' && this.props.pressEnterToAddText}</label>}
+                    {this.props.label && <label className={((this.state.value !== '') 
+                    || (this.state.textIsFocused)) ? 'label--focused' : ''}
+                    >{this.props.label}{this.state.value !== '' && this.props.pressEnterToAddText}</label>}
                 </div>
             </InputGroup >
         );
