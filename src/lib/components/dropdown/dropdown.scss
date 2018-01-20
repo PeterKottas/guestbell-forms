@@ -72,6 +72,17 @@ a.guestbell__dropdown-toggle {
     &.guestbell__dropdown-toggle__arrow--hidden::after{
         display: none;
     }
+    &::after {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: .255em;
+        content: "";
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid #555555;
+        pointer-events: none;
+    }
 }
 
 .guestbell__label-count {
