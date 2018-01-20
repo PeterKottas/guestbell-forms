@@ -1300,7 +1300,8 @@ a.guestbell__dropdown-toggle {
   display: inline-block;
   width: 0;
   height: 0;
-  margin-left: .255em;
+  margin-left: .25rem;
+  vertical-align: 0.25rem;
   content: "";
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
