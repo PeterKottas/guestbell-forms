@@ -314,11 +314,18 @@ var BaseInput = /** @class */ (function (_super) {
         return _this;
     }
     BaseInput.prototype.getValidationClass = function () {
-        return this.state.valid || !this.state.touched ? 'validation__success' : 'validation__error';
+        return (this.state.valid || !this.state.touched) && (!this.props.errors || this.props.errors.length === 0) ? 'validation__success' : 'validation__error';
     };
     BaseInput.prototype.renderDefaultValidation = function () {
+        var finalErrors = this.state.errors;
+        if (!finalErrors) {
+            finalErrors = [];
+        }
+        if (this.props.errors) {
+            finalErrors = finalErrors.concat(this.props.errors);
+        }
         return React.createElement("div", { className: "validation__container" },
-            React.createElement("ul", { className: "validation__ul" }, this.state.errors && this.state.errors.map(function (item, index) { return React.createElement("span", { key: index, className: "validation__item" }, item); })));
+            React.createElement("ul", { className: "validation__ul" }, finalErrors.map(function (item, index) { return React.createElement("span", { key: index, className: "validation__item" }, item); })));
     };
     BaseInput.prototype.componentWillUnmount = function () {
         if (!this.props.ignoreContext) {

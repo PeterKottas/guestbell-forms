@@ -28,6 +28,7 @@ export type BaseInputProps = {
     onBlur?: () => void;
     title?: string | JSX.Element;
     onKeyDown?: (e: React.KeyboardEvent<HTMLElement>) => void;
+    errors?: string[];
 }
 
 export interface BaseInputState {
@@ -57,11 +58,18 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
     public static contextTypes = Form.FormContextType;
 
     protected getValidationClass() {
-        return this.state.valid || !this.state.touched ? 'validation__success' : 'validation__error';
+        return (this.state.valid || !this.state.touched) && (!this.props.errors || this.props.errors.length === 0) ? 'validation__success' : 'validation__error';
     }
 
     protected renderDefaultValidation() {
-        return <div className="validation__container"><ul className="validation__ul">{this.state.errors && this.state.errors.map((item, index) => <span key={index} className="validation__item">{item}</span>)}</ul></div>;
+        let finalErrors = this.state.errors;
+        if (!finalErrors) {
+            finalErrors = [];
+        }
+        if (this.props.errors) {
+            finalErrors = finalErrors.concat(this.props.errors);
+        }
+        return <div className="validation__container"><ul className="validation__ul">{finalErrors.map((item, index) => <span key={index} className="validation__item">{item}</span>)}</ul></div>;
     }
 
     componentWillUnmount() {
@@ -100,7 +108,7 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
         this.setState({ disabled: false });
     }
 
-    private handleValueChange(value: string) : boolean {
+    private handleValueChange(value: string): boolean {
         var errors = [];
         var valid = true;
         if (this.props.required && !value) {
