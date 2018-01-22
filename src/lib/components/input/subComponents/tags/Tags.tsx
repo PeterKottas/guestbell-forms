@@ -78,10 +78,6 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                                 readOnly={this.props.readOnly}
                                 errors={this.props.errors}
                             />
-                            <span className="highlight"></span>
-                            <span className="bar"></span>
-
-                            {this.renderDefaultValidation()}
                         </div >
                     }
                     {this.props.label && <label className={((this.state.value !== '') 
