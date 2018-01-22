@@ -28,13 +28,13 @@ export type BaseInputProps = {
     onBlur?: () => void;
     title?: string | JSX.Element;
     onKeyDown?: (e: React.KeyboardEvent<HTMLElement>) => void;
-    errors?: string[];
+    errors?: (string | JSX.Element)[];
 }
 
 export interface BaseInputState {
     valid: boolean;
     value: string;
-    errors: string[];
+    errors: (string | JSX.Element)[];
     validator: undefined;
     touched: boolean;
     disabled: boolean;
