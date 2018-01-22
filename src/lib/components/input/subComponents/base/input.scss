@@ -22,6 +22,11 @@
     border-bottom: 1px solid $input-border-color;
     width: 100%;
 
+    // Chrome yellow tint fix
+    input:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    }
+
     /* VALIDATION ======================================= */
     .validation__container {
         position: absolute;

@@ -57,6 +57,8 @@ textarea {
   /* active state */
   /* HIGHLIGHTER ================================== */
   /* active state */ }
+  .input__base input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important; }
   .input__base .validation__container {
     position: absolute;
     top: 100%;
