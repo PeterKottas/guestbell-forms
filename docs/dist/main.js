@@ -30614,7 +30614,7 @@ var Tags = /** @class */ (function (_super) {
                                 else {
                                     _this.setValid();
                                 }
-                            }, onFocus: function (e) { return _this.setState({ textIsFocused: true }); }, onBlur: function () { return _this.setState({ textIsFocused: false }); }, value: this.state.value, readOnly: this.props.readOnly })),
+                            }, onFocus: function (e) { return _this.setState({ textIsFocused: true }); }, onBlur: function () { return _this.setState({ textIsFocused: false }); }, value: this.state.value, readOnly: this.props.readOnly, errors: this.props.errors })),
                         React.createElement("span", { className: "highlight" }),
                         React.createElement("span", { className: "bar" }),
                         this.renderDefaultValidation()),

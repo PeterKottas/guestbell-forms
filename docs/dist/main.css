@@ -1334,7 +1334,7 @@ a.guestbell__dropdown-toggle {
   border: none;
   margin-top: 20px;
   max-width: 37.5rem;
-  border-bottom: 0; }
+  border-bottom: 0 !important; }
   .tags-input .tags-input__text-input {
     margin: 0; }
   .tags-input .tags-input__tag {

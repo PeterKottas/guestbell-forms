@@ -76,6 +76,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                                 onBlur={() => this.setState({ textIsFocused: false })}
                                 value={this.state.value}
                                 readOnly={this.props.readOnly}
+                                errors={this.props.errors}
                             />
                             <span className="highlight"></span>
                             <span className="bar"></span>
