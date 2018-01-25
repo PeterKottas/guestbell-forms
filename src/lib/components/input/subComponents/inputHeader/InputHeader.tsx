@@ -272,6 +272,7 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
             {(allCollapsed || !allExpanded) && <Button
                 noRipples={true}
                 small={true}
+                className={((allExpanded || !allCollapsed) ? 'mr-2' : '')}
                 onClick={() => {
                     Object.keys(this.state.inputHeaders).forEach(key => {
                         const inputHeader = this.state.inputHeaders[key];

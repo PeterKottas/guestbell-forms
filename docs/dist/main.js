@@ -28719,7 +28719,7 @@ var InputHeader = /** @class */ (function (_super) {
             }
         });
         return React.createElement("div", { className: "input__header__expand-collapse--all", onClick: function (e) { return e.stopPropagation(); } },
-            (allCollapsed || !allExpanded) && React.createElement(Button_1.default, { noRipples: true, small: true, onClick: function () {
+            (allCollapsed || !allExpanded) && React.createElement(Button_1.default, { noRipples: true, small: true, className: ((allExpanded || !allCollapsed) ? 'mr-2' : ''), onClick: function () {
                     Object.keys(_this.state.inputHeaders).forEach(function (key) {
                         var inputHeader = _this.state.inputHeaders[key];
                         inputHeader.expand();
