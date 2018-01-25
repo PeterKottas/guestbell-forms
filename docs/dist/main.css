@@ -1074,12 +1074,14 @@ textarea {
           flex-direction: column;
   position: relative; }
 
-.input__header--hero > .input__header__top .input__header__title {
-  text-align: left;
-  font-size: 130%;
-  width: initial;
-  min-width: initial;
-  margin-right: 1rem; }
+.input__header--hero > .input__header__top {
+  min-height: 5.063rem; }
+  .input__header--hero > .input__header__top .input__header__title {
+    text-align: left;
+    font-size: 130%;
+    width: initial;
+    min-width: initial;
+    margin-right: 1rem; }
 
 .input__header--hero .input__header__icon {
   margin-right: 1rem; }
@@ -1177,7 +1179,8 @@ textarea {
   padding: 0.5rem 0; }
   .input__header__top__button-container > div {
     margin-left: auto; }
-  .input__header__top__button-container > div:not(.input__header__sub-title) ~ div:not(.input__header__sub-title), .input__header__top__button-container div.input__header__sub-title {
+  .input__header__top__button-container > div:not(.input__header__sub-title) ~ div:not(.input__header__sub-title),
+  .input__header__top__button-container div.input__header__sub-title {
     margin-left: initial; }
 
 .input__header__collapse-button {
@@ -1209,7 +1212,8 @@ textarea {
 .guestbell-forms--dark .input__header__sub-title {
   color: white; }
 
-.smooth-collapse__container > div, .smooth-collapse__container > div > div {
+.smooth-collapse__container > div,
+.smooth-collapse__container > div > div {
   overflow: visible !important; }
 
 @media (max-width: 768px) {
