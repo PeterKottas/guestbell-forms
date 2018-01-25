@@ -467,7 +467,8 @@ textarea {
       height: 0.4375rem;
       border: 2px solid #10bdc7;
       border-top-style: none;
-      border-right-style: none; }
+      border-right-style: none;
+      pointer-events: none; }
     .input__base.checkbox-input input:checked:before {
       -webkit-transform: rotate(-45deg) scale(1, 1);
               transform: rotate(-45deg) scale(1, 1); }
