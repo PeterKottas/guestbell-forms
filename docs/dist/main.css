@@ -220,7 +220,7 @@ textarea {
   outline: inherit !important;
   position: relative;
   padding: 0.5rem;
-  transition: 0.5s all;
+  transition: background-color 0.5s, border 0.5s;
   display: inline-block;
   text-align: center;
   white-space: nowrap;
