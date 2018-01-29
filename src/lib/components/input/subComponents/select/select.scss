@@ -27,6 +27,12 @@
             top: initial;
             font-size: 18px;
         }
+        select.filled:focus~label {
+            color: $input-highlight-color !important;
+        }
+        .filled~label {
+            color: $input-label-color !important;
+        }
     }
     &:not(.readonly) {
         border-bottom: 1px solid $input-border-color;

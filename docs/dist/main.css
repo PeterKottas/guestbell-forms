@@ -403,6 +403,10 @@ textarea {
     bottom: 4px;
     top: initial;
     font-size: 18px; }
+  .select-input.input__base.multiple select.filled:focus ~ label {
+    color: #10bdc7 !important; }
+  .select-input.input__base.multiple .filled ~ label {
+    color: #999999 !important; }
   .select-input:not(.readonly) {
     border-bottom: 1px solid #eeeeee; }
     .select-input:not(.readonly) .select-input__select__wrapper::after {
