@@ -86,7 +86,8 @@ textarea {
     pointer-events: none;
     left: 5px;
     top: 5px;
-    transition: 0.2s ease all; }
+    transition: 0.2s ease all;
+    margin-bottom: 0; }
   .input__base input:focus ~ label, .input__base .filled ~ label, .input__base select:focus ~ label, .input__base label.label--focused, .input__base span.label-classname.label--focused {
     top: -1rem;
     font-size: 14px;
@@ -399,7 +400,7 @@ textarea {
   .select-input .select-input__select__wrapper span.select-input__select {
     min-height: calc( 1rem + 13px); }
   .select-input.input__base.multiple select:focus ~ label, .select-input.input__base.multiple .filled ~ label {
-    bottom: -4px;
+    bottom: 4px;
     top: initial;
     font-size: 18px; }
   .select-input:not(.readonly) {

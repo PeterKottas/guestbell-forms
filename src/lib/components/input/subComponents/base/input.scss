@@ -66,6 +66,7 @@
         left: 5px;
         top: 5px;
         transition: 0.2s ease all;
+        margin-bottom: 0;
     }
     /* active state */
     input:focus ~ label, .filled ~ label, select:focus ~ label, label.label--focused, span.label-classname.label--focused {

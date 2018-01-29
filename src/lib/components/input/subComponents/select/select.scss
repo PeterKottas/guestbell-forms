@@ -23,7 +23,7 @@
     }
     &.input__base.multiple {
         select:focus~label, .filled~label {
-            bottom: -4px;
+            bottom: 4px;
             top: initial;
             font-size: 18px;
         }
