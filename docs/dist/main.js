@@ -2777,7 +2777,7 @@ var Select = /** @class */ (function (_super) {
         var _this = this;
         var finalValues = this.props.multiple ? this.props.values.filter(function (item) { return _this.props.selectedValues.findIndex(function (t) { return t.value === item.value; }) < 0; }) : this.props.values;
         return React.createElement(InputGroup_1.default, { title: this.props.title },
-            React.createElement("div", { className: 'input__base select-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '') + ' ' + (this.props.readOnly ? 'readonly' : '') },
+            React.createElement("div", { className: 'input__base select-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '') + ' ' + (this.props.readOnly ? 'readonly' : '') + ' ' + (this.props.multiple ? 'multiple' : '') },
                 this.renderSelectedValues(),
                 finalValues.length > 0 && ((this.props.multiple && !this.props.readOnly) || !this.props.multiple) &&
                     React.createElement("div", { className: "select-input__select__wrapper" },
@@ -24781,7 +24781,7 @@ var Basic = /** @class */ (function (_super) {
                                         React.createElement(index_1.Tags, { title: "Tags only email", label: "With label", maxTags: 2, readOnly: this.state.multipleReadonly, tags: this.state.tags, onTagsChanged: function (tags) { return _this.setState({ tags: tags }); }, textProps: {
                                                 validators: ['email']
                                             } }),
-                                        React.createElement(index_1.Select, { label: "One or more", title: "Multiselect", multiple: true, readOnly: this.state.multipleReadonly, selectedValues: this.state.selectedValues.map(function (item) { return ({
+                                        React.createElement(index_1.Select, { label: "One or more", title: "Multiselect", multiple: true, defaultEmpty: true, readOnly: this.state.multipleReadonly, selectedValues: this.state.selectedValues.map(function (item) { return ({
                                                 value: item
                                             }); }), values: this.state.multipleValues.map(function (item) { return ({
                                                 value: item

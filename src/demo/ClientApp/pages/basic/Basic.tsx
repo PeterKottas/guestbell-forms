@@ -527,6 +527,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                                 label="One or more"
                                                 title="Multiselect"
                                                 multiple={true}
+                                                defaultEmpty={true}
                                                 readOnly={this.state.multipleReadonly}
                                                 selectedValues={this.state.selectedValues.map(item => ({
                                                     value: item

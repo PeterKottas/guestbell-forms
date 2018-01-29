@@ -21,6 +21,13 @@
             min-height: calc( 1rem + 13px);
         }
     }
+    &.input__base.multiple {
+        select:focus~label, .filled~label {
+            bottom: -4px;
+            top: initial;
+            font-size: 18px;
+        }
+    }
     &:not(.readonly) {
         border-bottom: 1px solid $input-border-color;
         .select-input__select__wrapper {

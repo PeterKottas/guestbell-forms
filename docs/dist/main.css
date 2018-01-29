@@ -398,6 +398,10 @@ textarea {
     background-color: transparent; }
   .select-input .select-input__select__wrapper span.select-input__select {
     min-height: calc( 1rem + 13px); }
+  .select-input.input__base.multiple select:focus ~ label, .select-input.input__base.multiple .filled ~ label {
+    bottom: -4px;
+    top: initial;
+    font-size: 18px; }
   .select-input:not(.readonly) {
     border-bottom: 1px solid #eeeeee; }
     .select-input:not(.readonly) .select-input__select__wrapper::after {

@@ -56,7 +56,7 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
     public render() {
         const finalValues = this.props.multiple ? this.props.values.filter(item => this.props.selectedValues.findIndex((t) => t.value === item.value) < 0) : this.props.values;
         return <InputGroup title={this.props.title}>
-            <div className={'input__base select-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '') + ' ' + (this.props.readOnly ? 'readonly' : '')}>
+            <div className={'input__base select-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '') + ' ' + (this.props.readOnly ? 'readonly' : '')+ ' ' + (this.props.multiple ? 'multiple' : '')}>
                 {this.renderSelectedValues()}
                 {finalValues.length > 0 && ((this.props.multiple && !this.props.readOnly) || !this.props.multiple) &&
                     <div className="select-input__select__wrapper">
