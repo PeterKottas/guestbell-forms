@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { IBaseValidator, MoneyWithCurrency, OpeningHoursDayObj, OpeningHoursSpecialDayObj } from '../../../../lib/index';
+import { Tag } from 'src/lib/components/input/subComponents/tags/Tags';
 export interface BasicProps {
 }
 export interface BasicState {
@@ -26,7 +27,7 @@ export interface BasicState {
     openingHoursWeekDay: OpeningHoursDayObj;
     openingHoursSpecial: OpeningHoursSpecialDayObj[];
     website: string;
-    tags: string[];
+    tags: Tag[];
     selectedValues: string[];
     multipleValues: string[];
     multipleReadonly: boolean;

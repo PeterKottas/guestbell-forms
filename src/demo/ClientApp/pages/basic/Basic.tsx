@@ -8,6 +8,7 @@ import {
     Tags,
     NumberValidator
 } from '../../../../lib/index';
+import { Tag } from 'src/lib/components/input/subComponents/tags/Tags';
 
 export interface BasicProps {
 
@@ -37,7 +38,7 @@ export interface BasicState {
     openingHoursWeekDay: OpeningHoursDayObj;
     openingHoursSpecial: OpeningHoursSpecialDayObj[];
     website: string;
-    tags: string[];
+    tags: Tag[];
     selectedValues: string[];
     multipleValues: string[];
     multipleReadonly: boolean;
@@ -65,6 +66,26 @@ export class AgeValidator implements IBaseValidator {
     }
 }
 
+const existingTags:Tag[] = [{
+    id:1,
+    name:'Food'
+},{
+    id:2,
+    name:'Drink'
+},{
+    id:3,
+    name:'Beer'
+},{
+    id:4,
+    name:'Wine'
+},{
+    id:5,
+    name:'Gluten free'
+},{
+    id:6,
+    name:'Fruit'
+}
+];
 
 export class Basic extends React.Component<BasicProps, BasicState>{
     private form: Form;
@@ -502,23 +523,36 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             <Tags
                                                 title="Tags example"
                                                 readOnly={this.state.multipleReadonly}
+                                                allowNew={true}
                                                 tags={this.state.tags}
-                                                onTagsChanged={(tags: string[]) => this.setState({ tags })}
+                                                onTagsChanged={(tags) => this.setState({ tags })}
+                                            />
+                                            <Tags
+                                                title="Tags suggestions"
+                                                label="Choose or create tags"
+                                                pressEnterToAddText=" - Press Enter to create new tag"
+                                                readOnly={this.state.multipleReadonly}
+                                                allowNew={true}
+                                                existingTags={existingTags}
+                                                tags={this.state.tags}
+                                                onTagsChanged={(tags) => this.setState({ tags })}
                                             />
                                             <Tags
                                                 title="Tags max 3"
                                                 maxTags={2}
                                                 readOnly={this.state.multipleReadonly}
+                                                allowNew={true}
                                                 tags={this.state.tags}
-                                                onTagsChanged={(tags: string[]) => this.setState({ tags })}
+                                                onTagsChanged={(tags) => this.setState({ tags })}
                                             />
                                             <Tags
                                                 title="Tags only email"
                                                 label="With label"
                                                 maxTags={2}
+                                                allowNew={true}
                                                 readOnly={this.state.multipleReadonly}
                                                 tags={this.state.tags}
-                                                onTagsChanged={(tags: string[]) => this.setState({ tags })}
+                                                onTagsChanged={(tags) => this.setState({ tags })}
                                                 textProps={{
                                                     validators:['email']
                                                 }}
