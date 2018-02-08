@@ -56,7 +56,7 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
     public render() {
         const finalValues = this.props.multiple ? this.props.values.filter(item => this.props.selectedValues.findIndex((t) => t.value === item.value) < 0) : this.props.values;
         return <InputGroup title={this.props.title}>
-            <div className={'input__base select-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '') + ' ' + (this.props.readOnly ? 'readonly' : '')+ ' ' + (this.props.multiple ? 'multiple' : '')}>
+            <div className={'input__base select-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '') + ' ' + (this.props.readOnly ? 'readonly' : '') + ' ' + (this.props.multiple ? 'multiple' : '')}>
                 {this.renderSelectedValues()}
                 {finalValues.length > 0 && ((this.props.multiple && !this.props.readOnly) || !this.props.multiple) &&
                     <div className="select-input__select__wrapper">
@@ -76,7 +76,7 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
                             </select>
                             :
                             <span className={'select-input__select ' + (this.state.value !== '' || (this.props.selectedValues && this.props.selectedValues.length > 0) ? 'filled' : '')}>
-                                {this.state.value}
+                                {this.renderReadonly()}
                             </span>
                         }
                         <span className="highlight"></span>
@@ -108,33 +108,40 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
         }
     }
 
+    private renderReadonly() {
+        const value = this.props.values.filter(item => item.value === this.state.value)[0];
+        return value.label ? value.label : value.value;
+    }
+
     private renderSelectedValues() {
-        return this.props.multiple && this.props.selectedValues.length > 0 ?
-            <div className="select-input__selectedValue__wrapper">{this.props.selectedValues.map((item, index) => (
-                <div
-                    className="select-input__selectedValue"
-                    key={index}
-                >
-                    {item.label ? item.label : item.value}
-                    {!this.props.readOnly && <Button
-                        disabled={item.forceSelected}
-                        circular={true}
-                        type={'blank--light'}
-                        onClick={() => this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(this.props.selectedValues.filter(sv => sv.value !== item.value))}
-                        className="ml-1 transform-rotate--45 line-height--0 p-0"
+        return this.props.multiple ?
+            this.props.selectedValues.length > 0 ?
+                <div className="select-input__selectedValue__wrapper">{this.props.selectedValues.map((item, index) => (
+                    <div
+                        className="select-input__selectedValue"
+                        key={index}
                     >
-                        <PlusIcon />
-                    </Button>}
+                        {item.label ? item.label : item.value}
+                        {!this.props.readOnly && <Button
+                            disabled={item.forceSelected}
+                            circular={true}
+                            type={'blank--light'}
+                            onClick={() => this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(this.props.selectedValues.filter(sv => sv.value !== item.value))}
+                            className="ml-1 transform-rotate--45 line-height--0 p-0"
+                        >
+                            <PlusIcon />
+                        </Button>}
+                    </div>
+                ))}
                 </div>
-            ))}
-            </div>
+                :
+                this.props.readOnly && <div className="select-input__selectedValue__wrapper">
+                    <div className="select-input__selectedValue">
+                        {this.props.reaondlyEmptyPlaceholder}
+                    </div>
+                </div>
             :
-            this.props.readOnly && <div className="select-input__selectedValue__wrapper">
-                <div className="select-input__selectedValue">
-                    {this.props.reaondlyEmptyPlaceholder}
-                </div>
-            </div>
-            
+            null;
     }
 }
 

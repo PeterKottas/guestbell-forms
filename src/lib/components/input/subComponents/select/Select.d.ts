@@ -27,5 +27,6 @@ export declare class Select extends BaseInput.BaseInput<SelectProps, SelectState
     constructor(props: SelectProps);
     render(): JSX.Element;
     private handleChangeCustom(event);
+    private renderReadonly();
     private renderSelectedValues();
 }
