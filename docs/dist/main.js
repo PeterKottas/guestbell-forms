@@ -2842,7 +2842,7 @@ var Select = /** @class */ (function (_super) {
     Select.prototype.renderReadonly = function () {
         var _this = this;
         var value = this.props.values.filter(function (item) { return item.value.toString() === _this.state.value; })[0];
-        return value.label ? value.label : value.value;
+        return value ? value.label ? value.label : value.value : '';
     };
     Select.prototype.renderSelectedValues = function () {
         var _this = this;

@@ -110,7 +110,7 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
 
     private renderReadonly() {
         const value = this.props.values.filter(item => item.value.toString() === this.state.value)[0];
-        return value.label ? value.label : value.value;
+        return value ? value.label ? value.label : value.value : '';
     }
 
     private renderSelectedValues() {
