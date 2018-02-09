@@ -42360,7 +42360,7 @@ var OpeningHoursSpecial = /** @class */ (function (_super) {
                         var days = _this.props.days.slice(0);
                         days[index] = __assign({}, day, { date: date.toDate() });
                         _this.props.onDaysChange(days);
-                    }, withPortal: true, minDate: Moment() }) })); }),
+                    }, excludeDates: _this.props.days.map(function (day) { return Moment(day.date); }), withPortal: true, minDate: Moment() }) })); }),
             React.createElement("span", { className: "bar" }),
             this.renderDefaultValidation());
     };
