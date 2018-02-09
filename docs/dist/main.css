@@ -497,7 +497,6 @@ textarea {
        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
-    margin-bottom: 4px;
     pointer-events: auto;
     position: relative;
     display: inline-block;
