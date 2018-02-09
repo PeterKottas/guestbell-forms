@@ -44,16 +44,14 @@
         }
     }
 
-    .DayPickerInput{
+    .react-datepicker__input-container{
         width: 100%;
         > input {
             width: 100%;
             padding: 0;
             border: none;
             color: $input-label-color;
-        }
-        .DayPickerInput-Overlay{
-            z-index: 1;
+            text-align: right;
         }
     }
 

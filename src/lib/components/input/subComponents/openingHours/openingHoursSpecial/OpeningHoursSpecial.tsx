@@ -5,10 +5,15 @@ import * as plusIconSrc from '../../assets/images/ic_add_circle_outline_black_24
 //Libs
 import * as React from 'react';
 try {
-    var DayPickerInput = require('react-day-picker/DayPickerInput').default;
-    require('react-day-picker/lib/style.css');
+    var Moment = require('moment');
 } catch {
-    DayPickerInput = undefined;
+    Moment = undefined;
+}
+try {
+    var DatePicker = require('react-datepicker').default;
+    require('react-datepicker/dist/react-datepicker.css');
+} catch {
+    DatePicker = undefined;
 }
 
 //Misc
@@ -39,8 +44,11 @@ export class OpeningHoursSpecial extends BaseInput.BaseInput<OpeningHoursSpecial
     }
 
     public render() {
-        if(!DayPickerInput){
-            throw new Error('You need to install react-day-picker in order to use special day picker');
+        if(!DatePicker){
+            throw new Error('You need to install react-datepicker in order to use special day picker');
+        }
+        if(!Moment){
+            throw new Error('You need to install moment in order to use special day picker');
         }
         return <div className={'input__base openingHoursSpecial-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')}>
             {this.props.days.map((day, index) => (
@@ -67,24 +75,17 @@ export class OpeningHoursSpecial extends BaseInput.BaseInput<OpeningHoursSpecial
                         days[index] = { ...day, ...openingHours };
                         this.props.onDaysChange(days);
                     }}
-                    title={<DayPickerInput
+                    title={<DatePicker
                         placeholder={DAY_FORMAT}
-                        value={day.date}
-                        format={DAY_FORMAT}
-                        onDayChange={(date) => {
+                        selected={Moment(day.date)}
+                        dateFormat={DAY_FORMAT}
+                        onChange={(date) => {
                             let days = this.props.days.slice(0);
-                            days[index] = { ...day, date: date };
+                            days[index] = { ...day, date: date.toDate() };
                             this.props.onDaysChange(days);
                         }}
-                        dayPickerProps={{
-                            selectedDays: day.date,
-                            disabledDays:
-                                [
-                                    {
-                                        before: new Date()
-                                    }
-                                ]
-                        }}
+                        withPortal={true}
+                        minDate={Moment()}
                     />}
                 />
             ))}
