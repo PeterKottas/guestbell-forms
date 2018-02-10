@@ -58,6 +58,7 @@ textarea {
   /* HIGHLIGHTER ================================== */
   /* active state */ }
   .input__base input:-webkit-autofill {
+    box-shadow: 0 0 0 1000px white inset !important;
     -webkit-box-shadow: 0 0 0 1000px white inset !important; }
   .input__base .validation__container {
     position: absolute;
@@ -598,8 +599,8 @@ textarea {
   border-bottom: none !important;
   margin-bottom: 16px;
   min-height: 47px; }
-  .money-input input {
-    padding: 10px 10px 5px 5px;
+  .money-input input, .money-input select {
+    padding: 10px 10px 5px 5px !important;
     color: #555555;
     outline: 0;
     border: none; }
@@ -617,9 +618,10 @@ textarea {
     width: initial; }
     .money-input .money-input__select select {
       padding-right: 20px;
-      min-width: 40px;
-      width: initial; }
-    .money-input .money-input__select::after {
+      min-width: 4rem;
+      width: initial !important; }
+    .money-input .money-input__select .select-input__select__wrapper::after {
+      bottom: 20px;
       right: 4px; }
   .money-input .money-input__text {
     border: none;
