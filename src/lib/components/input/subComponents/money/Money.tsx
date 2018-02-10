@@ -54,7 +54,7 @@ export class Money extends BaseInput.BaseInput<MoneyProps, MoneyState>  {
                             values={currentCurrencies}
                             onChange={(e) => {
                                 let newPrices: MoneyWithCurrency[] = [].concat(this.props.prices);
-                                newPrices[index].currency = currentCurrencies.filter(item => item.value === e.target.value)[0];
+                                newPrices[index].currency = currentCurrencies.filter(item => item.value.toString() === e.target.value)[0];
                                 this.props.onPricesChange(newPrices);
                             }}
                             value={item.currency.value.toString()}

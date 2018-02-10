@@ -41986,7 +41986,7 @@ var Money = /** @class */ (function (_super) {
                     var retComponents = currentCurrencies.length ? [
                         React.createElement(Select_1.Select, { onFocus: function () { return _this.setState({ focused: true }); }, onBlur: function () { return _this.setState({ focused: false }); }, className: 'money-input__select m-0', key: index * 3, values: currentCurrencies, onChange: function (e) {
                                 var newPrices = [].concat(_this.props.prices);
-                                newPrices[index].currency = currentCurrencies.filter(function (item) { return item.value === e.target.value; })[0];
+                                newPrices[index].currency = currentCurrencies.filter(function (item) { return item.value.toString() === e.target.value; })[0];
                                 _this.props.onPricesChange(newPrices);
                             }, value: item.currency.value.toString() }),
                         React.createElement(Text_1.Text, { onFocus: function () { return _this.setState({ focused: true }); }, onBlur: function () { return _this.setState({ focused: false }); }, onTheFlightValidate: function (value) {
