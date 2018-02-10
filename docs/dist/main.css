@@ -361,7 +361,8 @@ textarea {
     margin-left: 1rem;
     margin-right: 1.6rem;
     margin-top: 1.6rem;
-    color: #555555; }
+    color: #555555;
+    margin-bottom: 1.2rem; }
 
 @media (max-width: 768px) {
   .input__group {
