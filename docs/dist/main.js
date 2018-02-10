@@ -42119,7 +42119,7 @@ var OpeningHoursDay = /** @class */ (function (_super) {
                         var nextTime = _this.props.openingHours.times.length - 1 > index ? new Date(_this.props.openingHours.times[index + 1]) : _this.getTime(23, 59);
                         return React.createElement("div", { className: "openingHoursDay-input__time__container", key: index },
                             React.createElement("span", { className: "openingHoursDay-input__label" }, index % 2 === 0 ? 'Opens' : 'Closes'),
-                            React.createElement(Time_1.Time, { className: 'openingHoursDay-input__time m-0', timeChange: function (time) {
+                            React.createElement(Time_1.Time, { className: 'openingHoursDay-input__time', timeChange: function (time) {
                                     var newOpeningHours = __assign({}, _this.props.openingHours, { times: _this.props.openingHours.times.slice(0) });
                                     newOpeningHours.times[index] = time;
                                     _this.props.onOpeningHoursChange(newOpeningHours);

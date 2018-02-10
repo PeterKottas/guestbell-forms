@@ -49,7 +49,7 @@ export class OpeningHoursDay extends BaseInput.BaseInput<OpeningHoursDayProps, O
                         return <div className="openingHoursDay-input__time__container" key={index}>
                             <span className="openingHoursDay-input__label">{index % 2 === 0 ? 'Opens' : 'Closes'}</span>
                             <Time
-                                className={'openingHoursDay-input__time m-0'}
+                                className={'openingHoursDay-input__time'}
                                 timeChange={(time) => {
                                     let newOpeningHours: OpeningHoursDayObj = { ...this.props.openingHours, times: this.props.openingHours.times.slice(0) };
                                     newOpeningHours.times[index] = time;
