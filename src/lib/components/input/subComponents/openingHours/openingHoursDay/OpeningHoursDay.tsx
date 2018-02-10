@@ -63,6 +63,7 @@ export class OpeningHoursDay extends BaseInput.BaseInput<OpeningHoursDayProps, O
                                 type={'blank--light'}
                                 onClick={() => this.props.onOpeningHoursChange({ ...this.props.openingHours, times: this.props.openingHours.times.filter((item, itemIndex) => itemIndex !== index) })}
                                 className="openingHoursDay-input__button--remove mr-5 line-height--0"
+                                circular={true}
                             >
                                 <PlusIcon />
                             </Button>

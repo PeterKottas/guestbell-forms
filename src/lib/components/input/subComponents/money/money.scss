@@ -6,9 +6,10 @@
     flex-direction: row;
     margin-top: 17px;
     position: relative;
-    border-bottom: none !important;
+    // border-bottom: none !important;
     margin-bottom: 16px;
-    min-height: 47px;
+    max-width: 37.5rem;
+    min-height: 40px;
     input, select {
         padding: 10px 10px 5px 5px !important;
         color: $input-text-color;
@@ -45,7 +46,6 @@
             width: initial !important;
         }
         .select-input__select__wrapper::after{
-            bottom: 20px;
             right: 4px;
         }
     }

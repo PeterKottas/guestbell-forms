@@ -596,9 +596,9 @@ textarea {
           flex-direction: row;
   margin-top: 17px;
   position: relative;
-  border-bottom: none !important;
   margin-bottom: 16px;
-  min-height: 47px; }
+  max-width: 37.5rem;
+  min-height: 40px; }
   .money-input input, .money-input select {
     padding: 10px 10px 5px 5px !important;
     color: #555555;
@@ -621,7 +621,6 @@ textarea {
       min-width: 4rem;
       width: initial !important; }
     .money-input .money-input__select .select-input__select__wrapper::after {
-      bottom: 20px;
       right: 4px; }
   .money-input .money-input__text {
     border: none;

@@ -42124,7 +42124,7 @@ var OpeningHoursDay = /** @class */ (function (_super) {
                                     newOpeningHours.times[index] = time;
                                     _this.props.onOpeningHoursChange(newOpeningHours);
                                 }, time: item, min: previousTime, max: nextTime }),
-                            React.createElement(Button_1.default, { type: 'blank--light', onClick: function () { return _this.props.onOpeningHoursChange(__assign({}, _this.props.openingHours, { times: _this.props.openingHours.times.filter(function (item, itemIndex) { return itemIndex !== index; }) })); }, className: "openingHoursDay-input__button--remove mr-5 line-height--0" },
+                            React.createElement(Button_1.default, { type: 'blank--light', onClick: function () { return _this.props.onOpeningHoursChange(__assign({}, _this.props.openingHours, { times: _this.props.openingHours.times.filter(function (item, itemIndex) { return itemIndex !== index; }) })); }, className: "openingHoursDay-input__button--remove mr-5 line-height--0", circular: true },
                                 React.createElement(PlusIcon, null)));
                     }),
                     this.props.maxOpenCloseTimes > this.props.openingHours.times.length &&
