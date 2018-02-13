@@ -1665,16 +1665,17 @@ a.guestbell__dropdown-toggle {
 
 .guestbell__label-count {
   position: absolute;
-  bottom: 0;
-  right: -5px;
-  font-size: 14px;
-  line-height: 16px;
-  width: 16px;
+  bottom: 2px;
+  right: 2px;
+  font-size: 12px;
+  line-height: 15px;
+  min-width: 16px;
   background-color: #10bdc7;
   color: white;
   border-radius: 3px;
   margin-bottom: 0;
-  text-align: center; }
+  text-align: center;
+  padding: 0 2px; }
 
 .guestbell__dropdown-menu > li > a i.material-icons {
   float: left;
