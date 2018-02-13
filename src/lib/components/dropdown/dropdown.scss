@@ -88,15 +88,16 @@ a.guestbell__dropdown-toggle {
 
 .guestbell__label-count {
     position: absolute;
-    top: 55%;
-    left: 60%;
-    font-size: 10px;
-    line-height: 15px;
-    background-color: $input-bg-color;
-    color: $input-highlight-color;
-    padding: 0 4px;
+    bottom: 0;
+    right: -5px;
+    font-size: 14px;
+    line-height: 16px;
+    width: 16px;
+    background-color: $input-highlight-color;
+    color: $input-bg-color;
     border-radius: 3px;
     margin-bottom: 0;
+    text-align: center;
 }
 
 .guestbell__dropdown-menu > li > a i.material-icons {

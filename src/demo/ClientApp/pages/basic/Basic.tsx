@@ -66,24 +66,24 @@ export class AgeValidator implements IBaseValidator {
     }
 }
 
-const existingTags:Tag[] = [{
-    id:1,
-    name:'Food'
-},{
-    id:2,
-    name:'Drink'
-},{
-    id:3,
-    name:'Beer'
-},{
-    id:4,
-    name:'Wine'
-},{
-    id:5,
-    name:'Gluten free'
-},{
-    id:6,
-    name:'Fruit'
+const existingTags: Tag[] = [{
+    id: 1,
+    name: 'Food'
+}, {
+    id: 2,
+    name: 'Drink'
+}, {
+    id: 3,
+    name: 'Beer'
+}, {
+    id: 4,
+    name: 'Wine'
+}, {
+    id: 5,
+    name: 'Gluten free'
+}, {
+    id: 6,
+    name: 'Fruit'
 }
 ];
 
@@ -554,7 +554,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                                 tags={this.state.tags}
                                                 onTagsChanged={(tags) => this.setState({ tags })}
                                                 textProps={{
-                                                    validators:['email']
+                                                    validators: ['email']
                                                 }}
                                             />
                                             <Select
@@ -583,7 +583,18 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             <div className="p-3 buttons-row d-flex">
                                                 <Dropdown
                                                     className="position-relative mr-3"
+                                                    header={<i className="material-icons">notifications</i>}
+                                                    notificationCount={5}
+                                                    showArrow={false}
+                                                >
+                                                    <li>
+                                                        Item
+                                                </li>
+                                                </Dropdown>
+                                                <Dropdown
+                                                    className="position-relative mr-3"
                                                     header={'String header'}
+                                                    notificationCount={5}
                                                 >
                                                     <li>
                                                         Item

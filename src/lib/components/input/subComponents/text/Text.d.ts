@@ -7,6 +7,7 @@ export interface TextProps extends BaseInput.BaseInputProps {
     stopClickPropagation?: boolean;
     inputRef?: (input: HTMLInputElement) => void;
     readOnly?: boolean;
+    type?: 'number' | 'text';
 }
 export interface TextState extends BaseInput.BaseInputState {
 }

@@ -5882,7 +5882,7 @@ var Text = /** @class */ (function (_super) {
         var _this = this;
         return React.createElement(InputGroup_1.default, { title: this.props.title },
             React.createElement("div", { className: "input__base text-input " + this.getValidationClass() + " " + (this.props.readOnly ? 'text-input--readOnly' : '') + " " + (this.props.className ? this.props.className : ''), onClick: function (e) { return _this.props.stopClickPropagation && e.stopPropagation(); } },
-                React.createElement("input", { ref: function (elem) { return _this.props.inputRef && _this.props.inputRef(elem); }, placeholder: this.props.placeholder, disabled: this.getDisabled(), required: this.props.required, className: this.state.value ? 'filled' : '', onChange: this.handleChange, value: this.state.value, onBlur: this.handleBlur, onFocus: this.handleFocus, readOnly: this.props.readOnly, onKeyDown: function (e) { return _this.props.onKeyDown && _this.props.onKeyDown(e); } }),
+                React.createElement("input", { ref: function (elem) { return _this.props.inputRef && _this.props.inputRef(elem); }, placeholder: this.props.placeholder, disabled: this.getDisabled(), required: this.props.required, className: this.state.value ? 'filled' : '', onChange: this.handleChange, value: this.state.value, onBlur: this.handleBlur, onFocus: this.handleFocus, readOnly: this.props.readOnly, onKeyDown: function (e) { return _this.props.onKeyDown && _this.props.onKeyDown(e); }, type: this.props.type }),
                 React.createElement("span", { className: "highlight" }),
                 React.createElement("span", { className: "bar" }),
                 this.renderDefaultValidation(),
@@ -40790,7 +40790,9 @@ var Basic = /** @class */ (function (_super) {
                                             } })),
                                     React.createElement(index_1.InputHeader, { className: '', title: 'Dropdown', collapsable: true, collapsedDefault: false },
                                         React.createElement("div", { className: "p-3 buttons-row d-flex" },
-                                            React.createElement(index_1.Dropdown, { className: "position-relative mr-3", header: 'String header' },
+                                            React.createElement(index_1.Dropdown, { className: "position-relative mr-3", header: React.createElement("i", { className: "material-icons" }, "notifications"), notificationCount: 5, showArrow: false },
+                                                React.createElement("li", null, "Item")),
+                                            React.createElement(index_1.Dropdown, { className: "position-relative mr-3", header: 'String header', notificationCount: 5 },
                                                 React.createElement("li", null, "Item")),
                                             React.createElement(index_1.Dropdown, { className: "position-relative", header: function (clickHandler) { return React.createElement(index_1.Button, { onClick: function (e) { return clickHandler(e); }, type: "hero" }, "Function header"); } },
                                                 React.createElement("li", null, "Item")))),
@@ -42002,12 +42004,13 @@ var Money = /** @class */ (function (_super) {
                                     return false;
                             }, placeholder: '0.00', className: 'money-input__text m-0', key: index * 3 + 1, validators: ["number"], value: item.value ? item.value.toString() : '', onChange: function (e) {
                                 var newPrices = [].concat(_this.props.prices);
-                                var number = Number(e.target.value);
+                                var str = e.target.value;
+                                var number = Number(str);
                                 if (!isNaN(number)) {
                                     newPrices[index].value = number;
                                 }
                                 _this.props.onPricesChange(newPrices);
-                            } }),
+                            }, type: "number" }),
                         _this.props.prices.length > 0 && (React.createElement(Button_1.default, { type: 'blank--light', key: index * 3 + 2, onClick: function () { return _this.props.onPricesChange(_this.props.prices.filter(function (item, itemIndex) { return itemIndex !== index; })); }, className: "money-input__button--remove line-height--0", circular: true },
                             React.createElement(PlusIcon, null)))
                     ] : null;

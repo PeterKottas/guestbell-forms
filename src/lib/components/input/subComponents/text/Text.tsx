@@ -15,6 +15,7 @@ export interface TextProps extends BaseInput.BaseInputProps {
     stopClickPropagation?: boolean;
     inputRef?: (input: HTMLInputElement) => void;
     readOnly?: boolean;
+    type?:'number'|'text';
 }
 
 export interface TextState extends BaseInput.BaseInputState {
@@ -45,6 +46,7 @@ export class Text extends BaseInput.BaseInput<TextProps, TextState>  {
                     onFocus={this.handleFocus}
                     readOnly={this.props.readOnly}
                     onKeyDown={e=>this.props.onKeyDown && this.props.onKeyDown(e)}
+                    type={this.props.type}
                 />
                 <span className="highlight"></span>
                 <span className="bar"></span>

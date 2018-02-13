@@ -81,12 +81,14 @@ export class Money extends BaseInput.BaseInput<MoneyProps, MoneyState>  {
                             value={item.value ? item.value.toString() : ''}
                             onChange={(e) => {
                                 let newPrices: MoneyWithCurrency[] = [].concat(this.props.prices);
-                                let number = Number(e.target.value);
+                                let str = e.target.value;
+                                let number = Number(str);
                                 if (!isNaN(number)) {
                                     newPrices[index].value = number;
                                 }
                                 this.props.onPricesChange(newPrices);
                             }}
+                            type="number"
                         />,
                         this.props.prices.length > 0 && (
                             <Button

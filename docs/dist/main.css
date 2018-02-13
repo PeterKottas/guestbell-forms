@@ -1665,15 +1665,16 @@ a.guestbell__dropdown-toggle {
 
 .guestbell__label-count {
   position: absolute;
-  top: 55%;
-  left: 60%;
-  font-size: 10px;
-  line-height: 15px;
-  background-color: white;
-  color: #10bdc7;
-  padding: 0 4px;
+  bottom: 0;
+  right: -5px;
+  font-size: 14px;
+  line-height: 16px;
+  width: 16px;
+  background-color: #10bdc7;
+  color: white;
   border-radius: 3px;
-  margin-bottom: 0; }
+  margin-bottom: 0;
+  text-align: center; }
 
 .guestbell__dropdown-menu > li > a i.material-icons {
   float: left;
