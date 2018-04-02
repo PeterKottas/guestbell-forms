@@ -73,8 +73,10 @@ textarea {
     position: relative;
     margin-top: -20px;
     transition: 0.5s; }
+    .input__base .validation__ul .validation__item {
+      margin-left: 10px; }
   .input__base.validation__error {
-    border-bottom: 1px solid #ffbbbb; }
+    border-bottom: 1px solid #ffbbbb !important; }
     .input__base.validation__error .validation__ul {
       margin-top: 0; }
     .input__base.validation__error .bar:before, .input__base.validation__error .bar:after {

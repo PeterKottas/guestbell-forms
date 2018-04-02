@@ -5,6 +5,7 @@ import * as Button from '../../../buttons/Button';
 export declare type SubmitProps = BaseInput.BaseInputProps & Button.ButtonProps & {
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     validateForm?: boolean;
+    disabledTitle?: string;
 };
 export interface SubmitState extends BaseInput.BaseInputState {
 }
@@ -14,6 +15,7 @@ export declare class Submit extends BaseInput.BaseInput<SubmitProps, SubmitState
     };
     constructor(props: any);
     private handleClick(e);
+    private isDisabled();
     render(): JSX.Element;
 }
 export default Submit;

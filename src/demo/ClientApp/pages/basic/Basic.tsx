@@ -530,7 +530,6 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             <Tags
                                                 title="Tags suggestions"
                                                 label="Choose or create tags"
-                                                pressEnterToAddText=" - Press Enter to create new tag"
                                                 readOnly={this.state.multipleReadonly}
                                                 allowNew={true}
                                                 existingTags={existingTags}
@@ -556,6 +555,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                                 textProps={{
                                                     validators: ['email']
                                                 }}
+                                                errors={['Extra error']}
                                             />
                                             <Select
                                                 label="One or more"

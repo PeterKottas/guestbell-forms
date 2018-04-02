@@ -162,9 +162,6 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
                 }
             }
         }
-        if (this.state.errors && this.state.errors.length > 0 && errors.length == 0) {
-            errors = errors.concat(this.state.errors);
-        }
         this.setState({ value: value, valid: valid, errors: errors });
         if (!this.props.ignoreContext) {
             this.context && this.context.updateCallback && this.context.updateCallback(valid, this.inputId);

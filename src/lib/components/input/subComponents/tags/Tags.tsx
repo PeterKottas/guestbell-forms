@@ -13,7 +13,7 @@ import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_c
 
 //Misc
 export type Tag = {
-    id: number|string;
+    id: number | string;
     name: string;
 };
 
@@ -27,9 +27,9 @@ export type TagsProps = {
     allowNew?: boolean;
     textProps?: TextProps;
     readOnly?: boolean;
-    reaondlyEmptyPlaceholder?: string;
+    readonlyEmptyPlaceholder?: string;
     maxTags?: number;
-    pressEnterToAddText?: string;
+    valueNotAddedError?: (string | JSX.Element);
 } & BaseInput.BaseInputProps;
 
 export interface TagsState extends BaseInput.BaseInputState {
@@ -75,17 +75,16 @@ class Suggestions extends React.Component<SuggestionsProps & InjectedProps> {
 
 const SuggestionsWrapped = onClickOutside<SuggestionsProps>(Suggestions);
 
-// unfisnished 
 export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
     public static defaultProps: TagsProps = {
         disabled: false,
         className: '',
         tags: [],
         existingTags: [],
-        pressEnterToAddText: ' - Press Enter to add',
         maxTags: 1000,
         onTagsChanged: () => undefined,
-        onNewTagAdded: (newTagName) => ({ name: newTagName, id: new Date().getTime() })
+        onNewTagAdded: (newTagName) => ({ name: newTagName, id: new Date().getTime() }),
+        valueNotAddedError: <span>Press <b>ENTER</b> to confirm</span>
     }
 
     constructor(props: TagsProps) {
@@ -137,14 +136,14 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                                 onBlur={() => this.setState({ textIsFocused: false })}
                                 value={this.state.value}
                                 readOnly={this.props.readOnly}
-                                errors={this.props.errors}
+                                errors={this.state.value ? this.props.errors.concat(this.props.valueNotAddedError) : this.props.errors}
                             />
                             {this.props.existingTags && this.props.existingTags.length > 0 && <SuggestionsWrapped
                                 isVisible={this.state.suggestionsVisible}
                                 tags={suggestions}
                                 onSelected={tag => {
                                     this.props.onTagsChanged(this.props.tags.concat(tag));
-                                    this.setState({value: ''});
+                                    this.setState({ value: '' });
                                 }}
                                 onClickOutside={() => this.setState({ suggestionsVisible: false })}
                                 value={this.state.value}
@@ -153,7 +152,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                     }
                     {this.props.label && <label className={((this.state.value !== '')
                         || (this.state.textIsFocused) || (this.props.tags.length >= this.props.maxTags)) ? 'label--focused' : ''}
-                    >{this.props.label}{this.state.value !== '' && this.props.pressEnterToAddText}</label>}
+                    >{this.props.label}</label>}
                 </div>
             </InputGroup >
         );
@@ -187,7 +186,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
             :
             this.props.readOnly && <div className="tags-input__tag__wrapper">
                 <div className="tags-input__tag">
-                    {this.props.reaondlyEmptyPlaceholder}
+                    {this.props.readonlyEmptyPlaceholder}
                 </div>
             </div>
     }

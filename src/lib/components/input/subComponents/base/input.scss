@@ -44,6 +44,9 @@
         position: relative;
         margin-top: -20px;
         transition: 0.5s;
+        .validation__item{
+            margin-left: 10px;
+        }
     }
 
     &.validation__error {
@@ -55,7 +58,7 @@
             background: $input-validation-error-bar-color;
         }
 
-        border-bottom: 1px solid $input-validation-error-border-color;
+        border-bottom: 1px solid $input-validation-error-border-color !important;
     }
     /* LABEL ======================================= */
     label, span.label-classname {

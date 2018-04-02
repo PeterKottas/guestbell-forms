@@ -4765,9 +4765,6 @@ var BaseInput = /** @class */ (function (_super) {
                 }
             }
         }
-        if (this.state.errors && this.state.errors.length > 0 && errors.length == 0) {
-            errors = errors.concat(this.state.errors);
-        }
         this.setState({ value: value, valid: valid, errors: errors });
         if (!this.props.ignoreContext) {
             this.context && this.context.updateCallback && this.context.updateCallback(valid, this.inputId);
@@ -40776,11 +40773,11 @@ var Basic = /** @class */ (function (_super) {
                                             //label="Multiple readonly"
                                             onChecked: function (e) { return _this.setState({ multipleReadonly: !_this.state.multipleReadonly }); }, checked: this.state.multipleReadonly, title: "Multiple readonly" }),
                                         React.createElement(index_1.Tags, { title: "Tags example", readOnly: this.state.multipleReadonly, allowNew: true, tags: this.state.tags, onTagsChanged: function (tags) { return _this.setState({ tags: tags }); } }),
-                                        React.createElement(index_1.Tags, { title: "Tags suggestions", label: "Choose or create tags", pressEnterToAddText: " - Press Enter to create new tag", readOnly: this.state.multipleReadonly, allowNew: true, existingTags: existingTags, tags: this.state.tags, onTagsChanged: function (tags) { return _this.setState({ tags: tags }); } }),
+                                        React.createElement(index_1.Tags, { title: "Tags suggestions", label: "Choose or create tags", readOnly: this.state.multipleReadonly, allowNew: true, existingTags: existingTags, tags: this.state.tags, onTagsChanged: function (tags) { return _this.setState({ tags: tags }); } }),
                                         React.createElement(index_1.Tags, { title: "Tags max 3", maxTags: 2, readOnly: this.state.multipleReadonly, allowNew: true, tags: this.state.tags, onTagsChanged: function (tags) { return _this.setState({ tags: tags }); } }),
                                         React.createElement(index_1.Tags, { title: "Tags only email", label: "With label", maxTags: 2, allowNew: true, readOnly: this.state.multipleReadonly, tags: this.state.tags, onTagsChanged: function (tags) { return _this.setState({ tags: tags }); }, textProps: {
                                                 validators: ['email']
-                                            } }),
+                                            }, errors: ['Extra error'] }),
                                         React.createElement(index_1.Select, { label: "One or more", title: "Multiselect", multiple: true, defaultEmpty: true, readOnly: this.state.multipleReadonly, selectedValues: this.state.selectedValues.map(function (item) { return ({
                                                 value: item
                                             }); }), values: this.state.multipleValues.map(function (item) { return ({
@@ -41746,8 +41743,11 @@ var Submit = /** @class */ (function (_super) {
         e.preventDefault();
         this.props.onClick && this.props.onClick(e);
     };
+    Submit.prototype.isDisabled = function () {
+        return this.getDisabled() ? this.getDisabled() : (this.props.validateForm ? this.context.isFormValid && !this.context.isFormValid() : false);
+    };
     Submit.prototype.render = function () {
-        return React.createElement(Button.Button, __assign({}, this.props, { buttonType: "submit", className: "" + (this.props.className ? this.props.className : ''), onClick: this.handleClick, disabled: this.getDisabled() ? this.getDisabled() : (this.props.validateForm ? this.context.isFormValid && !this.context.isFormValid() : false) }), this.props.children);
+        return React.createElement(Button.Button, __assign({}, this.props, { buttonType: "submit", className: "" + (this.props.className ? this.props.className : ''), onClick: this.handleClick, disabled: this.isDisabled(), buttonProps: __assign({}, this.props.buttonProps, { title: this.isDisabled() ? this.props.disabledTitle : this.props.buttonProps && this.props.buttonProps.title }) }), this.props.children);
     };
     Submit.defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { validateForm: true });
     return Submit;
@@ -49968,7 +49968,6 @@ var Suggestions = /** @class */ (function (_super) {
 }(React.Component));
 ;
 var SuggestionsWrapped = react_onclickoutside_1.default(Suggestions);
-// unfisnished 
 var Tags = /** @class */ (function (_super) {
     __extends(Tags, _super);
     function Tags(props) {
@@ -50011,15 +50010,13 @@ var Tags = /** @class */ (function (_super) {
                                 if (_this.props.existingTags && _this.props.existingTags.length > 0) {
                                     _this.setState({ suggestionsVisible: true });
                                 }
-                            }, onBlur: function () { return _this.setState({ textIsFocused: false }); }, value: this.state.value, readOnly: this.props.readOnly, errors: this.props.errors })),
+                            }, onBlur: function () { return _this.setState({ textIsFocused: false }); }, value: this.state.value, readOnly: this.props.readOnly, errors: this.state.value ? this.props.errors.concat(this.props.valueNotAddedError) : this.props.errors })),
                         this.props.existingTags && this.props.existingTags.length > 0 && React.createElement(SuggestionsWrapped, { isVisible: this.state.suggestionsVisible, tags: suggestions, onSelected: function (tag) {
                                 _this.props.onTagsChanged(_this.props.tags.concat(tag));
                                 _this.setState({ value: '' });
                             }, onClickOutside: function () { return _this.setState({ suggestionsVisible: false }); }, value: this.state.value })),
                 this.props.label && React.createElement("label", { className: ((this.state.value !== '')
-                        || (this.state.textIsFocused) || (this.props.tags.length >= this.props.maxTags)) ? 'label--focused' : '' },
-                    this.props.label,
-                    this.state.value !== '' && this.props.pressEnterToAddText))));
+                        || (this.state.textIsFocused) || (this.props.tags.length >= this.props.maxTags)) ? 'label--focused' : '' }, this.props.label))));
     };
     Tags.prototype.renderTag = function (tag, index) {
         var _this = this;
@@ -50034,17 +50031,20 @@ var Tags = /** @class */ (function (_super) {
             React.createElement("div", { className: "tags-input__tag__wrapper" }, this.props.tags.map(function (item, index) { return (_this.renderTag(item, index)); }))
             :
                 this.props.readOnly && React.createElement("div", { className: "tags-input__tag__wrapper" },
-                    React.createElement("div", { className: "tags-input__tag" }, this.props.reaondlyEmptyPlaceholder));
+                    React.createElement("div", { className: "tags-input__tag" }, this.props.readonlyEmptyPlaceholder));
     };
     Tags.defaultProps = {
         disabled: false,
         className: '',
         tags: [],
         existingTags: [],
-        pressEnterToAddText: ' - Press Enter to add',
         maxTags: 1000,
         onTagsChanged: function () { return undefined; },
-        onNewTagAdded: function (newTagName) { return ({ name: newTagName, id: new Date().getTime() }); }
+        onNewTagAdded: function (newTagName) { return ({ name: newTagName, id: new Date().getTime() }); },
+        valueNotAddedError: React.createElement("span", null,
+            "Press ",
+            React.createElement("b", null, "ENTER"),
+            " to confirm")
     };
     return Tags;
 }(BaseInput.BaseInput));

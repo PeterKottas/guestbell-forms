@@ -15,9 +15,9 @@ export declare type TagsProps = {
     allowNew?: boolean;
     textProps?: TextProps;
     readOnly?: boolean;
-    reaondlyEmptyPlaceholder?: string;
+    readonlyEmptyPlaceholder?: string;
     maxTags?: number;
-    pressEnterToAddText?: string;
+    valueNotAddedError?: (string | JSX.Element);
 } & BaseInput.BaseInputProps;
 export interface TagsState extends BaseInput.BaseInputState {
     textIsFocused: boolean;
