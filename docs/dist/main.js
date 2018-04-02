@@ -4742,7 +4742,7 @@ var BaseInput = /** @class */ (function (_super) {
                                 validInner = new Validators.UrlValidator().Validate(value, _this.props.required, function (error) { return errors.push(error); });
                                 break;
                             default:
-                                throw new Error("Validator " + validator + " not implmeneted");
+                                throw new Error("Validator " + validator + " not implemented");
                         }
                         if (valid && !validInner) {
                             valid = validInner;
@@ -6792,7 +6792,7 @@ var Select = /** @class */ (function (_super) {
                         React.createElement(PlusIcon, null)))); }))
                 :
                     this.props.readOnly && React.createElement("div", { className: "select-input__selectedValue__wrapper" },
-                        React.createElement("div", { className: "select-input__selectedValue" }, this.props.reaondlyEmptyPlaceholder))
+                        React.createElement("div", { className: "select-input__selectedValue" }, this.props.readonlyEmptyPlaceholder))
             :
                 null;
     };
@@ -6800,7 +6800,7 @@ var Select = /** @class */ (function (_super) {
         defaultEmpty: true,
         multiple: false,
         readOnly: false,
-        reaondlyEmptyPlaceholder: 'N/A'
+        readonlyEmptyPlaceholder: 'N/A'
     });
     return Select;
 }(BaseInput.BaseInput));
@@ -40589,7 +40589,7 @@ var AgeValidator = /** @class */ (function () {
                 return false;
             }
             if (number > 122) {
-                addError('Older than Jeanne Calment? C\'mon');
+                addError('Older than Jeanne Calment? Really?');
                 return false;
             }
             return true;
@@ -40677,17 +40677,17 @@ var Basic = /** @class */ (function (_super) {
         e && e.preventDefault();
         this.setState(this.initialState);
     };
-    Basic.prototype.dynamicSubmitSuccessForm = function (e, submiting, error, success, reset) {
+    Basic.prototype.dynamicSubmitSuccessForm = function (e, submitting, error, success, reset) {
         e.preventDefault();
-        submiting();
+        submitting();
         setTimeout(function () {
             error();
             setTimeout(function () { return reset(); }, 3000);
         }, 1000);
     };
-    Basic.prototype.dynamicSubmitErrorForm = function (e, submiting, error, success, reset) {
+    Basic.prototype.dynamicSubmitErrorForm = function (e, submitting, error, success, reset) {
         e.preventDefault();
-        submiting();
+        submitting();
         setTimeout(function () {
             success();
             setTimeout(function () { return reset(); }, 3000);
@@ -42246,6 +42246,7 @@ var OpeningHoursWeek = /** @class */ (function (_super) {
     OpeningHoursWeek.prototype.renderContent = function () {
         var _this = this;
         return React.createElement("div", { className: "" },
+            this.props.helpContent && React.createElement("div", { style: { padding: 20 } }, this.props.helpContent),
             this.props.standardDay && React.createElement(Inputs_1.OpeningHoursDay, { label: React.createElement("span", null, OpeningHoursUtil_1.default.getLabelSuffix(this.props.standardDay)), openingHours: {
                     times: this.props.standardDay.times
                 }, onOpeningHoursChange: function (openingHours) {
@@ -42274,7 +42275,13 @@ var OpeningHoursWeek = /** @class */ (function (_super) {
             React.createElement("span", { className: "bar" }),
             this.renderDefaultValidation());
     };
-    OpeningHoursWeek.defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "openingHoursWeek", placeholder: '', collapsable: false });
+    OpeningHoursWeek.defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, {
+        type: "openingHoursWeek",
+        placeholder: '',
+        collapsable: false,
+        helpContent: (React.createElement(React.Fragment, null,
+            React.createElement("p", { style: { marginBottom: 0 } }, "Tip: Use the \"Standard day\" if multiple days share the same opening hours. Finish by checking the \"Standard day?\" checkbox for each day that shares these opening hours.")))
+    });
     return OpeningHoursWeek;
 }(BaseInput.BaseInput));
 exports.OpeningHoursWeek = OpeningHoursWeek;

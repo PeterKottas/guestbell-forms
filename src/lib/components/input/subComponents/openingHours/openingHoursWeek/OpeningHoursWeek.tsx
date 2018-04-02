@@ -15,6 +15,7 @@ export interface OpeningHoursWeekDayObj extends OpeningHoursDayObj {
 }
 
 export interface OpeningHoursWeekProps extends BaseInput.BaseInputProps {
+    helpContent?: string | JSX.Element;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     days: OpeningHoursWeekDayObj[];
     onDaysChange: (days: OpeningHoursWeekDayObj[]) => void;
@@ -26,7 +27,16 @@ export interface OpeningHoursWeekState extends BaseInput.BaseInputState {
 }
 
 export class OpeningHoursWeek extends BaseInput.BaseInput<OpeningHoursWeekProps, OpeningHoursWeekState>  {
-    public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "openingHoursWeek", placeholder: '', collapsable: false });
+    public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, {
+        type: "openingHoursWeek",
+        placeholder: '',
+        collapsable: false,
+        helpContent: (
+            <React.Fragment>
+                <p style={{marginBottom: 0}}>Tip: Use the "Standard day" if multiple days share the same opening hours. Finish by checking the "Standard day?" checkbox for each day that shares these opening hours.</p>
+            </React.Fragment>
+        )
+    });
 
     constructor(props: OpeningHoursWeekProps) {
         super(props);
@@ -70,6 +80,7 @@ export class OpeningHoursWeek extends BaseInput.BaseInput<OpeningHoursWeekProps,
 
     private renderContent() {
         return <div className={``}>
+            {this.props.helpContent && <div style={{padding: 20}}>{this.props.helpContent}</div>}
             {this.props.standardDay && <OpeningHoursDay
                 label={<span>
                     {OpeningHoursUtil.getLabelSuffix(this.props.standardDay)}

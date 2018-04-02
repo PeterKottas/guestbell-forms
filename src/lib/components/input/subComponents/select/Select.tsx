@@ -24,7 +24,7 @@ export interface SelectProps extends BaseInput.BaseInputProps {
     onSelectedValuesChange?: (newValues: SelectValue[]) => void;
     inputRef?: (input: HTMLSelectElement) => void;
     readOnly?: boolean;
-    reaondlyEmptyPlaceholder?: string;
+    readonlyEmptyPlaceholder?: string;
 }
 
 export interface SelectState extends BaseInput.BaseInputState {
@@ -35,7 +35,7 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
         defaultEmpty: true,
         multiple: false,
         readOnly: false,
-        reaondlyEmptyPlaceholder: 'N/A'
+        readonlyEmptyPlaceholder: 'N/A'
     });
 
     constructor(props: SelectProps) {
@@ -137,7 +137,7 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
                 :
                 this.props.readOnly && <div className="select-input__selectedValue__wrapper">
                     <div className="select-input__selectedValue">
-                        {this.props.reaondlyEmptyPlaceholder}
+                        {this.props.readonlyEmptyPlaceholder}
                     </div>
                 </div>
             :

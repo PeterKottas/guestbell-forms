@@ -54,7 +54,7 @@ export class AgeValidator implements IBaseValidator {
                 return false;
             }
             if (number > 122) {
-                addError('Older than Jeanne Calment? C\'mon');
+                addError('Older than Jeanne Calment? Really?');
                 return false;
             }
             return true;
@@ -145,18 +145,18 @@ export class Basic extends React.Component<BasicProps, BasicState>{
         this.setState(this.initialState);
     }
 
-    private dynamicSubmitSuccessForm(e: React.MouseEvent<HTMLButtonElement>, submiting: () => void, error: () => void, success: () => void, reset: () => void) {
+    private dynamicSubmitSuccessForm(e: React.MouseEvent<HTMLButtonElement>, submitting: () => void, error: () => void, success: () => void, reset: () => void) {
         e.preventDefault();
-        submiting();
+        submitting();
         setTimeout(() => {
             error();
             setTimeout(() => reset(), 3000);
         }, 1000);
     }
 
-    private dynamicSubmitErrorForm(e: React.MouseEvent<HTMLButtonElement>, submiting: () => void, error: () => void, success: () => void, reset: () => void) {
+    private dynamicSubmitErrorForm(e: React.MouseEvent<HTMLButtonElement>, submitting: () => void, error: () => void, success: () => void, reset: () => void) {
         e.preventDefault();
-        submiting();
+        submitting();
         setTimeout(() => {
             success();
             setTimeout(() => reset(), 3000);

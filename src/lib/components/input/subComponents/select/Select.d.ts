@@ -13,7 +13,7 @@ export interface SelectProps extends BaseInput.BaseInputProps {
     onSelectedValuesChange?: (newValues: SelectValue[]) => void;
     inputRef?: (input: HTMLSelectElement) => void;
     readOnly?: boolean;
-    reaondlyEmptyPlaceholder?: string;
+    readonlyEmptyPlaceholder?: string;
 }
 export interface SelectState extends BaseInput.BaseInputState {
 }
@@ -22,7 +22,7 @@ export declare class Select extends BaseInput.BaseInput<SelectProps, SelectState
         defaultEmpty: boolean;
         multiple: boolean;
         readOnly: boolean;
-        reaondlyEmptyPlaceholder: string;
+        readonlyEmptyPlaceholder: string;
     };
     constructor(props: SelectProps);
     render(): JSX.Element;

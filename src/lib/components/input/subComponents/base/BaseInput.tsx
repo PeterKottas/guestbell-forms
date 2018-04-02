@@ -140,7 +140,7 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
                                 validInner = new Validators.UrlValidator().Validate(value, this.props.required, (error) => errors.push(error));
                                 break;
                             default:
-                                throw new Error(`Validator ${validator} not implmeneted`);
+                                throw new Error(`Validator ${validator} not implemented`);
                         }
                         if (valid && !validInner) {
                             valid = validInner;
