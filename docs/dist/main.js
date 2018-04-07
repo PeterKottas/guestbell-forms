@@ -50020,7 +50020,7 @@ var Tags = /** @class */ (function (_super) {
                                         _this.setState({ suggestionsVisible: true });
                                     }
                                 }
-                            }, onBlur: function () { return _this.setState({ textIsFocused: false }); }, value: this.state.value, readOnly: this.props.readOnly, errors: this.state.value ? (this.props.errors ? this.props.errors : []).concat(this.props.valueNotAddedError) : this.props.errors })),
+                            }, onBlur: function () { return _this.setState({ textIsFocused: false }); }, value: this.state.value, readOnly: this.props.readOnly, errors: this.state.value && this.props.allowNew ? (this.props.errors ? this.props.errors : []).concat(this.props.valueNotAddedError) : this.props.errors })),
                         this.props.existingTags && this.props.existingTags.length > 0 && React.createElement(SuggestionsWrapped, { isVisible: this.state.suggestionsVisible, tags: suggestions, onSelected: function (tag) {
                                 _this.props.onTagsChanged(_this.props.tags.concat(tag));
                                 _this.setState({ value: '' });

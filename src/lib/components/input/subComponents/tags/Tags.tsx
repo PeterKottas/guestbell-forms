@@ -141,7 +141,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                                 onBlur={() => this.setState({ textIsFocused: false })}
                                 value={this.state.value}
                                 readOnly={this.props.readOnly}
-                                errors={this.state.value ? (this.props.errors ? this.props.errors : []).concat(this.props.valueNotAddedError) : this.props.errors}
+                                errors={this.state.value && this.props.allowNew ? (this.props.errors ? this.props.errors : []).concat(this.props.valueNotAddedError) : this.props.errors}
                             />
                             {this.props.existingTags && this.props.existingTags.length > 0 && <SuggestionsWrapped
                                 isVisible={this.state.suggestionsVisible}
