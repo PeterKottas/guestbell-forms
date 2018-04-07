@@ -22,7 +22,7 @@ export type TagsProps = {
     disabled?: boolean;
     tags: Tag[];
     existingTags?: Tag[];
-    fetchExistingTags?: (text: string) => Tag[];
+    fetchExistingTags?: (text: string) => Promise<Tag[]>;
     onTagsChanged: (newTags: Tag[]) => void;
     onNewTagAdded?: (newTagName: string) => Tag;
     allowNew?: boolean;
@@ -117,7 +117,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                                         }
                                     }
                                 }}
-                                onChange={(e, isValid) => {
+                                onChange={async (e, isValid) => {
                                     this.setState({ suggestionsVisible: true });
                                     this.handleChange(e);
                                     if (!isValid) {
@@ -125,12 +125,12 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                                     } else {
                                         this.setValid();
                                     }
-                                    this.props.fetchExistingTags && this.setState({ fetchedExistingTags: this.props.fetchExistingTags(e.target.value) });
+                                    this.props.fetchExistingTags && this.setState({ fetchedExistingTags: await this.props.fetchExistingTags(e.target.value) });
                                 }}
-                                onFocus={e => {
+                                onFocus={async e => {
                                     this.setState({ textIsFocused: true });
                                     if (this.props.fetchExistingTags) {
-                                        this.setState({ fetchedExistingTags: this.props.fetchExistingTags(this.state.value) },
+                                        this.setState({ fetchedExistingTags: await this.props.fetchExistingTags(this.state.value) },
                                             () => this.getSuggestions().length > 0 && this.setState({ suggestionsVisible: true }));
                                     } else {
                                         if (suggestions.length > 0) {

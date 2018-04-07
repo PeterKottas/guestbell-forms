@@ -10,7 +10,7 @@ export declare type TagsProps = {
     disabled?: boolean;
     tags: Tag[];
     existingTags?: Tag[];
-    fetchExistingTags?: (text: string) => Tag[];
+    fetchExistingTags?: (text: string) => Promise<Tag[]>;
     onTagsChanged: (newTags: Tag[]) => void;
     onNewTagAdded?: (newTagName: string) => Tag;
     allowNew?: boolean;
