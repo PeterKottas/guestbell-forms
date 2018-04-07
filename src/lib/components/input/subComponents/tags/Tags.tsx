@@ -143,7 +143,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                                 readOnly={this.props.readOnly}
                                 errors={this.state.value && this.props.allowNew ? (this.props.errors ? this.props.errors : []).concat(this.props.valueNotAddedError) : this.props.errors}
                             />
-                            {this.props.existingTags && this.props.existingTags.length > 0 && <SuggestionsWrapped
+                            {suggestions.length > 0 && <SuggestionsWrapped
                                 isVisible={this.state.suggestionsVisible}
                                 tags={suggestions}
                                 onSelected={tag => {
