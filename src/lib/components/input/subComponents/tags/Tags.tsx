@@ -22,6 +22,7 @@ export type TagsProps = {
     disabled?: boolean;
     tags: Tag[];
     existingTags?: Tag[];
+    fetchExistingTags?: (text: string) => Tag[];
     onTagsChanged: (newTags: Tag[]) => void;
     onNewTagAdded?: (newTagName: string) => Tag;
     allowNew?: boolean;
@@ -35,6 +36,7 @@ export type TagsProps = {
 export interface TagsState extends BaseInput.BaseInputState {
     textIsFocused: boolean;
     suggestionsVisible: boolean;
+    fetchedExistingTags: Tag[];
 }
 
 type SuggestionsProps = {
@@ -94,10 +96,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
 
     public render() {
         const textProps = this.props.textProps ? this.props.textProps : {};
-        const suggestions = this.props.existingTags ? this.props.existingTags.
-            filter(tag => tag.name && tag.name.toLowerCase().startsWith(this.state.value ? this.state.value.toLowerCase() : '')).
-            filter(tag => !this.props.tags.some(t => t.id === tag.id)).
-            slice(0, 5) : [];
+        const suggestions = this.getSuggestions();
         return (
             <InputGroup title={this.props.title}>
                 <div className={'input__base tags-input ' + this.getValidationClass() + (this.props.className ? ' ' + this.props.className : '') + ' ' + (this.props.readOnly ? 'readonly' : '')}>
@@ -126,11 +125,17 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                                     } else {
                                         this.setValid();
                                     }
+                                    this.props.fetchExistingTags && this.setState({ fetchedExistingTags: this.props.fetchExistingTags(e.target.value) });
                                 }}
                                 onFocus={e => {
                                     this.setState({ textIsFocused: true });
-                                    if (this.props.existingTags && this.props.existingTags.length > 0) {
-                                        this.setState({ suggestionsVisible: true });
+                                    if (this.props.fetchExistingTags) {
+                                        this.setState({ fetchedExistingTags: this.props.fetchExistingTags(this.state.value) },
+                                            () => this.getSuggestions().length > 0 && this.setState({ suggestionsVisible: true }));
+                                    } else {
+                                        if (suggestions.length > 0) {
+                                            this.setState({ suggestionsVisible: true });
+                                        }
                                     }
                                 }}
                                 onBlur={() => this.setState({ textIsFocused: false })}
@@ -156,6 +161,16 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                 </div>
             </InputGroup >
         );
+    }
+
+    private getSuggestions() {
+        const existingTags: Tag[] = [].concat((this.props.existingTags ? this.props.existingTags : [])).
+            concat(this.state.fetchedExistingTags ? this.state.fetchedExistingTags : []);
+        const suggestions = existingTags.
+            filter(tag => tag.name && tag.name.toLowerCase().startsWith(this.state.value ? this.state.value.toLowerCase() : '')).
+            filter(tag => !this.props.tags.some(t => t.id === tag.id)).
+            slice(0, 5);
+        return suggestions;
     }
 
     private renderTag(tag: Tag, index: number) {

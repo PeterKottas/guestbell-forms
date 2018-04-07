@@ -10,6 +10,7 @@ export declare type TagsProps = {
     disabled?: boolean;
     tags: Tag[];
     existingTags?: Tag[];
+    fetchExistingTags?: (text: string) => Tag[];
     onTagsChanged: (newTags: Tag[]) => void;
     onNewTagAdded?: (newTagName: string) => Tag;
     allowNew?: boolean;
@@ -22,11 +23,13 @@ export declare type TagsProps = {
 export interface TagsState extends BaseInput.BaseInputState {
     textIsFocused: boolean;
     suggestionsVisible: boolean;
+    fetchedExistingTags: Tag[];
 }
 export declare class Tags extends BaseInput.BaseInput<TagsProps, TagsState> {
     static defaultProps: TagsProps;
     constructor(props: TagsProps);
     render(): JSX.Element;
+    private getSuggestions();
     private renderTag(tag, index);
     private renderTags();
 }

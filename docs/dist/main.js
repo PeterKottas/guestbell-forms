@@ -49985,10 +49985,7 @@ var Tags = /** @class */ (function (_super) {
     Tags.prototype.render = function () {
         var _this = this;
         var textProps = this.props.textProps ? this.props.textProps : {};
-        var suggestions = this.props.existingTags ? this.props.existingTags.
-            filter(function (tag) { return tag.name && tag.name.toLowerCase().startsWith(_this.state.value ? _this.state.value.toLowerCase() : ''); }).
-            filter(function (tag) { return !_this.props.tags.some(function (t) { return t.id === tag.id; }); }).
-            slice(0, 5) : [];
+        var suggestions = this.getSuggestions();
         return (React.createElement(InputGroup_1.InputGroup, { title: this.props.title },
             React.createElement("div", { className: 'input__base tags-input ' + this.getValidationClass() + (this.props.className ? ' ' + this.props.className : '') + ' ' + (this.props.readOnly ? 'readonly' : '') },
                 this.renderTags(),
@@ -50012,10 +50009,16 @@ var Tags = /** @class */ (function (_super) {
                                 else {
                                     _this.setValid();
                                 }
+                                _this.props.fetchExistingTags && _this.setState({ fetchedExistingTags: _this.props.fetchExistingTags(e.target.value) });
                             }, onFocus: function (e) {
                                 _this.setState({ textIsFocused: true });
-                                if (_this.props.existingTags && _this.props.existingTags.length > 0) {
-                                    _this.setState({ suggestionsVisible: true });
+                                if (_this.props.fetchExistingTags) {
+                                    _this.setState({ fetchedExistingTags: _this.props.fetchExistingTags(_this.state.value) }, function () { return _this.getSuggestions().length > 0 && _this.setState({ suggestionsVisible: true }); });
+                                }
+                                else {
+                                    if (suggestions.length > 0) {
+                                        _this.setState({ suggestionsVisible: true });
+                                    }
                                 }
                             }, onBlur: function () { return _this.setState({ textIsFocused: false }); }, value: this.state.value, readOnly: this.props.readOnly, errors: this.state.value ? this.props.errors.concat(this.props.valueNotAddedError) : this.props.errors })),
                         this.props.existingTags && this.props.existingTags.length > 0 && React.createElement(SuggestionsWrapped, { isVisible: this.state.suggestionsVisible, tags: suggestions, onSelected: function (tag) {
@@ -50024,6 +50027,16 @@ var Tags = /** @class */ (function (_super) {
                             }, onClickOutside: function () { return _this.setState({ suggestionsVisible: false }); }, value: this.state.value })),
                 this.props.label && React.createElement("label", { className: ((this.state.value !== '')
                         || (this.state.textIsFocused) || (this.props.tags.length >= this.props.maxTags)) ? 'label--focused' : '' }, this.props.label))));
+    };
+    Tags.prototype.getSuggestions = function () {
+        var _this = this;
+        var existingTags = [].concat((this.props.existingTags ? this.props.existingTags : [])).
+            concat(this.state.fetchedExistingTags ? this.state.fetchedExistingTags : []);
+        var suggestions = existingTags.
+            filter(function (tag) { return tag.name && tag.name.toLowerCase().startsWith(_this.state.value ? _this.state.value.toLowerCase() : ''); }).
+            filter(function (tag) { return !_this.props.tags.some(function (t) { return t.id === tag.id; }); }).
+            slice(0, 5);
+        return suggestions;
     };
     Tags.prototype.renderTag = function (tag, index) {
         var _this = this;
