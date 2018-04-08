@@ -50031,7 +50031,10 @@ var Tags = /** @class */ (function (_super) {
                                     e.preventDefault();
                                     e.stopPropagation();
                                     if (_this.props.allowNew) {
-                                        _this.props.onTagsChanged(_this.props.tags.concat(_this.props.onNewTagAdded(_this.state.value)));
+                                        var newTag = _this.props.onNewTagAdded(_this.state.value);
+                                        if (newTag) {
+                                            _this.props.onTagsChanged(_this.props.tags.concat());
+                                        }
                                         _this.setState({ value: '' });
                                     }
                                 }
@@ -50068,7 +50071,7 @@ var Tags = /** @class */ (function (_super) {
                                     switch (_c.label) {
                                         case 0:
                                             this.setState({ textIsFocused: true });
-                                            if (!this.props.fetchExistingTags) return [3 /*break*/, 2];
+                                            if (!(this.props.fetchExistingTags && (!this.state.fetchedExistingTags || this.state.fetchedExistingTags.length === 0))) return [3 /*break*/, 2];
                                             _a = this.setState;
                                             _b = {};
                                             return [4 /*yield*/, this.props.fetchExistingTags(this.state.value)];

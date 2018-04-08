@@ -112,7 +112,10 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                                         e.stopPropagation();
 
                                         if (this.props.allowNew) {
-                                            this.props.onTagsChanged(this.props.tags.concat(this.props.onNewTagAdded(this.state.value)));
+                                            const newTag = this.props.onNewTagAdded(this.state.value);
+                                            if (newTag) {
+                                                this.props.onTagsChanged(this.props.tags.concat());
+                                            }
                                             this.setState({ value: '' });
                                         }
                                     }
@@ -129,7 +132,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                                 }}
                                 onFocus={async e => {
                                     this.setState({ textIsFocused: true });
-                                    if (this.props.fetchExistingTags) {
+                                    if (this.props.fetchExistingTags && (!this.state.fetchedExistingTags || this.state.fetchedExistingTags.length === 0)) {
                                         this.setState({ fetchedExistingTags: await this.props.fetchExistingTags(this.state.value) },
                                             () => this.getSuggestions().length > 0 && this.setState({ suggestionsVisible: true }));
                                     } else {
