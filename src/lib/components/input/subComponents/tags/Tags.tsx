@@ -114,7 +114,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                                         if (this.props.allowNew) {
                                             const newTag = this.props.onNewTagAdded(this.state.value);
                                             if (newTag) {
-                                                this.props.onTagsChanged(this.props.tags ? this.props.tags.concat() : [newTag]);
+                                                this.props.onTagsChanged(this.props.tags ? this.props.tags.concat(newTag) : [newTag]);
                                             }
                                             this.setState({ value: '' });
                                         }
