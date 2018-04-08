@@ -12,7 +12,7 @@ export declare type TagsProps = {
     existingTags?: Tag[];
     fetchExistingTags?: (text: string) => Promise<Tag[]>;
     onTagsChanged: (newTags: Tag[]) => void;
-    onNewTagAdded?: (newTagName: string) => Tag;
+    onNewTagAdded?: (newTagName: string) => Promise<Tag>;
     allowNew?: boolean;
     textProps?: TextProps;
     readOnly?: boolean;

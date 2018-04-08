@@ -24,7 +24,7 @@ export type TagsProps = {
     existingTags?: Tag[];
     fetchExistingTags?: (text: string) => Promise<Tag[]>;
     onTagsChanged: (newTags: Tag[]) => void;
-    onNewTagAdded?: (newTagName: string) => Tag;
+    onNewTagAdded?: (newTagName: string) => Promise<Tag>;
     allowNew?: boolean;
     textProps?: TextProps;
     readOnly?: boolean;
@@ -85,7 +85,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
         existingTags: [],
         maxTags: 1000,
         onTagsChanged: () => undefined,
-        onNewTagAdded: (newTagName) => ({ name: newTagName, id: new Date().getTime() }),
+        onNewTagAdded: (newTagName) => new Promise(() => ({ name: newTagName, id: new Date().getTime() })),
         valueNotAddedError: <span>Press <b>ENTER</b> to confirm</span>
     }
 
@@ -106,13 +106,13 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                             <Text
                                 {...textProps}
                                 className="tags-input__text-input"
-                                onKeyDown={e => {
+                                onKeyDown={async e => {
                                     if (e.key === 'Enter' && this.state.value !== '' && this.state.valid) {
                                         e.preventDefault();
                                         e.stopPropagation();
 
                                         if (this.props.allowNew) {
-                                            const newTag = this.props.onNewTagAdded(this.state.value);
+                                            const newTag = await this.props.onNewTagAdded(this.state.value);
                                             if (newTag) {
                                                 this.props.onTagsChanged(this.props.tags ? this.props.tags.concat(newTag) : [newTag]);
                                             }

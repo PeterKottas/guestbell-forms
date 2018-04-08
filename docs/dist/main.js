@@ -50026,19 +50026,27 @@ var Tags = /** @class */ (function (_super) {
                 this.renderTags(),
                 (!this.props.maxTags || (this.props.maxTags > (this.props.tags && this.props.tags.length))) && !this.props.readOnly &&
                     React.createElement("div", { className: "tags-input__tags__wrapper" },
-                        React.createElement(Text_1.Text, __assign({}, textProps, { className: "tags-input__text-input", onKeyDown: function (e) {
-                                if (e.key === 'Enter' && _this.state.value !== '' && _this.state.valid) {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    if (_this.props.allowNew) {
-                                        var newTag = _this.props.onNewTagAdded(_this.state.value);
-                                        if (newTag) {
-                                            _this.props.onTagsChanged(_this.props.tags ? _this.props.tags.concat(newTag) : [newTag]);
-                                        }
-                                        _this.setState({ value: '' });
+                        React.createElement(Text_1.Text, __assign({}, textProps, { className: "tags-input__text-input", onKeyDown: function (e) { return __awaiter(_this, void 0, void 0, function () {
+                                var newTag;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            if (!(e.key === 'Enter' && this.state.value !== '' && this.state.valid)) return [3 /*break*/, 2];
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            if (!this.props.allowNew) return [3 /*break*/, 2];
+                                            return [4 /*yield*/, this.props.onNewTagAdded(this.state.value)];
+                                        case 1:
+                                            newTag = _a.sent();
+                                            if (newTag) {
+                                                this.props.onTagsChanged(this.props.tags ? this.props.tags.concat(newTag) : [newTag]);
+                                            }
+                                            this.setState({ value: '' });
+                                            _a.label = 2;
+                                        case 2: return [2 /*return*/];
                                     }
-                                }
-                            }, onChange: function (e, isValid) { return __awaiter(_this, void 0, void 0, function () {
+                                });
+                            }); }, onChange: function (e, isValid) { return __awaiter(_this, void 0, void 0, function () {
                                 var _a, _b, _c;
                                 return __generator(this, function (_d) {
                                     switch (_d.label) {
@@ -50126,7 +50134,7 @@ var Tags = /** @class */ (function (_super) {
         existingTags: [],
         maxTags: 1000,
         onTagsChanged: function () { return undefined; },
-        onNewTagAdded: function (newTagName) { return ({ name: newTagName, id: new Date().getTime() }); },
+        onNewTagAdded: function (newTagName) { return new Promise(function () { return ({ name: newTagName, id: new Date().getTime() }); }); },
         valueNotAddedError: React.createElement("span", null,
             "Press ",
             React.createElement("b", null, "ENTER"),
