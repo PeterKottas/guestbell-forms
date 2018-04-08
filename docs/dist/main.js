@@ -50033,7 +50033,7 @@ var Tags = /** @class */ (function (_super) {
                                     if (_this.props.allowNew) {
                                         var newTag = _this.props.onNewTagAdded(_this.state.value);
                                         if (newTag) {
-                                            _this.props.onTagsChanged(_this.props.tags.concat());
+                                            _this.props.onTagsChanged(_this.props.tags ? _this.props.tags.concat() : [newTag]);
                                         }
                                         _this.setState({ value: '' });
                                     }
