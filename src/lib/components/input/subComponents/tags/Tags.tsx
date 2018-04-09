@@ -61,7 +61,7 @@ class Suggestions extends React.Component<SuggestionsProps & InjectedProps> {
         return this.props.isVisible ? (
             <div className="tags-input__suggestions">
                 <ul>
-                    {this.props.loading && <li className="w-100 text-center p-2">{this.props.loadingComponent}</li>}
+                    {this.props.loading && this.props.loadingComponent && <li className="w-100 text-center p-2">{this.props.loadingComponent}</li>}
                     {!this.props.loading && this.props.tags.map((tag, index) => (
                         <li key={index}>
                             <Button
@@ -73,7 +73,7 @@ class Suggestions extends React.Component<SuggestionsProps & InjectedProps> {
                             </Button>
                         </li>
                     ))}
-                    {!this.props.loading && (this.props.tags.length === 0) && <li className="w-100 text-center p-2">{this.props.emptyComponent}</li>}
+                    {!this.props.loading && this.props.emptyComponent && (this.props.tags.length === 0) && <li className="w-100 text-center p-2">{this.props.emptyComponent}</li>}
                 </ul>
             </div>
         ) : null;
@@ -94,7 +94,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
         existingTags: [],
         maxTags: 1000,
         onTagsChanged: () => undefined,
-        onNewTagAdded: (newTagName) => new Promise(() => ({ name: newTagName, id: new Date().getTime() })),
+        onNewTagAdded: (newTagName) => Promise.resolve(({ name: newTagName, id: new Date().getTime() })),
         valueNotAddedError: <span>Press <b>ENTER</b> to confirm</span>,
         showSuggestions: true,
         suggestionsLoadingComponent: 'Loading...',

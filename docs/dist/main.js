@@ -49999,10 +49999,10 @@ var Suggestions = /** @class */ (function (_super) {
         var _this = this;
         return this.props.isVisible ? (React.createElement("div", { className: "tags-input__suggestions" },
             React.createElement("ul", null,
-                this.props.loading && React.createElement("li", { className: "w-100 text-center p-2" }, this.props.loadingComponent),
+                this.props.loading && this.props.loadingComponent && React.createElement("li", { className: "w-100 text-center p-2" }, this.props.loadingComponent),
                 !this.props.loading && this.props.tags.map(function (tag, index) { return (React.createElement("li", { key: index },
                     React.createElement(Button_1.Button, { className: "w-100", type: "dropdown", onClick: function (e) { return _this.props.onSelected(tag); } }, tag.name))); }),
-                !this.props.loading && (this.props.tags.length === 0) && React.createElement("li", { className: "w-100 text-center p-2" }, this.props.emptyComponent)))) : null;
+                !this.props.loading && this.props.emptyComponent && (this.props.tags.length === 0) && React.createElement("li", { className: "w-100 text-center p-2" }, this.props.emptyComponent)))) : null;
     };
     Suggestions.prototype.handleClickOutside = function (evt) {
         this.props.onClickOutside();
@@ -50118,7 +50118,7 @@ var Tags = /** @class */ (function (_super) {
         existingTags: [],
         maxTags: 1000,
         onTagsChanged: function () { return undefined; },
-        onNewTagAdded: function (newTagName) { return new Promise(function () { return ({ name: newTagName, id: new Date().getTime() }); }); },
+        onNewTagAdded: function (newTagName) { return Promise.resolve(({ name: newTagName, id: new Date().getTime() })); },
         valueNotAddedError: React.createElement("span", null,
             "Press ",
             React.createElement("b", null, "ENTER"),
