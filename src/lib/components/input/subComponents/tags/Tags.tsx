@@ -178,7 +178,6 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
     private fetchExistingTags(startsWith: string = '') {
         if (this.props.fetchExistingTags) {
             const timer = setTimeout(() => this.setState({ fetchingExistingTags: true }), this.props.loadingDelayMs);
-            this.setState({ fetchingExistingTags: true });
             this.props.fetchExistingTags(startsWith).
                 then(fetchedExistingTags => {
                     clearTimeout(timer);

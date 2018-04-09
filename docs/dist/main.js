@@ -50076,7 +50076,6 @@ var Tags = /** @class */ (function (_super) {
         if (startsWith === void 0) { startsWith = ''; }
         if (this.props.fetchExistingTags) {
             var timer_1 = setTimeout(function () { return _this.setState({ fetchingExistingTags: true }); }, this.props.loadingDelayMs);
-            this.setState({ fetchingExistingTags: true });
             this.props.fetchExistingTags(startsWith).
                 then(function (fetchedExistingTags) {
                 clearTimeout(timer_1);
