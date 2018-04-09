@@ -31,12 +31,16 @@ export type TagsProps = {
     readonlyEmptyPlaceholder?: string;
     maxTags?: number;
     valueNotAddedError?: (string | JSX.Element);
+    showSuggestions?: boolean;
+    suggestionsLoadingComponent?: string | JSX.Element;
+    suggestionsEmptyComponent?: string | JSX.Element;
 } & BaseInput.BaseInputProps;
 
 export interface TagsState extends BaseInput.BaseInputState {
     textIsFocused: boolean;
     suggestionsVisible: boolean;
     fetchedExistingTags: Tag[];
+    fetchingExistingTags: boolean;
 }
 
 type SuggestionsProps = {
@@ -45,6 +49,9 @@ type SuggestionsProps = {
     onSelected: (tag: Tag) => void;
     onClickOutside: () => void;
     value: string;
+    loading: boolean;
+    loadingComponent?: string | JSX.Element;
+    emptyComponent?: string | JSX.Element;
 };
 
 type InjectedProps = InjectedOnClickOutProps;
@@ -53,7 +60,8 @@ class Suggestions extends React.Component<SuggestionsProps & InjectedProps> {
         return this.props.isVisible ? (
             <div className="tags-input__suggestions">
                 <ul>
-                    {this.props.tags.map((tag, index) => (
+                    {this.props.loading && <li className="w-100 text-center p-2">{this.props.loadingComponent}</li>}
+                    {!this.props.loading && this.props.tags.map((tag, index) => (
                         <li key={index}>
                             <Button
                                 className="w-100"
@@ -64,7 +72,7 @@ class Suggestions extends React.Component<SuggestionsProps & InjectedProps> {
                             </Button>
                         </li>
                     ))}
-                    {(this.props.tags.length === 0) && <li className="w-100 text-center p-2">No existing tags</li>}
+                    {!this.props.loading && (this.props.tags.length === 0) && <li className="w-100 text-center p-2">{this.props.emptyComponent}</li>}
                 </ul>
             </div>
         ) : null;
@@ -86,12 +94,15 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
         maxTags: 1000,
         onTagsChanged: () => undefined,
         onNewTagAdded: (newTagName) => new Promise(() => ({ name: newTagName, id: new Date().getTime() })),
-        valueNotAddedError: <span>Press <b>ENTER</b> to confirm</span>
+        valueNotAddedError: <span>Press <b>ENTER</b> to confirm</span>,
+        showSuggestions: true,
+        suggestionsLoadingComponent: 'Loading...',
+        suggestionsEmptyComponent: 'No data...'
     }
 
     constructor(props: TagsProps) {
         super(props);
-        this.state = { ...this.state, textIsFocused: false, suggestionsVisible: false };
+        this.state = { ...this.state, textIsFocused: false, suggestionsVisible: false, fetchingExistingTags: false };
     }
 
     public render() {
@@ -120,33 +131,29 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                                         }
                                     }
                                 }}
-                                onChange={async (e, isValid) => {
-                                    this.setState({ suggestionsVisible: true });
+                                onChange={(e, isValid) => {
+                                    !this.state.suggestionsVisible && this.setState({ suggestionsVisible: true });
                                     this.handleChange(e);
                                     if (!isValid) {
                                         this.setInvalid();
                                     } else {
                                         this.setValid();
                                     }
-                                    this.props.fetchExistingTags && this.setState({ fetchedExistingTags: await this.props.fetchExistingTags(e.target.value) });
+                                    this.fetchExistingTags(e.target.value);
                                 }}
                                 onFocus={async e => {
-                                    this.setState({ textIsFocused: true });
-                                    if (this.props.fetchExistingTags && (!this.state.fetchedExistingTags || this.state.fetchedExistingTags.length === 0)) {
-                                        this.setState({ fetchedExistingTags: await this.props.fetchExistingTags(this.state.value) },
-                                            () => this.getSuggestions().length > 0 && this.setState({ suggestionsVisible: true }));
-                                    } else {
-                                        if (suggestions.length > 0) {
-                                            this.setState({ suggestionsVisible: true });
-                                        }
-                                    }
+                                    this.setState({ textIsFocused: true, suggestionsVisible: true });
+                                    this.fetchExistingTags();
                                 }}
                                 onBlur={() => this.setState({ textIsFocused: false })}
                                 value={this.state.value}
                                 readOnly={this.props.readOnly}
                                 errors={this.state.value && this.props.allowNew ? (this.props.errors ? this.props.errors : []).concat(this.props.valueNotAddedError) : this.props.errors}
                             />
-                            {suggestions.length > 0 && <SuggestionsWrapped
+                            {this.state.suggestionsVisible && this.props.showSuggestions && <SuggestionsWrapped
+                                loading={this.state.fetchingExistingTags}
+                                loadingComponent={this.props.suggestionsLoadingComponent}
+                                emptyComponent={this.props.suggestionsEmptyComponent}
                                 isVisible={this.state.suggestionsVisible}
                                 tags={suggestions}
                                 onSelected={tag => {
@@ -164,6 +171,17 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
                 </div>
             </InputGroup >
         );
+    }
+
+    private fetchExistingTags(startsWith: string = ''){
+        if (this.props.fetchExistingTags) {
+            this.setState({ fetchingExistingTags: true });
+            this.props.fetchExistingTags(startsWith).
+                then(fetchedExistingTags => this.setState({ 
+                    fetchedExistingTags,
+                    fetchingExistingTags: false 
+                }));
+        }
     }
 
     private getSuggestions() {

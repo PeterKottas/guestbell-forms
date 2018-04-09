@@ -49999,9 +49999,10 @@ var Suggestions = /** @class */ (function (_super) {
         var _this = this;
         return this.props.isVisible ? (React.createElement("div", { className: "tags-input__suggestions" },
             React.createElement("ul", null,
-                this.props.tags.map(function (tag, index) { return (React.createElement("li", { key: index },
+                this.props.loading && React.createElement("li", { className: "w-100 text-center p-2" }, this.props.loadingComponent),
+                !this.props.loading && this.props.tags.map(function (tag, index) { return (React.createElement("li", { key: index },
                     React.createElement(Button_1.Button, { className: "w-100", type: "dropdown", onClick: function (e) { return _this.props.onSelected(tag); } }, tag.name))); }),
-                (this.props.tags.length === 0) && React.createElement("li", { className: "w-100 text-center p-2" }, "No existing tags")))) : null;
+                !this.props.loading && (this.props.tags.length === 0) && React.createElement("li", { className: "w-100 text-center p-2" }, this.props.emptyComponent)))) : null;
     };
     Suggestions.prototype.handleClickOutside = function (evt) {
         this.props.onClickOutside();
@@ -50014,7 +50015,7 @@ var Tags = /** @class */ (function (_super) {
     __extends(Tags, _super);
     function Tags(props) {
         var _this = _super.call(this, props) || this;
-        _this.state = __assign({}, _this.state, { textIsFocused: false, suggestionsVisible: false });
+        _this.state = __assign({}, _this.state, { textIsFocused: false, suggestionsVisible: false, fetchingExistingTags: false });
         return _this;
     }
     Tags.prototype.render = function () {
@@ -50046,61 +50047,41 @@ var Tags = /** @class */ (function (_super) {
                                         case 2: return [2 /*return*/];
                                     }
                                 });
-                            }); }, onChange: function (e, isValid) { return __awaiter(_this, void 0, void 0, function () {
-                                var _a, _b, _c;
-                                return __generator(this, function (_d) {
-                                    switch (_d.label) {
-                                        case 0:
-                                            this.setState({ suggestionsVisible: true });
-                                            this.handleChange(e);
-                                            if (!isValid) {
-                                                this.setInvalid();
-                                            }
-                                            else {
-                                                this.setValid();
-                                            }
-                                            _a = this.props.fetchExistingTags;
-                                            if (!_a) return [3 /*break*/, 2];
-                                            _b = this.setState;
-                                            _c = {};
-                                            return [4 /*yield*/, this.props.fetchExistingTags(e.target.value)];
-                                        case 1:
-                                            _a = _b.apply(this, [(_c.fetchedExistingTags = _d.sent(), _c)]);
-                                            _d.label = 2;
-                                        case 2:
-                                            _a;
-                                            return [2 /*return*/];
-                                    }
-                                });
-                            }); }, onFocus: function (e) { return __awaiter(_this, void 0, void 0, function () {
-                                var _this = this;
-                                var _a, _b;
-                                return __generator(this, function (_c) {
-                                    switch (_c.label) {
-                                        case 0:
-                                            this.setState({ textIsFocused: true });
-                                            if (!(this.props.fetchExistingTags && (!this.state.fetchedExistingTags || this.state.fetchedExistingTags.length === 0))) return [3 /*break*/, 2];
-                                            _a = this.setState;
-                                            _b = {};
-                                            return [4 /*yield*/, this.props.fetchExistingTags(this.state.value)];
-                                        case 1:
-                                            _a.apply(this, [(_b.fetchedExistingTags = _c.sent(), _b), function () { return _this.getSuggestions().length > 0 && _this.setState({ suggestionsVisible: true }); }]);
-                                            return [3 /*break*/, 3];
-                                        case 2:
-                                            if (suggestions.length > 0) {
-                                                this.setState({ suggestionsVisible: true });
-                                            }
-                                            _c.label = 3;
-                                        case 3: return [2 /*return*/];
-                                    }
+                            }); }, onChange: function (e, isValid) {
+                                !_this.state.suggestionsVisible && _this.setState({ suggestionsVisible: true });
+                                _this.handleChange(e);
+                                if (!isValid) {
+                                    _this.setInvalid();
+                                }
+                                else {
+                                    _this.setValid();
+                                }
+                                _this.fetchExistingTags(e.target.value);
+                            }, onFocus: function (e) { return __awaiter(_this, void 0, void 0, function () {
+                                return __generator(this, function (_a) {
+                                    this.setState({ textIsFocused: true, suggestionsVisible: true });
+                                    this.fetchExistingTags();
+                                    return [2 /*return*/];
                                 });
                             }); }, onBlur: function () { return _this.setState({ textIsFocused: false }); }, value: this.state.value, readOnly: this.props.readOnly, errors: this.state.value && this.props.allowNew ? (this.props.errors ? this.props.errors : []).concat(this.props.valueNotAddedError) : this.props.errors })),
-                        suggestions.length > 0 && React.createElement(SuggestionsWrapped, { isVisible: this.state.suggestionsVisible, tags: suggestions, onSelected: function (tag) {
+                        this.state.suggestionsVisible && this.props.showSuggestions && React.createElement(SuggestionsWrapped, { loading: this.state.fetchingExistingTags, loadingComponent: this.props.suggestionsLoadingComponent, emptyComponent: this.props.suggestionsEmptyComponent, isVisible: this.state.suggestionsVisible, tags: suggestions, onSelected: function (tag) {
                                 _this.props.onTagsChanged(_this.props.tags.concat(tag));
                                 _this.setState({ value: '' });
                             }, onClickOutside: function () { return _this.setState({ suggestionsVisible: false }); }, value: this.state.value })),
                 this.props.label && React.createElement("label", { className: ((this.state.value !== '')
                         || (this.state.textIsFocused) || (this.props.tags.length >= this.props.maxTags)) ? 'label--focused' : '' }, this.props.label))));
+    };
+    Tags.prototype.fetchExistingTags = function (startsWith) {
+        var _this = this;
+        if (startsWith === void 0) { startsWith = ''; }
+        if (this.props.fetchExistingTags) {
+            this.setState({ fetchingExistingTags: true });
+            this.props.fetchExistingTags(startsWith).
+                then(function (fetchedExistingTags) { return _this.setState({
+                fetchedExistingTags: fetchedExistingTags,
+                fetchingExistingTags: false
+            }); });
+        }
     };
     Tags.prototype.getSuggestions = function () {
         var _this = this;
@@ -50138,7 +50119,10 @@ var Tags = /** @class */ (function (_super) {
         valueNotAddedError: React.createElement("span", null,
             "Press ",
             React.createElement("b", null, "ENTER"),
-            " to confirm")
+            " to confirm"),
+        showSuggestions: true,
+        suggestionsLoadingComponent: 'Loading...',
+        suggestionsEmptyComponent: 'No data...'
     };
     return Tags;
 }(BaseInput.BaseInput));

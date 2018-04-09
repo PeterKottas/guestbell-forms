@@ -19,16 +19,21 @@ export declare type TagsProps = {
     readonlyEmptyPlaceholder?: string;
     maxTags?: number;
     valueNotAddedError?: (string | JSX.Element);
+    showSuggestions?: boolean;
+    suggestionsLoadingComponent?: string | JSX.Element;
+    suggestionsEmptyComponent?: string | JSX.Element;
 } & BaseInput.BaseInputProps;
 export interface TagsState extends BaseInput.BaseInputState {
     textIsFocused: boolean;
     suggestionsVisible: boolean;
     fetchedExistingTags: Tag[];
+    fetchingExistingTags: boolean;
 }
 export declare class Tags extends BaseInput.BaseInput<TagsProps, TagsState> {
     static defaultProps: TagsProps;
     constructor(props: TagsProps);
     render(): JSX.Element;
+    private fetchExistingTags(startsWith?);
     private getSuggestions();
     private renderTag(tag, index);
     private renderTags();
