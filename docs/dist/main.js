@@ -50075,12 +50075,16 @@ var Tags = /** @class */ (function (_super) {
         var _this = this;
         if (startsWith === void 0) { startsWith = ''; }
         if (this.props.fetchExistingTags) {
+            var timer_1 = setTimeout(function () { return _this.setState({ fetchingExistingTags: true }); }, this.props.loadingDelayMs);
             this.setState({ fetchingExistingTags: true });
             this.props.fetchExistingTags(startsWith).
-                then(function (fetchedExistingTags) { return _this.setState({
-                fetchedExistingTags: fetchedExistingTags,
-                fetchingExistingTags: false
-            }); });
+                then(function (fetchedExistingTags) {
+                clearTimeout(timer_1);
+                _this.setState({
+                    fetchedExistingTags: fetchedExistingTags,
+                    fetchingExistingTags: false
+                });
+            });
         }
     };
     Tags.prototype.getSuggestions = function () {
@@ -50122,7 +50126,8 @@ var Tags = /** @class */ (function (_super) {
             " to confirm"),
         showSuggestions: true,
         suggestionsLoadingComponent: 'Loading...',
-        suggestionsEmptyComponent: 'No data...'
+        suggestionsEmptyComponent: 'No data...',
+        loadingDelayMs: 500
     };
     return Tags;
 }(BaseInput.BaseInput));

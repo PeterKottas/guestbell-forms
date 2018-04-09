@@ -34,6 +34,7 @@ export type TagsProps = {
     showSuggestions?: boolean;
     suggestionsLoadingComponent?: string | JSX.Element;
     suggestionsEmptyComponent?: string | JSX.Element;
+    loadingDelayMs?: number;
 } & BaseInput.BaseInputProps;
 
 export interface TagsState extends BaseInput.BaseInputState {
@@ -97,7 +98,8 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
         valueNotAddedError: <span>Press <b>ENTER</b> to confirm</span>,
         showSuggestions: true,
         suggestionsLoadingComponent: 'Loading...',
-        suggestionsEmptyComponent: 'No data...'
+        suggestionsEmptyComponent: 'No data...',
+        loadingDelayMs: 500
     }
 
     constructor(props: TagsProps) {
@@ -173,14 +175,18 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
         );
     }
 
-    private fetchExistingTags(startsWith: string = ''){
+    private fetchExistingTags(startsWith: string = '') {
         if (this.props.fetchExistingTags) {
+            const timer = setTimeout(() => this.setState({ fetchingExistingTags: true }), this.props.loadingDelayMs);
             this.setState({ fetchingExistingTags: true });
             this.props.fetchExistingTags(startsWith).
-                then(fetchedExistingTags => this.setState({ 
-                    fetchedExistingTags,
-                    fetchingExistingTags: false 
-                }));
+                then(fetchedExistingTags => {
+                    clearTimeout(timer);
+                    this.setState({
+                        fetchedExistingTags,
+                        fetchingExistingTags: false
+                    });
+                });
         }
     }
 

@@ -22,6 +22,7 @@ export declare type TagsProps = {
     showSuggestions?: boolean;
     suggestionsLoadingComponent?: string | JSX.Element;
     suggestionsEmptyComponent?: string | JSX.Element;
+    loadingDelayMs?: number;
 } & BaseInput.BaseInputProps;
 export interface TagsState extends BaseInput.BaseInputState {
     textIsFocused: boolean;
