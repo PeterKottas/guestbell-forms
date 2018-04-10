@@ -35,6 +35,8 @@ export type TagsProps = {
     suggestionsLoadingComponent?: string | JSX.Element;
     suggestionsEmptyComponent?: string | JSX.Element;
     loadingDelayMs?: number;
+    filterExistingTags?: (text: string, existingTags: Tag[]) => Tag[];
+    maxSuggestions?: number;
 } & BaseInput.BaseInputProps;
 
 export interface TagsState extends BaseInput.BaseInputState {
@@ -99,7 +101,9 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
         showSuggestions: true,
         suggestionsLoadingComponent: 'Loading...',
         suggestionsEmptyComponent: 'No data...',
-        loadingDelayMs: 500
+        loadingDelayMs: 500,
+        filterExistingTags: (text, tags) => tags.filter(tag => tag.name && tag.name.toLowerCase().startsWith(text)),
+        maxSuggestions: 5
     }
 
     constructor(props: TagsProps) {
@@ -192,10 +196,10 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
     private getSuggestions() {
         const existingTags: Tag[] = [].concat((this.props.existingTags ? this.props.existingTags : [])).
             concat(this.state.fetchedExistingTags ? this.state.fetchedExistingTags : []);
-        const suggestions = existingTags.
-            filter(tag => tag.name && tag.name.toLowerCase().startsWith(this.state.value ? this.state.value.toLowerCase() : '')).
+        const filteredTags = this.props.filterExistingTags(this.state.value ? this.state.value.toLowerCase() : '', existingTags);
+        const suggestions = filteredTags.
             filter(tag => !this.props.tags.some(t => t.id === tag.id)).
-            slice(0, 5);
+            slice(0, this.props.maxSuggestions);
         return suggestions;
     }
 

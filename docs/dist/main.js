@@ -50090,10 +50090,10 @@ var Tags = /** @class */ (function (_super) {
         var _this = this;
         var existingTags = [].concat((this.props.existingTags ? this.props.existingTags : [])).
             concat(this.state.fetchedExistingTags ? this.state.fetchedExistingTags : []);
-        var suggestions = existingTags.
-            filter(function (tag) { return tag.name && tag.name.toLowerCase().startsWith(_this.state.value ? _this.state.value.toLowerCase() : ''); }).
+        var filteredTags = this.props.filterExistingTags(this.state.value ? this.state.value.toLowerCase() : '', existingTags);
+        var suggestions = filteredTags.
             filter(function (tag) { return !_this.props.tags.some(function (t) { return t.id === tag.id; }); }).
-            slice(0, 5);
+            slice(0, this.props.maxSuggestions);
         return suggestions;
     };
     Tags.prototype.renderTag = function (tag, index) {
@@ -50126,7 +50126,9 @@ var Tags = /** @class */ (function (_super) {
         showSuggestions: true,
         suggestionsLoadingComponent: 'Loading...',
         suggestionsEmptyComponent: 'No data...',
-        loadingDelayMs: 500
+        loadingDelayMs: 500,
+        filterExistingTags: function (text, tags) { return tags.filter(function (tag) { return tag.name && tag.name.toLowerCase().startsWith(text); }); },
+        maxSuggestions: 5
     };
     return Tags;
 }(BaseInput.BaseInput));
