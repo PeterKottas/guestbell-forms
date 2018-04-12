@@ -88,6 +88,7 @@
     "react-datepicker": "*",
     "react-ink": "*",
     "react-popper": "*",
-    "react-smooth-collapse": "*"
+    "react-smooth-collapse": "*",
+    "react-textarea-autosize": "*"
   }
 }
