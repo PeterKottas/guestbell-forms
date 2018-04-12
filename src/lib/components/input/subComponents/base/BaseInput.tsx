@@ -11,12 +11,12 @@ import * as Validators from '../../../../validators/index';
 import * as Form from '../../../form/Form';
 import guid from '../../../utils/Guid';
 
-export type BaseInputProps = {
+export type BaseInputProps<HTMLType extends (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)> = {
     disabled?: boolean;
     className?: string;
     label?: string | JSX.Element;
     value?: string;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>, isValid: boolean) => void;
+    onChange?: (e: React.ChangeEvent<HTMLType>, isValid: boolean) => void;
     required?: boolean;
     customValidators?: Validators.IBaseValidator[];
     validators?: ("email" | "number" | "latitude" | "longitude" | "url")[];
@@ -41,12 +41,12 @@ export interface BaseInputState {
     focused: boolean;
 }
 
-export class BaseInput<P extends BaseInputProps, S extends BaseInputState> extends React.Component<P, S> {
+export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputState, HTMLType extends (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)> extends React.Component<P, S> {
     context: Form.FormContext;
 
     public inputId = guid();
 
-    public static defaultProps: BaseInputProps = {
+    public static defaultProps: BaseInputProps<any> = {
         className: undefined,
         required: false,
         label: undefined,
@@ -169,7 +169,7 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
         return valid;
     }
 
-    protected handleChange(event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) {
+    protected handleChange(event: React.ChangeEvent<HTMLType>) {
         let value = event.target.value;
         if (!this.props.onTheFlightValidate || (this.props.onTheFlightValidate && this.props.onTheFlightValidate(value))) {
             const valid = this.handleValueChange(value);
@@ -179,7 +179,7 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
         }
     }
 
-    protected handleBlur(e: React.FocusEvent<HTMLSelectElement | HTMLInputElement>) {
+    protected handleBlur(e: React.FocusEvent<HTMLType>) {
         this.props.onBlur && this.props.onBlur();
         let state = { focused: false };
         if (this.props.touchOn == "blur") {
@@ -189,7 +189,7 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
         this.setState(state);
     }
 
-    protected handleFocus(e: React.FocusEvent<HTMLSelectElement | HTMLInputElement>) {
+    protected handleFocus(e: React.FocusEvent<HTMLType>) {
         this.props.onFocus && this.props.onFocus(e);
         let state = { focused: true };
         if (this.props.touchOn == "focus") {
@@ -209,6 +209,14 @@ export class BaseInput<P extends BaseInputProps, S extends BaseInputState> exten
 
     protected setInvalid() {
         this.setState({ valid: false });
+    }
+
+    protected renderLabel() {
+        return this.props.label;
+    }
+
+    protected renderTitle() {
+        return this.props.title;
     }
 
     constructor(props) {

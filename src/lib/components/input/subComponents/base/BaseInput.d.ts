@@ -2,12 +2,12 @@ import * as React from 'react';
 import './input.scss';
 import * as Validators from '../../../../validators/index';
 import * as Form from '../../../form/Form';
-export declare type BaseInputProps = {
+export declare type BaseInputProps<HTMLType extends (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)> = {
     disabled?: boolean;
     className?: string;
     label?: string | JSX.Element;
     value?: string;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>, isValid: boolean) => void;
+    onChange?: (e: React.ChangeEvent<HTMLType>, isValid: boolean) => void;
     required?: boolean;
     customValidators?: Validators.IBaseValidator[];
     validators?: ("email" | "number" | "latitude" | "longitude" | "url")[];
@@ -30,10 +30,10 @@ export interface BaseInputState {
     disabled: boolean;
     focused: boolean;
 }
-export declare class BaseInput<P extends BaseInputProps, S extends BaseInputState> extends React.Component<P, S> {
+export declare class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputState, HTMLType extends (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)> extends React.Component<P, S> {
     context: Form.FormContext;
     inputId: string;
-    static defaultProps: BaseInputProps;
+    static defaultProps: BaseInputProps<any>;
     static contextTypes: {
         register: any;
         unregister: any;
@@ -52,12 +52,14 @@ export declare class BaseInput<P extends BaseInputProps, S extends BaseInputStat
     disableInput(): void;
     enableInput(): void;
     private handleValueChange(value);
-    protected handleChange(event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>): void;
-    protected handleBlur(e: React.FocusEvent<HTMLSelectElement | HTMLInputElement>): void;
-    protected handleFocus(e: React.FocusEvent<HTMLSelectElement | HTMLInputElement>): void;
+    protected handleChange(event: React.ChangeEvent<HTMLType>): void;
+    protected handleBlur(e: React.FocusEvent<HTMLType>): void;
+    protected handleFocus(e: React.FocusEvent<HTMLType>): void;
     protected getDisabled(): P["disabled"];
     protected setValid(): void;
     protected setInvalid(): void;
+    protected renderLabel(): P["label"];
+    protected renderTitle(): P["title"];
     constructor(props: any);
 }
 export default BaseInput;

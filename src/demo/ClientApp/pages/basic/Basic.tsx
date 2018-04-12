@@ -6,7 +6,8 @@ import {
     Button,
     ButtonTypes,
     Tags,
-    NumberValidator
+    NumberValidator,
+    TextArea
 } from '../../../../lib/index';
 import { Tag } from 'src/lib/components/input/subComponents/tags/Tags';
 
@@ -42,6 +43,7 @@ export interface BasicState {
     selectedValues: string[];
     multipleValues: string[];
     multipleReadonly: boolean;
+    textAreaText: string;
 }
 
 export class AgeValidator implements IBaseValidator {
@@ -121,7 +123,8 @@ export class Basic extends React.Component<BasicProps, BasicState>{
         tags: [],
         selectedValues: [],
         multipleValues: ["One option", "Second option", "Third option", "one more option", "rly long last option"],
-        multipleReadonly: false
+        multipleReadonly: false,
+        textAreaText: ''
     };
 
     constructor(props: BasicProps) {
@@ -133,7 +136,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
         this.dynamicSubmitErrorForm = this.dynamicSubmitErrorForm.bind(this);
     }
 
-    private handleGenderChange(e: React.ChangeEvent<HTMLInputElement>) {
+    private handleGenderChange(e: React.ChangeEvent<HTMLSelectElement>) {
         const val = e.target.value;
         if (val == 'M' || val == 'F') {
             this.setState({ gender: val });
@@ -328,6 +331,14 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             value={this.state.name}
                                             title="Name"
                                         />
+                                        <Text
+                                            touchOn={this.state.touchOn}
+                                            required={true} label="Your name"
+                                            onChange={(e) => this.setState({ name: e.target.value })}
+                                            value={this.state.name}
+                                            title="Name readonly"
+                                            readOnly={true}
+                                        />
                                         <Select
                                             touchOn={this.state.touchOn}
                                             required={false}
@@ -336,6 +347,23 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             onChange={this.handleGenderChange}
                                             value={this.state.gender}
                                             title="Gender"
+                                        />
+                                        <TextArea
+                                            touchOn={this.state.touchOn}
+                                            required={true} 
+                                            label="Textarea"
+                                            onChange={(e) => this.setState({ textAreaText: e.target.value })}
+                                            value={this.state.textAreaText}
+                                            title="Textarea"
+                                        />
+                                        <TextArea
+                                            touchOn={this.state.touchOn}
+                                            required={true} 
+                                            label="Textarea"
+                                            onChange={(e) => this.setState({ textAreaText: e.target.value })}
+                                            value={this.state.textAreaText}
+                                            title="Readonly"
+                                            readOnly={true}
                                         />
                                         <InputHeader
                                             title={'Some collapsed stuff'}

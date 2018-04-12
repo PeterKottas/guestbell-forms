@@ -15,8 +15,8 @@ export enum ButtonState {
     Success
 }
 
-export interface DynamicSubmitProps extends Button.ButtonProps, BaseInput.BaseInputProps {
-    onClick?: (e: React.MouseEvent<HTMLButtonElement>, submiting?: () => void, error?: () => void, success?: () => void, reset?: () => void) => void;
+export interface DynamicSubmitProps extends Button.ButtonProps, BaseInput.BaseInputProps<never> {
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>, submitting?: () => void, error?: () => void, success?: () => void, reset?: () => void) => void;
     validateForm?: boolean;
     submittingChildren?: JSX.Element | string;
     errorChildren?: JSX.Element | string;
@@ -35,7 +35,7 @@ export interface DynamicSubmitState extends BaseInput.BaseInputState {
     buttonState: ButtonState;
 }
 
-export class DynamicSubmit extends BaseInput.BaseInput<DynamicSubmitProps, DynamicSubmitState>  {
+export class DynamicSubmit extends BaseInput.BaseInput<DynamicSubmitProps, DynamicSubmitState, never>  {
     public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { validateForm: true, submitDisablesInputs: true, resetEnablesInputs: true });
 
     constructor(props) {
@@ -44,7 +44,7 @@ export class DynamicSubmit extends BaseInput.BaseInput<DynamicSubmitProps, Dynam
             buttonState: ButtonState.Normal
         });
         this.handleClick = this.handleClick.bind(this);
-        this.submiting = this.submiting.bind(this);
+        this.submitting = this.submitting.bind(this);
         this.error = this.error.bind(this);
         this.success = this.success.bind(this);
         this.reset = this.reset.bind(this);
@@ -53,10 +53,10 @@ export class DynamicSubmit extends BaseInput.BaseInput<DynamicSubmitProps, Dynam
     private handleClick(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
         this.props.submitDisablesInputs && this.context.disableInputs();
-        this.props.onClick && this.props.onClick(e, this.submiting, this.error, this.success, this.reset);
+        this.props.onClick && this.props.onClick(e, this.submitting, this.error, this.success, this.reset);
     }
 
-    private submiting() {
+    private submitting() {
         this.setState({ buttonState: ButtonState.Submitting });
     }
 

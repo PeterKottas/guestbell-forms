@@ -8,8 +8,8 @@ export declare enum ButtonState {
     Error = 2,
     Success = 3,
 }
-export interface DynamicSubmitProps extends Button.ButtonProps, BaseInput.BaseInputProps {
-    onClick?: (e: React.MouseEvent<HTMLButtonElement>, submiting?: () => void, error?: () => void, success?: () => void, reset?: () => void) => void;
+export interface DynamicSubmitProps extends Button.ButtonProps, BaseInput.BaseInputProps<never> {
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>, submitting?: () => void, error?: () => void, success?: () => void, reset?: () => void) => void;
     validateForm?: boolean;
     submittingChildren?: JSX.Element | string;
     errorChildren?: JSX.Element | string;
@@ -24,15 +24,15 @@ export interface DynamicSubmitProps extends Button.ButtonProps, BaseInput.BaseIn
 export interface DynamicSubmitState extends BaseInput.BaseInputState {
     buttonState: ButtonState;
 }
-export declare class DynamicSubmit extends BaseInput.BaseInput<DynamicSubmitProps, DynamicSubmitState> {
-    static defaultProps: BaseInput.BaseInputProps & {
+export declare class DynamicSubmit extends BaseInput.BaseInput<DynamicSubmitProps, DynamicSubmitState, never> {
+    static defaultProps: BaseInput.BaseInputProps<any> & {
         validateForm: boolean;
         submitDisablesInputs: boolean;
         resetEnablesInputs: boolean;
     };
     constructor(props: any);
     private handleClick(e);
-    private submiting();
+    private submitting();
     private error();
     private success();
     private reset();

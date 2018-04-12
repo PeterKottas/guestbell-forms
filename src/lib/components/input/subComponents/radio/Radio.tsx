@@ -7,7 +7,7 @@ import * as React from 'react';
 //Misc
 import * as BaseInput from '../base/BaseInput';
 
-export interface RadioProps extends BaseInput.BaseInputProps {
+export interface RadioProps extends BaseInput.BaseInputProps<HTMLInputElement> {
     onChange?: never;
     onChecked: (value: string) => void;
     result: string;
@@ -18,7 +18,7 @@ export interface RadioProps extends BaseInput.BaseInputProps {
 export interface RadioState extends BaseInput.BaseInputState {
 }
 
-export class Radio extends BaseInput.BaseInput<RadioProps, RadioState>  {
+export class Radio extends BaseInput.BaseInput<RadioProps, RadioState, HTMLInputElement>  {
     public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { });
 
     constructor(props: RadioProps) {

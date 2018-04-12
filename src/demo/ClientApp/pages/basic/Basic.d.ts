@@ -31,6 +31,7 @@ export interface BasicState {
     selectedValues: string[];
     multipleValues: string[];
     multipleReadonly: boolean;
+    textAreaText: string;
 }
 export declare class AgeValidator implements IBaseValidator {
     static instance: AgeValidator;

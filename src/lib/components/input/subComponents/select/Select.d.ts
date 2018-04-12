@@ -5,7 +5,7 @@ export interface SelectValue {
     label?: string;
     forceSelected?: boolean;
 }
-export interface SelectProps extends BaseInput.BaseInputProps {
+export interface SelectProps extends BaseInput.BaseInputProps<HTMLSelectElement> {
     values?: SelectValue[];
     defaultEmpty?: boolean;
     multiple?: boolean;
@@ -17,8 +17,8 @@ export interface SelectProps extends BaseInput.BaseInputProps {
 }
 export interface SelectState extends BaseInput.BaseInputState {
 }
-export declare class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
-    static defaultProps: BaseInput.BaseInputProps & {
+export declare class Select extends BaseInput.BaseInput<SelectProps, SelectState, HTMLSelectElement> {
+    static defaultProps: BaseInput.BaseInputProps<any> & {
         defaultEmpty: boolean;
         multiple: boolean;
         readOnly: boolean;

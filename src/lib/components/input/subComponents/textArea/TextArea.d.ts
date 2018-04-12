@@ -1,17 +1,17 @@
-import './text.scss';
+import './textArea.scss';
 import * as BaseInput from '../base/BaseInput';
-export interface TextProps extends BaseInput.BaseInputProps<HTMLInputElement> {
+export interface TextAreaProps extends BaseInput.BaseInputProps<HTMLTextAreaElement> {
     mask?: string;
     reverse?: boolean;
     placeholder?: string;
     stopClickPropagation?: boolean;
-    inputRef?: (input: HTMLInputElement) => void;
+    inputRef?: (input: HTMLTextAreaElement) => void;
     readOnly?: boolean;
     type?: 'number' | 'text';
 }
-export interface TextState extends BaseInput.BaseInputState {
+export interface TextAreaState extends BaseInput.BaseInputState {
 }
-export declare class Text extends BaseInput.BaseInput<TextProps, TextState, HTMLInputElement> {
+export declare class TextArea extends BaseInput.BaseInput<TextAreaProps, TextAreaState, HTMLTextAreaElement> {
     static defaultProps: BaseInput.BaseInputProps<any> & {
         type: string;
         placeholder: string;
@@ -21,4 +21,4 @@ export declare class Text extends BaseInput.BaseInput<TextProps, TextState, HTML
     constructor(props: any);
     render(): JSX.Element;
 }
-export default Text;
+export default TextArea;

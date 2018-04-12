@@ -37,7 +37,7 @@ export type TagsProps = {
     loadingDelayMs?: number;
     filterExistingTags?: (text: string, existingTags: Tag[]) => Tag[];
     maxSuggestions?: number;
-} & BaseInput.BaseInputProps;
+} & BaseInput.BaseInputProps<HTMLInputElement>;
 
 export interface TagsState extends BaseInput.BaseInputState {
     textIsFocused: boolean;
@@ -88,7 +88,7 @@ class Suggestions extends React.Component<SuggestionsProps & InjectedProps> {
 
 const SuggestionsWrapped = onClickOutside<SuggestionsProps>(Suggestions);
 
-export class Tags extends BaseInput.BaseInput<TagsProps, TagsState>  {
+export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputElement>  {
     public static defaultProps: TagsProps = {
         disabled: false,
         className: '',

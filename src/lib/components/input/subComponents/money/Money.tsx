@@ -17,7 +17,7 @@ export interface MoneyWithCurrency {
     currency: SelectValue;
 }
 
-export interface MoneyProps extends BaseInput.BaseInputProps {
+export interface MoneyProps extends BaseInput.BaseInputProps<never> {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onPricesChange: (prices: MoneyWithCurrency[]) => void;
     allowMultiple?: boolean;
@@ -28,7 +28,7 @@ export interface MoneyProps extends BaseInput.BaseInputProps {
 export interface MoneyState extends BaseInput.BaseInputState {
 }
 
-export class Money extends BaseInput.BaseInput<MoneyProps, MoneyState>  {
+export class Money extends BaseInput.BaseInput<MoneyProps, MoneyState, never>  {
     public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "money", allowMultiple: false });
 
     constructor(props: MoneyProps) {
@@ -122,7 +122,7 @@ export class Money extends BaseInput.BaseInput<MoneyProps, MoneyState>  {
                 <span className="highlight"></span>
                 <span className={'bar ' + (this.state.focused ? 'focused' : '')}></span>
                 {this.renderDefaultValidation()}
-                {this.props.label && <label className={this.props.prices && this.props.prices ? 'label--focused' : ''}>{this.props.label}</label>}
+                {this.props.label && <label className={this.props.prices && this.props.prices ? 'label--focused' : ''}>{this.renderLabel()}</label>}
             </div>
         </InputGroup>;
     }

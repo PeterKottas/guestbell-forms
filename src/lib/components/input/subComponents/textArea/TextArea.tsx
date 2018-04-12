@@ -1,27 +1,28 @@
 ﻿//Styles
-import './text.scss';
+import './textArea.scss';
 
 //Libs
 import * as React from 'react';
+import Textarea from "react-textarea-autosize";
 
 //Misc
 import * as BaseInput from '../base/BaseInput';
 import InputGroup from '../inputGroup/InputGroup';
 
-export interface TextProps extends BaseInput.BaseInputProps<HTMLInputElement> {
+export interface TextAreaProps extends BaseInput.BaseInputProps<HTMLTextAreaElement> {
     mask?: string;
     reverse?: boolean;
     placeholder?: string;
     stopClickPropagation?: boolean;
-    inputRef?: (input: HTMLInputElement) => void;
+    inputRef?: (input: HTMLTextAreaElement) => void;
     readOnly?: boolean;
     type?:'number'|'text';
 }
 
-export interface TextState extends BaseInput.BaseInputState {
+export interface TextAreaState extends BaseInput.BaseInputState {
 }
 
-export class Text extends BaseInput.BaseInput<TextProps, TextState, HTMLInputElement>  {
+export class TextArea extends BaseInput.BaseInput<TextAreaProps, TextAreaState, HTMLTextAreaElement>  {
     public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "text", placeholder: '', stopClickPropagation: true, readOnly: false });
 
     constructor(props) {
@@ -31,10 +32,10 @@ export class Text extends BaseInput.BaseInput<TextProps, TextState, HTMLInputEle
     public render() {
         return <InputGroup title={this.props.title}>
             <div
-                className={`input__base text-input ${this.getValidationClass()} ${(this.props.readOnly ? 'text-input--readOnly' : '')} ${this.props.className ? this.props.className : ''}`}
+                className={`input__base textArea-input ${this.getValidationClass()} ${(this.props.readOnly ? 'textArea-input--readOnly' : '')} ${this.props.className ? this.props.className : ''}`}
                 onClick={e => this.props.stopClickPropagation && e.stopPropagation()}
             >
-                <input
+                <Textarea
                     ref={elem => this.props.inputRef && this.props.inputRef(elem)}
                     placeholder={this.props.placeholder}
                     disabled={this.getDisabled()}
@@ -46,7 +47,6 @@ export class Text extends BaseInput.BaseInput<TextProps, TextState, HTMLInputEle
                     onFocus={this.handleFocus}
                     readOnly={this.props.readOnly}
                     onKeyDown={e=>this.props.onKeyDown && this.props.onKeyDown(e)}
-                    type={this.props.type}
                 />
                 <span className="highlight"></span>
                 <span className="bar"></span>
@@ -56,4 +56,4 @@ export class Text extends BaseInput.BaseInput<TextProps, TextState, HTMLInputEle
         </InputGroup>;
     }
 }
-export default Text;
+export default TextArea;

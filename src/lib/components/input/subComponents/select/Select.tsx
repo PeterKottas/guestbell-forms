@@ -16,7 +16,7 @@ export interface SelectValue {
     forceSelected?: boolean;
 }
 
-export interface SelectProps extends BaseInput.BaseInputProps {
+export interface SelectProps extends BaseInput.BaseInputProps<HTMLSelectElement> {
     values?: SelectValue[];
     defaultEmpty?: boolean;
     multiple?: boolean;
@@ -30,7 +30,7 @@ export interface SelectProps extends BaseInput.BaseInputProps {
 export interface SelectState extends BaseInput.BaseInputState {
 }
 
-export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
+export class Select extends BaseInput.BaseInput<SelectProps, SelectState, HTMLSelectElement> {
     public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, {
         defaultEmpty: true,
         multiple: false,
@@ -89,7 +89,7 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState> {
         </InputGroup>;
     }
 
-    private handleChangeCustom(event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) {
+    private handleChangeCustom(event: React.ChangeEvent<HTMLSelectElement>) {
         if (this.props.multiple) {
             let value = event.target.value;
             let val = this.props.values.filter(item => item.value === value)[0];

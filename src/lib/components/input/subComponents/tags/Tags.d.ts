@@ -25,14 +25,14 @@ export declare type TagsProps = {
     loadingDelayMs?: number;
     filterExistingTags?: (text: string, existingTags: Tag[]) => Tag[];
     maxSuggestions?: number;
-} & BaseInput.BaseInputProps;
+} & BaseInput.BaseInputProps<HTMLInputElement>;
 export interface TagsState extends BaseInput.BaseInputState {
     textIsFocused: boolean;
     suggestionsVisible: boolean;
     fetchedExistingTags: Tag[];
     fetchingExistingTags: boolean;
 }
-export declare class Tags extends BaseInput.BaseInput<TagsProps, TagsState> {
+export declare class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputElement> {
     static defaultProps: TagsProps;
     constructor(props: TagsProps);
     render(): JSX.Element;

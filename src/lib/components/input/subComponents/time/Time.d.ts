@@ -1,7 +1,7 @@
 import './time.scss';
 import * as React from 'react';
 import * as BaseInput from '../base/BaseInput';
-export interface TimeProps extends BaseInput.BaseInputProps {
+export interface TimeProps extends BaseInput.BaseInputProps<HTMLInputElement> {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     timeChange: (time: Date) => void;
     time: Date;
@@ -11,8 +11,8 @@ export interface TimeProps extends BaseInput.BaseInputProps {
 }
 export interface TimeState extends BaseInput.BaseInputState {
 }
-export declare class Time extends BaseInput.BaseInput<TimeProps, TimeState> {
-    static defaultProps: BaseInput.BaseInputProps & {
+export declare class Time extends BaseInput.BaseInput<TimeProps, TimeState, HTMLInputElement> {
+    static defaultProps: BaseInput.BaseInputProps<any> & {
         type: string;
         placeholder: string;
     };

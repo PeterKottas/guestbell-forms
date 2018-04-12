@@ -18,6 +18,7 @@ module.exports = merge(require('./webpack.config.base'), {
         "prop-types": "prop-types",
         "react-day-picker": "react-day-picker",
         "react-day-picker/DayPickerInput": "react-day-picker/DayPickerInput",
-        "react-smooth-collapse": "react-smooth-collapse"
+        "react-smooth-collapse": "react-smooth-collapse",
+        "react-popper": "react-popper"
     }
 });

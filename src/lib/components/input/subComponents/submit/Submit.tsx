@@ -8,7 +8,7 @@ import * as React from 'react';
 import * as BaseInput from '../base/BaseInput';
 import * as Button from '../../../buttons/Button';
 
-export type SubmitProps = BaseInput.BaseInputProps & Button.ButtonProps & {
+export type SubmitProps = BaseInput.BaseInputProps<never> & Button.ButtonProps & {
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     validateForm?: boolean;
     disabledTitle?: string;
@@ -17,7 +17,7 @@ export type SubmitProps = BaseInput.BaseInputProps & Button.ButtonProps & {
 export interface SubmitState extends BaseInput.BaseInputState {
 }
 
-export class Submit extends BaseInput.BaseInput<SubmitProps, SubmitState>  {
+export class Submit extends BaseInput.BaseInput<SubmitProps, SubmitState, never>  {
     public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { validateForm: true });
 
     constructor(props) {

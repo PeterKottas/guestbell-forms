@@ -1,7 +1,7 @@
 import './checkbox.scss';
 import * as React from 'react';
 import * as BaseInput from '../base/BaseInput';
-export interface CheckboxProps extends BaseInput.BaseInputProps {
+export interface CheckboxProps extends BaseInput.BaseInputProps<HTMLInputElement> {
     onChecked?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onChange?: never;
     value?: never;
@@ -11,8 +11,8 @@ export interface CheckboxProps extends BaseInput.BaseInputProps {
 export interface CheckboxState extends BaseInput.BaseInputState {
     checked: boolean;
 }
-export declare class Checkbox extends BaseInput.BaseInput<CheckboxProps, CheckboxState> {
-    static defaultProps: BaseInput.BaseInputProps & {
+export declare class Checkbox extends BaseInput.BaseInput<CheckboxProps, CheckboxState, HTMLInputElement> {
+    static defaultProps: BaseInput.BaseInputProps<any> & {
         checked: boolean;
     };
     constructor(props: CheckboxProps);

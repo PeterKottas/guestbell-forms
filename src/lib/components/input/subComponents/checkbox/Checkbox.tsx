@@ -8,7 +8,7 @@ import * as React from 'react';
 import * as BaseInput from '../base/BaseInput';
 import InputGroup from '../inputGroup/InputGroup';
 
-export interface CheckboxProps extends BaseInput.BaseInputProps {
+export interface CheckboxProps extends BaseInput.BaseInputProps<HTMLInputElement> {
     onChecked?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onChange?: never;
     value?: never;
@@ -20,7 +20,7 @@ export interface CheckboxState extends BaseInput.BaseInputState {
     checked: boolean;
 }
 
-export class Checkbox extends BaseInput.BaseInput<CheckboxProps, CheckboxState>  {
+export class Checkbox extends BaseInput.BaseInput<CheckboxProps, CheckboxState, HTMLInputElement>  {
     public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { checked: false });
 
     constructor(props: CheckboxProps) {
@@ -71,7 +71,7 @@ export class Checkbox extends BaseInput.BaseInput<CheckboxProps, CheckboxState> 
             <div className={`input__base checkbox-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''} ${this.props.label ? 'checkbox-input--with-label' : ''}`}>
                 {!this.props.label && this.renderInput()}
                 {this.renderDefaultValidation()}
-                {this.props.label && <label>{this.renderInput()}{this.props.label}</label>}
+                {this.props.label && <label>{this.renderInput()}{this.renderLabel()}</label>}
             </div>
         </InputGroup>;
     }

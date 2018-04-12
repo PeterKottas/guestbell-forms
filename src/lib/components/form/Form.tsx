@@ -21,12 +21,12 @@ export interface FormProps {
 
 export interface FormState {
     isFormValid: boolean;
-    components: { [name: string]: BaseInput.BaseInput<BaseInput.BaseInputProps, BaseInput.BaseInputState> };
+    components: { [name: string]: BaseInput.BaseInput<BaseInput.BaseInputProps<any>, BaseInput.BaseInputState, any> };
 }
 
 export interface FormContext {
-    register: (component: BaseInput.BaseInput<BaseInput.BaseInputProps, BaseInput.BaseInputState>) => void;
-    unregister: (component: BaseInput.BaseInput<BaseInput.BaseInputProps, BaseInput.BaseInputState>) => void;
+    register: (component: BaseInput.BaseInput<BaseInput.BaseInputProps<any>, BaseInput.BaseInputState, any>) => void;
+    unregister: (component: BaseInput.BaseInput<BaseInput.BaseInputProps<any>, BaseInput.BaseInputState, any>) => void;
     isFormValid: () => boolean;
     updateCallback: (isComponentValid: boolean, inputId: string) => void;
     disableInputs: () => void;
@@ -51,7 +51,7 @@ export class Form extends React.Component<FormProps, FormState> {
 
     public static childContextTypes = FormContextType;
 
-    private register(component: BaseInput.BaseInput<BaseInput.BaseInputProps, BaseInput.BaseInputState>) {
+    private register(component: BaseInput.BaseInput<BaseInput.BaseInputProps<any>, BaseInput.BaseInputState, any>) {
         if (component) {
             this.setState(previousState => {
                 let newComponents = Object.assign({}, previousState.components);
@@ -63,7 +63,7 @@ export class Form extends React.Component<FormProps, FormState> {
         }
     };
 
-    private unregister(component: BaseInput.BaseInput<BaseInput.BaseInputProps, BaseInput.BaseInputState>) {
+    private unregister(component: BaseInput.BaseInput<BaseInput.BaseInputProps<any>, BaseInput.BaseInputState, any>) {
         if (component) {
             this.setState(previousState => {
                 let newComponents = Object.assign({}, previousState.components);

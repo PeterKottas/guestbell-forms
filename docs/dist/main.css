@@ -79,9 +79,11 @@ textarea {
     border-bottom: 1px solid #ffbbbb !important; }
     .input__base.validation__error .validation__ul {
       margin-top: 0; }
-    .input__base.validation__error .bar:before, .input__base.validation__error .bar:after {
+    .input__base.validation__error .bar:before,
+    .input__base.validation__error .bar:after {
       background: #ff5d5d; }
-  .input__base label, .input__base span.label-classname {
+  .input__base label,
+  .input__base span.label-classname {
     color: #999999;
     font-size: 18px;
     font-weight: normal;
@@ -91,14 +93,20 @@ textarea {
     top: 5px;
     transition: 0.2s ease all;
     margin-bottom: 0; }
-  .input__base input:focus ~ label, .input__base .filled ~ label, .input__base select:focus ~ label, .input__base label.label--focused, .input__base span.label-classname.label--focused {
+  .input__base input:focus ~ label,
+  .input__base .filled ~ label,
+  .input__base select:focus ~ label,
+  .input__base textarea:focus ~ label,
+  .input__base label.label--focused,
+  .input__base span.label-classname.label--focused {
     top: -1rem;
     font-size: 14px;
     color: #10bdc7; }
   .input__base .bar {
     display: block;
     width: 100%; }
-  .input__base .bar:before, .input__base .bar:after {
+  .input__base .bar:before,
+  .input__base .bar:after {
     content: '';
     height: 2px;
     width: 0;
@@ -110,8 +118,16 @@ textarea {
     left: 50%; }
   .input__base .bar:after {
     right: 50%; }
-  .input__base input:focus ~ .bar:before, .input__base input:focus ~ .bar:after, .input__base select:focus ~ .bar:before, .input__base select:focus ~ .bar:after,
-  .input__base label:focus ~ .bar:before, .input__base label:focus ~ .bar:after, .input__base .bar.focused:before, .input__base .bar.focused:after {
+  .input__base input:focus ~ .bar:before,
+  .input__base input:focus ~ .bar:after,
+  .input__base textarea:focus ~ .bar:before,
+  .input__base textarea:focus ~ .bar:after,
+  .input__base select:focus ~ .bar:before,
+  .input__base select:focus ~ .bar:after,
+  .input__base label:focus ~ .bar:before,
+  .input__base label:focus ~ .bar:after,
+  .input__base .bar.focused:before,
+  .input__base .bar.focused:after {
     width: 50%; }
   .input__base .highlight {
     position: absolute;
@@ -121,12 +137,14 @@ textarea {
     left: 0;
     pointer-events: none;
     opacity: 0.5; }
-  .input__base input:focus ~ .highlight, .input__base select:focus ~ .highlight {
+  .input__base input:focus ~ .highlight,
+  .input__base select:focus ~ .highlight {
     -webkit-animation: inputHighlighter 0.3s ease;
             animation: inputHighlighter 0.3s ease; }
   .input__base input:focus {
     outline: none; }
-  .input__base input:disabled, .input__base select:disabled {
+  .input__base input:disabled,
+  .input__base select:disabled {
     cursor: not-allowed;
     color: #999999;
     background: transparent; }
@@ -144,7 +162,8 @@ textarea {
         color: #10bdc7;
         fill: #10bdc7; }
 
-.guestbell-forms--dark.input__form .input__group__border, .guestbell-forms--dark .input__form .input__group__border {
+.guestbell-forms--dark.input__form .input__group__border,
+.guestbell-forms--dark .input__form .input__group__border {
   border-top: 1px solid #b3b3b3; }
 
 .guestbell-forms--dark .input__group .row-header {
@@ -165,18 +184,31 @@ textarea {
     color: #ff5d5d; }
   .guestbell-forms--dark .input__base .validation__error {
     border-bottom: 1px solid #ffbbbb; }
-    .guestbell-forms--dark .input__base .validation__error .bar:before, .guestbell-forms--dark .input__base .validation__error .bar:after {
+    .guestbell-forms--dark .input__base .validation__error .bar:before,
+    .guestbell-forms--dark .input__base .validation__error .bar:after {
       background: #ff5d5d; }
-  .guestbell-forms--dark .input__base label, .guestbell-forms--dark .input__base span.label-classname {
+  .guestbell-forms--dark .input__base label,
+  .guestbell-forms--dark .input__base span.label-classname {
     color: #cccccc; }
-  .guestbell-forms--dark .input__base input:focus ~ label, .guestbell-forms--dark .input__base input.filled ~ label, .guestbell-forms--dark .input__base select:focus ~ label, .guestbell-forms--dark .input__base select.filled ~ label, .guestbell-forms--dark .input__base label.label--focused, .guestbell-forms--dark .input__base span.label-classname.label--focused {
+  .guestbell-forms--dark .input__base input:focus ~ label,
+  .guestbell-forms--dark .input__base input.filled ~ label,
+  .guestbell-forms--dark .input__base textarea:focus ~ label,
+  .guestbell-forms--dark .input__base textarea.filled ~ label,
+  .guestbell-forms--dark .input__base select:focus ~ label,
+  .guestbell-forms--dark .input__base select.filled ~ label,
+  .guestbell-forms--dark .input__base label.label--focused,
+  .guestbell-forms--dark .input__base span.label-classname.label--focused {
     color: #10bdc7; }
-  .guestbell-forms--dark .input__base .bar:before, .guestbell-forms--dark .input__base .bar:after {
+  .guestbell-forms--dark .input__base .bar:before,
+  .guestbell-forms--dark .input__base .bar:after {
     background: #10bdc7; }
-  .guestbell-forms--dark .input__base input:focus ~ .highlight, .guestbell-forms--dark .input__base select:focus ~ .highlight {
+  .guestbell-forms--dark .input__base textarea:focus ~ .highlight,
+  .guestbell-forms--dark .input__base input:focus ~ .highlight,
+  .guestbell-forms--dark .input__base select:focus ~ .highlight {
     -webkit-animation: inputHighlighter--dark 0.3s ease;
             animation: inputHighlighter--dark 0.3s ease; }
-  .guestbell-forms--dark .input__base input:disabled, .guestbell-forms--dark .input__base select:disabled {
+  .guestbell-forms--dark .input__base input:disabled,
+  .guestbell-forms--dark .input__base select:disabled {
     color: #cccccc; }
 
 .guestbell-forms--dark .input__button svg.material-design-icon, .guestbell-forms--dark .input__button {
@@ -1730,6 +1762,37 @@ a.guestbell__dropdown-toggle {
       margin: 0; }
       .tags-input .tags-input__suggestions > ul > li {
         list-style: none; }
+.textArea-input {
+  display: inline-block;
+  margin-top: 20px;
+  max-width: 37.5rem; }
+  .textArea-input.textArea-input--readOnly {
+    border-bottom-color: transparent !important; }
+    .textArea-input.textArea-input--readOnly input:focus ~ .bar:before,
+    .textArea-input.textArea-input--readOnly input:focus ~ .bar:after,
+    .textArea-input.textArea-input--readOnly textarea:focus ~ .bar:before,
+    .textArea-input.textArea-input--readOnly textarea:focus ~ .bar:after,
+    .textArea-input.textArea-input--readOnly select:focus ~ .bar:before,
+    .textArea-input.textArea-input--readOnly select:focus ~ .bar:after,
+    .textArea-input.textArea-input--readOnly label:focus ~ .bar:before,
+    .textArea-input.textArea-input--readOnly label:focus ~ .bar:after,
+    .textArea-input.textArea-input--readOnly .bar.focused:before,
+    .textArea-input.textArea-input--readOnly .bar.focused:after {
+      width: initial; }
+    .textArea-input.textArea-input--readOnly textArea:focus ~ .highlight, .textArea-input.textArea-input--readOnly select:focus ~ .highlight {
+      -webkit-animation: none;
+              animation: none; }
+  .textArea-input textarea {
+    padding: 6px 10px 5px 5px;
+    color: #555555;
+    outline: 0;
+    border: none;
+    width: 100%;
+    background-color: transparent;
+    text-overflow: ellipsis; }
+
+.guestbell-forms--dark .textArea-input input {
+  color: white; }
 .navbar {
   height: 96px;
   background-color: white;

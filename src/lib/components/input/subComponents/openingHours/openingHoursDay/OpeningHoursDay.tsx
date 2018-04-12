@@ -16,7 +16,7 @@ export interface OpeningHoursDayObj {
     times: Date[];
 }
 
-export interface OpeningHoursDayProps extends BaseInput.BaseInputProps {
+export interface OpeningHoursDayProps extends BaseInput.BaseInputProps<never> {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onOpeningHoursChange: (openingHours: OpeningHoursDayObj) => void;
     openingHours: OpeningHoursDayObj;
@@ -27,9 +27,9 @@ export interface OpeningHoursDayProps extends BaseInput.BaseInputProps {
 export interface OpeningHoursState extends BaseInput.BaseInputState {
 }
 
-export class OpeningHoursDay extends BaseInput.BaseInput<OpeningHoursDayProps, OpeningHoursState>  {
+export class OpeningHoursDay extends BaseInput.BaseInput<OpeningHoursDayProps, OpeningHoursState, never>  {
     public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "openingHours", allowMultiple: false, maxOpenCloseTimes: 10 });
-    private fullDayMiliseconds: number = 24 * 60 * 60 * 1000;
+    private fullDayMilliseconds: number = 24 * 60 * 60 * 1000;
 
     constructor(props: OpeningHoursDayProps) {
         super(props);
@@ -81,7 +81,7 @@ export class OpeningHoursDay extends BaseInput.BaseInput<OpeningHoursDayProps, O
                 </div>
                 {this.renderDefaultValidation()}
                 {this.props.openingHours && this.props.label && <span className={'label-classname ' + (this.props.openingHours && this.props.openingHours.times
-                    && this.props.openingHours.times.length ? 'label--focused' : 'label--focused label--closed')}>{this.props.label}</span>}
+                    && this.props.openingHours.times.length ? 'label--focused' : 'label--focused label--closed')}>{this.renderLabel()}</span>}
             </div>
             {this.getBottomBorder()}
         </InputGroup>;
@@ -93,14 +93,14 @@ export class OpeningHoursDay extends BaseInput.BaseInput<OpeningHoursDayProps, O
             parts = parts.concat([1]);
         }
         else {
-            parts = parts.concat([OpeningHoursUtil.getTimeFromMidnight(this.props.openingHours.times[0]) / this.fullDayMiliseconds]);
+            parts = parts.concat([OpeningHoursUtil.getTimeFromMidnight(this.props.openingHours.times[0]) / this.fullDayMilliseconds]);
             for (var index = 0; index < this.props.openingHours.times.length - 1; index++) {
                 let start = OpeningHoursUtil.getTimeFromMidnight(this.props.openingHours.times[index]);
                 let end = OpeningHoursUtil.getTimeFromMidnight(this.props.openingHours.times[index + 1]);
-                let diff = (end - start) / this.fullDayMiliseconds;
+                let diff = (end - start) / this.fullDayMilliseconds;
                 parts = parts.concat([diff]);
             }
-            parts = parts.concat([(this.fullDayMiliseconds - OpeningHoursUtil.getTimeFromMidnight(this.props.openingHours.times[this.props.openingHours.times.length - 1])) / this.fullDayMiliseconds]);
+            parts = parts.concat([(this.fullDayMilliseconds - OpeningHoursUtil.getTimeFromMidnight(this.props.openingHours.times[this.props.openingHours.times.length - 1])) / this.fullDayMilliseconds]);
         }
         return <div className="openingHoursDay-input__bottom-border__container">
             {parts.map((part, index) => (

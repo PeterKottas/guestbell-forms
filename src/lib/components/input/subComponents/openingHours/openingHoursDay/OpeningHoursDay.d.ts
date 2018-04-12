@@ -4,7 +4,7 @@ import * as BaseInput from '../../base/BaseInput';
 export interface OpeningHoursDayObj {
     times: Date[];
 }
-export interface OpeningHoursDayProps extends BaseInput.BaseInputProps {
+export interface OpeningHoursDayProps extends BaseInput.BaseInputProps<never> {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onOpeningHoursChange: (openingHours: OpeningHoursDayObj) => void;
     openingHours: OpeningHoursDayObj;
@@ -13,13 +13,13 @@ export interface OpeningHoursDayProps extends BaseInput.BaseInputProps {
 }
 export interface OpeningHoursState extends BaseInput.BaseInputState {
 }
-export declare class OpeningHoursDay extends BaseInput.BaseInput<OpeningHoursDayProps, OpeningHoursState> {
-    static defaultProps: BaseInput.BaseInputProps & {
+export declare class OpeningHoursDay extends BaseInput.BaseInput<OpeningHoursDayProps, OpeningHoursState, never> {
+    static defaultProps: BaseInput.BaseInputProps<any> & {
         type: string;
         allowMultiple: boolean;
         maxOpenCloseTimes: number;
     };
-    private fullDayMiliseconds;
+    private fullDayMilliseconds;
     constructor(props: OpeningHoursDayProps);
     render(): JSX.Element;
     private getBottomBorder();

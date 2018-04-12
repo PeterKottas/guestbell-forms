@@ -25,7 +25,7 @@ export interface OpeningHoursSpecialDayObj extends OpeningHoursDayObj {
     date: Date;
 }
 
-export interface OpeningHoursSpecialProps extends BaseInput.BaseInputProps {
+export interface OpeningHoursSpecialProps extends BaseInput.BaseInputProps<never> {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     days: OpeningHoursSpecialDayObj[];
     onDaysChange: (days: OpeningHoursSpecialDayObj[]) => void;
@@ -36,7 +36,7 @@ export interface OpeningHoursSpecialState extends BaseInput.BaseInputState {
 
 const DAY_FORMAT = 'D/M/YYYY';
 
-export class OpeningHoursSpecial extends BaseInput.BaseInput<OpeningHoursSpecialProps, OpeningHoursSpecialState>  {
+export class OpeningHoursSpecial extends BaseInput.BaseInput<OpeningHoursSpecialProps, OpeningHoursSpecialState, never>  {
     public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "openingHoursSpecial", placeholder: '' });
 
     constructor(props) {
