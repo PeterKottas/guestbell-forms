@@ -122,7 +122,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
                         <div className="tags-input__tags__wrapper">
                             <Text
                                 {...textProps}
-                                className="tags-input__text-input"
+                                className={'tags-input__text-input ' + textProps.className}
                                 onKeyDown={async e => {
                                     if (e.key === 'Enter' && this.state.value !== '' && this.state.valid) {
                                         e.preventDefault();

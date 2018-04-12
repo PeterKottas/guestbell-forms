@@ -50039,7 +50039,7 @@ var Tags = /** @class */ (function (_super) {
                 this.renderTags(),
                 (!this.props.maxTags || (this.props.maxTags > (this.props.tags && this.props.tags.length))) && !this.props.readOnly &&
                     React.createElement("div", { className: "tags-input__tags__wrapper" },
-                        React.createElement(Text_1.Text, __assign({}, textProps, { className: "tags-input__text-input", onKeyDown: function (e) { return __awaiter(_this, void 0, void 0, function () {
+                        React.createElement(Text_1.Text, __assign({}, textProps, { className: 'tags-input__text-input ' + textProps.className, onKeyDown: function (e) { return __awaiter(_this, void 0, void 0, function () {
                                 var newTag;
                                 return __generator(this, function (_a) {
                                     switch (_a.label) {
