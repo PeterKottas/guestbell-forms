@@ -8,6 +8,8 @@ export interface TextAreaProps extends BaseInput.BaseInputProps<HTMLTextAreaElem
     inputRef?: (input: HTMLTextAreaElement) => void;
     readOnly?: boolean;
     type?: 'number' | 'text';
+    minRows?: number;
+    maxRows?: number;
 }
 export interface TextAreaState extends BaseInput.BaseInputState {
 }

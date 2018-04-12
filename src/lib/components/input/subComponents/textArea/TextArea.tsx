@@ -17,6 +17,8 @@ export interface TextAreaProps extends BaseInput.BaseInputProps<HTMLTextAreaElem
     inputRef?: (input: HTMLTextAreaElement) => void;
     readOnly?: boolean;
     type?:'number'|'text';
+    minRows?: number;
+    maxRows?: number;
 }
 
 export interface TextAreaState extends BaseInput.BaseInputState {
@@ -47,6 +49,8 @@ export class TextArea extends BaseInput.BaseInput<TextAreaProps, TextAreaState, 
                     onFocus={this.handleFocus}
                     readOnly={this.props.readOnly}
                     onKeyDown={e=>this.props.onKeyDown && this.props.onKeyDown(e)}
+                    minRows={this.props.minRows}
+                    maxRows={this.props.maxRows}
                 />
                 <span className="highlight"></span>
                 <span className="bar"></span>
