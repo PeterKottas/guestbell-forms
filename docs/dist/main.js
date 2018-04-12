@@ -5798,7 +5798,7 @@ var NumberValidator = /** @class */ (function () {
                 return false;
             }
             if (this.config.max !== undefined && number >= this.config.max) {
-                addError('Max: ' + this.config.max);
+                addError('Max: ' + (this.config.max - 1));
                 return false;
             }
             return true;
