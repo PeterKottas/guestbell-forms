@@ -38,6 +38,7 @@ export type InputHeaderProps = {
     showExpandAll?: boolean;
     type?: 'hero' | 'standard' | 'small';
     noBg?: boolean;
+    headerClassName?: string;
 }
 
 export interface InputHeaderState {
@@ -146,7 +147,7 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
                 onClick={() => this.toggle()}
                 role={this.props.collapsable ? 'button' : ''}
             >
-                <div className="input__header__top__header-container">
+                <div className={'input__header__top__header-container ' + (this.props.headerClassName ? this.props.headerClassName : '')}>
                     {this.props.icon && <div className="input__header__icon line-height--0">
                         {this.props.icon}
                     </div>}
