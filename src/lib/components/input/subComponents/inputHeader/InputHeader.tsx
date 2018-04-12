@@ -143,11 +143,14 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
     public render() {
         return <div className={`input__header ` + (this.props.className ? this.props.className : '') + ' ' + (this.getTypeClass())}>
             <div
-                className={'input__header__top ' + (this.props.showExpandAll ? 'input__header__top--tall ' : '') + (this.props.noBg ? 'input__header__top--no-bg ' : '')}
+                className={'input__header__top ' +
+                    (this.props.showExpandAll ? 'input__header__top--tall ' : '') +
+                    (this.props.noBg ? 'input__header__top--no-bg ' : '') +
+                    (this.props.headerClassName ? this.props.headerClassName : '')}
                 onClick={() => this.toggle()}
                 role={this.props.collapsable ? 'button' : ''}
             >
-                <div className={'input__header__top__header-container ' + (this.props.headerClassName ? this.props.headerClassName : '')}>
+                <div className={'input__header__top__header-container '}>
                     {this.props.icon && <div className="input__header__icon line-height--0">
                         {this.props.icon}
                     </div>}

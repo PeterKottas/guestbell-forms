@@ -48769,8 +48769,11 @@ var InputHeader = /** @class */ (function (_super) {
     InputHeader.prototype.render = function () {
         var _this = this;
         return React.createElement("div", { className: "input__header " + (this.props.className ? this.props.className : '') + ' ' + (this.getTypeClass()) },
-            React.createElement("div", { className: 'input__header__top ' + (this.props.showExpandAll ? 'input__header__top--tall ' : '') + (this.props.noBg ? 'input__header__top--no-bg ' : ''), onClick: function () { return _this.toggle(); }, role: this.props.collapsable ? 'button' : '' },
-                React.createElement("div", { className: 'input__header__top__header-container ' + (this.props.headerClassName ? this.props.headerClassName : '') },
+            React.createElement("div", { className: 'input__header__top ' +
+                    (this.props.showExpandAll ? 'input__header__top--tall ' : '') +
+                    (this.props.noBg ? 'input__header__top--no-bg ' : '') +
+                    (this.props.headerClassName ? this.props.headerClassName : ''), onClick: function () { return _this.toggle(); }, role: this.props.collapsable ? 'button' : '' },
+                React.createElement("div", { className: 'input__header__top__header-container ' },
                     this.props.icon && React.createElement("div", { className: "input__header__icon line-height--0" }, this.props.icon),
                     this.props.title && React.createElement("div", { className: "input__header__title" }, this.props.title),
                     this.props.subTitle &&
