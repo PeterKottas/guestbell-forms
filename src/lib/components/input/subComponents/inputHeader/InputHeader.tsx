@@ -39,6 +39,7 @@ export type InputHeaderProps = {
     type?: 'hero' | 'standard' | 'small';
     noBg?: boolean;
     headerClassName?: string;
+    contentClassName?: string;
 }
 
 export interface InputHeaderState {
@@ -190,7 +191,7 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
                 {this.props.showExpandAll && Object.keys(this.state.inputHeaders).length > 0 &&
                     this.renderCollapseExpandAll()}
             </div>
-            <div className="input__header__bottom">
+            <div className={'input__header__bottom ' + (this.props.contentClassName ? this.props.contentClassName : '')}>
                 {
                     this.props.collapsable ?
                         <div className={(!this.state.collapsed && this.state.smoothCollapseDone ? 'smooth-collapse__container' : '')}>

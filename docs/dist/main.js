@@ -48790,7 +48790,7 @@ var InputHeader = /** @class */ (function (_super) {
                             React.createElement(PlusIcon, null))),
                 this.props.showExpandAll && Object.keys(this.state.inputHeaders).length > 0 &&
                     this.renderCollapseExpandAll()),
-            React.createElement("div", { className: "input__header__bottom" }, this.props.collapsable ?
+            React.createElement("div", { className: 'input__header__bottom ' + (this.props.contentClassName ? this.props.contentClassName : '') }, this.props.collapsable ?
                 React.createElement("div", { className: (!this.state.collapsed && this.state.smoothCollapseDone ? 'smooth-collapse__container' : '') }, SmoothCollapse ? React.createElement(SmoothCollapse, { collapsedHeight: '0.0001px', expanded: this.props.collapsed !== undefined ? !this.props.collapsed : !this.state.collapsed, onChangeEnd: function () { return _this.setState(function (previousState) { return ({ smoothCollapseDone: true }); }); } }, this.props.children) : this.props.children)
                 :
                     this.props.children));

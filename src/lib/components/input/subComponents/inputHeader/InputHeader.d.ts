@@ -20,6 +20,7 @@ export declare type InputHeaderProps = {
     type?: 'hero' | 'standard' | 'small';
     noBg?: boolean;
     headerClassName?: string;
+    contentClassName?: string;
 };
 export interface InputHeaderState {
     collapsed: boolean;
