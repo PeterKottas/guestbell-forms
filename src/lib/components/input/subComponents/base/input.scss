@@ -67,8 +67,10 @@
     .label--no-touch {
         pointer-events: none;
     }
-    $dim: 1.3rem;
+    $dim: 1.1rem;
     .label--help-icon {
+        position: absolute;
+        bottom: 0.35rem;
         margin-left: 0.5rem;
         background-color: $input-label-color;
         border-radius: 50%;
@@ -76,8 +78,8 @@
         text-align: center;
         height: $dim;
         line-height: $dim;
+        font-size: $dim - 0.3;
         width: $dim;
-        height: $dim;
         display: inline-block;
     }
     /* active state */

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/dist";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 197);
+/******/ 	return __webpack_require__(__webpack_require__.s = 200);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1911,7 +1911,7 @@ function loadLocale(name) {
         try {
             oldLocale = globalLocale._abbr;
             var aliasedRequire = require;
-            __webpack_require__(247)("./" + name);
+            __webpack_require__(252)("./" + name);
             getSetGlobalLocale(oldLocale);
         } catch (e) {}
     }
@@ -4603,7 +4603,7 @@ return hooks;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(246)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(251)(module)))
 
 /***/ }),
 /* 1 */
@@ -4613,223 +4613,15 @@ return hooks;
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(199);
+  module.exports = __webpack_require__(203);
 } else {
-  module.exports = __webpack_require__(200);
+  module.exports = __webpack_require__(204);
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-//Styles
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-//Libs
-var React = __webpack_require__(1);
-//Styles
-__webpack_require__(221);
-//Misc
-var Validators = __webpack_require__(54);
-var Form = __webpack_require__(55);
-var Guid_1 = __webpack_require__(56);
-var BaseInput = /** @class */ (function (_super) {
-    __extends(BaseInput, _super);
-    function BaseInput(props) {
-        var _this = _super.call(this, props) || this;
-        _this.inputId = Guid_1.default();
-        _this.state = {
-            valid: props.required ? false : true,
-            value: props.value ? props.value : '',
-            touched: false,
-            disabled: false,
-            focused: false
-        };
-        _this.handleChange = _this.handleChange.bind(_this);
-        _this.handleBlur = _this.handleBlur.bind(_this);
-        _this.handleFocus = _this.handleFocus.bind(_this);
-        _this.setValid = _this.setValid.bind(_this);
-        _this.setInvalid = _this.setInvalid.bind(_this);
-        return _this;
-    }
-    BaseInput.prototype.getValidationClass = function () {
-        return (this.state.valid || !this.state.touched) && (!this.props.errors || this.props.errors.length === 0) ? 'validation__success' : 'validation__error';
-    };
-    BaseInput.prototype.renderDefaultValidation = function () {
-        var finalErrors = this.state.errors;
-        if (!finalErrors) {
-            finalErrors = [];
-        }
-        if (this.props.errors) {
-            finalErrors = finalErrors.concat(this.props.errors);
-        }
-        return React.createElement("div", { className: "validation__container" },
-            React.createElement("ul", { className: "validation__ul" }, finalErrors.map(function (item, index) { return React.createElement("span", { key: index, className: "validation__item" }, item); })));
-    };
-    BaseInput.prototype.componentWillUnmount = function () {
-        if (!this.props.ignoreContext) {
-            this.context && this.context.unregister && this.context.unregister(this);
-        }
-    };
-    BaseInput.prototype.componentDidMount = function () {
-        if (!this.props.ignoreContext) {
-            this.context && this.context.register && this.context.register(this);
-        }
-        this.handleValueChange(this.state.value);
-    };
-    BaseInput.prototype.componentWillReceiveProps = function (nextProps) {
-        if (nextProps.value != this.props.value) {
-            this.handleValueChange(nextProps.value);
-        }
-    };
-    BaseInput.prototype.touch = function () {
-        this.setState({ touched: true });
-        this.handleValueChange(this.state.value || '');
-    };
-    BaseInput.prototype.unTouch = function () {
-        this.setState({ touched: false });
-    };
-    BaseInput.prototype.disableInput = function () {
-        this.setState({ disabled: true });
-    };
-    BaseInput.prototype.enableInput = function () {
-        this.setState({ disabled: false });
-    };
-    BaseInput.prototype.handleValueChange = function (value) {
-        var _this = this;
-        var errors = [];
-        var valid = true;
-        if (this.props.required && !value) {
-            errors.push('Required');
-            valid = false;
-        }
-        else {
-            if (!this.props.required && !value) {
-                valid = true;
-            }
-            else {
-                if (this.props.validators) {
-                    valid = true;
-                    this.props.validators.forEach(function (validator) {
-                        var validInner = false;
-                        switch (validator) {
-                            case 'email':
-                                validInner = new Validators.EmailValidator().Validate(value, _this.props.required, function (error) { return errors.push(error); });
-                                break;
-                            case 'number':
-                                validInner = new Validators.NumberValidator().Validate(value, _this.props.required, function (error) { return errors.push(error); });
-                                break;
-                            case 'latitude':
-                                validInner = new Validators.LatitudeValidator().Validate(value, _this.props.required, function (error) { return errors.push(error); });
-                                break;
-                            case 'longitude':
-                                validInner = new Validators.LongitudeValidator().Validate(value, _this.props.required, function (error) { return errors.push(error); });
-                                break;
-                            case 'url':
-                                validInner = new Validators.UrlValidator().Validate(value, _this.props.required, function (error) { return errors.push(error); });
-                                break;
-                            default:
-                                throw new Error("Validator " + validator + " not implemented");
-                        }
-                        if (valid && !validInner) {
-                            valid = validInner;
-                        }
-                    });
-                }
-                if (this.props.customValidators) {
-                    this.props.customValidators.forEach(function (customValidator) {
-                        var validInner = false;
-                        try {
-                            validInner = customValidator.Validate(value, _this.props.required, function (error) { return errors.push(error); });
-                        }
-                        catch (e) {
-                            throw new Error("Custom validator exception " + e + " on input " + _this.inputId);
-                        }
-                        if (valid && !validInner) {
-                            valid = validInner;
-                        }
-                    });
-                }
-            }
-        }
-        this.setState({ value: value, valid: valid, errors: errors });
-        if (!this.props.ignoreContext) {
-            this.context && this.context.updateCallback && this.context.updateCallback(valid, this.inputId);
-        }
-        return valid;
-    };
-    BaseInput.prototype.handleChange = function (event) {
-        var value = event.target.value;
-        if (!this.props.onTheFlightValidate || (this.props.onTheFlightValidate && this.props.onTheFlightValidate(value))) {
-            var valid = this.handleValueChange(value);
-            if (this.props.onChange) {
-                this.props.onChange(event, valid);
-            }
-        }
-    };
-    BaseInput.prototype.handleBlur = function (e) {
-        this.props.onBlur && this.props.onBlur();
-        var state = { focused: false };
-        if (this.props.touchOn == "blur") {
-            state = Object.assign(state, { touched: true });
-            this.handleValueChange(this.state.value);
-        }
-        this.setState(state);
-    };
-    BaseInput.prototype.handleFocus = function (e) {
-        this.props.onFocus && this.props.onFocus(e);
-        var state = { focused: true };
-        if (this.props.touchOn == "focus") {
-            state = Object.assign(state, { touched: true });
-            this.handleValueChange(this.state.value);
-        }
-        this.setState(state);
-    };
-    BaseInput.prototype.getDisabled = function () {
-        return this.state.disabled ? this.state.disabled : this.props.disabled;
-    };
-    BaseInput.prototype.setValid = function () {
-        this.setState({ valid: true });
-    };
-    BaseInput.prototype.setInvalid = function () {
-        this.setState({ valid: false });
-    };
-    BaseInput.prototype.renderLabel = function () {
-        return this.props.label;
-    };
-    BaseInput.prototype.renderTitle = function () {
-        return this.props.title;
-    };
-    BaseInput.defaultProps = {
-        className: undefined,
-        required: false,
-        label: undefined,
-        disabled: false,
-        touchOn: "focus",
-        ignoreContext: false,
-    };
-    BaseInput.contextTypes = Form.FormContextType;
-    return BaseInput;
-}(React.Component));
-exports.BaseInput = BaseInput;
-exports.default = BaseInput;
-
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -5019,11 +4811,12 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+//Styles
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -5035,67 +4828,205 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-//Styles
-__webpack_require__(225);
 //Libs
 var React = __webpack_require__(1);
+var react_tippy_1 = __webpack_require__(225);
+//Styles
+__webpack_require__(226);
 //Misc
-var BaseInput = __webpack_require__(2);
-var InputGroup = /** @class */ (function (_super) {
-    __extends(InputGroup, _super);
-    function InputGroup(props) {
-        return _super.call(this, props) || this;
+var Validators = __webpack_require__(56);
+var Form = __webpack_require__(57);
+var Guid_1 = __webpack_require__(60);
+var BaseInput = /** @class */ (function (_super) {
+    __extends(BaseInput, _super);
+    function BaseInput(props) {
+        var _this = _super.call(this, props) || this;
+        _this.inputId = Guid_1.default();
+        _this.state = {
+            valid: props.required ? false : true,
+            value: props.value ? props.value : '',
+            touched: false,
+            disabled: false,
+            focused: false
+        };
+        _this.handleChange = _this.handleChange.bind(_this);
+        _this.handleBlur = _this.handleBlur.bind(_this);
+        _this.handleFocus = _this.handleFocus.bind(_this);
+        _this.setValid = _this.setValid.bind(_this);
+        _this.setInvalid = _this.setInvalid.bind(_this);
+        return _this;
     }
-    InputGroup.prototype.render = function () {
-        return this.props.title ?
-            React.createElement("div", { className: "input__group input__group__border " + (this.props.className ? this.props.className : '') },
-                this.props.title && React.createElement("div", { className: "row-header" }, this.renderTitle()),
-                this.props.children) :
-            this.props.children;
+    BaseInput.prototype.getValidationClass = function () {
+        return (this.state.valid || !this.state.touched) && (!this.props.errors || this.props.errors.length === 0) ? 'validation__success' : 'validation__error';
     };
-    return InputGroup;
-}(BaseInput.BaseInput));
-exports.InputGroup = InputGroup;
-exports.default = InputGroup;
+    BaseInput.prototype.renderDefaultValidation = function () {
+        var finalErrors = this.state.errors;
+        if (!finalErrors) {
+            finalErrors = [];
+        }
+        if (this.props.errors) {
+            finalErrors = finalErrors.concat(this.props.errors);
+        }
+        return React.createElement("div", { className: "validation__container" },
+            React.createElement("ul", { className: "validation__ul" }, finalErrors.map(function (item, index) { return React.createElement("span", { key: index, className: "validation__item" }, item); })));
+    };
+    BaseInput.prototype.componentWillUnmount = function () {
+        if (!this.props.ignoreContext) {
+            this.context && this.context.unregister && this.context.unregister(this);
+        }
+    };
+    BaseInput.prototype.componentDidMount = function () {
+        if (!this.props.ignoreContext) {
+            this.context && this.context.register && this.context.register(this);
+        }
+        this.handleValueChange(this.state.value);
+    };
+    BaseInput.prototype.componentWillReceiveProps = function (nextProps) {
+        if (nextProps.value != this.props.value) {
+            this.handleValueChange(nextProps.value);
+        }
+    };
+    BaseInput.prototype.touch = function () {
+        this.setState({ touched: true });
+        this.handleValueChange(this.state.value || '');
+    };
+    BaseInput.prototype.unTouch = function () {
+        this.setState({ touched: false });
+    };
+    BaseInput.prototype.disableInput = function () {
+        this.setState({ disabled: true });
+    };
+    BaseInput.prototype.enableInput = function () {
+        this.setState({ disabled: false });
+    };
+    BaseInput.prototype.handleValueChange = function (value) {
+        var _this = this;
+        var errors = [];
+        var valid = true;
+        if (this.props.required && !value) {
+            errors.push('Required');
+            valid = false;
+        }
+        else {
+            if (!this.props.required && !value) {
+                valid = true;
+            }
+            else {
+                if (this.props.validators) {
+                    valid = true;
+                    this.props.validators.forEach(function (validator) {
+                        var validInner = false;
+                        switch (validator) {
+                            case 'email':
+                                validInner = new Validators.EmailValidator().Validate(value, _this.props.required, function (error) { return errors.push(error); });
+                                break;
+                            case 'number':
+                                validInner = new Validators.NumberValidator().Validate(value, _this.props.required, function (error) { return errors.push(error); });
+                                break;
+                            case 'latitude':
+                                validInner = new Validators.LatitudeValidator().Validate(value, _this.props.required, function (error) { return errors.push(error); });
+                                break;
+                            case 'longitude':
+                                validInner = new Validators.LongitudeValidator().Validate(value, _this.props.required, function (error) { return errors.push(error); });
+                                break;
+                            case 'url':
+                                validInner = new Validators.UrlValidator().Validate(value, _this.props.required, function (error) { return errors.push(error); });
+                                break;
+                            default:
+                                throw new Error("Validator " + validator + " not implemented");
+                        }
+                        if (valid && !validInner) {
+                            valid = validInner;
+                        }
+                    });
+                }
+                if (this.props.customValidators) {
+                    this.props.customValidators.forEach(function (customValidator) {
+                        var validInner = false;
+                        try {
+                            validInner = customValidator.Validate(value, _this.props.required, function (error) { return errors.push(error); });
+                        }
+                        catch (e) {
+                            throw new Error("Custom validator exception " + e + " on input " + _this.inputId);
+                        }
+                        if (valid && !validInner) {
+                            valid = validInner;
+                        }
+                    });
+                }
+            }
+        }
+        this.setState({ value: value, valid: valid, errors: errors });
+        if (!this.props.ignoreContext) {
+            this.context && this.context.updateCallback && this.context.updateCallback(valid, this.inputId);
+        }
+        return valid;
+    };
+    BaseInput.prototype.handleChange = function (event) {
+        var value = event.target.value;
+        if (!this.props.onTheFlightValidate || (this.props.onTheFlightValidate && this.props.onTheFlightValidate(value))) {
+            var valid = this.handleValueChange(value);
+            if (this.props.onChange) {
+                this.props.onChange(event, valid);
+            }
+        }
+    };
+    BaseInput.prototype.handleBlur = function (e) {
+        this.props.onBlur && this.props.onBlur();
+        var state = { focused: false };
+        if (this.props.touchOn == "blur") {
+            state = Object.assign(state, { touched: true });
+            this.handleValueChange(this.state.value);
+        }
+        this.setState(state);
+    };
+    BaseInput.prototype.handleFocus = function (e) {
+        this.props.onFocus && this.props.onFocus(e);
+        var state = { focused: true };
+        if (this.props.touchOn == "focus") {
+            state = Object.assign(state, { touched: true });
+            this.handleValueChange(this.state.value);
+        }
+        this.setState(state);
+    };
+    BaseInput.prototype.getDisabled = function () {
+        return this.state.disabled ? this.state.disabled : this.props.disabled;
+    };
+    BaseInput.prototype.setValid = function () {
+        this.setState({ valid: true });
+    };
+    BaseInput.prototype.setInvalid = function () {
+        this.setState({ valid: false });
+    };
+    BaseInput.prototype.renderLabel = function () {
+        if ((!this.props.helpText) || (this.props.helpText && this.props.title)) {
+            return this.props.label;
+        }
+        return (React.createElement(React.Fragment, null,
+            React.createElement("span", { className: "label--no-touch" }, this.props.label),
+            React.createElement(react_tippy_1.Tooltip, { html: this.props.helpText, position: "bottom", trigger: "mouseenter", interactive: true, className: "label--help-icon__container" },
+                React.createElement("span", { className: "label--help-icon" }, "?"))));
+    };
+    BaseInput.prototype.renderTitle = function () {
+        return this.props.title;
+    };
+    BaseInput.defaultProps = {
+        className: undefined,
+        required: false,
+        label: undefined,
+        disabled: false,
+        touchOn: "focus",
+        ignoreContext: false,
+    };
+    BaseInput.contextTypes = Form.FormContextType;
+    return BaseInput;
+}(React.Component));
+exports.BaseInput = BaseInput;
+exports.default = BaseInput;
 
 
 /***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-if (process.env.NODE_ENV !== 'production') {
-  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
-    Symbol.for &&
-    Symbol.for('react.element')) ||
-    0xeac7;
-
-  var isValidElement = function(object) {
-    return typeof object === 'object' &&
-      object !== null &&
-      object.$$typeof === REACT_ELEMENT_TYPE;
-  };
-
-  // By explicitly using `prop-types` you are opting into new development behavior.
-  // http://fb.me/prop-types-in-prod
-  var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(217)(isValidElement, throwOnDirectAccess);
-} else {
-  // By explicitly using `prop-types` you are opting into new production behavior.
-  // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(218)();
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ }),
-/* 6 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5137,6 +5068,107 @@ emptyFunction.thatReturnsArgument = function (arg) {
 module.exports = emptyFunction;
 
 /***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+//Styles
+__webpack_require__(230);
+//Libs
+var React = __webpack_require__(1);
+//Misc
+var BaseInput = __webpack_require__(3);
+var InputGroup = /** @class */ (function (_super) {
+    __extends(InputGroup, _super);
+    function InputGroup(props) {
+        return _super.call(this, props) || this;
+    }
+    InputGroup.prototype.render = function () {
+        return this.props.title ?
+            React.createElement("div", { className: "input__group input__group__border " + (this.props.className ? this.props.className : '') },
+                this.props.title && React.createElement("div", { className: "row-header" }, this.renderTitle()),
+                this.props.children) :
+            this.props.children;
+    };
+    return InputGroup;
+}(BaseInput.BaseInput));
+exports.InputGroup = InputGroup;
+exports.default = InputGroup;
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+
+
+/**
+ * Use invariant() to assert state which your program assumes to be true.
+ *
+ * Provide sprintf-style format (only %s is supported) and arguments
+ * to provide information about what broke and what you were
+ * expecting.
+ *
+ * The invariant message will be stripped in production, but the invariant
+ * will remain to ensure logic does not differ in production.
+ */
+
+var validateFormat = function validateFormat(format) {};
+
+if (process.env.NODE_ENV !== 'production') {
+  validateFormat = function validateFormat(format) {
+    if (format === undefined) {
+      throw new Error('invariant requires an error message argument');
+    }
+  };
+}
+
+function invariant(condition, format, a, b, c, d, e, f) {
+  validateFormat(format);
+
+  if (!condition) {
+    var error;
+    if (format === undefined) {
+      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
+    } else {
+      var args = [a, b, c, d, e, f];
+      var argIndex = 0;
+      error = new Error(format.replace(/%s/g, function () {
+        return args[argIndex++];
+      }));
+      error.name = 'Invariant Violation';
+    }
+
+    error.framesToPop = 1; // we don't care about invariant's own frame
+    throw error;
+  }
+}
+
+module.exports = invariant;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5162,10 +5194,10 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 //Styles
-__webpack_require__(222);
+__webpack_require__(227);
 //Libs
 var React = __webpack_require__(1);
-var Ink = __webpack_require__(223);
+var Ink = __webpack_require__(228);
 var Button = /** @class */ (function (_super) {
     __extends(Button, _super);
     function Button(props) {
@@ -5246,9 +5278,9 @@ module.exports = function (it, key) {
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var anObject = __webpack_require__(20);
-var IE8_DOM_DEFINE = __webpack_require__(185);
-var toPrimitive = __webpack_require__(36);
+var anObject = __webpack_require__(21);
+var IE8_DOM_DEFINE = __webpack_require__(188);
+var toPrimitive = __webpack_require__(39);
 var dP = Object.defineProperty;
 
 exports.f = __webpack_require__(12) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
@@ -5269,132 +5301,13 @@ exports.f = __webpack_require__(12) ? Object.defineProperty : function definePro
 /***/ (function(module, exports, __webpack_require__) {
 
 // Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(21)(function () {
+module.exports = !__webpack_require__(22)(function () {
   return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
 });
 
 
 /***/ }),
 /* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__(8);
-var core = __webpack_require__(9);
-var ctx = __webpack_require__(184);
-var hide = __webpack_require__(14);
-var PROTOTYPE = 'prototype';
-
-var $export = function (type, name, source) {
-  var IS_FORCED = type & $export.F;
-  var IS_GLOBAL = type & $export.G;
-  var IS_STATIC = type & $export.S;
-  var IS_PROTO = type & $export.P;
-  var IS_BIND = type & $export.B;
-  var IS_WRAP = type & $export.W;
-  var exports = IS_GLOBAL ? core : core[name] || (core[name] = {});
-  var expProto = exports[PROTOTYPE];
-  var target = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE];
-  var key, own, out;
-  if (IS_GLOBAL) source = name;
-  for (key in source) {
-    // contains in native
-    own = !IS_FORCED && target && target[key] !== undefined;
-    if (own && key in exports) continue;
-    // export native or passed
-    out = own ? target[key] : source[key];
-    // prevent global pollution for namespaces
-    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
-    // bind timers to global for call from export context
-    : IS_BIND && own ? ctx(out, global)
-    // wrap global constructors for prevent change them in library
-    : IS_WRAP && target[key] == out ? (function (C) {
-      var F = function (a, b, c) {
-        if (this instanceof C) {
-          switch (arguments.length) {
-            case 0: return new C();
-            case 1: return new C(a);
-            case 2: return new C(a, b);
-          } return new C(a, b, c);
-        } return C.apply(this, arguments);
-      };
-      F[PROTOTYPE] = C[PROTOTYPE];
-      return F;
-    // make static versions for prototype methods
-    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
-    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
-    if (IS_PROTO) {
-      (exports.virtual || (exports.virtual = {}))[key] = out;
-      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
-      if (type & $export.R && expProto && !expProto[key]) hide(expProto, key, out);
-    }
-  }
-};
-// type bitmap
-$export.F = 1;   // forced
-$export.G = 2;   // global
-$export.S = 4;   // static
-$export.P = 8;   // proto
-$export.B = 16;  // bind
-$export.W = 32;  // wrap
-$export.U = 64;  // safe
-$export.R = 128; // real proto method for `library`
-module.exports = $export;
-
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dP = __webpack_require__(11);
-var createDesc = __webpack_require__(25);
-module.exports = __webpack_require__(12) ? function (object, key, value) {
-  return dP.f(object, key, createDesc(1, value));
-} : function (object, key, value) {
-  object[key] = value;
-  return object;
-};
-
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports) {
-
-module.exports = function (it) {
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
-
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(276);
-var defined = __webpack_require__(33);
-module.exports = function (it) {
-  return IObject(defined(it));
-};
-
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var store = __webpack_require__(35)('wks');
-var uid = __webpack_require__(24);
-var Symbol = __webpack_require__(8).Symbol;
-var USE_SYMBOL = typeof Symbol == 'function';
-
-var $exports = module.exports = function (name) {
-  return store[name] || (store[name] =
-    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
-};
-
-$exports.store = store;
-
-
-/***/ }),
-/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5491,115 +5404,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
-
-
-/**
- * Use invariant() to assert state which your program assumes to be true.
- *
- * Provide sprintf-style format (only %s is supported) and arguments
- * to provide information about what broke and what you were
- * expecting.
- *
- * The invariant message will be stripped in production, but the invariant
- * will remain to ensure logic does not differ in production.
- */
-
-var validateFormat = function validateFormat(format) {};
-
-if (process.env.NODE_ENV !== 'production') {
-  validateFormat = function validateFormat(format) {
-    if (format === undefined) {
-      throw new Error('invariant requires an error message argument');
-    }
-  };
-}
-
-function invariant(condition, format, a, b, c, d, e, f) {
-  validateFormat(format);
-
-  if (!condition) {
-    var error;
-    if (format === undefined) {
-      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
-    } else {
-      var args = [a, b, c, d, e, f];
-      var argIndex = 0;
-      error = new Error(format.replace(/%s/g, function () {
-        return args[argIndex++];
-      }));
-      error.name = 'Invariant Violation';
-    }
-
-    error.framesToPop = 1; // we don't care about invariant's own frame
-    throw error;
-  }
-}
-
-module.exports = invariant;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__(15);
-module.exports = function (it) {
-  if (!isObject(it)) throw TypeError(it + ' is not an object!');
-  return it;
-};
-
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports) {
-
-module.exports = function (exec) {
-  try {
-    return !!exec();
-  } catch (e) {
-    return true;
-  }
-};
-
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
-
-
-var emptyObject = {};
-
-if (process.env.NODE_ENV !== 'production') {
-  Object.freeze(emptyObject);
-}
-
-module.exports = emptyObject;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ }),
-/* 23 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5613,7 +5418,7 @@ module.exports = emptyObject;
 
 
 
-var emptyFunction = __webpack_require__(6);
+var emptyFunction = __webpack_require__(4);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -5665,10 +5470,247 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 module.exports = warning;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__(8);
+var core = __webpack_require__(9);
+var ctx = __webpack_require__(187);
+var hide = __webpack_require__(16);
+var PROTOTYPE = 'prototype';
+
+var $export = function (type, name, source) {
+  var IS_FORCED = type & $export.F;
+  var IS_GLOBAL = type & $export.G;
+  var IS_STATIC = type & $export.S;
+  var IS_PROTO = type & $export.P;
+  var IS_BIND = type & $export.B;
+  var IS_WRAP = type & $export.W;
+  var exports = IS_GLOBAL ? core : core[name] || (core[name] = {});
+  var expProto = exports[PROTOTYPE];
+  var target = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE];
+  var key, own, out;
+  if (IS_GLOBAL) source = name;
+  for (key in source) {
+    // contains in native
+    own = !IS_FORCED && target && target[key] !== undefined;
+    if (own && key in exports) continue;
+    // export native or passed
+    out = own ? target[key] : source[key];
+    // prevent global pollution for namespaces
+    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
+    // bind timers to global for call from export context
+    : IS_BIND && own ? ctx(out, global)
+    // wrap global constructors for prevent change them in library
+    : IS_WRAP && target[key] == out ? (function (C) {
+      var F = function (a, b, c) {
+        if (this instanceof C) {
+          switch (arguments.length) {
+            case 0: return new C();
+            case 1: return new C(a);
+            case 2: return new C(a, b);
+          } return new C(a, b, c);
+        } return C.apply(this, arguments);
+      };
+      F[PROTOTYPE] = C[PROTOTYPE];
+      return F;
+    // make static versions for prototype methods
+    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
+    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
+    if (IS_PROTO) {
+      (exports.virtual || (exports.virtual = {}))[key] = out;
+      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
+      if (type & $export.R && expProto && !expProto[key]) hide(expProto, key, out);
+    }
+  }
+};
+// type bitmap
+$export.F = 1;   // forced
+$export.G = 2;   // global
+$export.S = 4;   // static
+$export.P = 8;   // proto
+$export.B = 16;  // bind
+$export.W = 32;  // wrap
+$export.U = 64;  // safe
+$export.R = 128; // real proto method for `library`
+module.exports = $export;
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var dP = __webpack_require__(11);
+var createDesc = __webpack_require__(26);
+module.exports = __webpack_require__(12) ? function (object, key, value) {
+  return dP.f(object, key, createDesc(1, value));
+} : function (object, key, value) {
+  object[key] = value;
+  return object;
+};
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+module.exports = function (it) {
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// to indexed object, toObject with fallback for non-array-like ES3 strings
+var IObject = __webpack_require__(283);
+var defined = __webpack_require__(36);
+module.exports = function (it) {
+  return IObject(defined(it));
+};
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var store = __webpack_require__(38)('wks');
+var uid = __webpack_require__(25);
+var Symbol = __webpack_require__(8).Symbol;
+var USE_SYMBOL = typeof Symbol == 'function';
+
+var $exports = module.exports = function (name) {
+  return store[name] || (store[name] =
+    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+};
+
+$exports.store = store;
+
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+if (process.env.NODE_ENV !== 'production') {
+  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
+    Symbol.for &&
+    Symbol.for('react.element')) ||
+    0xeac7;
+
+  var isValidElement = function(object) {
+    return typeof object === 'object' &&
+      object !== null &&
+      object.$$typeof === REACT_ELEMENT_TYPE;
+  };
+
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = __webpack_require__(221)(isValidElement, throwOnDirectAccess);
+} else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = __webpack_require__(222)();
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__(17);
+module.exports = function (it) {
+  if (!isObject(it)) throw TypeError(it + ' is not an object!');
+  return it;
+};
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports) {
+
+module.exports = function (exec) {
+  try {
+    return !!exec();
+  } catch (e) {
+    return true;
+  }
+};
+
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+
+
+var emptyObject = {};
+
+if (process.env.NODE_ENV !== 'production') {
+  Object.freeze(emptyObject);
+}
+
+module.exports = emptyObject;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+if (process.env.NODE_ENV !== 'production') {
+  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
+    Symbol.for &&
+    Symbol.for('react.element')) ||
+    0xeac7;
+
+  var isValidElement = function(object) {
+    return typeof object === 'object' &&
+      object !== null &&
+      object.$$typeof === REACT_ELEMENT_TYPE;
+  };
+
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = __webpack_require__(257)(isValidElement, throwOnDirectAccess);
+} else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = __webpack_require__(259)();
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+/* 25 */
 /***/ (function(module, exports) {
 
 var id = 0;
@@ -5679,7 +5721,7 @@ module.exports = function (key) {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports) {
 
 module.exports = function (bitmap, value) {
@@ -5693,7 +5735,7 @@ module.exports = function (bitmap, value) {
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5707,9 +5749,9 @@ module.exports = function (bitmap, value) {
 
 
 if (process.env.NODE_ENV !== 'production') {
-  var invariant = __webpack_require__(19);
-  var warning = __webpack_require__(23);
-  var ReactPropTypesSecret = __webpack_require__(27);
+  var invariant = __webpack_require__(6);
+  var warning = __webpack_require__(14);
+  var ReactPropTypesSecret = __webpack_require__(28);
   var loggedTypeFailures = {};
 }
 
@@ -5757,10 +5799,10 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 
 module.exports = checkPropTypes;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5779,7 +5821,53 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 28 */
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+function checkDCE() {
+  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
+  if (
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
+  ) {
+    return;
+  }
+  if (process.env.NODE_ENV !== 'production') {
+    // This branch is unreachable because this function is only called
+    // in production, but the condition is true only in development.
+    // Therefore if the branch is still here, dead code elimination wasn't
+    // properly applied.
+    // Don't change the message. React DevTools relies on it. Also make sure
+    // this message doesn't occur elsewhere in this function, or it will cause
+    // a false positive.
+    throw new Error('^_^');
+  }
+  try {
+    // Verify that the code above has been dead code eliminated (DCE'd).
+    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
+  } catch (err) {
+    // DevTools shouldn't crash React, no matter what.
+    // We should still report in case we break this code.
+    console.error(err);
+  }
+}
+
+if (process.env.NODE_ENV === 'production') {
+  // DCE check should happen before ReactDOM bundle executes so that
+  // DevTools can report bad minification during injection.
+  checkDCE();
+  module.exports = __webpack_require__(205);
+} else {
+  module.exports = __webpack_require__(208);
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5812,7 +5900,7 @@ exports.NumberValidator = NumberValidator;
 
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5820,42 +5908,42 @@ exports.NumberValidator = NumberValidator;
 //Styles
 Object.defineProperty(exports, "__esModule", { value: true });
 //Misc
-var DynamicSubmit_1 = __webpack_require__(219);
+var DynamicSubmit_1 = __webpack_require__(223);
 exports.DynamicSubmit = DynamicSubmit_1.DynamicSubmit;
-var Text_1 = __webpack_require__(30);
+var Text_1 = __webpack_require__(32);
 exports.Text = Text_1.Text;
-var Select_1 = __webpack_require__(57);
+var Select_1 = __webpack_require__(61);
 exports.Select = Select_1.Select;
-var Submit_1 = __webpack_require__(227);
+var Submit_1 = __webpack_require__(232);
 exports.Submit = Submit_1.Submit;
-var Checkbox_1 = __webpack_require__(229);
+var Checkbox_1 = __webpack_require__(234);
 exports.Checkbox = Checkbox_1.Checkbox;
-var Radio_1 = __webpack_require__(231);
+var Radio_1 = __webpack_require__(236);
 exports.Radio = Radio_1.Radio;
-var RadioContainer_1 = __webpack_require__(233);
+var RadioContainer_1 = __webpack_require__(238);
 exports.RadioContainer = RadioContainer_1.RadioContainer;
-var Money_1 = __webpack_require__(235);
+var Money_1 = __webpack_require__(240);
 exports.Money = Money_1.Money;
-var Time_1 = __webpack_require__(58);
+var Time_1 = __webpack_require__(62);
 exports.Time = Time_1.Time;
-var OpeningHoursDay_1 = __webpack_require__(239);
+var OpeningHoursDay_1 = __webpack_require__(244);
 exports.OpeningHoursDay = OpeningHoursDay_1.OpeningHoursDay;
-var OpeningHoursWeek_1 = __webpack_require__(241);
+var OpeningHoursWeek_1 = __webpack_require__(246);
 exports.OpeningHoursWeek = OpeningHoursWeek_1.OpeningHoursWeek;
-var OpeningHoursSpecial_1 = __webpack_require__(243);
+var OpeningHoursSpecial_1 = __webpack_require__(248);
 exports.OpeningHoursSpecial = OpeningHoursSpecial_1.OpeningHoursSpecial;
-var InputHeader_1 = __webpack_require__(257);
+var InputHeader_1 = __webpack_require__(264);
 exports.InputHeader = InputHeader_1.InputHeader;
-var InputGroup_1 = __webpack_require__(4);
+var InputGroup_1 = __webpack_require__(5);
 exports.InputGroup = InputGroup_1.InputGroup;
-var Tags_1 = __webpack_require__(307);
+var Tags_1 = __webpack_require__(314);
 exports.Tags = Tags_1.Tags;
-var TextArea_1 = __webpack_require__(309);
+var TextArea_1 = __webpack_require__(316);
 exports.TextArea = TextArea_1.TextArea;
 
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5872,12 +5960,12 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 //Styles
-__webpack_require__(224);
+__webpack_require__(229);
 //Libs
 var React = __webpack_require__(1);
 //Misc
-var BaseInput = __webpack_require__(2);
-var InputGroup_1 = __webpack_require__(4);
+var BaseInput = __webpack_require__(3);
+var InputGroup_1 = __webpack_require__(5);
 var Text = /** @class */ (function (_super) {
     __extends(Text, _super);
     function Text(props) {
@@ -5891,7 +5979,7 @@ var Text = /** @class */ (function (_super) {
                 React.createElement("span", { className: "highlight" }),
                 React.createElement("span", { className: "bar" }),
                 this.renderDefaultValidation(),
-                this.props.label && React.createElement("label", null, this.props.label)));
+                this.props.label && React.createElement("label", null, this.renderLabel())));
     };
     Text.defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "text", placeholder: '', stopClickPropagation: true, readOnly: false });
     return Text;
@@ -5901,7 +5989,7 @@ exports.default = Text;
 
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var React = __webpack_require__(1);
@@ -5920,7 +6008,7 @@ IcAddCircleOutline24px.default = IcAddCircleOutline24px;
 
 
 /***/ }),
-/* 32 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5985,7 +6073,26 @@ exports.default = util;
 
 
 /***/ }),
-/* 33 */
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+
+module.exports = ReactPropTypesSecret;
+
+
+/***/ }),
+/* 36 */
 /***/ (function(module, exports) {
 
 // 7.2.1 RequireObjectCoercible(argument)
@@ -5996,18 +6103,18 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 34 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var shared = __webpack_require__(35)('keys');
-var uid = __webpack_require__(24);
+var shared = __webpack_require__(38)('keys');
+var uid = __webpack_require__(25);
 module.exports = function (key) {
   return shared[key] || (shared[key] = uid(key));
 };
 
 
 /***/ }),
-/* 35 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(8);
@@ -6019,11 +6126,11 @@ module.exports = function (key) {
 
 
 /***/ }),
-/* 36 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(15);
+var isObject = __webpack_require__(17);
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
 // and the second argument - flag - preferred type is a string
 module.exports = function (it, S) {
@@ -6037,7 +6144,7 @@ module.exports = function (it, S) {
 
 
 /***/ }),
-/* 37 */
+/* 40 */
 /***/ (function(module, exports) {
 
 // 7.1.4 ToInteger
@@ -6049,41 +6156,41 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 38 */
+/* 41 */
 /***/ (function(module, exports) {
 
 module.exports = true;
 
 
 /***/ }),
-/* 39 */
+/* 42 */
 /***/ (function(module, exports) {
 
 module.exports = {};
 
 
 /***/ }),
-/* 40 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-var anObject = __webpack_require__(20);
-var dPs = __webpack_require__(275);
-var enumBugKeys = __webpack_require__(42);
-var IE_PROTO = __webpack_require__(34)('IE_PROTO');
+var anObject = __webpack_require__(21);
+var dPs = __webpack_require__(282);
+var enumBugKeys = __webpack_require__(45);
+var IE_PROTO = __webpack_require__(37)('IE_PROTO');
 var Empty = function () { /* empty */ };
 var PROTOTYPE = 'prototype';
 
 // Create object with fake `null` prototype: use iframe Object with cleared prototype
 var createDict = function () {
   // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(186)('iframe');
+  var iframe = __webpack_require__(189)('iframe');
   var i = enumBugKeys.length;
   var lt = '<';
   var gt = '>';
   var iframeDocument;
   iframe.style.display = 'none';
-  __webpack_require__(280).appendChild(iframe);
+  __webpack_require__(287).appendChild(iframe);
   iframe.src = 'javascript:'; // eslint-disable-line no-script-url
   // createDict = iframe.contentWindow.Object;
   // html.removeChild(iframe);
@@ -6110,12 +6217,12 @@ module.exports = Object.create || function create(O, Properties) {
 
 
 /***/ }),
-/* 41 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(190);
-var enumBugKeys = __webpack_require__(42);
+var $keys = __webpack_require__(193);
+var enumBugKeys = __webpack_require__(45);
 
 module.exports = Object.keys || function keys(O) {
   return $keys(O, enumBugKeys);
@@ -6123,7 +6230,7 @@ module.exports = Object.keys || function keys(O) {
 
 
 /***/ }),
-/* 42 */
+/* 45 */
 /***/ (function(module, exports) {
 
 // IE 8- don't enum bug keys
@@ -6133,12 +6240,12 @@ module.exports = (
 
 
 /***/ }),
-/* 43 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var def = __webpack_require__(11).f;
 var has = __webpack_require__(10);
-var TAG = __webpack_require__(17)('toStringTag');
+var TAG = __webpack_require__(19)('toStringTag');
 
 module.exports = function (it, tag, stat) {
   if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
@@ -6146,20 +6253,20 @@ module.exports = function (it, tag, stat) {
 
 
 /***/ }),
-/* 44 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.f = __webpack_require__(17);
+exports.f = __webpack_require__(19);
 
 
 /***/ }),
-/* 45 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(8);
 var core = __webpack_require__(9);
-var LIBRARY = __webpack_require__(38);
-var wksExt = __webpack_require__(44);
+var LIBRARY = __webpack_require__(41);
+var wksExt = __webpack_require__(47);
 var defineProperty = __webpack_require__(11).f;
 module.exports = function (name) {
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
@@ -6168,60 +6275,14 @@ module.exports = function (name) {
 
 
 /***/ }),
-/* 46 */
+/* 49 */
 /***/ (function(module, exports) {
 
 exports.f = {}.propertyIsEnumerable;
 
 
 /***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-function checkDCE() {
-  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
-  if (
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
-  ) {
-    return;
-  }
-  if (process.env.NODE_ENV !== 'production') {
-    // This branch is unreachable because this function is only called
-    // in production, but the condition is true only in development.
-    // Therefore if the branch is still here, dead code elimination wasn't
-    // properly applied.
-    // Don't change the message. React DevTools relies on it. Also make sure
-    // this message doesn't occur elsewhere in this function, or it will cause
-    // a false positive.
-    throw new Error('^_^');
-  }
-  try {
-    // Verify that the code above has been dead code eliminated (DCE'd).
-    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
-  } catch (err) {
-    // DevTools shouldn't crash React, no matter what.
-    // We should still report in case we break this code.
-    console.error(err);
-  }
-}
-
-if (process.env.NODE_ENV === 'production') {
-  // DCE check should happen before ReactDOM bundle executes so that
-  // DevTools can report bad minification during injection.
-  checkDCE();
-  module.exports = __webpack_require__(201);
-} else {
-  module.exports = __webpack_require__(204);
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6260,7 +6321,7 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6275,7 +6336,7 @@ module.exports = ExecutionEnvironment;
  * @typechecks
  */
 
-var emptyFunction = __webpack_require__(6);
+var emptyFunction = __webpack_require__(4);
 
 /**
  * Upstream version of event listener. Does not take into account specific
@@ -6338,10 +6399,10 @@ var EventListener = {
 };
 
 module.exports = EventListener;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6383,7 +6444,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6454,7 +6515,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6469,7 +6530,7 @@ module.exports = shallowEqual;
  * 
  */
 
-var isTextNode = __webpack_require__(202);
+var isTextNode = __webpack_require__(206);
 
 /*eslint-disable no-bitwise */
 
@@ -6497,7 +6558,7 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6527,26 +6588,26 @@ function focusNode(node) {
 module.exports = focusNode;
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var EmailValidator_1 = __webpack_require__(212);
+var EmailValidator_1 = __webpack_require__(216);
 exports.EmailValidator = EmailValidator_1.EmailValidator;
-var LatitudeValidator_1 = __webpack_require__(213);
+var LatitudeValidator_1 = __webpack_require__(217);
 exports.LatitudeValidator = LatitudeValidator_1.LatitudeValidator;
-var LongitudeValidator_1 = __webpack_require__(214);
+var LongitudeValidator_1 = __webpack_require__(218);
 exports.LongitudeValidator = LongitudeValidator_1.LongitudeValidator;
-var NumberValidator_1 = __webpack_require__(28);
+var NumberValidator_1 = __webpack_require__(30);
 exports.NumberValidator = NumberValidator_1.NumberValidator;
-var UrlValidator_1 = __webpack_require__(215);
+var UrlValidator_1 = __webpack_require__(219);
 exports.UrlValidator = UrlValidator_1.UrlValidator;
 
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6563,10 +6624,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 // Styles
-__webpack_require__(216);
+__webpack_require__(220);
 // Libs
 var React = __webpack_require__(1);
-var PropTypes = __webpack_require__(5);
+var PropTypes = __webpack_require__(20);
 exports.FormContextType = {
     register: PropTypes.func,
     unregister: PropTypes.func,
@@ -6691,7 +6752,2563 @@ exports.default = Form;
 
 
 /***/ }),
-/* 56 */
+/* 58 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* WEBPACK VAR INJECTION */(function(global) {/**!
+ * @fileOverview Kickass library to create and place poppers near their reference elements.
+ * @version 1.14.3
+ * @license
+ * Copyright (c) 2016 Federico Zivolo and contributors
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+var isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
+
+var longerTimeoutBrowsers = ['Edge', 'Trident', 'Firefox'];
+var timeoutDuration = 0;
+for (var i = 0; i < longerTimeoutBrowsers.length; i += 1) {
+  if (isBrowser && navigator.userAgent.indexOf(longerTimeoutBrowsers[i]) >= 0) {
+    timeoutDuration = 1;
+    break;
+  }
+}
+
+function microtaskDebounce(fn) {
+  var called = false;
+  return function () {
+    if (called) {
+      return;
+    }
+    called = true;
+    window.Promise.resolve().then(function () {
+      called = false;
+      fn();
+    });
+  };
+}
+
+function taskDebounce(fn) {
+  var scheduled = false;
+  return function () {
+    if (!scheduled) {
+      scheduled = true;
+      setTimeout(function () {
+        scheduled = false;
+        fn();
+      }, timeoutDuration);
+    }
+  };
+}
+
+var supportsMicroTasks = isBrowser && window.Promise;
+
+/**
+* Create a debounced version of a method, that's asynchronously deferred
+* but called in the minimum time possible.
+*
+* @method
+* @memberof Popper.Utils
+* @argument {Function} fn
+* @returns {Function}
+*/
+var debounce = supportsMicroTasks ? microtaskDebounce : taskDebounce;
+
+/**
+ * Check if the given variable is a function
+ * @method
+ * @memberof Popper.Utils
+ * @argument {Any} functionToCheck - variable to check
+ * @returns {Boolean} answer to: is a function?
+ */
+function isFunction(functionToCheck) {
+  var getType = {};
+  return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+}
+
+/**
+ * Get CSS computed property of the given element
+ * @method
+ * @memberof Popper.Utils
+ * @argument {Eement} element
+ * @argument {String} property
+ */
+function getStyleComputedProperty(element, property) {
+  if (element.nodeType !== 1) {
+    return [];
+  }
+  // NOTE: 1 DOM access here
+  var css = getComputedStyle(element, null);
+  return property ? css[property] : css;
+}
+
+/**
+ * Returns the parentNode or the host of the element
+ * @method
+ * @memberof Popper.Utils
+ * @argument {Element} element
+ * @returns {Element} parent
+ */
+function getParentNode(element) {
+  if (element.nodeName === 'HTML') {
+    return element;
+  }
+  return element.parentNode || element.host;
+}
+
+/**
+ * Returns the scrolling parent of the given element
+ * @method
+ * @memberof Popper.Utils
+ * @argument {Element} element
+ * @returns {Element} scroll parent
+ */
+function getScrollParent(element) {
+  // Return body, `getScroll` will take care to get the correct `scrollTop` from it
+  if (!element) {
+    return document.body;
+  }
+
+  switch (element.nodeName) {
+    case 'HTML':
+    case 'BODY':
+      return element.ownerDocument.body;
+    case '#document':
+      return element.body;
+  }
+
+  // Firefox want us to check `-x` and `-y` variations as well
+
+  var _getStyleComputedProp = getStyleComputedProperty(element),
+      overflow = _getStyleComputedProp.overflow,
+      overflowX = _getStyleComputedProp.overflowX,
+      overflowY = _getStyleComputedProp.overflowY;
+
+  if (/(auto|scroll|overlay)/.test(overflow + overflowY + overflowX)) {
+    return element;
+  }
+
+  return getScrollParent(getParentNode(element));
+}
+
+var isIE11 = isBrowser && !!(window.MSInputMethodContext && document.documentMode);
+var isIE10 = isBrowser && /MSIE 10/.test(navigator.userAgent);
+
+/**
+ * Determines if the browser is Internet Explorer
+ * @method
+ * @memberof Popper.Utils
+ * @param {Number} version to check
+ * @returns {Boolean} isIE
+ */
+function isIE(version) {
+  if (version === 11) {
+    return isIE11;
+  }
+  if (version === 10) {
+    return isIE10;
+  }
+  return isIE11 || isIE10;
+}
+
+/**
+ * Returns the offset parent of the given element
+ * @method
+ * @memberof Popper.Utils
+ * @argument {Element} element
+ * @returns {Element} offset parent
+ */
+function getOffsetParent(element) {
+  if (!element) {
+    return document.documentElement;
+  }
+
+  var noOffsetParent = isIE(10) ? document.body : null;
+
+  // NOTE: 1 DOM access here
+  var offsetParent = element.offsetParent;
+  // Skip hidden elements which don't have an offsetParent
+  while (offsetParent === noOffsetParent && element.nextElementSibling) {
+    offsetParent = (element = element.nextElementSibling).offsetParent;
+  }
+
+  var nodeName = offsetParent && offsetParent.nodeName;
+
+  if (!nodeName || nodeName === 'BODY' || nodeName === 'HTML') {
+    return element ? element.ownerDocument.documentElement : document.documentElement;
+  }
+
+  // .offsetParent will return the closest TD or TABLE in case
+  // no offsetParent is present, I hate this job...
+  if (['TD', 'TABLE'].indexOf(offsetParent.nodeName) !== -1 && getStyleComputedProperty(offsetParent, 'position') === 'static') {
+    return getOffsetParent(offsetParent);
+  }
+
+  return offsetParent;
+}
+
+function isOffsetContainer(element) {
+  var nodeName = element.nodeName;
+
+  if (nodeName === 'BODY') {
+    return false;
+  }
+  return nodeName === 'HTML' || getOffsetParent(element.firstElementChild) === element;
+}
+
+/**
+ * Finds the root node (document, shadowDOM root) of the given element
+ * @method
+ * @memberof Popper.Utils
+ * @argument {Element} node
+ * @returns {Element} root node
+ */
+function getRoot(node) {
+  if (node.parentNode !== null) {
+    return getRoot(node.parentNode);
+  }
+
+  return node;
+}
+
+/**
+ * Finds the offset parent common to the two provided nodes
+ * @method
+ * @memberof Popper.Utils
+ * @argument {Element} element1
+ * @argument {Element} element2
+ * @returns {Element} common offset parent
+ */
+function findCommonOffsetParent(element1, element2) {
+  // This check is needed to avoid errors in case one of the elements isn't defined for any reason
+  if (!element1 || !element1.nodeType || !element2 || !element2.nodeType) {
+    return document.documentElement;
+  }
+
+  // Here we make sure to give as "start" the element that comes first in the DOM
+  var order = element1.compareDocumentPosition(element2) & Node.DOCUMENT_POSITION_FOLLOWING;
+  var start = order ? element1 : element2;
+  var end = order ? element2 : element1;
+
+  // Get common ancestor container
+  var range = document.createRange();
+  range.setStart(start, 0);
+  range.setEnd(end, 0);
+  var commonAncestorContainer = range.commonAncestorContainer;
+
+  // Both nodes are inside #document
+
+  if (element1 !== commonAncestorContainer && element2 !== commonAncestorContainer || start.contains(end)) {
+    if (isOffsetContainer(commonAncestorContainer)) {
+      return commonAncestorContainer;
+    }
+
+    return getOffsetParent(commonAncestorContainer);
+  }
+
+  // one of the nodes is inside shadowDOM, find which one
+  var element1root = getRoot(element1);
+  if (element1root.host) {
+    return findCommonOffsetParent(element1root.host, element2);
+  } else {
+    return findCommonOffsetParent(element1, getRoot(element2).host);
+  }
+}
+
+/**
+ * Gets the scroll value of the given element in the given side (top and left)
+ * @method
+ * @memberof Popper.Utils
+ * @argument {Element} element
+ * @argument {String} side `top` or `left`
+ * @returns {number} amount of scrolled pixels
+ */
+function getScroll(element) {
+  var side = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'top';
+
+  var upperSide = side === 'top' ? 'scrollTop' : 'scrollLeft';
+  var nodeName = element.nodeName;
+
+  if (nodeName === 'BODY' || nodeName === 'HTML') {
+    var html = element.ownerDocument.documentElement;
+    var scrollingElement = element.ownerDocument.scrollingElement || html;
+    return scrollingElement[upperSide];
+  }
+
+  return element[upperSide];
+}
+
+/*
+ * Sum or subtract the element scroll values (left and top) from a given rect object
+ * @method
+ * @memberof Popper.Utils
+ * @param {Object} rect - Rect object you want to change
+ * @param {HTMLElement} element - The element from the function reads the scroll values
+ * @param {Boolean} subtract - set to true if you want to subtract the scroll values
+ * @return {Object} rect - The modifier rect object
+ */
+function includeScroll(rect, element) {
+  var subtract = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+  var scrollTop = getScroll(element, 'top');
+  var scrollLeft = getScroll(element, 'left');
+  var modifier = subtract ? -1 : 1;
+  rect.top += scrollTop * modifier;
+  rect.bottom += scrollTop * modifier;
+  rect.left += scrollLeft * modifier;
+  rect.right += scrollLeft * modifier;
+  return rect;
+}
+
+/*
+ * Helper to detect borders of a given element
+ * @method
+ * @memberof Popper.Utils
+ * @param {CSSStyleDeclaration} styles
+ * Result of `getStyleComputedProperty` on the given element
+ * @param {String} axis - `x` or `y`
+ * @return {number} borders - The borders size of the given axis
+ */
+
+function getBordersSize(styles, axis) {
+  var sideA = axis === 'x' ? 'Left' : 'Top';
+  var sideB = sideA === 'Left' ? 'Right' : 'Bottom';
+
+  return parseFloat(styles['border' + sideA + 'Width'], 10) + parseFloat(styles['border' + sideB + 'Width'], 10);
+}
+
+function getSize(axis, body, html, computedStyle) {
+  return Math.max(body['offset' + axis], body['scroll' + axis], html['client' + axis], html['offset' + axis], html['scroll' + axis], isIE(10) ? html['offset' + axis] + computedStyle['margin' + (axis === 'Height' ? 'Top' : 'Left')] + computedStyle['margin' + (axis === 'Height' ? 'Bottom' : 'Right')] : 0);
+}
+
+function getWindowSizes() {
+  var body = document.body;
+  var html = document.documentElement;
+  var computedStyle = isIE(10) && getComputedStyle(html);
+
+  return {
+    height: getSize('Height', body, html, computedStyle),
+    width: getSize('Width', body, html, computedStyle)
+  };
+}
+
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+
+
+
+
+var defineProperty = function (obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+};
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
+/**
+ * Given element offsets, generate an output similar to getBoundingClientRect
+ * @method
+ * @memberof Popper.Utils
+ * @argument {Object} offsets
+ * @returns {Object} ClientRect like output
+ */
+function getClientRect(offsets) {
+  return _extends({}, offsets, {
+    right: offsets.left + offsets.width,
+    bottom: offsets.top + offsets.height
+  });
+}
+
+/**
+ * Get bounding client rect of given element
+ * @method
+ * @memberof Popper.Utils
+ * @param {HTMLElement} element
+ * @return {Object} client rect
+ */
+function getBoundingClientRect(element) {
+  var rect = {};
+
+  // IE10 10 FIX: Please, don't ask, the element isn't
+  // considered in DOM in some circumstances...
+  // This isn't reproducible in IE10 compatibility mode of IE11
+  try {
+    if (isIE(10)) {
+      rect = element.getBoundingClientRect();
+      var scrollTop = getScroll(element, 'top');
+      var scrollLeft = getScroll(element, 'left');
+      rect.top += scrollTop;
+      rect.left += scrollLeft;
+      rect.bottom += scrollTop;
+      rect.right += scrollLeft;
+    } else {
+      rect = element.getBoundingClientRect();
+    }
+  } catch (e) {}
+
+  var result = {
+    left: rect.left,
+    top: rect.top,
+    width: rect.right - rect.left,
+    height: rect.bottom - rect.top
+  };
+
+  // subtract scrollbar size from sizes
+  var sizes = element.nodeName === 'HTML' ? getWindowSizes() : {};
+  var width = sizes.width || element.clientWidth || result.right - result.left;
+  var height = sizes.height || element.clientHeight || result.bottom - result.top;
+
+  var horizScrollbar = element.offsetWidth - width;
+  var vertScrollbar = element.offsetHeight - height;
+
+  // if an hypothetical scrollbar is detected, we must be sure it's not a `border`
+  // we make this check conditional for performance reasons
+  if (horizScrollbar || vertScrollbar) {
+    var styles = getStyleComputedProperty(element);
+    horizScrollbar -= getBordersSize(styles, 'x');
+    vertScrollbar -= getBordersSize(styles, 'y');
+
+    result.width -= horizScrollbar;
+    result.height -= vertScrollbar;
+  }
+
+  return getClientRect(result);
+}
+
+function getOffsetRectRelativeToArbitraryNode(children, parent) {
+  var fixedPosition = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+  var isIE10 = isIE(10);
+  var isHTML = parent.nodeName === 'HTML';
+  var childrenRect = getBoundingClientRect(children);
+  var parentRect = getBoundingClientRect(parent);
+  var scrollParent = getScrollParent(children);
+
+  var styles = getStyleComputedProperty(parent);
+  var borderTopWidth = parseFloat(styles.borderTopWidth, 10);
+  var borderLeftWidth = parseFloat(styles.borderLeftWidth, 10);
+
+  // In cases where the parent is fixed, we must ignore negative scroll in offset calc
+  if (fixedPosition && parent.nodeName === 'HTML') {
+    parentRect.top = Math.max(parentRect.top, 0);
+    parentRect.left = Math.max(parentRect.left, 0);
+  }
+  var offsets = getClientRect({
+    top: childrenRect.top - parentRect.top - borderTopWidth,
+    left: childrenRect.left - parentRect.left - borderLeftWidth,
+    width: childrenRect.width,
+    height: childrenRect.height
+  });
+  offsets.marginTop = 0;
+  offsets.marginLeft = 0;
+
+  // Subtract margins of documentElement in case it's being used as parent
+  // we do this only on HTML because it's the only element that behaves
+  // differently when margins are applied to it. The margins are included in
+  // the box of the documentElement, in the other cases not.
+  if (!isIE10 && isHTML) {
+    var marginTop = parseFloat(styles.marginTop, 10);
+    var marginLeft = parseFloat(styles.marginLeft, 10);
+
+    offsets.top -= borderTopWidth - marginTop;
+    offsets.bottom -= borderTopWidth - marginTop;
+    offsets.left -= borderLeftWidth - marginLeft;
+    offsets.right -= borderLeftWidth - marginLeft;
+
+    // Attach marginTop and marginLeft because in some circumstances we may need them
+    offsets.marginTop = marginTop;
+    offsets.marginLeft = marginLeft;
+  }
+
+  if (isIE10 && !fixedPosition ? parent.contains(scrollParent) : parent === scrollParent && scrollParent.nodeName !== 'BODY') {
+    offsets = includeScroll(offsets, parent);
+  }
+
+  return offsets;
+}
+
+function getViewportOffsetRectRelativeToArtbitraryNode(element) {
+  var excludeScroll = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+  var html = element.ownerDocument.documentElement;
+  var relativeOffset = getOffsetRectRelativeToArbitraryNode(element, html);
+  var width = Math.max(html.clientWidth, window.innerWidth || 0);
+  var height = Math.max(html.clientHeight, window.innerHeight || 0);
+
+  var scrollTop = !excludeScroll ? getScroll(html) : 0;
+  var scrollLeft = !excludeScroll ? getScroll(html, 'left') : 0;
+
+  var offset = {
+    top: scrollTop - relativeOffset.top + relativeOffset.marginTop,
+    left: scrollLeft - relativeOffset.left + relativeOffset.marginLeft,
+    width: width,
+    height: height
+  };
+
+  return getClientRect(offset);
+}
+
+/**
+ * Check if the given element is fixed or is inside a fixed parent
+ * @method
+ * @memberof Popper.Utils
+ * @argument {Element} element
+ * @argument {Element} customContainer
+ * @returns {Boolean} answer to "isFixed?"
+ */
+function isFixed(element) {
+  var nodeName = element.nodeName;
+  if (nodeName === 'BODY' || nodeName === 'HTML') {
+    return false;
+  }
+  if (getStyleComputedProperty(element, 'position') === 'fixed') {
+    return true;
+  }
+  return isFixed(getParentNode(element));
+}
+
+/**
+ * Finds the first parent of an element that has a transformed property defined
+ * @method
+ * @memberof Popper.Utils
+ * @argument {Element} element
+ * @returns {Element} first transformed parent or documentElement
+ */
+
+function getFixedPositionOffsetParent(element) {
+  // This check is needed to avoid errors in case one of the elements isn't defined for any reason
+  if (!element || !element.parentElement || isIE()) {
+    return document.documentElement;
+  }
+  var el = element.parentElement;
+  while (el && getStyleComputedProperty(el, 'transform') === 'none') {
+    el = el.parentElement;
+  }
+  return el || document.documentElement;
+}
+
+/**
+ * Computed the boundaries limits and return them
+ * @method
+ * @memberof Popper.Utils
+ * @param {HTMLElement} popper
+ * @param {HTMLElement} reference
+ * @param {number} padding
+ * @param {HTMLElement} boundariesElement - Element used to define the boundaries
+ * @param {Boolean} fixedPosition - Is in fixed position mode
+ * @returns {Object} Coordinates of the boundaries
+ */
+function getBoundaries(popper, reference, padding, boundariesElement) {
+  var fixedPosition = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
+
+  // NOTE: 1 DOM access here
+
+  var boundaries = { top: 0, left: 0 };
+  var offsetParent = fixedPosition ? getFixedPositionOffsetParent(popper) : findCommonOffsetParent(popper, reference);
+
+  // Handle viewport case
+  if (boundariesElement === 'viewport') {
+    boundaries = getViewportOffsetRectRelativeToArtbitraryNode(offsetParent, fixedPosition);
+  } else {
+    // Handle other cases based on DOM element used as boundaries
+    var boundariesNode = void 0;
+    if (boundariesElement === 'scrollParent') {
+      boundariesNode = getScrollParent(getParentNode(reference));
+      if (boundariesNode.nodeName === 'BODY') {
+        boundariesNode = popper.ownerDocument.documentElement;
+      }
+    } else if (boundariesElement === 'window') {
+      boundariesNode = popper.ownerDocument.documentElement;
+    } else {
+      boundariesNode = boundariesElement;
+    }
+
+    var offsets = getOffsetRectRelativeToArbitraryNode(boundariesNode, offsetParent, fixedPosition);
+
+    // In case of HTML, we need a different computation
+    if (boundariesNode.nodeName === 'HTML' && !isFixed(offsetParent)) {
+      var _getWindowSizes = getWindowSizes(),
+          height = _getWindowSizes.height,
+          width = _getWindowSizes.width;
+
+      boundaries.top += offsets.top - offsets.marginTop;
+      boundaries.bottom = height + offsets.top;
+      boundaries.left += offsets.left - offsets.marginLeft;
+      boundaries.right = width + offsets.left;
+    } else {
+      // for all the other DOM elements, this one is good
+      boundaries = offsets;
+    }
+  }
+
+  // Add paddings
+  boundaries.left += padding;
+  boundaries.top += padding;
+  boundaries.right -= padding;
+  boundaries.bottom -= padding;
+
+  return boundaries;
+}
+
+function getArea(_ref) {
+  var width = _ref.width,
+      height = _ref.height;
+
+  return width * height;
+}
+
+/**
+ * Utility used to transform the `auto` placement to the placement with more
+ * available space.
+ * @method
+ * @memberof Popper.Utils
+ * @argument {Object} data - The data object generated by update method
+ * @argument {Object} options - Modifiers configuration and options
+ * @returns {Object} The data object, properly modified
+ */
+function computeAutoPlacement(placement, refRect, popper, reference, boundariesElement) {
+  var padding = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 0;
+
+  if (placement.indexOf('auto') === -1) {
+    return placement;
+  }
+
+  var boundaries = getBoundaries(popper, reference, padding, boundariesElement);
+
+  var rects = {
+    top: {
+      width: boundaries.width,
+      height: refRect.top - boundaries.top
+    },
+    right: {
+      width: boundaries.right - refRect.right,
+      height: boundaries.height
+    },
+    bottom: {
+      width: boundaries.width,
+      height: boundaries.bottom - refRect.bottom
+    },
+    left: {
+      width: refRect.left - boundaries.left,
+      height: boundaries.height
+    }
+  };
+
+  var sortedAreas = Object.keys(rects).map(function (key) {
+    return _extends({
+      key: key
+    }, rects[key], {
+      area: getArea(rects[key])
+    });
+  }).sort(function (a, b) {
+    return b.area - a.area;
+  });
+
+  var filteredAreas = sortedAreas.filter(function (_ref2) {
+    var width = _ref2.width,
+        height = _ref2.height;
+    return width >= popper.clientWidth && height >= popper.clientHeight;
+  });
+
+  var computedPlacement = filteredAreas.length > 0 ? filteredAreas[0].key : sortedAreas[0].key;
+
+  var variation = placement.split('-')[1];
+
+  return computedPlacement + (variation ? '-' + variation : '');
+}
+
+/**
+ * Get offsets to the reference element
+ * @method
+ * @memberof Popper.Utils
+ * @param {Object} state
+ * @param {Element} popper - the popper element
+ * @param {Element} reference - the reference element (the popper will be relative to this)
+ * @param {Element} fixedPosition - is in fixed position mode
+ * @returns {Object} An object containing the offsets which will be applied to the popper
+ */
+function getReferenceOffsets(state, popper, reference) {
+  var fixedPosition = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+
+  var commonOffsetParent = fixedPosition ? getFixedPositionOffsetParent(popper) : findCommonOffsetParent(popper, reference);
+  return getOffsetRectRelativeToArbitraryNode(reference, commonOffsetParent, fixedPosition);
+}
+
+/**
+ * Get the outer sizes of the given element (offset size + margins)
+ * @method
+ * @memberof Popper.Utils
+ * @argument {Element} element
+ * @returns {Object} object containing width and height properties
+ */
+function getOuterSizes(element) {
+  var styles = getComputedStyle(element);
+  var x = parseFloat(styles.marginTop) + parseFloat(styles.marginBottom);
+  var y = parseFloat(styles.marginLeft) + parseFloat(styles.marginRight);
+  var result = {
+    width: element.offsetWidth + y,
+    height: element.offsetHeight + x
+  };
+  return result;
+}
+
+/**
+ * Get the opposite placement of the given one
+ * @method
+ * @memberof Popper.Utils
+ * @argument {String} placement
+ * @returns {String} flipped placement
+ */
+function getOppositePlacement(placement) {
+  var hash = { left: 'right', right: 'left', bottom: 'top', top: 'bottom' };
+  return placement.replace(/left|right|bottom|top/g, function (matched) {
+    return hash[matched];
+  });
+}
+
+/**
+ * Get offsets to the popper
+ * @method
+ * @memberof Popper.Utils
+ * @param {Object} position - CSS position the Popper will get applied
+ * @param {HTMLElement} popper - the popper element
+ * @param {Object} referenceOffsets - the reference offsets (the popper will be relative to this)
+ * @param {String} placement - one of the valid placement options
+ * @returns {Object} popperOffsets - An object containing the offsets which will be applied to the popper
+ */
+function getPopperOffsets(popper, referenceOffsets, placement) {
+  placement = placement.split('-')[0];
+
+  // Get popper node sizes
+  var popperRect = getOuterSizes(popper);
+
+  // Add position, width and height to our offsets object
+  var popperOffsets = {
+    width: popperRect.width,
+    height: popperRect.height
+  };
+
+  // depending by the popper placement we have to compute its offsets slightly differently
+  var isHoriz = ['right', 'left'].indexOf(placement) !== -1;
+  var mainSide = isHoriz ? 'top' : 'left';
+  var secondarySide = isHoriz ? 'left' : 'top';
+  var measurement = isHoriz ? 'height' : 'width';
+  var secondaryMeasurement = !isHoriz ? 'height' : 'width';
+
+  popperOffsets[mainSide] = referenceOffsets[mainSide] + referenceOffsets[measurement] / 2 - popperRect[measurement] / 2;
+  if (placement === secondarySide) {
+    popperOffsets[secondarySide] = referenceOffsets[secondarySide] - popperRect[secondaryMeasurement];
+  } else {
+    popperOffsets[secondarySide] = referenceOffsets[getOppositePlacement(secondarySide)];
+  }
+
+  return popperOffsets;
+}
+
+/**
+ * Mimics the `find` method of Array
+ * @method
+ * @memberof Popper.Utils
+ * @argument {Array} arr
+ * @argument prop
+ * @argument value
+ * @returns index or -1
+ */
+function find(arr, check) {
+  // use native find if supported
+  if (Array.prototype.find) {
+    return arr.find(check);
+  }
+
+  // use `filter` to obtain the same behavior of `find`
+  return arr.filter(check)[0];
+}
+
+/**
+ * Return the index of the matching object
+ * @method
+ * @memberof Popper.Utils
+ * @argument {Array} arr
+ * @argument prop
+ * @argument value
+ * @returns index or -1
+ */
+function findIndex(arr, prop, value) {
+  // use native findIndex if supported
+  if (Array.prototype.findIndex) {
+    return arr.findIndex(function (cur) {
+      return cur[prop] === value;
+    });
+  }
+
+  // use `find` + `indexOf` if `findIndex` isn't supported
+  var match = find(arr, function (obj) {
+    return obj[prop] === value;
+  });
+  return arr.indexOf(match);
+}
+
+/**
+ * Loop trough the list of modifiers and run them in order,
+ * each of them will then edit the data object.
+ * @method
+ * @memberof Popper.Utils
+ * @param {dataObject} data
+ * @param {Array} modifiers
+ * @param {String} ends - Optional modifier name used as stopper
+ * @returns {dataObject}
+ */
+function runModifiers(modifiers, data, ends) {
+  var modifiersToRun = ends === undefined ? modifiers : modifiers.slice(0, findIndex(modifiers, 'name', ends));
+
+  modifiersToRun.forEach(function (modifier) {
+    if (modifier['function']) {
+      // eslint-disable-line dot-notation
+      console.warn('`modifier.function` is deprecated, use `modifier.fn`!');
+    }
+    var fn = modifier['function'] || modifier.fn; // eslint-disable-line dot-notation
+    if (modifier.enabled && isFunction(fn)) {
+      // Add properties to offsets to make them a complete clientRect object
+      // we do this before each modifier to make sure the previous one doesn't
+      // mess with these values
+      data.offsets.popper = getClientRect(data.offsets.popper);
+      data.offsets.reference = getClientRect(data.offsets.reference);
+
+      data = fn(data, modifier);
+    }
+  });
+
+  return data;
+}
+
+/**
+ * Updates the position of the popper, computing the new offsets and applying
+ * the new style.<br />
+ * Prefer `scheduleUpdate` over `update` because of performance reasons.
+ * @method
+ * @memberof Popper
+ */
+function update() {
+  // if popper is destroyed, don't perform any further update
+  if (this.state.isDestroyed) {
+    return;
+  }
+
+  var data = {
+    instance: this,
+    styles: {},
+    arrowStyles: {},
+    attributes: {},
+    flipped: false,
+    offsets: {}
+  };
+
+  // compute reference element offsets
+  data.offsets.reference = getReferenceOffsets(this.state, this.popper, this.reference, this.options.positionFixed);
+
+  // compute auto placement, store placement inside the data object,
+  // modifiers will be able to edit `placement` if needed
+  // and refer to originalPlacement to know the original value
+  data.placement = computeAutoPlacement(this.options.placement, data.offsets.reference, this.popper, this.reference, this.options.modifiers.flip.boundariesElement, this.options.modifiers.flip.padding);
+
+  // store the computed placement inside `originalPlacement`
+  data.originalPlacement = data.placement;
+
+  data.positionFixed = this.options.positionFixed;
+
+  // compute the popper offsets
+  data.offsets.popper = getPopperOffsets(this.popper, data.offsets.reference, data.placement);
+
+  data.offsets.popper.position = this.options.positionFixed ? 'fixed' : 'absolute';
+
+  // run the modifiers
+  data = runModifiers(this.modifiers, data);
+
+  // the first `update` will call `onCreate` callback
+  // the other ones will call `onUpdate` callback
+  if (!this.state.isCreated) {
+    this.state.isCreated = true;
+    this.options.onCreate(data);
+  } else {
+    this.options.onUpdate(data);
+  }
+}
+
+/**
+ * Helper used to know if the given modifier is enabled.
+ * @method
+ * @memberof Popper.Utils
+ * @returns {Boolean}
+ */
+function isModifierEnabled(modifiers, modifierName) {
+  return modifiers.some(function (_ref) {
+    var name = _ref.name,
+        enabled = _ref.enabled;
+    return enabled && name === modifierName;
+  });
+}
+
+/**
+ * Get the prefixed supported property name
+ * @method
+ * @memberof Popper.Utils
+ * @argument {String} property (camelCase)
+ * @returns {String} prefixed property (camelCase or PascalCase, depending on the vendor prefix)
+ */
+function getSupportedPropertyName(property) {
+  var prefixes = [false, 'ms', 'Webkit', 'Moz', 'O'];
+  var upperProp = property.charAt(0).toUpperCase() + property.slice(1);
+
+  for (var i = 0; i < prefixes.length; i++) {
+    var prefix = prefixes[i];
+    var toCheck = prefix ? '' + prefix + upperProp : property;
+    if (typeof document.body.style[toCheck] !== 'undefined') {
+      return toCheck;
+    }
+  }
+  return null;
+}
+
+/**
+ * Destroy the popper
+ * @method
+ * @memberof Popper
+ */
+function destroy() {
+  this.state.isDestroyed = true;
+
+  // touch DOM only if `applyStyle` modifier is enabled
+  if (isModifierEnabled(this.modifiers, 'applyStyle')) {
+    this.popper.removeAttribute('x-placement');
+    this.popper.style.position = '';
+    this.popper.style.top = '';
+    this.popper.style.left = '';
+    this.popper.style.right = '';
+    this.popper.style.bottom = '';
+    this.popper.style.willChange = '';
+    this.popper.style[getSupportedPropertyName('transform')] = '';
+  }
+
+  this.disableEventListeners();
+
+  // remove the popper if user explicity asked for the deletion on destroy
+  // do not use `remove` because IE11 doesn't support it
+  if (this.options.removeOnDestroy) {
+    this.popper.parentNode.removeChild(this.popper);
+  }
+  return this;
+}
+
+/**
+ * Get the window associated with the element
+ * @argument {Element} element
+ * @returns {Window}
+ */
+function getWindow(element) {
+  var ownerDocument = element.ownerDocument;
+  return ownerDocument ? ownerDocument.defaultView : window;
+}
+
+function attachToScrollParents(scrollParent, event, callback, scrollParents) {
+  var isBody = scrollParent.nodeName === 'BODY';
+  var target = isBody ? scrollParent.ownerDocument.defaultView : scrollParent;
+  target.addEventListener(event, callback, { passive: true });
+
+  if (!isBody) {
+    attachToScrollParents(getScrollParent(target.parentNode), event, callback, scrollParents);
+  }
+  scrollParents.push(target);
+}
+
+/**
+ * Setup needed event listeners used to update the popper position
+ * @method
+ * @memberof Popper.Utils
+ * @private
+ */
+function setupEventListeners(reference, options, state, updateBound) {
+  // Resize event listener on window
+  state.updateBound = updateBound;
+  getWindow(reference).addEventListener('resize', state.updateBound, { passive: true });
+
+  // Scroll event listener on scroll parents
+  var scrollElement = getScrollParent(reference);
+  attachToScrollParents(scrollElement, 'scroll', state.updateBound, state.scrollParents);
+  state.scrollElement = scrollElement;
+  state.eventsEnabled = true;
+
+  return state;
+}
+
+/**
+ * It will add resize/scroll events and start recalculating
+ * position of the popper element when they are triggered.
+ * @method
+ * @memberof Popper
+ */
+function enableEventListeners() {
+  if (!this.state.eventsEnabled) {
+    this.state = setupEventListeners(this.reference, this.options, this.state, this.scheduleUpdate);
+  }
+}
+
+/**
+ * Remove event listeners used to update the popper position
+ * @method
+ * @memberof Popper.Utils
+ * @private
+ */
+function removeEventListeners(reference, state) {
+  // Remove resize event listener on window
+  getWindow(reference).removeEventListener('resize', state.updateBound);
+
+  // Remove scroll event listener on scroll parents
+  state.scrollParents.forEach(function (target) {
+    target.removeEventListener('scroll', state.updateBound);
+  });
+
+  // Reset state
+  state.updateBound = null;
+  state.scrollParents = [];
+  state.scrollElement = null;
+  state.eventsEnabled = false;
+  return state;
+}
+
+/**
+ * It will remove resize/scroll events and won't recalculate popper position
+ * when they are triggered. It also won't trigger onUpdate callback anymore,
+ * unless you call `update` method manually.
+ * @method
+ * @memberof Popper
+ */
+function disableEventListeners() {
+  if (this.state.eventsEnabled) {
+    cancelAnimationFrame(this.scheduleUpdate);
+    this.state = removeEventListeners(this.reference, this.state);
+  }
+}
+
+/**
+ * Tells if a given input is a number
+ * @method
+ * @memberof Popper.Utils
+ * @param {*} input to check
+ * @return {Boolean}
+ */
+function isNumeric(n) {
+  return n !== '' && !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+/**
+ * Set the style to the given popper
+ * @method
+ * @memberof Popper.Utils
+ * @argument {Element} element - Element to apply the style to
+ * @argument {Object} styles
+ * Object with a list of properties and values which will be applied to the element
+ */
+function setStyles(element, styles) {
+  Object.keys(styles).forEach(function (prop) {
+    var unit = '';
+    // add unit if the value is numeric and is one of the following
+    if (['width', 'height', 'top', 'right', 'bottom', 'left'].indexOf(prop) !== -1 && isNumeric(styles[prop])) {
+      unit = 'px';
+    }
+    element.style[prop] = styles[prop] + unit;
+  });
+}
+
+/**
+ * Set the attributes to the given popper
+ * @method
+ * @memberof Popper.Utils
+ * @argument {Element} element - Element to apply the attributes to
+ * @argument {Object} styles
+ * Object with a list of properties and values which will be applied to the element
+ */
+function setAttributes(element, attributes) {
+  Object.keys(attributes).forEach(function (prop) {
+    var value = attributes[prop];
+    if (value !== false) {
+      element.setAttribute(prop, attributes[prop]);
+    } else {
+      element.removeAttribute(prop);
+    }
+  });
+}
+
+/**
+ * @function
+ * @memberof Modifiers
+ * @argument {Object} data - The data object generated by `update` method
+ * @argument {Object} data.styles - List of style properties - values to apply to popper element
+ * @argument {Object} data.attributes - List of attribute properties - values to apply to popper element
+ * @argument {Object} options - Modifiers configuration and options
+ * @returns {Object} The same data object
+ */
+function applyStyle(data) {
+  // any property present in `data.styles` will be applied to the popper,
+  // in this way we can make the 3rd party modifiers add custom styles to it
+  // Be aware, modifiers could override the properties defined in the previous
+  // lines of this modifier!
+  setStyles(data.instance.popper, data.styles);
+
+  // any property present in `data.attributes` will be applied to the popper,
+  // they will be set as HTML attributes of the element
+  setAttributes(data.instance.popper, data.attributes);
+
+  // if arrowElement is defined and arrowStyles has some properties
+  if (data.arrowElement && Object.keys(data.arrowStyles).length) {
+    setStyles(data.arrowElement, data.arrowStyles);
+  }
+
+  return data;
+}
+
+/**
+ * Set the x-placement attribute before everything else because it could be used
+ * to add margins to the popper margins needs to be calculated to get the
+ * correct popper offsets.
+ * @method
+ * @memberof Popper.modifiers
+ * @param {HTMLElement} reference - The reference element used to position the popper
+ * @param {HTMLElement} popper - The HTML element used as popper
+ * @param {Object} options - Popper.js options
+ */
+function applyStyleOnLoad(reference, popper, options, modifierOptions, state) {
+  // compute reference element offsets
+  var referenceOffsets = getReferenceOffsets(state, popper, reference, options.positionFixed);
+
+  // compute auto placement, store placement inside the data object,
+  // modifiers will be able to edit `placement` if needed
+  // and refer to originalPlacement to know the original value
+  var placement = computeAutoPlacement(options.placement, referenceOffsets, popper, reference, options.modifiers.flip.boundariesElement, options.modifiers.flip.padding);
+
+  popper.setAttribute('x-placement', placement);
+
+  // Apply `position` to popper before anything else because
+  // without the position applied we can't guarantee correct computations
+  setStyles(popper, { position: options.positionFixed ? 'fixed' : 'absolute' });
+
+  return options;
+}
+
+/**
+ * @function
+ * @memberof Modifiers
+ * @argument {Object} data - The data object generated by `update` method
+ * @argument {Object} options - Modifiers configuration and options
+ * @returns {Object} The data object, properly modified
+ */
+function computeStyle(data, options) {
+  var x = options.x,
+      y = options.y;
+  var popper = data.offsets.popper;
+
+  // Remove this legacy support in Popper.js v2
+
+  var legacyGpuAccelerationOption = find(data.instance.modifiers, function (modifier) {
+    return modifier.name === 'applyStyle';
+  }).gpuAcceleration;
+  if (legacyGpuAccelerationOption !== undefined) {
+    console.warn('WARNING: `gpuAcceleration` option moved to `computeStyle` modifier and will not be supported in future versions of Popper.js!');
+  }
+  var gpuAcceleration = legacyGpuAccelerationOption !== undefined ? legacyGpuAccelerationOption : options.gpuAcceleration;
+
+  var offsetParent = getOffsetParent(data.instance.popper);
+  var offsetParentRect = getBoundingClientRect(offsetParent);
+
+  // Styles
+  var styles = {
+    position: popper.position
+  };
+
+  // Avoid blurry text by using full pixel integers.
+  // For pixel-perfect positioning, top/bottom prefers rounded
+  // values, while left/right prefers floored values.
+  var offsets = {
+    left: Math.floor(popper.left),
+    top: Math.round(popper.top),
+    bottom: Math.round(popper.bottom),
+    right: Math.floor(popper.right)
+  };
+
+  var sideA = x === 'bottom' ? 'top' : 'bottom';
+  var sideB = y === 'right' ? 'left' : 'right';
+
+  // if gpuAcceleration is set to `true` and transform is supported,
+  //  we use `translate3d` to apply the position to the popper we
+  // automatically use the supported prefixed version if needed
+  var prefixedProperty = getSupportedPropertyName('transform');
+
+  // now, let's make a step back and look at this code closely (wtf?)
+  // If the content of the popper grows once it's been positioned, it
+  // may happen that the popper gets misplaced because of the new content
+  // overflowing its reference element
+  // To avoid this problem, we provide two options (x and y), which allow
+  // the consumer to define the offset origin.
+  // If we position a popper on top of a reference element, we can set
+  // `x` to `top` to make the popper grow towards its top instead of
+  // its bottom.
+  var left = void 0,
+      top = void 0;
+  if (sideA === 'bottom') {
+    top = -offsetParentRect.height + offsets.bottom;
+  } else {
+    top = offsets.top;
+  }
+  if (sideB === 'right') {
+    left = -offsetParentRect.width + offsets.right;
+  } else {
+    left = offsets.left;
+  }
+  if (gpuAcceleration && prefixedProperty) {
+    styles[prefixedProperty] = 'translate3d(' + left + 'px, ' + top + 'px, 0)';
+    styles[sideA] = 0;
+    styles[sideB] = 0;
+    styles.willChange = 'transform';
+  } else {
+    // othwerise, we use the standard `top`, `left`, `bottom` and `right` properties
+    var invertTop = sideA === 'bottom' ? -1 : 1;
+    var invertLeft = sideB === 'right' ? -1 : 1;
+    styles[sideA] = top * invertTop;
+    styles[sideB] = left * invertLeft;
+    styles.willChange = sideA + ', ' + sideB;
+  }
+
+  // Attributes
+  var attributes = {
+    'x-placement': data.placement
+  };
+
+  // Update `data` attributes, styles and arrowStyles
+  data.attributes = _extends({}, attributes, data.attributes);
+  data.styles = _extends({}, styles, data.styles);
+  data.arrowStyles = _extends({}, data.offsets.arrow, data.arrowStyles);
+
+  return data;
+}
+
+/**
+ * Helper used to know if the given modifier depends from another one.<br />
+ * It checks if the needed modifier is listed and enabled.
+ * @method
+ * @memberof Popper.Utils
+ * @param {Array} modifiers - list of modifiers
+ * @param {String} requestingName - name of requesting modifier
+ * @param {String} requestedName - name of requested modifier
+ * @returns {Boolean}
+ */
+function isModifierRequired(modifiers, requestingName, requestedName) {
+  var requesting = find(modifiers, function (_ref) {
+    var name = _ref.name;
+    return name === requestingName;
+  });
+
+  var isRequired = !!requesting && modifiers.some(function (modifier) {
+    return modifier.name === requestedName && modifier.enabled && modifier.order < requesting.order;
+  });
+
+  if (!isRequired) {
+    var _requesting = '`' + requestingName + '`';
+    var requested = '`' + requestedName + '`';
+    console.warn(requested + ' modifier is required by ' + _requesting + ' modifier in order to work, be sure to include it before ' + _requesting + '!');
+  }
+  return isRequired;
+}
+
+/**
+ * @function
+ * @memberof Modifiers
+ * @argument {Object} data - The data object generated by update method
+ * @argument {Object} options - Modifiers configuration and options
+ * @returns {Object} The data object, properly modified
+ */
+function arrow(data, options) {
+  var _data$offsets$arrow;
+
+  // arrow depends on keepTogether in order to work
+  if (!isModifierRequired(data.instance.modifiers, 'arrow', 'keepTogether')) {
+    return data;
+  }
+
+  var arrowElement = options.element;
+
+  // if arrowElement is a string, suppose it's a CSS selector
+  if (typeof arrowElement === 'string') {
+    arrowElement = data.instance.popper.querySelector(arrowElement);
+
+    // if arrowElement is not found, don't run the modifier
+    if (!arrowElement) {
+      return data;
+    }
+  } else {
+    // if the arrowElement isn't a query selector we must check that the
+    // provided DOM node is child of its popper node
+    if (!data.instance.popper.contains(arrowElement)) {
+      console.warn('WARNING: `arrow.element` must be child of its popper element!');
+      return data;
+    }
+  }
+
+  var placement = data.placement.split('-')[0];
+  var _data$offsets = data.offsets,
+      popper = _data$offsets.popper,
+      reference = _data$offsets.reference;
+
+  var isVertical = ['left', 'right'].indexOf(placement) !== -1;
+
+  var len = isVertical ? 'height' : 'width';
+  var sideCapitalized = isVertical ? 'Top' : 'Left';
+  var side = sideCapitalized.toLowerCase();
+  var altSide = isVertical ? 'left' : 'top';
+  var opSide = isVertical ? 'bottom' : 'right';
+  var arrowElementSize = getOuterSizes(arrowElement)[len];
+
+  //
+  // extends keepTogether behavior making sure the popper and its
+  // reference have enough pixels in conjuction
+  //
+
+  // top/left side
+  if (reference[opSide] - arrowElementSize < popper[side]) {
+    data.offsets.popper[side] -= popper[side] - (reference[opSide] - arrowElementSize);
+  }
+  // bottom/right side
+  if (reference[side] + arrowElementSize > popper[opSide]) {
+    data.offsets.popper[side] += reference[side] + arrowElementSize - popper[opSide];
+  }
+  data.offsets.popper = getClientRect(data.offsets.popper);
+
+  // compute center of the popper
+  var center = reference[side] + reference[len] / 2 - arrowElementSize / 2;
+
+  // Compute the sideValue using the updated popper offsets
+  // take popper margin in account because we don't have this info available
+  var css = getStyleComputedProperty(data.instance.popper);
+  var popperMarginSide = parseFloat(css['margin' + sideCapitalized], 10);
+  var popperBorderSide = parseFloat(css['border' + sideCapitalized + 'Width'], 10);
+  var sideValue = center - data.offsets.popper[side] - popperMarginSide - popperBorderSide;
+
+  // prevent arrowElement from being placed not contiguously to its popper
+  sideValue = Math.max(Math.min(popper[len] - arrowElementSize, sideValue), 0);
+
+  data.arrowElement = arrowElement;
+  data.offsets.arrow = (_data$offsets$arrow = {}, defineProperty(_data$offsets$arrow, side, Math.round(sideValue)), defineProperty(_data$offsets$arrow, altSide, ''), _data$offsets$arrow);
+
+  return data;
+}
+
+/**
+ * Get the opposite placement variation of the given one
+ * @method
+ * @memberof Popper.Utils
+ * @argument {String} placement variation
+ * @returns {String} flipped placement variation
+ */
+function getOppositeVariation(variation) {
+  if (variation === 'end') {
+    return 'start';
+  } else if (variation === 'start') {
+    return 'end';
+  }
+  return variation;
+}
+
+/**
+ * List of accepted placements to use as values of the `placement` option.<br />
+ * Valid placements are:
+ * - `auto`
+ * - `top`
+ * - `right`
+ * - `bottom`
+ * - `left`
+ *
+ * Each placement can have a variation from this list:
+ * - `-start`
+ * - `-end`
+ *
+ * Variations are interpreted easily if you think of them as the left to right
+ * written languages. Horizontally (`top` and `bottom`), `start` is left and `end`
+ * is right.<br />
+ * Vertically (`left` and `right`), `start` is top and `end` is bottom.
+ *
+ * Some valid examples are:
+ * - `top-end` (on top of reference, right aligned)
+ * - `right-start` (on right of reference, top aligned)
+ * - `bottom` (on bottom, centered)
+ * - `auto-right` (on the side with more space available, alignment depends by placement)
+ *
+ * @static
+ * @type {Array}
+ * @enum {String}
+ * @readonly
+ * @method placements
+ * @memberof Popper
+ */
+var placements = ['auto-start', 'auto', 'auto-end', 'top-start', 'top', 'top-end', 'right-start', 'right', 'right-end', 'bottom-end', 'bottom', 'bottom-start', 'left-end', 'left', 'left-start'];
+
+// Get rid of `auto` `auto-start` and `auto-end`
+var validPlacements = placements.slice(3);
+
+/**
+ * Given an initial placement, returns all the subsequent placements
+ * clockwise (or counter-clockwise).
+ *
+ * @method
+ * @memberof Popper.Utils
+ * @argument {String} placement - A valid placement (it accepts variations)
+ * @argument {Boolean} counter - Set to true to walk the placements counterclockwise
+ * @returns {Array} placements including their variations
+ */
+function clockwise(placement) {
+  var counter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+  var index = validPlacements.indexOf(placement);
+  var arr = validPlacements.slice(index + 1).concat(validPlacements.slice(0, index));
+  return counter ? arr.reverse() : arr;
+}
+
+var BEHAVIORS = {
+  FLIP: 'flip',
+  CLOCKWISE: 'clockwise',
+  COUNTERCLOCKWISE: 'counterclockwise'
+};
+
+/**
+ * @function
+ * @memberof Modifiers
+ * @argument {Object} data - The data object generated by update method
+ * @argument {Object} options - Modifiers configuration and options
+ * @returns {Object} The data object, properly modified
+ */
+function flip(data, options) {
+  // if `inner` modifier is enabled, we can't use the `flip` modifier
+  if (isModifierEnabled(data.instance.modifiers, 'inner')) {
+    return data;
+  }
+
+  if (data.flipped && data.placement === data.originalPlacement) {
+    // seems like flip is trying to loop, probably there's not enough space on any of the flippable sides
+    return data;
+  }
+
+  var boundaries = getBoundaries(data.instance.popper, data.instance.reference, options.padding, options.boundariesElement, data.positionFixed);
+
+  var placement = data.placement.split('-')[0];
+  var placementOpposite = getOppositePlacement(placement);
+  var variation = data.placement.split('-')[1] || '';
+
+  var flipOrder = [];
+
+  switch (options.behavior) {
+    case BEHAVIORS.FLIP:
+      flipOrder = [placement, placementOpposite];
+      break;
+    case BEHAVIORS.CLOCKWISE:
+      flipOrder = clockwise(placement);
+      break;
+    case BEHAVIORS.COUNTERCLOCKWISE:
+      flipOrder = clockwise(placement, true);
+      break;
+    default:
+      flipOrder = options.behavior;
+  }
+
+  flipOrder.forEach(function (step, index) {
+    if (placement !== step || flipOrder.length === index + 1) {
+      return data;
+    }
+
+    placement = data.placement.split('-')[0];
+    placementOpposite = getOppositePlacement(placement);
+
+    var popperOffsets = data.offsets.popper;
+    var refOffsets = data.offsets.reference;
+
+    // using floor because the reference offsets may contain decimals we are not going to consider here
+    var floor = Math.floor;
+    var overlapsRef = placement === 'left' && floor(popperOffsets.right) > floor(refOffsets.left) || placement === 'right' && floor(popperOffsets.left) < floor(refOffsets.right) || placement === 'top' && floor(popperOffsets.bottom) > floor(refOffsets.top) || placement === 'bottom' && floor(popperOffsets.top) < floor(refOffsets.bottom);
+
+    var overflowsLeft = floor(popperOffsets.left) < floor(boundaries.left);
+    var overflowsRight = floor(popperOffsets.right) > floor(boundaries.right);
+    var overflowsTop = floor(popperOffsets.top) < floor(boundaries.top);
+    var overflowsBottom = floor(popperOffsets.bottom) > floor(boundaries.bottom);
+
+    var overflowsBoundaries = placement === 'left' && overflowsLeft || placement === 'right' && overflowsRight || placement === 'top' && overflowsTop || placement === 'bottom' && overflowsBottom;
+
+    // flip the variation if required
+    var isVertical = ['top', 'bottom'].indexOf(placement) !== -1;
+    var flippedVariation = !!options.flipVariations && (isVertical && variation === 'start' && overflowsLeft || isVertical && variation === 'end' && overflowsRight || !isVertical && variation === 'start' && overflowsTop || !isVertical && variation === 'end' && overflowsBottom);
+
+    if (overlapsRef || overflowsBoundaries || flippedVariation) {
+      // this boolean to detect any flip loop
+      data.flipped = true;
+
+      if (overlapsRef || overflowsBoundaries) {
+        placement = flipOrder[index + 1];
+      }
+
+      if (flippedVariation) {
+        variation = getOppositeVariation(variation);
+      }
+
+      data.placement = placement + (variation ? '-' + variation : '');
+
+      // this object contains `position`, we want to preserve it along with
+      // any additional property we may add in the future
+      data.offsets.popper = _extends({}, data.offsets.popper, getPopperOffsets(data.instance.popper, data.offsets.reference, data.placement));
+
+      data = runModifiers(data.instance.modifiers, data, 'flip');
+    }
+  });
+  return data;
+}
+
+/**
+ * @function
+ * @memberof Modifiers
+ * @argument {Object} data - The data object generated by update method
+ * @argument {Object} options - Modifiers configuration and options
+ * @returns {Object} The data object, properly modified
+ */
+function keepTogether(data) {
+  var _data$offsets = data.offsets,
+      popper = _data$offsets.popper,
+      reference = _data$offsets.reference;
+
+  var placement = data.placement.split('-')[0];
+  var floor = Math.floor;
+  var isVertical = ['top', 'bottom'].indexOf(placement) !== -1;
+  var side = isVertical ? 'right' : 'bottom';
+  var opSide = isVertical ? 'left' : 'top';
+  var measurement = isVertical ? 'width' : 'height';
+
+  if (popper[side] < floor(reference[opSide])) {
+    data.offsets.popper[opSide] = floor(reference[opSide]) - popper[measurement];
+  }
+  if (popper[opSide] > floor(reference[side])) {
+    data.offsets.popper[opSide] = floor(reference[side]);
+  }
+
+  return data;
+}
+
+/**
+ * Converts a string containing value + unit into a px value number
+ * @function
+ * @memberof {modifiers~offset}
+ * @private
+ * @argument {String} str - Value + unit string
+ * @argument {String} measurement - `height` or `width`
+ * @argument {Object} popperOffsets
+ * @argument {Object} referenceOffsets
+ * @returns {Number|String}
+ * Value in pixels, or original string if no values were extracted
+ */
+function toValue(str, measurement, popperOffsets, referenceOffsets) {
+  // separate value from unit
+  var split = str.match(/((?:\-|\+)?\d*\.?\d*)(.*)/);
+  var value = +split[1];
+  var unit = split[2];
+
+  // If it's not a number it's an operator, I guess
+  if (!value) {
+    return str;
+  }
+
+  if (unit.indexOf('%') === 0) {
+    var element = void 0;
+    switch (unit) {
+      case '%p':
+        element = popperOffsets;
+        break;
+      case '%':
+      case '%r':
+      default:
+        element = referenceOffsets;
+    }
+
+    var rect = getClientRect(element);
+    return rect[measurement] / 100 * value;
+  } else if (unit === 'vh' || unit === 'vw') {
+    // if is a vh or vw, we calculate the size based on the viewport
+    var size = void 0;
+    if (unit === 'vh') {
+      size = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    } else {
+      size = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    }
+    return size / 100 * value;
+  } else {
+    // if is an explicit pixel unit, we get rid of the unit and keep the value
+    // if is an implicit unit, it's px, and we return just the value
+    return value;
+  }
+}
+
+/**
+ * Parse an `offset` string to extrapolate `x` and `y` numeric offsets.
+ * @function
+ * @memberof {modifiers~offset}
+ * @private
+ * @argument {String} offset
+ * @argument {Object} popperOffsets
+ * @argument {Object} referenceOffsets
+ * @argument {String} basePlacement
+ * @returns {Array} a two cells array with x and y offsets in numbers
+ */
+function parseOffset(offset, popperOffsets, referenceOffsets, basePlacement) {
+  var offsets = [0, 0];
+
+  // Use height if placement is left or right and index is 0 otherwise use width
+  // in this way the first offset will use an axis and the second one
+  // will use the other one
+  var useHeight = ['right', 'left'].indexOf(basePlacement) !== -1;
+
+  // Split the offset string to obtain a list of values and operands
+  // The regex addresses values with the plus or minus sign in front (+10, -20, etc)
+  var fragments = offset.split(/(\+|\-)/).map(function (frag) {
+    return frag.trim();
+  });
+
+  // Detect if the offset string contains a pair of values or a single one
+  // they could be separated by comma or space
+  var divider = fragments.indexOf(find(fragments, function (frag) {
+    return frag.search(/,|\s/) !== -1;
+  }));
+
+  if (fragments[divider] && fragments[divider].indexOf(',') === -1) {
+    console.warn('Offsets separated by white space(s) are deprecated, use a comma (,) instead.');
+  }
+
+  // If divider is found, we divide the list of values and operands to divide
+  // them by ofset X and Y.
+  var splitRegex = /\s*,\s*|\s+/;
+  var ops = divider !== -1 ? [fragments.slice(0, divider).concat([fragments[divider].split(splitRegex)[0]]), [fragments[divider].split(splitRegex)[1]].concat(fragments.slice(divider + 1))] : [fragments];
+
+  // Convert the values with units to absolute pixels to allow our computations
+  ops = ops.map(function (op, index) {
+    // Most of the units rely on the orientation of the popper
+    var measurement = (index === 1 ? !useHeight : useHeight) ? 'height' : 'width';
+    var mergeWithPrevious = false;
+    return op
+    // This aggregates any `+` or `-` sign that aren't considered operators
+    // e.g.: 10 + +5 => [10, +, +5]
+    .reduce(function (a, b) {
+      if (a[a.length - 1] === '' && ['+', '-'].indexOf(b) !== -1) {
+        a[a.length - 1] = b;
+        mergeWithPrevious = true;
+        return a;
+      } else if (mergeWithPrevious) {
+        a[a.length - 1] += b;
+        mergeWithPrevious = false;
+        return a;
+      } else {
+        return a.concat(b);
+      }
+    }, [])
+    // Here we convert the string values into number values (in px)
+    .map(function (str) {
+      return toValue(str, measurement, popperOffsets, referenceOffsets);
+    });
+  });
+
+  // Loop trough the offsets arrays and execute the operations
+  ops.forEach(function (op, index) {
+    op.forEach(function (frag, index2) {
+      if (isNumeric(frag)) {
+        offsets[index] += frag * (op[index2 - 1] === '-' ? -1 : 1);
+      }
+    });
+  });
+  return offsets;
+}
+
+/**
+ * @function
+ * @memberof Modifiers
+ * @argument {Object} data - The data object generated by update method
+ * @argument {Object} options - Modifiers configuration and options
+ * @argument {Number|String} options.offset=0
+ * The offset value as described in the modifier description
+ * @returns {Object} The data object, properly modified
+ */
+function offset(data, _ref) {
+  var offset = _ref.offset;
+  var placement = data.placement,
+      _data$offsets = data.offsets,
+      popper = _data$offsets.popper,
+      reference = _data$offsets.reference;
+
+  var basePlacement = placement.split('-')[0];
+
+  var offsets = void 0;
+  if (isNumeric(+offset)) {
+    offsets = [+offset, 0];
+  } else {
+    offsets = parseOffset(offset, popper, reference, basePlacement);
+  }
+
+  if (basePlacement === 'left') {
+    popper.top += offsets[0];
+    popper.left -= offsets[1];
+  } else if (basePlacement === 'right') {
+    popper.top += offsets[0];
+    popper.left += offsets[1];
+  } else if (basePlacement === 'top') {
+    popper.left += offsets[0];
+    popper.top -= offsets[1];
+  } else if (basePlacement === 'bottom') {
+    popper.left += offsets[0];
+    popper.top += offsets[1];
+  }
+
+  data.popper = popper;
+  return data;
+}
+
+/**
+ * @function
+ * @memberof Modifiers
+ * @argument {Object} data - The data object generated by `update` method
+ * @argument {Object} options - Modifiers configuration and options
+ * @returns {Object} The data object, properly modified
+ */
+function preventOverflow(data, options) {
+  var boundariesElement = options.boundariesElement || getOffsetParent(data.instance.popper);
+
+  // If offsetParent is the reference element, we really want to
+  // go one step up and use the next offsetParent as reference to
+  // avoid to make this modifier completely useless and look like broken
+  if (data.instance.reference === boundariesElement) {
+    boundariesElement = getOffsetParent(boundariesElement);
+  }
+
+  // NOTE: DOM access here
+  // resets the popper's position so that the document size can be calculated excluding
+  // the size of the popper element itself
+  var transformProp = getSupportedPropertyName('transform');
+  var popperStyles = data.instance.popper.style; // assignment to help minification
+  var top = popperStyles.top,
+      left = popperStyles.left,
+      transform = popperStyles[transformProp];
+
+  popperStyles.top = '';
+  popperStyles.left = '';
+  popperStyles[transformProp] = '';
+
+  var boundaries = getBoundaries(data.instance.popper, data.instance.reference, options.padding, boundariesElement, data.positionFixed);
+
+  // NOTE: DOM access here
+  // restores the original style properties after the offsets have been computed
+  popperStyles.top = top;
+  popperStyles.left = left;
+  popperStyles[transformProp] = transform;
+
+  options.boundaries = boundaries;
+
+  var order = options.priority;
+  var popper = data.offsets.popper;
+
+  var check = {
+    primary: function primary(placement) {
+      var value = popper[placement];
+      if (popper[placement] < boundaries[placement] && !options.escapeWithReference) {
+        value = Math.max(popper[placement], boundaries[placement]);
+      }
+      return defineProperty({}, placement, value);
+    },
+    secondary: function secondary(placement) {
+      var mainSide = placement === 'right' ? 'left' : 'top';
+      var value = popper[mainSide];
+      if (popper[placement] > boundaries[placement] && !options.escapeWithReference) {
+        value = Math.min(popper[mainSide], boundaries[placement] - (placement === 'right' ? popper.width : popper.height));
+      }
+      return defineProperty({}, mainSide, value);
+    }
+  };
+
+  order.forEach(function (placement) {
+    var side = ['left', 'top'].indexOf(placement) !== -1 ? 'primary' : 'secondary';
+    popper = _extends({}, popper, check[side](placement));
+  });
+
+  data.offsets.popper = popper;
+
+  return data;
+}
+
+/**
+ * @function
+ * @memberof Modifiers
+ * @argument {Object} data - The data object generated by `update` method
+ * @argument {Object} options - Modifiers configuration and options
+ * @returns {Object} The data object, properly modified
+ */
+function shift(data) {
+  var placement = data.placement;
+  var basePlacement = placement.split('-')[0];
+  var shiftvariation = placement.split('-')[1];
+
+  // if shift shiftvariation is specified, run the modifier
+  if (shiftvariation) {
+    var _data$offsets = data.offsets,
+        reference = _data$offsets.reference,
+        popper = _data$offsets.popper;
+
+    var isVertical = ['bottom', 'top'].indexOf(basePlacement) !== -1;
+    var side = isVertical ? 'left' : 'top';
+    var measurement = isVertical ? 'width' : 'height';
+
+    var shiftOffsets = {
+      start: defineProperty({}, side, reference[side]),
+      end: defineProperty({}, side, reference[side] + reference[measurement] - popper[measurement])
+    };
+
+    data.offsets.popper = _extends({}, popper, shiftOffsets[shiftvariation]);
+  }
+
+  return data;
+}
+
+/**
+ * @function
+ * @memberof Modifiers
+ * @argument {Object} data - The data object generated by update method
+ * @argument {Object} options - Modifiers configuration and options
+ * @returns {Object} The data object, properly modified
+ */
+function hide(data) {
+  if (!isModifierRequired(data.instance.modifiers, 'hide', 'preventOverflow')) {
+    return data;
+  }
+
+  var refRect = data.offsets.reference;
+  var bound = find(data.instance.modifiers, function (modifier) {
+    return modifier.name === 'preventOverflow';
+  }).boundaries;
+
+  if (refRect.bottom < bound.top || refRect.left > bound.right || refRect.top > bound.bottom || refRect.right < bound.left) {
+    // Avoid unnecessary DOM access if visibility hasn't changed
+    if (data.hide === true) {
+      return data;
+    }
+
+    data.hide = true;
+    data.attributes['x-out-of-boundaries'] = '';
+  } else {
+    // Avoid unnecessary DOM access if visibility hasn't changed
+    if (data.hide === false) {
+      return data;
+    }
+
+    data.hide = false;
+    data.attributes['x-out-of-boundaries'] = false;
+  }
+
+  return data;
+}
+
+/**
+ * @function
+ * @memberof Modifiers
+ * @argument {Object} data - The data object generated by `update` method
+ * @argument {Object} options - Modifiers configuration and options
+ * @returns {Object} The data object, properly modified
+ */
+function inner(data) {
+  var placement = data.placement;
+  var basePlacement = placement.split('-')[0];
+  var _data$offsets = data.offsets,
+      popper = _data$offsets.popper,
+      reference = _data$offsets.reference;
+
+  var isHoriz = ['left', 'right'].indexOf(basePlacement) !== -1;
+
+  var subtractLength = ['top', 'left'].indexOf(basePlacement) === -1;
+
+  popper[isHoriz ? 'left' : 'top'] = reference[basePlacement] - (subtractLength ? popper[isHoriz ? 'width' : 'height'] : 0);
+
+  data.placement = getOppositePlacement(placement);
+  data.offsets.popper = getClientRect(popper);
+
+  return data;
+}
+
+/**
+ * Modifier function, each modifier can have a function of this type assigned
+ * to its `fn` property.<br />
+ * These functions will be called on each update, this means that you must
+ * make sure they are performant enough to avoid performance bottlenecks.
+ *
+ * @function ModifierFn
+ * @argument {dataObject} data - The data object generated by `update` method
+ * @argument {Object} options - Modifiers configuration and options
+ * @returns {dataObject} The data object, properly modified
+ */
+
+/**
+ * Modifiers are plugins used to alter the behavior of your poppers.<br />
+ * Popper.js uses a set of 9 modifiers to provide all the basic functionalities
+ * needed by the library.
+ *
+ * Usually you don't want to override the `order`, `fn` and `onLoad` props.
+ * All the other properties are configurations that could be tweaked.
+ * @namespace modifiers
+ */
+var modifiers = {
+  /**
+   * Modifier used to shift the popper on the start or end of its reference
+   * element.<br />
+   * It will read the variation of the `placement` property.<br />
+   * It can be one either `-end` or `-start`.
+   * @memberof modifiers
+   * @inner
+   */
+  shift: {
+    /** @prop {number} order=100 - Index used to define the order of execution */
+    order: 100,
+    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
+    enabled: true,
+    /** @prop {ModifierFn} */
+    fn: shift
+  },
+
+  /**
+   * The `offset` modifier can shift your popper on both its axis.
+   *
+   * It accepts the following units:
+   * - `px` or unitless, interpreted as pixels
+   * - `%` or `%r`, percentage relative to the length of the reference element
+   * - `%p`, percentage relative to the length of the popper element
+   * - `vw`, CSS viewport width unit
+   * - `vh`, CSS viewport height unit
+   *
+   * For length is intended the main axis relative to the placement of the popper.<br />
+   * This means that if the placement is `top` or `bottom`, the length will be the
+   * `width`. In case of `left` or `right`, it will be the height.
+   *
+   * You can provide a single value (as `Number` or `String`), or a pair of values
+   * as `String` divided by a comma or one (or more) white spaces.<br />
+   * The latter is a deprecated method because it leads to confusion and will be
+   * removed in v2.<br />
+   * Additionally, it accepts additions and subtractions between different units.
+   * Note that multiplications and divisions aren't supported.
+   *
+   * Valid examples are:
+   * ```
+   * 10
+   * '10%'
+   * '10, 10'
+   * '10%, 10'
+   * '10 + 10%'
+   * '10 - 5vh + 3%'
+   * '-10px + 5vh, 5px - 6%'
+   * ```
+   * > **NB**: If you desire to apply offsets to your poppers in a way that may make them overlap
+   * > with their reference element, unfortunately, you will have to disable the `flip` modifier.
+   * > More on this [reading this issue](https://github.com/FezVrasta/popper.js/issues/373)
+   *
+   * @memberof modifiers
+   * @inner
+   */
+  offset: {
+    /** @prop {number} order=200 - Index used to define the order of execution */
+    order: 200,
+    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
+    enabled: true,
+    /** @prop {ModifierFn} */
+    fn: offset,
+    /** @prop {Number|String} offset=0
+     * The offset value as described in the modifier description
+     */
+    offset: 0
+  },
+
+  /**
+   * Modifier used to prevent the popper from being positioned outside the boundary.
+   *
+   * An scenario exists where the reference itself is not within the boundaries.<br />
+   * We can say it has "escaped the boundaries" — or just "escaped".<br />
+   * In this case we need to decide whether the popper should either:
+   *
+   * - detach from the reference and remain "trapped" in the boundaries, or
+   * - if it should ignore the boundary and "escape with its reference"
+   *
+   * When `escapeWithReference` is set to`true` and reference is completely
+   * outside its boundaries, the popper will overflow (or completely leave)
+   * the boundaries in order to remain attached to the edge of the reference.
+   *
+   * @memberof modifiers
+   * @inner
+   */
+  preventOverflow: {
+    /** @prop {number} order=300 - Index used to define the order of execution */
+    order: 300,
+    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
+    enabled: true,
+    /** @prop {ModifierFn} */
+    fn: preventOverflow,
+    /**
+     * @prop {Array} [priority=['left','right','top','bottom']]
+     * Popper will try to prevent overflow following these priorities by default,
+     * then, it could overflow on the left and on top of the `boundariesElement`
+     */
+    priority: ['left', 'right', 'top', 'bottom'],
+    /**
+     * @prop {number} padding=5
+     * Amount of pixel used to define a minimum distance between the boundaries
+     * and the popper this makes sure the popper has always a little padding
+     * between the edges of its container
+     */
+    padding: 5,
+    /**
+     * @prop {String|HTMLElement} boundariesElement='scrollParent'
+     * Boundaries used by the modifier, can be `scrollParent`, `window`,
+     * `viewport` or any DOM element.
+     */
+    boundariesElement: 'scrollParent'
+  },
+
+  /**
+   * Modifier used to make sure the reference and its popper stay near eachothers
+   * without leaving any gap between the two. Expecially useful when the arrow is
+   * enabled and you want to assure it to point to its reference element.
+   * It cares only about the first axis, you can still have poppers with margin
+   * between the popper and its reference element.
+   * @memberof modifiers
+   * @inner
+   */
+  keepTogether: {
+    /** @prop {number} order=400 - Index used to define the order of execution */
+    order: 400,
+    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
+    enabled: true,
+    /** @prop {ModifierFn} */
+    fn: keepTogether
+  },
+
+  /**
+   * This modifier is used to move the `arrowElement` of the popper to make
+   * sure it is positioned between the reference element and its popper element.
+   * It will read the outer size of the `arrowElement` node to detect how many
+   * pixels of conjuction are needed.
+   *
+   * It has no effect if no `arrowElement` is provided.
+   * @memberof modifiers
+   * @inner
+   */
+  arrow: {
+    /** @prop {number} order=500 - Index used to define the order of execution */
+    order: 500,
+    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
+    enabled: true,
+    /** @prop {ModifierFn} */
+    fn: arrow,
+    /** @prop {String|HTMLElement} element='[x-arrow]' - Selector or node used as arrow */
+    element: '[x-arrow]'
+  },
+
+  /**
+   * Modifier used to flip the popper's placement when it starts to overlap its
+   * reference element.
+   *
+   * Requires the `preventOverflow` modifier before it in order to work.
+   *
+   * **NOTE:** this modifier will interrupt the current update cycle and will
+   * restart it if it detects the need to flip the placement.
+   * @memberof modifiers
+   * @inner
+   */
+  flip: {
+    /** @prop {number} order=600 - Index used to define the order of execution */
+    order: 600,
+    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
+    enabled: true,
+    /** @prop {ModifierFn} */
+    fn: flip,
+    /**
+     * @prop {String|Array} behavior='flip'
+     * The behavior used to change the popper's placement. It can be one of
+     * `flip`, `clockwise`, `counterclockwise` or an array with a list of valid
+     * placements (with optional variations).
+     */
+    behavior: 'flip',
+    /**
+     * @prop {number} padding=5
+     * The popper will flip if it hits the edges of the `boundariesElement`
+     */
+    padding: 5,
+    /**
+     * @prop {String|HTMLElement} boundariesElement='viewport'
+     * The element which will define the boundaries of the popper position,
+     * the popper will never be placed outside of the defined boundaries
+     * (except if keepTogether is enabled)
+     */
+    boundariesElement: 'viewport'
+  },
+
+  /**
+   * Modifier used to make the popper flow toward the inner of the reference element.
+   * By default, when this modifier is disabled, the popper will be placed outside
+   * the reference element.
+   * @memberof modifiers
+   * @inner
+   */
+  inner: {
+    /** @prop {number} order=700 - Index used to define the order of execution */
+    order: 700,
+    /** @prop {Boolean} enabled=false - Whether the modifier is enabled or not */
+    enabled: false,
+    /** @prop {ModifierFn} */
+    fn: inner
+  },
+
+  /**
+   * Modifier used to hide the popper when its reference element is outside of the
+   * popper boundaries. It will set a `x-out-of-boundaries` attribute which can
+   * be used to hide with a CSS selector the popper when its reference is
+   * out of boundaries.
+   *
+   * Requires the `preventOverflow` modifier before it in order to work.
+   * @memberof modifiers
+   * @inner
+   */
+  hide: {
+    /** @prop {number} order=800 - Index used to define the order of execution */
+    order: 800,
+    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
+    enabled: true,
+    /** @prop {ModifierFn} */
+    fn: hide
+  },
+
+  /**
+   * Computes the style that will be applied to the popper element to gets
+   * properly positioned.
+   *
+   * Note that this modifier will not touch the DOM, it just prepares the styles
+   * so that `applyStyle` modifier can apply it. This separation is useful
+   * in case you need to replace `applyStyle` with a custom implementation.
+   *
+   * This modifier has `850` as `order` value to maintain backward compatibility
+   * with previous versions of Popper.js. Expect the modifiers ordering method
+   * to change in future major versions of the library.
+   *
+   * @memberof modifiers
+   * @inner
+   */
+  computeStyle: {
+    /** @prop {number} order=850 - Index used to define the order of execution */
+    order: 850,
+    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
+    enabled: true,
+    /** @prop {ModifierFn} */
+    fn: computeStyle,
+    /**
+     * @prop {Boolean} gpuAcceleration=true
+     * If true, it uses the CSS 3d transformation to position the popper.
+     * Otherwise, it will use the `top` and `left` properties.
+     */
+    gpuAcceleration: true,
+    /**
+     * @prop {string} [x='bottom']
+     * Where to anchor the X axis (`bottom` or `top`). AKA X offset origin.
+     * Change this if your popper should grow in a direction different from `bottom`
+     */
+    x: 'bottom',
+    /**
+     * @prop {string} [x='left']
+     * Where to anchor the Y axis (`left` or `right`). AKA Y offset origin.
+     * Change this if your popper should grow in a direction different from `right`
+     */
+    y: 'right'
+  },
+
+  /**
+   * Applies the computed styles to the popper element.
+   *
+   * All the DOM manipulations are limited to this modifier. This is useful in case
+   * you want to integrate Popper.js inside a framework or view library and you
+   * want to delegate all the DOM manipulations to it.
+   *
+   * Note that if you disable this modifier, you must make sure the popper element
+   * has its position set to `absolute` before Popper.js can do its work!
+   *
+   * Just disable this modifier and define you own to achieve the desired effect.
+   *
+   * @memberof modifiers
+   * @inner
+   */
+  applyStyle: {
+    /** @prop {number} order=900 - Index used to define the order of execution */
+    order: 900,
+    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
+    enabled: true,
+    /** @prop {ModifierFn} */
+    fn: applyStyle,
+    /** @prop {Function} */
+    onLoad: applyStyleOnLoad,
+    /**
+     * @deprecated since version 1.10.0, the property moved to `computeStyle` modifier
+     * @prop {Boolean} gpuAcceleration=true
+     * If true, it uses the CSS 3d transformation to position the popper.
+     * Otherwise, it will use the `top` and `left` properties.
+     */
+    gpuAcceleration: undefined
+  }
+};
+
+/**
+ * The `dataObject` is an object containing all the informations used by Popper.js
+ * this object get passed to modifiers and to the `onCreate` and `onUpdate` callbacks.
+ * @name dataObject
+ * @property {Object} data.instance The Popper.js instance
+ * @property {String} data.placement Placement applied to popper
+ * @property {String} data.originalPlacement Placement originally defined on init
+ * @property {Boolean} data.flipped True if popper has been flipped by flip modifier
+ * @property {Boolean} data.hide True if the reference element is out of boundaries, useful to know when to hide the popper.
+ * @property {HTMLElement} data.arrowElement Node used as arrow by arrow modifier
+ * @property {Object} data.styles Any CSS property defined here will be applied to the popper, it expects the JavaScript nomenclature (eg. `marginBottom`)
+ * @property {Object} data.arrowStyles Any CSS property defined here will be applied to the popper arrow, it expects the JavaScript nomenclature (eg. `marginBottom`)
+ * @property {Object} data.boundaries Offsets of the popper boundaries
+ * @property {Object} data.offsets The measurements of popper, reference and arrow elements.
+ * @property {Object} data.offsets.popper `top`, `left`, `width`, `height` values
+ * @property {Object} data.offsets.reference `top`, `left`, `width`, `height` values
+ * @property {Object} data.offsets.arrow] `top` and `left` offsets, only one of them will be different from 0
+ */
+
+/**
+ * Default options provided to Popper.js constructor.<br />
+ * These can be overriden using the `options` argument of Popper.js.<br />
+ * To override an option, simply pass as 3rd argument an object with the same
+ * structure of this object, example:
+ * ```
+ * new Popper(ref, pop, {
+ *   modifiers: {
+ *     preventOverflow: { enabled: false }
+ *   }
+ * })
+ * ```
+ * @type {Object}
+ * @static
+ * @memberof Popper
+ */
+var Defaults = {
+  /**
+   * Popper's placement
+   * @prop {Popper.placements} placement='bottom'
+   */
+  placement: 'bottom',
+
+  /**
+   * Set this to true if you want popper to position it self in 'fixed' mode
+   * @prop {Boolean} positionFixed=false
+   */
+  positionFixed: false,
+
+  /**
+   * Whether events (resize, scroll) are initially enabled
+   * @prop {Boolean} eventsEnabled=true
+   */
+  eventsEnabled: true,
+
+  /**
+   * Set to true if you want to automatically remove the popper when
+   * you call the `destroy` method.
+   * @prop {Boolean} removeOnDestroy=false
+   */
+  removeOnDestroy: false,
+
+  /**
+   * Callback called when the popper is created.<br />
+   * By default, is set to no-op.<br />
+   * Access Popper.js instance with `data.instance`.
+   * @prop {onCreate}
+   */
+  onCreate: function onCreate() {},
+
+  /**
+   * Callback called when the popper is updated, this callback is not called
+   * on the initialization/creation of the popper, but only on subsequent
+   * updates.<br />
+   * By default, is set to no-op.<br />
+   * Access Popper.js instance with `data.instance`.
+   * @prop {onUpdate}
+   */
+  onUpdate: function onUpdate() {},
+
+  /**
+   * List of modifiers used to modify the offsets before they are applied to the popper.
+   * They provide most of the functionalities of Popper.js
+   * @prop {modifiers}
+   */
+  modifiers: modifiers
+};
+
+/**
+ * @callback onCreate
+ * @param {dataObject} data
+ */
+
+/**
+ * @callback onUpdate
+ * @param {dataObject} data
+ */
+
+// Utils
+// Methods
+var Popper = function () {
+  /**
+   * Create a new Popper.js instance
+   * @class Popper
+   * @param {HTMLElement|referenceObject} reference - The reference element used to position the popper
+   * @param {HTMLElement} popper - The HTML element used as popper.
+   * @param {Object} options - Your custom options to override the ones defined in [Defaults](#defaults)
+   * @return {Object} instance - The generated Popper.js instance
+   */
+  function Popper(reference, popper) {
+    var _this = this;
+
+    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    classCallCheck(this, Popper);
+
+    this.scheduleUpdate = function () {
+      return requestAnimationFrame(_this.update);
+    };
+
+    // make update() debounced, so that it only runs at most once-per-tick
+    this.update = debounce(this.update.bind(this));
+
+    // with {} we create a new object with the options inside it
+    this.options = _extends({}, Popper.Defaults, options);
+
+    // init state
+    this.state = {
+      isDestroyed: false,
+      isCreated: false,
+      scrollParents: []
+    };
+
+    // get reference and popper elements (allow jQuery wrappers)
+    this.reference = reference && reference.jquery ? reference[0] : reference;
+    this.popper = popper && popper.jquery ? popper[0] : popper;
+
+    // Deep merge modifiers options
+    this.options.modifiers = {};
+    Object.keys(_extends({}, Popper.Defaults.modifiers, options.modifiers)).forEach(function (name) {
+      _this.options.modifiers[name] = _extends({}, Popper.Defaults.modifiers[name] || {}, options.modifiers ? options.modifiers[name] : {});
+    });
+
+    // Refactoring modifiers' list (Object => Array)
+    this.modifiers = Object.keys(this.options.modifiers).map(function (name) {
+      return _extends({
+        name: name
+      }, _this.options.modifiers[name]);
+    })
+    // sort the modifiers by order
+    .sort(function (a, b) {
+      return a.order - b.order;
+    });
+
+    // modifiers have the ability to execute arbitrary code when Popper.js get inited
+    // such code is executed in the same order of its modifier
+    // they could add new properties to their options configuration
+    // BE AWARE: don't add options to `options.modifiers.name` but to `modifierOptions`!
+    this.modifiers.forEach(function (modifierOptions) {
+      if (modifierOptions.enabled && isFunction(modifierOptions.onLoad)) {
+        modifierOptions.onLoad(_this.reference, _this.popper, _this.options, modifierOptions, _this.state);
+      }
+    });
+
+    // fire the first update to position the popper in the right place
+    this.update();
+
+    var eventsEnabled = this.options.eventsEnabled;
+    if (eventsEnabled) {
+      // setup event listeners, they will take care of update the position in specific situations
+      this.enableEventListeners();
+    }
+
+    this.state.eventsEnabled = eventsEnabled;
+  }
+
+  // We can't use class properties because they don't get listed in the
+  // class prototype and break stuff like Sinon stubs
+
+
+  createClass(Popper, [{
+    key: 'update',
+    value: function update$$1() {
+      return update.call(this);
+    }
+  }, {
+    key: 'destroy',
+    value: function destroy$$1() {
+      return destroy.call(this);
+    }
+  }, {
+    key: 'enableEventListeners',
+    value: function enableEventListeners$$1() {
+      return enableEventListeners.call(this);
+    }
+  }, {
+    key: 'disableEventListeners',
+    value: function disableEventListeners$$1() {
+      return disableEventListeners.call(this);
+    }
+
+    /**
+     * Schedule an update, it will run on the next UI update available
+     * @method scheduleUpdate
+     * @memberof Popper
+     */
+
+
+    /**
+     * Collection of utilities useful when writing custom modifiers.
+     * Starting from version 1.7, this method is available only if you
+     * include `popper-utils.js` before `popper.js`.
+     *
+     * **DEPRECATION**: This way to access PopperUtils is deprecated
+     * and will be removed in v2! Use the PopperUtils module directly instead.
+     * Due to the high instability of the methods contained in Utils, we can't
+     * guarantee them to follow semver. Use them at your own risk!
+     * @static
+     * @private
+     * @type {Object}
+     * @deprecated since version 1.8
+     * @member Utils
+     * @memberof Popper
+     */
+
+  }]);
+  return Popper;
+}();
+
+/**
+ * The `referenceObject` is an object that provides an interface compatible with Popper.js
+ * and lets you use it as replacement of a real DOM node.<br />
+ * You can use this method to position a popper relatively to a set of coordinates
+ * in case you don't have a DOM node to use as reference.
+ *
+ * ```
+ * new Popper(referenceObject, popperNode);
+ * ```
+ *
+ * NB: This feature isn't supported in Internet Explorer 10
+ * @name referenceObject
+ * @property {Function} data.getBoundingClientRect
+ * A function that returns a set of coordinates compatible with the native `getBoundingClientRect` method.
+ * @property {number} data.clientWidth
+ * An ES6 getter that will return the width of the virtual reference element.
+ * @property {number} data.clientHeight
+ * An ES6 getter that will return the height of the virtual reference element.
+ */
+
+
+Popper.Utils = (typeof window !== 'undefined' ? window : global).PopperUtils;
+Popper.placements = placements;
+Popper.Defaults = Defaults;
+
+/* harmony default export */ __webpack_exports__["default"] = (Popper);
+//# sourceMappingURL=popper.js.map
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(59)))
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6705,7 +9322,7 @@ exports.default = guid;
 
 
 /***/ }),
-/* 57 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6722,14 +9339,14 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 //Styles
-__webpack_require__(226);
+__webpack_require__(231);
 //Libs
 var React = __webpack_require__(1);
 //Misc
-var BaseInput = __webpack_require__(2);
-var InputGroup_1 = __webpack_require__(4);
+var BaseInput = __webpack_require__(3);
+var InputGroup_1 = __webpack_require__(5);
 var Button_1 = __webpack_require__(7);
-var PlusIcon = __webpack_require__(31);
+var PlusIcon = __webpack_require__(33);
 var Select = /** @class */ (function (_super) {
     __extends(Select, _super);
     function Select(props) {
@@ -6816,7 +9433,7 @@ exports.Select = Select;
 
 
 /***/ }),
-/* 58 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6833,14 +9450,14 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 //Styles
-__webpack_require__(238);
+__webpack_require__(243);
 //import * as arrowSrc from '../assets/images/ic_keyboard_arrow_down_black_24dp_1x.png';
-var ArrowIcon = __webpack_require__(59);
+var ArrowIcon = __webpack_require__(63);
 //Libs
 var React = __webpack_require__(1);
 //Misc
-var BaseInput = __webpack_require__(2);
-var InputGroup_1 = __webpack_require__(4);
+var BaseInput = __webpack_require__(3);
+var InputGroup_1 = __webpack_require__(5);
 var Time = /** @class */ (function (_super) {
     __extends(Time, _super);
     function Time(props) {
@@ -6949,7 +9566,7 @@ exports.default = Time;
 
 
 /***/ }),
-/* 59 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var React = __webpack_require__(1);
@@ -6968,7 +9585,7 @@ IcKeyboardArrowDown24px.default = IcKeyboardArrowDown24px;
 
 
 /***/ }),
-/* 60 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7047,7 +9664,7 @@ return af;
 
 
 /***/ }),
-/* 61 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7195,7 +9812,7 @@ return ar;
 
 
 /***/ }),
-/* 62 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7260,7 +9877,7 @@ return arDz;
 
 
 /***/ }),
-/* 63 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7325,7 +9942,7 @@ return arKw;
 
 
 /***/ }),
-/* 64 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7457,7 +10074,7 @@ return arLy;
 
 
 /***/ }),
-/* 65 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7523,7 +10140,7 @@ return arMa;
 
 
 /***/ }),
-/* 66 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7634,7 +10251,7 @@ return arSa;
 
 
 /***/ }),
-/* 67 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7699,7 +10316,7 @@ return arTn;
 
 
 /***/ }),
-/* 68 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7810,7 +10427,7 @@ return az;
 
 
 /***/ }),
-/* 69 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7950,7 +10567,7 @@ return be;
 
 
 /***/ }),
-/* 70 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8046,7 +10663,7 @@ return bg;
 
 
 /***/ }),
-/* 71 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8111,7 +10728,7 @@ return bm;
 
 
 /***/ }),
-/* 72 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8236,7 +10853,7 @@ return bn;
 
 
 /***/ }),
-/* 73 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8361,7 +10978,7 @@ return bo;
 
 
 /***/ }),
-/* 74 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8475,7 +11092,7 @@ return br;
 
 
 /***/ }),
-/* 75 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8633,7 +11250,7 @@ return bs;
 
 
 /***/ }),
-/* 76 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8727,7 +11344,7 @@ return ca;
 
 
 /***/ }),
-/* 77 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8912,7 +11529,7 @@ return cs;
 
 
 /***/ }),
-/* 78 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8981,7 +11598,7 @@ return cv;
 
 
 /***/ }),
-/* 79 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9068,7 +11685,7 @@ return cy;
 
 
 /***/ }),
-/* 80 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9134,7 +11751,7 @@ return da;
 
 
 /***/ }),
-/* 81 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9218,7 +11835,7 @@ return de;
 
 
 /***/ }),
-/* 82 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9303,7 +11920,7 @@ return deAt;
 
 
 /***/ }),
-/* 83 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9387,7 +12004,7 @@ return deCh;
 
 
 /***/ }),
-/* 84 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9493,7 +12110,7 @@ return dv;
 
 
 /***/ }),
-/* 85 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9599,7 +12216,7 @@ return el;
 
 
 /***/ }),
-/* 86 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9672,7 +12289,7 @@ return enAu;
 
 
 /***/ }),
-/* 87 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9741,7 +12358,7 @@ return enCa;
 
 
 /***/ }),
-/* 88 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9814,7 +12431,7 @@ return enGb;
 
 
 /***/ }),
-/* 89 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9887,7 +12504,7 @@ return enIe;
 
 
 /***/ }),
-/* 90 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9960,7 +12577,7 @@ return enNz;
 
 
 /***/ }),
-/* 91 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10039,7 +12656,7 @@ return eo;
 
 
 /***/ }),
-/* 92 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10137,7 +12754,7 @@ return es;
 
 
 /***/ }),
-/* 93 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10234,7 +12851,7 @@ return esDo;
 
 
 /***/ }),
-/* 94 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10323,7 +12940,7 @@ return esUs;
 
 
 /***/ }),
-/* 95 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10410,7 +13027,7 @@ return et;
 
 
 /***/ }),
-/* 96 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10482,7 +13099,7 @@ return eu;
 
 
 /***/ }),
-/* 97 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10595,7 +13212,7 @@ return fa;
 
 
 /***/ }),
-/* 98 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10710,7 +13327,7 @@ return fi;
 
 
 /***/ }),
-/* 99 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10776,7 +13393,7 @@ return fo;
 
 
 /***/ }),
-/* 100 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10865,7 +13482,7 @@ return fr;
 
 
 /***/ }),
-/* 101 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10945,7 +13562,7 @@ return frCa;
 
 
 /***/ }),
-/* 102 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11029,7 +13646,7 @@ return frCh;
 
 
 /***/ }),
-/* 103 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11110,7 +13727,7 @@ return fy;
 
 
 /***/ }),
-/* 104 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11192,7 +13809,7 @@ return gd;
 
 
 /***/ }),
-/* 105 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11275,7 +13892,7 @@ return gl;
 
 
 /***/ }),
-/* 106 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11404,7 +14021,7 @@ return gomLatn;
 
 
 /***/ }),
-/* 107 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11534,7 +14151,7 @@ return gu;
 
 
 /***/ }),
-/* 108 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11639,7 +14256,7 @@ return he;
 
 
 /***/ }),
-/* 109 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11769,7 +14386,7 @@ return hi;
 
 
 /***/ }),
-/* 110 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11929,7 +14546,7 @@ return hr;
 
 
 /***/ }),
-/* 111 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12045,7 +14662,7 @@ return hu;
 
 
 /***/ }),
-/* 112 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12146,7 +14763,7 @@ return hyAm;
 
 
 /***/ }),
-/* 113 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12235,7 +14852,7 @@ return id;
 
 
 /***/ }),
-/* 114 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12373,7 +14990,7 @@ return is;
 
 
 /***/ }),
-/* 115 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12449,7 +15066,7 @@ return it;
 
 
 /***/ }),
-/* 116 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12535,7 +15152,7 @@ return ja;
 
 
 /***/ }),
-/* 117 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12624,7 +15241,7 @@ return jv;
 
 
 /***/ }),
-/* 118 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12719,7 +15336,7 @@ return ka;
 
 
 /***/ }),
-/* 119 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12812,7 +15429,7 @@ return kk;
 
 
 /***/ }),
-/* 120 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12876,7 +15493,7 @@ return km;
 
 
 /***/ }),
-/* 121 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13008,7 +15625,7 @@ return kn;
 
 
 /***/ }),
-/* 122 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13096,7 +15713,7 @@ return ko;
 
 
 /***/ }),
-/* 123 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13190,7 +15807,7 @@ return ky;
 
 
 /***/ }),
-/* 124 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13333,7 +15950,7 @@ return lb;
 
 
 /***/ }),
-/* 125 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13409,7 +16026,7 @@ return lo;
 
 
 /***/ }),
-/* 126 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13533,7 +16150,7 @@ return lt;
 
 
 /***/ }),
-/* 127 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13637,7 +16254,7 @@ return lv;
 
 
 /***/ }),
-/* 128 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13755,7 +16372,7 @@ return me;
 
 
 /***/ }),
-/* 129 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13825,7 +16442,7 @@ return mi;
 
 
 /***/ }),
-/* 130 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13921,7 +16538,7 @@ return mk;
 
 
 /***/ }),
-/* 131 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14008,7 +16625,7 @@ return ml;
 
 
 /***/ }),
-/* 132 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14175,7 +16792,7 @@ return mr;
 
 
 /***/ }),
-/* 133 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14263,7 +16880,7 @@ return ms;
 
 
 /***/ }),
-/* 134 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14352,7 +16969,7 @@ return msMy;
 
 
 /***/ }),
-/* 135 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14418,7 +17035,7 @@ return mt;
 
 
 /***/ }),
-/* 136 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14520,7 +17137,7 @@ return my;
 
 
 /***/ }),
-/* 137 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14589,7 +17206,7 @@ return nb;
 
 
 /***/ }),
-/* 138 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14718,7 +17335,7 @@ return ne;
 
 
 /***/ }),
-/* 139 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14812,7 +17429,7 @@ return nl;
 
 
 /***/ }),
-/* 140 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14906,7 +17523,7 @@ return nlBe;
 
 
 /***/ }),
-/* 141 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14972,7 +17589,7 @@ return nn;
 
 
 /***/ }),
-/* 142 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15102,7 +17719,7 @@ return paIn;
 
 
 /***/ }),
-/* 143 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15234,7 +17851,7 @@ return pl;
 
 
 /***/ }),
-/* 144 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15305,7 +17922,7 @@ return pt;
 
 
 /***/ }),
-/* 145 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15372,7 +17989,7 @@ return ptBr;
 
 
 /***/ }),
-/* 146 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15454,7 +18071,7 @@ return ro;
 
 
 /***/ }),
-/* 147 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15644,7 +18261,7 @@ return ru;
 
 
 /***/ }),
-/* 148 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15748,7 +18365,7 @@ return sd;
 
 
 /***/ }),
-/* 149 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15815,7 +18432,7 @@ return se;
 
 
 /***/ }),
-/* 150 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15892,7 +18509,7 @@ return si;
 
 
 /***/ }),
-/* 151 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16055,7 +18672,7 @@ return sk;
 
 
 /***/ }),
-/* 152 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16234,7 +18851,7 @@ return sl;
 
 
 /***/ }),
-/* 153 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16310,7 +18927,7 @@ return sq;
 
 
 /***/ }),
-/* 154 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16427,7 +19044,7 @@ return sr;
 
 
 /***/ }),
-/* 155 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16544,7 +19161,7 @@ return srCyrl;
 
 
 /***/ }),
-/* 156 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16639,7 +19256,7 @@ return ss;
 
 
 /***/ }),
-/* 157 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16714,7 +19331,7 @@ return sv;
 
 
 /***/ }),
-/* 158 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16779,7 +19396,7 @@ return sw;
 
 
 /***/ }),
-/* 159 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16915,7 +19532,7 @@ return ta;
 
 
 /***/ }),
-/* 160 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17010,7 +19627,7 @@ return te;
 
 
 /***/ }),
-/* 161 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17084,7 +19701,7 @@ return tet;
 
 
 /***/ }),
-/* 162 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17157,7 +19774,7 @@ return th;
 
 
 /***/ }),
-/* 163 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17225,7 +19842,7 @@ return tlPh;
 
 
 /***/ }),
-/* 164 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17353,7 +19970,7 @@ return tlh;
 
 
 /***/ }),
-/* 165 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17449,7 +20066,7 @@ return tr;
 
 
 /***/ }),
-/* 166 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17547,7 +20164,7 @@ return tzl;
 
 
 /***/ }),
-/* 167 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17611,7 +20228,7 @@ return tzm;
 
 
 /***/ }),
-/* 168 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17675,7 +20292,7 @@ return tzmLatn;
 
 
 /***/ }),
-/* 169 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17833,7 +20450,7 @@ return uk;
 
 
 /***/ }),
-/* 170 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17938,7 +20555,7 @@ return ur;
 
 
 /***/ }),
-/* 171 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18002,7 +20619,7 @@ return uz;
 
 
 /***/ }),
-/* 172 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18066,7 +20683,7 @@ return uzLatn;
 
 
 /***/ }),
-/* 173 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18151,7 +20768,7 @@ return vi;
 
 
 /***/ }),
-/* 174 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18225,7 +20842,7 @@ return xPseudo;
 
 
 /***/ }),
-/* 175 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18291,7 +20908,7 @@ return yo;
 
 
 /***/ }),
-/* 176 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18408,7 +21025,7 @@ return zhCn;
 
 
 /***/ }),
-/* 177 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18519,7 +21136,7 @@ return zhHk;
 
 
 /***/ }),
-/* 178 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18629,7 +21246,7 @@ return zhTw;
 
 
 /***/ }),
-/* 179 */
+/* 183 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -18637,7 +21254,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IGNORE_CLASS_NAME", function() { return IGNORE_CLASS_NAME; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 
 
@@ -18989,34 +21606,7 @@ function onClickOutsideHOC(WrappedComponent, config) {
 
 
 /***/ }),
-/* 180 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 181 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19026,23 +21616,23 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _getPrototypeOf = __webpack_require__(259);
+var _getPrototypeOf = __webpack_require__(266);
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-var _classCallCheck2 = __webpack_require__(264);
+var _classCallCheck2 = __webpack_require__(271);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = __webpack_require__(265);
+var _createClass2 = __webpack_require__(272);
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
-var _possibleConstructorReturn2 = __webpack_require__(269);
+var _possibleConstructorReturn2 = __webpack_require__(276);
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 
-var _inherits2 = __webpack_require__(295);
+var _inherits2 = __webpack_require__(302);
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
@@ -19050,19 +21640,19 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(5);
+var _propTypes = __webpack_require__(20);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _kefir = __webpack_require__(195);
+var _kefir = __webpack_require__(198);
 
 var _kefir2 = _interopRequireDefault(_kefir);
 
-var _kefirBus = __webpack_require__(303);
+var _kefirBus = __webpack_require__(310);
 
 var _kefirBus2 = _interopRequireDefault(_kefirBus);
 
-var _getTransitionTimeMs = __webpack_require__(304);
+var _getTransitionTimeMs = __webpack_require__(311);
 
 var _getTransitionTimeMs2 = _interopRequireDefault(_getTransitionTimeMs);
 
@@ -19229,24 +21819,24 @@ module.exports = exports['default'];
 //# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9pbmRleC5qcyJdLCJuYW1lcyI6WyJTbW9vdGhDb2xsYXBzZSIsInByb3BzIiwiX3Jlc2V0dGVyIiwiX21haW5FbCIsIl9pbm5lckVsIiwiX21haW5FbFNldHRlciIsImVsIiwiX2lubmVyRWxTZXR0ZXIiLCJzdGF0ZSIsImhhc0JlZW5WaXNpYmxlQmVmb3JlIiwiZXhwYW5kZWQiLCJfdmlzaWJsZVdoZW5DbG9zZWQiLCJmdWxseUNsb3NlZCIsImhlaWdodCIsImNvbGxhcHNlZEhlaWdodCIsInBhcnNlRmxvYXQiLCJlbWl0IiwibmV4dFByb3BzIiwic2V0U3RhdGUiLCJtYWluRWwiLCJpbm5lckVsIiwiRXJyb3IiLCJ0YXJnZXRIZWlnaHQiLCJjbGllbnRIZWlnaHQiLCJmcm9tRXZlbnRzIiwibWVyZ2UiLCJsYXRlciIsImhlaWdodFRyYW5zaXRpb24iLCJ0YWtlVW50aWxCeSIsInRha2UiLCJvblZhbHVlIiwib25DaGFuZ2VFbmQiLCJ2aXNpYmxlV2hlbkNsb3NlZCIsIm92ZXJmbG93IiwiY2hpbGRyZW4iLCJkaXNwbGF5IiwidHJhbnNpdGlvbiIsIkNvbXBvbmVudCIsInByb3BUeXBlcyIsImJvb2wiLCJpc1JlcXVpcmVkIiwiZnVuYyIsInN0cmluZyIsImRlZmF1bHRQcm9wcyJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFFQTs7OztBQUNBOzs7O0FBQ0E7Ozs7QUFDQTs7OztBQUVBOzs7Ozs7SUFjcUJBLGM7OztBQXFCbkIsMEJBQVlDLEtBQVosRUFBMEI7QUFBQTs7QUFBQSxzSkFDbEJBLEtBRGtCOztBQUFBLFVBcEIxQkMsU0FvQjBCLEdBcEJkLHlCQW9CYztBQUFBLFVBbkIxQkMsT0FtQjBCLEdBbkJGLElBbUJFO0FBQUEsVUFsQjFCQyxRQWtCMEIsR0FsQkQsSUFrQkM7O0FBQUEsVUFqQjFCQyxhQWlCMEIsR0FqQlYsVUFBQ0MsRUFBRCxFQUFzQjtBQUNwQyxZQUFLSCxPQUFMLEdBQWVHLEVBQWY7QUFDRCxLQWV5Qjs7QUFBQSxVQWQxQkMsY0FjMEIsR0FkVCxVQUFDRCxFQUFELEVBQXNCO0FBQ3JDLFlBQUtGLFFBQUwsR0FBZ0JFLEVBQWhCO0FBQ0QsS0FZeUI7O0FBRXhCLFVBQUtFLEtBQUwsR0FBYTtBQUNYQyw0QkFBc0JSLE1BQU1TLFFBQU4sSUFBa0IsTUFBS0Msa0JBQUwsRUFEN0I7QUFFWEMsbUJBQWEsQ0FBQ1gsTUFBTVMsUUFGVDtBQUdYRyxjQUFRWixNQUFNUyxRQUFOLEdBQWlCLE1BQWpCLEdBQTBCVCxNQUFNYTtBQUg3QixLQUFiO0FBRndCO0FBT3pCOzs7O3VDQUVrQmIsSyxFQUFlO0FBQ2hDLFVBQUksQ0FBQ0EsS0FBTCxFQUFZQSxRQUFRLEtBQUtBLEtBQWI7QUFDWixhQUFPYyxXQUFXZCxNQUFNYSxlQUFqQixNQUFzQyxDQUE3QztBQUNEOzs7MkNBRXNCO0FBQ3JCLFdBQUtaLFNBQUwsQ0FBZWMsSUFBZixDQUFvQixJQUFwQjtBQUNEOzs7OENBRXlCQyxTLEVBQWtCO0FBQUE7O0FBQzFDLFVBQUksQ0FBQyxLQUFLaEIsS0FBTCxDQUFXUyxRQUFaLElBQXdCTyxVQUFVUCxRQUF0QyxFQUFnRDtBQUM5QyxhQUFLUixTQUFMLENBQWVjLElBQWYsQ0FBb0IsSUFBcEI7O0FBRUE7QUFDQTs7QUFFQSxhQUFLRSxRQUFMLENBQWM7QUFDWk4sdUJBQWEsS0FERDtBQUVaSCxnQ0FBc0I7QUFGVixTQUFkLEVBR0csWUFBTTtBQUNQLGNBQU1VLFNBQVMsT0FBS2hCLE9BQXBCO0FBQ0EsY0FBTWlCLFVBQVUsT0FBS2hCLFFBQXJCO0FBQ0EsY0FBSSxDQUFDZSxNQUFELElBQVcsQ0FBQ0MsT0FBaEIsRUFBeUIsTUFBTSxJQUFJQyxLQUFKLENBQVUsbUJBQVYsQ0FBTjs7QUFFekI7QUFDQTtBQUNBO0FBQ0EsY0FBTUMsZUFBa0JGLFFBQVFHLFlBQTFCLE9BQU47QUFDQSxpQkFBS0wsUUFBTCxDQUFjO0FBQ1pMLG9CQUFRUztBQURJLFdBQWQ7O0FBSUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsMEJBQU1FLFVBQU4sQ0FBaUJMLE1BQWpCLEVBQXlCLGVBQXpCLEVBQ0dNLEtBREgsQ0FDUyxnQkFBTUMsS0FBTixDQUFZLG1DQUFvQlQsVUFBVVUsZ0JBQTlCLElBQWdELEdBQWhELEdBQXNELEdBQWxFLENBRFQsRUFFR0MsV0FGSCxDQUVlLE9BQUsxQixTQUZwQixFQUdHMkIsSUFISCxDQUdRLENBSFIsRUFJR0MsT0FKSCxDQUlXLFlBQU07QUFDYixtQkFBS1osUUFBTCxDQUFjO0FBQ1pMLHNCQUFRO0FBREksYUFBZCxFQUVHLFlBQU07QUFDUCxrQkFBSSxPQUFLWixLQUFMLENBQVc4QixXQUFmLEVBQTRCO0FBQzFCLHVCQUFLOUIsS0FBTCxDQUFXOEIsV0FBWDtBQUNEO0FBQ0YsYUFORDtBQU9ELFdBWkg7QUFhRCxTQW5DRDtBQXFDRCxPQTNDRCxNQTJDTyxJQUFJLEtBQUs5QixLQUFMLENBQVdTLFFBQVgsSUFBdUIsQ0FBQ08sVUFBVVAsUUFBdEMsRUFBZ0Q7QUFDckQsYUFBS1IsU0FBTCxDQUFlYyxJQUFmLENBQW9CLElBQXBCOztBQUVBLFlBQUksQ0FBQyxLQUFLWixRQUFWLEVBQW9CLE1BQU0sSUFBSWlCLEtBQUosQ0FBVSxtQkFBVixDQUFOO0FBQ3BCLGFBQUtILFFBQUwsQ0FBYztBQUNaTCxrQkFBVyxLQUFLVCxRQUFMLENBQWNtQixZQUF6QjtBQURZLFNBQWQsRUFFRyxZQUFNO0FBQ1AsY0FBTUosU0FBUyxPQUFLaEIsT0FBcEI7QUFDQSxjQUFJLENBQUNnQixNQUFMLEVBQWEsTUFBTSxJQUFJRSxLQUFKLENBQVUsbUJBQVYsQ0FBTjs7QUFFYkYsaUJBQU9JLFlBQVAsQ0FKTyxDQUljO0FBQ3JCLGlCQUFLTCxRQUFMLENBQWM7QUFDWkwsb0JBQVFJLFVBQVVIO0FBRE4sV0FBZDs7QUFJQTtBQUNBLDBCQUFNVSxVQUFOLENBQWlCTCxNQUFqQixFQUF5QixlQUF6QixFQUNHTSxLQURILENBQ1MsZ0JBQU1DLEtBQU4sQ0FBWSxtQ0FBb0JULFVBQVVVLGdCQUE5QixJQUFnRCxHQUFoRCxHQUFzRCxHQUFsRSxDQURULEVBRUdDLFdBRkgsQ0FFZSxPQUFLMUIsU0FGcEIsRUFHRzJCLElBSEgsQ0FHUSxDQUhSLEVBSUdDLE9BSkgsQ0FJVyxZQUFNO0FBQ2IsbUJBQUtaLFFBQUwsQ0FBYztBQUNaTiwyQkFBYTtBQURELGFBQWQ7QUFHQSxnQkFBSSxPQUFLWCxLQUFMLENBQVc4QixXQUFmLEVBQTRCO0FBQzFCLHFCQUFLOUIsS0FBTCxDQUFXOEIsV0FBWDtBQUNEO0FBQ0YsV0FYSDtBQVlELFNBeEJEO0FBeUJELE9BN0JNLE1BNkJBLElBQUksQ0FBQ2QsVUFBVVAsUUFBWCxJQUF1QixLQUFLVCxLQUFMLENBQVdhLGVBQVgsS0FBK0JHLFVBQVVILGVBQXBFLEVBQXFGO0FBQzFGLGFBQUtJLFFBQUwsQ0FBYztBQUNaVCxnQ0FDRSxLQUFLRCxLQUFMLENBQVdDLG9CQUFYLElBQW1DLEtBQUtFLGtCQUFMLENBQXdCTSxTQUF4QixDQUZ6QjtBQUdaSixrQkFBUUksVUFBVUg7QUFITixTQUFkO0FBS0Q7QUFDRjs7OzZCQUVRO0FBQ1AsVUFBTWtCLG9CQUFvQixLQUFLckIsa0JBQUwsRUFBMUI7QUFETyxtQkFFNkMsS0FBS0gsS0FGbEQ7QUFBQSxVQUVBSyxNQUZBLFVBRUFBLE1BRkE7QUFBQSxVQUVRRCxXQUZSLFVBRVFBLFdBRlI7QUFBQSxVQUVxQkgsb0JBRnJCLFVBRXFCQSxvQkFGckI7O0FBR1AsVUFBTVcsVUFBVVgsdUJBQ2Q7QUFBQTtBQUFBLFVBQUssS0FBSyxLQUFLRixjQUFmLEVBQStCLE9BQU8sRUFBQzBCLFVBQVUsUUFBWCxFQUF0QztBQUNLLGFBQUtoQyxLQUFOLENBQWlCaUM7QUFEckIsT0FEYyxHQUlaLElBSko7O0FBTUEsYUFDRTtBQUFBO0FBQUE7QUFDRSxlQUFLLEtBQUs3QixhQURaO0FBRUUsaUJBQU87QUFDTFEsMEJBREssRUFDR29CLFVBQVUsUUFEYjtBQUVMRSxxQkFBVXZCLGVBQWUsQ0FBQ29CLGlCQUFqQixHQUFzQyxNQUF0QyxHQUE4QyxJQUZsRDtBQUdMSSxvQ0FBc0IsS0FBS25DLEtBQUwsQ0FBVzBCO0FBSDVCO0FBRlQ7QUFRR1A7QUFSSCxPQURGO0FBWUQ7OztFQTlJeUMsZ0JBQU1pQixTOztBQUE3QnJDLGMsQ0FVWnNDLFMsR0FBWTtBQUNqQjVCLFlBQVUsb0JBQVU2QixJQUFWLENBQWVDLFVBRFI7QUFFakJULGVBQWEsb0JBQVVVLElBRk47QUFHakIzQixtQkFBaUIsb0JBQVU0QixNQUhWO0FBSWpCZixvQkFBa0Isb0JBQVVlO0FBSlgsQztBQVZBMUMsYyxDQWdCWjJDLFksR0FBZTtBQUNwQjdCLG1CQUFpQixHQURHO0FBRXBCYSxvQkFBa0I7QUFGRSxDO2tCQWhCSDNCLGMiLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VzQ29udGVudCI6WyIvKiBAZmxvdyAqL1xuXG5pbXBvcnQgUmVhY3QgZnJvbSAncmVhY3QnO1xuaW1wb3J0IFByb3BUeXBlcyBmcm9tICdwcm9wLXR5cGVzJztcbmltcG9ydCBLZWZpciBmcm9tICdrZWZpcic7XG5pbXBvcnQga2VmaXJCdXMgZnJvbSAna2VmaXItYnVzJztcblxuaW1wb3J0IGdldFRyYW5zaXRpb25UaW1lTXMgZnJvbSAnLi9nZXRUcmFuc2l0aW9uVGltZU1zJztcblxuZXhwb3J0IHR5cGUgUHJvcHMgPSB7XG4gIGV4cGFuZGVkOiBib29sZWFuO1xuICBvbkNoYW5nZUVuZD86ID8oKSA9PiB2b2lkO1xuICBjb2xsYXBzZWRIZWlnaHQ6IHN0cmluZztcbiAgaGVpZ2h0VHJhbnNpdGlvbjogc3RyaW5nO1xufTtcbnR5cGUgU3RhdGUgPSB7XG4gIGhhc0JlZW5WaXNpYmxlQmVmb3JlOiBib29sZWFuO1xuICBmdWxseUNsb3NlZDogYm9vbGVhbjtcbiAgaGVpZ2h0OiBzdHJpbmc7XG59O1xuXG5leHBvcnQgZGVmYXVsdCBjbGFzcyBTbW9vdGhDb2xsYXBzZSBleHRlbmRzIFJlYWN0LkNvbXBvbmVudDxQcm9wcyxTdGF0ZT4ge1xuICBfcmVzZXR0ZXIgPSBrZWZpckJ1cygpO1xuICBfbWFpbkVsOiA/SFRNTEVsZW1lbnQgPSBudWxsO1xuICBfaW5uZXJFbDogP0hUTUxFbGVtZW50ID0gbnVsbDtcbiAgX21haW5FbFNldHRlciA9IChlbDogP0hUTUxFbGVtZW50KSA9PiB7XG4gICAgdGhpcy5fbWFpbkVsID0gZWw7XG4gIH07XG4gIF9pbm5lckVsU2V0dGVyID0gKGVsOiA/SFRNTEVsZW1lbnQpID0+IHtcbiAgICB0aGlzLl9pbm5lckVsID0gZWw7XG4gIH07XG4gIHN0YXRpYyBwcm9wVHlwZXMgPSB7XG4gICAgZXhwYW5kZWQ6IFByb3BUeXBlcy5ib29sLmlzUmVxdWlyZWQsXG4gICAgb25DaGFuZ2VFbmQ6IFByb3BUeXBlcy5mdW5jLFxuICAgIGNvbGxhcHNlZEhlaWdodDogUHJvcFR5cGVzLnN0cmluZyxcbiAgICBoZWlnaHRUcmFuc2l0aW9uOiBQcm9wVHlwZXMuc3RyaW5nXG4gIH07XG4gIHN0YXRpYyBkZWZhdWx0UHJvcHMgPSB7XG4gICAgY29sbGFwc2VkSGVpZ2h0OiAnMCcsXG4gICAgaGVpZ2h0VHJhbnNpdGlvbjogJy4yNXMgZWFzZSdcbiAgfTtcblxuICBjb25zdHJ1Y3Rvcihwcm9wczogUHJvcHMpIHtcbiAgICBzdXBlcihwcm9wcyk7XG4gICAgdGhpcy5zdGF0ZSA9IHtcbiAgICAgIGhhc0JlZW5WaXNpYmxlQmVmb3JlOiBwcm9wcy5leHBhbmRlZCB8fCB0aGlzLl92aXNpYmxlV2hlbkNsb3NlZCgpLFxuICAgICAgZnVsbHlDbG9zZWQ6ICFwcm9wcy5leHBhbmRlZCxcbiAgICAgIGhlaWdodDogcHJvcHMuZXhwYW5kZWQgPyAnYXV0bycgOiBwcm9wcy5jb2xsYXBzZWRIZWlnaHRcbiAgICB9O1xuICB9XG5cbiAgX3Zpc2libGVXaGVuQ2xvc2VkKHByb3BzOiA/UHJvcHMpIHtcbiAgICBpZiAoIXByb3BzKSBwcm9wcyA9IHRoaXMucHJvcHM7XG4gICAgcmV0dXJuIHBhcnNlRmxvYXQocHJvcHMuY29sbGFwc2VkSGVpZ2h0KSAhPT0gMDtcbiAgfVxuXG4gIGNvbXBvbmVudFdpbGxVbm1vdW50KCkge1xuICAgIHRoaXMuX3Jlc2V0dGVyLmVtaXQobnVsbCk7XG4gIH1cblxuICBjb21wb25lbnRXaWxsUmVjZWl2ZVByb3BzKG5leHRQcm9wczogUHJvcHMpIHtcbiAgICBpZiAoIXRoaXMucHJvcHMuZXhwYW5kZWQgJiYgbmV4dFByb3BzLmV4cGFuZGVkKSB7XG4gICAgICB0aGlzLl9yZXNldHRlci5lbWl0KG51bGwpO1xuXG4gICAgICAvLyBJbiBvcmRlciB0byBleHBhbmQsIHdlIG5lZWQgdG8ga25vdyB0aGUgaGVpZ2h0IG9mIHRoZSBjaGlsZHJlbiwgc28gd2VcbiAgICAgIC8vIG5lZWQgdG8gc2V0U3RhdGUgZmlyc3Qgc28gdGhleSBnZXQgcmVuZGVyZWQgYmVmb3JlIHdlIGNvbnRpbnVlLlxuXG4gICAgICB0aGlzLnNldFN0YXRlKHtcbiAgICAgICAgZnVsbHlDbG9zZWQ6IGZhbHNlLFxuICAgICAgICBoYXNCZWVuVmlzaWJsZUJlZm9yZTogdHJ1ZVxuICAgICAgfSwgKCkgPT4ge1xuICAgICAgICBjb25zdCBtYWluRWwgPSB0aGlzLl9tYWluRWw7XG4gICAgICAgIGNvbnN0IGlubmVyRWwgPSB0aGlzLl9pbm5lckVsO1xuICAgICAgICBpZiAoIW1haW5FbCB8fCAhaW5uZXJFbCkgdGhyb3cgbmV3IEVycm9yKCdTaG91bGQgbm90IGhhcHBlbicpO1xuXG4gICAgICAgIC8vIFNldCB0aGUgY29sbGFwc2VyIHRvIHRoZSB0YXJnZXQgaGVpZ2h0IGluc3RlYWQgb2YgYXV0byBzbyB0aGF0IGl0XG4gICAgICAgIC8vIGFuaW1hdGVzIGNvcnJlY3RseS4gVGhlbiBzd2l0Y2ggaXQgdG8gJ2F1dG8nIGFmdGVyIHRoZSBhbmltYXRpb24gc29cbiAgICAgICAgLy8gdGhhdCBpdCBmbG93cyBjb3JyZWN0bHkgaWYgdGhlIHBhZ2UgaXMgcmVzaXplZC5cbiAgICAgICAgY29uc3QgdGFyZ2V0SGVpZ2h0ID0gYCR7aW5uZXJFbC5jbGllbnRIZWlnaHR9cHhgO1xuICAgICAgICB0aGlzLnNldFN0YXRlKHtcbiAgICAgICAgICBoZWlnaHQ6IHRhcmdldEhlaWdodFxuICAgICAgICB9KTtcblxuICAgICAgICAvLyBXYWl0IHVudGlsIHRoZSB0cmFuc2l0aW9uZW5kIGV2ZW50LCBvciB1bnRpbCBhIHRpbWVyIGdvZXMgb2ZmIGluXG4gICAgICAgIC8vIGNhc2UgdGhlIGV2ZW50IGRvZXNuJ3QgZmlyZSBiZWNhdXNlIHRoZSBicm93c2VyIGRvZXNuJ3Qgc3VwcG9ydCBpdFxuICAgICAgICAvLyBvciB0aGUgZWxlbWVudCBpcyBoaWRkZW4gYmVmb3JlIGl0IGhhcHBlbnMuIFRoZSB0aW1lciBpcyBhIGxpdHRsZVxuICAgICAgICAvLyBsb25nZXIgdGhhbiB0aGUgdHJhbnNpdGlvbiBpcyBzdXBwb3NlZCB0byB0YWtlIHRvIG1ha2Ugc3VyZSB3ZSBkb24ndFxuICAgICAgICAvLyBjdXQgdGhlIGFuaW1hdGlvbiBlYXJseSB3aGlsZSBpdCdzIHN0aWxsIGdvaW5nIGlmIHRoZSBicm93c2VyIGlzXG4gICAgICAgIC8vIHJ1bm5pbmcgaXQganVzdCBhIGxpdHRsZSBzbG93LlxuICAgICAgICBLZWZpci5mcm9tRXZlbnRzKG1haW5FbCwgJ3RyYW5zaXRpb25lbmQnKVxuICAgICAgICAgIC5tZXJnZShLZWZpci5sYXRlcihnZXRUcmFuc2l0aW9uVGltZU1zKG5leHRQcm9wcy5oZWlnaHRUcmFuc2l0aW9uKSoxLjEgKyA1MDApKVxuICAgICAgICAgIC50YWtlVW50aWxCeSh0aGlzLl9yZXNldHRlcilcbiAgICAgICAgICAudGFrZSgxKVxuICAgICAgICAgIC5vblZhbHVlKCgpID0+IHtcbiAgICAgICAgICAgIHRoaXMuc2V0U3RhdGUoe1xuICAgICAgICAgICAgICBoZWlnaHQ6ICdhdXRvJ1xuICAgICAgICAgICAgfSwgKCkgPT4ge1xuICAgICAgICAgICAgICBpZiAodGhpcy5wcm9wcy5vbkNoYW5nZUVuZCkge1xuICAgICAgICAgICAgICAgIHRoaXMucHJvcHMub25DaGFuZ2VFbmQoKTtcbiAgICAgICAgICAgICAgfVxuICAgICAgICAgICAgfSk7XG4gICAgICAgICAgfSk7XG4gICAgICB9KTtcblxuICAgIH0gZWxzZSBpZiAodGhpcy5wcm9wcy5leHBhbmRlZCAmJiAhbmV4dFByb3BzLmV4cGFuZGVkKSB7XG4gICAgICB0aGlzLl9yZXNldHRlci5lbWl0KG51bGwpO1xuXG4gICAgICBpZiAoIXRoaXMuX2lubmVyRWwpIHRocm93IG5ldyBFcnJvcignU2hvdWxkIG5vdCBoYXBwZW4nKTtcbiAgICAgIHRoaXMuc2V0U3RhdGUoe1xuICAgICAgICBoZWlnaHQ6IGAke3RoaXMuX2lubmVyRWwuY2xpZW50SGVpZ2h0fXB4YFxuICAgICAgfSwgKCkgPT4ge1xuICAgICAgICBjb25zdCBtYWluRWwgPSB0aGlzLl9tYWluRWw7XG4gICAgICAgIGlmICghbWFpbkVsKSB0aHJvdyBuZXcgRXJyb3IoJ1Nob3VsZCBub3QgaGFwcGVuJyk7XG5cbiAgICAgICAgbWFpbkVsLmNsaWVudEhlaWdodDsgLy8gZm9yY2UgdGhlIHBhZ2UgbGF5b3V0XG4gICAgICAgIHRoaXMuc2V0U3RhdGUoe1xuICAgICAgICAgIGhlaWdodDogbmV4dFByb3BzLmNvbGxhcHNlZEhlaWdodFxuICAgICAgICB9KTtcblxuICAgICAgICAvLyBTZWUgY29tbWVudCBhYm92ZSBhYm91dCBwcmV2aW91cyB1c2Ugb2YgdHJhbnNpdGlvbmVuZCBldmVudC5cbiAgICAgICAgS2VmaXIuZnJvbUV2ZW50cyhtYWluRWwsICd0cmFuc2l0aW9uZW5kJylcbiAgICAgICAgICAubWVyZ2UoS2VmaXIubGF0ZXIoZ2V0VHJhbnNpdGlvblRpbWVNcyhuZXh0UHJvcHMuaGVpZ2h0VHJhbnNpdGlvbikqMS4xICsgNTAwKSlcbiAgICAgICAgICAudGFrZVVudGlsQnkodGhpcy5fcmVzZXR0ZXIpXG4gICAgICAgICAgLnRha2UoMSlcbiAgICAgICAgICAub25WYWx1ZSgoKSA9PiB7XG4gICAgICAgICAgICB0aGlzLnNldFN0YXRlKHtcbiAgICAgICAgICAgICAgZnVsbHlDbG9zZWQ6IHRydWVcbiAgICAgICAgICAgIH0pO1xuICAgICAgICAgICAgaWYgKHRoaXMucHJvcHMub25DaGFuZ2VFbmQpIHtcbiAgICAgICAgICAgICAgdGhpcy5wcm9wcy5vbkNoYW5nZUVuZCgpO1xuICAgICAgICAgICAgfVxuICAgICAgICAgIH0pO1xuICAgICAgfSk7XG4gICAgfSBlbHNlIGlmICghbmV4dFByb3BzLmV4cGFuZGVkICYmIHRoaXMucHJvcHMuY29sbGFwc2VkSGVpZ2h0ICE9PSBuZXh0UHJvcHMuY29sbGFwc2VkSGVpZ2h0KSB7XG4gICAgICB0aGlzLnNldFN0YXRlKHtcbiAgICAgICAgaGFzQmVlblZpc2libGVCZWZvcmU6XG4gICAgICAgICAgdGhpcy5zdGF0ZS5oYXNCZWVuVmlzaWJsZUJlZm9yZSB8fCB0aGlzLl92aXNpYmxlV2hlbkNsb3NlZChuZXh0UHJvcHMpLFxuICAgICAgICBoZWlnaHQ6IG5leHRQcm9wcy5jb2xsYXBzZWRIZWlnaHRcbiAgICAgIH0pO1xuICAgIH1cbiAgfVxuXG4gIHJlbmRlcigpIHtcbiAgICBjb25zdCB2aXNpYmxlV2hlbkNsb3NlZCA9IHRoaXMuX3Zpc2libGVXaGVuQ2xvc2VkKCk7XG4gICAgY29uc3Qge2hlaWdodCwgZnVsbHlDbG9zZWQsIGhhc0JlZW5WaXNpYmxlQmVmb3JlfSA9IHRoaXMuc3RhdGU7XG4gICAgY29uc3QgaW5uZXJFbCA9IGhhc0JlZW5WaXNpYmxlQmVmb3JlID9cbiAgICAgIDxkaXYgcmVmPXt0aGlzLl9pbm5lckVsU2V0dGVyfSBzdHlsZT17e292ZXJmbG93OiAnaGlkZGVuJ319PlxuICAgICAgICB7ICh0aGlzLnByb3BzOmFueSkuY2hpbGRyZW4gfVxuICAgICAgPC9kaXY+XG4gICAgICA6IG51bGw7XG5cbiAgICByZXR1cm4gKFxuICAgICAgPGRpdlxuICAgICAgICByZWY9e3RoaXMuX21haW5FbFNldHRlcn1cbiAgICAgICAgc3R5bGU9e3tcbiAgICAgICAgICBoZWlnaHQsIG92ZXJmbG93OiAnaGlkZGVuJyxcbiAgICAgICAgICBkaXNwbGF5OiAoZnVsbHlDbG9zZWQgJiYgIXZpc2libGVXaGVuQ2xvc2VkKSA/ICdub25lJzogbnVsbCxcbiAgICAgICAgICB0cmFuc2l0aW9uOiBgaGVpZ2h0ICR7dGhpcy5wcm9wcy5oZWlnaHRUcmFuc2l0aW9ufWBcbiAgICAgICAgfX1cbiAgICAgID5cbiAgICAgICAge2lubmVyRWx9XG4gICAgICA8L2Rpdj5cbiAgICApO1xuICB9XG59XG4iXX0=
 
 /***/ }),
-/* 182 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
-var defined = __webpack_require__(33);
+var defined = __webpack_require__(36);
 module.exports = function (it) {
   return Object(defined(it));
 };
 
 
 /***/ }),
-/* 183 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has = __webpack_require__(10);
-var toObject = __webpack_require__(182);
-var IE_PROTO = __webpack_require__(34)('IE_PROTO');
+var toObject = __webpack_require__(185);
+var IE_PROTO = __webpack_require__(37)('IE_PROTO');
 var ObjectProto = Object.prototype;
 
 module.exports = Object.getPrototypeOf || function (O) {
@@ -19259,11 +21849,11 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 
 /***/ }),
-/* 184 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // optional / simple context binding
-var aFunction = __webpack_require__(263);
+var aFunction = __webpack_require__(270);
 module.exports = function (fn, that, length) {
   aFunction(fn);
   if (that === undefined) return fn;
@@ -19285,19 +21875,19 @@ module.exports = function (fn, that, length) {
 
 
 /***/ }),
-/* 185 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = !__webpack_require__(12) && !__webpack_require__(21)(function () {
-  return Object.defineProperty(__webpack_require__(186)('div'), 'a', { get: function () { return 7; } }).a != 7;
+module.exports = !__webpack_require__(12) && !__webpack_require__(22)(function () {
+  return Object.defineProperty(__webpack_require__(189)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
 
 /***/ }),
-/* 186 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(15);
+var isObject = __webpack_require__(17);
 var document = __webpack_require__(8).document;
 // typeof document.createElement is 'object' in old IE
 var is = isObject(document) && isObject(document.createElement);
@@ -19307,7 +21897,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 187 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19315,11 +21905,11 @@ module.exports = function (it) {
 
 exports.__esModule = true;
 
-var _iterator = __webpack_require__(270);
+var _iterator = __webpack_require__(277);
 
 var _iterator2 = _interopRequireDefault(_iterator);
 
-var _symbol = __webpack_require__(285);
+var _symbol = __webpack_require__(292);
 
 var _symbol2 = _interopRequireDefault(_symbol);
 
@@ -19334,21 +21924,21 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 };
 
 /***/ }),
-/* 188 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var LIBRARY = __webpack_require__(38);
-var $export = __webpack_require__(13);
-var redefine = __webpack_require__(189);
-var hide = __webpack_require__(14);
+var LIBRARY = __webpack_require__(41);
+var $export = __webpack_require__(15);
+var redefine = __webpack_require__(192);
+var hide = __webpack_require__(16);
 var has = __webpack_require__(10);
-var Iterators = __webpack_require__(39);
-var $iterCreate = __webpack_require__(274);
-var setToStringTag = __webpack_require__(43);
-var getPrototypeOf = __webpack_require__(183);
-var ITERATOR = __webpack_require__(17)('iterator');
+var Iterators = __webpack_require__(42);
+var $iterCreate = __webpack_require__(281);
+var setToStringTag = __webpack_require__(46);
+var getPrototypeOf = __webpack_require__(186);
+var ITERATOR = __webpack_require__(19)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
 var KEYS = 'keys';
@@ -19411,20 +22001,20 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 
 /***/ }),
-/* 189 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(14);
+module.exports = __webpack_require__(16);
 
 
 /***/ }),
-/* 190 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var has = __webpack_require__(10);
-var toIObject = __webpack_require__(16);
-var arrayIndexOf = __webpack_require__(277)(false);
-var IE_PROTO = __webpack_require__(34)('IE_PROTO');
+var toIObject = __webpack_require__(18);
+var arrayIndexOf = __webpack_require__(284)(false);
+var IE_PROTO = __webpack_require__(37)('IE_PROTO');
 
 module.exports = function (object, names) {
   var O = toIObject(object);
@@ -19441,7 +22031,7 @@ module.exports = function (object, names) {
 
 
 /***/ }),
-/* 191 */
+/* 194 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -19452,19 +22042,19 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 192 */
+/* 195 */
 /***/ (function(module, exports) {
 
 exports.f = Object.getOwnPropertySymbols;
 
 
 /***/ }),
-/* 193 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-var $keys = __webpack_require__(190);
-var hiddenKeys = __webpack_require__(42).concat('length', 'prototype');
+var $keys = __webpack_require__(193);
+var hiddenKeys = __webpack_require__(45).concat('length', 'prototype');
 
 exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
   return $keys(O, hiddenKeys);
@@ -19472,15 +22062,15 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 
 
 /***/ }),
-/* 194 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pIE = __webpack_require__(46);
-var createDesc = __webpack_require__(25);
-var toIObject = __webpack_require__(16);
-var toPrimitive = __webpack_require__(36);
+var pIE = __webpack_require__(49);
+var createDesc = __webpack_require__(26);
+var toIObject = __webpack_require__(18);
+var toPrimitive = __webpack_require__(39);
 var has = __webpack_require__(10);
-var IE8_DOM_DEFINE = __webpack_require__(185);
+var IE8_DOM_DEFINE = __webpack_require__(188);
 var gOPD = Object.getOwnPropertyDescriptor;
 
 exports.f = __webpack_require__(12) ? gOPD : function getOwnPropertyDescriptor(O, P) {
@@ -19494,7 +22084,7 @@ exports.f = __webpack_require__(12) ? gOPD : function getOwnPropertyDescriptor(O
 
 
 /***/ }),
-/* 195 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/*! Kefir.js v3.8.1
@@ -23195,10 +25785,10 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(180)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(59)))
 
 /***/ }),
-/* 196 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23215,11 +25805,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 // Styles
-__webpack_require__(305);
+__webpack_require__(312);
 // Libs
 var React = __webpack_require__(1);
 try {
-    var SmoothCollapse = __webpack_require__(181);
+    var SmoothCollapse = __webpack_require__(184);
 }
 catch (_a) {
     SmoothCollapse = undefined;
@@ -23298,20 +25888,21 @@ exports.default = Dropdown;
 
 
 /***/ }),
-/* 197 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 // Styles 
-__webpack_require__(198);
+__webpack_require__(201);
+__webpack_require__(202);
 // Libs
 var React = __webpack_require__(1);
-var react_dom_1 = __webpack_require__(47);
+var react_dom_1 = __webpack_require__(29);
 // Misc
-var Basic_1 = __webpack_require__(209);
-var Header_1 = __webpack_require__(312);
+var Basic_1 = __webpack_require__(213);
+var Header_1 = __webpack_require__(319);
 var App = function () { return (React.createElement("div", null,
     React.createElement(Header_1.default, null),
     React.createElement(Basic_1.default, null))); };
@@ -23319,13 +25910,19 @@ react_dom_1.render(React.createElement(App, null), document.getElementById('reac
 
 
 /***/ }),
-/* 198 */
+/* 201 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 199 */
+/* 202 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23338,7 +25935,7 @@ react_dom_1.render(React.createElement(App, null), document.getElementById('reac
  * LICENSE file in the root directory of this source tree.
  */
 
-var m=__webpack_require__(18),n=__webpack_require__(22),p=__webpack_require__(6),q="function"===typeof Symbol&&Symbol["for"],r=q?Symbol["for"]("react.element"):60103,t=q?Symbol["for"]("react.call"):60104,u=q?Symbol["for"]("react.return"):60105,v=q?Symbol["for"]("react.portal"):60106,w=q?Symbol["for"]("react.fragment"):60107,x="function"===typeof Symbol&&Symbol.iterator;
+var m=__webpack_require__(13),n=__webpack_require__(23),p=__webpack_require__(4),q="function"===typeof Symbol&&Symbol["for"],r=q?Symbol["for"]("react.element"):60103,t=q?Symbol["for"]("react.call"):60104,u=q?Symbol["for"]("react.return"):60105,v=q?Symbol["for"]("react.portal"):60106,w=q?Symbol["for"]("react.fragment"):60107,x="function"===typeof Symbol&&Symbol.iterator;
 function y(a){for(var b=arguments.length-1,e="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,c=0;c<b;c++)e+="\x26args[]\x3d"+encodeURIComponent(arguments[c+1]);b=Error(e+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}
 var z={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}};function A(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}A.prototype.isReactComponent={};A.prototype.setState=function(a,b){"object"!==typeof a&&"function"!==typeof a&&null!=a?y("85"):void 0;this.updater.enqueueSetState(this,a,b,"setState")};A.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};
 function B(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}function C(){}C.prototype=A.prototype;var D=B.prototype=new C;D.constructor=B;m(D,A.prototype);D.isPureReactComponent=!0;function E(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}var F=E.prototype=new C;F.constructor=E;m(F,A.prototype);F.unstable_isAsyncReactComponent=!0;F.render=function(){return this.props.children};var G={current:null},H=Object.prototype.hasOwnProperty,I={key:!0,ref:!0,__self:!0,__source:!0};
@@ -23353,7 +25950,7 @@ isValidElement:K,version:"16.2.0",__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_F
 
 
 /***/ }),
-/* 200 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23374,12 +25971,12 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(18);
-var emptyObject = __webpack_require__(22);
-var invariant = __webpack_require__(19);
-var warning = __webpack_require__(23);
-var emptyFunction = __webpack_require__(6);
-var checkPropTypes = __webpack_require__(26);
+var _assign = __webpack_require__(13);
+var emptyObject = __webpack_require__(23);
+var invariant = __webpack_require__(6);
+var warning = __webpack_require__(14);
+var emptyFunction = __webpack_require__(4);
+var checkPropTypes = __webpack_require__(27);
 
 // TODO: this is special because it gets imported during build.
 
@@ -24715,10 +27312,10 @@ module.exports = react;
   })();
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 201 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24734,7 +27331,7 @@ module.exports = react;
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(1),l=__webpack_require__(48),B=__webpack_require__(18),C=__webpack_require__(6),ba=__webpack_require__(49),da=__webpack_require__(50),ea=__webpack_require__(51),fa=__webpack_require__(52),ia=__webpack_require__(53),D=__webpack_require__(22);
+var aa=__webpack_require__(1),l=__webpack_require__(50),B=__webpack_require__(13),C=__webpack_require__(4),ba=__webpack_require__(51),da=__webpack_require__(52),ea=__webpack_require__(53),fa=__webpack_require__(54),ia=__webpack_require__(55),D=__webpack_require__(23);
 function E(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:E("227");
 var oa={children:!0,dangerouslySetInnerHTML:!0,defaultValue:!0,defaultChecked:!0,innerHTML:!0,suppressContentEditableWarning:!0,suppressHydrationWarning:!0,style:!0};function pa(a,b){return(a&b)===b}
 var ta={MUST_USE_PROPERTY:1,HAS_BOOLEAN_VALUE:4,HAS_NUMERIC_VALUE:8,HAS_POSITIVE_NUMERIC_VALUE:24,HAS_OVERLOADED_BOOLEAN_VALUE:32,HAS_STRING_BOOLEAN_VALUE:64,injectDOMPropertyConfig:function(a){var b=ta,c=a.Properties||{},d=a.DOMAttributeNamespaces||{},e=a.DOMAttributeNames||{};a=a.DOMMutationMethods||{};for(var f in c){ua.hasOwnProperty(f)?E("48",f):void 0;var g=f.toLowerCase(),h=c[f];g={attributeName:g,attributeNamespace:null,propertyName:f,mutationMethod:null,mustUseProperty:pa(h,b.MUST_USE_PROPERTY),
@@ -24954,7 +27551,7 @@ Z.injectIntoDevTools({findFiberByHostInstance:pb,bundleType:0,version:"16.2.0",r
 
 
 /***/ }),
-/* 202 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24969,7 +27566,7 @@ Z.injectIntoDevTools({findFiberByHostInstance:pb,bundleType:0,version:"16.2.0",r
  * @typechecks
  */
 
-var isNode = __webpack_require__(203);
+var isNode = __webpack_require__(207);
 
 /**
  * @param {*} object The object to check.
@@ -24982,7 +27579,7 @@ function isTextNode(object) {
 module.exports = isTextNode;
 
 /***/ }),
-/* 203 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25010,7 +27607,7 @@ function isNode(object) {
 module.exports = isNode;
 
 /***/ }),
-/* 204 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25032,20 +27629,20 @@ if (process.env.NODE_ENV !== "production") {
 'use strict';
 
 var React = __webpack_require__(1);
-var invariant = __webpack_require__(19);
-var warning = __webpack_require__(23);
-var ExecutionEnvironment = __webpack_require__(48);
-var _assign = __webpack_require__(18);
-var emptyFunction = __webpack_require__(6);
-var EventListener = __webpack_require__(49);
-var getActiveElement = __webpack_require__(50);
-var shallowEqual = __webpack_require__(51);
-var containsNode = __webpack_require__(52);
-var focusNode = __webpack_require__(53);
-var emptyObject = __webpack_require__(22);
-var checkPropTypes = __webpack_require__(26);
-var hyphenateStyleName = __webpack_require__(205);
-var camelizeStyleName = __webpack_require__(207);
+var invariant = __webpack_require__(6);
+var warning = __webpack_require__(14);
+var ExecutionEnvironment = __webpack_require__(50);
+var _assign = __webpack_require__(13);
+var emptyFunction = __webpack_require__(4);
+var EventListener = __webpack_require__(51);
+var getActiveElement = __webpack_require__(52);
+var shallowEqual = __webpack_require__(53);
+var containsNode = __webpack_require__(54);
+var focusNode = __webpack_require__(55);
+var emptyObject = __webpack_require__(23);
+var checkPropTypes = __webpack_require__(27);
+var hyphenateStyleName = __webpack_require__(209);
+var camelizeStyleName = __webpack_require__(211);
 
 /**
  * WARNING: DO NOT manually require this module.
@@ -40409,10 +43006,10 @@ module.exports = reactDom;
   })();
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 205 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40427,7 +43024,7 @@ module.exports = reactDom;
 
 
 
-var hyphenate = __webpack_require__(206);
+var hyphenate = __webpack_require__(210);
 
 var msPattern = /^ms-/;
 
@@ -40454,7 +43051,7 @@ function hyphenateStyleName(string) {
 module.exports = hyphenateStyleName;
 
 /***/ }),
-/* 206 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40490,7 +43087,7 @@ function hyphenate(string) {
 module.exports = hyphenate;
 
 /***/ }),
-/* 207 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40505,7 +43102,7 @@ module.exports = hyphenate;
 
 
 
-var camelize = __webpack_require__(208);
+var camelize = __webpack_require__(212);
 
 var msPattern = /^-ms-/;
 
@@ -40533,7 +43130,7 @@ function camelizeStyleName(string) {
 module.exports = camelizeStyleName;
 
 /***/ }),
-/* 208 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40568,7 +43165,7 @@ function camelize(string) {
 module.exports = camelize;
 
 /***/ }),
-/* 209 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40585,7 +43182,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(1);
-var index_1 = __webpack_require__(210);
+var index_1 = __webpack_require__(214);
 var AgeValidator = /** @class */ (function () {
     function AgeValidator() {
     }
@@ -40739,6 +43336,11 @@ var Basic = /** @class */ (function (_super) {
                                     React.createElement(index_1.Checkbox, { required: true, label: "Smart", onChecked: function (e) { return _this.setState({ checkbox1: !_this.state.checkbox1 }); }, checked: this.state.checkbox1, title: "Dress code" }),
                                     React.createElement(index_1.Checkbox, { label: "(optional)", onChecked: function (e) { return _this.setState({ checkbox2: !_this.state.checkbox2 }); }, checked: this.state.checkbox2, title: "Wallet parking" }),
                                     React.createElement(index_1.Text, { touchOn: this.state.touchOn, required: true, label: "Your name", onChange: function (e) { return _this.setState({ name: e.target.value }); }, value: this.state.name, title: "Name" }),
+                                    React.createElement("div", { className: "px-3" },
+                                        React.createElement(index_1.Text, { touchOn: this.state.touchOn, required: true, label: "Your name (no title)", onChange: function (e) { return _this.setState({ name: e.target.value }); }, value: this.state.name, helpText: React.createElement("p", { className: "m-0" },
+                                                "This is some help text. It can also do ",
+                                                React.createElement("b", null, "bold"),
+                                                " and other stuff.") })),
                                     React.createElement(index_1.Text, { touchOn: this.state.touchOn, required: true, label: "Your name", onChange: function (e) { return _this.setState({ name: e.target.value }); }, value: this.state.name, title: "Name readonly", readOnly: true }),
                                     React.createElement(index_1.Select, { touchOn: this.state.touchOn, required: false, label: 'Your gender', values: [{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }], onChange: this.handleGenderChange, value: this.state.gender, title: "Gender" }),
                                     React.createElement(index_1.TextArea, { touchOn: this.state.touchOn, required: true, label: "Textarea", onChange: function (e) { return _this.setState({ textAreaText: e.target.value }); }, value: this.state.textAreaText, title: "Textarea" }),
@@ -40820,7 +43422,7 @@ exports.default = Basic;
 
 
 /***/ }),
-/* 210 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40829,22 +43431,22 @@ function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-__webpack_require__(211);
-__export(__webpack_require__(54));
-__export(__webpack_require__(55));
-__export(__webpack_require__(29));
-__export(__webpack_require__(196));
+__webpack_require__(215);
+__export(__webpack_require__(56));
+__export(__webpack_require__(57));
+__export(__webpack_require__(31));
+__export(__webpack_require__(199));
 __export(__webpack_require__(7));
 
 
 /***/ }),
-/* 211 */
+/* 215 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 212 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40866,13 +43468,13 @@ exports.EmailValidator = EmailValidator;
 
 
 /***/ }),
-/* 213 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var NumberValidator_1 = __webpack_require__(28);
+var NumberValidator_1 = __webpack_require__(30);
 var LatitudeValidator = /** @class */ (function () {
     function LatitudeValidator() {
     }
@@ -40894,13 +43496,13 @@ exports.LatitudeValidator = LatitudeValidator;
 
 
 /***/ }),
-/* 214 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var NumberValidator_1 = __webpack_require__(28);
+var NumberValidator_1 = __webpack_require__(30);
 var LongitudeValidator = /** @class */ (function () {
     function LongitudeValidator() {
     }
@@ -40922,7 +43524,7 @@ exports.LongitudeValidator = LongitudeValidator;
 
 
 /***/ }),
-/* 215 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40944,13 +43546,13 @@ exports.UrlValidator = UrlValidator;
 
 
 /***/ }),
-/* 216 */
+/* 220 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 217 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40963,13 +43565,13 @@ exports.UrlValidator = UrlValidator;
 
 
 
-var emptyFunction = __webpack_require__(6);
-var invariant = __webpack_require__(19);
-var warning = __webpack_require__(23);
-var assign = __webpack_require__(18);
+var emptyFunction = __webpack_require__(4);
+var invariant = __webpack_require__(6);
+var warning = __webpack_require__(14);
+var assign = __webpack_require__(13);
 
-var ReactPropTypesSecret = __webpack_require__(27);
-var checkPropTypes = __webpack_require__(26);
+var ReactPropTypesSecret = __webpack_require__(28);
+var checkPropTypes = __webpack_require__(27);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -41497,10 +44099,10 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
   return ReactPropTypes;
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 218 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41513,9 +44115,9 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 
 
-var emptyFunction = __webpack_require__(6);
-var invariant = __webpack_require__(19);
-var ReactPropTypesSecret = __webpack_require__(27);
+var emptyFunction = __webpack_require__(4);
+var invariant = __webpack_require__(6);
+var ReactPropTypesSecret = __webpack_require__(28);
 
 module.exports = function() {
   function shim(props, propName, componentName, location, propFullName, secret) {
@@ -41565,7 +44167,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 219 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41590,11 +44192,11 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 //Styles
-__webpack_require__(220);
+__webpack_require__(224);
 //Libs
 var React = __webpack_require__(1);
 //Misc
-var BaseInput = __webpack_require__(2);
+var BaseInput = __webpack_require__(3);
 var Button = __webpack_require__(7);
 var ButtonState;
 (function (ButtonState) {
@@ -41670,31 +44272,6 @@ exports.default = DynamicSubmit;
 
 
 /***/ }),
-/* 220 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 221 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 222 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 223 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports=function(t){function e(n){if(o[n])return o[n].exports;var r=o[n]={i:n,l:!1,exports:{}};return t[n].call(r.exports,r,r.exports,e),r.l=!0,r.exports}var o={};return e.m=t,e.c=o,e.i=function(t){return t},e.d=function(t,o,n){e.o(t,o)||Object.defineProperty(t,o,{configurable:!1,enumerable:!0,get:n})},e.n=function(t){var o=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(o,"a",o),o},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="",e(e.s=6)}([function(t,e,o){function n(t){return l(t.duration,Date.now()-t.mouseDown)}function r(t){return t.mouseUp>0?Date.now()-t.mouseUp:0}function i(t){var e=t.duration,o=t.radius,i=.85*a(n(t),0,o,e),u=.15*a(r(t),0,o,e),l=.02*o*s(Date.now()/e);return c(0,i+u+l)}var a=o(7),u=Math.sqrt(2),s=Math.cos,c=Math.max,l=Math.min;t.exports={getMaxRadius:function(t,e,o){return l(.5*c(t,e),o)},getBlotOpacity:function(t,e){return a(r(t),e,-e,t.duration)},getBlotOuterOpacity:function(t,e){return l(this.getBlotOpacity(t,e),a(n(t),0,.3,3*t.duration))},getBlotShiftX:function(t,e,o){return l(1,i(t)/e*2/u)*(o/2-t.x)},getBlotShiftY:function(t,e,o){return l(1,i(t)/e*2/u)*(o/2-t.y)},getBlotScale:function(t){return i(t)/t.radius}}},function(t,e){t.exports={borderRadius:"inherit",height:"100%",left:0,position:"absolute",top:0,width:"100%"}},function(t,e){var o=!1;"undefined"!=typeof window&&(o="ontouchstart"in window||window.DocumentTouch&&document instanceof window.DocumentTouch),t.exports=o},function(t,e){t.exports=function(t){return(window.devicePixelRatio||1)/(t.webkitBackingStorePixelRatio||t.mozBackingStorePixelRatio||t.msBackingStorePixelRatio||t.oBackingStorePixelRatio||t.backingStorePixelRatio||1)}},function(t,e,o){var n=o(0),r=function(t){var e=t.mouseUp,o=t.duration;return!e||Date.now()-e<o};t.exports=function(t){var e=[],o=!1,i=void 0,a={each:function(t,o){for(var n=0,r=e.length;n<r;n++)t.call(o,e[n])},play:function(){o||(o=!0,a.update())},stop:function(){o=!1,cancelAnimationFrame(i)},getTotalOpacity:function(t){for(var o=0,r=0,i=e.length;r<i;r++)o+=n.getBlotOuterOpacity(e[r],t);return o},update:function(){e=e.filter(r),e.length?i=requestAnimationFrame(a.update):a.stop(),t()},add:function(t){e.push(t),a.play()},release:function(t){for(var o=e.length-1;o>=0;o--)if(!e[o].mouseUp)return e[o].mouseUp=t}};return a}},function(t,e){t.exports=__webpack_require__(1)},function(t,e,o){function n(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function r(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}function i(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}var a=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var o=arguments[e];for(var n in o)Object.prototype.hasOwnProperty.call(o,n)&&(t[n]=o[n])}return t},u=o(2),s=0,c=o(3),l=o(5),p=o(1),f=o(4),h=2*Math.PI,d=o(0),g=function(t){function e(o){n(this,e);var i=r(this,t.apply(this,arguments));return i.tick=function(){var t=i.state,e=t.ctx,o=t.color,n=t.density,r=t.height,a=t.width,u=t.store;e.save(),e.scale(n,n),e.clearRect(0,0,a,r),e.fillStyle=o,i.props.background&&(e.globalAlpha=u.getTotalOpacity(i.props.opacity),e.fillRect(0,0,a,r)),u.each(i.makeBlot,i),e.restore()},i._onPress=function(t){var e=t.button,o=t.ctrlKey,n=t.clientX,r=t.clientY,a=t.changedTouches,u=Date.now();if(a)for(var c=0;c<a.length;c++){var l=a[c],p=l.clientX,f=l.clientY;i.pushBlot(u,p,f)}else e!==s||o||i.pushBlot(u,n,r)},i._onRelease=function(){i.state.store.release(Date.now())},i.state={color:"transparent",density:1,height:0,store:f(i.tick),touchEvents:i.touchEvents(),width:0},i}return i(e,t),e.prototype.touchEvents=function(){return this.props.hasTouch?{onTouchStart:this._onPress,onTouchEnd:this._onRelease,onTouchCancel:this._onRelease}:{onMouseDown:this._onPress,onMouseUp:this._onRelease,onMouseLeave:this._onRelease}},e.prototype.makeBlot=function(t){var e=this.state,o=e.ctx,n=e.height,r=e.width,i=t.x,a=t.y,u=t.radius;if(o.globalAlpha=d.getBlotOpacity(t,this.props.opacity),o.beginPath(),this.props.recenter){var s=Math.max(n,r);i+=d.getBlotShiftX(t,s,r),a+=d.getBlotShiftY(t,s,n)}o.arc(i,a,u*d.getBlotScale(t),0,h),o.closePath(),o.fill()},e.prototype.componentWillUnmount=function(){this.state.store.stop()},e.prototype.pushBlot=function(t,e,o){var n=this,r=this.refs.canvas;r instanceof window.HTMLCanvasElement==!1&&(r=r.getDOMNode());var i=r.getBoundingClientRect(),a=i.top,u=i.bottom,s=i.left,l=i.right,p=window.getComputedStyle(r),f=p.color,h=this.state.ctx||r.getContext("2d"),g=c(h),y=u-a,v=l-s,w=d.getMaxRadius(y,v,this.props.radius);this.setState({color:f,ctx:h,density:g,height:y,width:v},function(){n.state.store.add({duration:n.props.duration,mouseDown:t,mouseUp:0,radius:w,x:e-s,y:o-a})})},e.prototype.render=function(){var t=this.state,e=t.density,o=t.height,n=t.width,r=t.touchEvents;return l.createElement("canvas",a({className:"ink",ref:"canvas",style:a({},p,this.props.style),height:o*e,width:n*e,onDragOver:this._onRelease},r))},e}(l.PureComponent);g.defaultProps={background:!0,duration:1e3,opacity:.25,radius:150,recenter:!0,hasTouch:u},t.exports=g},function(t,e){t.exports=function(t,e,o,n){return o*((t=t/n-1)*t*t*t*t+1)+e}}]);
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vaW5rLmpzIiwid2VicGFjazovLy93ZWJwYWNrL2Jvb3RzdHJhcCA0YmZmMDVlNWU3N2Q4NDU5Nzc1OSIsIndlYnBhY2s6Ly8vLi9zcmMvdXRpbC9lcXVhdGlvbnMuanMiLCJ3ZWJwYWNrOi8vLy4vc3JjL3N0eWxlLmpzIiwid2VicGFjazovLy8uL3NyYy91dGlsL2hhc1RvdWNoLmpzIiwid2VicGFjazovLy8uL3NyYy91dGlsL3BpeGVsUmF0aW8uanMiLCJ3ZWJwYWNrOi8vLy4vc3JjL3V0aWwvc3RvcmUuanMiLCJ3ZWJwYWNrOi8vL2V4dGVybmFsIFwicmVhY3RcIiIsIndlYnBhY2s6Ly8vLi9zcmMvaW5kZXguanMiLCJ3ZWJwYWNrOi8vLy4vc3JjL3V0aWwvZWFzaW5nLmpzIl0sIm5hbWVzIjpbIm1vZHVsZSIsImV4cG9ydHMiLCJtb2R1bGVzIiwiX193ZWJwYWNrX3JlcXVpcmVfXyIsIm1vZHVsZUlkIiwiaW5zdGFsbGVkTW9kdWxlcyIsImkiLCJsIiwiY2FsbCIsIm0iLCJjIiwidmFsdWUiLCJkIiwibmFtZSIsImdldHRlciIsIm8iLCJPYmplY3QiLCJkZWZpbmVQcm9wZXJ0eSIsImNvbmZpZ3VyYWJsZSIsImVudW1lcmFibGUiLCJnZXQiLCJuIiwiX19lc01vZHVsZSIsIm9iamVjdCIsInByb3BlcnR5IiwicHJvdG90eXBlIiwiaGFzT3duUHJvcGVydHkiLCJwIiwicyIsImdldFByZXNzIiwiYmxvdCIsIm1pbiIsImR1cmF0aW9uIiwiRGF0ZSIsIm5vdyIsIm1vdXNlRG93biIsImdldFJlbGVhc2UiLCJtb3VzZVVwIiwiZ2V0UmFkaXVzIiwicmFkaXVzIiwiZG93biIsImVhc2luZyIsInVwIiwidW5kdWxhdGlvbiIsImNvcyIsIm1heCIsIlNRUlRfMiIsIk1hdGgiLCJzcXJ0IiwiZ2V0TWF4UmFkaXVzIiwiaGVpZ2h0Iiwid2lkdGgiLCJnZXRCbG90T3BhY2l0eSIsIm9wYWNpdHkiLCJnZXRCbG90T3V0ZXJPcGFjaXR5IiwidGhpcyIsImdldEJsb3RTaGlmdFgiLCJzaXplIiwieCIsImdldEJsb3RTaGlmdFkiLCJ5IiwiZ2V0QmxvdFNjYWxlIiwiYm9yZGVyUmFkaXVzIiwibGVmdCIsInBvc2l0aW9uIiwidG9wIiwiYm9vbCIsIndpbmRvdyIsIkRvY3VtZW50VG91Y2giLCJkb2N1bWVudCIsImNvbnRleHQiLCJkZXZpY2VQaXhlbFJhdGlvIiwid2Via2l0QmFja2luZ1N0b3JlUGl4ZWxSYXRpbyIsIm1vekJhY2tpbmdTdG9yZVBpeGVsUmF0aW8iLCJtc0JhY2tpbmdTdG9yZVBpeGVsUmF0aW8iLCJvQmFja2luZ1N0b3JlUGl4ZWxSYXRpbyIsImJhY2tpbmdTdG9yZVBpeGVsUmF0aW8iLCJFcXVhdGlvbnMiLCJraWxsU3RhbGUiLCJfcmVmIiwicHVibGljaXplIiwiX2RhdGEiLCJfcGxheWluZyIsIl9mcmFtZSIsIlN0b3JlIiwiZWFjaCIsImNhbGxiYWNrIiwic2NvcGUiLCJsZW5ndGgiLCJwbGF5IiwidXBkYXRlIiwic3RvcCIsImNhbmNlbEFuaW1hdGlvbkZyYW1lIiwiZ2V0VG90YWxPcGFjaXR5IiwiYW5zd2VyIiwiZmlsdGVyIiwicmVxdWVzdEFuaW1hdGlvbkZyYW1lIiwiYWRkIiwicHJvcHMiLCJwdXNoIiwicmVsZWFzZSIsInRpbWUiLCJyZXF1aXJlIiwiX2NsYXNzQ2FsbENoZWNrIiwiaW5zdGFuY2UiLCJDb25zdHJ1Y3RvciIsIlR5cGVFcnJvciIsIl9wb3NzaWJsZUNvbnN0cnVjdG9yUmV0dXJuIiwic2VsZiIsIlJlZmVyZW5jZUVycm9yIiwiX2luaGVyaXRzIiwic3ViQ2xhc3MiLCJzdXBlckNsYXNzIiwiY3JlYXRlIiwiY29uc3RydWN0b3IiLCJ3cml0YWJsZSIsInNldFByb3RvdHlwZU9mIiwiX19wcm90b19fIiwiX2V4dGVuZHMiLCJhc3NpZ24iLCJ0YXJnZXQiLCJhcmd1bWVudHMiLCJzb3VyY2UiLCJrZXkiLCJIQVNfVE9VQ0giLCJNT1VTRV9MRUZUIiwicGl4ZWxSYXRpbyIsIlJlYWN0IiwiU1RZTEUiLCJUQVUiLCJQSSIsIkluayIsIl9SZWFjdCRQdXJlQ29tcG9uZW50IiwiX3RoaXMiLCJhcHBseSIsInRpY2siLCJfdGhpcyRzdGF0ZSIsInN0YXRlIiwiY3R4IiwiY29sb3IiLCJkZW5zaXR5Iiwic3RvcmUiLCJzYXZlIiwic2NhbGUiLCJjbGVhclJlY3QiLCJmaWxsU3R5bGUiLCJiYWNrZ3JvdW5kIiwiZ2xvYmFsQWxwaGEiLCJmaWxsUmVjdCIsIm1ha2VCbG90IiwicmVzdG9yZSIsIl9vblByZXNzIiwiZSIsImJ1dHRvbiIsImN0cmxLZXkiLCJjbGllbnRYIiwiY2xpZW50WSIsImNoYW5nZWRUb3VjaGVzIiwidGltZVN0YW1wIiwiX2NoYW5nZWRUb3VjaGVzJGkiLCJwdXNoQmxvdCIsIl9vblJlbGVhc2UiLCJ0b3VjaEV2ZW50cyIsImhhc1RvdWNoIiwib25Ub3VjaFN0YXJ0Iiwib25Ub3VjaEVuZCIsIm9uVG91Y2hDYW5jZWwiLCJvbk1vdXNlRG93biIsIm9uTW91c2VVcCIsIm9uTW91c2VMZWF2ZSIsIl9zdGF0ZSIsImJlZ2luUGF0aCIsInJlY2VudGVyIiwiYXJjIiwiY2xvc2VQYXRoIiwiZmlsbCIsImNvbXBvbmVudFdpbGxVbm1vdW50IiwiX3RoaXMyIiwiZWwiLCJyZWZzIiwiY2FudmFzIiwiSFRNTENhbnZhc0VsZW1lbnQiLCJnZXRET01Ob2RlIiwiX2VsJGdldEJvdW5kaW5nQ2xpZW50IiwiZ2V0Qm91bmRpbmdDbGllbnRSZWN0IiwiYm90dG9tIiwicmlnaHQiLCJfd2luZG93JGdldENvbXB1dGVkU3QiLCJnZXRDb21wdXRlZFN0eWxlIiwiZ2V0Q29udGV4dCIsInNldFN0YXRlIiwicmVuZGVyIiwiX3N0YXRlMiIsImNyZWF0ZUVsZW1lbnQiLCJjbGFzc05hbWUiLCJyZWYiLCJzdHlsZSIsIm9uRHJhZ092ZXIiLCJQdXJlQ29tcG9uZW50IiwiZGVmYXVsdFByb3BzIiwidCIsImIiXSwibWFwcGluZ3MiOiJBQUFBQSxPQUFPQyxRQUNFLFNBQVVDLEdDR25CLFFBQUFDLEdBQUFDLEdBR0EsR0FBQUMsRUFBQUQsR0FDQSxNQUFBQyxHQUFBRCxHQUFBSCxPQUdBLElBQUFELEdBQUFLLEVBQUFELElBQ0FFLEVBQUFGLEVBQ0FHLEdBQUEsRUFDQU4sV0FVQSxPQU5BQyxHQUFBRSxHQUFBSSxLQUFBUixFQUFBQyxRQUFBRCxJQUFBQyxRQUFBRSxHQUdBSCxFQUFBTyxHQUFBLEVBR0FQLEVBQUFDLFFBdkJBLEdBQUFJLEtBK0RBLE9BbkNBRixHQUFBTSxFQUFBUCxFQUdBQyxFQUFBTyxFQUFBTCxFQUdBRixFQUFBRyxFQUFBLFNBQUFLLEdBQTJDLE1BQUFBLElBRzNDUixFQUFBUyxFQUFBLFNBQUFYLEVBQUFZLEVBQUFDLEdBQ0FYLEVBQUFZLEVBQUFkLEVBQUFZLElBQ0FHLE9BQUFDLGVBQUFoQixFQUFBWSxHQUNBSyxjQUFBLEVBQ0FDLFlBQUEsRUFDQUMsSUFBQU4sS0FNQVgsRUFBQWtCLEVBQUEsU0FBQXJCLEdBQ0EsR0FBQWMsR0FBQWQsS0FBQXNCLFdBQ0EsV0FBMkIsTUFBQXRCLEdBQUEsU0FDM0IsV0FBaUMsTUFBQUEsR0FFakMsT0FEQUcsR0FBQVMsRUFBQUUsRUFBQSxJQUFBQSxHQUNBQSxHQUlBWCxFQUFBWSxFQUFBLFNBQUFRLEVBQUFDLEdBQXNELE1BQUFSLFFBQUFTLFVBQUFDLGVBQUFsQixLQUFBZSxFQUFBQyxJQUd0RHJCLEVBQUF3QixFQUFBLEdBR0F4QixJQUFBeUIsRUFBQSxLRE9NLFNBQVU1QixFQUFRQyxFQUFTRSxHRW5FakMsUUFBUzBCLEdBQVNDLEdBQ2hCLE1BQU9DLEdBQUlELEVBQUtFLFNBQVVDLEtBQUtDLE1BQVFKLEVBQUtLLFdBRzlDLFFBQVNDLEdBQVdOLEdBQ2xCLE1BQU9BLEdBQUtPLFFBQVUsRUFBSUosS0FBS0MsTUFBUUosRUFBS08sUUFBVSxFQUd4RCxRQUFTQyxHQUFVUixHQUFNLEdBQ2pCRSxHQUFxQkYsRUFBckJFLFNBQVVPLEVBQVdULEVBQVhTLE9BRVpDLEVBQTJELElBQTlDQyxFQUFPWixFQUFTQyxHQUFPLEVBQUdTLEVBQVFQLEdBQy9DVSxFQUE2RCxJQUFoREQsRUFBT0wsRUFBV04sR0FBTyxFQUFHUyxFQUFRUCxHQUNqRFcsRUFBc0IsSUFBVEosRUFBZ0JLLEVBQUlYLEtBQUtDLE1BQVFGLEVBRWxELE9BQU9hLEdBQUksRUFBR0wsRUFBT0UsRUFBS0MsR0FuQjVCLEdBQUlGLEdBQVN0QyxFQUFRLEdBQ2pCMkMsRUFBU0MsS0FBS0MsS0FBSyxHQUNqQkosRUFBa0JHLEtBQWxCSCxJQUFLQyxFQUFhRSxLQUFiRixJQUFLZCxFQUFRZ0IsS0FBUmhCLEdBb0JoQi9CLEdBQU9DLFNBRUxnRCxhQUZlLFNBRUZDLEVBQVFDLEVBQU9aLEdBQzFCLE1BQU9SLEdBQXlCLEdBQXJCYyxFQUFJSyxFQUFRQyxHQUFjWixJQUd2Q2EsZUFOZSxTQU1BdEIsRUFBTXVCLEdBQ25CLE1BQU9aLEdBQU9MLEVBQVdOLEdBQU91QixHQUFVQSxFQUFTdkIsRUFBS0UsV0FHMURzQixvQkFWZSxTQVVLeEIsRUFBTXVCLEdBQ3hCLE1BQU90QixHQUFJd0IsS0FBS0gsZUFBZXRCLEVBQU11QixHQUMxQlosRUFBT1osRUFBU0MsR0FBTyxFQUFHLEdBQXFCLEVBQWhCQSxFQUFLRSxZQUdqRHdCLGNBZmUsU0FlRDFCLEVBQU0yQixFQUFNTixHQUN4QixNQUFPcEIsR0FBSSxFQUNBTyxFQUFVUixHQUFRMkIsRUFBTyxFQUFJWCxJQUFXSyxFQUFRLEVBQUlyQixFQUFLNEIsSUFHdEVDLGNBcEJlLFNBb0JEN0IsRUFBTTJCLEVBQU1QLEdBQ3hCLE1BQU9uQixHQUFJLEVBQ0FPLEVBQVVSLEdBQVEyQixFQUFPLEVBQUlYLElBQVdJLEVBQVMsRUFBSXBCLEVBQUs4QixJQUd2RUMsYUF6QmUsU0F5QkYvQixHQUNYLE1BQU9RLEdBQVVSLEdBQVFBLEVBQUtTLFVGMkU1QixTQUFVdkMsRUFBUUMsR0czSHhCRCxFQUFPQyxTQUNMNkQsYUFBYyxVQUNkWixPQUFRLE9BQ1JhLEtBQU0sRUFDTkMsU0FBVSxXQUNWQyxJQUFLLEVBQ0xkLE1BQU8sU0hrSUgsU0FBVW5ELEVBQVFDLEdJeEl4QixHQUFJaUUsSUFBTyxDQUVXLG9CQUFYQyxVQUNURCxFQUFRLGdCQUFrQkMsU0FBV0EsT0FBT0MsZUFBaUJDLG1CQUFvQkYsUUFBT0MsZUFHMUZwRSxFQUFPQyxRQUFVaUUsR0o4SVgsU0FBVWxFLEVBQVFDLEdLakp4QkQsRUFBT0MsUUFBVSxTQUFBcUUsR0FRZixPQVB3QkgsT0FBT0ksa0JBQW9CLElBQzNCRCxFQUFRRSw4QkFDUkYsRUFBUUcsMkJBQ1JILEVBQVFJLDBCQUNSSixFQUFRSyx5QkFDUkwsRUFBUU0sd0JBQWdDLEtMeUo1RCxTQUFVNUUsRUFBUUMsRUFBU0UsR001SmpDLEdBQUkwRSxHQUFZMUUsRUFBUSxHQUVwQjJFLEVBQVksU0FBQUMsR0FBQSxHQUFHMUMsR0FBSDBDLEVBQUcxQyxRQUFTTCxFQUFaK0MsRUFBWS9DLFFBQVosUUFBNEJLLEdBQVlKLEtBQUtDLE1BQVFHLEVBQVdMLEVBRWhGaEMsR0FBT0MsUUFBVSxTQUFTK0UsR0FDeEIsR0FBSUMsTUFDQUMsR0FBVyxFQUNYQyxTQUVBQyxHQUVGQyxLQUZVLFNBRUxDLEVBQVVDLEdBQ2IsSUFBSyxHQUFJakYsR0FBSSxFQUFHQyxFQUFJMEUsRUFBTU8sT0FBUWxGLEVBQUlDLEVBQUdELElBQ3ZDZ0YsRUFBUzlFLEtBQUsrRSxFQUFPTixFQUFNM0UsS0FJL0JtRixLQVJVLFdBU0hQLElBQ0hBLEdBQVcsRUFDWEUsRUFBTU0sV0FJVkMsS0FmVSxXQWdCUlQsR0FBVyxFQUNYVSxxQkFBcUJULElBR3ZCVSxnQkFwQlUsU0FvQk14QyxHQUdkLElBQUssR0FGRHlDLEdBQVMsRUFFSnhGLEVBQUksRUFBR0MsRUFBSTBFLEVBQU1PLE9BQVFsRixFQUFJQyxFQUFHRCxJQUN2Q3dGLEdBQVVqQixFQUFVdkIsb0JBQW9CMkIsRUFBTTNFLEdBQUkrQyxFQUdwRCxPQUFPeUMsSUFHVEosT0E5QlUsV0ErQlJULEVBQVFBLEVBQU1jLE9BQU9qQixHQUVqQkcsRUFBTU8sT0FDUkwsRUFBU2Esc0JBQXNCWixFQUFNTSxRQUVyQ04sRUFBTU8sT0FHUlgsS0FHRmlCLElBMUNVLFNBMENOQyxHQUNGakIsRUFBTWtCLEtBQUtELEdBQ1hkLEVBQU1LLFFBR1JXLFFBL0NVLFNBK0NGQyxHQUNOLElBQUssR0FBSS9GLEdBQUkyRSxFQUFNTyxPQUFTLEVBQUdsRixHQUFLLEVBQUdBLElBQ3JDLElBQUsyRSxFQUFNM0UsR0FBRytCLFFBQ1osTUFBTzRDLEdBQU0zRSxHQUFHK0IsUUFBVWdFLEdBT2xDLE9BQU9qQixLTnFLSCxTQUFVcEYsRUFBUUMsR083T3hCRCxFQUFBQyxRQUFBcUcsUUFBQSxVUG1QTSxTQUFVdEcsRUFBUUMsRUFBU0UsR0FJakMsUUFBU29HLEdBQWdCQyxFQUFVQyxHQUFlLEtBQU1ELFlBQW9CQyxJQUFnQixLQUFNLElBQUlDLFdBQVUscUNBRWhILFFBQVNDLEdBQTJCQyxFQUFNcEcsR0FBUSxJQUFLb0csRUFBUSxLQUFNLElBQUlDLGdCQUFlLDREQUFnRSxRQUFPckcsR0FBeUIsZ0JBQVRBLElBQXFDLGtCQUFUQSxHQUE4Qm9HLEVBQVBwRyxFQUVsTyxRQUFTc0csR0FBVUMsRUFBVUMsR0FBYyxHQUEwQixrQkFBZkEsSUFBNEMsT0FBZkEsRUFBdUIsS0FBTSxJQUFJTixXQUFVLGlFQUFvRU0sR0FBZUQsR0FBU3RGLFVBQVlULE9BQU9pRyxPQUFPRCxHQUFjQSxFQUFXdkYsV0FBYXlGLGFBQWV2RyxNQUFPb0csRUFBVTVGLFlBQVksRUFBT2dHLFVBQVUsRUFBTWpHLGNBQWMsS0FBZThGLElBQVloRyxPQUFPb0csZUFBaUJwRyxPQUFPb0csZUFBZUwsRUFBVUMsR0FBY0QsRUFBU00sVUFBWUwsR0FOamUsR0FBSU0sR0FBV3RHLE9BQU91RyxRQUFVLFNBQVVDLEdBQVUsSUFBSyxHQUFJbEgsR0FBSSxFQUFHQSxFQUFJbUgsVUFBVWpDLE9BQVFsRixJQUFLLENBQUUsR0FBSW9ILEdBQVNELFVBQVVuSCxFQUFJLEtBQUssR0FBSXFILEtBQU9ELEdBQWMxRyxPQUFPUyxVQUFVQyxlQUFlbEIsS0FBS2tILEVBQVFDLEtBQVFILEVBQU9HLEdBQU9ELEVBQU9DLElBQVksTUFBT0gsSVEvT25QSSxFQUFhekgsRUFBUSxHQUNyQjBILEVBQWEsRUFDYkMsRUFBYTNILEVBQVEsR0FDckI0SCxFQUFhNUgsRUFBUSxHQUNyQjZILEVBQWE3SCxFQUFRLEdBQ3JCaUYsRUFBYWpGLEVBQVEsR0FDckI4SCxFQUF1QixFQUFWbEYsS0FBS21GLEdBQ2xCckQsRUFBYTFFLEVBQVEsR0FFbkJnSSxFUjZQSSxTQUFVQyxHUWxQbEIsUUFBQUQsR0FBYWpDLEdBQU9LLEVBQUFoRCxLQUFBNEUsRUFBQSxJQUFBRSxHQUFBMUIsRUFBQXBELEtBQ2xCNkUsRUFBQUUsTUFBQS9FLEtBQVNrRSxXQURTLE9BQUFZLEdBNkJwQkUsS0FBTyxXQUFNLEdBQUFDLEdBQ3lDSCxFQUFLSSxNQUFuREMsRUFES0YsRUFDTEUsSUFBS0MsRUFEQUgsRUFDQUcsTUFBT0MsRUFEUEosRUFDT0ksUUFBUzFGLEVBRGhCc0YsRUFDZ0J0RixPQUFRQyxFQUR4QnFGLEVBQ3dCckYsTUFBTzBGLEVBRC9CTCxFQUMrQkssS0FFMUNILEdBQUlJLE9BRUpKLEVBQUlLLE1BQU1ILEVBQVNBLEdBRW5CRixFQUFJTSxVQUFVLEVBQUcsRUFBRzdGLEVBQU9ELEdBRTNCd0YsRUFBSU8sVUFBWU4sRUFFWk4sRUFBS25DLE1BQU1nRCxhQUNiUixFQUFJUyxZQUFjTixFQUFNaEQsZ0JBQWdCd0MsRUFBS25DLE1BQU03QyxTQUNuRHFGLEVBQUlVLFNBQVMsRUFBRyxFQUFHakcsRUFBT0QsSUFHNUIyRixFQUFNeEQsS0FBS2dELEVBQUtnQixTQUFoQmhCLEdBRUFLLEVBQUlZLFdBL0NjakIsRUFxSHBCa0IsU0FBVyxTQUFDQyxHQUFNLEdBQ1ZDLEdBQXNERCxFQUF0REMsT0FBUUMsRUFBOENGLEVBQTlDRSxRQUFTQyxFQUFxQ0gsRUFBckNHLFFBQVNDLEVBQTRCSixFQUE1QkksUUFBU0MsRUFBbUJMLEVBQW5CSyxlQUNyQ0MsRUFBWTdILEtBQUtDLEtBRXJCLElBQUkySCxFQUNGLElBQUssR0FBSXZKLEdBQUksRUFBR0EsRUFBSXVKLEVBQWVyRSxPQUFRbEYsSUFBSyxJQUFBeUosR0FDbkJGLEVBQWV2SixHQUFwQ3FKLEVBRHdDSSxFQUN4Q0osUUFBU0MsRUFEK0JHLEVBQy9CSCxPQUNmdkIsR0FBSzJCLFNBQVNGLEVBQVdILEVBQVNDLE9BRTNCSCxLQUFXNUIsR0FBZTZCLEdBQ25DckIsRUFBSzJCLFNBQVNGLEVBQVdILEVBQVNDLElBL0hsQnZCLEVBbUlwQjRCLFdBQWEsV0FDWDVCLEVBQUtJLE1BQU1JLE1BQU16QyxRQUFRbkUsS0FBS0MsUUFqSTlCbUcsRUFBS0ksT0FDSEUsTUFBYyxjQUNkQyxRQUFjLEVBQ2QxRixPQUFjLEVBQ2QyRixNQUFjekQsRUFBTWlELEVBQUtFLE1BQ3pCMkIsWUFBYzdCLEVBQUs2QixjQUNuQi9HLE1BQWMsR0FURWtGLEVSK1pwQixNQTVLQXZCLEdBQVVxQixFQUFLQyxHQXdFZkQsRUFBSTFHLFVROVNKeUksWVI4UzRCLFdRN1MxQixNQUFJM0csTUFBSzJDLE1BQU1pRSxVQUVYQyxhQUFnQjdHLEtBQUtnRyxTQUNyQmMsV0FBZ0I5RyxLQUFLMEcsV0FDckJLLGNBQWdCL0csS0FBSzBHLGFBSXJCTSxZQUFnQmhILEtBQUtnRyxTQUNyQmlCLFVBQWdCakgsS0FBSzBHLFdBQ3JCUSxhQUFnQmxILEtBQUswRyxhUm1UM0I5QixFQUFJMUcsVVF6Uko0SCxTUnlSeUIsU1F6UmZ2SCxHQUFNLEdBQUE0SSxHQUNlbkgsS0FBS2tGLE1BQTVCQyxFQURRZ0MsRUFDUmhDLElBQUt4RixFQURHd0gsRUFDSHhILE9BQVFDLEVBREx1SCxFQUNLdkgsTUFDYk8sRUFBaUI1QixFQUFqQjRCLEVBQUdFLEVBQWM5QixFQUFkOEIsRUFBR3JCLEVBQVdULEVBQVhTLE1BS1osSUFIQW1HLEVBQUlTLFlBQWN0RSxFQUFVekIsZUFBZXRCLEVBQU15QixLQUFLMkMsTUFBTTdDLFNBQzVEcUYsRUFBSWlDLFlBRUFwSCxLQUFLMkMsTUFBTTBFLFNBQVUsQ0FDdkIsR0FBSW5ILEdBQU9WLEtBQUtGLElBQUlLLEVBQVFDLEVBRTVCTyxJQUFLbUIsRUFBVXJCLGNBQWMxQixFQUFNMkIsRUFBTU4sR0FDekNTLEdBQUtpQixFQUFVbEIsY0FBYzdCLEVBQU0yQixFQUFNUCxHQUczQ3dGLEVBQUltQyxJQUFJbkgsRUFBR0UsRUFBR3JCLEVBQVNzQyxFQUFVaEIsYUFBYS9CLEdBQU8sRUFBR21HLEdBRXhEUyxFQUFJb0MsWUFDSnBDLEVBQUlxQyxRUmtTTjVDLEVBQUkxRyxVUS9SSnVKLHFCUitScUMsV1E5Um5DekgsS0FBS2tGLE1BQU1JLE1BQU1sRCxRUmtTbkJ3QyxFQUFJMUcsVVEvUkp1SSxTUitSeUIsU1EvUmZGLEVBQVdILEVBQVNDLEdBQVMsR0FBQXFCLEdBQUExSCxLQUNqQzJILEVBQUszSCxLQUFLNEgsS0FBS0MsTUFHZkYsYUFBYy9HLFFBQU9rSCxvQkFBc0IsSUFDN0NILEVBQUtBLEVBQUdJLGFBTDJCLElBQUFDLEdBUUZMLEVBQUdNLHdCQUFoQ3ZILEVBUitCc0gsRUFRL0J0SCxJQUFLd0gsRUFSMEJGLEVBUTFCRSxPQUFRMUgsRUFSa0J3SCxFQVFsQnhILEtBQU0ySCxFQVJZSCxFQVFaRyxNQVJZQyxFQVNyQnhILE9BQU95SCxpQkFBaUJWLEdBQWxDdkMsRUFUK0JnRCxFQVMvQmhELE1BRUZELEVBQVVuRixLQUFLa0YsTUFBTUMsS0FBT3dDLEVBQUdXLFdBQVcsTUFDMUNqRCxFQUFVZCxFQUFXWSxHQUNyQnhGLEVBQVV1SSxFQUFTeEgsRUFDbkJkLEVBQVV1SSxFQUFRM0gsRUFDbEJ4QixFQUFVc0MsRUFBVTVCLGFBQWFDLEVBQVFDLEVBQU9JLEtBQUsyQyxNQUFNM0QsT0FFL0RnQixNQUFLdUksVUFBV25ELFFBQU9ELE1BQUtFLFVBQVMxRixTQUFRQyxTQUFTLFdBQ3BEOEgsRUFBS3hDLE1BQU1JLE1BQU01QyxLQUNmakUsU0FBWWlKLEVBQUsvRSxNQUFNbEUsU0FDdkJHLFVBQVkySCxFQUNaekgsUUFBWSxFQUNaRSxPQUFZQSxFQUNabUIsRUFBWWlHLEVBQVU1RixFQUN0QkgsRUFBWWdHLEVBQVUzRixPUjRTNUJrRSxFQUFJMUcsVVF2U0pzSyxPUnVTdUIsV1F2U2IsR0FBQUMsR0FDc0N6SSxLQUFLa0YsTUFBN0NHLEVBREVvRCxFQUNGcEQsUUFBUzFGLEVBRFA4SSxFQUNPOUksT0FBUUMsRUFEZjZJLEVBQ2U3SSxNQUFPK0csRUFEdEI4QixFQUNzQjlCLFdBRTlCLE9BQ0VuQyxHQUFBa0UsY0FBQSxTQUFBM0UsR0FBUTRFLFVBQVUsTUFDVkMsSUFBSSxTQUNKQyxNQUFBOUUsS0FBWVUsRUFBVXpFLEtBQUsyQyxNQUFNa0csT0FDakNsSixPQUFTQSxFQUFTMEYsRUFDbEJ6RixNQUFRQSxFQUFReUYsRUFDaEJ5RCxXQUFhOUksS0FBSzBHLFlBQ2JDLEtSOFNWL0IsR1ExYVNKLEVBQU11RSxjQUFsQm5FLEdBRUdvRSxjQUNMckQsWUFBYSxFQUNibEgsU0FBYSxJQUNicUIsUUFBYSxJQUNiZCxPQUFhLElBQ2JxSSxVQUFhLEVBQ2JULFNBQWF2QyxHQTRJakI1SCxFQUFPQyxRQUFVa0ksR1J1U1gsU0FBVW5JLEVBQVFDLEdTbmN4QkQsRUFBT0MsUUFBVSxTQUF1QnVNLEVBQUdDLEVBQUcvTCxFQUFHRSxHQUMvQyxNQUFPRixLQUFJOEwsRUFBRUEsRUFBRTVMLEVBQUUsR0FBRzRMLEVBQUVBLEVBQUVBLEVBQUVBLEVBQUksR0FBS0MiLCJmaWxlIjoiaW5rLmpzIiwic291cmNlc0NvbnRlbnQiOlsibW9kdWxlLmV4cG9ydHMgPVxuLyoqKioqKi8gKGZ1bmN0aW9uKG1vZHVsZXMpIHsgLy8gd2VicGFja0Jvb3RzdHJhcFxuLyoqKioqKi8gXHQvLyBUaGUgbW9kdWxlIGNhY2hlXG4vKioqKioqLyBcdHZhciBpbnN0YWxsZWRNb2R1bGVzID0ge307XG4vKioqKioqL1xuLyoqKioqKi8gXHQvLyBUaGUgcmVxdWlyZSBmdW5jdGlvblxuLyoqKioqKi8gXHRmdW5jdGlvbiBfX3dlYnBhY2tfcmVxdWlyZV9fKG1vZHVsZUlkKSB7XG4vKioqKioqL1xuLyoqKioqKi8gXHRcdC8vIENoZWNrIGlmIG1vZHVsZSBpcyBpbiBjYWNoZVxuLyoqKioqKi8gXHRcdGlmKGluc3RhbGxlZE1vZHVsZXNbbW9kdWxlSWRdKVxuLyoqKioqKi8gXHRcdFx0cmV0dXJuIGluc3RhbGxlZE1vZHVsZXNbbW9kdWxlSWRdLmV4cG9ydHM7XG4vKioqKioqL1xuLyoqKioqKi8gXHRcdC8vIENyZWF0ZSBhIG5ldyBtb2R1bGUgKGFuZCBwdXQgaXQgaW50byB0aGUgY2FjaGUpXG4vKioqKioqLyBcdFx0dmFyIG1vZHVsZSA9IGluc3RhbGxlZE1vZHVsZXNbbW9kdWxlSWRdID0ge1xuLyoqKioqKi8gXHRcdFx0aTogbW9kdWxlSWQsXG4vKioqKioqLyBcdFx0XHRsOiBmYWxzZSxcbi8qKioqKiovIFx0XHRcdGV4cG9ydHM6IHt9XG4vKioqKioqLyBcdFx0fTtcbi8qKioqKiovXG4vKioqKioqLyBcdFx0Ly8gRXhlY3V0ZSB0aGUgbW9kdWxlIGZ1bmN0aW9uXG4vKioqKioqLyBcdFx0bW9kdWxlc1ttb2R1bGVJZF0uY2FsbChtb2R1bGUuZXhwb3J0cywgbW9kdWxlLCBtb2R1bGUuZXhwb3J0cywgX193ZWJwYWNrX3JlcXVpcmVfXyk7XG4vKioqKioqL1xuLyoqKioqKi8gXHRcdC8vIEZsYWcgdGhlIG1vZHVsZSBhcyBsb2FkZWRcbi8qKioqKiovIFx0XHRtb2R1bGUubCA9IHRydWU7XG4vKioqKioqL1xuLyoqKioqKi8gXHRcdC8vIFJldHVybiB0aGUgZXhwb3J0cyBvZiB0aGUgbW9kdWxlXG4vKioqKioqLyBcdFx0cmV0dXJuIG1vZHVsZS5leHBvcnRzO1xuLyoqKioqKi8gXHR9XG4vKioqKioqL1xuLyoqKioqKi9cbi8qKioqKiovIFx0Ly8gZXhwb3NlIHRoZSBtb2R1bGVzIG9iamVjdCAoX193ZWJwYWNrX21vZHVsZXNfXylcbi8qKioqKiovIFx0X193ZWJwYWNrX3JlcXVpcmVfXy5tID0gbW9kdWxlcztcbi8qKioqKiovXG4vKioqKioqLyBcdC8vIGV4cG9zZSB0aGUgbW9kdWxlIGNhY2hlXG4vKioqKioqLyBcdF9fd2VicGFja19yZXF1aXJlX18uYyA9IGluc3RhbGxlZE1vZHVsZXM7XG4vKioqKioqL1xuLyoqKioqKi8gXHQvLyBpZGVudGl0eSBmdW5jdGlvbiBmb3IgY2FsbGluZyBoYXJtb255IGltcG9ydHMgd2l0aCB0aGUgY29ycmVjdCBjb250ZXh0XG4vKioqKioqLyBcdF9fd2VicGFja19yZXF1aXJlX18uaSA9IGZ1bmN0aW9uKHZhbHVlKSB7IHJldHVybiB2YWx1ZTsgfTtcbi8qKioqKiovXG4vKioqKioqLyBcdC8vIGRlZmluZSBnZXR0ZXIgZnVuY3Rpb24gZm9yIGhhcm1vbnkgZXhwb3J0c1xuLyoqKioqKi8gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLmQgPSBmdW5jdGlvbihleHBvcnRzLCBuYW1lLCBnZXR0ZXIpIHtcbi8qKioqKiovIFx0XHRpZighX193ZWJwYWNrX3JlcXVpcmVfXy5vKGV4cG9ydHMsIG5hbWUpKSB7XG4vKioqKioqLyBcdFx0XHRPYmplY3QuZGVmaW5lUHJvcGVydHkoZXhwb3J0cywgbmFtZSwge1xuLyoqKioqKi8gXHRcdFx0XHRjb25maWd1cmFibGU6IGZhbHNlLFxuLyoqKioqKi8gXHRcdFx0XHRlbnVtZXJhYmxlOiB0cnVlLFxuLyoqKioqKi8gXHRcdFx0XHRnZXQ6IGdldHRlclxuLyoqKioqKi8gXHRcdFx0fSk7XG4vKioqKioqLyBcdFx0fVxuLyoqKioqKi8gXHR9O1xuLyoqKioqKi9cbi8qKioqKiovIFx0Ly8gZ2V0RGVmYXVsdEV4cG9ydCBmdW5jdGlvbiBmb3IgY29tcGF0aWJpbGl0eSB3aXRoIG5vbi1oYXJtb255IG1vZHVsZXNcbi8qKioqKiovIFx0X193ZWJwYWNrX3JlcXVpcmVfXy5uID0gZnVuY3Rpb24obW9kdWxlKSB7XG4vKioqKioqLyBcdFx0dmFyIGdldHRlciA9IG1vZHVsZSAmJiBtb2R1bGUuX19lc01vZHVsZSA/XG4vKioqKioqLyBcdFx0XHRmdW5jdGlvbiBnZXREZWZhdWx0KCkgeyByZXR1cm4gbW9kdWxlWydkZWZhdWx0J107IH0gOlxuLyoqKioqKi8gXHRcdFx0ZnVuY3Rpb24gZ2V0TW9kdWxlRXhwb3J0cygpIHsgcmV0dXJuIG1vZHVsZTsgfTtcbi8qKioqKiovIFx0XHRfX3dlYnBhY2tfcmVxdWlyZV9fLmQoZ2V0dGVyLCAnYScsIGdldHRlcik7XG4vKioqKioqLyBcdFx0cmV0dXJuIGdldHRlcjtcbi8qKioqKiovIFx0fTtcbi8qKioqKiovXG4vKioqKioqLyBcdC8vIE9iamVjdC5wcm90b3R5cGUuaGFzT3duUHJvcGVydHkuY2FsbFxuLyoqKioqKi8gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLm8gPSBmdW5jdGlvbihvYmplY3QsIHByb3BlcnR5KSB7IHJldHVybiBPYmplY3QucHJvdG90eXBlLmhhc093blByb3BlcnR5LmNhbGwob2JqZWN0LCBwcm9wZXJ0eSk7IH07XG4vKioqKioqL1xuLyoqKioqKi8gXHQvLyBfX3dlYnBhY2tfcHVibGljX3BhdGhfX1xuLyoqKioqKi8gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLnAgPSBcIlwiO1xuLyoqKioqKi9cbi8qKioqKiovIFx0Ly8gTG9hZCBlbnRyeSBtb2R1bGUgYW5kIHJldHVybiBleHBvcnRzXG4vKioqKioqLyBcdHJldHVybiBfX3dlYnBhY2tfcmVxdWlyZV9fKF9fd2VicGFja19yZXF1aXJlX18ucyA9IDYpO1xuLyoqKioqKi8gfSlcbi8qKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKiovXG4vKioqKioqLyAoW1xuLyogMCAqL1xuLyoqKi8gKGZ1bmN0aW9uKG1vZHVsZSwgZXhwb3J0cywgX193ZWJwYWNrX3JlcXVpcmVfXykge1xuXG52YXIgZWFzaW5nID0gX193ZWJwYWNrX3JlcXVpcmVfXyg3KTtcbnZhciBTUVJUXzIgPSBNYXRoLnNxcnQoMik7XG52YXIgY29zID0gTWF0aC5jb3MsXG4gICAgbWF4ID0gTWF0aC5tYXgsXG4gICAgbWluID0gTWF0aC5taW47XG5cblxuZnVuY3Rpb24gZ2V0UHJlc3MoYmxvdCkge1xuICByZXR1cm4gbWluKGJsb3QuZHVyYXRpb24sIERhdGUubm93KCkgLSBibG90Lm1vdXNlRG93bik7XG59XG5cbmZ1bmN0aW9uIGdldFJlbGVhc2UoYmxvdCkge1xuICByZXR1cm4gYmxvdC5tb3VzZVVwID4gMCA/IERhdGUubm93KCkgLSBibG90Lm1vdXNlVXAgOiAwO1xufVxuXG5mdW5jdGlvbiBnZXRSYWRpdXMoYmxvdCkge1xuICB2YXIgZHVyYXRpb24gPSBibG90LmR1cmF0aW9uLFxuICAgICAgcmFkaXVzID0gYmxvdC5yYWRpdXM7XG5cblxuICB2YXIgZG93biA9IGVhc2luZyhnZXRQcmVzcyhibG90KSwgMCwgcmFkaXVzLCBkdXJhdGlvbikgKiAwLjg1O1xuICB2YXIgdXAgPSBlYXNpbmcoZ2V0UmVsZWFzZShibG90KSwgMCwgcmFkaXVzLCBkdXJhdGlvbikgKiAwLjE1O1xuICB2YXIgdW5kdWxhdGlvbiA9IHJhZGl1cyAqIDAuMDIgKiBjb3MoRGF0ZS5ub3coKSAvIGR1cmF0aW9uKTtcblxuICByZXR1cm4gbWF4KDAsIGRvd24gKyB1cCArIHVuZHVsYXRpb24pO1xufVxuXG5tb2R1bGUuZXhwb3J0cyA9IHtcbiAgZ2V0TWF4UmFkaXVzOiBmdW5jdGlvbiBnZXRNYXhSYWRpdXMoaGVpZ2h0LCB3aWR0aCwgcmFkaXVzKSB7XG4gICAgcmV0dXJuIG1pbihtYXgoaGVpZ2h0LCB3aWR0aCkgKiAwLjUsIHJhZGl1cyk7XG4gIH0sXG4gIGdldEJsb3RPcGFjaXR5OiBmdW5jdGlvbiBnZXRCbG90T3BhY2l0eShibG90LCBvcGFjaXR5KSB7XG4gICAgcmV0dXJuIGVhc2luZyhnZXRSZWxlYXNlKGJsb3QpLCBvcGFjaXR5LCAtb3BhY2l0eSwgYmxvdC5kdXJhdGlvbik7XG4gIH0sXG4gIGdldEJsb3RPdXRlck9wYWNpdHk6IGZ1bmN0aW9uIGdldEJsb3RPdXRlck9wYWNpdHkoYmxvdCwgb3BhY2l0eSkge1xuICAgIHJldHVybiBtaW4odGhpcy5nZXRCbG90T3BhY2l0eShibG90LCBvcGFjaXR5KSwgZWFzaW5nKGdldFByZXNzKGJsb3QpLCAwLCAwLjMsIGJsb3QuZHVyYXRpb24gKiAzKSk7XG4gIH0sXG4gIGdldEJsb3RTaGlmdFg6IGZ1bmN0aW9uIGdldEJsb3RTaGlmdFgoYmxvdCwgc2l6ZSwgd2lkdGgpIHtcbiAgICByZXR1cm4gbWluKDEsIGdldFJhZGl1cyhibG90KSAvIHNpemUgKiAyIC8gU1FSVF8yKSAqICh3aWR0aCAvIDIgLSBibG90LngpO1xuICB9LFxuICBnZXRCbG90U2hpZnRZOiBmdW5jdGlvbiBnZXRCbG90U2hpZnRZKGJsb3QsIHNpemUsIGhlaWdodCkge1xuICAgIHJldHVybiBtaW4oMSwgZ2V0UmFkaXVzKGJsb3QpIC8gc2l6ZSAqIDIgLyBTUVJUXzIpICogKGhlaWdodCAvIDIgLSBibG90LnkpO1xuICB9LFxuICBnZXRCbG90U2NhbGU6IGZ1bmN0aW9uIGdldEJsb3RTY2FsZShibG90KSB7XG4gICAgcmV0dXJuIGdldFJhZGl1cyhibG90KSAvIGJsb3QucmFkaXVzO1xuICB9XG59O1xuXG4vKioqLyB9KSxcbi8qIDEgKi9cbi8qKiovIChmdW5jdGlvbihtb2R1bGUsIGV4cG9ydHMpIHtcblxubW9kdWxlLmV4cG9ydHMgPSB7XG4gIGJvcmRlclJhZGl1czogJ2luaGVyaXQnLFxuICBoZWlnaHQ6ICcxMDAlJyxcbiAgbGVmdDogMCxcbiAgcG9zaXRpb246ICdhYnNvbHV0ZScsXG4gIHRvcDogMCxcbiAgd2lkdGg6ICcxMDAlJ1xufTtcblxuLyoqKi8gfSksXG4vKiAyICovXG4vKioqLyAoZnVuY3Rpb24obW9kdWxlLCBleHBvcnRzKSB7XG5cbnZhciBib29sID0gZmFsc2U7XG5cbmlmICh0eXBlb2Ygd2luZG93ICE9PSAndW5kZWZpbmVkJykge1xuICBib29sID0gJ29udG91Y2hzdGFydCcgaW4gd2luZG93IHx8IHdpbmRvdy5Eb2N1bWVudFRvdWNoICYmIGRvY3VtZW50IGluc3RhbmNlb2Ygd2luZG93LkRvY3VtZW50VG91Y2g7XG59XG5cbm1vZHVsZS5leHBvcnRzID0gYm9vbDtcblxuLyoqKi8gfSksXG4vKiAzICovXG4vKioqLyAoZnVuY3Rpb24obW9kdWxlLCBleHBvcnRzKSB7XG5cbi8vIEdvb2Qgc3R1ZmYgaGVyZTpcbi8vIGh0dHA6Ly93d3cuaHRtbDVyb2Nrcy5jb20vZW4vdHV0b3JpYWxzL2NhbnZhcy9oaWRwaS9cblxubW9kdWxlLmV4cG9ydHMgPSBmdW5jdGlvbiAoY29udGV4dCkge1xuICAgICAgICAgICAgICAgICAgICAgICAgdmFyIGRldmljZVBpeGVsUmF0aW8gPSB3aW5kb3cuZGV2aWNlUGl4ZWxSYXRpbyB8fCAxO1xuICAgICAgICAgICAgICAgICAgICAgICAgdmFyIGJhY2tpbmdTdG9yZVJhdGlvID0gY29udGV4dC53ZWJraXRCYWNraW5nU3RvcmVQaXhlbFJhdGlvIHx8IGNvbnRleHQubW96QmFja2luZ1N0b3JlUGl4ZWxSYXRpbyB8fCBjb250ZXh0Lm1zQmFja2luZ1N0b3JlUGl4ZWxSYXRpbyB8fCBjb250ZXh0Lm9CYWNraW5nU3RvcmVQaXhlbFJhdGlvIHx8IGNvbnRleHQuYmFja2luZ1N0b3JlUGl4ZWxSYXRpbyB8fCAxO1xuXG4gICAgICAgICAgICAgICAgICAgICAgICByZXR1cm4gZGV2aWNlUGl4ZWxSYXRpbyAvIGJhY2tpbmdTdG9yZVJhdGlvO1xufTtcblxuLyoqKi8gfSksXG4vKiA0ICovXG4vKioqLyAoZnVuY3Rpb24obW9kdWxlLCBleHBvcnRzLCBfX3dlYnBhY2tfcmVxdWlyZV9fKSB7XG5cbi8qKlxuICogSW5rIFN0b3JlXG4gKiBLZWVwcyB0cmFjayBvZiBjaGFuZ2VzIHRvIHJpcHBsZSBlcGljZW50ZXJzXG4gKiBzbyB0aGF0IDxJbmsgLz4gY2FuIGZvY3VzIG9uIHJlbmRlcmluZyB0aGVtLlxuICovXG5cbnZhciBFcXVhdGlvbnMgPSBfX3dlYnBhY2tfcmVxdWlyZV9fKDApO1xuXG52YXIga2lsbFN0YWxlID0gZnVuY3Rpb24ga2lsbFN0YWxlKF9yZWYpIHtcbiAgdmFyIG1vdXNlVXAgPSBfcmVmLm1vdXNlVXAsXG4gICAgICBkdXJhdGlvbiA9IF9yZWYuZHVyYXRpb247XG4gIHJldHVybiAhbW91c2VVcCB8fCBEYXRlLm5vdygpIC0gbW91c2VVcCA8IGR1cmF0aW9uO1xufTtcblxubW9kdWxlLmV4cG9ydHMgPSBmdW5jdGlvbiAocHVibGljaXplKSB7XG4gIHZhciBfZGF0YSA9IFtdO1xuICB2YXIgX3BsYXlpbmcgPSBmYWxzZTtcbiAgdmFyIF9mcmFtZSA9IHZvaWQgMDtcblxuICB2YXIgU3RvcmUgPSB7XG4gICAgZWFjaDogZnVuY3Rpb24gZWFjaChjYWxsYmFjaywgc2NvcGUpIHtcbiAgICAgIGZvciAodmFyIGkgPSAwLCBsID0gX2RhdGEubGVuZ3RoOyBpIDwgbDsgaSsrKSB7XG4gICAgICAgIGNhbGxiYWNrLmNhbGwoc2NvcGUsIF9kYXRhW2ldKTtcbiAgICAgIH1cbiAgICB9LFxuICAgIHBsYXk6IGZ1bmN0aW9uIHBsYXkoKSB7XG4gICAgICBpZiAoIV9wbGF5aW5nKSB7XG4gICAgICAgIF9wbGF5aW5nID0gdHJ1ZTtcbiAgICAgICAgU3RvcmUudXBkYXRlKCk7XG4gICAgICB9XG4gICAgfSxcbiAgICBzdG9wOiBmdW5jdGlvbiBzdG9wKCkge1xuICAgICAgX3BsYXlpbmcgPSBmYWxzZTtcbiAgICAgIGNhbmNlbEFuaW1hdGlvbkZyYW1lKF9mcmFtZSk7XG4gICAgfSxcbiAgICBnZXRUb3RhbE9wYWNpdHk6IGZ1bmN0aW9uIGdldFRvdGFsT3BhY2l0eShvcGFjaXR5KSB7XG4gICAgICB2YXIgYW5zd2VyID0gMDtcblxuICAgICAgZm9yICh2YXIgaSA9IDAsIGwgPSBfZGF0YS5sZW5ndGg7IGkgPCBsOyBpKyspIHtcbiAgICAgICAgYW5zd2VyICs9IEVxdWF0aW9ucy5nZXRCbG90T3V0ZXJPcGFjaXR5KF9kYXRhW2ldLCBvcGFjaXR5KTtcbiAgICAgIH1cblxuICAgICAgcmV0dXJuIGFuc3dlcjtcbiAgICB9LFxuICAgIHVwZGF0ZTogZnVuY3Rpb24gdXBkYXRlKCkge1xuICAgICAgX2RhdGEgPSBfZGF0YS5maWx0ZXIoa2lsbFN0YWxlKTtcblxuICAgICAgaWYgKF9kYXRhLmxlbmd0aCkge1xuICAgICAgICBfZnJhbWUgPSByZXF1ZXN0QW5pbWF0aW9uRnJhbWUoU3RvcmUudXBkYXRlKTtcbiAgICAgIH0gZWxzZSB7XG4gICAgICAgIFN0b3JlLnN0b3AoKTtcbiAgICAgIH1cblxuICAgICAgcHVibGljaXplKCk7XG4gICAgfSxcbiAgICBhZGQ6IGZ1bmN0aW9uIGFkZChwcm9wcykge1xuICAgICAgX2RhdGEucHVzaChwcm9wcyk7XG4gICAgICBTdG9yZS5wbGF5KCk7XG4gICAgfSxcbiAgICByZWxlYXNlOiBmdW5jdGlvbiByZWxlYXNlKHRpbWUpIHtcbiAgICAgIGZvciAodmFyIGkgPSBfZGF0YS5sZW5ndGggLSAxOyBpID49IDA7IGktLSkge1xuICAgICAgICBpZiAoIV9kYXRhW2ldLm1vdXNlVXApIHtcbiAgICAgICAgICByZXR1cm4gX2RhdGFbaV0ubW91c2VVcCA9IHRpbWU7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH07XG5cbiAgcmV0dXJuIFN0b3JlO1xufTtcblxuLyoqKi8gfSksXG4vKiA1ICovXG4vKioqLyAoZnVuY3Rpb24obW9kdWxlLCBleHBvcnRzKSB7XG5cbm1vZHVsZS5leHBvcnRzID0gcmVxdWlyZShcInJlYWN0XCIpO1xuXG4vKioqLyB9KSxcbi8qIDYgKi9cbi8qKiovIChmdW5jdGlvbihtb2R1bGUsIGV4cG9ydHMsIF9fd2VicGFja19yZXF1aXJlX18pIHtcblxudmFyIF9leHRlbmRzID0gT2JqZWN0LmFzc2lnbiB8fCBmdW5jdGlvbiAodGFyZ2V0KSB7IGZvciAodmFyIGkgPSAxOyBpIDwgYXJndW1lbnRzLmxlbmd0aDsgaSsrKSB7IHZhciBzb3VyY2UgPSBhcmd1bWVudHNbaV07IGZvciAodmFyIGtleSBpbiBzb3VyY2UpIHsgaWYgKE9iamVjdC5wcm90b3R5cGUuaGFzT3duUHJvcGVydHkuY2FsbChzb3VyY2UsIGtleSkpIHsgdGFyZ2V0W2tleV0gPSBzb3VyY2Vba2V5XTsgfSB9IH0gcmV0dXJuIHRhcmdldDsgfTtcblxuZnVuY3Rpb24gX2NsYXNzQ2FsbENoZWNrKGluc3RhbmNlLCBDb25zdHJ1Y3RvcikgeyBpZiAoIShpbnN0YW5jZSBpbnN0YW5jZW9mIENvbnN0cnVjdG9yKSkgeyB0aHJvdyBuZXcgVHlwZUVycm9yKFwiQ2Fubm90IGNhbGwgYSBjbGFzcyBhcyBhIGZ1bmN0aW9uXCIpOyB9IH1cblxuZnVuY3Rpb24gX3Bvc3NpYmxlQ29uc3RydWN0b3JSZXR1cm4oc2VsZiwgY2FsbCkgeyBpZiAoIXNlbGYpIHsgdGhyb3cgbmV3IFJlZmVyZW5jZUVycm9yKFwidGhpcyBoYXNuJ3QgYmVlbiBpbml0aWFsaXNlZCAtIHN1cGVyKCkgaGFzbid0IGJlZW4gY2FsbGVkXCIpOyB9IHJldHVybiBjYWxsICYmICh0eXBlb2YgY2FsbCA9PT0gXCJvYmplY3RcIiB8fCB0eXBlb2YgY2FsbCA9PT0gXCJmdW5jdGlvblwiKSA/IGNhbGwgOiBzZWxmOyB9XG5cbmZ1bmN0aW9uIF9pbmhlcml0cyhzdWJDbGFzcywgc3VwZXJDbGFzcykgeyBpZiAodHlwZW9mIHN1cGVyQ2xhc3MgIT09IFwiZnVuY3Rpb25cIiAmJiBzdXBlckNsYXNzICE9PSBudWxsKSB7IHRocm93IG5ldyBUeXBlRXJyb3IoXCJTdXBlciBleHByZXNzaW9uIG11c3QgZWl0aGVyIGJlIG51bGwgb3IgYSBmdW5jdGlvbiwgbm90IFwiICsgdHlwZW9mIHN1cGVyQ2xhc3MpOyB9IHN1YkNsYXNzLnByb3RvdHlwZSA9IE9iamVjdC5jcmVhdGUoc3VwZXJDbGFzcyAmJiBzdXBlckNsYXNzLnByb3RvdHlwZSwgeyBjb25zdHJ1Y3RvcjogeyB2YWx1ZTogc3ViQ2xhc3MsIGVudW1lcmFibGU6IGZhbHNlLCB3cml0YWJsZTogdHJ1ZSwgY29uZmlndXJhYmxlOiB0cnVlIH0gfSk7IGlmIChzdXBlckNsYXNzKSBPYmplY3Quc2V0UHJvdG90eXBlT2YgPyBPYmplY3Quc2V0UHJvdG90eXBlT2Yoc3ViQ2xhc3MsIHN1cGVyQ2xhc3MpIDogc3ViQ2xhc3MuX19wcm90b19fID0gc3VwZXJDbGFzczsgfVxuXG4vKipcbiAqIElua1xuICogRmlsbHMgYSBjb250YWluZXIgd2l0aCBhbiBTVkcgb2JqZWN0IHRoYXQgcHJvdmlkZXMgZmVlZGJhY2sgb24gbW91c2UvdG91Y2hcbiAqIGV2ZW50cyB3aXRoIGEgcmlwcGxpbmcgcG9vbC5cbiAqL1xuXG52YXIgSEFTX1RPVUNIID0gX193ZWJwYWNrX3JlcXVpcmVfXygyKTtcbnZhciBNT1VTRV9MRUZUID0gMDtcbnZhciBwaXhlbFJhdGlvID0gX193ZWJwYWNrX3JlcXVpcmVfXygzKTtcbnZhciBSZWFjdCA9IF9fd2VicGFja19yZXF1aXJlX18oNSk7XG52YXIgU1RZTEUgPSBfX3dlYnBhY2tfcmVxdWlyZV9fKDEpO1xudmFyIFN0b3JlID0gX193ZWJwYWNrX3JlcXVpcmVfXyg0KTtcbnZhciBUQVUgPSBNYXRoLlBJICogMjtcbnZhciBFcXVhdGlvbnMgPSBfX3dlYnBhY2tfcmVxdWlyZV9fKDApO1xuXG52YXIgSW5rID0gZnVuY3Rpb24gKF9SZWFjdCRQdXJlQ29tcG9uZW50KSB7XG4gIF9pbmhlcml0cyhJbmssIF9SZWFjdCRQdXJlQ29tcG9uZW50KTtcblxuICBmdW5jdGlvbiBJbmsocHJvcHMpIHtcbiAgICBfY2xhc3NDYWxsQ2hlY2sodGhpcywgSW5rKTtcblxuICAgIHZhciBfdGhpcyA9IF9wb3NzaWJsZUNvbnN0cnVjdG9yUmV0dXJuKHRoaXMsIF9SZWFjdCRQdXJlQ29tcG9uZW50LmFwcGx5KHRoaXMsIGFyZ3VtZW50cykpO1xuXG4gICAgX3RoaXMudGljayA9IGZ1bmN0aW9uICgpIHtcbiAgICAgIHZhciBfdGhpcyRzdGF0ZSA9IF90aGlzLnN0YXRlLFxuICAgICAgICAgIGN0eCA9IF90aGlzJHN0YXRlLmN0eCxcbiAgICAgICAgICBjb2xvciA9IF90aGlzJHN0YXRlLmNvbG9yLFxuICAgICAgICAgIGRlbnNpdHkgPSBfdGhpcyRzdGF0ZS5kZW5zaXR5LFxuICAgICAgICAgIGhlaWdodCA9IF90aGlzJHN0YXRlLmhlaWdodCxcbiAgICAgICAgICB3aWR0aCA9IF90aGlzJHN0YXRlLndpZHRoLFxuICAgICAgICAgIHN0b3JlID0gX3RoaXMkc3RhdGUuc3RvcmU7XG5cblxuICAgICAgY3R4LnNhdmUoKTtcblxuICAgICAgY3R4LnNjYWxlKGRlbnNpdHksIGRlbnNpdHkpO1xuXG4gICAgICBjdHguY2xlYXJSZWN0KDAsIDAsIHdpZHRoLCBoZWlnaHQpO1xuXG4gICAgICBjdHguZmlsbFN0eWxlID0gY29sb3I7XG5cbiAgICAgIGlmIChfdGhpcy5wcm9wcy5iYWNrZ3JvdW5kKSB7XG4gICAgICAgIGN0eC5nbG9iYWxBbHBoYSA9IHN0b3JlLmdldFRvdGFsT3BhY2l0eShfdGhpcy5wcm9wcy5vcGFjaXR5KTtcbiAgICAgICAgY3R4LmZpbGxSZWN0KDAsIDAsIHdpZHRoLCBoZWlnaHQpO1xuICAgICAgfVxuXG4gICAgICBzdG9yZS5lYWNoKF90aGlzLm1ha2VCbG90LCBfdGhpcyk7XG5cbiAgICAgIGN0eC5yZXN0b3JlKCk7XG4gICAgfTtcblxuICAgIF90aGlzLl9vblByZXNzID0gZnVuY3Rpb24gKGUpIHtcbiAgICAgIHZhciBidXR0b24gPSBlLmJ1dHRvbixcbiAgICAgICAgICBjdHJsS2V5ID0gZS5jdHJsS2V5LFxuICAgICAgICAgIGNsaWVudFggPSBlLmNsaWVudFgsXG4gICAgICAgICAgY2xpZW50WSA9IGUuY2xpZW50WSxcbiAgICAgICAgICBjaGFuZ2VkVG91Y2hlcyA9IGUuY2hhbmdlZFRvdWNoZXM7XG5cbiAgICAgIHZhciB0aW1lU3RhbXAgPSBEYXRlLm5vdygpO1xuXG4gICAgICBpZiAoY2hhbmdlZFRvdWNoZXMpIHtcbiAgICAgICAgZm9yICh2YXIgaSA9IDA7IGkgPCBjaGFuZ2VkVG91Y2hlcy5sZW5ndGg7IGkrKykge1xuICAgICAgICAgIHZhciBfY2hhbmdlZFRvdWNoZXMkaSA9IGNoYW5nZWRUb3VjaGVzW2ldLFxuICAgICAgICAgICAgICBfY2xpZW50WCA9IF9jaGFuZ2VkVG91Y2hlcyRpLmNsaWVudFgsXG4gICAgICAgICAgICAgIF9jbGllbnRZID0gX2NoYW5nZWRUb3VjaGVzJGkuY2xpZW50WTtcblxuICAgICAgICAgIF90aGlzLnB1c2hCbG90KHRpbWVTdGFtcCwgX2NsaWVudFgsIF9jbGllbnRZKTtcbiAgICAgICAgfVxuICAgICAgfSBlbHNlIGlmIChidXR0b24gPT09IE1PVVNFX0xFRlQgJiYgIWN0cmxLZXkpIHtcbiAgICAgICAgX3RoaXMucHVzaEJsb3QodGltZVN0YW1wLCBjbGllbnRYLCBjbGllbnRZKTtcbiAgICAgIH1cbiAgICB9O1xuXG4gICAgX3RoaXMuX29uUmVsZWFzZSA9IGZ1bmN0aW9uICgpIHtcbiAgICAgIF90aGlzLnN0YXRlLnN0b3JlLnJlbGVhc2UoRGF0ZS5ub3coKSk7XG4gICAgfTtcblxuICAgIF90aGlzLnN0YXRlID0ge1xuICAgICAgY29sb3I6ICd0cmFuc3BhcmVudCcsXG4gICAgICBkZW5zaXR5OiAxLFxuICAgICAgaGVpZ2h0OiAwLFxuICAgICAgc3RvcmU6IFN0b3JlKF90aGlzLnRpY2spLFxuICAgICAgdG91Y2hFdmVudHM6IF90aGlzLnRvdWNoRXZlbnRzKCksXG4gICAgICB3aWR0aDogMFxuICAgIH07XG4gICAgcmV0dXJuIF90aGlzO1xuICB9XG5cbiAgSW5rLnByb3RvdHlwZS50b3VjaEV2ZW50cyA9IGZ1bmN0aW9uIHRvdWNoRXZlbnRzKCkge1xuICAgIGlmICh0aGlzLnByb3BzLmhhc1RvdWNoKSB7XG4gICAgICByZXR1cm4ge1xuICAgICAgICBvblRvdWNoU3RhcnQ6IHRoaXMuX29uUHJlc3MsXG4gICAgICAgIG9uVG91Y2hFbmQ6IHRoaXMuX29uUmVsZWFzZSxcbiAgICAgICAgb25Ub3VjaENhbmNlbDogdGhpcy5fb25SZWxlYXNlXG4gICAgICB9O1xuICAgIH0gZWxzZSB7XG4gICAgICByZXR1cm4ge1xuICAgICAgICBvbk1vdXNlRG93bjogdGhpcy5fb25QcmVzcyxcbiAgICAgICAgb25Nb3VzZVVwOiB0aGlzLl9vblJlbGVhc2UsXG4gICAgICAgIG9uTW91c2VMZWF2ZTogdGhpcy5fb25SZWxlYXNlXG4gICAgICB9O1xuICAgIH1cbiAgfTtcblxuICBJbmsucHJvdG90eXBlLm1ha2VCbG90ID0gZnVuY3Rpb24gbWFrZUJsb3QoYmxvdCkge1xuICAgIHZhciBfc3RhdGUgPSB0aGlzLnN0YXRlLFxuICAgICAgICBjdHggPSBfc3RhdGUuY3R4LFxuICAgICAgICBoZWlnaHQgPSBfc3RhdGUuaGVpZ2h0LFxuICAgICAgICB3aWR0aCA9IF9zdGF0ZS53aWR0aDtcbiAgICB2YXIgeCA9IGJsb3QueCxcbiAgICAgICAgeSA9IGJsb3QueSxcbiAgICAgICAgcmFkaXVzID0gYmxvdC5yYWRpdXM7XG5cblxuICAgIGN0eC5nbG9iYWxBbHBoYSA9IEVxdWF0aW9ucy5nZXRCbG90T3BhY2l0eShibG90LCB0aGlzLnByb3BzLm9wYWNpdHkpO1xuICAgIGN0eC5iZWdpblBhdGgoKTtcblxuICAgIGlmICh0aGlzLnByb3BzLnJlY2VudGVyKSB7XG4gICAgICB2YXIgc2l6ZSA9IE1hdGgubWF4KGhlaWdodCwgd2lkdGgpO1xuXG4gICAgICB4ICs9IEVxdWF0aW9ucy5nZXRCbG90U2hpZnRYKGJsb3QsIHNpemUsIHdpZHRoKTtcbiAgICAgIHkgKz0gRXF1YXRpb25zLmdldEJsb3RTaGlmdFkoYmxvdCwgc2l6ZSwgaGVpZ2h0KTtcbiAgICB9XG5cbiAgICBjdHguYXJjKHgsIHksIHJhZGl1cyAqIEVxdWF0aW9ucy5nZXRCbG90U2NhbGUoYmxvdCksIDAsIFRBVSk7XG5cbiAgICBjdHguY2xvc2VQYXRoKCk7XG4gICAgY3R4LmZpbGwoKTtcbiAgfTtcblxuICBJbmsucHJvdG90eXBlLmNvbXBvbmVudFdpbGxVbm1vdW50ID0gZnVuY3Rpb24gY29tcG9uZW50V2lsbFVubW91bnQoKSB7XG4gICAgdGhpcy5zdGF0ZS5zdG9yZS5zdG9wKCk7XG4gIH07XG5cbiAgSW5rLnByb3RvdHlwZS5wdXNoQmxvdCA9IGZ1bmN0aW9uIHB1c2hCbG90KHRpbWVTdGFtcCwgY2xpZW50WCwgY2xpZW50WSkge1xuICAgIHZhciBfdGhpczIgPSB0aGlzO1xuXG4gICAgdmFyIGVsID0gdGhpcy5yZWZzLmNhbnZhcztcblxuICAgIC8vIDAuMTMgc3VwcG9ydFxuICAgIGlmIChlbCBpbnN0YW5jZW9mIHdpbmRvdy5IVE1MQ2FudmFzRWxlbWVudCA9PT0gZmFsc2UpIHtcbiAgICAgIGVsID0gZWwuZ2V0RE9NTm9kZSgpO1xuICAgIH1cblxuICAgIHZhciBfZWwkZ2V0Qm91bmRpbmdDbGllbnQgPSBlbC5nZXRCb3VuZGluZ0NsaWVudFJlY3QoKSxcbiAgICAgICAgdG9wID0gX2VsJGdldEJvdW5kaW5nQ2xpZW50LnRvcCxcbiAgICAgICAgYm90dG9tID0gX2VsJGdldEJvdW5kaW5nQ2xpZW50LmJvdHRvbSxcbiAgICAgICAgbGVmdCA9IF9lbCRnZXRCb3VuZGluZ0NsaWVudC5sZWZ0LFxuICAgICAgICByaWdodCA9IF9lbCRnZXRCb3VuZGluZ0NsaWVudC5yaWdodDtcblxuICAgIHZhciBfd2luZG93JGdldENvbXB1dGVkU3QgPSB3aW5kb3cuZ2V0Q29tcHV0ZWRTdHlsZShlbCksXG4gICAgICAgIGNvbG9yID0gX3dpbmRvdyRnZXRDb21wdXRlZFN0LmNvbG9yO1xuXG4gICAgdmFyIGN0eCA9IHRoaXMuc3RhdGUuY3R4IHx8IGVsLmdldENvbnRleHQoJzJkJyk7XG4gICAgdmFyIGRlbnNpdHkgPSBwaXhlbFJhdGlvKGN0eCk7XG4gICAgdmFyIGhlaWdodCA9IGJvdHRvbSAtIHRvcDtcbiAgICB2YXIgd2lkdGggPSByaWdodCAtIGxlZnQ7XG4gICAgdmFyIHJhZGl1cyA9IEVxdWF0aW9ucy5nZXRNYXhSYWRpdXMoaGVpZ2h0LCB3aWR0aCwgdGhpcy5wcm9wcy5yYWRpdXMpO1xuXG4gICAgdGhpcy5zZXRTdGF0ZSh7IGNvbG9yOiBjb2xvciwgY3R4OiBjdHgsIGRlbnNpdHk6IGRlbnNpdHksIGhlaWdodDogaGVpZ2h0LCB3aWR0aDogd2lkdGggfSwgZnVuY3Rpb24gKCkge1xuICAgICAgX3RoaXMyLnN0YXRlLnN0b3JlLmFkZCh7XG4gICAgICAgIGR1cmF0aW9uOiBfdGhpczIucHJvcHMuZHVyYXRpb24sXG4gICAgICAgIG1vdXNlRG93bjogdGltZVN0YW1wLFxuICAgICAgICBtb3VzZVVwOiAwLFxuICAgICAgICByYWRpdXM6IHJhZGl1cyxcbiAgICAgICAgeDogY2xpZW50WCAtIGxlZnQsXG4gICAgICAgIHk6IGNsaWVudFkgLSB0b3BcbiAgICAgIH0pO1xuICAgIH0pO1xuICB9O1xuXG4gIEluay5wcm90b3R5cGUucmVuZGVyID0gZnVuY3Rpb24gcmVuZGVyKCkge1xuICAgIHZhciBfc3RhdGUyID0gdGhpcy5zdGF0ZSxcbiAgICAgICAgZGVuc2l0eSA9IF9zdGF0ZTIuZGVuc2l0eSxcbiAgICAgICAgaGVpZ2h0ID0gX3N0YXRlMi5oZWlnaHQsXG4gICAgICAgIHdpZHRoID0gX3N0YXRlMi53aWR0aCxcbiAgICAgICAgdG91Y2hFdmVudHMgPSBfc3RhdGUyLnRvdWNoRXZlbnRzO1xuXG5cbiAgICByZXR1cm4gUmVhY3QuY3JlYXRlRWxlbWVudCgnY2FudmFzJywgX2V4dGVuZHMoeyBjbGFzc05hbWU6ICdpbmsnLFxuICAgICAgcmVmOiAnY2FudmFzJyxcbiAgICAgIHN0eWxlOiBfZXh0ZW5kcyh7fSwgU1RZTEUsIHRoaXMucHJvcHMuc3R5bGUpLFxuICAgICAgaGVpZ2h0OiBoZWlnaHQgKiBkZW5zaXR5LFxuICAgICAgd2lkdGg6IHdpZHRoICogZGVuc2l0eSxcbiAgICAgIG9uRHJhZ092ZXI6IHRoaXMuX29uUmVsZWFzZVxuICAgIH0sIHRvdWNoRXZlbnRzKSk7XG4gIH07XG5cbiAgcmV0dXJuIEluaztcbn0oUmVhY3QuUHVyZUNvbXBvbmVudCk7XG5cbkluay5kZWZhdWx0UHJvcHMgPSB7XG4gIGJhY2tncm91bmQ6IHRydWUsXG4gIGR1cmF0aW9uOiAxMDAwLFxuICBvcGFjaXR5OiAwLjI1LFxuICByYWRpdXM6IDE1MCxcbiAgcmVjZW50ZXI6IHRydWUsXG4gIGhhc1RvdWNoOiBIQVNfVE9VQ0hcbn07XG5cblxubW9kdWxlLmV4cG9ydHMgPSBJbms7XG5cbi8qKiovIH0pLFxuLyogNyAqL1xuLyoqKi8gKGZ1bmN0aW9uKG1vZHVsZSwgZXhwb3J0cykge1xuXG4vKipcbiAqIEB0IGlzIHRoZSBjdXJyZW50IHRpbWUgKG9yIHBvc2l0aW9uKSBvZiB0aGUgdHdlZW4uIFRoaXMgY2FuIGJlIHNlY29uZHMgb3IgZnJhbWVzLCBzdGVwcywgc2Vjb25kcywgbXMsIHdoYXRldmVyIOKAkyBhcyBsb25nIGFzIHRoZSB1bml0IGlzIHRoZSBzYW1lIGFzIGlzIHVzZWQgZm9yIHRoZSB0b3RhbCB0aW1lIFszXS5cbiAqIEBiIGlzIHRoZSBiZWdpbm5pbmcgdmFsdWUgb2YgdGhlIHByb3BlcnR5LlxuICogQGMgaXMgdGhlIGNoYW5nZSBiZXR3ZWVuIHRoZSBiZWdpbm5pbmcgYW5kIGRlc3RpbmF0aW9uIHZhbHVlIG9mIHRoZSBwcm9wZXJ0eS5cbiAqIEBkIGlzIHRoZSB0b3RhbCB0aW1lIG9mIHRoZSB0d2Vlbi5cbiAqL1xuXG5tb2R1bGUuZXhwb3J0cyA9IGZ1bmN0aW9uIGVhc2VPdXRRdWludCh0LCBiLCBjLCBkKSB7XG4gIHJldHVybiBjICogKCh0ID0gdCAvIGQgLSAxKSAqIHQgKiB0ICogdCAqIHQgKyAxKSArIGI7XG59O1xuXG4vKioqLyB9KVxuLyoqKioqKi8gXSk7XG5cblxuLy8gV0VCUEFDSyBGT09URVIgLy9cbi8vIGluay5qcyIsIiBcdC8vIFRoZSBtb2R1bGUgY2FjaGVcbiBcdHZhciBpbnN0YWxsZWRNb2R1bGVzID0ge307XG5cbiBcdC8vIFRoZSByZXF1aXJlIGZ1bmN0aW9uXG4gXHRmdW5jdGlvbiBfX3dlYnBhY2tfcmVxdWlyZV9fKG1vZHVsZUlkKSB7XG5cbiBcdFx0Ly8gQ2hlY2sgaWYgbW9kdWxlIGlzIGluIGNhY2hlXG4gXHRcdGlmKGluc3RhbGxlZE1vZHVsZXNbbW9kdWxlSWRdKVxuIFx0XHRcdHJldHVybiBpbnN0YWxsZWRNb2R1bGVzW21vZHVsZUlkXS5leHBvcnRzO1xuXG4gXHRcdC8vIENyZWF0ZSBhIG5ldyBtb2R1bGUgKGFuZCBwdXQgaXQgaW50byB0aGUgY2FjaGUpXG4gXHRcdHZhciBtb2R1bGUgPSBpbnN0YWxsZWRNb2R1bGVzW21vZHVsZUlkXSA9IHtcbiBcdFx0XHRpOiBtb2R1bGVJZCxcbiBcdFx0XHRsOiBmYWxzZSxcbiBcdFx0XHRleHBvcnRzOiB7fVxuIFx0XHR9O1xuXG4gXHRcdC8vIEV4ZWN1dGUgdGhlIG1vZHVsZSBmdW5jdGlvblxuIFx0XHRtb2R1bGVzW21vZHVsZUlkXS5jYWxsKG1vZHVsZS5leHBvcnRzLCBtb2R1bGUsIG1vZHVsZS5leHBvcnRzLCBfX3dlYnBhY2tfcmVxdWlyZV9fKTtcblxuIFx0XHQvLyBGbGFnIHRoZSBtb2R1bGUgYXMgbG9hZGVkXG4gXHRcdG1vZHVsZS5sID0gdHJ1ZTtcblxuIFx0XHQvLyBSZXR1cm4gdGhlIGV4cG9ydHMgb2YgdGhlIG1vZHVsZVxuIFx0XHRyZXR1cm4gbW9kdWxlLmV4cG9ydHM7XG4gXHR9XG5cblxuIFx0Ly8gZXhwb3NlIHRoZSBtb2R1bGVzIG9iamVjdCAoX193ZWJwYWNrX21vZHVsZXNfXylcbiBcdF9fd2VicGFja19yZXF1aXJlX18ubSA9IG1vZHVsZXM7XG5cbiBcdC8vIGV4cG9zZSB0aGUgbW9kdWxlIGNhY2hlXG4gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLmMgPSBpbnN0YWxsZWRNb2R1bGVzO1xuXG4gXHQvLyBpZGVudGl0eSBmdW5jdGlvbiBmb3IgY2FsbGluZyBoYXJtb255IGltcG9ydHMgd2l0aCB0aGUgY29ycmVjdCBjb250ZXh0XG4gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLmkgPSBmdW5jdGlvbih2YWx1ZSkgeyByZXR1cm4gdmFsdWU7IH07XG5cbiBcdC8vIGRlZmluZSBnZXR0ZXIgZnVuY3Rpb24gZm9yIGhhcm1vbnkgZXhwb3J0c1xuIFx0X193ZWJwYWNrX3JlcXVpcmVfXy5kID0gZnVuY3Rpb24oZXhwb3J0cywgbmFtZSwgZ2V0dGVyKSB7XG4gXHRcdGlmKCFfX3dlYnBhY2tfcmVxdWlyZV9fLm8oZXhwb3J0cywgbmFtZSkpIHtcbiBcdFx0XHRPYmplY3QuZGVmaW5lUHJvcGVydHkoZXhwb3J0cywgbmFtZSwge1xuIFx0XHRcdFx0Y29uZmlndXJhYmxlOiBmYWxzZSxcbiBcdFx0XHRcdGVudW1lcmFibGU6IHRydWUsXG4gXHRcdFx0XHRnZXQ6IGdldHRlclxuIFx0XHRcdH0pO1xuIFx0XHR9XG4gXHR9O1xuXG4gXHQvLyBnZXREZWZhdWx0RXhwb3J0IGZ1bmN0aW9uIGZvciBjb21wYXRpYmlsaXR5IHdpdGggbm9uLWhhcm1vbnkgbW9kdWxlc1xuIFx0X193ZWJwYWNrX3JlcXVpcmVfXy5uID0gZnVuY3Rpb24obW9kdWxlKSB7XG4gXHRcdHZhciBnZXR0ZXIgPSBtb2R1bGUgJiYgbW9kdWxlLl9fZXNNb2R1bGUgP1xuIFx0XHRcdGZ1bmN0aW9uIGdldERlZmF1bHQoKSB7IHJldHVybiBtb2R1bGVbJ2RlZmF1bHQnXTsgfSA6XG4gXHRcdFx0ZnVuY3Rpb24gZ2V0TW9kdWxlRXhwb3J0cygpIHsgcmV0dXJuIG1vZHVsZTsgfTtcbiBcdFx0X193ZWJwYWNrX3JlcXVpcmVfXy5kKGdldHRlciwgJ2EnLCBnZXR0ZXIpO1xuIFx0XHRyZXR1cm4gZ2V0dGVyO1xuIFx0fTtcblxuIFx0Ly8gT2JqZWN0LnByb3RvdHlwZS5oYXNPd25Qcm9wZXJ0eS5jYWxsXG4gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLm8gPSBmdW5jdGlvbihvYmplY3QsIHByb3BlcnR5KSB7IHJldHVybiBPYmplY3QucHJvdG90eXBlLmhhc093blByb3BlcnR5LmNhbGwob2JqZWN0LCBwcm9wZXJ0eSk7IH07XG5cbiBcdC8vIF9fd2VicGFja19wdWJsaWNfcGF0aF9fXG4gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLnAgPSBcIlwiO1xuXG4gXHQvLyBMb2FkIGVudHJ5IG1vZHVsZSBhbmQgcmV0dXJuIGV4cG9ydHNcbiBcdHJldHVybiBfX3dlYnBhY2tfcmVxdWlyZV9fKF9fd2VicGFja19yZXF1aXJlX18ucyA9IDYpO1xuXG5cblxuLy8gV0VCUEFDSyBGT09URVIgLy9cbi8vIHdlYnBhY2svYm9vdHN0cmFwIDRiZmYwNWU1ZTc3ZDg0NTk3NzU5IiwibGV0IGVhc2luZyA9IHJlcXVpcmUoJy4vZWFzaW5nJylcbmxldCBTUVJUXzIgPSBNYXRoLnNxcnQoMilcbmxldCB7IGNvcywgbWF4LCBtaW4gfSA9IE1hdGhcblxuZnVuY3Rpb24gZ2V0UHJlc3MoYmxvdCkge1xuICByZXR1cm4gbWluKGJsb3QuZHVyYXRpb24sIERhdGUubm93KCkgLSBibG90Lm1vdXNlRG93bilcbn1cblxuZnVuY3Rpb24gZ2V0UmVsZWFzZShibG90KSB7XG4gIHJldHVybiBibG90Lm1vdXNlVXAgPiAwID8gRGF0ZS5ub3coKSAtIGJsb3QubW91c2VVcCA6IDBcbn1cblxuZnVuY3Rpb24gZ2V0UmFkaXVzKGJsb3QpIHtcbiAgbGV0IHsgZHVyYXRpb24sIHJhZGl1cyB9ID0gYmxvdFxuXG4gIGxldCBkb3duICAgICAgID0gZWFzaW5nKGdldFByZXNzKGJsb3QpLCAwLCByYWRpdXMsIGR1cmF0aW9uKSAqIDAuODVcbiAgbGV0IHVwICAgICAgICAgPSBlYXNpbmcoZ2V0UmVsZWFzZShibG90KSwgMCwgcmFkaXVzLCBkdXJhdGlvbikgKiAwLjE1XG4gIGxldCB1bmR1bGF0aW9uID0gcmFkaXVzICogMC4wMiAqIGNvcyhEYXRlLm5vdygpIC8gZHVyYXRpb24pXG5cbiAgcmV0dXJuIG1heCgwLCBkb3duICsgdXAgKyB1bmR1bGF0aW9uKVxufVxuXG5tb2R1bGUuZXhwb3J0cyA9IHtcblxuICBnZXRNYXhSYWRpdXMoaGVpZ2h0LCB3aWR0aCwgcmFkaXVzKSB7XG4gICAgcmV0dXJuIG1pbihtYXgoaGVpZ2h0LCB3aWR0aCkgKiAwLjUsIHJhZGl1cylcbiAgfSxcblxuICBnZXRCbG90T3BhY2l0eShibG90LCBvcGFjaXR5KSB7XG4gICAgcmV0dXJuIGVhc2luZyhnZXRSZWxlYXNlKGJsb3QpLCBvcGFjaXR5LCAtb3BhY2l0eSwgYmxvdC5kdXJhdGlvbilcbiAgfSxcblxuICBnZXRCbG90T3V0ZXJPcGFjaXR5KGJsb3QsIG9wYWNpdHkpIHtcbiAgICByZXR1cm4gbWluKHRoaXMuZ2V0QmxvdE9wYWNpdHkoYmxvdCwgb3BhY2l0eSksXG4gICAgICAgICAgICAgICBlYXNpbmcoZ2V0UHJlc3MoYmxvdCksIDAsIDAuMywgYmxvdC5kdXJhdGlvbiAqIDMpKVxuICB9LFxuXG4gIGdldEJsb3RTaGlmdFgoYmxvdCwgc2l6ZSwgd2lkdGgpIHtcbiAgICByZXR1cm4gbWluKDEsXG4gICAgICAgICAgICAgICBnZXRSYWRpdXMoYmxvdCkgLyBzaXplICogMiAvIFNRUlRfMikgKiAod2lkdGggLyAyIC0gYmxvdC54KVxuICB9LFxuXG4gIGdldEJsb3RTaGlmdFkoYmxvdCwgc2l6ZSwgaGVpZ2h0KSB7XG4gICAgcmV0dXJuIG1pbigxLFxuICAgICAgICAgICAgICAgZ2V0UmFkaXVzKGJsb3QpIC8gc2l6ZSAqIDIgLyBTUVJUXzIpICogKGhlaWdodCAvIDIgLSBibG90LnkpXG4gIH0sXG5cbiAgZ2V0QmxvdFNjYWxlKGJsb3QpIHtcbiAgICByZXR1cm4gZ2V0UmFkaXVzKGJsb3QpIC8gYmxvdC5yYWRpdXNcbiAgfVxufVxuXG5cblxuLy8gV0VCUEFDSyBGT09URVIgLy9cbi8vIC4vc3JjL3V0aWwvZXF1YXRpb25zLmpzIiwibW9kdWxlLmV4cG9ydHMgPSB7XG4gIGJvcmRlclJhZGl1czogJ2luaGVyaXQnLFxuICBoZWlnaHQ6ICcxMDAlJyxcbiAgbGVmdDogMCxcbiAgcG9zaXRpb246ICdhYnNvbHV0ZScsXG4gIHRvcDogMCxcbiAgd2lkdGg6ICcxMDAlJ1xufVxuXG5cblxuLy8gV0VCUEFDSyBGT09URVIgLy9cbi8vIC4vc3JjL3N0eWxlLmpzIiwidmFyIGJvb2wgPSBmYWxzZVxuXG5pZiAodHlwZW9mIHdpbmRvdyAhPT0gJ3VuZGVmaW5lZCcpIHtcbiAgYm9vbCA9ICgnb250b3VjaHN0YXJ0JyBpbiB3aW5kb3cpIHx8IHdpbmRvdy5Eb2N1bWVudFRvdWNoICYmIGRvY3VtZW50IGluc3RhbmNlb2Ygd2luZG93LkRvY3VtZW50VG91Y2hcbn1cblxubW9kdWxlLmV4cG9ydHMgPSBib29sXG5cblxuXG4vLyBXRUJQQUNLIEZPT1RFUiAvL1xuLy8gLi9zcmMvdXRpbC9oYXNUb3VjaC5qcyIsIi8vIEdvb2Qgc3R1ZmYgaGVyZTpcbi8vIGh0dHA6Ly93d3cuaHRtbDVyb2Nrcy5jb20vZW4vdHV0b3JpYWxzL2NhbnZhcy9oaWRwaS9cblxubW9kdWxlLmV4cG9ydHMgPSBjb250ZXh0ID0+IHtcbiAgbGV0IGRldmljZVBpeGVsUmF0aW8gID0gd2luZG93LmRldmljZVBpeGVsUmF0aW8gfHwgMVxuICBsZXQgYmFja2luZ1N0b3JlUmF0aW8gPSBjb250ZXh0LndlYmtpdEJhY2tpbmdTdG9yZVBpeGVsUmF0aW8gfHxcbiAgICAgICAgICAgICAgICAgICAgICAgICAgY29udGV4dC5tb3pCYWNraW5nU3RvcmVQaXhlbFJhdGlvICAgIHx8XG4gICAgICAgICAgICAgICAgICAgICAgICAgIGNvbnRleHQubXNCYWNraW5nU3RvcmVQaXhlbFJhdGlvICAgICB8fFxuICAgICAgICAgICAgICAgICAgICAgICAgICBjb250ZXh0Lm9CYWNraW5nU3RvcmVQaXhlbFJhdGlvICAgICAgfHxcbiAgICAgICAgICAgICAgICAgICAgICAgICAgY29udGV4dC5iYWNraW5nU3RvcmVQaXhlbFJhdGlvICAgICAgIHx8IDFcblxuICByZXR1cm4gZGV2aWNlUGl4ZWxSYXRpbyAvIGJhY2tpbmdTdG9yZVJhdGlvXG59XG5cblxuXG4vLyBXRUJQQUNLIEZPT1RFUiAvL1xuLy8gLi9zcmMvdXRpbC9waXhlbFJhdGlvLmpzIiwiLyoqXG4gKiBJbmsgU3RvcmVcbiAqIEtlZXBzIHRyYWNrIG9mIGNoYW5nZXMgdG8gcmlwcGxlIGVwaWNlbnRlcnNcbiAqIHNvIHRoYXQgPEluayAvPiBjYW4gZm9jdXMgb24gcmVuZGVyaW5nIHRoZW0uXG4gKi9cblxudmFyIEVxdWF0aW9ucyA9IHJlcXVpcmUoJy4vZXF1YXRpb25zJylcblxubGV0IGtpbGxTdGFsZSA9ICh7IG1vdXNlVXAsIGR1cmF0aW9uIH0pID0+ICFtb3VzZVVwIHx8IChEYXRlLm5vdygpIC0gbW91c2VVcCkgPCBkdXJhdGlvblxuXG5tb2R1bGUuZXhwb3J0cyA9IGZ1bmN0aW9uKHB1YmxpY2l6ZSkge1xuICBsZXQgX2RhdGEgICAgPSBbXVxuICBsZXQgX3BsYXlpbmcgPSBmYWxzZVxuICBsZXQgX2ZyYW1lXG5cbiAgbGV0IFN0b3JlID0ge1xuXG4gICAgZWFjaChjYWxsYmFjaywgc2NvcGUpIHtcbiAgICAgIGZvciAodmFyIGkgPSAwLCBsID0gX2RhdGEubGVuZ3RoOyBpIDwgbDsgaSsrKSB7XG4gICAgICAgIGNhbGxiYWNrLmNhbGwoc2NvcGUsIF9kYXRhW2ldKVxuICAgICAgfVxuICAgIH0sXG5cbiAgICBwbGF5KCkge1xuICAgICAgaWYgKCFfcGxheWluZykge1xuICAgICAgICBfcGxheWluZyA9IHRydWVcbiAgICAgICAgU3RvcmUudXBkYXRlKClcbiAgICAgIH1cbiAgICB9LFxuXG4gICAgc3RvcCgpIHtcbiAgICAgIF9wbGF5aW5nID0gZmFsc2VcbiAgICAgIGNhbmNlbEFuaW1hdGlvbkZyYW1lKF9mcmFtZSlcbiAgICB9LFxuXG4gICAgZ2V0VG90YWxPcGFjaXR5KG9wYWNpdHkpIHtcbiAgICAgIGxldCBhbnN3ZXIgPSAwXG5cbiAgICAgIGZvciAodmFyIGkgPSAwLCBsID0gX2RhdGEubGVuZ3RoOyBpIDwgbDsgaSsrKSB7XG4gICAgICAgIGFuc3dlciArPSBFcXVhdGlvbnMuZ2V0QmxvdE91dGVyT3BhY2l0eShfZGF0YVtpXSwgb3BhY2l0eSlcbiAgICAgIH1cblxuICAgICAgcmV0dXJuIGFuc3dlclxuICAgIH0sXG5cbiAgICB1cGRhdGUoKSB7XG4gICAgICBfZGF0YSA9IF9kYXRhLmZpbHRlcihraWxsU3RhbGUpXG5cbiAgICAgIGlmIChfZGF0YS5sZW5ndGgpIHtcbiAgICAgICAgX2ZyYW1lID0gcmVxdWVzdEFuaW1hdGlvbkZyYW1lKFN0b3JlLnVwZGF0ZSlcbiAgICAgIH0gZWxzZSB7XG4gICAgICAgIFN0b3JlLnN0b3AoKVxuICAgICAgfVxuXG4gICAgICBwdWJsaWNpemUoKVxuICAgIH0sXG5cbiAgICBhZGQocHJvcHMpIHtcbiAgICAgIF9kYXRhLnB1c2gocHJvcHMpXG4gICAgICBTdG9yZS5wbGF5KClcbiAgICB9LFxuXG4gICAgcmVsZWFzZSh0aW1lKSB7XG4gICAgICBmb3IgKGxldCBpID0gX2RhdGEubGVuZ3RoIC0gMTsgaSA+PSAwOyBpLS0pIHtcbiAgICAgICAgaWYgKCFfZGF0YVtpXS5tb3VzZVVwKSB7XG4gICAgICAgICAgcmV0dXJuIF9kYXRhW2ldLm1vdXNlVXAgPSB0aW1lXG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG5cbiAgfVxuXG4gIHJldHVybiBTdG9yZVxufVxuXG5cblxuLy8gV0VCUEFDSyBGT09URVIgLy9cbi8vIC4vc3JjL3V0aWwvc3RvcmUuanMiLCJtb2R1bGUuZXhwb3J0cyA9IHJlcXVpcmUoXCJyZWFjdFwiKTtcblxuXG4vLy8vLy8vLy8vLy8vLy8vLy9cbi8vIFdFQlBBQ0sgRk9PVEVSXG4vLyBleHRlcm5hbCBcInJlYWN0XCJcbi8vIG1vZHVsZSBpZCA9IDVcbi8vIG1vZHVsZSBjaHVua3MgPSAwIiwiLyoqXG4gKiBJbmtcbiAqIEZpbGxzIGEgY29udGFpbmVyIHdpdGggYW4gU1ZHIG9iamVjdCB0aGF0IHByb3ZpZGVzIGZlZWRiYWNrIG9uIG1vdXNlL3RvdWNoXG4gKiBldmVudHMgd2l0aCBhIHJpcHBsaW5nIHBvb2wuXG4gKi9cblxubGV0IEhBU19UT1VDSCAgPSByZXF1aXJlKCcuL3V0aWwvaGFzVG91Y2gnKVxubGV0IE1PVVNFX0xFRlQgPSAwXG5sZXQgcGl4ZWxSYXRpbyA9IHJlcXVpcmUoJy4vdXRpbC9waXhlbFJhdGlvJylcbmxldCBSZWFjdCAgICAgID0gcmVxdWlyZSgncmVhY3QnKVxubGV0IFNUWUxFICAgICAgPSByZXF1aXJlKCcuL3N0eWxlJylcbmxldCBTdG9yZSAgICAgID0gcmVxdWlyZSgnLi91dGlsL3N0b3JlJylcbmxldCBUQVUgICAgICAgID0gTWF0aC5QSSAqIDJcbmxldCBFcXVhdGlvbnMgID0gcmVxdWlyZSgnLi91dGlsL2VxdWF0aW9ucycpXG5cbmNsYXNzIEluayBleHRlbmRzIFJlYWN0LlB1cmVDb21wb25lbnQge1xuXG4gIHN0YXRpYyBkZWZhdWx0UHJvcHMgPSB7XG4gICAgYmFja2dyb3VuZCA6IHRydWUsXG4gICAgZHVyYXRpb24gICA6IDEwMDAsXG4gICAgb3BhY2l0eSAgICA6IDAuMjUsXG4gICAgcmFkaXVzICAgICA6IDE1MCxcbiAgICByZWNlbnRlciAgIDogdHJ1ZSxcbiAgICBoYXNUb3VjaCAgIDogSEFTX1RPVUNIXG4gIH1cblxuICBjb25zdHJ1Y3RvciAocHJvcHMpIHtcbiAgICBzdXBlciguLi5hcmd1bWVudHMpXG5cbiAgICB0aGlzLnN0YXRlID0ge1xuICAgICAgY29sb3IgICAgICAgOiAndHJhbnNwYXJlbnQnLFxuICAgICAgZGVuc2l0eSAgICAgOiAxLFxuICAgICAgaGVpZ2h0ICAgICAgOiAwLFxuICAgICAgc3RvcmUgICAgICAgOiBTdG9yZSh0aGlzLnRpY2spLFxuICAgICAgdG91Y2hFdmVudHMgOiB0aGlzLnRvdWNoRXZlbnRzKCksXG4gICAgICB3aWR0aCAgICAgICA6IDBcbiAgICB9XG4gIH1cblxuICB0b3VjaEV2ZW50cyAoKSB7XG4gICAgaWYgKHRoaXMucHJvcHMuaGFzVG91Y2gpIHtcbiAgICAgIHJldHVybiB7XG4gICAgICAgIG9uVG91Y2hTdGFydCAgOiB0aGlzLl9vblByZXNzLFxuICAgICAgICBvblRvdWNoRW5kICAgIDogdGhpcy5fb25SZWxlYXNlLFxuICAgICAgICBvblRvdWNoQ2FuY2VsIDogdGhpcy5fb25SZWxlYXNlXG4gICAgICB9XG4gICAgfSBlbHNlIHtcbiAgICAgIHJldHVybiB7XG4gICAgICAgIG9uTW91c2VEb3duICAgOiB0aGlzLl9vblByZXNzLFxuICAgICAgICBvbk1vdXNlVXAgICAgIDogdGhpcy5fb25SZWxlYXNlLFxuICAgICAgICBvbk1vdXNlTGVhdmUgIDogdGhpcy5fb25SZWxlYXNlXG4gICAgICB9XG4gICAgfVxuICB9XG5cbiAgdGljayA9ICgpID0+IHtcbiAgICBsZXQgeyBjdHgsIGNvbG9yLCBkZW5zaXR5LCBoZWlnaHQsIHdpZHRoLCBzdG9yZSB9ID0gdGhpcy5zdGF0ZVxuXG4gICAgY3R4LnNhdmUoKVxuXG4gICAgY3R4LnNjYWxlKGRlbnNpdHksIGRlbnNpdHkpXG5cbiAgICBjdHguY2xlYXJSZWN0KDAsIDAsIHdpZHRoLCBoZWlnaHQpXG5cbiAgICBjdHguZmlsbFN0eWxlID0gY29sb3JcblxuICAgIGlmICh0aGlzLnByb3BzLmJhY2tncm91bmQpIHtcbiAgICAgIGN0eC5nbG9iYWxBbHBoYSA9IHN0b3JlLmdldFRvdGFsT3BhY2l0eSh0aGlzLnByb3BzLm9wYWNpdHkpXG4gICAgICBjdHguZmlsbFJlY3QoMCwgMCwgd2lkdGgsIGhlaWdodClcbiAgICB9XG5cbiAgICBzdG9yZS5lYWNoKHRoaXMubWFrZUJsb3QsIHRoaXMpXG5cbiAgICBjdHgucmVzdG9yZSgpXG4gIH1cblxuICBtYWtlQmxvdCAoYmxvdCkge1xuICAgIGxldCB7IGN0eCwgaGVpZ2h0LCB3aWR0aCB9ID0gdGhpcy5zdGF0ZVxuICAgIGxldCB7IHgsIHksIHJhZGl1cyB9ID0gYmxvdFxuXG4gICAgY3R4Lmdsb2JhbEFscGhhID0gRXF1YXRpb25zLmdldEJsb3RPcGFjaXR5KGJsb3QsIHRoaXMucHJvcHMub3BhY2l0eSlcbiAgICBjdHguYmVnaW5QYXRoKClcblxuICAgIGlmICh0aGlzLnByb3BzLnJlY2VudGVyKSB7XG4gICAgICBsZXQgc2l6ZSA9IE1hdGgubWF4KGhlaWdodCwgd2lkdGgpXG5cbiAgICAgIHggKz0gRXF1YXRpb25zLmdldEJsb3RTaGlmdFgoYmxvdCwgc2l6ZSwgd2lkdGgpXG4gICAgICB5ICs9IEVxdWF0aW9ucy5nZXRCbG90U2hpZnRZKGJsb3QsIHNpemUsIGhlaWdodClcbiAgICB9XG5cbiAgICBjdHguYXJjKHgsIHksIHJhZGl1cyAqIEVxdWF0aW9ucy5nZXRCbG90U2NhbGUoYmxvdCksIDAsIFRBVSlcblxuICAgIGN0eC5jbG9zZVBhdGgoKVxuICAgIGN0eC5maWxsKClcbiAgfVxuXG4gIGNvbXBvbmVudFdpbGxVbm1vdW50ICgpIHtcbiAgICB0aGlzLnN0YXRlLnN0b3JlLnN0b3AoKVxuICB9XG5cbiAgcHVzaEJsb3QgKHRpbWVTdGFtcCwgY2xpZW50WCwgY2xpZW50WSkge1xuICAgIGxldCBlbCA9IHRoaXMucmVmcy5jYW52YXNcblxuICAgIC8vIDAuMTMgc3VwcG9ydFxuICAgIGlmIChlbCBpbnN0YW5jZW9mIHdpbmRvdy5IVE1MQ2FudmFzRWxlbWVudCA9PT0gZmFsc2UpIHtcbiAgICAgIGVsID0gZWwuZ2V0RE9NTm9kZSgpXG4gICAgfVxuXG4gICAgbGV0IHsgdG9wLCBib3R0b20sIGxlZnQsIHJpZ2h0IH0gPSBlbC5nZXRCb3VuZGluZ0NsaWVudFJlY3QoKVxuICAgIGxldCB7IGNvbG9yIH0gPSB3aW5kb3cuZ2V0Q29tcHV0ZWRTdHlsZShlbClcblxuICAgIGxldCBjdHggICAgID0gdGhpcy5zdGF0ZS5jdHggfHwgZWwuZ2V0Q29udGV4dCgnMmQnKVxuICAgIGxldCBkZW5zaXR5ID0gcGl4ZWxSYXRpbyhjdHgpXG4gICAgbGV0IGhlaWdodCAgPSBib3R0b20gLSB0b3BcbiAgICBsZXQgd2lkdGggICA9IHJpZ2h0IC0gbGVmdFxuICAgIGxldCByYWRpdXMgID0gRXF1YXRpb25zLmdldE1heFJhZGl1cyhoZWlnaHQsIHdpZHRoLCB0aGlzLnByb3BzLnJhZGl1cylcblxuICAgIHRoaXMuc2V0U3RhdGUoeyBjb2xvciwgY3R4LCBkZW5zaXR5LCBoZWlnaHQsIHdpZHRoIH0sICgpID0+IHtcbiAgICAgIHRoaXMuc3RhdGUuc3RvcmUuYWRkKHtcbiAgICAgICAgZHVyYXRpb24gIDogdGhpcy5wcm9wcy5kdXJhdGlvbixcbiAgICAgICAgbW91c2VEb3duIDogdGltZVN0YW1wLFxuICAgICAgICBtb3VzZVVwICAgOiAwLFxuICAgICAgICByYWRpdXMgICAgOiByYWRpdXMsXG4gICAgICAgIHggICAgICAgICA6IGNsaWVudFggLSBsZWZ0LFxuICAgICAgICB5ICAgICAgICAgOiBjbGllbnRZIC0gdG9wXG4gICAgICB9KVxuICAgIH0pXG4gIH1cblxuICByZW5kZXIgKCkge1xuICAgIGxldCB7IGRlbnNpdHksIGhlaWdodCwgd2lkdGgsIHRvdWNoRXZlbnRzIH0gPSB0aGlzLnN0YXRlXG5cbiAgICByZXR1cm4gKFxuICAgICAgPGNhbnZhcyBjbGFzc05hbWU9XCJpbmtcIlxuICAgICAgICAgICAgICByZWY9XCJjYW52YXNcIlxuICAgICAgICAgICAgICBzdHlsZT17eyAuLi5TVFlMRSwgLi4udGhpcy5wcm9wcy5zdHlsZSB9fVxuICAgICAgICAgICAgICBoZWlnaHQ9eyBoZWlnaHQgKiBkZW5zaXR5IH1cbiAgICAgICAgICAgICAgd2lkdGg9eyB3aWR0aCAqIGRlbnNpdHkgfVxuICAgICAgICAgICAgICBvbkRyYWdPdmVyPXsgdGhpcy5fb25SZWxlYXNlIH1cbiAgICAgICAgICAgICAgeyAuLi50b3VjaEV2ZW50cyB9IC8+XG4gICAgKVxuICB9XG5cbiAgX29uUHJlc3MgPSAoZSkgPT4ge1xuICAgIGxldCB7IGJ1dHRvbiwgY3RybEtleSwgY2xpZW50WCwgY2xpZW50WSwgY2hhbmdlZFRvdWNoZXMgfSA9IGVcbiAgICBsZXQgdGltZVN0YW1wID0gRGF0ZS5ub3coKVxuXG4gICAgaWYgKGNoYW5nZWRUb3VjaGVzKSB7XG4gICAgICBmb3IgKHZhciBpID0gMDsgaSA8IGNoYW5nZWRUb3VjaGVzLmxlbmd0aDsgaSsrKSB7XG4gICAgICAgIGxldCB7IGNsaWVudFgsIGNsaWVudFkgfSA9IGNoYW5nZWRUb3VjaGVzW2ldXG4gICAgICAgIHRoaXMucHVzaEJsb3QodGltZVN0YW1wLCBjbGllbnRYLCBjbGllbnRZKVxuICAgICAgfVxuICAgIH0gZWxzZSBpZiAoYnV0dG9uID09PSBNT1VTRV9MRUZUICYmICFjdHJsS2V5KSB7XG4gICAgICB0aGlzLnB1c2hCbG90KHRpbWVTdGFtcCwgY2xpZW50WCwgY2xpZW50WSlcbiAgICB9XG4gIH1cblxuICBfb25SZWxlYXNlID0gKCkgPT4ge1xuICAgIHRoaXMuc3RhdGUuc3RvcmUucmVsZWFzZShEYXRlLm5vdygpKVxuICB9XG5cbn1cblxubW9kdWxlLmV4cG9ydHMgPSBJbmtcblxuXG5cbi8vIFdFQlBBQ0sgRk9PVEVSIC8vXG4vLyAuL3NyYy9pbmRleC5qcyIsIi8qKlxuICogQHQgaXMgdGhlIGN1cnJlbnQgdGltZSAob3IgcG9zaXRpb24pIG9mIHRoZSB0d2Vlbi4gVGhpcyBjYW4gYmUgc2Vjb25kcyBvciBmcmFtZXMsIHN0ZXBzLCBzZWNvbmRzLCBtcywgd2hhdGV2ZXIg4oCTIGFzIGxvbmcgYXMgdGhlIHVuaXQgaXMgdGhlIHNhbWUgYXMgaXMgdXNlZCBmb3IgdGhlIHRvdGFsIHRpbWUgWzNdLlxuICogQGIgaXMgdGhlIGJlZ2lubmluZyB2YWx1ZSBvZiB0aGUgcHJvcGVydHkuXG4gKiBAYyBpcyB0aGUgY2hhbmdlIGJldHdlZW4gdGhlIGJlZ2lubmluZyBhbmQgZGVzdGluYXRpb24gdmFsdWUgb2YgdGhlIHByb3BlcnR5LlxuICogQGQgaXMgdGhlIHRvdGFsIHRpbWUgb2YgdGhlIHR3ZWVuLlxuICovXG5cbm1vZHVsZS5leHBvcnRzID0gZnVuY3Rpb24gZWFzZU91dFF1aW50ICh0LCBiLCBjLCBkKSB7XG4gIHJldHVybiBjKigodD10L2QtMSkqdCp0KnQqdCArIDEpICsgYlxufVxuXG5cblxuLy8gV0VCUEFDSyBGT09URVIgLy9cbi8vIC4vc3JjL3V0aWwvZWFzaW5nLmpzIl0sInNvdXJjZVJvb3QiOiIifQ==
-
-/***/ }),
 /* 224 */
 /***/ (function(module, exports) {
 
@@ -41702,9 +44279,2754 @@ module.exports=function(t){function e(n){if(o[n])return o[n].exports;var r=o[n]=
 
 /***/ }),
 /* 225 */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory(__webpack_require__(1), __webpack_require__(58), __webpack_require__(29));
+	else if(typeof define === 'function' && define.amd)
+		define("reactTippy", ["react", "popper.js", "react-dom"], factory);
+	else if(typeof exports === 'object')
+		exports["reactTippy"] = factory(require("react"), require("popper.js"), require("react-dom"));
+	else
+		root["reactTippy"] = factory(root["React"], root["Popper"], root["ReactDOM"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_13__, __WEBPACK_EXTERNAL_MODULE_38__, __WEBPACK_EXTERNAL_MODULE_39__) {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+/******/
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var Browser = exports.Browser = {};
+
+if (typeof window !== 'undefined') {
+  Browser.SUPPORTED = 'requestAnimationFrame' in window;
+  Browser.SUPPORTS_TOUCH = 'ontouchstart' in window;
+  Browser.touch = false;
+  Browser.dynamicInputDetection = true;
+  // Chrome device/touch emulation can make this dynamic
+  Browser.iOS = function () {
+    return (/iPhone|iPad|iPod/.test(navigator.userAgent) && !window.MSStream
+    );
+  };
+}
+
+/**
+* The global storage array which holds all data reference objects
+* from every instance
+* This allows us to hide tooltips from all instances, finding the ref when
+* clicking on the body, and for followCursor
+*/
+var Store = exports.Store = [];
+
+/**
+* Selector constants used for grabbing elements
+*/
+var Selectors = exports.Selectors = {
+  POPPER: '.tippy-popper',
+  TOOLTIP: '.tippy-tooltip',
+  CONTENT: '.tippy-tooltip-content',
+  CIRCLE: '[x-circle]',
+  ARROW: '[x-arrow]',
+  TOOLTIPPED_EL: '[data-tooltipped]',
+  CONTROLLER: '[data-tippy-controller]'
+};
+
+/**
+* The default settings applied to each instance
+*/
+var Defaults = exports.Defaults = {
+  html: false,
+  position: 'top',
+  animation: 'shift',
+  animateFill: true,
+  arrow: false,
+  arrowSize: 'regular',
+  delay: 0,
+  trigger: 'mouseenter focus',
+  duration: 350,
+  interactive: false,
+  interactiveBorder: 2,
+  theme: 'dark',
+  size: 'regular',
+  distance: 10,
+  offset: 0,
+  hideOnClick: true,
+  multiple: false,
+  followCursor: false,
+  inertia: false,
+  flipDuration: 350,
+  sticky: false,
+  stickyDuration: 200,
+  appendTo: function appendTo() {
+    return document.body;
+  },
+  zIndex: 9999,
+  touchHold: false,
+  performance: false,
+  dynamicTitle: false,
+  useContext: false,
+  reactInstance: undefined,
+  popperOptions: {},
+  open: undefined,
+  onRequestClose: function onRequestClose() {}
+};
+
+/**
+* The keys of the defaults object for reducing down into a new object
+* Used in `getIndividualSettings()`
+*/
+var DefaultsKeys = exports.DefaultsKeys = Browser.SUPPORTED && Object.keys(Defaults);
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = prefix;
+/**
+* Returns the supported prefixed property - only `webkit` is needed, `moz`, `ms` and `o` are obsolete
+* @param {String} property
+* @return {String} - browser supported prefixed property
+*/
+function prefix(property) {
+  var prefixes = [false, 'webkit'];
+  var upperProp = property.charAt(0).toUpperCase() + property.slice(1);
+
+  for (var i = 0; i < prefixes.length; i++) {
+    var _prefix = prefixes[i];
+    var prefixedProp = _prefix ? '' + _prefix + upperProp : property;
+    if (typeof window.document.body.style[prefixedProp] !== 'undefined') {
+      return prefixedProp;
+    }
+  }
+
+  return null;
+}
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = find;
+/**
+* Ponyfill for Array.prototype.find
+* @param {Array} arr
+* @param {Function} checkFn
+* @return item in the array
+*/
+function find(arr, checkFn) {
+  if (Array.prototype.find) {
+    return arr.find(checkFn);
+  }
+
+  // use `filter` as fallback
+  return arr.filter(checkFn)[0];
+}
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = getCorePlacement;
+/**
+* Returns the non-shifted placement (e.g., 'bottom-start' => 'bottom')
+* @param {String} placement
+* @return {String}
+*/
+function getCorePlacement(placement) {
+  return placement.replace(/-.+/, '');
+}
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = closest;
+
+var _matches = __webpack_require__(8);
+
+/**
+* Ponyfill to get the closest parent element
+* @param {Element} element - child of parent to be returned
+* @param {String} parentSelector - selector to match the parent if found
+* @return {Element}
+*/
+function closest(element, parentSelector) {
+  var _closest = Element.prototype.closest || function (selector) {
+    var el = this;
+    while (el) {
+      if (_matches.matches.call(el, selector)) {
+        return el;
+      }
+      el = el.parentElement;
+    }
+  };
+
+  return _closest.call(element, parentSelector);
+}
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = defer;
+/**
+* Waits until next repaint to execute a fn
+* @param {Function} fn
+*/
+function defer(fn) {
+  window.requestAnimationFrame(function () {
+    setTimeout(fn, 0);
+  });
+}
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = getInnerElements;
+
+var _globals = __webpack_require__(0);
+
+/**
+* Returns inner elements of the popper element
+* @param {Element} popper
+* @return {Object}
+*/
+function getInnerElements(popper) {
+  return {
+    tooltip: popper.querySelector(_globals.Selectors.TOOLTIP),
+    circle: popper.querySelector(_globals.Selectors.CIRCLE),
+    content: popper.querySelector(_globals.Selectors.CONTENT)
+  };
+}
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isVisible;
+/**
+* Determines if a popper is currently visible
+* @param {Element} popper
+* @return {Boolean}
+*/
+function isVisible(popper) {
+  return popper.style.visibility === 'visible';
+}
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+function defaultMatchSelector(s) {
+  var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+      i = matches.length;
+  while (--i >= 0 && matches.item(i) !== this) {}
+  return i > -1;
+}
+
+var matches = exports.matches = typeof window === 'undefined' ? defaultMatchSelector : Element.prototype.matches || Element.prototype.matchesSelector || Element.prototype.webkitMatchesSelector || Element.prototype.mozMatchesSelector || Element.prototype.msMatchesSelector || defaultMatchSelector;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(13);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _tippy = __webpack_require__(30);
+
+var _tippy2 = _interopRequireDefault(_tippy);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var defaultProps = {
+  html: null,
+  position: 'top',
+  animation: 'shift',
+  animateFill: true,
+  arrow: false,
+  delay: 0,
+  hideDelay: 0,
+  trigger: 'mouseenter focus',
+  duration: 375,
+  hideDuration: 375,
+  interactive: false,
+  interactiveBorder: 2,
+  theme: 'dark',
+  offset: 0,
+  hideOnClick: true,
+  multiple: false,
+  followCursor: false,
+  inertia: false,
+  popperOptions: {},
+  onShow: function onShow() {},
+  onShown: function onShown() {},
+  onHide: function onHide() {},
+  onHidden: function onHidden() {},
+  disabled: false,
+  arrowSize: 'regular',
+  size: 'regular',
+  className: '',
+  style: {},
+  distance: 10,
+  onRequestClose: function onRequestClose() {},
+  sticky: false,
+  stickyDuration: 200,
+  touchHold: false,
+  unmountHTMLWhenHide: false
+};
+
+var propKeys = Object.keys(defaultProps);
+
+var detectPropsChanged = function detectPropsChanged(props, prevProps) {
+  var result = [];
+  propKeys.forEach(function (key) {
+    if (props[key] !== prevProps[key]) {
+      result.push(key);
+    }
+  });
+  return result;
+};
+
+var Tooltip = function (_Component) {
+  _inherits(Tooltip, _Component);
+
+  function Tooltip(props) {
+    _classCallCheck(this, Tooltip);
+
+    var _this = _possibleConstructorReturn(this, (Tooltip.__proto__ || Object.getPrototypeOf(Tooltip)).call(this, props));
+
+    _this.initTippy = _this._initTippy.bind(_this);
+    _this.destroyTippy = _this._destroyTippy.bind(_this);
+    _this.updateTippy = _this._updateTippy.bind(_this);
+    _this.updateReactDom = _this._updateReactDom.bind(_this);
+    _this.showTooltip = _this._showTooltip.bind(_this);
+    _this.hideTooltip = _this._hideTooltip.bind(_this);
+    _this.updateSettings = _this._updateSettings.bind(_this);
+    return _this;
+  }
+
+  _createClass(Tooltip, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (typeof window === 'undefined' || typeof document === 'undefined') {
+        return;
+      }
+      this.initTippy();
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      if (typeof window === 'undefined' || typeof document === 'undefined') {
+        return;
+      }
+      this.destroyTippy();
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps) {
+      var _this2 = this;
+
+      // enable and disabled
+      if (typeof window === 'undefined' || typeof document === 'undefined') {
+        return;
+      }
+      if (this.props.disabled === false && prevProps.disabled === true) {
+        this.updateSettings('disabled', false);
+        this.destroyTippy();
+        this.initTippy();
+        return;
+      }
+
+      if (this.props.disabled === true && prevProps.disabled === false) {
+        this.updateSettings('disabled', true);
+        this.destroyTippy();
+        return;
+      }
+
+      // open
+      if (this.props.open === true && !prevProps.open) {
+        this.updateSettings('open', true);
+        setTimeout(function () {
+          _this2.showTooltip();
+        }, 0);
+      }
+      if (this.props.open === false && prevProps.open === true) {
+        this.updateSettings('open', false);
+        this.hideTooltip();
+      }
+
+      if (this.props.html !== prevProps.html) {
+        this.updateReactDom();
+      }
+
+      // Update content
+      if (this.props.title !== prevProps.title) {
+        this.updateTippy();
+      }
+
+      // update otherProps
+      var propChanges = detectPropsChanged(this.props, prevProps);
+      propChanges.forEach(function (key) {
+        _this2.updateSettings(key, _this2.props[key]);
+      });
+    }
+  }, {
+    key: '_showTooltip',
+    value: function _showTooltip() {
+      if (typeof window === 'undefined' || typeof document === 'undefined') {
+        return;
+      }
+      if (this.tippy) {
+        var popper = this.tippy.getPopperElement(this.tooltipDOM);
+        this.tippy.show(popper, this.props.duration);
+      }
+    }
+  }, {
+    key: '_hideTooltip',
+    value: function _hideTooltip() {
+      if (typeof window === 'undefined' || typeof document === 'undefined') {
+        return;
+      }
+      if (this.tippy) {
+        var popper = this.tippy.getPopperElement(this.tooltipDOM);
+        this.tippy.hide(popper, this.props.hideDuration);
+      }
+    }
+  }, {
+    key: '_updateSettings',
+    value: function _updateSettings(name, value) {
+      if (typeof window === 'undefined' || typeof document === 'undefined') {
+        return;
+      }
+      if (this.tippy) {
+        var popper = this.tippy.getPopperElement(this.tooltipDOM);
+        this.tippy.updateSettings(popper, name, value);
+      }
+    }
+  }, {
+    key: '_updateReactDom',
+    value: function _updateReactDom() {
+      if (typeof window === 'undefined' || typeof document === 'undefined') {
+        return;
+      }
+      if (this.tippy) {
+        this.updateSettings('reactDOM', this.props.html);
+        var popper = this.tippy.getPopperElement(this.tooltipDOM);
+        var isVisible = popper.style.visibility === 'visible' || this.props.open;
+        if (isVisible) {
+          this.tippy.updateForReact(popper, this.props.html);
+        }
+      }
+    }
+  }, {
+    key: '_updateTippy',
+    value: function _updateTippy() {
+      if (typeof window === 'undefined' || typeof document === 'undefined') {
+        return;
+      }
+      if (this.tippy) {
+        var popper = this.tippy.getPopperElement(this.tooltipDOM);
+        this.tippy.update(popper);
+      }
+    }
+  }, {
+    key: '_initTippy',
+    value: function _initTippy() {
+      if (typeof window === 'undefined' || typeof document === 'undefined') {
+        return;
+      }
+      if (!this.props.disabled) {
+        this.tooltipDOM.setAttribute('title', this.props.title);
+        this.tippy = (0, _tippy2.default)(this.tooltipDOM, {
+          disabled: this.props.disabled,
+          position: this.props.position,
+          animation: this.props.animation,
+          animateFill: this.props.animateFill,
+          arrow: this.props.arrow,
+          arrowSize: this.props.arrowSize,
+          delay: this.props.delay,
+          hideDelay: this.props.hideDelay,
+          trigger: this.props.trigger,
+          duration: this.props.duration,
+          hideDuration: this.props.hideDuration,
+          interactive: this.props.interactive,
+          interactiveBorder: this.props.interactiveBorder,
+          theme: this.props.theme,
+          offset: this.props.offset,
+          hideOnClick: this.props.hideOnClick,
+          multiple: this.props.multiple,
+          size: this.props.size,
+          followCursor: this.props.followCursor,
+          inertia: this.props.inertia,
+          popperOptions: this.props.popperOptions,
+          onShow: this.props.onShow,
+          onShown: this.props.onShown,
+          onHide: this.props.onHide,
+          onHidden: this.props.onHidden,
+          distance: this.props.distance,
+          reactDOM: this.props.html,
+          unmountHTMLWhenHide: this.props.unmountHTMLWhenHide,
+          open: this.props.open,
+          sticky: this.props.sticky,
+          stickyDuration: this.props.stickyDuration,
+          touchHold: this.props.touchHold,
+          onRequestClose: this.props.onRequestClose,
+          useContext: this.props.useContext,
+          reactInstance: this.props.useContext ? this : undefined,
+          performance: true,
+          html: this.props.rawTemplate ? this.props.rawTemplate : undefined
+        });
+        if (this.props.open) {
+          this.showTooltip();
+        }
+      } else {
+        this.tippy = null;
+      }
+    }
+  }, {
+    key: '_destroyTippy',
+    value: function _destroyTippy() {
+      if (typeof window === 'undefined' || typeof document === 'undefined') {
+        return;
+      }
+      if (this.tippy) {
+        var popper = this.tippy.getPopperElement(this.tooltipDOM);
+        this.updateSettings('open', false);
+        this.tippy.hide(popper, 0);
+        this.tippy.destroy(popper);
+        this.tippy = null;
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this3 = this;
+
+      return _react2.default.createElement(
+        'div',
+        {
+          ref: function ref(tooltip) {
+            _this3.tooltipDOM = tooltip;
+          },
+          title: this.props.title,
+          className: this.props.className,
+          tabIndex: this.props.tabIndex,
+          style: _extends({
+            display: 'inline'
+          }, this.props.style)
+        },
+        this.props.children
+      );
+    }
+  }]);
+
+  return Tooltip;
+}(_react.Component);
+
+Tooltip.defaultProps = defaultProps;
+
+exports.default = Tooltip;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = followCursorHandler;
+
+var _globals = __webpack_require__(0);
+
+var _getCorePlacement = __webpack_require__(3);
+
+var _getCorePlacement2 = _interopRequireDefault(_getCorePlacement);
+
+var _find = __webpack_require__(2);
+
+var _find2 = _interopRequireDefault(_find);
+
+var _prefix = __webpack_require__(1);
+
+var _prefix2 = _interopRequireDefault(_prefix);
+
+var _closest = __webpack_require__(4);
+
+var _closest2 = _interopRequireDefault(_closest);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+* Mousemove event listener callback method for follow cursor setting
+* @param {MouseEvent} e
+*/
+function followCursorHandler(e) {
+  var _this = this;
+
+  var refData = (0, _find2.default)(_globals.Store, function (refData) {
+    return refData.el === _this;
+  });
+
+  var popper = refData.popper,
+      offset = refData.settings.offset;
+
+
+  var position = (0, _getCorePlacement2.default)(popper.getAttribute('x-placement'));
+  var halfPopperWidth = Math.round(popper.offsetWidth / 2);
+  var halfPopperHeight = Math.round(popper.offsetHeight / 2);
+  var viewportPadding = 5;
+  var pageWidth = document.documentElement.offsetWidth || document.body.offsetWidth;
+
+  var pageX = e.pageX,
+      pageY = e.pageY;
+
+
+  var x = void 0,
+      y = void 0;
+
+  switch (position) {
+    case 'top':
+      x = pageX - halfPopperWidth + offset;
+      y = pageY - 2.25 * halfPopperHeight;
+      break;
+    case 'left':
+      x = pageX - 2 * halfPopperWidth - 10;
+      y = pageY - halfPopperHeight + offset;
+      break;
+    case 'right':
+      x = pageX + halfPopperHeight;
+      y = pageY - halfPopperHeight + offset;
+      break;
+    case 'bottom':
+      x = pageX - halfPopperWidth + offset;
+      y = pageY + halfPopperHeight / 1.5;
+      break;
+  }
+
+  var isRightOverflowing = pageX + viewportPadding + halfPopperWidth + offset > pageWidth;
+  var isLeftOverflowing = pageX - viewportPadding - halfPopperWidth + offset < 0;
+
+  // Prevent left/right overflow
+  if (position === 'top' || position === 'bottom') {
+    if (isRightOverflowing) {
+      x = pageWidth - viewportPadding - 2 * halfPopperWidth;
+    }
+
+    if (isLeftOverflowing) {
+      x = viewportPadding;
+    }
+  }
+
+  popper.style[(0, _prefix2.default)('transform')] = 'translate3d(' + x + 'px, ' + y + 'px, 0)';
+}
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = getOffsetDistanceInPx;
+
+var _globals = __webpack_require__(0);
+
+/**
+* Returns the distance taking into account the default distance due to
+* the transform: translate setting in CSS
+* @param {Number} distance
+* @return {String}
+*/
+function getOffsetDistanceInPx(distance) {
+  return -(distance - _globals.Defaults.distance) + 'px';
+}
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = removeTitle;
+/**
+* Removes the title from the tooltipped element, setting `data-original-title`
+* appropriately
+* @param {Element} el
+*/
+function removeTitle(el) {
+  var title = el.getAttribute('title');
+
+  // Only set `data-original-title` attr if there is a title
+  if (title) {
+    el.setAttribute('data-original-title', title);
+  }
+
+  el.removeAttribute('title');
+}
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+module.exports = __WEBPACK_EXTERNAL_MODULE_13__;
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(13);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _component = __webpack_require__(9);
+
+var _component2 = _interopRequireDefault(_component);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+var withTooltip = function withTooltip(Component) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  return function (_ref) {
+    var props = _objectWithoutProperties(_ref, []);
+
+    return _react2.default.createElement(
+      _component2.default,
+      options,
+      _react2.default.createElement(Component, props)
+    );
+  };
+};
+
+exports.default = withTooltip;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.withTooltip = exports.Tooltip = undefined;
+
+var _component = __webpack_require__(9);
+
+var _component2 = _interopRequireDefault(_component);
+
+var _hoc = __webpack_require__(14);
+
+var _hoc2 = _interopRequireDefault(_hoc);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.Tooltip = _component2.default;
+exports.withTooltip = _hoc2.default;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = bindEventListeners;
+
+var _globals = __webpack_require__(0);
+
+var _hideAllPoppers = __webpack_require__(25);
+
+var _hideAllPoppers2 = _interopRequireDefault(_hideAllPoppers);
+
+var _closest = __webpack_require__(4);
+
+var _closest2 = _interopRequireDefault(_closest);
+
+var _find = __webpack_require__(2);
+
+var _find2 = _interopRequireDefault(_find);
+
+var _matches = __webpack_require__(8);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+* Adds the needed event listeners
+*/
+function bindEventListeners() {
+  var touchHandler = function touchHandler() {
+    _globals.Browser.touch = true;
+
+    if (_globals.Browser.iOS()) {
+      document.body.classList.add('tippy-touch');
+    }
+
+    if (_globals.Browser.dynamicInputDetection && window.performance) {
+      document.addEventListener('mousemove', mousemoveHandler);
+    }
+  };
+
+  var mousemoveHandler = function () {
+    var time = void 0;
+
+    return function () {
+      var now = performance.now();
+
+      // Chrome 60+ is 1 mousemove per rAF, use 20ms time difference
+      if (now - time < 20) {
+        _globals.Browser.touch = false;
+        document.removeEventListener('mousemove', mousemoveHandler);
+        if (!_globals.Browser.iOS()) {
+          document.body.classList.remove('tippy-touch');
+        }
+      }
+
+      time = now;
+    };
+  }();
+
+  var clickHandler = function clickHandler(event) {
+    // Simulated events dispatched on the document
+    if (!(event.target instanceof Element)) {
+      return (0, _hideAllPoppers2.default)();
+    }
+
+    var el = (0, _closest2.default)(event.target, _globals.Selectors.TOOLTIPPED_EL);
+    var popper = (0, _closest2.default)(event.target, _globals.Selectors.POPPER);
+
+    if (popper) {
+      var ref = (0, _find2.default)(_globals.Store, function (ref) {
+        return ref.popper === popper;
+      });
+      var interactive = ref.settings.interactive;
+
+      if (interactive) return;
+    }
+
+    if (el) {
+      var _ref = (0, _find2.default)(_globals.Store, function (ref) {
+        return ref.el === el;
+      });
+      var _ref$settings = _ref.settings,
+          hideOnClick = _ref$settings.hideOnClick,
+          multiple = _ref$settings.multiple,
+          trigger = _ref$settings.trigger;
+
+      // Hide all poppers except the one belonging to the element that was clicked IF
+      // `multiple` is false AND they are a touch user, OR
+      // `multiple` is false AND it's triggered by a click
+
+      if (!multiple && _globals.Browser.touch || !multiple && trigger.indexOf('click') !== -1) {
+        return (0, _hideAllPoppers2.default)(_ref);
+      }
+
+      // If hideOnClick is not strictly true or triggered by a click don't hide poppers
+      if (hideOnClick !== true || trigger.indexOf('click') !== -1) return;
+    }
+
+    // Don't trigger a hide for tippy controllers, and don't needlessly run loop
+    if ((0, _closest2.default)(event.target, _globals.Selectors.CONTROLLER) || !document.querySelector(_globals.Selectors.POPPER)) return;
+
+    (0, _hideAllPoppers2.default)();
+  };
+
+  var blurHandler = function blurHandler(event) {
+    var _document = document,
+        el = _document.activeElement;
+
+    if (el && el.blur && _matches.matches.call(el, _globals.Selectors.TOOLTIPPED_EL)) {
+      el.blur();
+    }
+  };
+
+  // Hook events
+  document.addEventListener('click', clickHandler);
+  document.addEventListener('touchstart', touchHandler);
+  window.addEventListener('blur', blurHandler);
+
+  if (!_globals.Browser.SUPPORTS_TOUCH && (navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0)) {
+    document.addEventListener('pointerdown', touchHandler);
+  }
+}
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = createPopperElement;
+
+var _getCorePlacement = __webpack_require__(3);
+
+var _getCorePlacement2 = _interopRequireDefault(_getCorePlacement);
+
+var _getOffsetDistanceInPx = __webpack_require__(11);
+
+var _getOffsetDistanceInPx2 = _interopRequireDefault(_getOffsetDistanceInPx);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+* Creates a popper element then returns it
+* @param {Number} id - the popper id
+* @param {String} title - the tooltip's `title` attribute
+* @param {Object} settings - individual settings
+* @return {Element} - the popper element
+*/
+function createPopperElement(id, title, settings) {
+  var position = settings.position,
+      distance = settings.distance,
+      arrow = settings.arrow,
+      animateFill = settings.animateFill,
+      inertia = settings.inertia,
+      animation = settings.animation,
+      arrowSize = settings.arrowSize,
+      size = settings.size,
+      theme = settings.theme,
+      html = settings.html,
+      zIndex = settings.zIndex,
+      interactive = settings.interactive;
+
+
+  var popper = document.createElement('div');
+  popper.setAttribute('class', 'tippy-popper');
+  popper.setAttribute('role', 'tooltip');
+  popper.setAttribute('aria-hidden', 'true');
+  popper.setAttribute('id', 'tippy-tooltip-' + id);
+  popper.style.zIndex = zIndex;
+
+  var tooltip = document.createElement('div');
+  tooltip.setAttribute('class', 'tippy-tooltip tippy-tooltip--' + size + ' leave');
+  tooltip.setAttribute('data-animation', animation);
+
+  theme.split(' ').forEach(function (t) {
+    tooltip.classList.add(t + '-theme');
+  });
+
+  if (arrow) {
+    // Add an arrow
+    var _arrow = document.createElement('div');
+    _arrow.setAttribute('class', 'arrow-' + arrowSize);
+    _arrow.setAttribute('x-arrow', '');
+    tooltip.appendChild(_arrow);
+  }
+
+  if (animateFill) {
+    // Create animateFill circle element for animation
+    tooltip.setAttribute('data-animatefill', '');
+    var circle = document.createElement('div');
+    circle.setAttribute('class', 'leave');
+    circle.setAttribute('x-circle', '');
+    tooltip.appendChild(circle);
+  }
+
+  if (inertia) {
+    // Change transition timing function cubic bezier
+    tooltip.setAttribute('data-inertia', '');
+  }
+
+  if (interactive) {
+    tooltip.setAttribute('data-interactive', '');
+  }
+
+  // Tooltip content (text or HTML)
+  var content = document.createElement('div');
+  content.setAttribute('class', 'tippy-tooltip-content');
+
+  if (html) {
+    var templateId = void 0;
+
+    if (html instanceof Element) {
+      content.appendChild(html);
+      templateId = '#' + html.id || 'tippy-html-template';
+    } else {
+      content.innerHTML = document.getElementById(html.replace('#', '')).innerHTML;
+      templateId = html;
+    }
+
+    popper.classList.add('html-template');
+    interactive && popper.setAttribute('tabindex', '-1');
+    tooltip.setAttribute('data-template-id', templateId);
+  } else {
+    content.innerHTML = title;
+  }
+
+  // Init distance. Further updates are made in the popper instance's `onUpdate()` method
+  tooltip.style[(0, _getCorePlacement2.default)(position)] = (0, _getOffsetDistanceInPx2.default)(distance);
+
+  tooltip.appendChild(content);
+  popper.appendChild(tooltip);
+
+  return popper;
+}
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.default = createPopperInstance;
+
+var _popper = __webpack_require__(38);
+
+var _popper2 = _interopRequireDefault(_popper);
+
+var _defer = __webpack_require__(5);
+
+var _defer2 = _interopRequireDefault(_defer);
+
+var _prefix = __webpack_require__(1);
+
+var _prefix2 = _interopRequireDefault(_prefix);
+
+var _getCorePlacement = __webpack_require__(3);
+
+var _getCorePlacement2 = _interopRequireDefault(_getCorePlacement);
+
+var _getInnerElements2 = __webpack_require__(6);
+
+var _getInnerElements3 = _interopRequireDefault(_getInnerElements2);
+
+var _getOffsetDistanceInPx = __webpack_require__(11);
+
+var _getOffsetDistanceInPx2 = _interopRequireDefault(_getOffsetDistanceInPx);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+* Creates a new popper instance
+* @param {Object} data
+* @return {Object} - the popper instance
+*/
+function createPopperInstance(data) {
+  var el = data.el,
+      popper = data.popper,
+      _data$settings = data.settings,
+      position = _data$settings.position,
+      popperOptions = _data$settings.popperOptions,
+      offset = _data$settings.offset,
+      distance = _data$settings.distance,
+      flipDuration = _data$settings.flipDuration;
+
+  var _getInnerElements = (0, _getInnerElements3.default)(popper),
+      tooltip = _getInnerElements.tooltip;
+
+  var config = _extends({
+    placement: position
+  }, popperOptions || {}, {
+    modifiers: _extends({}, popperOptions ? popperOptions.modifiers : {}, {
+      flip: _extends({
+        padding: distance + 5 /* 5px from viewport boundary */
+      }, popperOptions && popperOptions.modifiers ? popperOptions.modifiers.flip : {}),
+      offset: _extends({
+        offset: offset
+      }, popperOptions && popperOptions.modifiers ? popperOptions.modifiers.offset : {})
+    }),
+    onUpdate: function onUpdate() {
+      var styles = tooltip.style;
+      styles.top = '';
+      styles.bottom = '';
+      styles.left = '';
+      styles.right = '';
+      styles[(0, _getCorePlacement2.default)(popper.getAttribute('x-placement'))] = (0, _getOffsetDistanceInPx2.default)(distance);
+    }
+  });
+
+  // Update the popper's position whenever its content changes
+  // Not supported in IE10 unless polyfilled
+  if (window.MutationObserver) {
+    var styles = popper.style;
+
+    var observer = new MutationObserver(function () {
+      styles[(0, _prefix2.default)('transitionDuration')] = '0ms';
+      data.popperInstance.update();
+      (0, _defer2.default)(function () {
+        styles[(0, _prefix2.default)('transitionDuration')] = flipDuration + 'ms';
+      });
+    });
+
+    observer.observe(popper, {
+      childList: true,
+      subtree: true,
+      characterData: true
+    });
+
+    data._mutationObserver = observer;
+  }
+
+  return new _popper2.default(el, popper, config);
+}
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = createTooltips;
+
+var _getIndividualSettings = __webpack_require__(24);
+
+var _getIndividualSettings2 = _interopRequireDefault(_getIndividualSettings);
+
+var _createPopperElement = __webpack_require__(17);
+
+var _createPopperElement2 = _interopRequireDefault(_createPopperElement);
+
+var _createTrigger = __webpack_require__(20);
+
+var _createTrigger2 = _interopRequireDefault(_createTrigger);
+
+var _getEventListenerHandlers = __webpack_require__(23);
+
+var _getEventListenerHandlers2 = _interopRequireDefault(_getEventListenerHandlers);
+
+var _evaluateSettings = __webpack_require__(21);
+
+var _evaluateSettings2 = _interopRequireDefault(_evaluateSettings);
+
+var _removeTitle = __webpack_require__(12);
+
+var _removeTitle2 = _interopRequireDefault(_removeTitle);
+
+var _globals = __webpack_require__(0);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var idCounter = 1;
+
+/**
+* Creates tooltips for all el elements that match the instance's selector
+* @param {Element[]} els
+* @return {Object[]} Array of ref data objects
+*/
+function createTooltips(els) {
+  var _this = this;
+
+  return els.reduce(function (a, el) {
+    var id = idCounter;
+
+    var settings = (0, _evaluateSettings2.default)(_this.settings.performance ? _this.settings : (0, _getIndividualSettings2.default)(el, _this.settings));
+
+    var html = settings.html,
+        trigger = settings.trigger,
+        touchHold = settings.touchHold;
+
+
+    var title = el.getAttribute('title');
+    if (!title && !html) return a;
+
+    el.setAttribute('data-tooltipped', '');
+    el.setAttribute('aria-describedby', 'tippy-tooltip-' + id);
+    (0, _removeTitle2.default)(el);
+
+    var popper = (0, _createPopperElement2.default)(id, title, settings);
+    var handlers = _getEventListenerHandlers2.default.call(_this, el, popper, settings);
+
+    var listeners = [];
+
+    trigger.trim().split(' ').forEach(function (event) {
+      return listeners = listeners.concat((0, _createTrigger2.default)(event, el, handlers, touchHold));
+    });
+
+    a.push({
+      id: id,
+      el: el,
+      popper: popper,
+      settings: settings,
+      listeners: listeners,
+      tippyInstance: _this
+    });
+
+    idCounter++;
+
+    return a;
+  }, []);
+}
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = createTrigger;
+
+var _globals = __webpack_require__(0);
+
+/**
+* Creates a trigger
+* @param {Object} event - the custom event specified in the `trigger` setting
+* @param {Element} el - tooltipped element
+* @param {Object} handlers - the handlers for each listener
+* @param {Boolean} touchHold
+* @return {Array} - array of listener objects
+*/
+function createTrigger(event, el, handlers, touchHold) {
+  var listeners = [];
+
+  if (event === 'manual') return listeners;
+
+  // Enter
+  el.addEventListener(event, handlers.handleTrigger);
+  listeners.push({
+    event: event,
+    handler: handlers.handleTrigger
+  });
+
+  // Leave
+  if (event === 'mouseenter') {
+    if (_globals.Browser.SUPPORTS_TOUCH && touchHold) {
+      el.addEventListener('touchstart', handlers.handleTrigger);
+      listeners.push({
+        event: 'touchstart',
+        handler: handlers.handleTrigger
+      });
+      el.addEventListener('touchend', handlers.handleMouseleave);
+      listeners.push({
+        event: 'touchend',
+        handler: handlers.handleMouseleave
+      });
+    }
+
+    el.addEventListener('mouseleave', handlers.handleMouseleave);
+    listeners.push({
+      event: 'mouseleave',
+      handler: handlers.handleMouseleave
+    });
+  }
+
+  if (event === 'focus') {
+    el.addEventListener('blur', handlers.handleBlur);
+    listeners.push({
+      event: 'blur',
+      handler: handlers.handleBlur
+    });
+  }
+
+  return listeners;
+}
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = evaluateSettings;
+/**
+* Evaluates/modifies the settings object for appropriate behavior
+* @param {Object} settings
+* @return {Object} modified/evaluated settings
+*/
+function evaluateSettings(settings) {
+  // animateFill is disabled if an arrow is true
+  if (settings.arrow) {
+    settings.animateFill = false;
+  }
+
+  // reassign appendTo into the result of evaluating appendTo
+  // if it's set as a function instead of Element
+  if (settings.appendTo && typeof settings.appendTo === 'function') {
+    settings.appendTo = settings.appendTo();
+  }
+
+  return settings;
+}
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = getArrayOfElements;
+/**
+* Returns an array of elements based on the selector input
+* @param {String|Element|Element[]} selector
+* @return {Element[]}
+*/
+function getArrayOfElements(selector) {
+  if (selector instanceof Element) {
+    return [selector];
+  }
+
+  if (Array.isArray(selector)) {
+    return selector;
+  }
+
+  return [].slice.call(document.querySelectorAll(selector));
+}
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = getEventListenerHandlers;
+
+var _globals = __webpack_require__(0);
+
+var _isVisible = __webpack_require__(7);
+
+var _isVisible2 = _interopRequireDefault(_isVisible);
+
+var _closest = __webpack_require__(4);
+
+var _closest2 = _interopRequireDefault(_closest);
+
+var _cursorIsOutsideInteractiveBorder = __webpack_require__(32);
+
+var _cursorIsOutsideInteractiveBorder2 = _interopRequireDefault(_cursorIsOutsideInteractiveBorder);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+* Returns relevant listener callbacks for each ref
+* @param {Element} el
+* @param {Element} popper
+* @param {Object} settings
+* @return {Object} - relevant listener handlers
+*/
+function getEventListenerHandlers(el, popper, settings) {
+  var _this = this;
+
+  var position = settings.position,
+      delay = settings.delay,
+      duration = settings.duration,
+      interactive = settings.interactive,
+      interactiveBorder = settings.interactiveBorder,
+      distance = settings.distance,
+      hideOnClick = settings.hideOnClick,
+      trigger = settings.trigger,
+      touchHold = settings.touchHold,
+      touchWait = settings.touchWait;
+
+
+  var showDelay = void 0,
+      hideDelay = void 0;
+
+  var clearTimeouts = function clearTimeouts() {
+    clearTimeout(showDelay);
+    clearTimeout(hideDelay);
+  };
+
+  var _show = function _show() {
+    clearTimeouts();
+
+    // Not hidden. For clicking when it also has a `focus` event listener
+    if ((0, _isVisible2.default)(popper)) return;
+
+    var _delay = Array.isArray(delay) ? delay[0] : delay;
+
+    if (delay) {
+      showDelay = setTimeout(function () {
+        return _this.show(popper);
+      }, _delay);
+    } else {
+      _this.show(popper);
+    }
+  };
+
+  var show = function show(event) {
+    return _this.callbacks.wait ? _this.callbacks.wait.call(popper, _show, event) : _show();
+  };
+
+  var hide = function hide() {
+    clearTimeouts();
+
+    var _delay = Array.isArray(delay) ? delay[1] : delay;
+
+    if (delay) {
+      hideDelay = setTimeout(function () {
+        return _this.hide(popper);
+      }, _delay);
+    } else {
+      _this.hide(popper);
+    }
+  };
+
+  var handleTrigger = function handleTrigger(event) {
+    var mouseenterTouch = event.type === 'mouseenter' && _globals.Browser.SUPPORTS_TOUCH && _globals.Browser.touch;
+
+    if (mouseenterTouch && touchHold) return;
+
+    // Toggle show/hide when clicking click-triggered tooltips
+    var isClick = event.type === 'click';
+    var isNotPersistent = hideOnClick !== 'persistent';
+
+    isClick && (0, _isVisible2.default)(popper) && isNotPersistent ? hide() : show(event);
+
+    if (mouseenterTouch && _globals.Browser.iOS() && el.click) {
+      el.click();
+    }
+  };
+
+  var handleMouseleave = function handleMouseleave(event) {
+
+    // Don't fire 'mouseleave', use the 'touchend'
+    if (event.type === 'mouseleave' && _globals.Browser.SUPPORTS_TOUCH && _globals.Browser.touch && touchHold) {
+      return;
+    }
+
+    if (interactive) {
+      // Temporarily handle mousemove to check if the mouse left somewhere
+      // other than its popper
+      var handleMousemove = function handleMousemove(event) {
+
+        var triggerHide = function triggerHide() {
+          document.body.removeEventListener('mouseleave', hide);
+          document.removeEventListener('mousemove', handleMousemove);
+          hide();
+        };
+
+        var closestTooltippedEl = (0, _closest2.default)(event.target, _globals.Selectors.TOOLTIPPED_EL);
+
+        var isOverPopper = (0, _closest2.default)(event.target, _globals.Selectors.POPPER) === popper;
+        var isOverEl = closestTooltippedEl === el;
+        var isClickTriggered = trigger.indexOf('click') !== -1;
+        var isOverOtherTooltippedEl = closestTooltippedEl && closestTooltippedEl !== el;
+
+        if (isOverOtherTooltippedEl) {
+          return triggerHide();
+        }
+
+        if (isOverPopper || isOverEl || isClickTriggered) return;
+
+        if ((0, _cursorIsOutsideInteractiveBorder2.default)(event, popper, settings)) {
+          triggerHide();
+        }
+      };
+
+      document.body.addEventListener('mouseleave', hide);
+      document.addEventListener('mousemove', handleMousemove);
+
+      return;
+    }
+
+    // If it's not interactive, just hide it
+    hide();
+  };
+
+  var handleBlur = function handleBlur(event) {
+    // Ignore blur on touch devices, if there is no `relatedTarget`, hide
+    // If the related target is a popper, ignore
+    if (!event.relatedTarget || _globals.Browser.touch) return;
+    if ((0, _closest2.default)(event.relatedTarget, _globals.Selectors.POPPER)) return;
+
+    hide();
+  };
+
+  return {
+    handleTrigger: handleTrigger,
+    handleMouseleave: handleMouseleave,
+    handleBlur: handleBlur
+  };
+}
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = getIndividualSettings;
+
+var _globals = __webpack_require__(0);
+
+/**
+* Returns an object of settings to override global settings
+* @param {Element} el - the tooltipped element
+* @param {Object} instanceSettings
+* @return {Object} - individual settings
+*/
+function getIndividualSettings(el, instanceSettings) {
+  var settings = _globals.DefaultsKeys.reduce(function (acc, key) {
+    var val = el.getAttribute('data-' + key.toLowerCase()) || instanceSettings[key];
+
+    // Convert strings to booleans
+    if (val === 'false') val = false;
+    if (val === 'true') val = true;
+
+    // Convert number strings to true numbers
+    if (isFinite(val) && !isNaN(parseFloat(val))) {
+      val = parseFloat(val);
+    }
+
+    // Convert array strings to actual arrays
+    if (typeof val === 'string' && val.trim().charAt(0) === '[') {
+      val = JSON.parse(val);
+    }
+
+    acc[key] = val;
+
+    return acc;
+  }, {});
+
+  return Object.assign({}, instanceSettings, settings);
+}
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = hideAllPoppers;
+
+var _globals = __webpack_require__(0);
+
+/**
+* Hides all poppers
+* @param {Object} exclude - refData to exclude if needed
+*/
+function hideAllPoppers(exclude) {
+  _globals.Store.forEach(function (refData) {
+    var popper = refData.popper,
+        tippyInstance = refData.tippyInstance,
+        _refData$settings = refData.settings,
+        appendTo = _refData$settings.appendTo,
+        hideOnClick = _refData$settings.hideOnClick,
+        trigger = _refData$settings.trigger;
+
+    // Don't hide already hidden ones
+
+    if (!appendTo.contains(popper)) return;
+
+    // hideOnClick can have the truthy value of 'persistent', so strict check is needed
+    var isHideOnClick = hideOnClick === true || trigger.indexOf('focus') !== -1;
+    var isNotCurrentRef = !exclude || popper !== exclude.popper;
+
+    if (isHideOnClick && isNotCurrentRef) {
+      refData.settings.onRequestClose();
+      tippyInstance.hide(popper);
+    }
+  });
+}
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = init;
+
+var _bindEventListeners = __webpack_require__(16);
+
+var _bindEventListeners2 = _interopRequireDefault(_bindEventListeners);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+* To run a single time, once DOM is presumed to be ready
+* @return {Boolean} whether the function has run or not
+*/
+function init() {
+  if (init.done) return false;
+  init.done = true;
+
+  (0, _bindEventListeners2.default)();
+
+  return true;
+}
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = makeSticky;
+
+var _defer = __webpack_require__(5);
+
+var _defer2 = _interopRequireDefault(_defer);
+
+var _prefix = __webpack_require__(1);
+
+var _prefix2 = _interopRequireDefault(_prefix);
+
+var _isVisible = __webpack_require__(7);
+
+var _isVisible2 = _interopRequireDefault(_isVisible);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+* Updates a popper's position on each animation frame to make it stick to a moving element
+* @param {Object} refData
+*/
+function makeSticky(refData) {
+  var popper = refData.popper,
+      popperInstance = refData.popperInstance,
+      stickyDuration = refData.settings.stickyDuration;
+
+
+  var applyTransitionDuration = function applyTransitionDuration() {
+    return popper.style[(0, _prefix2.default)('transitionDuration')] = stickyDuration + 'ms';
+  };
+
+  var removeTransitionDuration = function removeTransitionDuration() {
+    return popper.style[(0, _prefix2.default)('transitionDuration')] = '';
+  };
+
+  var updatePosition = function updatePosition() {
+    popperInstance && popperInstance.scheduleUpdate();
+
+    applyTransitionDuration();
+
+    (0, _isVisible2.default)(popper) ? window.requestAnimationFrame(updatePosition) : removeTransitionDuration();
+  };
+
+  // Wait until Popper's position has been updated initially
+  (0, _defer2.default)(updatePosition);
+}
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = mountPopper;
+
+var _globals = __webpack_require__(0);
+
+var _followCursorHandler = __webpack_require__(10);
+
+var _followCursorHandler2 = _interopRequireDefault(_followCursorHandler);
+
+var _createPopperInstance = __webpack_require__(18);
+
+var _createPopperInstance2 = _interopRequireDefault(_createPopperInstance);
+
+var _prefix = __webpack_require__(1);
+
+var _prefix2 = _interopRequireDefault(_prefix);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+* Appends the popper and creates a popper instance if one does not exist
+* Also updates its position if need be and enables event listeners
+* @param {Object} data -  the element/popper reference data
+*/
+function mountPopper(data) {
+  var el = data.el,
+      popper = data.popper,
+      _data$settings = data.settings,
+      appendTo = _data$settings.appendTo,
+      followCursor = _data$settings.followCursor;
+
+  // Already on the DOM
+
+  if (appendTo.contains(popper)) return;
+
+  appendTo.appendChild(popper);
+
+  if (!data.popperInstance) {
+    data.popperInstance = (0, _createPopperInstance2.default)(data);
+  } else {
+    data.popperInstance.update();
+    if (!followCursor || _globals.Browser.touch) {
+      data.popperInstance.enableEventListeners();
+    }
+  }
+
+  // Since touch is determined dynamically, followCursor is set on mount
+  if (followCursor && !_globals.Browser.touch) {
+    el.addEventListener('mousemove', _followCursorHandler2.default);
+    data.popperInstance.disableEventListeners();
+  }
+}
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = onTransitionEnd;
+
+var _globals = __webpack_require__(0);
+
+var _getInnerElements2 = __webpack_require__(6);
+
+var _getInnerElements3 = _interopRequireDefault(_getInnerElements2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+* Prepares the callback functions for `show` and `hide` methods
+* @param {Object} data
+* @param {Number} duration
+* @param {Function} callback - callback function to fire once transitions complete
+*/
+function onTransitionEnd(data, duration, callback) {
+  // Make callback synchronous if duration is 0
+  if (!duration) {
+    return callback();
+  }
+
+  var _getInnerElements = (0, _getInnerElements3.default)(data.popper),
+      tooltip = _getInnerElements.tooltip;
+
+  var transitionendFired = false;
+
+  var listenerCallback = function listenerCallback(e) {
+    if (e.target === tooltip && !transitionendFired) {
+      transitionendFired = true;
+      callback();
+    }
+  };
+
+  // Fire callback upon transition completion
+  tooltip.addEventListener('webkitTransitionEnd', listenerCallback);
+  tooltip.addEventListener('transitionend', listenerCallback);
+
+  // Fallback: transitionend listener sometimes may not fire
+  clearTimeout(data._transitionendTimeout);
+  data._transitionendTimeout = setTimeout(function () {
+    if (!transitionendFired) {
+      callback();
+    }
+  }, duration);
+}
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+/* Utility functions */
+
+
+/* Core library functions */
+
+
+var _globals = __webpack_require__(0);
+
+var _reactDom = __webpack_require__(39);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _init = __webpack_require__(26);
+
+var _init2 = _interopRequireDefault(_init);
+
+var _defer = __webpack_require__(5);
+
+var _defer2 = _interopRequireDefault(_defer);
+
+var _prefix = __webpack_require__(1);
+
+var _prefix2 = _interopRequireDefault(_prefix);
+
+var _find = __webpack_require__(2);
+
+var _find2 = _interopRequireDefault(_find);
+
+var _findIndex = __webpack_require__(34);
+
+var _findIndex2 = _interopRequireDefault(_findIndex);
+
+var _removeTitle = __webpack_require__(12);
+
+var _removeTitle2 = _interopRequireDefault(_removeTitle);
+
+var _elementIsInViewport = __webpack_require__(33);
+
+var _elementIsInViewport2 = _interopRequireDefault(_elementIsInViewport);
+
+var _triggerReflow = __webpack_require__(37);
+
+var _triggerReflow2 = _interopRequireDefault(_triggerReflow);
+
+var _modifyClassList = __webpack_require__(35);
+
+var _modifyClassList2 = _interopRequireDefault(_modifyClassList);
+
+var _getInnerElements4 = __webpack_require__(6);
+
+var _getInnerElements5 = _interopRequireDefault(_getInnerElements4);
+
+var _applyTransitionDuration = __webpack_require__(31);
+
+var _applyTransitionDuration2 = _interopRequireDefault(_applyTransitionDuration);
+
+var _isVisible = __webpack_require__(7);
+
+var _isVisible2 = _interopRequireDefault(_isVisible);
+
+var _noop = __webpack_require__(36);
+
+var _noop2 = _interopRequireDefault(_noop);
+
+var _followCursorHandler = __webpack_require__(10);
+
+var _followCursorHandler2 = _interopRequireDefault(_followCursorHandler);
+
+var _getArrayOfElements = __webpack_require__(22);
+
+var _getArrayOfElements2 = _interopRequireDefault(_getArrayOfElements);
+
+var _onTransitionEnd = __webpack_require__(29);
+
+var _onTransitionEnd2 = _interopRequireDefault(_onTransitionEnd);
+
+var _mountPopper = __webpack_require__(28);
+
+var _mountPopper2 = _interopRequireDefault(_mountPopper);
+
+var _makeSticky = __webpack_require__(27);
+
+var _makeSticky2 = _interopRequireDefault(_makeSticky);
+
+var _createTooltips = __webpack_require__(19);
+
+var _createTooltips2 = _interopRequireDefault(_createTooltips);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+* @param {String|Element|Element[]} selector
+* @param {Object} settings (optional) - the object of settings to be applied to the instance
+*/
+var Tippy = function () {
+  function Tippy(selector) {
+    var settings = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    _classCallCheck(this, Tippy);
+
+    // Use default browser tooltip on unsupported browsers
+    if (!_globals.Browser.SUPPORTED) return;
+
+    (0, _init2.default)();
+
+    this.state = {
+      destroyed: false
+    };
+
+    this.selector = selector;
+
+    this.settings = _extends({}, _globals.Defaults, settings);
+
+    if (settings.show || settings.shown || settings.hide || settings.hidden) {
+      console.warn('Callbacks without the `on` prefix are deprecated (with the exception of `wait`).' + ' Use onShow, onShown, onHide, and onHidden instead.');
+    }
+
+    this.callbacks = {
+      wait: settings.wait,
+      show: settings.onShow || settings.show || _noop2.default,
+      shown: settings.onShown || settings.shown || _noop2.default,
+      hide: settings.onHide || settings.hide || _noop2.default,
+      hidden: settings.onHidden || settings.hidden || _noop2.default
+    };
+
+    this.store = _createTooltips2.default.call(this, (0, _getArrayOfElements2.default)(selector));
+    _globals.Store.push.apply(_globals.Store, this.store);
+  }
+
+  /**
+  * Returns the reference element's popper element
+  * @param {Element} el
+  * @return {Element}
+  */
+
+
+  _createClass(Tippy, [{
+    key: 'getPopperElement',
+    value: function getPopperElement(el) {
+      try {
+        return (0, _find2.default)(this.store, function (data) {
+          return data.el === el;
+        }).popper;
+      } catch (e) {
+        console.error('[getPopperElement]: Element passed as the argument does not exist in the instance');
+      }
+    }
+
+    /**
+    * Returns a popper's reference element
+    * @param {Element} popper
+    * @return {Element}
+    */
+
+  }, {
+    key: 'getReferenceElement',
+    value: function getReferenceElement(popper) {
+      try {
+        return (0, _find2.default)(this.store, function (data) {
+          return data.popper === popper;
+        }).el;
+      } catch (e) {
+        console.error('[getReferenceElement]: Popper passed as the argument does not exist in the instance');
+      }
+    }
+
+    /**
+    * Returns the reference data object from either the reference element or popper element
+    * @param {Element} x (reference element or popper)
+    * @return {Object}
+    */
+
+  }, {
+    key: 'getReferenceData',
+    value: function getReferenceData(x) {
+      return (0, _find2.default)(this.store, function (data) {
+        return data.el === x || data.popper === x;
+      });
+    }
+
+    /**
+    * Update settings
+    * @param {DOMElement} - popper
+    * @param {string} - name
+    * @param {string} - value
+    */
+
+  }, {
+    key: 'updateSettings',
+    value: function updateSettings(popper, name, value) {
+      var data = (0, _find2.default)(this.store, function (data) {
+        return data.popper === popper;
+      });
+      var newSettings = _extends({}, data.settings, _defineProperty({}, name, value));
+      data.settings = newSettings;
+    }
+  }, {
+    key: 'updateForReact',
+
+
+    /**
+    * Update for React
+    * @param {DOMElement} - popper
+    * @param {ReactElement} - content
+    */
+    value: function updateForReact(popper, updatedContent) {
+      var tooltipContent = popper.querySelector(_globals.Selectors.CONTENT);
+      var data = (0, _find2.default)(this.store, function (data) {
+        return data.popper === popper;
+      });
+
+      var _data$settings = data.settings,
+          useContext = _data$settings.useContext,
+          reactInstance = _data$settings.reactInstance;
+
+      if (useContext) {
+        _reactDom2.default.unstable_renderSubtreeIntoContainer(data.settings.reactInstance, updatedContent, tooltipContent);
+      } else {
+        _reactDom2.default.render(updatedContent, tooltipContent);
+      }
+    }
+    /**
+    * Shows a popper
+    * @param {Element} popper
+    * @param {Number} customDuration (optional)
+    */
+
+  }, {
+    key: 'show',
+    value: function show(popper, customDuration) {
+      var _this = this;
+
+      if (this.state.destroyed) return;
+
+      var data = (0, _find2.default)(this.store, function (data) {
+        return data.popper === popper;
+      });
+
+      var _getInnerElements = (0, _getInnerElements5.default)(popper),
+          tooltip = _getInnerElements.tooltip,
+          circle = _getInnerElements.circle,
+          content = _getInnerElements.content;
+
+      if (!document.body.contains(data.el)) {
+        this.destroy(popper);
+        return;
+      }
+
+      this.callbacks.show.call(popper);
+
+      // Custom react
+      if (data && data.settings && data.settings.open === false) {
+        return;
+      }
+
+      if (data.settings.reactDOM) {
+        this.updateForReact(popper, data.settings.reactDOM);
+      }
+      // end: Custom react
+
+      var el = data.el,
+          _data$settings2 = data.settings,
+          appendTo = _data$settings2.appendTo,
+          sticky = _data$settings2.sticky,
+          interactive = _data$settings2.interactive,
+          followCursor = _data$settings2.followCursor,
+          flipDuration = _data$settings2.flipDuration,
+          duration = _data$settings2.duration,
+          dynamicTitle = _data$settings2.dynamicTitle;
+
+
+      if (dynamicTitle) {
+        var title = el.getAttribute('title');
+        if (title) {
+          content.innerHTML = title;
+          (0, _removeTitle2.default)(el);
+        }
+      }
+
+      var _duration = customDuration !== undefined ? customDuration : Array.isArray(duration) ? duration[0] : duration;
+
+      // Prevent a transition when popper changes position
+      (0, _applyTransitionDuration2.default)([popper, tooltip, circle], 0);
+
+      (0, _mountPopper2.default)(data);
+
+      popper.style.visibility = 'visible';
+      popper.setAttribute('aria-hidden', 'false');
+
+      // Wait for popper's position to update
+      (0, _defer2.default)(function () {
+        // Sometimes the arrow will not be in the correct position, force another update
+        if (!followCursor || _globals.Browser.touch) {
+          data.popperInstance.update();
+          (0, _applyTransitionDuration2.default)([popper], flipDuration);
+        }
+
+        // Re-apply transition durations
+        (0, _applyTransitionDuration2.default)([tooltip, circle], _duration);
+
+        // Make content fade out a bit faster than the tooltip if `animateFill`
+        if (circle) content.style.opacity = 1;
+
+        // Interactive tooltips receive a class of 'active'
+        interactive && el.classList.add('active');
+
+        // Update popper's position on every animation frame
+        sticky && (0, _makeSticky2.default)(data);
+
+        // Repaint/reflow is required for CSS transition when appending
+        (0, _triggerReflow2.default)(tooltip, circle);
+
+        (0, _modifyClassList2.default)([tooltip, circle], function (list) {
+          list.contains('tippy-notransition') && list.remove('tippy-notransition');
+          list.remove('leave');
+          list.add('enter');
+        });
+
+        // Wait for transitions to complete
+        (0, _onTransitionEnd2.default)(data, _duration, function () {
+          if (!(0, _isVisible2.default)(popper) || data._onShownFired) return;
+
+          // Focus interactive tooltips only
+          interactive && popper.focus();
+          // Remove transitions from tooltip
+          tooltip.classList.add('tippy-notransition');
+          // Prevents shown() from firing more than once from early transition cancellations
+          data._onShownFired = true;
+
+          _this.callbacks.shown.call(popper);
+        });
+      });
+    }
+
+    /**
+    * Hides a popper
+    * @param {Element} popper
+    * @param {Number} customDuration (optional)
+    */
+
+  }, {
+    key: 'hide',
+    value: function hide(popper, customDuration) {
+      var _this2 = this;
+
+      if (this.state.destroyed) return;
+
+      this.callbacks.hide.call(popper);
+
+      var data = (0, _find2.default)(this.store, function (data) {
+        return data.popper === popper;
+      });
+
+      var _getInnerElements2 = (0, _getInnerElements5.default)(popper),
+          tooltip = _getInnerElements2.tooltip,
+          circle = _getInnerElements2.circle,
+          content = _getInnerElements2.content;
+
+      // custom react
+      // Prevent hide if open
+
+
+      if (data.settings.disabled === false && data.settings.open) {
+        return;
+      }
+
+      var isUnmount = data && data.settings && data.settings.unmountHTMLWhenHide && data.settings.reactDOM;
+      // end: custom react
+
+      var el = data.el,
+          _data$settings3 = data.settings,
+          appendTo = _data$settings3.appendTo,
+          sticky = _data$settings3.sticky,
+          interactive = _data$settings3.interactive,
+          followCursor = _data$settings3.followCursor,
+          html = _data$settings3.html,
+          trigger = _data$settings3.trigger,
+          duration = _data$settings3.duration;
+
+
+      var _duration = customDuration !== undefined ? customDuration : Array.isArray(duration) ? duration[1] : duration;
+
+      data._onShownFired = false;
+      interactive && el.classList.remove('active');
+
+      popper.style.visibility = 'hidden';
+      popper.setAttribute('aria-hidden', 'true');
+
+      (0, _applyTransitionDuration2.default)([tooltip, circle, circle ? content : null], _duration);
+
+      if (circle) content.style.opacity = 0;
+
+      (0, _modifyClassList2.default)([tooltip, circle], function (list) {
+        list.contains('tippy-tooltip') && list.remove('tippy-notransition');
+        list.remove('enter');
+        list.add('leave');
+      });
+
+      // Re-focus click-triggered html elements
+      // and the tooltipped element IS in the viewport (otherwise it causes unsightly scrolling
+      // if the tooltip is closed and the element isn't in the viewport anymore)
+      if (html && trigger.indexOf('click') !== -1 && (0, _elementIsInViewport2.default)(el)) {
+        el.focus();
+      }
+
+      // Wait for transitions to complete
+      (0, _onTransitionEnd2.default)(data, _duration, function () {
+        // `isVisible` is not completely reliable to determine if we shouldn't
+        // run the hidden callback, we need to check the computed opacity style.
+        // This prevents glitchy behavior of the transition when quickly showing
+        // and hiding a tooltip.
+        if ((0, _isVisible2.default)(popper) || !appendTo.contains(popper) || getComputedStyle(tooltip).opacity === '1') return;
+
+        el.removeEventListener('mousemove', _followCursorHandler2.default);
+        data.popperInstance.disableEventListeners();
+        appendTo.removeChild(popper);
+
+        _this2.callbacks.hidden.call(popper);
+
+        // custom react
+        if (isUnmount) {
+          _reactDom2.default.unmountComponentAtNode(content);
+        }
+      });
+    }
+
+    /**
+    * Updates a popper with new content
+    * @param {Element} popper
+    */
+
+  }, {
+    key: 'update',
+    value: function update(popper) {
+      if (this.state.destroyed) return;
+
+      var data = (0, _find2.default)(this.store, function (data) {
+        return data.popper === popper;
+      });
+
+      var _getInnerElements3 = (0, _getInnerElements5.default)(popper),
+          content = _getInnerElements3.content;
+
+      var el = data.el,
+          html = data.settings.html;
+
+
+      if (html instanceof Element) {
+        console.warn('Aborted: update() should not be used if `html` is a DOM element');
+        return;
+      }
+
+      content.innerHTML = html ? document.getElementById(html.replace('#', '')).innerHTML : el.getAttribute('title') || el.getAttribute('data-original-title');
+
+      if (!html) (0, _removeTitle2.default)(el);
+    }
+
+    /**
+    * Destroys a popper
+    * @param {Element} popper
+    * @param {Boolean} _isLast - private param used by destroyAll to optimize
+    */
+
+  }, {
+    key: 'destroy',
+    value: function destroy(popper, _isLast) {
+      var _this3 = this;
+
+      if (this.state.destroyed) return;
+
+      var data = (0, _find2.default)(this.store, function (data) {
+        return data.popper === popper;
+      });
+
+      var el = data.el,
+          popperInstance = data.popperInstance,
+          listeners = data.listeners,
+          _mutationObserver = data._mutationObserver;
+
+      // Ensure the popper is hidden
+
+      if ((0, _isVisible2.default)(popper)) {
+        this.hide(popper, 0);
+      }
+
+      // Remove Tippy-only event listeners from tooltipped element
+      listeners.forEach(function (listener) {
+        return el.removeEventListener(listener.event, listener.handler);
+      });
+
+      // Restore original title
+      el.setAttribute('title', el.getAttribute('data-original-title'));
+
+      el.removeAttribute('data-original-title');
+      el.removeAttribute('data-tooltipped');
+      el.removeAttribute('aria-describedby');
+
+      popperInstance && popperInstance.destroy();
+      _mutationObserver && _mutationObserver.disconnect();
+
+      // Remove from store
+      _globals.Store.splice((0, _findIndex2.default)(_globals.Store, function (data) {
+        return data.popper === popper;
+      }), 1);
+
+      // Ensure filter is called only once
+      if (_isLast === undefined || _isLast) {
+        this.store = _globals.Store.filter(function (data) {
+          return data.tippyInstance === _this3;
+        });
+      }
+    }
+
+    /**
+    * Destroys all tooltips created by the instance
+    */
+
+  }, {
+    key: 'destroyAll',
+    value: function destroyAll() {
+      var _this4 = this;
+
+      if (this.state.destroyed) return;
+
+      var storeLength = this.store.length;
+
+      this.store.forEach(function (_ref, index) {
+        var popper = _ref.popper;
+
+        _this4.destroy(popper, index === storeLength - 1);
+      });
+
+      this.store = null;
+      this.state.destroyed = true;
+    }
+  }]);
+
+  return Tippy;
+}();
+
+function tippy(selector, settings) {
+  return new Tippy(selector, settings);
+}
+
+tippy.Browser = _globals.Browser;
+tippy.Defaults = _globals.Defaults;
+tippy.disableDynamicInputDetection = function () {
+  return _globals.Browser.dynamicInputDetection = false;
+};
+tippy.enableDynamicInputDetection = function () {
+  return _globals.Browser.dynamicInputDetection = true;
+};
+
+exports.default = tippy;
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = applyTransitionDuration;
+
+var _globals = __webpack_require__(0);
+
+var _prefix = __webpack_require__(1);
+
+var _prefix2 = _interopRequireDefault(_prefix);
+
+var _matches = __webpack_require__(8);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+* Applies the transition duration to each element
+* @param {Element[]} els - Array of elements
+* @param {Number} duration
+*/
+function applyTransitionDuration(els, duration) {
+  els.forEach(function (el) {
+    if (!el) return;
+
+    var isContent = _matches.matches.call(el, _globals.Selectors.CONTENT);
+
+    var _duration = isContent ? Math.round(duration / 1.3) : duration;
+
+    el.style[(0, _prefix2.default)('transitionDuration')] = _duration + 'ms';
+  });
+}
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = cursorIsOutsideInteractiveBorder;
+
+var _getCorePlacement = __webpack_require__(3);
+
+var _getCorePlacement2 = _interopRequireDefault(_getCorePlacement);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+* Determines if the mouse's cursor is outside the interactive border
+* @param {MouseEvent} event
+* @param {Element} popper
+* @param {Object} settings
+* @return {Boolean}
+*/
+function cursorIsOutsideInteractiveBorder(event, popper, settings) {
+  if (!popper.getAttribute('x-placement')) return true;
+
+  var x = event.clientX,
+      y = event.clientY;
+  var interactiveBorder = settings.interactiveBorder,
+      distance = settings.distance;
+
+
+  var rect = popper.getBoundingClientRect();
+  var corePosition = (0, _getCorePlacement2.default)(popper.getAttribute('x-placement'));
+  var borderWithDistance = interactiveBorder + distance;
+
+  var exceeds = {
+    top: rect.top - y > interactiveBorder,
+    bottom: y - rect.bottom > interactiveBorder,
+    left: rect.left - x > interactiveBorder,
+    right: x - rect.right > interactiveBorder
+  };
+
+  switch (corePosition) {
+    case 'top':
+      exceeds.top = rect.top - y > borderWithDistance;
+      break;
+    case 'bottom':
+      exceeds.bottom = y - rect.bottom > borderWithDistance;
+      break;
+    case 'left':
+      exceeds.left = rect.left - x > borderWithDistance;
+      break;
+    case 'right':
+      exceeds.right = x - rect.right > borderWithDistance;
+      break;
+  }
+
+  return exceeds.top || exceeds.bottom || exceeds.left || exceeds.right;
+}
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = elementIsInViewport;
+/**
+* Determines if an element is visible in the viewport
+* @param {Element} el
+* @return {Boolean}
+*/
+function elementIsInViewport(el) {
+  var rect = el.getBoundingClientRect();
+
+  return rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && rect.right <= (window.innerWidth || document.documentElement.clientWidth);
+}
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = findIndex;
+
+var _find = __webpack_require__(2);
+
+var _find2 = _interopRequireDefault(_find);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+* Ponyfill for Array.prototype.findIndex
+* @param {Array} arr
+* @param {Function} checkFn
+* @return index of the item in the array
+*/
+function findIndex(arr, checkFn) {
+  if (Array.prototype.findIndex) {
+    return arr.findIndex(checkFn);
+  }
+
+  // fallback
+  return arr.indexOf((0, _find2.default)(arr, checkFn));
+}
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = modifyClassList;
+/**
+* Modifies elements' class lists
+* @param {Element[]} els - Array of elements
+* @param {Function} callback
+*/
+function modifyClassList(els, callback) {
+  els.forEach(function (el) {
+    if (!el) return;
+    callback(el.classList);
+  });
+}
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = noop;
+function noop() {}
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = triggerReflow;
+
+var _prefix = __webpack_require__(1);
+
+var _prefix2 = _interopRequireDefault(_prefix);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+* Triggers a document repaint or reflow for CSS transition
+* @param {Element} tooltip
+* @param {Element} circle
+*/
+function triggerReflow(tooltip, circle) {
+  // Safari needs the specific 'transform' property to be accessed
+  circle ? window.getComputedStyle(circle)[(0, _prefix2.default)('transform')] : window.getComputedStyle(tooltip).opacity;
+}
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_38__;
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_39__;
+
+/***/ })
+/******/ ]);
+});
+//# sourceMappingURL=react-tippy.js.map
 
 /***/ }),
 /* 226 */
@@ -41714,6 +47036,37 @@ module.exports=function(t){function e(n){if(o[n])return o[n].exports;var r=o[n]=
 
 /***/ }),
 /* 227 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 228 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports=function(t){function e(n){if(o[n])return o[n].exports;var r=o[n]={i:n,l:!1,exports:{}};return t[n].call(r.exports,r,r.exports,e),r.l=!0,r.exports}var o={};return e.m=t,e.c=o,e.i=function(t){return t},e.d=function(t,o,n){e.o(t,o)||Object.defineProperty(t,o,{configurable:!1,enumerable:!0,get:n})},e.n=function(t){var o=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(o,"a",o),o},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="",e(e.s=6)}([function(t,e,o){function n(t){return l(t.duration,Date.now()-t.mouseDown)}function r(t){return t.mouseUp>0?Date.now()-t.mouseUp:0}function i(t){var e=t.duration,o=t.radius,i=.85*a(n(t),0,o,e),u=.15*a(r(t),0,o,e),l=.02*o*s(Date.now()/e);return c(0,i+u+l)}var a=o(7),u=Math.sqrt(2),s=Math.cos,c=Math.max,l=Math.min;t.exports={getMaxRadius:function(t,e,o){return l(.5*c(t,e),o)},getBlotOpacity:function(t,e){return a(r(t),e,-e,t.duration)},getBlotOuterOpacity:function(t,e){return l(this.getBlotOpacity(t,e),a(n(t),0,.3,3*t.duration))},getBlotShiftX:function(t,e,o){return l(1,i(t)/e*2/u)*(o/2-t.x)},getBlotShiftY:function(t,e,o){return l(1,i(t)/e*2/u)*(o/2-t.y)},getBlotScale:function(t){return i(t)/t.radius}}},function(t,e){t.exports={borderRadius:"inherit",height:"100%",left:0,position:"absolute",top:0,width:"100%"}},function(t,e){var o=!1;"undefined"!=typeof window&&(o="ontouchstart"in window||window.DocumentTouch&&document instanceof window.DocumentTouch),t.exports=o},function(t,e){t.exports=function(t){return(window.devicePixelRatio||1)/(t.webkitBackingStorePixelRatio||t.mozBackingStorePixelRatio||t.msBackingStorePixelRatio||t.oBackingStorePixelRatio||t.backingStorePixelRatio||1)}},function(t,e,o){var n=o(0),r=function(t){var e=t.mouseUp,o=t.duration;return!e||Date.now()-e<o};t.exports=function(t){var e=[],o=!1,i=void 0,a={each:function(t,o){for(var n=0,r=e.length;n<r;n++)t.call(o,e[n])},play:function(){o||(o=!0,a.update())},stop:function(){o=!1,cancelAnimationFrame(i)},getTotalOpacity:function(t){for(var o=0,r=0,i=e.length;r<i;r++)o+=n.getBlotOuterOpacity(e[r],t);return o},update:function(){e=e.filter(r),e.length?i=requestAnimationFrame(a.update):a.stop(),t()},add:function(t){e.push(t),a.play()},release:function(t){for(var o=e.length-1;o>=0;o--)if(!e[o].mouseUp)return e[o].mouseUp=t}};return a}},function(t,e){t.exports=__webpack_require__(1)},function(t,e,o){function n(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function r(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}function i(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}var a=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var o=arguments[e];for(var n in o)Object.prototype.hasOwnProperty.call(o,n)&&(t[n]=o[n])}return t},u=o(2),s=0,c=o(3),l=o(5),p=o(1),f=o(4),h=2*Math.PI,d=o(0),g=function(t){function e(o){n(this,e);var i=r(this,t.apply(this,arguments));return i.tick=function(){var t=i.state,e=t.ctx,o=t.color,n=t.density,r=t.height,a=t.width,u=t.store;e.save(),e.scale(n,n),e.clearRect(0,0,a,r),e.fillStyle=o,i.props.background&&(e.globalAlpha=u.getTotalOpacity(i.props.opacity),e.fillRect(0,0,a,r)),u.each(i.makeBlot,i),e.restore()},i._onPress=function(t){var e=t.button,o=t.ctrlKey,n=t.clientX,r=t.clientY,a=t.changedTouches,u=Date.now();if(a)for(var c=0;c<a.length;c++){var l=a[c],p=l.clientX,f=l.clientY;i.pushBlot(u,p,f)}else e!==s||o||i.pushBlot(u,n,r)},i._onRelease=function(){i.state.store.release(Date.now())},i.state={color:"transparent",density:1,height:0,store:f(i.tick),touchEvents:i.touchEvents(),width:0},i}return i(e,t),e.prototype.touchEvents=function(){return this.props.hasTouch?{onTouchStart:this._onPress,onTouchEnd:this._onRelease,onTouchCancel:this._onRelease}:{onMouseDown:this._onPress,onMouseUp:this._onRelease,onMouseLeave:this._onRelease}},e.prototype.makeBlot=function(t){var e=this.state,o=e.ctx,n=e.height,r=e.width,i=t.x,a=t.y,u=t.radius;if(o.globalAlpha=d.getBlotOpacity(t,this.props.opacity),o.beginPath(),this.props.recenter){var s=Math.max(n,r);i+=d.getBlotShiftX(t,s,r),a+=d.getBlotShiftY(t,s,n)}o.arc(i,a,u*d.getBlotScale(t),0,h),o.closePath(),o.fill()},e.prototype.componentWillUnmount=function(){this.state.store.stop()},e.prototype.pushBlot=function(t,e,o){var n=this,r=this.refs.canvas;r instanceof window.HTMLCanvasElement==!1&&(r=r.getDOMNode());var i=r.getBoundingClientRect(),a=i.top,u=i.bottom,s=i.left,l=i.right,p=window.getComputedStyle(r),f=p.color,h=this.state.ctx||r.getContext("2d"),g=c(h),y=u-a,v=l-s,w=d.getMaxRadius(y,v,this.props.radius);this.setState({color:f,ctx:h,density:g,height:y,width:v},function(){n.state.store.add({duration:n.props.duration,mouseDown:t,mouseUp:0,radius:w,x:e-s,y:o-a})})},e.prototype.render=function(){var t=this.state,e=t.density,o=t.height,n=t.width,r=t.touchEvents;return l.createElement("canvas",a({className:"ink",ref:"canvas",style:a({},p,this.props.style),height:o*e,width:n*e,onDragOver:this._onRelease},r))},e}(l.PureComponent);g.defaultProps={background:!0,duration:1e3,opacity:.25,radius:150,recenter:!0,hasTouch:u},t.exports=g},function(t,e){t.exports=function(t,e,o,n){return o*((t=t/n-1)*t*t*t*t+1)+e}}]);
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vaW5rLmpzIiwid2VicGFjazovLy93ZWJwYWNrL2Jvb3RzdHJhcCA0YmZmMDVlNWU3N2Q4NDU5Nzc1OSIsIndlYnBhY2s6Ly8vLi9zcmMvdXRpbC9lcXVhdGlvbnMuanMiLCJ3ZWJwYWNrOi8vLy4vc3JjL3N0eWxlLmpzIiwid2VicGFjazovLy8uL3NyYy91dGlsL2hhc1RvdWNoLmpzIiwid2VicGFjazovLy8uL3NyYy91dGlsL3BpeGVsUmF0aW8uanMiLCJ3ZWJwYWNrOi8vLy4vc3JjL3V0aWwvc3RvcmUuanMiLCJ3ZWJwYWNrOi8vL2V4dGVybmFsIFwicmVhY3RcIiIsIndlYnBhY2s6Ly8vLi9zcmMvaW5kZXguanMiLCJ3ZWJwYWNrOi8vLy4vc3JjL3V0aWwvZWFzaW5nLmpzIl0sIm5hbWVzIjpbIm1vZHVsZSIsImV4cG9ydHMiLCJtb2R1bGVzIiwiX193ZWJwYWNrX3JlcXVpcmVfXyIsIm1vZHVsZUlkIiwiaW5zdGFsbGVkTW9kdWxlcyIsImkiLCJsIiwiY2FsbCIsIm0iLCJjIiwidmFsdWUiLCJkIiwibmFtZSIsImdldHRlciIsIm8iLCJPYmplY3QiLCJkZWZpbmVQcm9wZXJ0eSIsImNvbmZpZ3VyYWJsZSIsImVudW1lcmFibGUiLCJnZXQiLCJuIiwiX19lc01vZHVsZSIsIm9iamVjdCIsInByb3BlcnR5IiwicHJvdG90eXBlIiwiaGFzT3duUHJvcGVydHkiLCJwIiwicyIsImdldFByZXNzIiwiYmxvdCIsIm1pbiIsImR1cmF0aW9uIiwiRGF0ZSIsIm5vdyIsIm1vdXNlRG93biIsImdldFJlbGVhc2UiLCJtb3VzZVVwIiwiZ2V0UmFkaXVzIiwicmFkaXVzIiwiZG93biIsImVhc2luZyIsInVwIiwidW5kdWxhdGlvbiIsImNvcyIsIm1heCIsIlNRUlRfMiIsIk1hdGgiLCJzcXJ0IiwiZ2V0TWF4UmFkaXVzIiwiaGVpZ2h0Iiwid2lkdGgiLCJnZXRCbG90T3BhY2l0eSIsIm9wYWNpdHkiLCJnZXRCbG90T3V0ZXJPcGFjaXR5IiwidGhpcyIsImdldEJsb3RTaGlmdFgiLCJzaXplIiwieCIsImdldEJsb3RTaGlmdFkiLCJ5IiwiZ2V0QmxvdFNjYWxlIiwiYm9yZGVyUmFkaXVzIiwibGVmdCIsInBvc2l0aW9uIiwidG9wIiwiYm9vbCIsIndpbmRvdyIsIkRvY3VtZW50VG91Y2giLCJkb2N1bWVudCIsImNvbnRleHQiLCJkZXZpY2VQaXhlbFJhdGlvIiwid2Via2l0QmFja2luZ1N0b3JlUGl4ZWxSYXRpbyIsIm1vekJhY2tpbmdTdG9yZVBpeGVsUmF0aW8iLCJtc0JhY2tpbmdTdG9yZVBpeGVsUmF0aW8iLCJvQmFja2luZ1N0b3JlUGl4ZWxSYXRpbyIsImJhY2tpbmdTdG9yZVBpeGVsUmF0aW8iLCJFcXVhdGlvbnMiLCJraWxsU3RhbGUiLCJfcmVmIiwicHVibGljaXplIiwiX2RhdGEiLCJfcGxheWluZyIsIl9mcmFtZSIsIlN0b3JlIiwiZWFjaCIsImNhbGxiYWNrIiwic2NvcGUiLCJsZW5ndGgiLCJwbGF5IiwidXBkYXRlIiwic3RvcCIsImNhbmNlbEFuaW1hdGlvbkZyYW1lIiwiZ2V0VG90YWxPcGFjaXR5IiwiYW5zd2VyIiwiZmlsdGVyIiwicmVxdWVzdEFuaW1hdGlvbkZyYW1lIiwiYWRkIiwicHJvcHMiLCJwdXNoIiwicmVsZWFzZSIsInRpbWUiLCJyZXF1aXJlIiwiX2NsYXNzQ2FsbENoZWNrIiwiaW5zdGFuY2UiLCJDb25zdHJ1Y3RvciIsIlR5cGVFcnJvciIsIl9wb3NzaWJsZUNvbnN0cnVjdG9yUmV0dXJuIiwic2VsZiIsIlJlZmVyZW5jZUVycm9yIiwiX2luaGVyaXRzIiwic3ViQ2xhc3MiLCJzdXBlckNsYXNzIiwiY3JlYXRlIiwiY29uc3RydWN0b3IiLCJ3cml0YWJsZSIsInNldFByb3RvdHlwZU9mIiwiX19wcm90b19fIiwiX2V4dGVuZHMiLCJhc3NpZ24iLCJ0YXJnZXQiLCJhcmd1bWVudHMiLCJzb3VyY2UiLCJrZXkiLCJIQVNfVE9VQ0giLCJNT1VTRV9MRUZUIiwicGl4ZWxSYXRpbyIsIlJlYWN0IiwiU1RZTEUiLCJUQVUiLCJQSSIsIkluayIsIl9SZWFjdCRQdXJlQ29tcG9uZW50IiwiX3RoaXMiLCJhcHBseSIsInRpY2siLCJfdGhpcyRzdGF0ZSIsInN0YXRlIiwiY3R4IiwiY29sb3IiLCJkZW5zaXR5Iiwic3RvcmUiLCJzYXZlIiwic2NhbGUiLCJjbGVhclJlY3QiLCJmaWxsU3R5bGUiLCJiYWNrZ3JvdW5kIiwiZ2xvYmFsQWxwaGEiLCJmaWxsUmVjdCIsIm1ha2VCbG90IiwicmVzdG9yZSIsIl9vblByZXNzIiwiZSIsImJ1dHRvbiIsImN0cmxLZXkiLCJjbGllbnRYIiwiY2xpZW50WSIsImNoYW5nZWRUb3VjaGVzIiwidGltZVN0YW1wIiwiX2NoYW5nZWRUb3VjaGVzJGkiLCJwdXNoQmxvdCIsIl9vblJlbGVhc2UiLCJ0b3VjaEV2ZW50cyIsImhhc1RvdWNoIiwib25Ub3VjaFN0YXJ0Iiwib25Ub3VjaEVuZCIsIm9uVG91Y2hDYW5jZWwiLCJvbk1vdXNlRG93biIsIm9uTW91c2VVcCIsIm9uTW91c2VMZWF2ZSIsIl9zdGF0ZSIsImJlZ2luUGF0aCIsInJlY2VudGVyIiwiYXJjIiwiY2xvc2VQYXRoIiwiZmlsbCIsImNvbXBvbmVudFdpbGxVbm1vdW50IiwiX3RoaXMyIiwiZWwiLCJyZWZzIiwiY2FudmFzIiwiSFRNTENhbnZhc0VsZW1lbnQiLCJnZXRET01Ob2RlIiwiX2VsJGdldEJvdW5kaW5nQ2xpZW50IiwiZ2V0Qm91bmRpbmdDbGllbnRSZWN0IiwiYm90dG9tIiwicmlnaHQiLCJfd2luZG93JGdldENvbXB1dGVkU3QiLCJnZXRDb21wdXRlZFN0eWxlIiwiZ2V0Q29udGV4dCIsInNldFN0YXRlIiwicmVuZGVyIiwiX3N0YXRlMiIsImNyZWF0ZUVsZW1lbnQiLCJjbGFzc05hbWUiLCJyZWYiLCJzdHlsZSIsIm9uRHJhZ092ZXIiLCJQdXJlQ29tcG9uZW50IiwiZGVmYXVsdFByb3BzIiwidCIsImIiXSwibWFwcGluZ3MiOiJBQUFBQSxPQUFPQyxRQUNFLFNBQVVDLEdDR25CLFFBQUFDLEdBQUFDLEdBR0EsR0FBQUMsRUFBQUQsR0FDQSxNQUFBQyxHQUFBRCxHQUFBSCxPQUdBLElBQUFELEdBQUFLLEVBQUFELElBQ0FFLEVBQUFGLEVBQ0FHLEdBQUEsRUFDQU4sV0FVQSxPQU5BQyxHQUFBRSxHQUFBSSxLQUFBUixFQUFBQyxRQUFBRCxJQUFBQyxRQUFBRSxHQUdBSCxFQUFBTyxHQUFBLEVBR0FQLEVBQUFDLFFBdkJBLEdBQUFJLEtBK0RBLE9BbkNBRixHQUFBTSxFQUFBUCxFQUdBQyxFQUFBTyxFQUFBTCxFQUdBRixFQUFBRyxFQUFBLFNBQUFLLEdBQTJDLE1BQUFBLElBRzNDUixFQUFBUyxFQUFBLFNBQUFYLEVBQUFZLEVBQUFDLEdBQ0FYLEVBQUFZLEVBQUFkLEVBQUFZLElBQ0FHLE9BQUFDLGVBQUFoQixFQUFBWSxHQUNBSyxjQUFBLEVBQ0FDLFlBQUEsRUFDQUMsSUFBQU4sS0FNQVgsRUFBQWtCLEVBQUEsU0FBQXJCLEdBQ0EsR0FBQWMsR0FBQWQsS0FBQXNCLFdBQ0EsV0FBMkIsTUFBQXRCLEdBQUEsU0FDM0IsV0FBaUMsTUFBQUEsR0FFakMsT0FEQUcsR0FBQVMsRUFBQUUsRUFBQSxJQUFBQSxHQUNBQSxHQUlBWCxFQUFBWSxFQUFBLFNBQUFRLEVBQUFDLEdBQXNELE1BQUFSLFFBQUFTLFVBQUFDLGVBQUFsQixLQUFBZSxFQUFBQyxJQUd0RHJCLEVBQUF3QixFQUFBLEdBR0F4QixJQUFBeUIsRUFBQSxLRE9NLFNBQVU1QixFQUFRQyxFQUFTRSxHRW5FakMsUUFBUzBCLEdBQVNDLEdBQ2hCLE1BQU9DLEdBQUlELEVBQUtFLFNBQVVDLEtBQUtDLE1BQVFKLEVBQUtLLFdBRzlDLFFBQVNDLEdBQVdOLEdBQ2xCLE1BQU9BLEdBQUtPLFFBQVUsRUFBSUosS0FBS0MsTUFBUUosRUFBS08sUUFBVSxFQUd4RCxRQUFTQyxHQUFVUixHQUFNLEdBQ2pCRSxHQUFxQkYsRUFBckJFLFNBQVVPLEVBQVdULEVBQVhTLE9BRVpDLEVBQTJELElBQTlDQyxFQUFPWixFQUFTQyxHQUFPLEVBQUdTLEVBQVFQLEdBQy9DVSxFQUE2RCxJQUFoREQsRUFBT0wsRUFBV04sR0FBTyxFQUFHUyxFQUFRUCxHQUNqRFcsRUFBc0IsSUFBVEosRUFBZ0JLLEVBQUlYLEtBQUtDLE1BQVFGLEVBRWxELE9BQU9hLEdBQUksRUFBR0wsRUFBT0UsRUFBS0MsR0FuQjVCLEdBQUlGLEdBQVN0QyxFQUFRLEdBQ2pCMkMsRUFBU0MsS0FBS0MsS0FBSyxHQUNqQkosRUFBa0JHLEtBQWxCSCxJQUFLQyxFQUFhRSxLQUFiRixJQUFLZCxFQUFRZ0IsS0FBUmhCLEdBb0JoQi9CLEdBQU9DLFNBRUxnRCxhQUZlLFNBRUZDLEVBQVFDLEVBQU9aLEdBQzFCLE1BQU9SLEdBQXlCLEdBQXJCYyxFQUFJSyxFQUFRQyxHQUFjWixJQUd2Q2EsZUFOZSxTQU1BdEIsRUFBTXVCLEdBQ25CLE1BQU9aLEdBQU9MLEVBQVdOLEdBQU91QixHQUFVQSxFQUFTdkIsRUFBS0UsV0FHMURzQixvQkFWZSxTQVVLeEIsRUFBTXVCLEdBQ3hCLE1BQU90QixHQUFJd0IsS0FBS0gsZUFBZXRCLEVBQU11QixHQUMxQlosRUFBT1osRUFBU0MsR0FBTyxFQUFHLEdBQXFCLEVBQWhCQSxFQUFLRSxZQUdqRHdCLGNBZmUsU0FlRDFCLEVBQU0yQixFQUFNTixHQUN4QixNQUFPcEIsR0FBSSxFQUNBTyxFQUFVUixHQUFRMkIsRUFBTyxFQUFJWCxJQUFXSyxFQUFRLEVBQUlyQixFQUFLNEIsSUFHdEVDLGNBcEJlLFNBb0JEN0IsRUFBTTJCLEVBQU1QLEdBQ3hCLE1BQU9uQixHQUFJLEVBQ0FPLEVBQVVSLEdBQVEyQixFQUFPLEVBQUlYLElBQVdJLEVBQVMsRUFBSXBCLEVBQUs4QixJQUd2RUMsYUF6QmUsU0F5QkYvQixHQUNYLE1BQU9RLEdBQVVSLEdBQVFBLEVBQUtTLFVGMkU1QixTQUFVdkMsRUFBUUMsR0czSHhCRCxFQUFPQyxTQUNMNkQsYUFBYyxVQUNkWixPQUFRLE9BQ1JhLEtBQU0sRUFDTkMsU0FBVSxXQUNWQyxJQUFLLEVBQ0xkLE1BQU8sU0hrSUgsU0FBVW5ELEVBQVFDLEdJeEl4QixHQUFJaUUsSUFBTyxDQUVXLG9CQUFYQyxVQUNURCxFQUFRLGdCQUFrQkMsU0FBV0EsT0FBT0MsZUFBaUJDLG1CQUFvQkYsUUFBT0MsZUFHMUZwRSxFQUFPQyxRQUFVaUUsR0o4SVgsU0FBVWxFLEVBQVFDLEdLakp4QkQsRUFBT0MsUUFBVSxTQUFBcUUsR0FRZixPQVB3QkgsT0FBT0ksa0JBQW9CLElBQzNCRCxFQUFRRSw4QkFDUkYsRUFBUUcsMkJBQ1JILEVBQVFJLDBCQUNSSixFQUFRSyx5QkFDUkwsRUFBUU0sd0JBQWdDLEtMeUo1RCxTQUFVNUUsRUFBUUMsRUFBU0UsR001SmpDLEdBQUkwRSxHQUFZMUUsRUFBUSxHQUVwQjJFLEVBQVksU0FBQUMsR0FBQSxHQUFHMUMsR0FBSDBDLEVBQUcxQyxRQUFTTCxFQUFaK0MsRUFBWS9DLFFBQVosUUFBNEJLLEdBQVlKLEtBQUtDLE1BQVFHLEVBQVdMLEVBRWhGaEMsR0FBT0MsUUFBVSxTQUFTK0UsR0FDeEIsR0FBSUMsTUFDQUMsR0FBVyxFQUNYQyxTQUVBQyxHQUVGQyxLQUZVLFNBRUxDLEVBQVVDLEdBQ2IsSUFBSyxHQUFJakYsR0FBSSxFQUFHQyxFQUFJMEUsRUFBTU8sT0FBUWxGLEVBQUlDLEVBQUdELElBQ3ZDZ0YsRUFBUzlFLEtBQUsrRSxFQUFPTixFQUFNM0UsS0FJL0JtRixLQVJVLFdBU0hQLElBQ0hBLEdBQVcsRUFDWEUsRUFBTU0sV0FJVkMsS0FmVSxXQWdCUlQsR0FBVyxFQUNYVSxxQkFBcUJULElBR3ZCVSxnQkFwQlUsU0FvQk14QyxHQUdkLElBQUssR0FGRHlDLEdBQVMsRUFFSnhGLEVBQUksRUFBR0MsRUFBSTBFLEVBQU1PLE9BQVFsRixFQUFJQyxFQUFHRCxJQUN2Q3dGLEdBQVVqQixFQUFVdkIsb0JBQW9CMkIsRUFBTTNFLEdBQUkrQyxFQUdwRCxPQUFPeUMsSUFHVEosT0E5QlUsV0ErQlJULEVBQVFBLEVBQU1jLE9BQU9qQixHQUVqQkcsRUFBTU8sT0FDUkwsRUFBU2Esc0JBQXNCWixFQUFNTSxRQUVyQ04sRUFBTU8sT0FHUlgsS0FHRmlCLElBMUNVLFNBMENOQyxHQUNGakIsRUFBTWtCLEtBQUtELEdBQ1hkLEVBQU1LLFFBR1JXLFFBL0NVLFNBK0NGQyxHQUNOLElBQUssR0FBSS9GLEdBQUkyRSxFQUFNTyxPQUFTLEVBQUdsRixHQUFLLEVBQUdBLElBQ3JDLElBQUsyRSxFQUFNM0UsR0FBRytCLFFBQ1osTUFBTzRDLEdBQU0zRSxHQUFHK0IsUUFBVWdFLEdBT2xDLE9BQU9qQixLTnFLSCxTQUFVcEYsRUFBUUMsR083T3hCRCxFQUFBQyxRQUFBcUcsUUFBQSxVUG1QTSxTQUFVdEcsRUFBUUMsRUFBU0UsR0FJakMsUUFBU29HLEdBQWdCQyxFQUFVQyxHQUFlLEtBQU1ELFlBQW9CQyxJQUFnQixLQUFNLElBQUlDLFdBQVUscUNBRWhILFFBQVNDLEdBQTJCQyxFQUFNcEcsR0FBUSxJQUFLb0csRUFBUSxLQUFNLElBQUlDLGdCQUFlLDREQUFnRSxRQUFPckcsR0FBeUIsZ0JBQVRBLElBQXFDLGtCQUFUQSxHQUE4Qm9HLEVBQVBwRyxFQUVsTyxRQUFTc0csR0FBVUMsRUFBVUMsR0FBYyxHQUEwQixrQkFBZkEsSUFBNEMsT0FBZkEsRUFBdUIsS0FBTSxJQUFJTixXQUFVLGlFQUFvRU0sR0FBZUQsR0FBU3RGLFVBQVlULE9BQU9pRyxPQUFPRCxHQUFjQSxFQUFXdkYsV0FBYXlGLGFBQWV2RyxNQUFPb0csRUFBVTVGLFlBQVksRUFBT2dHLFVBQVUsRUFBTWpHLGNBQWMsS0FBZThGLElBQVloRyxPQUFPb0csZUFBaUJwRyxPQUFPb0csZUFBZUwsRUFBVUMsR0FBY0QsRUFBU00sVUFBWUwsR0FOamUsR0FBSU0sR0FBV3RHLE9BQU91RyxRQUFVLFNBQVVDLEdBQVUsSUFBSyxHQUFJbEgsR0FBSSxFQUFHQSxFQUFJbUgsVUFBVWpDLE9BQVFsRixJQUFLLENBQUUsR0FBSW9ILEdBQVNELFVBQVVuSCxFQUFJLEtBQUssR0FBSXFILEtBQU9ELEdBQWMxRyxPQUFPUyxVQUFVQyxlQUFlbEIsS0FBS2tILEVBQVFDLEtBQVFILEVBQU9HLEdBQU9ELEVBQU9DLElBQVksTUFBT0gsSVEvT25QSSxFQUFhekgsRUFBUSxHQUNyQjBILEVBQWEsRUFDYkMsRUFBYTNILEVBQVEsR0FDckI0SCxFQUFhNUgsRUFBUSxHQUNyQjZILEVBQWE3SCxFQUFRLEdBQ3JCaUYsRUFBYWpGLEVBQVEsR0FDckI4SCxFQUF1QixFQUFWbEYsS0FBS21GLEdBQ2xCckQsRUFBYTFFLEVBQVEsR0FFbkJnSSxFUjZQSSxTQUFVQyxHUWxQbEIsUUFBQUQsR0FBYWpDLEdBQU9LLEVBQUFoRCxLQUFBNEUsRUFBQSxJQUFBRSxHQUFBMUIsRUFBQXBELEtBQ2xCNkUsRUFBQUUsTUFBQS9FLEtBQVNrRSxXQURTLE9BQUFZLEdBNkJwQkUsS0FBTyxXQUFNLEdBQUFDLEdBQ3lDSCxFQUFLSSxNQUFuREMsRUFES0YsRUFDTEUsSUFBS0MsRUFEQUgsRUFDQUcsTUFBT0MsRUFEUEosRUFDT0ksUUFBUzFGLEVBRGhCc0YsRUFDZ0J0RixPQUFRQyxFQUR4QnFGLEVBQ3dCckYsTUFBTzBGLEVBRC9CTCxFQUMrQkssS0FFMUNILEdBQUlJLE9BRUpKLEVBQUlLLE1BQU1ILEVBQVNBLEdBRW5CRixFQUFJTSxVQUFVLEVBQUcsRUFBRzdGLEVBQU9ELEdBRTNCd0YsRUFBSU8sVUFBWU4sRUFFWk4sRUFBS25DLE1BQU1nRCxhQUNiUixFQUFJUyxZQUFjTixFQUFNaEQsZ0JBQWdCd0MsRUFBS25DLE1BQU03QyxTQUNuRHFGLEVBQUlVLFNBQVMsRUFBRyxFQUFHakcsRUFBT0QsSUFHNUIyRixFQUFNeEQsS0FBS2dELEVBQUtnQixTQUFoQmhCLEdBRUFLLEVBQUlZLFdBL0NjakIsRUFxSHBCa0IsU0FBVyxTQUFDQyxHQUFNLEdBQ1ZDLEdBQXNERCxFQUF0REMsT0FBUUMsRUFBOENGLEVBQTlDRSxRQUFTQyxFQUFxQ0gsRUFBckNHLFFBQVNDLEVBQTRCSixFQUE1QkksUUFBU0MsRUFBbUJMLEVBQW5CSyxlQUNyQ0MsRUFBWTdILEtBQUtDLEtBRXJCLElBQUkySCxFQUNGLElBQUssR0FBSXZKLEdBQUksRUFBR0EsRUFBSXVKLEVBQWVyRSxPQUFRbEYsSUFBSyxJQUFBeUosR0FDbkJGLEVBQWV2SixHQUFwQ3FKLEVBRHdDSSxFQUN4Q0osUUFBU0MsRUFEK0JHLEVBQy9CSCxPQUNmdkIsR0FBSzJCLFNBQVNGLEVBQVdILEVBQVNDLE9BRTNCSCxLQUFXNUIsR0FBZTZCLEdBQ25DckIsRUFBSzJCLFNBQVNGLEVBQVdILEVBQVNDLElBL0hsQnZCLEVBbUlwQjRCLFdBQWEsV0FDWDVCLEVBQUtJLE1BQU1JLE1BQU16QyxRQUFRbkUsS0FBS0MsUUFqSTlCbUcsRUFBS0ksT0FDSEUsTUFBYyxjQUNkQyxRQUFjLEVBQ2QxRixPQUFjLEVBQ2QyRixNQUFjekQsRUFBTWlELEVBQUtFLE1BQ3pCMkIsWUFBYzdCLEVBQUs2QixjQUNuQi9HLE1BQWMsR0FURWtGLEVSK1pwQixNQTVLQXZCLEdBQVVxQixFQUFLQyxHQXdFZkQsRUFBSTFHLFVROVNKeUksWVI4UzRCLFdRN1MxQixNQUFJM0csTUFBSzJDLE1BQU1pRSxVQUVYQyxhQUFnQjdHLEtBQUtnRyxTQUNyQmMsV0FBZ0I5RyxLQUFLMEcsV0FDckJLLGNBQWdCL0csS0FBSzBHLGFBSXJCTSxZQUFnQmhILEtBQUtnRyxTQUNyQmlCLFVBQWdCakgsS0FBSzBHLFdBQ3JCUSxhQUFnQmxILEtBQUswRyxhUm1UM0I5QixFQUFJMUcsVVF6Uko0SCxTUnlSeUIsU1F6UmZ2SCxHQUFNLEdBQUE0SSxHQUNlbkgsS0FBS2tGLE1BQTVCQyxFQURRZ0MsRUFDUmhDLElBQUt4RixFQURHd0gsRUFDSHhILE9BQVFDLEVBREx1SCxFQUNLdkgsTUFDYk8sRUFBaUI1QixFQUFqQjRCLEVBQUdFLEVBQWM5QixFQUFkOEIsRUFBR3JCLEVBQVdULEVBQVhTLE1BS1osSUFIQW1HLEVBQUlTLFlBQWN0RSxFQUFVekIsZUFBZXRCLEVBQU15QixLQUFLMkMsTUFBTTdDLFNBQzVEcUYsRUFBSWlDLFlBRUFwSCxLQUFLMkMsTUFBTTBFLFNBQVUsQ0FDdkIsR0FBSW5ILEdBQU9WLEtBQUtGLElBQUlLLEVBQVFDLEVBRTVCTyxJQUFLbUIsRUFBVXJCLGNBQWMxQixFQUFNMkIsRUFBTU4sR0FDekNTLEdBQUtpQixFQUFVbEIsY0FBYzdCLEVBQU0yQixFQUFNUCxHQUczQ3dGLEVBQUltQyxJQUFJbkgsRUFBR0UsRUFBR3JCLEVBQVNzQyxFQUFVaEIsYUFBYS9CLEdBQU8sRUFBR21HLEdBRXhEUyxFQUFJb0MsWUFDSnBDLEVBQUlxQyxRUmtTTjVDLEVBQUkxRyxVUS9SSnVKLHFCUitScUMsV1E5Um5DekgsS0FBS2tGLE1BQU1JLE1BQU1sRCxRUmtTbkJ3QyxFQUFJMUcsVVEvUkp1SSxTUitSeUIsU1EvUmZGLEVBQVdILEVBQVNDLEdBQVMsR0FBQXFCLEdBQUExSCxLQUNqQzJILEVBQUszSCxLQUFLNEgsS0FBS0MsTUFHZkYsYUFBYy9HLFFBQU9rSCxvQkFBc0IsSUFDN0NILEVBQUtBLEVBQUdJLGFBTDJCLElBQUFDLEdBUUZMLEVBQUdNLHdCQUFoQ3ZILEVBUitCc0gsRUFRL0J0SCxJQUFLd0gsRUFSMEJGLEVBUTFCRSxPQUFRMUgsRUFSa0J3SCxFQVFsQnhILEtBQU0ySCxFQVJZSCxFQVFaRyxNQVJZQyxFQVNyQnhILE9BQU95SCxpQkFBaUJWLEdBQWxDdkMsRUFUK0JnRCxFQVMvQmhELE1BRUZELEVBQVVuRixLQUFLa0YsTUFBTUMsS0FBT3dDLEVBQUdXLFdBQVcsTUFDMUNqRCxFQUFVZCxFQUFXWSxHQUNyQnhGLEVBQVV1SSxFQUFTeEgsRUFDbkJkLEVBQVV1SSxFQUFRM0gsRUFDbEJ4QixFQUFVc0MsRUFBVTVCLGFBQWFDLEVBQVFDLEVBQU9JLEtBQUsyQyxNQUFNM0QsT0FFL0RnQixNQUFLdUksVUFBV25ELFFBQU9ELE1BQUtFLFVBQVMxRixTQUFRQyxTQUFTLFdBQ3BEOEgsRUFBS3hDLE1BQU1JLE1BQU01QyxLQUNmakUsU0FBWWlKLEVBQUsvRSxNQUFNbEUsU0FDdkJHLFVBQVkySCxFQUNaekgsUUFBWSxFQUNaRSxPQUFZQSxFQUNabUIsRUFBWWlHLEVBQVU1RixFQUN0QkgsRUFBWWdHLEVBQVUzRixPUjRTNUJrRSxFQUFJMUcsVVF2U0pzSyxPUnVTdUIsV1F2U2IsR0FBQUMsR0FDc0N6SSxLQUFLa0YsTUFBN0NHLEVBREVvRCxFQUNGcEQsUUFBUzFGLEVBRFA4SSxFQUNPOUksT0FBUUMsRUFEZjZJLEVBQ2U3SSxNQUFPK0csRUFEdEI4QixFQUNzQjlCLFdBRTlCLE9BQ0VuQyxHQUFBa0UsY0FBQSxTQUFBM0UsR0FBUTRFLFVBQVUsTUFDVkMsSUFBSSxTQUNKQyxNQUFBOUUsS0FBWVUsRUFBVXpFLEtBQUsyQyxNQUFNa0csT0FDakNsSixPQUFTQSxFQUFTMEYsRUFDbEJ6RixNQUFRQSxFQUFReUYsRUFDaEJ5RCxXQUFhOUksS0FBSzBHLFlBQ2JDLEtSOFNWL0IsR1ExYVNKLEVBQU11RSxjQUFsQm5FLEdBRUdvRSxjQUNMckQsWUFBYSxFQUNibEgsU0FBYSxJQUNicUIsUUFBYSxJQUNiZCxPQUFhLElBQ2JxSSxVQUFhLEVBQ2JULFNBQWF2QyxHQTRJakI1SCxFQUFPQyxRQUFVa0ksR1J1U1gsU0FBVW5JLEVBQVFDLEdTbmN4QkQsRUFBT0MsUUFBVSxTQUF1QnVNLEVBQUdDLEVBQUcvTCxFQUFHRSxHQUMvQyxNQUFPRixLQUFJOEwsRUFBRUEsRUFBRTVMLEVBQUUsR0FBRzRMLEVBQUVBLEVBQUVBLEVBQUVBLEVBQUksR0FBS0MiLCJmaWxlIjoiaW5rLmpzIiwic291cmNlc0NvbnRlbnQiOlsibW9kdWxlLmV4cG9ydHMgPVxuLyoqKioqKi8gKGZ1bmN0aW9uKG1vZHVsZXMpIHsgLy8gd2VicGFja0Jvb3RzdHJhcFxuLyoqKioqKi8gXHQvLyBUaGUgbW9kdWxlIGNhY2hlXG4vKioqKioqLyBcdHZhciBpbnN0YWxsZWRNb2R1bGVzID0ge307XG4vKioqKioqL1xuLyoqKioqKi8gXHQvLyBUaGUgcmVxdWlyZSBmdW5jdGlvblxuLyoqKioqKi8gXHRmdW5jdGlvbiBfX3dlYnBhY2tfcmVxdWlyZV9fKG1vZHVsZUlkKSB7XG4vKioqKioqL1xuLyoqKioqKi8gXHRcdC8vIENoZWNrIGlmIG1vZHVsZSBpcyBpbiBjYWNoZVxuLyoqKioqKi8gXHRcdGlmKGluc3RhbGxlZE1vZHVsZXNbbW9kdWxlSWRdKVxuLyoqKioqKi8gXHRcdFx0cmV0dXJuIGluc3RhbGxlZE1vZHVsZXNbbW9kdWxlSWRdLmV4cG9ydHM7XG4vKioqKioqL1xuLyoqKioqKi8gXHRcdC8vIENyZWF0ZSBhIG5ldyBtb2R1bGUgKGFuZCBwdXQgaXQgaW50byB0aGUgY2FjaGUpXG4vKioqKioqLyBcdFx0dmFyIG1vZHVsZSA9IGluc3RhbGxlZE1vZHVsZXNbbW9kdWxlSWRdID0ge1xuLyoqKioqKi8gXHRcdFx0aTogbW9kdWxlSWQsXG4vKioqKioqLyBcdFx0XHRsOiBmYWxzZSxcbi8qKioqKiovIFx0XHRcdGV4cG9ydHM6IHt9XG4vKioqKioqLyBcdFx0fTtcbi8qKioqKiovXG4vKioqKioqLyBcdFx0Ly8gRXhlY3V0ZSB0aGUgbW9kdWxlIGZ1bmN0aW9uXG4vKioqKioqLyBcdFx0bW9kdWxlc1ttb2R1bGVJZF0uY2FsbChtb2R1bGUuZXhwb3J0cywgbW9kdWxlLCBtb2R1bGUuZXhwb3J0cywgX193ZWJwYWNrX3JlcXVpcmVfXyk7XG4vKioqKioqL1xuLyoqKioqKi8gXHRcdC8vIEZsYWcgdGhlIG1vZHVsZSBhcyBsb2FkZWRcbi8qKioqKiovIFx0XHRtb2R1bGUubCA9IHRydWU7XG4vKioqKioqL1xuLyoqKioqKi8gXHRcdC8vIFJldHVybiB0aGUgZXhwb3J0cyBvZiB0aGUgbW9kdWxlXG4vKioqKioqLyBcdFx0cmV0dXJuIG1vZHVsZS5leHBvcnRzO1xuLyoqKioqKi8gXHR9XG4vKioqKioqL1xuLyoqKioqKi9cbi8qKioqKiovIFx0Ly8gZXhwb3NlIHRoZSBtb2R1bGVzIG9iamVjdCAoX193ZWJwYWNrX21vZHVsZXNfXylcbi8qKioqKiovIFx0X193ZWJwYWNrX3JlcXVpcmVfXy5tID0gbW9kdWxlcztcbi8qKioqKiovXG4vKioqKioqLyBcdC8vIGV4cG9zZSB0aGUgbW9kdWxlIGNhY2hlXG4vKioqKioqLyBcdF9fd2VicGFja19yZXF1aXJlX18uYyA9IGluc3RhbGxlZE1vZHVsZXM7XG4vKioqKioqL1xuLyoqKioqKi8gXHQvLyBpZGVudGl0eSBmdW5jdGlvbiBmb3IgY2FsbGluZyBoYXJtb255IGltcG9ydHMgd2l0aCB0aGUgY29ycmVjdCBjb250ZXh0XG4vKioqKioqLyBcdF9fd2VicGFja19yZXF1aXJlX18uaSA9IGZ1bmN0aW9uKHZhbHVlKSB7IHJldHVybiB2YWx1ZTsgfTtcbi8qKioqKiovXG4vKioqKioqLyBcdC8vIGRlZmluZSBnZXR0ZXIgZnVuY3Rpb24gZm9yIGhhcm1vbnkgZXhwb3J0c1xuLyoqKioqKi8gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLmQgPSBmdW5jdGlvbihleHBvcnRzLCBuYW1lLCBnZXR0ZXIpIHtcbi8qKioqKiovIFx0XHRpZighX193ZWJwYWNrX3JlcXVpcmVfXy5vKGV4cG9ydHMsIG5hbWUpKSB7XG4vKioqKioqLyBcdFx0XHRPYmplY3QuZGVmaW5lUHJvcGVydHkoZXhwb3J0cywgbmFtZSwge1xuLyoqKioqKi8gXHRcdFx0XHRjb25maWd1cmFibGU6IGZhbHNlLFxuLyoqKioqKi8gXHRcdFx0XHRlbnVtZXJhYmxlOiB0cnVlLFxuLyoqKioqKi8gXHRcdFx0XHRnZXQ6IGdldHRlclxuLyoqKioqKi8gXHRcdFx0fSk7XG4vKioqKioqLyBcdFx0fVxuLyoqKioqKi8gXHR9O1xuLyoqKioqKi9cbi8qKioqKiovIFx0Ly8gZ2V0RGVmYXVsdEV4cG9ydCBmdW5jdGlvbiBmb3IgY29tcGF0aWJpbGl0eSB3aXRoIG5vbi1oYXJtb255IG1vZHVsZXNcbi8qKioqKiovIFx0X193ZWJwYWNrX3JlcXVpcmVfXy5uID0gZnVuY3Rpb24obW9kdWxlKSB7XG4vKioqKioqLyBcdFx0dmFyIGdldHRlciA9IG1vZHVsZSAmJiBtb2R1bGUuX19lc01vZHVsZSA/XG4vKioqKioqLyBcdFx0XHRmdW5jdGlvbiBnZXREZWZhdWx0KCkgeyByZXR1cm4gbW9kdWxlWydkZWZhdWx0J107IH0gOlxuLyoqKioqKi8gXHRcdFx0ZnVuY3Rpb24gZ2V0TW9kdWxlRXhwb3J0cygpIHsgcmV0dXJuIG1vZHVsZTsgfTtcbi8qKioqKiovIFx0XHRfX3dlYnBhY2tfcmVxdWlyZV9fLmQoZ2V0dGVyLCAnYScsIGdldHRlcik7XG4vKioqKioqLyBcdFx0cmV0dXJuIGdldHRlcjtcbi8qKioqKiovIFx0fTtcbi8qKioqKiovXG4vKioqKioqLyBcdC8vIE9iamVjdC5wcm90b3R5cGUuaGFzT3duUHJvcGVydHkuY2FsbFxuLyoqKioqKi8gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLm8gPSBmdW5jdGlvbihvYmplY3QsIHByb3BlcnR5KSB7IHJldHVybiBPYmplY3QucHJvdG90eXBlLmhhc093blByb3BlcnR5LmNhbGwob2JqZWN0LCBwcm9wZXJ0eSk7IH07XG4vKioqKioqL1xuLyoqKioqKi8gXHQvLyBfX3dlYnBhY2tfcHVibGljX3BhdGhfX1xuLyoqKioqKi8gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLnAgPSBcIlwiO1xuLyoqKioqKi9cbi8qKioqKiovIFx0Ly8gTG9hZCBlbnRyeSBtb2R1bGUgYW5kIHJldHVybiBleHBvcnRzXG4vKioqKioqLyBcdHJldHVybiBfX3dlYnBhY2tfcmVxdWlyZV9fKF9fd2VicGFja19yZXF1aXJlX18ucyA9IDYpO1xuLyoqKioqKi8gfSlcbi8qKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKiovXG4vKioqKioqLyAoW1xuLyogMCAqL1xuLyoqKi8gKGZ1bmN0aW9uKG1vZHVsZSwgZXhwb3J0cywgX193ZWJwYWNrX3JlcXVpcmVfXykge1xuXG52YXIgZWFzaW5nID0gX193ZWJwYWNrX3JlcXVpcmVfXyg3KTtcbnZhciBTUVJUXzIgPSBNYXRoLnNxcnQoMik7XG52YXIgY29zID0gTWF0aC5jb3MsXG4gICAgbWF4ID0gTWF0aC5tYXgsXG4gICAgbWluID0gTWF0aC5taW47XG5cblxuZnVuY3Rpb24gZ2V0UHJlc3MoYmxvdCkge1xuICByZXR1cm4gbWluKGJsb3QuZHVyYXRpb24sIERhdGUubm93KCkgLSBibG90Lm1vdXNlRG93bik7XG59XG5cbmZ1bmN0aW9uIGdldFJlbGVhc2UoYmxvdCkge1xuICByZXR1cm4gYmxvdC5tb3VzZVVwID4gMCA/IERhdGUubm93KCkgLSBibG90Lm1vdXNlVXAgOiAwO1xufVxuXG5mdW5jdGlvbiBnZXRSYWRpdXMoYmxvdCkge1xuICB2YXIgZHVyYXRpb24gPSBibG90LmR1cmF0aW9uLFxuICAgICAgcmFkaXVzID0gYmxvdC5yYWRpdXM7XG5cblxuICB2YXIgZG93biA9IGVhc2luZyhnZXRQcmVzcyhibG90KSwgMCwgcmFkaXVzLCBkdXJhdGlvbikgKiAwLjg1O1xuICB2YXIgdXAgPSBlYXNpbmcoZ2V0UmVsZWFzZShibG90KSwgMCwgcmFkaXVzLCBkdXJhdGlvbikgKiAwLjE1O1xuICB2YXIgdW5kdWxhdGlvbiA9IHJhZGl1cyAqIDAuMDIgKiBjb3MoRGF0ZS5ub3coKSAvIGR1cmF0aW9uKTtcblxuICByZXR1cm4gbWF4KDAsIGRvd24gKyB1cCArIHVuZHVsYXRpb24pO1xufVxuXG5tb2R1bGUuZXhwb3J0cyA9IHtcbiAgZ2V0TWF4UmFkaXVzOiBmdW5jdGlvbiBnZXRNYXhSYWRpdXMoaGVpZ2h0LCB3aWR0aCwgcmFkaXVzKSB7XG4gICAgcmV0dXJuIG1pbihtYXgoaGVpZ2h0LCB3aWR0aCkgKiAwLjUsIHJhZGl1cyk7XG4gIH0sXG4gIGdldEJsb3RPcGFjaXR5OiBmdW5jdGlvbiBnZXRCbG90T3BhY2l0eShibG90LCBvcGFjaXR5KSB7XG4gICAgcmV0dXJuIGVhc2luZyhnZXRSZWxlYXNlKGJsb3QpLCBvcGFjaXR5LCAtb3BhY2l0eSwgYmxvdC5kdXJhdGlvbik7XG4gIH0sXG4gIGdldEJsb3RPdXRlck9wYWNpdHk6IGZ1bmN0aW9uIGdldEJsb3RPdXRlck9wYWNpdHkoYmxvdCwgb3BhY2l0eSkge1xuICAgIHJldHVybiBtaW4odGhpcy5nZXRCbG90T3BhY2l0eShibG90LCBvcGFjaXR5KSwgZWFzaW5nKGdldFByZXNzKGJsb3QpLCAwLCAwLjMsIGJsb3QuZHVyYXRpb24gKiAzKSk7XG4gIH0sXG4gIGdldEJsb3RTaGlmdFg6IGZ1bmN0aW9uIGdldEJsb3RTaGlmdFgoYmxvdCwgc2l6ZSwgd2lkdGgpIHtcbiAgICByZXR1cm4gbWluKDEsIGdldFJhZGl1cyhibG90KSAvIHNpemUgKiAyIC8gU1FSVF8yKSAqICh3aWR0aCAvIDIgLSBibG90LngpO1xuICB9LFxuICBnZXRCbG90U2hpZnRZOiBmdW5jdGlvbiBnZXRCbG90U2hpZnRZKGJsb3QsIHNpemUsIGhlaWdodCkge1xuICAgIHJldHVybiBtaW4oMSwgZ2V0UmFkaXVzKGJsb3QpIC8gc2l6ZSAqIDIgLyBTUVJUXzIpICogKGhlaWdodCAvIDIgLSBibG90LnkpO1xuICB9LFxuICBnZXRCbG90U2NhbGU6IGZ1bmN0aW9uIGdldEJsb3RTY2FsZShibG90KSB7XG4gICAgcmV0dXJuIGdldFJhZGl1cyhibG90KSAvIGJsb3QucmFkaXVzO1xuICB9XG59O1xuXG4vKioqLyB9KSxcbi8qIDEgKi9cbi8qKiovIChmdW5jdGlvbihtb2R1bGUsIGV4cG9ydHMpIHtcblxubW9kdWxlLmV4cG9ydHMgPSB7XG4gIGJvcmRlclJhZGl1czogJ2luaGVyaXQnLFxuICBoZWlnaHQ6ICcxMDAlJyxcbiAgbGVmdDogMCxcbiAgcG9zaXRpb246ICdhYnNvbHV0ZScsXG4gIHRvcDogMCxcbiAgd2lkdGg6ICcxMDAlJ1xufTtcblxuLyoqKi8gfSksXG4vKiAyICovXG4vKioqLyAoZnVuY3Rpb24obW9kdWxlLCBleHBvcnRzKSB7XG5cbnZhciBib29sID0gZmFsc2U7XG5cbmlmICh0eXBlb2Ygd2luZG93ICE9PSAndW5kZWZpbmVkJykge1xuICBib29sID0gJ29udG91Y2hzdGFydCcgaW4gd2luZG93IHx8IHdpbmRvdy5Eb2N1bWVudFRvdWNoICYmIGRvY3VtZW50IGluc3RhbmNlb2Ygd2luZG93LkRvY3VtZW50VG91Y2g7XG59XG5cbm1vZHVsZS5leHBvcnRzID0gYm9vbDtcblxuLyoqKi8gfSksXG4vKiAzICovXG4vKioqLyAoZnVuY3Rpb24obW9kdWxlLCBleHBvcnRzKSB7XG5cbi8vIEdvb2Qgc3R1ZmYgaGVyZTpcbi8vIGh0dHA6Ly93d3cuaHRtbDVyb2Nrcy5jb20vZW4vdHV0b3JpYWxzL2NhbnZhcy9oaWRwaS9cblxubW9kdWxlLmV4cG9ydHMgPSBmdW5jdGlvbiAoY29udGV4dCkge1xuICAgICAgICAgICAgICAgICAgICAgICAgdmFyIGRldmljZVBpeGVsUmF0aW8gPSB3aW5kb3cuZGV2aWNlUGl4ZWxSYXRpbyB8fCAxO1xuICAgICAgICAgICAgICAgICAgICAgICAgdmFyIGJhY2tpbmdTdG9yZVJhdGlvID0gY29udGV4dC53ZWJraXRCYWNraW5nU3RvcmVQaXhlbFJhdGlvIHx8IGNvbnRleHQubW96QmFja2luZ1N0b3JlUGl4ZWxSYXRpbyB8fCBjb250ZXh0Lm1zQmFja2luZ1N0b3JlUGl4ZWxSYXRpbyB8fCBjb250ZXh0Lm9CYWNraW5nU3RvcmVQaXhlbFJhdGlvIHx8IGNvbnRleHQuYmFja2luZ1N0b3JlUGl4ZWxSYXRpbyB8fCAxO1xuXG4gICAgICAgICAgICAgICAgICAgICAgICByZXR1cm4gZGV2aWNlUGl4ZWxSYXRpbyAvIGJhY2tpbmdTdG9yZVJhdGlvO1xufTtcblxuLyoqKi8gfSksXG4vKiA0ICovXG4vKioqLyAoZnVuY3Rpb24obW9kdWxlLCBleHBvcnRzLCBfX3dlYnBhY2tfcmVxdWlyZV9fKSB7XG5cbi8qKlxuICogSW5rIFN0b3JlXG4gKiBLZWVwcyB0cmFjayBvZiBjaGFuZ2VzIHRvIHJpcHBsZSBlcGljZW50ZXJzXG4gKiBzbyB0aGF0IDxJbmsgLz4gY2FuIGZvY3VzIG9uIHJlbmRlcmluZyB0aGVtLlxuICovXG5cbnZhciBFcXVhdGlvbnMgPSBfX3dlYnBhY2tfcmVxdWlyZV9fKDApO1xuXG52YXIga2lsbFN0YWxlID0gZnVuY3Rpb24ga2lsbFN0YWxlKF9yZWYpIHtcbiAgdmFyIG1vdXNlVXAgPSBfcmVmLm1vdXNlVXAsXG4gICAgICBkdXJhdGlvbiA9IF9yZWYuZHVyYXRpb247XG4gIHJldHVybiAhbW91c2VVcCB8fCBEYXRlLm5vdygpIC0gbW91c2VVcCA8IGR1cmF0aW9uO1xufTtcblxubW9kdWxlLmV4cG9ydHMgPSBmdW5jdGlvbiAocHVibGljaXplKSB7XG4gIHZhciBfZGF0YSA9IFtdO1xuICB2YXIgX3BsYXlpbmcgPSBmYWxzZTtcbiAgdmFyIF9mcmFtZSA9IHZvaWQgMDtcblxuICB2YXIgU3RvcmUgPSB7XG4gICAgZWFjaDogZnVuY3Rpb24gZWFjaChjYWxsYmFjaywgc2NvcGUpIHtcbiAgICAgIGZvciAodmFyIGkgPSAwLCBsID0gX2RhdGEubGVuZ3RoOyBpIDwgbDsgaSsrKSB7XG4gICAgICAgIGNhbGxiYWNrLmNhbGwoc2NvcGUsIF9kYXRhW2ldKTtcbiAgICAgIH1cbiAgICB9LFxuICAgIHBsYXk6IGZ1bmN0aW9uIHBsYXkoKSB7XG4gICAgICBpZiAoIV9wbGF5aW5nKSB7XG4gICAgICAgIF9wbGF5aW5nID0gdHJ1ZTtcbiAgICAgICAgU3RvcmUudXBkYXRlKCk7XG4gICAgICB9XG4gICAgfSxcbiAgICBzdG9wOiBmdW5jdGlvbiBzdG9wKCkge1xuICAgICAgX3BsYXlpbmcgPSBmYWxzZTtcbiAgICAgIGNhbmNlbEFuaW1hdGlvbkZyYW1lKF9mcmFtZSk7XG4gICAgfSxcbiAgICBnZXRUb3RhbE9wYWNpdHk6IGZ1bmN0aW9uIGdldFRvdGFsT3BhY2l0eShvcGFjaXR5KSB7XG4gICAgICB2YXIgYW5zd2VyID0gMDtcblxuICAgICAgZm9yICh2YXIgaSA9IDAsIGwgPSBfZGF0YS5sZW5ndGg7IGkgPCBsOyBpKyspIHtcbiAgICAgICAgYW5zd2VyICs9IEVxdWF0aW9ucy5nZXRCbG90T3V0ZXJPcGFjaXR5KF9kYXRhW2ldLCBvcGFjaXR5KTtcbiAgICAgIH1cblxuICAgICAgcmV0dXJuIGFuc3dlcjtcbiAgICB9LFxuICAgIHVwZGF0ZTogZnVuY3Rpb24gdXBkYXRlKCkge1xuICAgICAgX2RhdGEgPSBfZGF0YS5maWx0ZXIoa2lsbFN0YWxlKTtcblxuICAgICAgaWYgKF9kYXRhLmxlbmd0aCkge1xuICAgICAgICBfZnJhbWUgPSByZXF1ZXN0QW5pbWF0aW9uRnJhbWUoU3RvcmUudXBkYXRlKTtcbiAgICAgIH0gZWxzZSB7XG4gICAgICAgIFN0b3JlLnN0b3AoKTtcbiAgICAgIH1cblxuICAgICAgcHVibGljaXplKCk7XG4gICAgfSxcbiAgICBhZGQ6IGZ1bmN0aW9uIGFkZChwcm9wcykge1xuICAgICAgX2RhdGEucHVzaChwcm9wcyk7XG4gICAgICBTdG9yZS5wbGF5KCk7XG4gICAgfSxcbiAgICByZWxlYXNlOiBmdW5jdGlvbiByZWxlYXNlKHRpbWUpIHtcbiAgICAgIGZvciAodmFyIGkgPSBfZGF0YS5sZW5ndGggLSAxOyBpID49IDA7IGktLSkge1xuICAgICAgICBpZiAoIV9kYXRhW2ldLm1vdXNlVXApIHtcbiAgICAgICAgICByZXR1cm4gX2RhdGFbaV0ubW91c2VVcCA9IHRpbWU7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH07XG5cbiAgcmV0dXJuIFN0b3JlO1xufTtcblxuLyoqKi8gfSksXG4vKiA1ICovXG4vKioqLyAoZnVuY3Rpb24obW9kdWxlLCBleHBvcnRzKSB7XG5cbm1vZHVsZS5leHBvcnRzID0gcmVxdWlyZShcInJlYWN0XCIpO1xuXG4vKioqLyB9KSxcbi8qIDYgKi9cbi8qKiovIChmdW5jdGlvbihtb2R1bGUsIGV4cG9ydHMsIF9fd2VicGFja19yZXF1aXJlX18pIHtcblxudmFyIF9leHRlbmRzID0gT2JqZWN0LmFzc2lnbiB8fCBmdW5jdGlvbiAodGFyZ2V0KSB7IGZvciAodmFyIGkgPSAxOyBpIDwgYXJndW1lbnRzLmxlbmd0aDsgaSsrKSB7IHZhciBzb3VyY2UgPSBhcmd1bWVudHNbaV07IGZvciAodmFyIGtleSBpbiBzb3VyY2UpIHsgaWYgKE9iamVjdC5wcm90b3R5cGUuaGFzT3duUHJvcGVydHkuY2FsbChzb3VyY2UsIGtleSkpIHsgdGFyZ2V0W2tleV0gPSBzb3VyY2Vba2V5XTsgfSB9IH0gcmV0dXJuIHRhcmdldDsgfTtcblxuZnVuY3Rpb24gX2NsYXNzQ2FsbENoZWNrKGluc3RhbmNlLCBDb25zdHJ1Y3RvcikgeyBpZiAoIShpbnN0YW5jZSBpbnN0YW5jZW9mIENvbnN0cnVjdG9yKSkgeyB0aHJvdyBuZXcgVHlwZUVycm9yKFwiQ2Fubm90IGNhbGwgYSBjbGFzcyBhcyBhIGZ1bmN0aW9uXCIpOyB9IH1cblxuZnVuY3Rpb24gX3Bvc3NpYmxlQ29uc3RydWN0b3JSZXR1cm4oc2VsZiwgY2FsbCkgeyBpZiAoIXNlbGYpIHsgdGhyb3cgbmV3IFJlZmVyZW5jZUVycm9yKFwidGhpcyBoYXNuJ3QgYmVlbiBpbml0aWFsaXNlZCAtIHN1cGVyKCkgaGFzbid0IGJlZW4gY2FsbGVkXCIpOyB9IHJldHVybiBjYWxsICYmICh0eXBlb2YgY2FsbCA9PT0gXCJvYmplY3RcIiB8fCB0eXBlb2YgY2FsbCA9PT0gXCJmdW5jdGlvblwiKSA/IGNhbGwgOiBzZWxmOyB9XG5cbmZ1bmN0aW9uIF9pbmhlcml0cyhzdWJDbGFzcywgc3VwZXJDbGFzcykgeyBpZiAodHlwZW9mIHN1cGVyQ2xhc3MgIT09IFwiZnVuY3Rpb25cIiAmJiBzdXBlckNsYXNzICE9PSBudWxsKSB7IHRocm93IG5ldyBUeXBlRXJyb3IoXCJTdXBlciBleHByZXNzaW9uIG11c3QgZWl0aGVyIGJlIG51bGwgb3IgYSBmdW5jdGlvbiwgbm90IFwiICsgdHlwZW9mIHN1cGVyQ2xhc3MpOyB9IHN1YkNsYXNzLnByb3RvdHlwZSA9IE9iamVjdC5jcmVhdGUoc3VwZXJDbGFzcyAmJiBzdXBlckNsYXNzLnByb3RvdHlwZSwgeyBjb25zdHJ1Y3RvcjogeyB2YWx1ZTogc3ViQ2xhc3MsIGVudW1lcmFibGU6IGZhbHNlLCB3cml0YWJsZTogdHJ1ZSwgY29uZmlndXJhYmxlOiB0cnVlIH0gfSk7IGlmIChzdXBlckNsYXNzKSBPYmplY3Quc2V0UHJvdG90eXBlT2YgPyBPYmplY3Quc2V0UHJvdG90eXBlT2Yoc3ViQ2xhc3MsIHN1cGVyQ2xhc3MpIDogc3ViQ2xhc3MuX19wcm90b19fID0gc3VwZXJDbGFzczsgfVxuXG4vKipcbiAqIElua1xuICogRmlsbHMgYSBjb250YWluZXIgd2l0aCBhbiBTVkcgb2JqZWN0IHRoYXQgcHJvdmlkZXMgZmVlZGJhY2sgb24gbW91c2UvdG91Y2hcbiAqIGV2ZW50cyB3aXRoIGEgcmlwcGxpbmcgcG9vbC5cbiAqL1xuXG52YXIgSEFTX1RPVUNIID0gX193ZWJwYWNrX3JlcXVpcmVfXygyKTtcbnZhciBNT1VTRV9MRUZUID0gMDtcbnZhciBwaXhlbFJhdGlvID0gX193ZWJwYWNrX3JlcXVpcmVfXygzKTtcbnZhciBSZWFjdCA9IF9fd2VicGFja19yZXF1aXJlX18oNSk7XG52YXIgU1RZTEUgPSBfX3dlYnBhY2tfcmVxdWlyZV9fKDEpO1xudmFyIFN0b3JlID0gX193ZWJwYWNrX3JlcXVpcmVfXyg0KTtcbnZhciBUQVUgPSBNYXRoLlBJICogMjtcbnZhciBFcXVhdGlvbnMgPSBfX3dlYnBhY2tfcmVxdWlyZV9fKDApO1xuXG52YXIgSW5rID0gZnVuY3Rpb24gKF9SZWFjdCRQdXJlQ29tcG9uZW50KSB7XG4gIF9pbmhlcml0cyhJbmssIF9SZWFjdCRQdXJlQ29tcG9uZW50KTtcblxuICBmdW5jdGlvbiBJbmsocHJvcHMpIHtcbiAgICBfY2xhc3NDYWxsQ2hlY2sodGhpcywgSW5rKTtcblxuICAgIHZhciBfdGhpcyA9IF9wb3NzaWJsZUNvbnN0cnVjdG9yUmV0dXJuKHRoaXMsIF9SZWFjdCRQdXJlQ29tcG9uZW50LmFwcGx5KHRoaXMsIGFyZ3VtZW50cykpO1xuXG4gICAgX3RoaXMudGljayA9IGZ1bmN0aW9uICgpIHtcbiAgICAgIHZhciBfdGhpcyRzdGF0ZSA9IF90aGlzLnN0YXRlLFxuICAgICAgICAgIGN0eCA9IF90aGlzJHN0YXRlLmN0eCxcbiAgICAgICAgICBjb2xvciA9IF90aGlzJHN0YXRlLmNvbG9yLFxuICAgICAgICAgIGRlbnNpdHkgPSBfdGhpcyRzdGF0ZS5kZW5zaXR5LFxuICAgICAgICAgIGhlaWdodCA9IF90aGlzJHN0YXRlLmhlaWdodCxcbiAgICAgICAgICB3aWR0aCA9IF90aGlzJHN0YXRlLndpZHRoLFxuICAgICAgICAgIHN0b3JlID0gX3RoaXMkc3RhdGUuc3RvcmU7XG5cblxuICAgICAgY3R4LnNhdmUoKTtcblxuICAgICAgY3R4LnNjYWxlKGRlbnNpdHksIGRlbnNpdHkpO1xuXG4gICAgICBjdHguY2xlYXJSZWN0KDAsIDAsIHdpZHRoLCBoZWlnaHQpO1xuXG4gICAgICBjdHguZmlsbFN0eWxlID0gY29sb3I7XG5cbiAgICAgIGlmIChfdGhpcy5wcm9wcy5iYWNrZ3JvdW5kKSB7XG4gICAgICAgIGN0eC5nbG9iYWxBbHBoYSA9IHN0b3JlLmdldFRvdGFsT3BhY2l0eShfdGhpcy5wcm9wcy5vcGFjaXR5KTtcbiAgICAgICAgY3R4LmZpbGxSZWN0KDAsIDAsIHdpZHRoLCBoZWlnaHQpO1xuICAgICAgfVxuXG4gICAgICBzdG9yZS5lYWNoKF90aGlzLm1ha2VCbG90LCBfdGhpcyk7XG5cbiAgICAgIGN0eC5yZXN0b3JlKCk7XG4gICAgfTtcblxuICAgIF90aGlzLl9vblByZXNzID0gZnVuY3Rpb24gKGUpIHtcbiAgICAgIHZhciBidXR0b24gPSBlLmJ1dHRvbixcbiAgICAgICAgICBjdHJsS2V5ID0gZS5jdHJsS2V5LFxuICAgICAgICAgIGNsaWVudFggPSBlLmNsaWVudFgsXG4gICAgICAgICAgY2xpZW50WSA9IGUuY2xpZW50WSxcbiAgICAgICAgICBjaGFuZ2VkVG91Y2hlcyA9IGUuY2hhbmdlZFRvdWNoZXM7XG5cbiAgICAgIHZhciB0aW1lU3RhbXAgPSBEYXRlLm5vdygpO1xuXG4gICAgICBpZiAoY2hhbmdlZFRvdWNoZXMpIHtcbiAgICAgICAgZm9yICh2YXIgaSA9IDA7IGkgPCBjaGFuZ2VkVG91Y2hlcy5sZW5ndGg7IGkrKykge1xuICAgICAgICAgIHZhciBfY2hhbmdlZFRvdWNoZXMkaSA9IGNoYW5nZWRUb3VjaGVzW2ldLFxuICAgICAgICAgICAgICBfY2xpZW50WCA9IF9jaGFuZ2VkVG91Y2hlcyRpLmNsaWVudFgsXG4gICAgICAgICAgICAgIF9jbGllbnRZID0gX2NoYW5nZWRUb3VjaGVzJGkuY2xpZW50WTtcblxuICAgICAgICAgIF90aGlzLnB1c2hCbG90KHRpbWVTdGFtcCwgX2NsaWVudFgsIF9jbGllbnRZKTtcbiAgICAgICAgfVxuICAgICAgfSBlbHNlIGlmIChidXR0b24gPT09IE1PVVNFX0xFRlQgJiYgIWN0cmxLZXkpIHtcbiAgICAgICAgX3RoaXMucHVzaEJsb3QodGltZVN0YW1wLCBjbGllbnRYLCBjbGllbnRZKTtcbiAgICAgIH1cbiAgICB9O1xuXG4gICAgX3RoaXMuX29uUmVsZWFzZSA9IGZ1bmN0aW9uICgpIHtcbiAgICAgIF90aGlzLnN0YXRlLnN0b3JlLnJlbGVhc2UoRGF0ZS5ub3coKSk7XG4gICAgfTtcblxuICAgIF90aGlzLnN0YXRlID0ge1xuICAgICAgY29sb3I6ICd0cmFuc3BhcmVudCcsXG4gICAgICBkZW5zaXR5OiAxLFxuICAgICAgaGVpZ2h0OiAwLFxuICAgICAgc3RvcmU6IFN0b3JlKF90aGlzLnRpY2spLFxuICAgICAgdG91Y2hFdmVudHM6IF90aGlzLnRvdWNoRXZlbnRzKCksXG4gICAgICB3aWR0aDogMFxuICAgIH07XG4gICAgcmV0dXJuIF90aGlzO1xuICB9XG5cbiAgSW5rLnByb3RvdHlwZS50b3VjaEV2ZW50cyA9IGZ1bmN0aW9uIHRvdWNoRXZlbnRzKCkge1xuICAgIGlmICh0aGlzLnByb3BzLmhhc1RvdWNoKSB7XG4gICAgICByZXR1cm4ge1xuICAgICAgICBvblRvdWNoU3RhcnQ6IHRoaXMuX29uUHJlc3MsXG4gICAgICAgIG9uVG91Y2hFbmQ6IHRoaXMuX29uUmVsZWFzZSxcbiAgICAgICAgb25Ub3VjaENhbmNlbDogdGhpcy5fb25SZWxlYXNlXG4gICAgICB9O1xuICAgIH0gZWxzZSB7XG4gICAgICByZXR1cm4ge1xuICAgICAgICBvbk1vdXNlRG93bjogdGhpcy5fb25QcmVzcyxcbiAgICAgICAgb25Nb3VzZVVwOiB0aGlzLl9vblJlbGVhc2UsXG4gICAgICAgIG9uTW91c2VMZWF2ZTogdGhpcy5fb25SZWxlYXNlXG4gICAgICB9O1xuICAgIH1cbiAgfTtcblxuICBJbmsucHJvdG90eXBlLm1ha2VCbG90ID0gZnVuY3Rpb24gbWFrZUJsb3QoYmxvdCkge1xuICAgIHZhciBfc3RhdGUgPSB0aGlzLnN0YXRlLFxuICAgICAgICBjdHggPSBfc3RhdGUuY3R4LFxuICAgICAgICBoZWlnaHQgPSBfc3RhdGUuaGVpZ2h0LFxuICAgICAgICB3aWR0aCA9IF9zdGF0ZS53aWR0aDtcbiAgICB2YXIgeCA9IGJsb3QueCxcbiAgICAgICAgeSA9IGJsb3QueSxcbiAgICAgICAgcmFkaXVzID0gYmxvdC5yYWRpdXM7XG5cblxuICAgIGN0eC5nbG9iYWxBbHBoYSA9IEVxdWF0aW9ucy5nZXRCbG90T3BhY2l0eShibG90LCB0aGlzLnByb3BzLm9wYWNpdHkpO1xuICAgIGN0eC5iZWdpblBhdGgoKTtcblxuICAgIGlmICh0aGlzLnByb3BzLnJlY2VudGVyKSB7XG4gICAgICB2YXIgc2l6ZSA9IE1hdGgubWF4KGhlaWdodCwgd2lkdGgpO1xuXG4gICAgICB4ICs9IEVxdWF0aW9ucy5nZXRCbG90U2hpZnRYKGJsb3QsIHNpemUsIHdpZHRoKTtcbiAgICAgIHkgKz0gRXF1YXRpb25zLmdldEJsb3RTaGlmdFkoYmxvdCwgc2l6ZSwgaGVpZ2h0KTtcbiAgICB9XG5cbiAgICBjdHguYXJjKHgsIHksIHJhZGl1cyAqIEVxdWF0aW9ucy5nZXRCbG90U2NhbGUoYmxvdCksIDAsIFRBVSk7XG5cbiAgICBjdHguY2xvc2VQYXRoKCk7XG4gICAgY3R4LmZpbGwoKTtcbiAgfTtcblxuICBJbmsucHJvdG90eXBlLmNvbXBvbmVudFdpbGxVbm1vdW50ID0gZnVuY3Rpb24gY29tcG9uZW50V2lsbFVubW91bnQoKSB7XG4gICAgdGhpcy5zdGF0ZS5zdG9yZS5zdG9wKCk7XG4gIH07XG5cbiAgSW5rLnByb3RvdHlwZS5wdXNoQmxvdCA9IGZ1bmN0aW9uIHB1c2hCbG90KHRpbWVTdGFtcCwgY2xpZW50WCwgY2xpZW50WSkge1xuICAgIHZhciBfdGhpczIgPSB0aGlzO1xuXG4gICAgdmFyIGVsID0gdGhpcy5yZWZzLmNhbnZhcztcblxuICAgIC8vIDAuMTMgc3VwcG9ydFxuICAgIGlmIChlbCBpbnN0YW5jZW9mIHdpbmRvdy5IVE1MQ2FudmFzRWxlbWVudCA9PT0gZmFsc2UpIHtcbiAgICAgIGVsID0gZWwuZ2V0RE9NTm9kZSgpO1xuICAgIH1cblxuICAgIHZhciBfZWwkZ2V0Qm91bmRpbmdDbGllbnQgPSBlbC5nZXRCb3VuZGluZ0NsaWVudFJlY3QoKSxcbiAgICAgICAgdG9wID0gX2VsJGdldEJvdW5kaW5nQ2xpZW50LnRvcCxcbiAgICAgICAgYm90dG9tID0gX2VsJGdldEJvdW5kaW5nQ2xpZW50LmJvdHRvbSxcbiAgICAgICAgbGVmdCA9IF9lbCRnZXRCb3VuZGluZ0NsaWVudC5sZWZ0LFxuICAgICAgICByaWdodCA9IF9lbCRnZXRCb3VuZGluZ0NsaWVudC5yaWdodDtcblxuICAgIHZhciBfd2luZG93JGdldENvbXB1dGVkU3QgPSB3aW5kb3cuZ2V0Q29tcHV0ZWRTdHlsZShlbCksXG4gICAgICAgIGNvbG9yID0gX3dpbmRvdyRnZXRDb21wdXRlZFN0LmNvbG9yO1xuXG4gICAgdmFyIGN0eCA9IHRoaXMuc3RhdGUuY3R4IHx8IGVsLmdldENvbnRleHQoJzJkJyk7XG4gICAgdmFyIGRlbnNpdHkgPSBwaXhlbFJhdGlvKGN0eCk7XG4gICAgdmFyIGhlaWdodCA9IGJvdHRvbSAtIHRvcDtcbiAgICB2YXIgd2lkdGggPSByaWdodCAtIGxlZnQ7XG4gICAgdmFyIHJhZGl1cyA9IEVxdWF0aW9ucy5nZXRNYXhSYWRpdXMoaGVpZ2h0LCB3aWR0aCwgdGhpcy5wcm9wcy5yYWRpdXMpO1xuXG4gICAgdGhpcy5zZXRTdGF0ZSh7IGNvbG9yOiBjb2xvciwgY3R4OiBjdHgsIGRlbnNpdHk6IGRlbnNpdHksIGhlaWdodDogaGVpZ2h0LCB3aWR0aDogd2lkdGggfSwgZnVuY3Rpb24gKCkge1xuICAgICAgX3RoaXMyLnN0YXRlLnN0b3JlLmFkZCh7XG4gICAgICAgIGR1cmF0aW9uOiBfdGhpczIucHJvcHMuZHVyYXRpb24sXG4gICAgICAgIG1vdXNlRG93bjogdGltZVN0YW1wLFxuICAgICAgICBtb3VzZVVwOiAwLFxuICAgICAgICByYWRpdXM6IHJhZGl1cyxcbiAgICAgICAgeDogY2xpZW50WCAtIGxlZnQsXG4gICAgICAgIHk6IGNsaWVudFkgLSB0b3BcbiAgICAgIH0pO1xuICAgIH0pO1xuICB9O1xuXG4gIEluay5wcm90b3R5cGUucmVuZGVyID0gZnVuY3Rpb24gcmVuZGVyKCkge1xuICAgIHZhciBfc3RhdGUyID0gdGhpcy5zdGF0ZSxcbiAgICAgICAgZGVuc2l0eSA9IF9zdGF0ZTIuZGVuc2l0eSxcbiAgICAgICAgaGVpZ2h0ID0gX3N0YXRlMi5oZWlnaHQsXG4gICAgICAgIHdpZHRoID0gX3N0YXRlMi53aWR0aCxcbiAgICAgICAgdG91Y2hFdmVudHMgPSBfc3RhdGUyLnRvdWNoRXZlbnRzO1xuXG5cbiAgICByZXR1cm4gUmVhY3QuY3JlYXRlRWxlbWVudCgnY2FudmFzJywgX2V4dGVuZHMoeyBjbGFzc05hbWU6ICdpbmsnLFxuICAgICAgcmVmOiAnY2FudmFzJyxcbiAgICAgIHN0eWxlOiBfZXh0ZW5kcyh7fSwgU1RZTEUsIHRoaXMucHJvcHMuc3R5bGUpLFxuICAgICAgaGVpZ2h0OiBoZWlnaHQgKiBkZW5zaXR5LFxuICAgICAgd2lkdGg6IHdpZHRoICogZGVuc2l0eSxcbiAgICAgIG9uRHJhZ092ZXI6IHRoaXMuX29uUmVsZWFzZVxuICAgIH0sIHRvdWNoRXZlbnRzKSk7XG4gIH07XG5cbiAgcmV0dXJuIEluaztcbn0oUmVhY3QuUHVyZUNvbXBvbmVudCk7XG5cbkluay5kZWZhdWx0UHJvcHMgPSB7XG4gIGJhY2tncm91bmQ6IHRydWUsXG4gIGR1cmF0aW9uOiAxMDAwLFxuICBvcGFjaXR5OiAwLjI1LFxuICByYWRpdXM6IDE1MCxcbiAgcmVjZW50ZXI6IHRydWUsXG4gIGhhc1RvdWNoOiBIQVNfVE9VQ0hcbn07XG5cblxubW9kdWxlLmV4cG9ydHMgPSBJbms7XG5cbi8qKiovIH0pLFxuLyogNyAqL1xuLyoqKi8gKGZ1bmN0aW9uKG1vZHVsZSwgZXhwb3J0cykge1xuXG4vKipcbiAqIEB0IGlzIHRoZSBjdXJyZW50IHRpbWUgKG9yIHBvc2l0aW9uKSBvZiB0aGUgdHdlZW4uIFRoaXMgY2FuIGJlIHNlY29uZHMgb3IgZnJhbWVzLCBzdGVwcywgc2Vjb25kcywgbXMsIHdoYXRldmVyIOKAkyBhcyBsb25nIGFzIHRoZSB1bml0IGlzIHRoZSBzYW1lIGFzIGlzIHVzZWQgZm9yIHRoZSB0b3RhbCB0aW1lIFszXS5cbiAqIEBiIGlzIHRoZSBiZWdpbm5pbmcgdmFsdWUgb2YgdGhlIHByb3BlcnR5LlxuICogQGMgaXMgdGhlIGNoYW5nZSBiZXR3ZWVuIHRoZSBiZWdpbm5pbmcgYW5kIGRlc3RpbmF0aW9uIHZhbHVlIG9mIHRoZSBwcm9wZXJ0eS5cbiAqIEBkIGlzIHRoZSB0b3RhbCB0aW1lIG9mIHRoZSB0d2Vlbi5cbiAqL1xuXG5tb2R1bGUuZXhwb3J0cyA9IGZ1bmN0aW9uIGVhc2VPdXRRdWludCh0LCBiLCBjLCBkKSB7XG4gIHJldHVybiBjICogKCh0ID0gdCAvIGQgLSAxKSAqIHQgKiB0ICogdCAqIHQgKyAxKSArIGI7XG59O1xuXG4vKioqLyB9KVxuLyoqKioqKi8gXSk7XG5cblxuLy8gV0VCUEFDSyBGT09URVIgLy9cbi8vIGluay5qcyIsIiBcdC8vIFRoZSBtb2R1bGUgY2FjaGVcbiBcdHZhciBpbnN0YWxsZWRNb2R1bGVzID0ge307XG5cbiBcdC8vIFRoZSByZXF1aXJlIGZ1bmN0aW9uXG4gXHRmdW5jdGlvbiBfX3dlYnBhY2tfcmVxdWlyZV9fKG1vZHVsZUlkKSB7XG5cbiBcdFx0Ly8gQ2hlY2sgaWYgbW9kdWxlIGlzIGluIGNhY2hlXG4gXHRcdGlmKGluc3RhbGxlZE1vZHVsZXNbbW9kdWxlSWRdKVxuIFx0XHRcdHJldHVybiBpbnN0YWxsZWRNb2R1bGVzW21vZHVsZUlkXS5leHBvcnRzO1xuXG4gXHRcdC8vIENyZWF0ZSBhIG5ldyBtb2R1bGUgKGFuZCBwdXQgaXQgaW50byB0aGUgY2FjaGUpXG4gXHRcdHZhciBtb2R1bGUgPSBpbnN0YWxsZWRNb2R1bGVzW21vZHVsZUlkXSA9IHtcbiBcdFx0XHRpOiBtb2R1bGVJZCxcbiBcdFx0XHRsOiBmYWxzZSxcbiBcdFx0XHRleHBvcnRzOiB7fVxuIFx0XHR9O1xuXG4gXHRcdC8vIEV4ZWN1dGUgdGhlIG1vZHVsZSBmdW5jdGlvblxuIFx0XHRtb2R1bGVzW21vZHVsZUlkXS5jYWxsKG1vZHVsZS5leHBvcnRzLCBtb2R1bGUsIG1vZHVsZS5leHBvcnRzLCBfX3dlYnBhY2tfcmVxdWlyZV9fKTtcblxuIFx0XHQvLyBGbGFnIHRoZSBtb2R1bGUgYXMgbG9hZGVkXG4gXHRcdG1vZHVsZS5sID0gdHJ1ZTtcblxuIFx0XHQvLyBSZXR1cm4gdGhlIGV4cG9ydHMgb2YgdGhlIG1vZHVsZVxuIFx0XHRyZXR1cm4gbW9kdWxlLmV4cG9ydHM7XG4gXHR9XG5cblxuIFx0Ly8gZXhwb3NlIHRoZSBtb2R1bGVzIG9iamVjdCAoX193ZWJwYWNrX21vZHVsZXNfXylcbiBcdF9fd2VicGFja19yZXF1aXJlX18ubSA9IG1vZHVsZXM7XG5cbiBcdC8vIGV4cG9zZSB0aGUgbW9kdWxlIGNhY2hlXG4gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLmMgPSBpbnN0YWxsZWRNb2R1bGVzO1xuXG4gXHQvLyBpZGVudGl0eSBmdW5jdGlvbiBmb3IgY2FsbGluZyBoYXJtb255IGltcG9ydHMgd2l0aCB0aGUgY29ycmVjdCBjb250ZXh0XG4gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLmkgPSBmdW5jdGlvbih2YWx1ZSkgeyByZXR1cm4gdmFsdWU7IH07XG5cbiBcdC8vIGRlZmluZSBnZXR0ZXIgZnVuY3Rpb24gZm9yIGhhcm1vbnkgZXhwb3J0c1xuIFx0X193ZWJwYWNrX3JlcXVpcmVfXy5kID0gZnVuY3Rpb24oZXhwb3J0cywgbmFtZSwgZ2V0dGVyKSB7XG4gXHRcdGlmKCFfX3dlYnBhY2tfcmVxdWlyZV9fLm8oZXhwb3J0cywgbmFtZSkpIHtcbiBcdFx0XHRPYmplY3QuZGVmaW5lUHJvcGVydHkoZXhwb3J0cywgbmFtZSwge1xuIFx0XHRcdFx0Y29uZmlndXJhYmxlOiBmYWxzZSxcbiBcdFx0XHRcdGVudW1lcmFibGU6IHRydWUsXG4gXHRcdFx0XHRnZXQ6IGdldHRlclxuIFx0XHRcdH0pO1xuIFx0XHR9XG4gXHR9O1xuXG4gXHQvLyBnZXREZWZhdWx0RXhwb3J0IGZ1bmN0aW9uIGZvciBjb21wYXRpYmlsaXR5IHdpdGggbm9uLWhhcm1vbnkgbW9kdWxlc1xuIFx0X193ZWJwYWNrX3JlcXVpcmVfXy5uID0gZnVuY3Rpb24obW9kdWxlKSB7XG4gXHRcdHZhciBnZXR0ZXIgPSBtb2R1bGUgJiYgbW9kdWxlLl9fZXNNb2R1bGUgP1xuIFx0XHRcdGZ1bmN0aW9uIGdldERlZmF1bHQoKSB7IHJldHVybiBtb2R1bGVbJ2RlZmF1bHQnXTsgfSA6XG4gXHRcdFx0ZnVuY3Rpb24gZ2V0TW9kdWxlRXhwb3J0cygpIHsgcmV0dXJuIG1vZHVsZTsgfTtcbiBcdFx0X193ZWJwYWNrX3JlcXVpcmVfXy5kKGdldHRlciwgJ2EnLCBnZXR0ZXIpO1xuIFx0XHRyZXR1cm4gZ2V0dGVyO1xuIFx0fTtcblxuIFx0Ly8gT2JqZWN0LnByb3RvdHlwZS5oYXNPd25Qcm9wZXJ0eS5jYWxsXG4gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLm8gPSBmdW5jdGlvbihvYmplY3QsIHByb3BlcnR5KSB7IHJldHVybiBPYmplY3QucHJvdG90eXBlLmhhc093blByb3BlcnR5LmNhbGwob2JqZWN0LCBwcm9wZXJ0eSk7IH07XG5cbiBcdC8vIF9fd2VicGFja19wdWJsaWNfcGF0aF9fXG4gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLnAgPSBcIlwiO1xuXG4gXHQvLyBMb2FkIGVudHJ5IG1vZHVsZSBhbmQgcmV0dXJuIGV4cG9ydHNcbiBcdHJldHVybiBfX3dlYnBhY2tfcmVxdWlyZV9fKF9fd2VicGFja19yZXF1aXJlX18ucyA9IDYpO1xuXG5cblxuLy8gV0VCUEFDSyBGT09URVIgLy9cbi8vIHdlYnBhY2svYm9vdHN0cmFwIDRiZmYwNWU1ZTc3ZDg0NTk3NzU5IiwibGV0IGVhc2luZyA9IHJlcXVpcmUoJy4vZWFzaW5nJylcbmxldCBTUVJUXzIgPSBNYXRoLnNxcnQoMilcbmxldCB7IGNvcywgbWF4LCBtaW4gfSA9IE1hdGhcblxuZnVuY3Rpb24gZ2V0UHJlc3MoYmxvdCkge1xuICByZXR1cm4gbWluKGJsb3QuZHVyYXRpb24sIERhdGUubm93KCkgLSBibG90Lm1vdXNlRG93bilcbn1cblxuZnVuY3Rpb24gZ2V0UmVsZWFzZShibG90KSB7XG4gIHJldHVybiBibG90Lm1vdXNlVXAgPiAwID8gRGF0ZS5ub3coKSAtIGJsb3QubW91c2VVcCA6IDBcbn1cblxuZnVuY3Rpb24gZ2V0UmFkaXVzKGJsb3QpIHtcbiAgbGV0IHsgZHVyYXRpb24sIHJhZGl1cyB9ID0gYmxvdFxuXG4gIGxldCBkb3duICAgICAgID0gZWFzaW5nKGdldFByZXNzKGJsb3QpLCAwLCByYWRpdXMsIGR1cmF0aW9uKSAqIDAuODVcbiAgbGV0IHVwICAgICAgICAgPSBlYXNpbmcoZ2V0UmVsZWFzZShibG90KSwgMCwgcmFkaXVzLCBkdXJhdGlvbikgKiAwLjE1XG4gIGxldCB1bmR1bGF0aW9uID0gcmFkaXVzICogMC4wMiAqIGNvcyhEYXRlLm5vdygpIC8gZHVyYXRpb24pXG5cbiAgcmV0dXJuIG1heCgwLCBkb3duICsgdXAgKyB1bmR1bGF0aW9uKVxufVxuXG5tb2R1bGUuZXhwb3J0cyA9IHtcblxuICBnZXRNYXhSYWRpdXMoaGVpZ2h0LCB3aWR0aCwgcmFkaXVzKSB7XG4gICAgcmV0dXJuIG1pbihtYXgoaGVpZ2h0LCB3aWR0aCkgKiAwLjUsIHJhZGl1cylcbiAgfSxcblxuICBnZXRCbG90T3BhY2l0eShibG90LCBvcGFjaXR5KSB7XG4gICAgcmV0dXJuIGVhc2luZyhnZXRSZWxlYXNlKGJsb3QpLCBvcGFjaXR5LCAtb3BhY2l0eSwgYmxvdC5kdXJhdGlvbilcbiAgfSxcblxuICBnZXRCbG90T3V0ZXJPcGFjaXR5KGJsb3QsIG9wYWNpdHkpIHtcbiAgICByZXR1cm4gbWluKHRoaXMuZ2V0QmxvdE9wYWNpdHkoYmxvdCwgb3BhY2l0eSksXG4gICAgICAgICAgICAgICBlYXNpbmcoZ2V0UHJlc3MoYmxvdCksIDAsIDAuMywgYmxvdC5kdXJhdGlvbiAqIDMpKVxuICB9LFxuXG4gIGdldEJsb3RTaGlmdFgoYmxvdCwgc2l6ZSwgd2lkdGgpIHtcbiAgICByZXR1cm4gbWluKDEsXG4gICAgICAgICAgICAgICBnZXRSYWRpdXMoYmxvdCkgLyBzaXplICogMiAvIFNRUlRfMikgKiAod2lkdGggLyAyIC0gYmxvdC54KVxuICB9LFxuXG4gIGdldEJsb3RTaGlmdFkoYmxvdCwgc2l6ZSwgaGVpZ2h0KSB7XG4gICAgcmV0dXJuIG1pbigxLFxuICAgICAgICAgICAgICAgZ2V0UmFkaXVzKGJsb3QpIC8gc2l6ZSAqIDIgLyBTUVJUXzIpICogKGhlaWdodCAvIDIgLSBibG90LnkpXG4gIH0sXG5cbiAgZ2V0QmxvdFNjYWxlKGJsb3QpIHtcbiAgICByZXR1cm4gZ2V0UmFkaXVzKGJsb3QpIC8gYmxvdC5yYWRpdXNcbiAgfVxufVxuXG5cblxuLy8gV0VCUEFDSyBGT09URVIgLy9cbi8vIC4vc3JjL3V0aWwvZXF1YXRpb25zLmpzIiwibW9kdWxlLmV4cG9ydHMgPSB7XG4gIGJvcmRlclJhZGl1czogJ2luaGVyaXQnLFxuICBoZWlnaHQ6ICcxMDAlJyxcbiAgbGVmdDogMCxcbiAgcG9zaXRpb246ICdhYnNvbHV0ZScsXG4gIHRvcDogMCxcbiAgd2lkdGg6ICcxMDAlJ1xufVxuXG5cblxuLy8gV0VCUEFDSyBGT09URVIgLy9cbi8vIC4vc3JjL3N0eWxlLmpzIiwidmFyIGJvb2wgPSBmYWxzZVxuXG5pZiAodHlwZW9mIHdpbmRvdyAhPT0gJ3VuZGVmaW5lZCcpIHtcbiAgYm9vbCA9ICgnb250b3VjaHN0YXJ0JyBpbiB3aW5kb3cpIHx8IHdpbmRvdy5Eb2N1bWVudFRvdWNoICYmIGRvY3VtZW50IGluc3RhbmNlb2Ygd2luZG93LkRvY3VtZW50VG91Y2hcbn1cblxubW9kdWxlLmV4cG9ydHMgPSBib29sXG5cblxuXG4vLyBXRUJQQUNLIEZPT1RFUiAvL1xuLy8gLi9zcmMvdXRpbC9oYXNUb3VjaC5qcyIsIi8vIEdvb2Qgc3R1ZmYgaGVyZTpcbi8vIGh0dHA6Ly93d3cuaHRtbDVyb2Nrcy5jb20vZW4vdHV0b3JpYWxzL2NhbnZhcy9oaWRwaS9cblxubW9kdWxlLmV4cG9ydHMgPSBjb250ZXh0ID0+IHtcbiAgbGV0IGRldmljZVBpeGVsUmF0aW8gID0gd2luZG93LmRldmljZVBpeGVsUmF0aW8gfHwgMVxuICBsZXQgYmFja2luZ1N0b3JlUmF0aW8gPSBjb250ZXh0LndlYmtpdEJhY2tpbmdTdG9yZVBpeGVsUmF0aW8gfHxcbiAgICAgICAgICAgICAgICAgICAgICAgICAgY29udGV4dC5tb3pCYWNraW5nU3RvcmVQaXhlbFJhdGlvICAgIHx8XG4gICAgICAgICAgICAgICAgICAgICAgICAgIGNvbnRleHQubXNCYWNraW5nU3RvcmVQaXhlbFJhdGlvICAgICB8fFxuICAgICAgICAgICAgICAgICAgICAgICAgICBjb250ZXh0Lm9CYWNraW5nU3RvcmVQaXhlbFJhdGlvICAgICAgfHxcbiAgICAgICAgICAgICAgICAgICAgICAgICAgY29udGV4dC5iYWNraW5nU3RvcmVQaXhlbFJhdGlvICAgICAgIHx8IDFcblxuICByZXR1cm4gZGV2aWNlUGl4ZWxSYXRpbyAvIGJhY2tpbmdTdG9yZVJhdGlvXG59XG5cblxuXG4vLyBXRUJQQUNLIEZPT1RFUiAvL1xuLy8gLi9zcmMvdXRpbC9waXhlbFJhdGlvLmpzIiwiLyoqXG4gKiBJbmsgU3RvcmVcbiAqIEtlZXBzIHRyYWNrIG9mIGNoYW5nZXMgdG8gcmlwcGxlIGVwaWNlbnRlcnNcbiAqIHNvIHRoYXQgPEluayAvPiBjYW4gZm9jdXMgb24gcmVuZGVyaW5nIHRoZW0uXG4gKi9cblxudmFyIEVxdWF0aW9ucyA9IHJlcXVpcmUoJy4vZXF1YXRpb25zJylcblxubGV0IGtpbGxTdGFsZSA9ICh7IG1vdXNlVXAsIGR1cmF0aW9uIH0pID0+ICFtb3VzZVVwIHx8IChEYXRlLm5vdygpIC0gbW91c2VVcCkgPCBkdXJhdGlvblxuXG5tb2R1bGUuZXhwb3J0cyA9IGZ1bmN0aW9uKHB1YmxpY2l6ZSkge1xuICBsZXQgX2RhdGEgICAgPSBbXVxuICBsZXQgX3BsYXlpbmcgPSBmYWxzZVxuICBsZXQgX2ZyYW1lXG5cbiAgbGV0IFN0b3JlID0ge1xuXG4gICAgZWFjaChjYWxsYmFjaywgc2NvcGUpIHtcbiAgICAgIGZvciAodmFyIGkgPSAwLCBsID0gX2RhdGEubGVuZ3RoOyBpIDwgbDsgaSsrKSB7XG4gICAgICAgIGNhbGxiYWNrLmNhbGwoc2NvcGUsIF9kYXRhW2ldKVxuICAgICAgfVxuICAgIH0sXG5cbiAgICBwbGF5KCkge1xuICAgICAgaWYgKCFfcGxheWluZykge1xuICAgICAgICBfcGxheWluZyA9IHRydWVcbiAgICAgICAgU3RvcmUudXBkYXRlKClcbiAgICAgIH1cbiAgICB9LFxuXG4gICAgc3RvcCgpIHtcbiAgICAgIF9wbGF5aW5nID0gZmFsc2VcbiAgICAgIGNhbmNlbEFuaW1hdGlvbkZyYW1lKF9mcmFtZSlcbiAgICB9LFxuXG4gICAgZ2V0VG90YWxPcGFjaXR5KG9wYWNpdHkpIHtcbiAgICAgIGxldCBhbnN3ZXIgPSAwXG5cbiAgICAgIGZvciAodmFyIGkgPSAwLCBsID0gX2RhdGEubGVuZ3RoOyBpIDwgbDsgaSsrKSB7XG4gICAgICAgIGFuc3dlciArPSBFcXVhdGlvbnMuZ2V0QmxvdE91dGVyT3BhY2l0eShfZGF0YVtpXSwgb3BhY2l0eSlcbiAgICAgIH1cblxuICAgICAgcmV0dXJuIGFuc3dlclxuICAgIH0sXG5cbiAgICB1cGRhdGUoKSB7XG4gICAgICBfZGF0YSA9IF9kYXRhLmZpbHRlcihraWxsU3RhbGUpXG5cbiAgICAgIGlmIChfZGF0YS5sZW5ndGgpIHtcbiAgICAgICAgX2ZyYW1lID0gcmVxdWVzdEFuaW1hdGlvbkZyYW1lKFN0b3JlLnVwZGF0ZSlcbiAgICAgIH0gZWxzZSB7XG4gICAgICAgIFN0b3JlLnN0b3AoKVxuICAgICAgfVxuXG4gICAgICBwdWJsaWNpemUoKVxuICAgIH0sXG5cbiAgICBhZGQocHJvcHMpIHtcbiAgICAgIF9kYXRhLnB1c2gocHJvcHMpXG4gICAgICBTdG9yZS5wbGF5KClcbiAgICB9LFxuXG4gICAgcmVsZWFzZSh0aW1lKSB7XG4gICAgICBmb3IgKGxldCBpID0gX2RhdGEubGVuZ3RoIC0gMTsgaSA+PSAwOyBpLS0pIHtcbiAgICAgICAgaWYgKCFfZGF0YVtpXS5tb3VzZVVwKSB7XG4gICAgICAgICAgcmV0dXJuIF9kYXRhW2ldLm1vdXNlVXAgPSB0aW1lXG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG5cbiAgfVxuXG4gIHJldHVybiBTdG9yZVxufVxuXG5cblxuLy8gV0VCUEFDSyBGT09URVIgLy9cbi8vIC4vc3JjL3V0aWwvc3RvcmUuanMiLCJtb2R1bGUuZXhwb3J0cyA9IHJlcXVpcmUoXCJyZWFjdFwiKTtcblxuXG4vLy8vLy8vLy8vLy8vLy8vLy9cbi8vIFdFQlBBQ0sgRk9PVEVSXG4vLyBleHRlcm5hbCBcInJlYWN0XCJcbi8vIG1vZHVsZSBpZCA9IDVcbi8vIG1vZHVsZSBjaHVua3MgPSAwIiwiLyoqXG4gKiBJbmtcbiAqIEZpbGxzIGEgY29udGFpbmVyIHdpdGggYW4gU1ZHIG9iamVjdCB0aGF0IHByb3ZpZGVzIGZlZWRiYWNrIG9uIG1vdXNlL3RvdWNoXG4gKiBldmVudHMgd2l0aCBhIHJpcHBsaW5nIHBvb2wuXG4gKi9cblxubGV0IEhBU19UT1VDSCAgPSByZXF1aXJlKCcuL3V0aWwvaGFzVG91Y2gnKVxubGV0IE1PVVNFX0xFRlQgPSAwXG5sZXQgcGl4ZWxSYXRpbyA9IHJlcXVpcmUoJy4vdXRpbC9waXhlbFJhdGlvJylcbmxldCBSZWFjdCAgICAgID0gcmVxdWlyZSgncmVhY3QnKVxubGV0IFNUWUxFICAgICAgPSByZXF1aXJlKCcuL3N0eWxlJylcbmxldCBTdG9yZSAgICAgID0gcmVxdWlyZSgnLi91dGlsL3N0b3JlJylcbmxldCBUQVUgICAgICAgID0gTWF0aC5QSSAqIDJcbmxldCBFcXVhdGlvbnMgID0gcmVxdWlyZSgnLi91dGlsL2VxdWF0aW9ucycpXG5cbmNsYXNzIEluayBleHRlbmRzIFJlYWN0LlB1cmVDb21wb25lbnQge1xuXG4gIHN0YXRpYyBkZWZhdWx0UHJvcHMgPSB7XG4gICAgYmFja2dyb3VuZCA6IHRydWUsXG4gICAgZHVyYXRpb24gICA6IDEwMDAsXG4gICAgb3BhY2l0eSAgICA6IDAuMjUsXG4gICAgcmFkaXVzICAgICA6IDE1MCxcbiAgICByZWNlbnRlciAgIDogdHJ1ZSxcbiAgICBoYXNUb3VjaCAgIDogSEFTX1RPVUNIXG4gIH1cblxuICBjb25zdHJ1Y3RvciAocHJvcHMpIHtcbiAgICBzdXBlciguLi5hcmd1bWVudHMpXG5cbiAgICB0aGlzLnN0YXRlID0ge1xuICAgICAgY29sb3IgICAgICAgOiAndHJhbnNwYXJlbnQnLFxuICAgICAgZGVuc2l0eSAgICAgOiAxLFxuICAgICAgaGVpZ2h0ICAgICAgOiAwLFxuICAgICAgc3RvcmUgICAgICAgOiBTdG9yZSh0aGlzLnRpY2spLFxuICAgICAgdG91Y2hFdmVudHMgOiB0aGlzLnRvdWNoRXZlbnRzKCksXG4gICAgICB3aWR0aCAgICAgICA6IDBcbiAgICB9XG4gIH1cblxuICB0b3VjaEV2ZW50cyAoKSB7XG4gICAgaWYgKHRoaXMucHJvcHMuaGFzVG91Y2gpIHtcbiAgICAgIHJldHVybiB7XG4gICAgICAgIG9uVG91Y2hTdGFydCAgOiB0aGlzLl9vblByZXNzLFxuICAgICAgICBvblRvdWNoRW5kICAgIDogdGhpcy5fb25SZWxlYXNlLFxuICAgICAgICBvblRvdWNoQ2FuY2VsIDogdGhpcy5fb25SZWxlYXNlXG4gICAgICB9XG4gICAgfSBlbHNlIHtcbiAgICAgIHJldHVybiB7XG4gICAgICAgIG9uTW91c2VEb3duICAgOiB0aGlzLl9vblByZXNzLFxuICAgICAgICBvbk1vdXNlVXAgICAgIDogdGhpcy5fb25SZWxlYXNlLFxuICAgICAgICBvbk1vdXNlTGVhdmUgIDogdGhpcy5fb25SZWxlYXNlXG4gICAgICB9XG4gICAgfVxuICB9XG5cbiAgdGljayA9ICgpID0+IHtcbiAgICBsZXQgeyBjdHgsIGNvbG9yLCBkZW5zaXR5LCBoZWlnaHQsIHdpZHRoLCBzdG9yZSB9ID0gdGhpcy5zdGF0ZVxuXG4gICAgY3R4LnNhdmUoKVxuXG4gICAgY3R4LnNjYWxlKGRlbnNpdHksIGRlbnNpdHkpXG5cbiAgICBjdHguY2xlYXJSZWN0KDAsIDAsIHdpZHRoLCBoZWlnaHQpXG5cbiAgICBjdHguZmlsbFN0eWxlID0gY29sb3JcblxuICAgIGlmICh0aGlzLnByb3BzLmJhY2tncm91bmQpIHtcbiAgICAgIGN0eC5nbG9iYWxBbHBoYSA9IHN0b3JlLmdldFRvdGFsT3BhY2l0eSh0aGlzLnByb3BzLm9wYWNpdHkpXG4gICAgICBjdHguZmlsbFJlY3QoMCwgMCwgd2lkdGgsIGhlaWdodClcbiAgICB9XG5cbiAgICBzdG9yZS5lYWNoKHRoaXMubWFrZUJsb3QsIHRoaXMpXG5cbiAgICBjdHgucmVzdG9yZSgpXG4gIH1cblxuICBtYWtlQmxvdCAoYmxvdCkge1xuICAgIGxldCB7IGN0eCwgaGVpZ2h0LCB3aWR0aCB9ID0gdGhpcy5zdGF0ZVxuICAgIGxldCB7IHgsIHksIHJhZGl1cyB9ID0gYmxvdFxuXG4gICAgY3R4Lmdsb2JhbEFscGhhID0gRXF1YXRpb25zLmdldEJsb3RPcGFjaXR5KGJsb3QsIHRoaXMucHJvcHMub3BhY2l0eSlcbiAgICBjdHguYmVnaW5QYXRoKClcblxuICAgIGlmICh0aGlzLnByb3BzLnJlY2VudGVyKSB7XG4gICAgICBsZXQgc2l6ZSA9IE1hdGgubWF4KGhlaWdodCwgd2lkdGgpXG5cbiAgICAgIHggKz0gRXF1YXRpb25zLmdldEJsb3RTaGlmdFgoYmxvdCwgc2l6ZSwgd2lkdGgpXG4gICAgICB5ICs9IEVxdWF0aW9ucy5nZXRCbG90U2hpZnRZKGJsb3QsIHNpemUsIGhlaWdodClcbiAgICB9XG5cbiAgICBjdHguYXJjKHgsIHksIHJhZGl1cyAqIEVxdWF0aW9ucy5nZXRCbG90U2NhbGUoYmxvdCksIDAsIFRBVSlcblxuICAgIGN0eC5jbG9zZVBhdGgoKVxuICAgIGN0eC5maWxsKClcbiAgfVxuXG4gIGNvbXBvbmVudFdpbGxVbm1vdW50ICgpIHtcbiAgICB0aGlzLnN0YXRlLnN0b3JlLnN0b3AoKVxuICB9XG5cbiAgcHVzaEJsb3QgKHRpbWVTdGFtcCwgY2xpZW50WCwgY2xpZW50WSkge1xuICAgIGxldCBlbCA9IHRoaXMucmVmcy5jYW52YXNcblxuICAgIC8vIDAuMTMgc3VwcG9ydFxuICAgIGlmIChlbCBpbnN0YW5jZW9mIHdpbmRvdy5IVE1MQ2FudmFzRWxlbWVudCA9PT0gZmFsc2UpIHtcbiAgICAgIGVsID0gZWwuZ2V0RE9NTm9kZSgpXG4gICAgfVxuXG4gICAgbGV0IHsgdG9wLCBib3R0b20sIGxlZnQsIHJpZ2h0IH0gPSBlbC5nZXRCb3VuZGluZ0NsaWVudFJlY3QoKVxuICAgIGxldCB7IGNvbG9yIH0gPSB3aW5kb3cuZ2V0Q29tcHV0ZWRTdHlsZShlbClcblxuICAgIGxldCBjdHggICAgID0gdGhpcy5zdGF0ZS5jdHggfHwgZWwuZ2V0Q29udGV4dCgnMmQnKVxuICAgIGxldCBkZW5zaXR5ID0gcGl4ZWxSYXRpbyhjdHgpXG4gICAgbGV0IGhlaWdodCAgPSBib3R0b20gLSB0b3BcbiAgICBsZXQgd2lkdGggICA9IHJpZ2h0IC0gbGVmdFxuICAgIGxldCByYWRpdXMgID0gRXF1YXRpb25zLmdldE1heFJhZGl1cyhoZWlnaHQsIHdpZHRoLCB0aGlzLnByb3BzLnJhZGl1cylcblxuICAgIHRoaXMuc2V0U3RhdGUoeyBjb2xvciwgY3R4LCBkZW5zaXR5LCBoZWlnaHQsIHdpZHRoIH0sICgpID0+IHtcbiAgICAgIHRoaXMuc3RhdGUuc3RvcmUuYWRkKHtcbiAgICAgICAgZHVyYXRpb24gIDogdGhpcy5wcm9wcy5kdXJhdGlvbixcbiAgICAgICAgbW91c2VEb3duIDogdGltZVN0YW1wLFxuICAgICAgICBtb3VzZVVwICAgOiAwLFxuICAgICAgICByYWRpdXMgICAgOiByYWRpdXMsXG4gICAgICAgIHggICAgICAgICA6IGNsaWVudFggLSBsZWZ0LFxuICAgICAgICB5ICAgICAgICAgOiBjbGllbnRZIC0gdG9wXG4gICAgICB9KVxuICAgIH0pXG4gIH1cblxuICByZW5kZXIgKCkge1xuICAgIGxldCB7IGRlbnNpdHksIGhlaWdodCwgd2lkdGgsIHRvdWNoRXZlbnRzIH0gPSB0aGlzLnN0YXRlXG5cbiAgICByZXR1cm4gKFxuICAgICAgPGNhbnZhcyBjbGFzc05hbWU9XCJpbmtcIlxuICAgICAgICAgICAgICByZWY9XCJjYW52YXNcIlxuICAgICAgICAgICAgICBzdHlsZT17eyAuLi5TVFlMRSwgLi4udGhpcy5wcm9wcy5zdHlsZSB9fVxuICAgICAgICAgICAgICBoZWlnaHQ9eyBoZWlnaHQgKiBkZW5zaXR5IH1cbiAgICAgICAgICAgICAgd2lkdGg9eyB3aWR0aCAqIGRlbnNpdHkgfVxuICAgICAgICAgICAgICBvbkRyYWdPdmVyPXsgdGhpcy5fb25SZWxlYXNlIH1cbiAgICAgICAgICAgICAgeyAuLi50b3VjaEV2ZW50cyB9IC8+XG4gICAgKVxuICB9XG5cbiAgX29uUHJlc3MgPSAoZSkgPT4ge1xuICAgIGxldCB7IGJ1dHRvbiwgY3RybEtleSwgY2xpZW50WCwgY2xpZW50WSwgY2hhbmdlZFRvdWNoZXMgfSA9IGVcbiAgICBsZXQgdGltZVN0YW1wID0gRGF0ZS5ub3coKVxuXG4gICAgaWYgKGNoYW5nZWRUb3VjaGVzKSB7XG4gICAgICBmb3IgKHZhciBpID0gMDsgaSA8IGNoYW5nZWRUb3VjaGVzLmxlbmd0aDsgaSsrKSB7XG4gICAgICAgIGxldCB7IGNsaWVudFgsIGNsaWVudFkgfSA9IGNoYW5nZWRUb3VjaGVzW2ldXG4gICAgICAgIHRoaXMucHVzaEJsb3QodGltZVN0YW1wLCBjbGllbnRYLCBjbGllbnRZKVxuICAgICAgfVxuICAgIH0gZWxzZSBpZiAoYnV0dG9uID09PSBNT1VTRV9MRUZUICYmICFjdHJsS2V5KSB7XG4gICAgICB0aGlzLnB1c2hCbG90KHRpbWVTdGFtcCwgY2xpZW50WCwgY2xpZW50WSlcbiAgICB9XG4gIH1cblxuICBfb25SZWxlYXNlID0gKCkgPT4ge1xuICAgIHRoaXMuc3RhdGUuc3RvcmUucmVsZWFzZShEYXRlLm5vdygpKVxuICB9XG5cbn1cblxubW9kdWxlLmV4cG9ydHMgPSBJbmtcblxuXG5cbi8vIFdFQlBBQ0sgRk9PVEVSIC8vXG4vLyAuL3NyYy9pbmRleC5qcyIsIi8qKlxuICogQHQgaXMgdGhlIGN1cnJlbnQgdGltZSAob3IgcG9zaXRpb24pIG9mIHRoZSB0d2Vlbi4gVGhpcyBjYW4gYmUgc2Vjb25kcyBvciBmcmFtZXMsIHN0ZXBzLCBzZWNvbmRzLCBtcywgd2hhdGV2ZXIg4oCTIGFzIGxvbmcgYXMgdGhlIHVuaXQgaXMgdGhlIHNhbWUgYXMgaXMgdXNlZCBmb3IgdGhlIHRvdGFsIHRpbWUgWzNdLlxuICogQGIgaXMgdGhlIGJlZ2lubmluZyB2YWx1ZSBvZiB0aGUgcHJvcGVydHkuXG4gKiBAYyBpcyB0aGUgY2hhbmdlIGJldHdlZW4gdGhlIGJlZ2lubmluZyBhbmQgZGVzdGluYXRpb24gdmFsdWUgb2YgdGhlIHByb3BlcnR5LlxuICogQGQgaXMgdGhlIHRvdGFsIHRpbWUgb2YgdGhlIHR3ZWVuLlxuICovXG5cbm1vZHVsZS5leHBvcnRzID0gZnVuY3Rpb24gZWFzZU91dFF1aW50ICh0LCBiLCBjLCBkKSB7XG4gIHJldHVybiBjKigodD10L2QtMSkqdCp0KnQqdCArIDEpICsgYlxufVxuXG5cblxuLy8gV0VCUEFDSyBGT09URVIgLy9cbi8vIC4vc3JjL3V0aWwvZWFzaW5nLmpzIl0sInNvdXJjZVJvb3QiOiIifQ==
+
+/***/ }),
+/* 229 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 230 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 231 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41738,11 +47091,11 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 //Styles
-__webpack_require__(228);
+__webpack_require__(233);
 //Libs
 var React = __webpack_require__(1);
 //Misc
-var BaseInput = __webpack_require__(2);
+var BaseInput = __webpack_require__(3);
 var Button = __webpack_require__(7);
 var Submit = /** @class */ (function (_super) {
     __extends(Submit, _super);
@@ -41769,13 +47122,13 @@ exports.default = Submit;
 
 
 /***/ }),
-/* 228 */
+/* 233 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 229 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41792,12 +47145,12 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 //Styles
-__webpack_require__(230);
+__webpack_require__(235);
 //Libs
 var React = __webpack_require__(1);
 //Misc
-var BaseInput = __webpack_require__(2);
-var InputGroup_1 = __webpack_require__(4);
+var BaseInput = __webpack_require__(3);
+var InputGroup_1 = __webpack_require__(5);
 var Checkbox = /** @class */ (function (_super) {
     __extends(Checkbox, _super);
     function Checkbox(props) {
@@ -41848,13 +47201,13 @@ exports.default = Checkbox;
 
 
 /***/ }),
-/* 230 */
+/* 235 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 231 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41871,11 +47224,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 //Styles
-__webpack_require__(232);
+__webpack_require__(237);
 //Libs
 var React = __webpack_require__(1);
 //Misc
-var BaseInput = __webpack_require__(2);
+var BaseInput = __webpack_require__(3);
 var Radio = /** @class */ (function (_super) {
     __extends(Radio, _super);
     function Radio(props) {
@@ -41905,13 +47258,13 @@ exports.default = Radio;
 
 
 /***/ }),
-/* 232 */
+/* 237 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 233 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41928,10 +47281,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 //Styles
-__webpack_require__(234);
+__webpack_require__(239);
 //Libs
 var React = __webpack_require__(1);
-var InputGroup_1 = __webpack_require__(4);
+var InputGroup_1 = __webpack_require__(5);
 var RadioContainer = /** @class */ (function (_super) {
     __extends(RadioContainer, _super);
     function RadioContainer(props) {
@@ -41948,13 +47301,13 @@ exports.default = RadioContainer;
 
 
 /***/ }),
-/* 234 */
+/* 239 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 235 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41971,15 +47324,15 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 //Styles
-__webpack_require__(236);
-var PlusIcon = __webpack_require__(237);
+__webpack_require__(241);
+var PlusIcon = __webpack_require__(242);
 //Libs
 var React = __webpack_require__(1);
 //Misc
-var BaseInput = __webpack_require__(2);
-var Select_1 = __webpack_require__(57);
-var Text_1 = __webpack_require__(30);
-var InputGroup_1 = __webpack_require__(4);
+var BaseInput = __webpack_require__(3);
+var Select_1 = __webpack_require__(61);
+var Text_1 = __webpack_require__(32);
+var InputGroup_1 = __webpack_require__(5);
 var Button_1 = __webpack_require__(7);
 var Money = /** @class */ (function (_super) {
     __extends(Money, _super);
@@ -42047,13 +47400,13 @@ exports.default = Money;
 
 
 /***/ }),
-/* 236 */
+/* 241 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 237 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var React = __webpack_require__(1);
@@ -42072,13 +47425,13 @@ IcAdd24px.default = IcAdd24px;
 
 
 /***/ }),
-/* 238 */
+/* 243 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 239 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42103,15 +47456,15 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 //Styles
-__webpack_require__(240);
-var PlusIcon = __webpack_require__(31);
+__webpack_require__(245);
+var PlusIcon = __webpack_require__(33);
 //Libs
 var React = __webpack_require__(1);
 //Misc
-var BaseInput = __webpack_require__(2);
-var Time_1 = __webpack_require__(58);
-var OpeningHoursUtil_1 = __webpack_require__(32);
-var InputGroup_1 = __webpack_require__(4);
+var BaseInput = __webpack_require__(3);
+var Time_1 = __webpack_require__(62);
+var OpeningHoursUtil_1 = __webpack_require__(34);
+var InputGroup_1 = __webpack_require__(5);
 var Button_1 = __webpack_require__(7);
 var OpeningHoursDay = /** @class */ (function (_super) {
     __extends(OpeningHoursDay, _super);
@@ -42181,13 +47534,13 @@ exports.default = OpeningHoursDay;
 
 
 /***/ }),
-/* 240 */
+/* 245 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 241 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42212,13 +47565,13 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 //Styles
-__webpack_require__(242);
+__webpack_require__(247);
 //Libs
 var React = __webpack_require__(1);
 //Misc
-var BaseInput = __webpack_require__(2);
-var Inputs_1 = __webpack_require__(29);
-var OpeningHoursUtil_1 = __webpack_require__(32);
+var BaseInput = __webpack_require__(3);
+var Inputs_1 = __webpack_require__(31);
+var OpeningHoursUtil_1 = __webpack_require__(34);
 var OpeningHoursWeek = /** @class */ (function (_super) {
     __extends(OpeningHoursWeek, _super);
     function OpeningHoursWeek(props) {
@@ -42301,13 +47654,13 @@ exports.default = OpeningHoursWeek;
 
 
 /***/ }),
-/* 242 */
+/* 247 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 243 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42332,8 +47685,8 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 //Styles
-__webpack_require__(244);
-var plusIconSrc = __webpack_require__(245);
+__webpack_require__(249);
+var plusIconSrc = __webpack_require__(250);
 //Libs
 var React = __webpack_require__(1);
 try {
@@ -42343,16 +47696,16 @@ catch (_a) {
     Moment = undefined;
 }
 try {
-    var DatePicker = __webpack_require__(248).default;
-    __webpack_require__(256);
+    var DatePicker = __webpack_require__(253).default;
+    __webpack_require__(263);
 }
 catch (_b) {
     DatePicker = undefined;
 }
 //Misc
-var BaseInput = __webpack_require__(2);
-var Inputs_1 = __webpack_require__(29);
-var OpeningHoursUtil_1 = __webpack_require__(32);
+var BaseInput = __webpack_require__(3);
+var Inputs_1 = __webpack_require__(31);
+var OpeningHoursUtil_1 = __webpack_require__(34);
 var DAY_FORMAT = 'D/M/YYYY';
 var OpeningHoursSpecial = /** @class */ (function (_super) {
     __extends(OpeningHoursSpecial, _super);
@@ -42394,19 +47747,19 @@ exports.default = OpeningHoursSpecial;
 
 
 /***/ }),
-/* 244 */
+/* 249 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 245 */
+/* 250 */
 /***/ (function(module, exports) {
 
 module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAQAAABKfvVzAAABCElEQVR4Ab3QQWrbUBhF4U8aSCtJiBdRTLdgsKmx8SQDmSSLaSHQPSQkSykiC7ARdrdQ1578hTd5IGRNCjlvdC//gcvz6dQ23nUuLjpv1mojfPNb9N7RwiCln0L4pXGjUrm11abuWalPOv/jHmQKjVNS+mPS+RdDTJMyJ1On7fcyIWS2wkGVi03a7qpQaIVVLt6FZkTgQXjNsRNuRoU7YZ/jRahADDyohfN/CJ1wOzppIuxyfBO2o8KT8JLjWmgVI9/6ISxzUTsKzVXhUehUMhbCydQQX/0VZno8J6VRyFB4TOc/9FEmJbQe3KnVJp7S9vBdaZC5g+i9zswIlZVXe2dnOy+WKp/MP+q1lHfumVchAAAAAElFTkSuQmCC"
 
 /***/ }),
-/* 246 */
+/* 251 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -42434,248 +47787,248 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 247 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 60,
-	"./af.js": 60,
-	"./ar": 61,
-	"./ar-dz": 62,
-	"./ar-dz.js": 62,
-	"./ar-kw": 63,
-	"./ar-kw.js": 63,
-	"./ar-ly": 64,
-	"./ar-ly.js": 64,
-	"./ar-ma": 65,
-	"./ar-ma.js": 65,
-	"./ar-sa": 66,
-	"./ar-sa.js": 66,
-	"./ar-tn": 67,
-	"./ar-tn.js": 67,
-	"./ar.js": 61,
-	"./az": 68,
-	"./az.js": 68,
-	"./be": 69,
-	"./be.js": 69,
-	"./bg": 70,
-	"./bg.js": 70,
-	"./bm": 71,
-	"./bm.js": 71,
-	"./bn": 72,
-	"./bn.js": 72,
-	"./bo": 73,
-	"./bo.js": 73,
-	"./br": 74,
-	"./br.js": 74,
-	"./bs": 75,
-	"./bs.js": 75,
-	"./ca": 76,
-	"./ca.js": 76,
-	"./cs": 77,
-	"./cs.js": 77,
-	"./cv": 78,
-	"./cv.js": 78,
-	"./cy": 79,
-	"./cy.js": 79,
-	"./da": 80,
-	"./da.js": 80,
-	"./de": 81,
-	"./de-at": 82,
-	"./de-at.js": 82,
-	"./de-ch": 83,
-	"./de-ch.js": 83,
-	"./de.js": 81,
-	"./dv": 84,
-	"./dv.js": 84,
-	"./el": 85,
-	"./el.js": 85,
-	"./en-au": 86,
-	"./en-au.js": 86,
-	"./en-ca": 87,
-	"./en-ca.js": 87,
-	"./en-gb": 88,
-	"./en-gb.js": 88,
-	"./en-ie": 89,
-	"./en-ie.js": 89,
-	"./en-nz": 90,
-	"./en-nz.js": 90,
-	"./eo": 91,
-	"./eo.js": 91,
-	"./es": 92,
-	"./es-do": 93,
-	"./es-do.js": 93,
-	"./es-us": 94,
-	"./es-us.js": 94,
-	"./es.js": 92,
-	"./et": 95,
-	"./et.js": 95,
-	"./eu": 96,
-	"./eu.js": 96,
-	"./fa": 97,
-	"./fa.js": 97,
-	"./fi": 98,
-	"./fi.js": 98,
-	"./fo": 99,
-	"./fo.js": 99,
-	"./fr": 100,
-	"./fr-ca": 101,
-	"./fr-ca.js": 101,
-	"./fr-ch": 102,
-	"./fr-ch.js": 102,
-	"./fr.js": 100,
-	"./fy": 103,
-	"./fy.js": 103,
-	"./gd": 104,
-	"./gd.js": 104,
-	"./gl": 105,
-	"./gl.js": 105,
-	"./gom-latn": 106,
-	"./gom-latn.js": 106,
-	"./gu": 107,
-	"./gu.js": 107,
-	"./he": 108,
-	"./he.js": 108,
-	"./hi": 109,
-	"./hi.js": 109,
-	"./hr": 110,
-	"./hr.js": 110,
-	"./hu": 111,
-	"./hu.js": 111,
-	"./hy-am": 112,
-	"./hy-am.js": 112,
-	"./id": 113,
-	"./id.js": 113,
-	"./is": 114,
-	"./is.js": 114,
-	"./it": 115,
-	"./it.js": 115,
-	"./ja": 116,
-	"./ja.js": 116,
-	"./jv": 117,
-	"./jv.js": 117,
-	"./ka": 118,
-	"./ka.js": 118,
-	"./kk": 119,
-	"./kk.js": 119,
-	"./km": 120,
-	"./km.js": 120,
-	"./kn": 121,
-	"./kn.js": 121,
-	"./ko": 122,
-	"./ko.js": 122,
-	"./ky": 123,
-	"./ky.js": 123,
-	"./lb": 124,
-	"./lb.js": 124,
-	"./lo": 125,
-	"./lo.js": 125,
-	"./lt": 126,
-	"./lt.js": 126,
-	"./lv": 127,
-	"./lv.js": 127,
-	"./me": 128,
-	"./me.js": 128,
-	"./mi": 129,
-	"./mi.js": 129,
-	"./mk": 130,
-	"./mk.js": 130,
-	"./ml": 131,
-	"./ml.js": 131,
-	"./mr": 132,
-	"./mr.js": 132,
-	"./ms": 133,
-	"./ms-my": 134,
-	"./ms-my.js": 134,
-	"./ms.js": 133,
-	"./mt": 135,
-	"./mt.js": 135,
-	"./my": 136,
-	"./my.js": 136,
-	"./nb": 137,
-	"./nb.js": 137,
-	"./ne": 138,
-	"./ne.js": 138,
-	"./nl": 139,
-	"./nl-be": 140,
-	"./nl-be.js": 140,
-	"./nl.js": 139,
-	"./nn": 141,
-	"./nn.js": 141,
-	"./pa-in": 142,
-	"./pa-in.js": 142,
-	"./pl": 143,
-	"./pl.js": 143,
-	"./pt": 144,
-	"./pt-br": 145,
-	"./pt-br.js": 145,
-	"./pt.js": 144,
-	"./ro": 146,
-	"./ro.js": 146,
-	"./ru": 147,
-	"./ru.js": 147,
-	"./sd": 148,
-	"./sd.js": 148,
-	"./se": 149,
-	"./se.js": 149,
-	"./si": 150,
-	"./si.js": 150,
-	"./sk": 151,
-	"./sk.js": 151,
-	"./sl": 152,
-	"./sl.js": 152,
-	"./sq": 153,
-	"./sq.js": 153,
-	"./sr": 154,
-	"./sr-cyrl": 155,
-	"./sr-cyrl.js": 155,
-	"./sr.js": 154,
-	"./ss": 156,
-	"./ss.js": 156,
-	"./sv": 157,
-	"./sv.js": 157,
-	"./sw": 158,
-	"./sw.js": 158,
-	"./ta": 159,
-	"./ta.js": 159,
-	"./te": 160,
-	"./te.js": 160,
-	"./tet": 161,
-	"./tet.js": 161,
-	"./th": 162,
-	"./th.js": 162,
-	"./tl-ph": 163,
-	"./tl-ph.js": 163,
-	"./tlh": 164,
-	"./tlh.js": 164,
-	"./tr": 165,
-	"./tr.js": 165,
-	"./tzl": 166,
-	"./tzl.js": 166,
-	"./tzm": 167,
-	"./tzm-latn": 168,
-	"./tzm-latn.js": 168,
-	"./tzm.js": 167,
-	"./uk": 169,
-	"./uk.js": 169,
-	"./ur": 170,
-	"./ur.js": 170,
-	"./uz": 171,
-	"./uz-latn": 172,
-	"./uz-latn.js": 172,
-	"./uz.js": 171,
-	"./vi": 173,
-	"./vi.js": 173,
-	"./x-pseudo": 174,
-	"./x-pseudo.js": 174,
-	"./yo": 175,
-	"./yo.js": 175,
-	"./zh-cn": 176,
-	"./zh-cn.js": 176,
-	"./zh-hk": 177,
-	"./zh-hk.js": 177,
-	"./zh-tw": 178,
-	"./zh-tw.js": 178
+	"./af": 64,
+	"./af.js": 64,
+	"./ar": 65,
+	"./ar-dz": 66,
+	"./ar-dz.js": 66,
+	"./ar-kw": 67,
+	"./ar-kw.js": 67,
+	"./ar-ly": 68,
+	"./ar-ly.js": 68,
+	"./ar-ma": 69,
+	"./ar-ma.js": 69,
+	"./ar-sa": 70,
+	"./ar-sa.js": 70,
+	"./ar-tn": 71,
+	"./ar-tn.js": 71,
+	"./ar.js": 65,
+	"./az": 72,
+	"./az.js": 72,
+	"./be": 73,
+	"./be.js": 73,
+	"./bg": 74,
+	"./bg.js": 74,
+	"./bm": 75,
+	"./bm.js": 75,
+	"./bn": 76,
+	"./bn.js": 76,
+	"./bo": 77,
+	"./bo.js": 77,
+	"./br": 78,
+	"./br.js": 78,
+	"./bs": 79,
+	"./bs.js": 79,
+	"./ca": 80,
+	"./ca.js": 80,
+	"./cs": 81,
+	"./cs.js": 81,
+	"./cv": 82,
+	"./cv.js": 82,
+	"./cy": 83,
+	"./cy.js": 83,
+	"./da": 84,
+	"./da.js": 84,
+	"./de": 85,
+	"./de-at": 86,
+	"./de-at.js": 86,
+	"./de-ch": 87,
+	"./de-ch.js": 87,
+	"./de.js": 85,
+	"./dv": 88,
+	"./dv.js": 88,
+	"./el": 89,
+	"./el.js": 89,
+	"./en-au": 90,
+	"./en-au.js": 90,
+	"./en-ca": 91,
+	"./en-ca.js": 91,
+	"./en-gb": 92,
+	"./en-gb.js": 92,
+	"./en-ie": 93,
+	"./en-ie.js": 93,
+	"./en-nz": 94,
+	"./en-nz.js": 94,
+	"./eo": 95,
+	"./eo.js": 95,
+	"./es": 96,
+	"./es-do": 97,
+	"./es-do.js": 97,
+	"./es-us": 98,
+	"./es-us.js": 98,
+	"./es.js": 96,
+	"./et": 99,
+	"./et.js": 99,
+	"./eu": 100,
+	"./eu.js": 100,
+	"./fa": 101,
+	"./fa.js": 101,
+	"./fi": 102,
+	"./fi.js": 102,
+	"./fo": 103,
+	"./fo.js": 103,
+	"./fr": 104,
+	"./fr-ca": 105,
+	"./fr-ca.js": 105,
+	"./fr-ch": 106,
+	"./fr-ch.js": 106,
+	"./fr.js": 104,
+	"./fy": 107,
+	"./fy.js": 107,
+	"./gd": 108,
+	"./gd.js": 108,
+	"./gl": 109,
+	"./gl.js": 109,
+	"./gom-latn": 110,
+	"./gom-latn.js": 110,
+	"./gu": 111,
+	"./gu.js": 111,
+	"./he": 112,
+	"./he.js": 112,
+	"./hi": 113,
+	"./hi.js": 113,
+	"./hr": 114,
+	"./hr.js": 114,
+	"./hu": 115,
+	"./hu.js": 115,
+	"./hy-am": 116,
+	"./hy-am.js": 116,
+	"./id": 117,
+	"./id.js": 117,
+	"./is": 118,
+	"./is.js": 118,
+	"./it": 119,
+	"./it.js": 119,
+	"./ja": 120,
+	"./ja.js": 120,
+	"./jv": 121,
+	"./jv.js": 121,
+	"./ka": 122,
+	"./ka.js": 122,
+	"./kk": 123,
+	"./kk.js": 123,
+	"./km": 124,
+	"./km.js": 124,
+	"./kn": 125,
+	"./kn.js": 125,
+	"./ko": 126,
+	"./ko.js": 126,
+	"./ky": 127,
+	"./ky.js": 127,
+	"./lb": 128,
+	"./lb.js": 128,
+	"./lo": 129,
+	"./lo.js": 129,
+	"./lt": 130,
+	"./lt.js": 130,
+	"./lv": 131,
+	"./lv.js": 131,
+	"./me": 132,
+	"./me.js": 132,
+	"./mi": 133,
+	"./mi.js": 133,
+	"./mk": 134,
+	"./mk.js": 134,
+	"./ml": 135,
+	"./ml.js": 135,
+	"./mr": 136,
+	"./mr.js": 136,
+	"./ms": 137,
+	"./ms-my": 138,
+	"./ms-my.js": 138,
+	"./ms.js": 137,
+	"./mt": 139,
+	"./mt.js": 139,
+	"./my": 140,
+	"./my.js": 140,
+	"./nb": 141,
+	"./nb.js": 141,
+	"./ne": 142,
+	"./ne.js": 142,
+	"./nl": 143,
+	"./nl-be": 144,
+	"./nl-be.js": 144,
+	"./nl.js": 143,
+	"./nn": 145,
+	"./nn.js": 145,
+	"./pa-in": 146,
+	"./pa-in.js": 146,
+	"./pl": 147,
+	"./pl.js": 147,
+	"./pt": 148,
+	"./pt-br": 149,
+	"./pt-br.js": 149,
+	"./pt.js": 148,
+	"./ro": 150,
+	"./ro.js": 150,
+	"./ru": 151,
+	"./ru.js": 151,
+	"./sd": 152,
+	"./sd.js": 152,
+	"./se": 153,
+	"./se.js": 153,
+	"./si": 154,
+	"./si.js": 154,
+	"./sk": 155,
+	"./sk.js": 155,
+	"./sl": 156,
+	"./sl.js": 156,
+	"./sq": 157,
+	"./sq.js": 157,
+	"./sr": 158,
+	"./sr-cyrl": 159,
+	"./sr-cyrl.js": 159,
+	"./sr.js": 158,
+	"./ss": 160,
+	"./ss.js": 160,
+	"./sv": 161,
+	"./sv.js": 161,
+	"./sw": 162,
+	"./sw.js": 162,
+	"./ta": 163,
+	"./ta.js": 163,
+	"./te": 164,
+	"./te.js": 164,
+	"./tet": 165,
+	"./tet.js": 165,
+	"./th": 166,
+	"./th.js": 166,
+	"./tl-ph": 167,
+	"./tl-ph.js": 167,
+	"./tlh": 168,
+	"./tlh.js": 168,
+	"./tr": 169,
+	"./tr.js": 169,
+	"./tzl": 170,
+	"./tzl.js": 170,
+	"./tzm": 171,
+	"./tzm-latn": 172,
+	"./tzm-latn.js": 172,
+	"./tzm.js": 171,
+	"./uk": 173,
+	"./uk.js": 173,
+	"./ur": 174,
+	"./ur.js": 174,
+	"./uz": 175,
+	"./uz-latn": 176,
+	"./uz-latn.js": 176,
+	"./uz.js": 175,
+	"./vi": 177,
+	"./vi.js": 177,
+	"./x-pseudo": 178,
+	"./x-pseudo.js": 178,
+	"./yo": 179,
+	"./yo.js": 179,
+	"./zh-cn": 180,
+	"./zh-cn.js": 180,
+	"./zh-hk": 181,
+	"./zh-hk.js": 181,
+	"./zh-tw": 182,
+	"./zh-tw.js": 182
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -42691,24 +48044,24 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 247;
+webpackContext.id = 252;
 
 /***/ }),
-/* 248 */
+/* 253 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classnames__ = __webpack_require__(249);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classnames__ = __webpack_require__(254);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_onclickoutside__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_onclickoutside__ = __webpack_require__(183);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_popper__ = __webpack_require__(250);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_popper__ = __webpack_require__(255);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_popper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react_popper__);
 
 
@@ -45614,7 +50967,7 @@ DatePicker.propTypes = {
 
 
 /***/ }),
-/* 249 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -45669,7 +51022,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 250 */
+/* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45680,19 +51033,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Arrow = exports.Popper = exports.Target = exports.Manager = undefined;
 
-var _Manager2 = __webpack_require__(251);
+var _Manager2 = __webpack_require__(256);
 
 var _Manager3 = _interopRequireDefault(_Manager2);
 
-var _Target2 = __webpack_require__(252);
+var _Target2 = __webpack_require__(260);
 
 var _Target3 = _interopRequireDefault(_Target2);
 
-var _Popper2 = __webpack_require__(253);
+var _Popper2 = __webpack_require__(261);
 
 var _Popper3 = _interopRequireDefault(_Popper2);
 
-var _Arrow2 = __webpack_require__(255);
+var _Arrow2 = __webpack_require__(262);
 
 var _Arrow3 = _interopRequireDefault(_Arrow2);
 
@@ -45704,7 +51057,7 @@ exports.Popper = _Popper3.default;
 exports.Arrow = _Arrow3.default;
 
 /***/ }),
-/* 251 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45720,7 +51073,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(5);
+var _propTypes = __webpack_require__(24);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -45796,7 +51149,689 @@ Manager.defaultProps = {
 exports.default = Manager;
 
 /***/ }),
-/* 252 */
+/* 257 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var emptyFunction = __webpack_require__(4);
+var invariant = __webpack_require__(6);
+var warning = __webpack_require__(14);
+var assign = __webpack_require__(13);
+
+var ReactPropTypesSecret = __webpack_require__(35);
+var checkPropTypes = __webpack_require__(258);
+
+module.exports = function(isValidElement, throwOnDirectAccess) {
+  /* global Symbol */
+  var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
+  var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
+
+  /**
+   * Returns the iterator method function contained on the iterable object.
+   *
+   * Be sure to invoke the function with the iterable as context:
+   *
+   *     var iteratorFn = getIteratorFn(myIterable);
+   *     if (iteratorFn) {
+   *       var iterator = iteratorFn.call(myIterable);
+   *       ...
+   *     }
+   *
+   * @param {?object} maybeIterable
+   * @return {?function}
+   */
+  function getIteratorFn(maybeIterable) {
+    var iteratorFn = maybeIterable && (ITERATOR_SYMBOL && maybeIterable[ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL]);
+    if (typeof iteratorFn === 'function') {
+      return iteratorFn;
+    }
+  }
+
+  /**
+   * Collection of methods that allow declaration and validation of props that are
+   * supplied to React components. Example usage:
+   *
+   *   var Props = require('ReactPropTypes');
+   *   var MyArticle = React.createClass({
+   *     propTypes: {
+   *       // An optional string prop named "description".
+   *       description: Props.string,
+   *
+   *       // A required enum prop named "category".
+   *       category: Props.oneOf(['News','Photos']).isRequired,
+   *
+   *       // A prop named "dialog" that requires an instance of Dialog.
+   *       dialog: Props.instanceOf(Dialog).isRequired
+   *     },
+   *     render: function() { ... }
+   *   });
+   *
+   * A more formal specification of how these methods are used:
+   *
+   *   type := array|bool|func|object|number|string|oneOf([...])|instanceOf(...)
+   *   decl := ReactPropTypes.{type}(.isRequired)?
+   *
+   * Each and every declaration produces a function with the same signature. This
+   * allows the creation of custom validation functions. For example:
+   *
+   *  var MyLink = React.createClass({
+   *    propTypes: {
+   *      // An optional string or URI prop named "href".
+   *      href: function(props, propName, componentName) {
+   *        var propValue = props[propName];
+   *        if (propValue != null && typeof propValue !== 'string' &&
+   *            !(propValue instanceof URI)) {
+   *          return new Error(
+   *            'Expected a string or an URI for ' + propName + ' in ' +
+   *            componentName
+   *          );
+   *        }
+   *      }
+   *    },
+   *    render: function() {...}
+   *  });
+   *
+   * @internal
+   */
+
+  var ANONYMOUS = '<<anonymous>>';
+
+  // Important!
+  // Keep this list in sync with production version in `./factoryWithThrowingShims.js`.
+  var ReactPropTypes = {
+    array: createPrimitiveTypeChecker('array'),
+    bool: createPrimitiveTypeChecker('boolean'),
+    func: createPrimitiveTypeChecker('function'),
+    number: createPrimitiveTypeChecker('number'),
+    object: createPrimitiveTypeChecker('object'),
+    string: createPrimitiveTypeChecker('string'),
+    symbol: createPrimitiveTypeChecker('symbol'),
+
+    any: createAnyTypeChecker(),
+    arrayOf: createArrayOfTypeChecker,
+    element: createElementTypeChecker(),
+    instanceOf: createInstanceTypeChecker,
+    node: createNodeChecker(),
+    objectOf: createObjectOfTypeChecker,
+    oneOf: createEnumTypeChecker,
+    oneOfType: createUnionTypeChecker,
+    shape: createShapeTypeChecker,
+    exact: createStrictShapeTypeChecker,
+  };
+
+  /**
+   * inlined Object.is polyfill to avoid requiring consumers ship their own
+   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+   */
+  /*eslint-disable no-self-compare*/
+  function is(x, y) {
+    // SameValue algorithm
+    if (x === y) {
+      // Steps 1-5, 7-10
+      // Steps 6.b-6.e: +0 != -0
+      return x !== 0 || 1 / x === 1 / y;
+    } else {
+      // Step 6.a: NaN == NaN
+      return x !== x && y !== y;
+    }
+  }
+  /*eslint-enable no-self-compare*/
+
+  /**
+   * We use an Error-like object for backward compatibility as people may call
+   * PropTypes directly and inspect their output. However, we don't use real
+   * Errors anymore. We don't inspect their stack anyway, and creating them
+   * is prohibitively expensive if they are created too often, such as what
+   * happens in oneOfType() for any type before the one that matched.
+   */
+  function PropTypeError(message) {
+    this.message = message;
+    this.stack = '';
+  }
+  // Make `instanceof Error` still work for returned errors.
+  PropTypeError.prototype = Error.prototype;
+
+  function createChainableTypeChecker(validate) {
+    if (process.env.NODE_ENV !== 'production') {
+      var manualPropTypeCallCache = {};
+      var manualPropTypeWarningCount = 0;
+    }
+    function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
+      componentName = componentName || ANONYMOUS;
+      propFullName = propFullName || propName;
+
+      if (secret !== ReactPropTypesSecret) {
+        if (throwOnDirectAccess) {
+          // New behavior only for users of `prop-types` package
+          invariant(
+            false,
+            'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+            'Use `PropTypes.checkPropTypes()` to call them. ' +
+            'Read more at http://fb.me/use-check-prop-types'
+          );
+        } else if (process.env.NODE_ENV !== 'production' && typeof console !== 'undefined') {
+          // Old behavior for people using React.PropTypes
+          var cacheKey = componentName + ':' + propName;
+          if (
+            !manualPropTypeCallCache[cacheKey] &&
+            // Avoid spamming the console because they are often not actionable except for lib authors
+            manualPropTypeWarningCount < 3
+          ) {
+            warning(
+              false,
+              'You are manually calling a React.PropTypes validation ' +
+              'function for the `%s` prop on `%s`. This is deprecated ' +
+              'and will throw in the standalone `prop-types` package. ' +
+              'You may be seeing this warning due to a third-party PropTypes ' +
+              'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.',
+              propFullName,
+              componentName
+            );
+            manualPropTypeCallCache[cacheKey] = true;
+            manualPropTypeWarningCount++;
+          }
+        }
+      }
+      if (props[propName] == null) {
+        if (isRequired) {
+          if (props[propName] === null) {
+            return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required ' + ('in `' + componentName + '`, but its value is `null`.'));
+          }
+          return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required in ' + ('`' + componentName + '`, but its value is `undefined`.'));
+        }
+        return null;
+      } else {
+        return validate(props, propName, componentName, location, propFullName);
+      }
+    }
+
+    var chainedCheckType = checkType.bind(null, false);
+    chainedCheckType.isRequired = checkType.bind(null, true);
+
+    return chainedCheckType;
+  }
+
+  function createPrimitiveTypeChecker(expectedType) {
+    function validate(props, propName, componentName, location, propFullName, secret) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== expectedType) {
+        // `propValue` being instance of, say, date/regexp, pass the 'object'
+        // check, but we can offer a more precise error message here rather than
+        // 'of type `object`'.
+        var preciseType = getPreciseType(propValue);
+
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createAnyTypeChecker() {
+    return createChainableTypeChecker(emptyFunction.thatReturnsNull);
+  }
+
+  function createArrayOfTypeChecker(typeChecker) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (typeof typeChecker !== 'function') {
+        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside arrayOf.');
+      }
+      var propValue = props[propName];
+      if (!Array.isArray(propValue)) {
+        var propType = getPropType(propValue);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an array.'));
+      }
+      for (var i = 0; i < propValue.length; i++) {
+        var error = typeChecker(propValue, i, componentName, location, propFullName + '[' + i + ']', ReactPropTypesSecret);
+        if (error instanceof Error) {
+          return error;
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createElementTypeChecker() {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      if (!isValidElement(propValue)) {
+        var propType = getPropType(propValue);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createInstanceTypeChecker(expectedClass) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (!(props[propName] instanceof expectedClass)) {
+        var expectedClassName = expectedClass.name || ANONYMOUS;
+        var actualClassName = getClassName(props[propName]);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + actualClassName + '` supplied to `' + componentName + '`, expected ') + ('instance of `' + expectedClassName + '`.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createEnumTypeChecker(expectedValues) {
+    if (!Array.isArray(expectedValues)) {
+      process.env.NODE_ENV !== 'production' ? warning(false, 'Invalid argument supplied to oneOf, expected an instance of array.') : void 0;
+      return emptyFunction.thatReturnsNull;
+    }
+
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      for (var i = 0; i < expectedValues.length; i++) {
+        if (is(propValue, expectedValues[i])) {
+          return null;
+        }
+      }
+
+      var valuesString = JSON.stringify(expectedValues);
+      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + propValue + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createObjectOfTypeChecker(typeChecker) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (typeof typeChecker !== 'function') {
+        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside objectOf.');
+      }
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
+      }
+      for (var key in propValue) {
+        if (propValue.hasOwnProperty(key)) {
+          var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+          if (error instanceof Error) {
+            return error;
+          }
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createUnionTypeChecker(arrayOfTypeCheckers) {
+    if (!Array.isArray(arrayOfTypeCheckers)) {
+      process.env.NODE_ENV !== 'production' ? warning(false, 'Invalid argument supplied to oneOfType, expected an instance of array.') : void 0;
+      return emptyFunction.thatReturnsNull;
+    }
+
+    for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+      var checker = arrayOfTypeCheckers[i];
+      if (typeof checker !== 'function') {
+        warning(
+          false,
+          'Invalid argument supplied to oneOfType. Expected an array of check functions, but ' +
+          'received %s at index %s.',
+          getPostfixForTypeWarning(checker),
+          i
+        );
+        return emptyFunction.thatReturnsNull;
+      }
+    }
+
+    function validate(props, propName, componentName, location, propFullName) {
+      for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+        var checker = arrayOfTypeCheckers[i];
+        if (checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret) == null) {
+          return null;
+        }
+      }
+
+      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`.'));
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createNodeChecker() {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (!isNode(props[propName])) {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a ReactNode.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createShapeTypeChecker(shapeTypes) {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+      }
+      for (var key in shapeTypes) {
+        var checker = shapeTypes[key];
+        if (!checker) {
+          continue;
+        }
+        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+        if (error) {
+          return error;
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createStrictShapeTypeChecker(shapeTypes) {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+      }
+      // We need to check all keys in case some are required but missing from
+      // props.
+      var allKeys = assign({}, props[propName], shapeTypes);
+      for (var key in allKeys) {
+        var checker = shapeTypes[key];
+        if (!checker) {
+          return new PropTypeError(
+            'Invalid ' + location + ' `' + propFullName + '` key `' + key + '` supplied to `' + componentName + '`.' +
+            '\nBad object: ' + JSON.stringify(props[propName], null, '  ') +
+            '\nValid keys: ' +  JSON.stringify(Object.keys(shapeTypes), null, '  ')
+          );
+        }
+        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+        if (error) {
+          return error;
+        }
+      }
+      return null;
+    }
+
+    return createChainableTypeChecker(validate);
+  }
+
+  function isNode(propValue) {
+    switch (typeof propValue) {
+      case 'number':
+      case 'string':
+      case 'undefined':
+        return true;
+      case 'boolean':
+        return !propValue;
+      case 'object':
+        if (Array.isArray(propValue)) {
+          return propValue.every(isNode);
+        }
+        if (propValue === null || isValidElement(propValue)) {
+          return true;
+        }
+
+        var iteratorFn = getIteratorFn(propValue);
+        if (iteratorFn) {
+          var iterator = iteratorFn.call(propValue);
+          var step;
+          if (iteratorFn !== propValue.entries) {
+            while (!(step = iterator.next()).done) {
+              if (!isNode(step.value)) {
+                return false;
+              }
+            }
+          } else {
+            // Iterator will provide entry [k,v] tuples rather than values.
+            while (!(step = iterator.next()).done) {
+              var entry = step.value;
+              if (entry) {
+                if (!isNode(entry[1])) {
+                  return false;
+                }
+              }
+            }
+          }
+        } else {
+          return false;
+        }
+
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  function isSymbol(propType, propValue) {
+    // Native Symbol.
+    if (propType === 'symbol') {
+      return true;
+    }
+
+    // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
+    if (propValue['@@toStringTag'] === 'Symbol') {
+      return true;
+    }
+
+    // Fallback for non-spec compliant Symbols which are polyfilled.
+    if (typeof Symbol === 'function' && propValue instanceof Symbol) {
+      return true;
+    }
+
+    return false;
+  }
+
+  // Equivalent of `typeof` but with special handling for array and regexp.
+  function getPropType(propValue) {
+    var propType = typeof propValue;
+    if (Array.isArray(propValue)) {
+      return 'array';
+    }
+    if (propValue instanceof RegExp) {
+      // Old webkits (at least until Android 4.0) return 'function' rather than
+      // 'object' for typeof a RegExp. We'll normalize this here so that /bla/
+      // passes PropTypes.object.
+      return 'object';
+    }
+    if (isSymbol(propType, propValue)) {
+      return 'symbol';
+    }
+    return propType;
+  }
+
+  // This handles more types than `getPropType`. Only used for error messages.
+  // See `createPrimitiveTypeChecker`.
+  function getPreciseType(propValue) {
+    if (typeof propValue === 'undefined' || propValue === null) {
+      return '' + propValue;
+    }
+    var propType = getPropType(propValue);
+    if (propType === 'object') {
+      if (propValue instanceof Date) {
+        return 'date';
+      } else if (propValue instanceof RegExp) {
+        return 'regexp';
+      }
+    }
+    return propType;
+  }
+
+  // Returns a string that is postfixed to a warning about an invalid type.
+  // For example, "undefined" or "of type array"
+  function getPostfixForTypeWarning(value) {
+    var type = getPreciseType(value);
+    switch (type) {
+      case 'array':
+      case 'object':
+        return 'an ' + type;
+      case 'boolean':
+      case 'date':
+      case 'regexp':
+        return 'a ' + type;
+      default:
+        return type;
+    }
+  }
+
+  // Returns class name of the object, if any.
+  function getClassName(propValue) {
+    if (!propValue.constructor || !propValue.constructor.name) {
+      return ANONYMOUS;
+    }
+    return propValue.constructor.name;
+  }
+
+  ReactPropTypes.checkPropTypes = checkPropTypes;
+  ReactPropTypes.PropTypes = ReactPropTypes;
+
+  return ReactPropTypes;
+};
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+/* 258 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+if (process.env.NODE_ENV !== 'production') {
+  var invariant = __webpack_require__(6);
+  var warning = __webpack_require__(14);
+  var ReactPropTypesSecret = __webpack_require__(35);
+  var loggedTypeFailures = {};
+}
+
+/**
+ * Assert that the values match with the type specs.
+ * Error messages are memorized and will only be shown once.
+ *
+ * @param {object} typeSpecs Map of name to a ReactPropType
+ * @param {object} values Runtime values that need to be type-checked
+ * @param {string} location e.g. "prop", "context", "child context"
+ * @param {string} componentName Name of the component for error messages.
+ * @param {?Function} getStack Returns the component stack.
+ * @private
+ */
+function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
+  if (process.env.NODE_ENV !== 'production') {
+    for (var typeSpecName in typeSpecs) {
+      if (typeSpecs.hasOwnProperty(typeSpecName)) {
+        var error;
+        // Prop type validation may throw. In case they do, we don't want to
+        // fail the render phase where it didn't fail before. So we log it.
+        // After these have been cleaned up, we'll let them throw.
+        try {
+          // This is intentionally an invariant that gets caught. It's the same
+          // behavior as without this statement except with a better message.
+          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'the `prop-types` package, but received `%s`.', componentName || 'React class', location, typeSpecName, typeof typeSpecs[typeSpecName]);
+          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
+        } catch (ex) {
+          error = ex;
+        }
+        warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
+        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+          // Only monitor this failure once because there tends to be a lot of the
+          // same error.
+          loggedTypeFailures[error.message] = true;
+
+          var stack = getStack ? getStack() : '';
+
+          warning(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
+        }
+      }
+    }
+  }
+}
+
+module.exports = checkPropTypes;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+/* 259 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var emptyFunction = __webpack_require__(4);
+var invariant = __webpack_require__(6);
+var ReactPropTypesSecret = __webpack_require__(35);
+
+module.exports = function() {
+  function shim(props, propName, componentName, location, propFullName, secret) {
+    if (secret === ReactPropTypesSecret) {
+      // It is still safe when called from React.
+      return;
+    }
+    invariant(
+      false,
+      'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+      'Use PropTypes.checkPropTypes() to call them. ' +
+      'Read more at http://fb.me/use-check-prop-types'
+    );
+  };
+  shim.isRequired = shim;
+  function getShim() {
+    return shim;
+  };
+  // Important!
+  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
+  var ReactPropTypes = {
+    array: shim,
+    bool: shim,
+    func: shim,
+    number: shim,
+    object: shim,
+    string: shim,
+    symbol: shim,
+
+    any: shim,
+    arrayOf: getShim,
+    element: shim,
+    instanceOf: getShim,
+    node: shim,
+    objectOf: getShim,
+    oneOf: getShim,
+    oneOfType: getShim,
+    shape: getShim,
+    exact: getShim
+  };
+
+  ReactPropTypes.checkPropTypes = emptyFunction;
+  ReactPropTypes.PropTypes = ReactPropTypes;
+
+  return ReactPropTypes;
+};
+
+
+/***/ }),
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45812,7 +51847,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(5);
+var _propTypes = __webpack_require__(24);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -45865,7 +51900,7 @@ Target.propTypes = {
 exports.default = Target;
 
 /***/ }),
-/* 253 */
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45883,11 +51918,11 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(5);
+var _propTypes = __webpack_require__(24);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _popper = __webpack_require__(254);
+var _popper = __webpack_require__(58);
 
 var _popper2 = _interopRequireDefault(_popper);
 
@@ -46133,2453 +52168,7 @@ Popper.defaultProps = {
 exports.default = Popper;
 
 /***/ }),
-/* 254 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function(global) {/**!
- * @fileOverview Kickass library to create and place poppers near their reference elements.
- * @version 1.12.9
- * @license
- * Copyright (c) 2016 Federico Zivolo and contributors
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-var isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
-var longerTimeoutBrowsers = ['Edge', 'Trident', 'Firefox'];
-var timeoutDuration = 0;
-for (var i = 0; i < longerTimeoutBrowsers.length; i += 1) {
-  if (isBrowser && navigator.userAgent.indexOf(longerTimeoutBrowsers[i]) >= 0) {
-    timeoutDuration = 1;
-    break;
-  }
-}
-
-function microtaskDebounce(fn) {
-  var called = false;
-  return function () {
-    if (called) {
-      return;
-    }
-    called = true;
-    window.Promise.resolve().then(function () {
-      called = false;
-      fn();
-    });
-  };
-}
-
-function taskDebounce(fn) {
-  var scheduled = false;
-  return function () {
-    if (!scheduled) {
-      scheduled = true;
-      setTimeout(function () {
-        scheduled = false;
-        fn();
-      }, timeoutDuration);
-    }
-  };
-}
-
-var supportsMicroTasks = isBrowser && window.Promise;
-
-/**
-* Create a debounced version of a method, that's asynchronously deferred
-* but called in the minimum time possible.
-*
-* @method
-* @memberof Popper.Utils
-* @argument {Function} fn
-* @returns {Function}
-*/
-var debounce = supportsMicroTasks ? microtaskDebounce : taskDebounce;
-
-/**
- * Check if the given variable is a function
- * @method
- * @memberof Popper.Utils
- * @argument {Any} functionToCheck - variable to check
- * @returns {Boolean} answer to: is a function?
- */
-function isFunction(functionToCheck) {
-  var getType = {};
-  return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
-}
-
-/**
- * Get CSS computed property of the given element
- * @method
- * @memberof Popper.Utils
- * @argument {Eement} element
- * @argument {String} property
- */
-function getStyleComputedProperty(element, property) {
-  if (element.nodeType !== 1) {
-    return [];
-  }
-  // NOTE: 1 DOM access here
-  var css = getComputedStyle(element, null);
-  return property ? css[property] : css;
-}
-
-/**
- * Returns the parentNode or the host of the element
- * @method
- * @memberof Popper.Utils
- * @argument {Element} element
- * @returns {Element} parent
- */
-function getParentNode(element) {
-  if (element.nodeName === 'HTML') {
-    return element;
-  }
-  return element.parentNode || element.host;
-}
-
-/**
- * Returns the scrolling parent of the given element
- * @method
- * @memberof Popper.Utils
- * @argument {Element} element
- * @returns {Element} scroll parent
- */
-function getScrollParent(element) {
-  // Return body, `getScroll` will take care to get the correct `scrollTop` from it
-  if (!element) {
-    return document.body;
-  }
-
-  switch (element.nodeName) {
-    case 'HTML':
-    case 'BODY':
-      return element.ownerDocument.body;
-    case '#document':
-      return element.body;
-  }
-
-  // Firefox want us to check `-x` and `-y` variations as well
-
-  var _getStyleComputedProp = getStyleComputedProperty(element),
-      overflow = _getStyleComputedProp.overflow,
-      overflowX = _getStyleComputedProp.overflowX,
-      overflowY = _getStyleComputedProp.overflowY;
-
-  if (/(auto|scroll)/.test(overflow + overflowY + overflowX)) {
-    return element;
-  }
-
-  return getScrollParent(getParentNode(element));
-}
-
-/**
- * Returns the offset parent of the given element
- * @method
- * @memberof Popper.Utils
- * @argument {Element} element
- * @returns {Element} offset parent
- */
-function getOffsetParent(element) {
-  // NOTE: 1 DOM access here
-  var offsetParent = element && element.offsetParent;
-  var nodeName = offsetParent && offsetParent.nodeName;
-
-  if (!nodeName || nodeName === 'BODY' || nodeName === 'HTML') {
-    if (element) {
-      return element.ownerDocument.documentElement;
-    }
-
-    return document.documentElement;
-  }
-
-  // .offsetParent will return the closest TD or TABLE in case
-  // no offsetParent is present, I hate this job...
-  if (['TD', 'TABLE'].indexOf(offsetParent.nodeName) !== -1 && getStyleComputedProperty(offsetParent, 'position') === 'static') {
-    return getOffsetParent(offsetParent);
-  }
-
-  return offsetParent;
-}
-
-function isOffsetContainer(element) {
-  var nodeName = element.nodeName;
-
-  if (nodeName === 'BODY') {
-    return false;
-  }
-  return nodeName === 'HTML' || getOffsetParent(element.firstElementChild) === element;
-}
-
-/**
- * Finds the root node (document, shadowDOM root) of the given element
- * @method
- * @memberof Popper.Utils
- * @argument {Element} node
- * @returns {Element} root node
- */
-function getRoot(node) {
-  if (node.parentNode !== null) {
-    return getRoot(node.parentNode);
-  }
-
-  return node;
-}
-
-/**
- * Finds the offset parent common to the two provided nodes
- * @method
- * @memberof Popper.Utils
- * @argument {Element} element1
- * @argument {Element} element2
- * @returns {Element} common offset parent
- */
-function findCommonOffsetParent(element1, element2) {
-  // This check is needed to avoid errors in case one of the elements isn't defined for any reason
-  if (!element1 || !element1.nodeType || !element2 || !element2.nodeType) {
-    return document.documentElement;
-  }
-
-  // Here we make sure to give as "start" the element that comes first in the DOM
-  var order = element1.compareDocumentPosition(element2) & Node.DOCUMENT_POSITION_FOLLOWING;
-  var start = order ? element1 : element2;
-  var end = order ? element2 : element1;
-
-  // Get common ancestor container
-  var range = document.createRange();
-  range.setStart(start, 0);
-  range.setEnd(end, 0);
-  var commonAncestorContainer = range.commonAncestorContainer;
-
-  // Both nodes are inside #document
-
-  if (element1 !== commonAncestorContainer && element2 !== commonAncestorContainer || start.contains(end)) {
-    if (isOffsetContainer(commonAncestorContainer)) {
-      return commonAncestorContainer;
-    }
-
-    return getOffsetParent(commonAncestorContainer);
-  }
-
-  // one of the nodes is inside shadowDOM, find which one
-  var element1root = getRoot(element1);
-  if (element1root.host) {
-    return findCommonOffsetParent(element1root.host, element2);
-  } else {
-    return findCommonOffsetParent(element1, getRoot(element2).host);
-  }
-}
-
-/**
- * Gets the scroll value of the given element in the given side (top and left)
- * @method
- * @memberof Popper.Utils
- * @argument {Element} element
- * @argument {String} side `top` or `left`
- * @returns {number} amount of scrolled pixels
- */
-function getScroll(element) {
-  var side = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'top';
-
-  var upperSide = side === 'top' ? 'scrollTop' : 'scrollLeft';
-  var nodeName = element.nodeName;
-
-  if (nodeName === 'BODY' || nodeName === 'HTML') {
-    var html = element.ownerDocument.documentElement;
-    var scrollingElement = element.ownerDocument.scrollingElement || html;
-    return scrollingElement[upperSide];
-  }
-
-  return element[upperSide];
-}
-
-/*
- * Sum or subtract the element scroll values (left and top) from a given rect object
- * @method
- * @memberof Popper.Utils
- * @param {Object} rect - Rect object you want to change
- * @param {HTMLElement} element - The element from the function reads the scroll values
- * @param {Boolean} subtract - set to true if you want to subtract the scroll values
- * @return {Object} rect - The modifier rect object
- */
-function includeScroll(rect, element) {
-  var subtract = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
-  var scrollTop = getScroll(element, 'top');
-  var scrollLeft = getScroll(element, 'left');
-  var modifier = subtract ? -1 : 1;
-  rect.top += scrollTop * modifier;
-  rect.bottom += scrollTop * modifier;
-  rect.left += scrollLeft * modifier;
-  rect.right += scrollLeft * modifier;
-  return rect;
-}
-
-/*
- * Helper to detect borders of a given element
- * @method
- * @memberof Popper.Utils
- * @param {CSSStyleDeclaration} styles
- * Result of `getStyleComputedProperty` on the given element
- * @param {String} axis - `x` or `y`
- * @return {number} borders - The borders size of the given axis
- */
-
-function getBordersSize(styles, axis) {
-  var sideA = axis === 'x' ? 'Left' : 'Top';
-  var sideB = sideA === 'Left' ? 'Right' : 'Bottom';
-
-  return parseFloat(styles['border' + sideA + 'Width'], 10) + parseFloat(styles['border' + sideB + 'Width'], 10);
-}
-
-/**
- * Tells if you are running Internet Explorer 10
- * @method
- * @memberof Popper.Utils
- * @returns {Boolean} isIE10
- */
-var isIE10 = undefined;
-
-var isIE10$1 = function () {
-  if (isIE10 === undefined) {
-    isIE10 = navigator.appVersion.indexOf('MSIE 10') !== -1;
-  }
-  return isIE10;
-};
-
-function getSize(axis, body, html, computedStyle) {
-  return Math.max(body['offset' + axis], body['scroll' + axis], html['client' + axis], html['offset' + axis], html['scroll' + axis], isIE10$1() ? html['offset' + axis] + computedStyle['margin' + (axis === 'Height' ? 'Top' : 'Left')] + computedStyle['margin' + (axis === 'Height' ? 'Bottom' : 'Right')] : 0);
-}
-
-function getWindowSizes() {
-  var body = document.body;
-  var html = document.documentElement;
-  var computedStyle = isIE10$1() && getComputedStyle(html);
-
-  return {
-    height: getSize('Height', body, html, computedStyle),
-    width: getSize('Width', body, html, computedStyle)
-  };
-}
-
-var classCallCheck = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-var createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
-
-
-
-
-
-var defineProperty = function (obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-};
-
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];
-
-    for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }
-
-  return target;
-};
-
-/**
- * Given element offsets, generate an output similar to getBoundingClientRect
- * @method
- * @memberof Popper.Utils
- * @argument {Object} offsets
- * @returns {Object} ClientRect like output
- */
-function getClientRect(offsets) {
-  return _extends({}, offsets, {
-    right: offsets.left + offsets.width,
-    bottom: offsets.top + offsets.height
-  });
-}
-
-/**
- * Get bounding client rect of given element
- * @method
- * @memberof Popper.Utils
- * @param {HTMLElement} element
- * @return {Object} client rect
- */
-function getBoundingClientRect(element) {
-  var rect = {};
-
-  // IE10 10 FIX: Please, don't ask, the element isn't
-  // considered in DOM in some circumstances...
-  // This isn't reproducible in IE10 compatibility mode of IE11
-  if (isIE10$1()) {
-    try {
-      rect = element.getBoundingClientRect();
-      var scrollTop = getScroll(element, 'top');
-      var scrollLeft = getScroll(element, 'left');
-      rect.top += scrollTop;
-      rect.left += scrollLeft;
-      rect.bottom += scrollTop;
-      rect.right += scrollLeft;
-    } catch (err) {}
-  } else {
-    rect = element.getBoundingClientRect();
-  }
-
-  var result = {
-    left: rect.left,
-    top: rect.top,
-    width: rect.right - rect.left,
-    height: rect.bottom - rect.top
-  };
-
-  // subtract scrollbar size from sizes
-  var sizes = element.nodeName === 'HTML' ? getWindowSizes() : {};
-  var width = sizes.width || element.clientWidth || result.right - result.left;
-  var height = sizes.height || element.clientHeight || result.bottom - result.top;
-
-  var horizScrollbar = element.offsetWidth - width;
-  var vertScrollbar = element.offsetHeight - height;
-
-  // if an hypothetical scrollbar is detected, we must be sure it's not a `border`
-  // we make this check conditional for performance reasons
-  if (horizScrollbar || vertScrollbar) {
-    var styles = getStyleComputedProperty(element);
-    horizScrollbar -= getBordersSize(styles, 'x');
-    vertScrollbar -= getBordersSize(styles, 'y');
-
-    result.width -= horizScrollbar;
-    result.height -= vertScrollbar;
-  }
-
-  return getClientRect(result);
-}
-
-function getOffsetRectRelativeToArbitraryNode(children, parent) {
-  var isIE10 = isIE10$1();
-  var isHTML = parent.nodeName === 'HTML';
-  var childrenRect = getBoundingClientRect(children);
-  var parentRect = getBoundingClientRect(parent);
-  var scrollParent = getScrollParent(children);
-
-  var styles = getStyleComputedProperty(parent);
-  var borderTopWidth = parseFloat(styles.borderTopWidth, 10);
-  var borderLeftWidth = parseFloat(styles.borderLeftWidth, 10);
-
-  var offsets = getClientRect({
-    top: childrenRect.top - parentRect.top - borderTopWidth,
-    left: childrenRect.left - parentRect.left - borderLeftWidth,
-    width: childrenRect.width,
-    height: childrenRect.height
-  });
-  offsets.marginTop = 0;
-  offsets.marginLeft = 0;
-
-  // Subtract margins of documentElement in case it's being used as parent
-  // we do this only on HTML because it's the only element that behaves
-  // differently when margins are applied to it. The margins are included in
-  // the box of the documentElement, in the other cases not.
-  if (!isIE10 && isHTML) {
-    var marginTop = parseFloat(styles.marginTop, 10);
-    var marginLeft = parseFloat(styles.marginLeft, 10);
-
-    offsets.top -= borderTopWidth - marginTop;
-    offsets.bottom -= borderTopWidth - marginTop;
-    offsets.left -= borderLeftWidth - marginLeft;
-    offsets.right -= borderLeftWidth - marginLeft;
-
-    // Attach marginTop and marginLeft because in some circumstances we may need them
-    offsets.marginTop = marginTop;
-    offsets.marginLeft = marginLeft;
-  }
-
-  if (isIE10 ? parent.contains(scrollParent) : parent === scrollParent && scrollParent.nodeName !== 'BODY') {
-    offsets = includeScroll(offsets, parent);
-  }
-
-  return offsets;
-}
-
-function getViewportOffsetRectRelativeToArtbitraryNode(element) {
-  var html = element.ownerDocument.documentElement;
-  var relativeOffset = getOffsetRectRelativeToArbitraryNode(element, html);
-  var width = Math.max(html.clientWidth, window.innerWidth || 0);
-  var height = Math.max(html.clientHeight, window.innerHeight || 0);
-
-  var scrollTop = getScroll(html);
-  var scrollLeft = getScroll(html, 'left');
-
-  var offset = {
-    top: scrollTop - relativeOffset.top + relativeOffset.marginTop,
-    left: scrollLeft - relativeOffset.left + relativeOffset.marginLeft,
-    width: width,
-    height: height
-  };
-
-  return getClientRect(offset);
-}
-
-/**
- * Check if the given element is fixed or is inside a fixed parent
- * @method
- * @memberof Popper.Utils
- * @argument {Element} element
- * @argument {Element} customContainer
- * @returns {Boolean} answer to "isFixed?"
- */
-function isFixed(element) {
-  var nodeName = element.nodeName;
-  if (nodeName === 'BODY' || nodeName === 'HTML') {
-    return false;
-  }
-  if (getStyleComputedProperty(element, 'position') === 'fixed') {
-    return true;
-  }
-  return isFixed(getParentNode(element));
-}
-
-/**
- * Computed the boundaries limits and return them
- * @method
- * @memberof Popper.Utils
- * @param {HTMLElement} popper
- * @param {HTMLElement} reference
- * @param {number} padding
- * @param {HTMLElement} boundariesElement - Element used to define the boundaries
- * @returns {Object} Coordinates of the boundaries
- */
-function getBoundaries(popper, reference, padding, boundariesElement) {
-  // NOTE: 1 DOM access here
-  var boundaries = { top: 0, left: 0 };
-  var offsetParent = findCommonOffsetParent(popper, reference);
-
-  // Handle viewport case
-  if (boundariesElement === 'viewport') {
-    boundaries = getViewportOffsetRectRelativeToArtbitraryNode(offsetParent);
-  } else {
-    // Handle other cases based on DOM element used as boundaries
-    var boundariesNode = void 0;
-    if (boundariesElement === 'scrollParent') {
-      boundariesNode = getScrollParent(getParentNode(reference));
-      if (boundariesNode.nodeName === 'BODY') {
-        boundariesNode = popper.ownerDocument.documentElement;
-      }
-    } else if (boundariesElement === 'window') {
-      boundariesNode = popper.ownerDocument.documentElement;
-    } else {
-      boundariesNode = boundariesElement;
-    }
-
-    var offsets = getOffsetRectRelativeToArbitraryNode(boundariesNode, offsetParent);
-
-    // In case of HTML, we need a different computation
-    if (boundariesNode.nodeName === 'HTML' && !isFixed(offsetParent)) {
-      var _getWindowSizes = getWindowSizes(),
-          height = _getWindowSizes.height,
-          width = _getWindowSizes.width;
-
-      boundaries.top += offsets.top - offsets.marginTop;
-      boundaries.bottom = height + offsets.top;
-      boundaries.left += offsets.left - offsets.marginLeft;
-      boundaries.right = width + offsets.left;
-    } else {
-      // for all the other DOM elements, this one is good
-      boundaries = offsets;
-    }
-  }
-
-  // Add paddings
-  boundaries.left += padding;
-  boundaries.top += padding;
-  boundaries.right -= padding;
-  boundaries.bottom -= padding;
-
-  return boundaries;
-}
-
-function getArea(_ref) {
-  var width = _ref.width,
-      height = _ref.height;
-
-  return width * height;
-}
-
-/**
- * Utility used to transform the `auto` placement to the placement with more
- * available space.
- * @method
- * @memberof Popper.Utils
- * @argument {Object} data - The data object generated by update method
- * @argument {Object} options - Modifiers configuration and options
- * @returns {Object} The data object, properly modified
- */
-function computeAutoPlacement(placement, refRect, popper, reference, boundariesElement) {
-  var padding = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 0;
-
-  if (placement.indexOf('auto') === -1) {
-    return placement;
-  }
-
-  var boundaries = getBoundaries(popper, reference, padding, boundariesElement);
-
-  var rects = {
-    top: {
-      width: boundaries.width,
-      height: refRect.top - boundaries.top
-    },
-    right: {
-      width: boundaries.right - refRect.right,
-      height: boundaries.height
-    },
-    bottom: {
-      width: boundaries.width,
-      height: boundaries.bottom - refRect.bottom
-    },
-    left: {
-      width: refRect.left - boundaries.left,
-      height: boundaries.height
-    }
-  };
-
-  var sortedAreas = Object.keys(rects).map(function (key) {
-    return _extends({
-      key: key
-    }, rects[key], {
-      area: getArea(rects[key])
-    });
-  }).sort(function (a, b) {
-    return b.area - a.area;
-  });
-
-  var filteredAreas = sortedAreas.filter(function (_ref2) {
-    var width = _ref2.width,
-        height = _ref2.height;
-    return width >= popper.clientWidth && height >= popper.clientHeight;
-  });
-
-  var computedPlacement = filteredAreas.length > 0 ? filteredAreas[0].key : sortedAreas[0].key;
-
-  var variation = placement.split('-')[1];
-
-  return computedPlacement + (variation ? '-' + variation : '');
-}
-
-/**
- * Get offsets to the reference element
- * @method
- * @memberof Popper.Utils
- * @param {Object} state
- * @param {Element} popper - the popper element
- * @param {Element} reference - the reference element (the popper will be relative to this)
- * @returns {Object} An object containing the offsets which will be applied to the popper
- */
-function getReferenceOffsets(state, popper, reference) {
-  var commonOffsetParent = findCommonOffsetParent(popper, reference);
-  return getOffsetRectRelativeToArbitraryNode(reference, commonOffsetParent);
-}
-
-/**
- * Get the outer sizes of the given element (offset size + margins)
- * @method
- * @memberof Popper.Utils
- * @argument {Element} element
- * @returns {Object} object containing width and height properties
- */
-function getOuterSizes(element) {
-  var styles = getComputedStyle(element);
-  var x = parseFloat(styles.marginTop) + parseFloat(styles.marginBottom);
-  var y = parseFloat(styles.marginLeft) + parseFloat(styles.marginRight);
-  var result = {
-    width: element.offsetWidth + y,
-    height: element.offsetHeight + x
-  };
-  return result;
-}
-
-/**
- * Get the opposite placement of the given one
- * @method
- * @memberof Popper.Utils
- * @argument {String} placement
- * @returns {String} flipped placement
- */
-function getOppositePlacement(placement) {
-  var hash = { left: 'right', right: 'left', bottom: 'top', top: 'bottom' };
-  return placement.replace(/left|right|bottom|top/g, function (matched) {
-    return hash[matched];
-  });
-}
-
-/**
- * Get offsets to the popper
- * @method
- * @memberof Popper.Utils
- * @param {Object} position - CSS position the Popper will get applied
- * @param {HTMLElement} popper - the popper element
- * @param {Object} referenceOffsets - the reference offsets (the popper will be relative to this)
- * @param {String} placement - one of the valid placement options
- * @returns {Object} popperOffsets - An object containing the offsets which will be applied to the popper
- */
-function getPopperOffsets(popper, referenceOffsets, placement) {
-  placement = placement.split('-')[0];
-
-  // Get popper node sizes
-  var popperRect = getOuterSizes(popper);
-
-  // Add position, width and height to our offsets object
-  var popperOffsets = {
-    width: popperRect.width,
-    height: popperRect.height
-  };
-
-  // depending by the popper placement we have to compute its offsets slightly differently
-  var isHoriz = ['right', 'left'].indexOf(placement) !== -1;
-  var mainSide = isHoriz ? 'top' : 'left';
-  var secondarySide = isHoriz ? 'left' : 'top';
-  var measurement = isHoriz ? 'height' : 'width';
-  var secondaryMeasurement = !isHoriz ? 'height' : 'width';
-
-  popperOffsets[mainSide] = referenceOffsets[mainSide] + referenceOffsets[measurement] / 2 - popperRect[measurement] / 2;
-  if (placement === secondarySide) {
-    popperOffsets[secondarySide] = referenceOffsets[secondarySide] - popperRect[secondaryMeasurement];
-  } else {
-    popperOffsets[secondarySide] = referenceOffsets[getOppositePlacement(secondarySide)];
-  }
-
-  return popperOffsets;
-}
-
-/**
- * Mimics the `find` method of Array
- * @method
- * @memberof Popper.Utils
- * @argument {Array} arr
- * @argument prop
- * @argument value
- * @returns index or -1
- */
-function find(arr, check) {
-  // use native find if supported
-  if (Array.prototype.find) {
-    return arr.find(check);
-  }
-
-  // use `filter` to obtain the same behavior of `find`
-  return arr.filter(check)[0];
-}
-
-/**
- * Return the index of the matching object
- * @method
- * @memberof Popper.Utils
- * @argument {Array} arr
- * @argument prop
- * @argument value
- * @returns index or -1
- */
-function findIndex(arr, prop, value) {
-  // use native findIndex if supported
-  if (Array.prototype.findIndex) {
-    return arr.findIndex(function (cur) {
-      return cur[prop] === value;
-    });
-  }
-
-  // use `find` + `indexOf` if `findIndex` isn't supported
-  var match = find(arr, function (obj) {
-    return obj[prop] === value;
-  });
-  return arr.indexOf(match);
-}
-
-/**
- * Loop trough the list of modifiers and run them in order,
- * each of them will then edit the data object.
- * @method
- * @memberof Popper.Utils
- * @param {dataObject} data
- * @param {Array} modifiers
- * @param {String} ends - Optional modifier name used as stopper
- * @returns {dataObject}
- */
-function runModifiers(modifiers, data, ends) {
-  var modifiersToRun = ends === undefined ? modifiers : modifiers.slice(0, findIndex(modifiers, 'name', ends));
-
-  modifiersToRun.forEach(function (modifier) {
-    if (modifier['function']) {
-      // eslint-disable-line dot-notation
-      console.warn('`modifier.function` is deprecated, use `modifier.fn`!');
-    }
-    var fn = modifier['function'] || modifier.fn; // eslint-disable-line dot-notation
-    if (modifier.enabled && isFunction(fn)) {
-      // Add properties to offsets to make them a complete clientRect object
-      // we do this before each modifier to make sure the previous one doesn't
-      // mess with these values
-      data.offsets.popper = getClientRect(data.offsets.popper);
-      data.offsets.reference = getClientRect(data.offsets.reference);
-
-      data = fn(data, modifier);
-    }
-  });
-
-  return data;
-}
-
-/**
- * Updates the position of the popper, computing the new offsets and applying
- * the new style.<br />
- * Prefer `scheduleUpdate` over `update` because of performance reasons.
- * @method
- * @memberof Popper
- */
-function update() {
-  // if popper is destroyed, don't perform any further update
-  if (this.state.isDestroyed) {
-    return;
-  }
-
-  var data = {
-    instance: this,
-    styles: {},
-    arrowStyles: {},
-    attributes: {},
-    flipped: false,
-    offsets: {}
-  };
-
-  // compute reference element offsets
-  data.offsets.reference = getReferenceOffsets(this.state, this.popper, this.reference);
-
-  // compute auto placement, store placement inside the data object,
-  // modifiers will be able to edit `placement` if needed
-  // and refer to originalPlacement to know the original value
-  data.placement = computeAutoPlacement(this.options.placement, data.offsets.reference, this.popper, this.reference, this.options.modifiers.flip.boundariesElement, this.options.modifiers.flip.padding);
-
-  // store the computed placement inside `originalPlacement`
-  data.originalPlacement = data.placement;
-
-  // compute the popper offsets
-  data.offsets.popper = getPopperOffsets(this.popper, data.offsets.reference, data.placement);
-  data.offsets.popper.position = 'absolute';
-
-  // run the modifiers
-  data = runModifiers(this.modifiers, data);
-
-  // the first `update` will call `onCreate` callback
-  // the other ones will call `onUpdate` callback
-  if (!this.state.isCreated) {
-    this.state.isCreated = true;
-    this.options.onCreate(data);
-  } else {
-    this.options.onUpdate(data);
-  }
-}
-
-/**
- * Helper used to know if the given modifier is enabled.
- * @method
- * @memberof Popper.Utils
- * @returns {Boolean}
- */
-function isModifierEnabled(modifiers, modifierName) {
-  return modifiers.some(function (_ref) {
-    var name = _ref.name,
-        enabled = _ref.enabled;
-    return enabled && name === modifierName;
-  });
-}
-
-/**
- * Get the prefixed supported property name
- * @method
- * @memberof Popper.Utils
- * @argument {String} property (camelCase)
- * @returns {String} prefixed property (camelCase or PascalCase, depending on the vendor prefix)
- */
-function getSupportedPropertyName(property) {
-  var prefixes = [false, 'ms', 'Webkit', 'Moz', 'O'];
-  var upperProp = property.charAt(0).toUpperCase() + property.slice(1);
-
-  for (var i = 0; i < prefixes.length - 1; i++) {
-    var prefix = prefixes[i];
-    var toCheck = prefix ? '' + prefix + upperProp : property;
-    if (typeof document.body.style[toCheck] !== 'undefined') {
-      return toCheck;
-    }
-  }
-  return null;
-}
-
-/**
- * Destroy the popper
- * @method
- * @memberof Popper
- */
-function destroy() {
-  this.state.isDestroyed = true;
-
-  // touch DOM only if `applyStyle` modifier is enabled
-  if (isModifierEnabled(this.modifiers, 'applyStyle')) {
-    this.popper.removeAttribute('x-placement');
-    this.popper.style.left = '';
-    this.popper.style.position = '';
-    this.popper.style.top = '';
-    this.popper.style[getSupportedPropertyName('transform')] = '';
-  }
-
-  this.disableEventListeners();
-
-  // remove the popper if user explicity asked for the deletion on destroy
-  // do not use `remove` because IE11 doesn't support it
-  if (this.options.removeOnDestroy) {
-    this.popper.parentNode.removeChild(this.popper);
-  }
-  return this;
-}
-
-/**
- * Get the window associated with the element
- * @argument {Element} element
- * @returns {Window}
- */
-function getWindow(element) {
-  var ownerDocument = element.ownerDocument;
-  return ownerDocument ? ownerDocument.defaultView : window;
-}
-
-function attachToScrollParents(scrollParent, event, callback, scrollParents) {
-  var isBody = scrollParent.nodeName === 'BODY';
-  var target = isBody ? scrollParent.ownerDocument.defaultView : scrollParent;
-  target.addEventListener(event, callback, { passive: true });
-
-  if (!isBody) {
-    attachToScrollParents(getScrollParent(target.parentNode), event, callback, scrollParents);
-  }
-  scrollParents.push(target);
-}
-
-/**
- * Setup needed event listeners used to update the popper position
- * @method
- * @memberof Popper.Utils
- * @private
- */
-function setupEventListeners(reference, options, state, updateBound) {
-  // Resize event listener on window
-  state.updateBound = updateBound;
-  getWindow(reference).addEventListener('resize', state.updateBound, { passive: true });
-
-  // Scroll event listener on scroll parents
-  var scrollElement = getScrollParent(reference);
-  attachToScrollParents(scrollElement, 'scroll', state.updateBound, state.scrollParents);
-  state.scrollElement = scrollElement;
-  state.eventsEnabled = true;
-
-  return state;
-}
-
-/**
- * It will add resize/scroll events and start recalculating
- * position of the popper element when they are triggered.
- * @method
- * @memberof Popper
- */
-function enableEventListeners() {
-  if (!this.state.eventsEnabled) {
-    this.state = setupEventListeners(this.reference, this.options, this.state, this.scheduleUpdate);
-  }
-}
-
-/**
- * Remove event listeners used to update the popper position
- * @method
- * @memberof Popper.Utils
- * @private
- */
-function removeEventListeners(reference, state) {
-  // Remove resize event listener on window
-  getWindow(reference).removeEventListener('resize', state.updateBound);
-
-  // Remove scroll event listener on scroll parents
-  state.scrollParents.forEach(function (target) {
-    target.removeEventListener('scroll', state.updateBound);
-  });
-
-  // Reset state
-  state.updateBound = null;
-  state.scrollParents = [];
-  state.scrollElement = null;
-  state.eventsEnabled = false;
-  return state;
-}
-
-/**
- * It will remove resize/scroll events and won't recalculate popper position
- * when they are triggered. It also won't trigger onUpdate callback anymore,
- * unless you call `update` method manually.
- * @method
- * @memberof Popper
- */
-function disableEventListeners() {
-  if (this.state.eventsEnabled) {
-    cancelAnimationFrame(this.scheduleUpdate);
-    this.state = removeEventListeners(this.reference, this.state);
-  }
-}
-
-/**
- * Tells if a given input is a number
- * @method
- * @memberof Popper.Utils
- * @param {*} input to check
- * @return {Boolean}
- */
-function isNumeric(n) {
-  return n !== '' && !isNaN(parseFloat(n)) && isFinite(n);
-}
-
-/**
- * Set the style to the given popper
- * @method
- * @memberof Popper.Utils
- * @argument {Element} element - Element to apply the style to
- * @argument {Object} styles
- * Object with a list of properties and values which will be applied to the element
- */
-function setStyles(element, styles) {
-  Object.keys(styles).forEach(function (prop) {
-    var unit = '';
-    // add unit if the value is numeric and is one of the following
-    if (['width', 'height', 'top', 'right', 'bottom', 'left'].indexOf(prop) !== -1 && isNumeric(styles[prop])) {
-      unit = 'px';
-    }
-    element.style[prop] = styles[prop] + unit;
-  });
-}
-
-/**
- * Set the attributes to the given popper
- * @method
- * @memberof Popper.Utils
- * @argument {Element} element - Element to apply the attributes to
- * @argument {Object} styles
- * Object with a list of properties and values which will be applied to the element
- */
-function setAttributes(element, attributes) {
-  Object.keys(attributes).forEach(function (prop) {
-    var value = attributes[prop];
-    if (value !== false) {
-      element.setAttribute(prop, attributes[prop]);
-    } else {
-      element.removeAttribute(prop);
-    }
-  });
-}
-
-/**
- * @function
- * @memberof Modifiers
- * @argument {Object} data - The data object generated by `update` method
- * @argument {Object} data.styles - List of style properties - values to apply to popper element
- * @argument {Object} data.attributes - List of attribute properties - values to apply to popper element
- * @argument {Object} options - Modifiers configuration and options
- * @returns {Object} The same data object
- */
-function applyStyle(data) {
-  // any property present in `data.styles` will be applied to the popper,
-  // in this way we can make the 3rd party modifiers add custom styles to it
-  // Be aware, modifiers could override the properties defined in the previous
-  // lines of this modifier!
-  setStyles(data.instance.popper, data.styles);
-
-  // any property present in `data.attributes` will be applied to the popper,
-  // they will be set as HTML attributes of the element
-  setAttributes(data.instance.popper, data.attributes);
-
-  // if arrowElement is defined and arrowStyles has some properties
-  if (data.arrowElement && Object.keys(data.arrowStyles).length) {
-    setStyles(data.arrowElement, data.arrowStyles);
-  }
-
-  return data;
-}
-
-/**
- * Set the x-placement attribute before everything else because it could be used
- * to add margins to the popper margins needs to be calculated to get the
- * correct popper offsets.
- * @method
- * @memberof Popper.modifiers
- * @param {HTMLElement} reference - The reference element used to position the popper
- * @param {HTMLElement} popper - The HTML element used as popper.
- * @param {Object} options - Popper.js options
- */
-function applyStyleOnLoad(reference, popper, options, modifierOptions, state) {
-  // compute reference element offsets
-  var referenceOffsets = getReferenceOffsets(state, popper, reference);
-
-  // compute auto placement, store placement inside the data object,
-  // modifiers will be able to edit `placement` if needed
-  // and refer to originalPlacement to know the original value
-  var placement = computeAutoPlacement(options.placement, referenceOffsets, popper, reference, options.modifiers.flip.boundariesElement, options.modifiers.flip.padding);
-
-  popper.setAttribute('x-placement', placement);
-
-  // Apply `position` to popper before anything else because
-  // without the position applied we can't guarantee correct computations
-  setStyles(popper, { position: 'absolute' });
-
-  return options;
-}
-
-/**
- * @function
- * @memberof Modifiers
- * @argument {Object} data - The data object generated by `update` method
- * @argument {Object} options - Modifiers configuration and options
- * @returns {Object} The data object, properly modified
- */
-function computeStyle(data, options) {
-  var x = options.x,
-      y = options.y;
-  var popper = data.offsets.popper;
-
-  // Remove this legacy support in Popper.js v2
-
-  var legacyGpuAccelerationOption = find(data.instance.modifiers, function (modifier) {
-    return modifier.name === 'applyStyle';
-  }).gpuAcceleration;
-  if (legacyGpuAccelerationOption !== undefined) {
-    console.warn('WARNING: `gpuAcceleration` option moved to `computeStyle` modifier and will not be supported in future versions of Popper.js!');
-  }
-  var gpuAcceleration = legacyGpuAccelerationOption !== undefined ? legacyGpuAccelerationOption : options.gpuAcceleration;
-
-  var offsetParent = getOffsetParent(data.instance.popper);
-  var offsetParentRect = getBoundingClientRect(offsetParent);
-
-  // Styles
-  var styles = {
-    position: popper.position
-  };
-
-  // floor sides to avoid blurry text
-  var offsets = {
-    left: Math.floor(popper.left),
-    top: Math.floor(popper.top),
-    bottom: Math.floor(popper.bottom),
-    right: Math.floor(popper.right)
-  };
-
-  var sideA = x === 'bottom' ? 'top' : 'bottom';
-  var sideB = y === 'right' ? 'left' : 'right';
-
-  // if gpuAcceleration is set to `true` and transform is supported,
-  //  we use `translate3d` to apply the position to the popper we
-  // automatically use the supported prefixed version if needed
-  var prefixedProperty = getSupportedPropertyName('transform');
-
-  // now, let's make a step back and look at this code closely (wtf?)
-  // If the content of the popper grows once it's been positioned, it
-  // may happen that the popper gets misplaced because of the new content
-  // overflowing its reference element
-  // To avoid this problem, we provide two options (x and y), which allow
-  // the consumer to define the offset origin.
-  // If we position a popper on top of a reference element, we can set
-  // `x` to `top` to make the popper grow towards its top instead of
-  // its bottom.
-  var left = void 0,
-      top = void 0;
-  if (sideA === 'bottom') {
-    top = -offsetParentRect.height + offsets.bottom;
-  } else {
-    top = offsets.top;
-  }
-  if (sideB === 'right') {
-    left = -offsetParentRect.width + offsets.right;
-  } else {
-    left = offsets.left;
-  }
-  if (gpuAcceleration && prefixedProperty) {
-    styles[prefixedProperty] = 'translate3d(' + left + 'px, ' + top + 'px, 0)';
-    styles[sideA] = 0;
-    styles[sideB] = 0;
-    styles.willChange = 'transform';
-  } else {
-    // othwerise, we use the standard `top`, `left`, `bottom` and `right` properties
-    var invertTop = sideA === 'bottom' ? -1 : 1;
-    var invertLeft = sideB === 'right' ? -1 : 1;
-    styles[sideA] = top * invertTop;
-    styles[sideB] = left * invertLeft;
-    styles.willChange = sideA + ', ' + sideB;
-  }
-
-  // Attributes
-  var attributes = {
-    'x-placement': data.placement
-  };
-
-  // Update `data` attributes, styles and arrowStyles
-  data.attributes = _extends({}, attributes, data.attributes);
-  data.styles = _extends({}, styles, data.styles);
-  data.arrowStyles = _extends({}, data.offsets.arrow, data.arrowStyles);
-
-  return data;
-}
-
-/**
- * Helper used to know if the given modifier depends from another one.<br />
- * It checks if the needed modifier is listed and enabled.
- * @method
- * @memberof Popper.Utils
- * @param {Array} modifiers - list of modifiers
- * @param {String} requestingName - name of requesting modifier
- * @param {String} requestedName - name of requested modifier
- * @returns {Boolean}
- */
-function isModifierRequired(modifiers, requestingName, requestedName) {
-  var requesting = find(modifiers, function (_ref) {
-    var name = _ref.name;
-    return name === requestingName;
-  });
-
-  var isRequired = !!requesting && modifiers.some(function (modifier) {
-    return modifier.name === requestedName && modifier.enabled && modifier.order < requesting.order;
-  });
-
-  if (!isRequired) {
-    var _requesting = '`' + requestingName + '`';
-    var requested = '`' + requestedName + '`';
-    console.warn(requested + ' modifier is required by ' + _requesting + ' modifier in order to work, be sure to include it before ' + _requesting + '!');
-  }
-  return isRequired;
-}
-
-/**
- * @function
- * @memberof Modifiers
- * @argument {Object} data - The data object generated by update method
- * @argument {Object} options - Modifiers configuration and options
- * @returns {Object} The data object, properly modified
- */
-function arrow(data, options) {
-  var _data$offsets$arrow;
-
-  // arrow depends on keepTogether in order to work
-  if (!isModifierRequired(data.instance.modifiers, 'arrow', 'keepTogether')) {
-    return data;
-  }
-
-  var arrowElement = options.element;
-
-  // if arrowElement is a string, suppose it's a CSS selector
-  if (typeof arrowElement === 'string') {
-    arrowElement = data.instance.popper.querySelector(arrowElement);
-
-    // if arrowElement is not found, don't run the modifier
-    if (!arrowElement) {
-      return data;
-    }
-  } else {
-    // if the arrowElement isn't a query selector we must check that the
-    // provided DOM node is child of its popper node
-    if (!data.instance.popper.contains(arrowElement)) {
-      console.warn('WARNING: `arrow.element` must be child of its popper element!');
-      return data;
-    }
-  }
-
-  var placement = data.placement.split('-')[0];
-  var _data$offsets = data.offsets,
-      popper = _data$offsets.popper,
-      reference = _data$offsets.reference;
-
-  var isVertical = ['left', 'right'].indexOf(placement) !== -1;
-
-  var len = isVertical ? 'height' : 'width';
-  var sideCapitalized = isVertical ? 'Top' : 'Left';
-  var side = sideCapitalized.toLowerCase();
-  var altSide = isVertical ? 'left' : 'top';
-  var opSide = isVertical ? 'bottom' : 'right';
-  var arrowElementSize = getOuterSizes(arrowElement)[len];
-
-  //
-  // extends keepTogether behavior making sure the popper and its
-  // reference have enough pixels in conjuction
-  //
-
-  // top/left side
-  if (reference[opSide] - arrowElementSize < popper[side]) {
-    data.offsets.popper[side] -= popper[side] - (reference[opSide] - arrowElementSize);
-  }
-  // bottom/right side
-  if (reference[side] + arrowElementSize > popper[opSide]) {
-    data.offsets.popper[side] += reference[side] + arrowElementSize - popper[opSide];
-  }
-  data.offsets.popper = getClientRect(data.offsets.popper);
-
-  // compute center of the popper
-  var center = reference[side] + reference[len] / 2 - arrowElementSize / 2;
-
-  // Compute the sideValue using the updated popper offsets
-  // take popper margin in account because we don't have this info available
-  var css = getStyleComputedProperty(data.instance.popper);
-  var popperMarginSide = parseFloat(css['margin' + sideCapitalized], 10);
-  var popperBorderSide = parseFloat(css['border' + sideCapitalized + 'Width'], 10);
-  var sideValue = center - data.offsets.popper[side] - popperMarginSide - popperBorderSide;
-
-  // prevent arrowElement from being placed not contiguously to its popper
-  sideValue = Math.max(Math.min(popper[len] - arrowElementSize, sideValue), 0);
-
-  data.arrowElement = arrowElement;
-  data.offsets.arrow = (_data$offsets$arrow = {}, defineProperty(_data$offsets$arrow, side, Math.round(sideValue)), defineProperty(_data$offsets$arrow, altSide, ''), _data$offsets$arrow);
-
-  return data;
-}
-
-/**
- * Get the opposite placement variation of the given one
- * @method
- * @memberof Popper.Utils
- * @argument {String} placement variation
- * @returns {String} flipped placement variation
- */
-function getOppositeVariation(variation) {
-  if (variation === 'end') {
-    return 'start';
-  } else if (variation === 'start') {
-    return 'end';
-  }
-  return variation;
-}
-
-/**
- * List of accepted placements to use as values of the `placement` option.<br />
- * Valid placements are:
- * - `auto`
- * - `top`
- * - `right`
- * - `bottom`
- * - `left`
- *
- * Each placement can have a variation from this list:
- * - `-start`
- * - `-end`
- *
- * Variations are interpreted easily if you think of them as the left to right
- * written languages. Horizontally (`top` and `bottom`), `start` is left and `end`
- * is right.<br />
- * Vertically (`left` and `right`), `start` is top and `end` is bottom.
- *
- * Some valid examples are:
- * - `top-end` (on top of reference, right aligned)
- * - `right-start` (on right of reference, top aligned)
- * - `bottom` (on bottom, centered)
- * - `auto-right` (on the side with more space available, alignment depends by placement)
- *
- * @static
- * @type {Array}
- * @enum {String}
- * @readonly
- * @method placements
- * @memberof Popper
- */
-var placements = ['auto-start', 'auto', 'auto-end', 'top-start', 'top', 'top-end', 'right-start', 'right', 'right-end', 'bottom-end', 'bottom', 'bottom-start', 'left-end', 'left', 'left-start'];
-
-// Get rid of `auto` `auto-start` and `auto-end`
-var validPlacements = placements.slice(3);
-
-/**
- * Given an initial placement, returns all the subsequent placements
- * clockwise (or counter-clockwise).
- *
- * @method
- * @memberof Popper.Utils
- * @argument {String} placement - A valid placement (it accepts variations)
- * @argument {Boolean} counter - Set to true to walk the placements counterclockwise
- * @returns {Array} placements including their variations
- */
-function clockwise(placement) {
-  var counter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-  var index = validPlacements.indexOf(placement);
-  var arr = validPlacements.slice(index + 1).concat(validPlacements.slice(0, index));
-  return counter ? arr.reverse() : arr;
-}
-
-var BEHAVIORS = {
-  FLIP: 'flip',
-  CLOCKWISE: 'clockwise',
-  COUNTERCLOCKWISE: 'counterclockwise'
-};
-
-/**
- * @function
- * @memberof Modifiers
- * @argument {Object} data - The data object generated by update method
- * @argument {Object} options - Modifiers configuration and options
- * @returns {Object} The data object, properly modified
- */
-function flip(data, options) {
-  // if `inner` modifier is enabled, we can't use the `flip` modifier
-  if (isModifierEnabled(data.instance.modifiers, 'inner')) {
-    return data;
-  }
-
-  if (data.flipped && data.placement === data.originalPlacement) {
-    // seems like flip is trying to loop, probably there's not enough space on any of the flippable sides
-    return data;
-  }
-
-  var boundaries = getBoundaries(data.instance.popper, data.instance.reference, options.padding, options.boundariesElement);
-
-  var placement = data.placement.split('-')[0];
-  var placementOpposite = getOppositePlacement(placement);
-  var variation = data.placement.split('-')[1] || '';
-
-  var flipOrder = [];
-
-  switch (options.behavior) {
-    case BEHAVIORS.FLIP:
-      flipOrder = [placement, placementOpposite];
-      break;
-    case BEHAVIORS.CLOCKWISE:
-      flipOrder = clockwise(placement);
-      break;
-    case BEHAVIORS.COUNTERCLOCKWISE:
-      flipOrder = clockwise(placement, true);
-      break;
-    default:
-      flipOrder = options.behavior;
-  }
-
-  flipOrder.forEach(function (step, index) {
-    if (placement !== step || flipOrder.length === index + 1) {
-      return data;
-    }
-
-    placement = data.placement.split('-')[0];
-    placementOpposite = getOppositePlacement(placement);
-
-    var popperOffsets = data.offsets.popper;
-    var refOffsets = data.offsets.reference;
-
-    // using floor because the reference offsets may contain decimals we are not going to consider here
-    var floor = Math.floor;
-    var overlapsRef = placement === 'left' && floor(popperOffsets.right) > floor(refOffsets.left) || placement === 'right' && floor(popperOffsets.left) < floor(refOffsets.right) || placement === 'top' && floor(popperOffsets.bottom) > floor(refOffsets.top) || placement === 'bottom' && floor(popperOffsets.top) < floor(refOffsets.bottom);
-
-    var overflowsLeft = floor(popperOffsets.left) < floor(boundaries.left);
-    var overflowsRight = floor(popperOffsets.right) > floor(boundaries.right);
-    var overflowsTop = floor(popperOffsets.top) < floor(boundaries.top);
-    var overflowsBottom = floor(popperOffsets.bottom) > floor(boundaries.bottom);
-
-    var overflowsBoundaries = placement === 'left' && overflowsLeft || placement === 'right' && overflowsRight || placement === 'top' && overflowsTop || placement === 'bottom' && overflowsBottom;
-
-    // flip the variation if required
-    var isVertical = ['top', 'bottom'].indexOf(placement) !== -1;
-    var flippedVariation = !!options.flipVariations && (isVertical && variation === 'start' && overflowsLeft || isVertical && variation === 'end' && overflowsRight || !isVertical && variation === 'start' && overflowsTop || !isVertical && variation === 'end' && overflowsBottom);
-
-    if (overlapsRef || overflowsBoundaries || flippedVariation) {
-      // this boolean to detect any flip loop
-      data.flipped = true;
-
-      if (overlapsRef || overflowsBoundaries) {
-        placement = flipOrder[index + 1];
-      }
-
-      if (flippedVariation) {
-        variation = getOppositeVariation(variation);
-      }
-
-      data.placement = placement + (variation ? '-' + variation : '');
-
-      // this object contains `position`, we want to preserve it along with
-      // any additional property we may add in the future
-      data.offsets.popper = _extends({}, data.offsets.popper, getPopperOffsets(data.instance.popper, data.offsets.reference, data.placement));
-
-      data = runModifiers(data.instance.modifiers, data, 'flip');
-    }
-  });
-  return data;
-}
-
-/**
- * @function
- * @memberof Modifiers
- * @argument {Object} data - The data object generated by update method
- * @argument {Object} options - Modifiers configuration and options
- * @returns {Object} The data object, properly modified
- */
-function keepTogether(data) {
-  var _data$offsets = data.offsets,
-      popper = _data$offsets.popper,
-      reference = _data$offsets.reference;
-
-  var placement = data.placement.split('-')[0];
-  var floor = Math.floor;
-  var isVertical = ['top', 'bottom'].indexOf(placement) !== -1;
-  var side = isVertical ? 'right' : 'bottom';
-  var opSide = isVertical ? 'left' : 'top';
-  var measurement = isVertical ? 'width' : 'height';
-
-  if (popper[side] < floor(reference[opSide])) {
-    data.offsets.popper[opSide] = floor(reference[opSide]) - popper[measurement];
-  }
-  if (popper[opSide] > floor(reference[side])) {
-    data.offsets.popper[opSide] = floor(reference[side]);
-  }
-
-  return data;
-}
-
-/**
- * Converts a string containing value + unit into a px value number
- * @function
- * @memberof {modifiers~offset}
- * @private
- * @argument {String} str - Value + unit string
- * @argument {String} measurement - `height` or `width`
- * @argument {Object} popperOffsets
- * @argument {Object} referenceOffsets
- * @returns {Number|String}
- * Value in pixels, or original string if no values were extracted
- */
-function toValue(str, measurement, popperOffsets, referenceOffsets) {
-  // separate value from unit
-  var split = str.match(/((?:\-|\+)?\d*\.?\d*)(.*)/);
-  var value = +split[1];
-  var unit = split[2];
-
-  // If it's not a number it's an operator, I guess
-  if (!value) {
-    return str;
-  }
-
-  if (unit.indexOf('%') === 0) {
-    var element = void 0;
-    switch (unit) {
-      case '%p':
-        element = popperOffsets;
-        break;
-      case '%':
-      case '%r':
-      default:
-        element = referenceOffsets;
-    }
-
-    var rect = getClientRect(element);
-    return rect[measurement] / 100 * value;
-  } else if (unit === 'vh' || unit === 'vw') {
-    // if is a vh or vw, we calculate the size based on the viewport
-    var size = void 0;
-    if (unit === 'vh') {
-      size = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    } else {
-      size = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-    }
-    return size / 100 * value;
-  } else {
-    // if is an explicit pixel unit, we get rid of the unit and keep the value
-    // if is an implicit unit, it's px, and we return just the value
-    return value;
-  }
-}
-
-/**
- * Parse an `offset` string to extrapolate `x` and `y` numeric offsets.
- * @function
- * @memberof {modifiers~offset}
- * @private
- * @argument {String} offset
- * @argument {Object} popperOffsets
- * @argument {Object} referenceOffsets
- * @argument {String} basePlacement
- * @returns {Array} a two cells array with x and y offsets in numbers
- */
-function parseOffset(offset, popperOffsets, referenceOffsets, basePlacement) {
-  var offsets = [0, 0];
-
-  // Use height if placement is left or right and index is 0 otherwise use width
-  // in this way the first offset will use an axis and the second one
-  // will use the other one
-  var useHeight = ['right', 'left'].indexOf(basePlacement) !== -1;
-
-  // Split the offset string to obtain a list of values and operands
-  // The regex addresses values with the plus or minus sign in front (+10, -20, etc)
-  var fragments = offset.split(/(\+|\-)/).map(function (frag) {
-    return frag.trim();
-  });
-
-  // Detect if the offset string contains a pair of values or a single one
-  // they could be separated by comma or space
-  var divider = fragments.indexOf(find(fragments, function (frag) {
-    return frag.search(/,|\s/) !== -1;
-  }));
-
-  if (fragments[divider] && fragments[divider].indexOf(',') === -1) {
-    console.warn('Offsets separated by white space(s) are deprecated, use a comma (,) instead.');
-  }
-
-  // If divider is found, we divide the list of values and operands to divide
-  // them by ofset X and Y.
-  var splitRegex = /\s*,\s*|\s+/;
-  var ops = divider !== -1 ? [fragments.slice(0, divider).concat([fragments[divider].split(splitRegex)[0]]), [fragments[divider].split(splitRegex)[1]].concat(fragments.slice(divider + 1))] : [fragments];
-
-  // Convert the values with units to absolute pixels to allow our computations
-  ops = ops.map(function (op, index) {
-    // Most of the units rely on the orientation of the popper
-    var measurement = (index === 1 ? !useHeight : useHeight) ? 'height' : 'width';
-    var mergeWithPrevious = false;
-    return op
-    // This aggregates any `+` or `-` sign that aren't considered operators
-    // e.g.: 10 + +5 => [10, +, +5]
-    .reduce(function (a, b) {
-      if (a[a.length - 1] === '' && ['+', '-'].indexOf(b) !== -1) {
-        a[a.length - 1] = b;
-        mergeWithPrevious = true;
-        return a;
-      } else if (mergeWithPrevious) {
-        a[a.length - 1] += b;
-        mergeWithPrevious = false;
-        return a;
-      } else {
-        return a.concat(b);
-      }
-    }, [])
-    // Here we convert the string values into number values (in px)
-    .map(function (str) {
-      return toValue(str, measurement, popperOffsets, referenceOffsets);
-    });
-  });
-
-  // Loop trough the offsets arrays and execute the operations
-  ops.forEach(function (op, index) {
-    op.forEach(function (frag, index2) {
-      if (isNumeric(frag)) {
-        offsets[index] += frag * (op[index2 - 1] === '-' ? -1 : 1);
-      }
-    });
-  });
-  return offsets;
-}
-
-/**
- * @function
- * @memberof Modifiers
- * @argument {Object} data - The data object generated by update method
- * @argument {Object} options - Modifiers configuration and options
- * @argument {Number|String} options.offset=0
- * The offset value as described in the modifier description
- * @returns {Object} The data object, properly modified
- */
-function offset(data, _ref) {
-  var offset = _ref.offset;
-  var placement = data.placement,
-      _data$offsets = data.offsets,
-      popper = _data$offsets.popper,
-      reference = _data$offsets.reference;
-
-  var basePlacement = placement.split('-')[0];
-
-  var offsets = void 0;
-  if (isNumeric(+offset)) {
-    offsets = [+offset, 0];
-  } else {
-    offsets = parseOffset(offset, popper, reference, basePlacement);
-  }
-
-  if (basePlacement === 'left') {
-    popper.top += offsets[0];
-    popper.left -= offsets[1];
-  } else if (basePlacement === 'right') {
-    popper.top += offsets[0];
-    popper.left += offsets[1];
-  } else if (basePlacement === 'top') {
-    popper.left += offsets[0];
-    popper.top -= offsets[1];
-  } else if (basePlacement === 'bottom') {
-    popper.left += offsets[0];
-    popper.top += offsets[1];
-  }
-
-  data.popper = popper;
-  return data;
-}
-
-/**
- * @function
- * @memberof Modifiers
- * @argument {Object} data - The data object generated by `update` method
- * @argument {Object} options - Modifiers configuration and options
- * @returns {Object} The data object, properly modified
- */
-function preventOverflow(data, options) {
-  var boundariesElement = options.boundariesElement || getOffsetParent(data.instance.popper);
-
-  // If offsetParent is the reference element, we really want to
-  // go one step up and use the next offsetParent as reference to
-  // avoid to make this modifier completely useless and look like broken
-  if (data.instance.reference === boundariesElement) {
-    boundariesElement = getOffsetParent(boundariesElement);
-  }
-
-  var boundaries = getBoundaries(data.instance.popper, data.instance.reference, options.padding, boundariesElement);
-  options.boundaries = boundaries;
-
-  var order = options.priority;
-  var popper = data.offsets.popper;
-
-  var check = {
-    primary: function primary(placement) {
-      var value = popper[placement];
-      if (popper[placement] < boundaries[placement] && !options.escapeWithReference) {
-        value = Math.max(popper[placement], boundaries[placement]);
-      }
-      return defineProperty({}, placement, value);
-    },
-    secondary: function secondary(placement) {
-      var mainSide = placement === 'right' ? 'left' : 'top';
-      var value = popper[mainSide];
-      if (popper[placement] > boundaries[placement] && !options.escapeWithReference) {
-        value = Math.min(popper[mainSide], boundaries[placement] - (placement === 'right' ? popper.width : popper.height));
-      }
-      return defineProperty({}, mainSide, value);
-    }
-  };
-
-  order.forEach(function (placement) {
-    var side = ['left', 'top'].indexOf(placement) !== -1 ? 'primary' : 'secondary';
-    popper = _extends({}, popper, check[side](placement));
-  });
-
-  data.offsets.popper = popper;
-
-  return data;
-}
-
-/**
- * @function
- * @memberof Modifiers
- * @argument {Object} data - The data object generated by `update` method
- * @argument {Object} options - Modifiers configuration and options
- * @returns {Object} The data object, properly modified
- */
-function shift(data) {
-  var placement = data.placement;
-  var basePlacement = placement.split('-')[0];
-  var shiftvariation = placement.split('-')[1];
-
-  // if shift shiftvariation is specified, run the modifier
-  if (shiftvariation) {
-    var _data$offsets = data.offsets,
-        reference = _data$offsets.reference,
-        popper = _data$offsets.popper;
-
-    var isVertical = ['bottom', 'top'].indexOf(basePlacement) !== -1;
-    var side = isVertical ? 'left' : 'top';
-    var measurement = isVertical ? 'width' : 'height';
-
-    var shiftOffsets = {
-      start: defineProperty({}, side, reference[side]),
-      end: defineProperty({}, side, reference[side] + reference[measurement] - popper[measurement])
-    };
-
-    data.offsets.popper = _extends({}, popper, shiftOffsets[shiftvariation]);
-  }
-
-  return data;
-}
-
-/**
- * @function
- * @memberof Modifiers
- * @argument {Object} data - The data object generated by update method
- * @argument {Object} options - Modifiers configuration and options
- * @returns {Object} The data object, properly modified
- */
-function hide(data) {
-  if (!isModifierRequired(data.instance.modifiers, 'hide', 'preventOverflow')) {
-    return data;
-  }
-
-  var refRect = data.offsets.reference;
-  var bound = find(data.instance.modifiers, function (modifier) {
-    return modifier.name === 'preventOverflow';
-  }).boundaries;
-
-  if (refRect.bottom < bound.top || refRect.left > bound.right || refRect.top > bound.bottom || refRect.right < bound.left) {
-    // Avoid unnecessary DOM access if visibility hasn't changed
-    if (data.hide === true) {
-      return data;
-    }
-
-    data.hide = true;
-    data.attributes['x-out-of-boundaries'] = '';
-  } else {
-    // Avoid unnecessary DOM access if visibility hasn't changed
-    if (data.hide === false) {
-      return data;
-    }
-
-    data.hide = false;
-    data.attributes['x-out-of-boundaries'] = false;
-  }
-
-  return data;
-}
-
-/**
- * @function
- * @memberof Modifiers
- * @argument {Object} data - The data object generated by `update` method
- * @argument {Object} options - Modifiers configuration and options
- * @returns {Object} The data object, properly modified
- */
-function inner(data) {
-  var placement = data.placement;
-  var basePlacement = placement.split('-')[0];
-  var _data$offsets = data.offsets,
-      popper = _data$offsets.popper,
-      reference = _data$offsets.reference;
-
-  var isHoriz = ['left', 'right'].indexOf(basePlacement) !== -1;
-
-  var subtractLength = ['top', 'left'].indexOf(basePlacement) === -1;
-
-  popper[isHoriz ? 'left' : 'top'] = reference[basePlacement] - (subtractLength ? popper[isHoriz ? 'width' : 'height'] : 0);
-
-  data.placement = getOppositePlacement(placement);
-  data.offsets.popper = getClientRect(popper);
-
-  return data;
-}
-
-/**
- * Modifier function, each modifier can have a function of this type assigned
- * to its `fn` property.<br />
- * These functions will be called on each update, this means that you must
- * make sure they are performant enough to avoid performance bottlenecks.
- *
- * @function ModifierFn
- * @argument {dataObject} data - The data object generated by `update` method
- * @argument {Object} options - Modifiers configuration and options
- * @returns {dataObject} The data object, properly modified
- */
-
-/**
- * Modifiers are plugins used to alter the behavior of your poppers.<br />
- * Popper.js uses a set of 9 modifiers to provide all the basic functionalities
- * needed by the library.
- *
- * Usually you don't want to override the `order`, `fn` and `onLoad` props.
- * All the other properties are configurations that could be tweaked.
- * @namespace modifiers
- */
-var modifiers = {
-  /**
-   * Modifier used to shift the popper on the start or end of its reference
-   * element.<br />
-   * It will read the variation of the `placement` property.<br />
-   * It can be one either `-end` or `-start`.
-   * @memberof modifiers
-   * @inner
-   */
-  shift: {
-    /** @prop {number} order=100 - Index used to define the order of execution */
-    order: 100,
-    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
-    enabled: true,
-    /** @prop {ModifierFn} */
-    fn: shift
-  },
-
-  /**
-   * The `offset` modifier can shift your popper on both its axis.
-   *
-   * It accepts the following units:
-   * - `px` or unitless, interpreted as pixels
-   * - `%` or `%r`, percentage relative to the length of the reference element
-   * - `%p`, percentage relative to the length of the popper element
-   * - `vw`, CSS viewport width unit
-   * - `vh`, CSS viewport height unit
-   *
-   * For length is intended the main axis relative to the placement of the popper.<br />
-   * This means that if the placement is `top` or `bottom`, the length will be the
-   * `width`. In case of `left` or `right`, it will be the height.
-   *
-   * You can provide a single value (as `Number` or `String`), or a pair of values
-   * as `String` divided by a comma or one (or more) white spaces.<br />
-   * The latter is a deprecated method because it leads to confusion and will be
-   * removed in v2.<br />
-   * Additionally, it accepts additions and subtractions between different units.
-   * Note that multiplications and divisions aren't supported.
-   *
-   * Valid examples are:
-   * ```
-   * 10
-   * '10%'
-   * '10, 10'
-   * '10%, 10'
-   * '10 + 10%'
-   * '10 - 5vh + 3%'
-   * '-10px + 5vh, 5px - 6%'
-   * ```
-   * > **NB**: If you desire to apply offsets to your poppers in a way that may make them overlap
-   * > with their reference element, unfortunately, you will have to disable the `flip` modifier.
-   * > More on this [reading this issue](https://github.com/FezVrasta/popper.js/issues/373)
-   *
-   * @memberof modifiers
-   * @inner
-   */
-  offset: {
-    /** @prop {number} order=200 - Index used to define the order of execution */
-    order: 200,
-    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
-    enabled: true,
-    /** @prop {ModifierFn} */
-    fn: offset,
-    /** @prop {Number|String} offset=0
-     * The offset value as described in the modifier description
-     */
-    offset: 0
-  },
-
-  /**
-   * Modifier used to prevent the popper from being positioned outside the boundary.
-   *
-   * An scenario exists where the reference itself is not within the boundaries.<br />
-   * We can say it has "escaped the boundaries" — or just "escaped".<br />
-   * In this case we need to decide whether the popper should either:
-   *
-   * - detach from the reference and remain "trapped" in the boundaries, or
-   * - if it should ignore the boundary and "escape with its reference"
-   *
-   * When `escapeWithReference` is set to`true` and reference is completely
-   * outside its boundaries, the popper will overflow (or completely leave)
-   * the boundaries in order to remain attached to the edge of the reference.
-   *
-   * @memberof modifiers
-   * @inner
-   */
-  preventOverflow: {
-    /** @prop {number} order=300 - Index used to define the order of execution */
-    order: 300,
-    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
-    enabled: true,
-    /** @prop {ModifierFn} */
-    fn: preventOverflow,
-    /**
-     * @prop {Array} [priority=['left','right','top','bottom']]
-     * Popper will try to prevent overflow following these priorities by default,
-     * then, it could overflow on the left and on top of the `boundariesElement`
-     */
-    priority: ['left', 'right', 'top', 'bottom'],
-    /**
-     * @prop {number} padding=5
-     * Amount of pixel used to define a minimum distance between the boundaries
-     * and the popper this makes sure the popper has always a little padding
-     * between the edges of its container
-     */
-    padding: 5,
-    /**
-     * @prop {String|HTMLElement} boundariesElement='scrollParent'
-     * Boundaries used by the modifier, can be `scrollParent`, `window`,
-     * `viewport` or any DOM element.
-     */
-    boundariesElement: 'scrollParent'
-  },
-
-  /**
-   * Modifier used to make sure the reference and its popper stay near eachothers
-   * without leaving any gap between the two. Expecially useful when the arrow is
-   * enabled and you want to assure it to point to its reference element.
-   * It cares only about the first axis, you can still have poppers with margin
-   * between the popper and its reference element.
-   * @memberof modifiers
-   * @inner
-   */
-  keepTogether: {
-    /** @prop {number} order=400 - Index used to define the order of execution */
-    order: 400,
-    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
-    enabled: true,
-    /** @prop {ModifierFn} */
-    fn: keepTogether
-  },
-
-  /**
-   * This modifier is used to move the `arrowElement` of the popper to make
-   * sure it is positioned between the reference element and its popper element.
-   * It will read the outer size of the `arrowElement` node to detect how many
-   * pixels of conjuction are needed.
-   *
-   * It has no effect if no `arrowElement` is provided.
-   * @memberof modifiers
-   * @inner
-   */
-  arrow: {
-    /** @prop {number} order=500 - Index used to define the order of execution */
-    order: 500,
-    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
-    enabled: true,
-    /** @prop {ModifierFn} */
-    fn: arrow,
-    /** @prop {String|HTMLElement} element='[x-arrow]' - Selector or node used as arrow */
-    element: '[x-arrow]'
-  },
-
-  /**
-   * Modifier used to flip the popper's placement when it starts to overlap its
-   * reference element.
-   *
-   * Requires the `preventOverflow` modifier before it in order to work.
-   *
-   * **NOTE:** this modifier will interrupt the current update cycle and will
-   * restart it if it detects the need to flip the placement.
-   * @memberof modifiers
-   * @inner
-   */
-  flip: {
-    /** @prop {number} order=600 - Index used to define the order of execution */
-    order: 600,
-    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
-    enabled: true,
-    /** @prop {ModifierFn} */
-    fn: flip,
-    /**
-     * @prop {String|Array} behavior='flip'
-     * The behavior used to change the popper's placement. It can be one of
-     * `flip`, `clockwise`, `counterclockwise` or an array with a list of valid
-     * placements (with optional variations).
-     */
-    behavior: 'flip',
-    /**
-     * @prop {number} padding=5
-     * The popper will flip if it hits the edges of the `boundariesElement`
-     */
-    padding: 5,
-    /**
-     * @prop {String|HTMLElement} boundariesElement='viewport'
-     * The element which will define the boundaries of the popper position,
-     * the popper will never be placed outside of the defined boundaries
-     * (except if keepTogether is enabled)
-     */
-    boundariesElement: 'viewport'
-  },
-
-  /**
-   * Modifier used to make the popper flow toward the inner of the reference element.
-   * By default, when this modifier is disabled, the popper will be placed outside
-   * the reference element.
-   * @memberof modifiers
-   * @inner
-   */
-  inner: {
-    /** @prop {number} order=700 - Index used to define the order of execution */
-    order: 700,
-    /** @prop {Boolean} enabled=false - Whether the modifier is enabled or not */
-    enabled: false,
-    /** @prop {ModifierFn} */
-    fn: inner
-  },
-
-  /**
-   * Modifier used to hide the popper when its reference element is outside of the
-   * popper boundaries. It will set a `x-out-of-boundaries` attribute which can
-   * be used to hide with a CSS selector the popper when its reference is
-   * out of boundaries.
-   *
-   * Requires the `preventOverflow` modifier before it in order to work.
-   * @memberof modifiers
-   * @inner
-   */
-  hide: {
-    /** @prop {number} order=800 - Index used to define the order of execution */
-    order: 800,
-    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
-    enabled: true,
-    /** @prop {ModifierFn} */
-    fn: hide
-  },
-
-  /**
-   * Computes the style that will be applied to the popper element to gets
-   * properly positioned.
-   *
-   * Note that this modifier will not touch the DOM, it just prepares the styles
-   * so that `applyStyle` modifier can apply it. This separation is useful
-   * in case you need to replace `applyStyle` with a custom implementation.
-   *
-   * This modifier has `850` as `order` value to maintain backward compatibility
-   * with previous versions of Popper.js. Expect the modifiers ordering method
-   * to change in future major versions of the library.
-   *
-   * @memberof modifiers
-   * @inner
-   */
-  computeStyle: {
-    /** @prop {number} order=850 - Index used to define the order of execution */
-    order: 850,
-    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
-    enabled: true,
-    /** @prop {ModifierFn} */
-    fn: computeStyle,
-    /**
-     * @prop {Boolean} gpuAcceleration=true
-     * If true, it uses the CSS 3d transformation to position the popper.
-     * Otherwise, it will use the `top` and `left` properties.
-     */
-    gpuAcceleration: true,
-    /**
-     * @prop {string} [x='bottom']
-     * Where to anchor the X axis (`bottom` or `top`). AKA X offset origin.
-     * Change this if your popper should grow in a direction different from `bottom`
-     */
-    x: 'bottom',
-    /**
-     * @prop {string} [x='left']
-     * Where to anchor the Y axis (`left` or `right`). AKA Y offset origin.
-     * Change this if your popper should grow in a direction different from `right`
-     */
-    y: 'right'
-  },
-
-  /**
-   * Applies the computed styles to the popper element.
-   *
-   * All the DOM manipulations are limited to this modifier. This is useful in case
-   * you want to integrate Popper.js inside a framework or view library and you
-   * want to delegate all the DOM manipulations to it.
-   *
-   * Note that if you disable this modifier, you must make sure the popper element
-   * has its position set to `absolute` before Popper.js can do its work!
-   *
-   * Just disable this modifier and define you own to achieve the desired effect.
-   *
-   * @memberof modifiers
-   * @inner
-   */
-  applyStyle: {
-    /** @prop {number} order=900 - Index used to define the order of execution */
-    order: 900,
-    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
-    enabled: true,
-    /** @prop {ModifierFn} */
-    fn: applyStyle,
-    /** @prop {Function} */
-    onLoad: applyStyleOnLoad,
-    /**
-     * @deprecated since version 1.10.0, the property moved to `computeStyle` modifier
-     * @prop {Boolean} gpuAcceleration=true
-     * If true, it uses the CSS 3d transformation to position the popper.
-     * Otherwise, it will use the `top` and `left` properties.
-     */
-    gpuAcceleration: undefined
-  }
-};
-
-/**
- * The `dataObject` is an object containing all the informations used by Popper.js
- * this object get passed to modifiers and to the `onCreate` and `onUpdate` callbacks.
- * @name dataObject
- * @property {Object} data.instance The Popper.js instance
- * @property {String} data.placement Placement applied to popper
- * @property {String} data.originalPlacement Placement originally defined on init
- * @property {Boolean} data.flipped True if popper has been flipped by flip modifier
- * @property {Boolean} data.hide True if the reference element is out of boundaries, useful to know when to hide the popper.
- * @property {HTMLElement} data.arrowElement Node used as arrow by arrow modifier
- * @property {Object} data.styles Any CSS property defined here will be applied to the popper, it expects the JavaScript nomenclature (eg. `marginBottom`)
- * @property {Object} data.arrowStyles Any CSS property defined here will be applied to the popper arrow, it expects the JavaScript nomenclature (eg. `marginBottom`)
- * @property {Object} data.boundaries Offsets of the popper boundaries
- * @property {Object} data.offsets The measurements of popper, reference and arrow elements.
- * @property {Object} data.offsets.popper `top`, `left`, `width`, `height` values
- * @property {Object} data.offsets.reference `top`, `left`, `width`, `height` values
- * @property {Object} data.offsets.arrow] `top` and `left` offsets, only one of them will be different from 0
- */
-
-/**
- * Default options provided to Popper.js constructor.<br />
- * These can be overriden using the `options` argument of Popper.js.<br />
- * To override an option, simply pass as 3rd argument an object with the same
- * structure of this object, example:
- * ```
- * new Popper(ref, pop, {
- *   modifiers: {
- *     preventOverflow: { enabled: false }
- *   }
- * })
- * ```
- * @type {Object}
- * @static
- * @memberof Popper
- */
-var Defaults = {
-  /**
-   * Popper's placement
-   * @prop {Popper.placements} placement='bottom'
-   */
-  placement: 'bottom',
-
-  /**
-   * Whether events (resize, scroll) are initially enabled
-   * @prop {Boolean} eventsEnabled=true
-   */
-  eventsEnabled: true,
-
-  /**
-   * Set to true if you want to automatically remove the popper when
-   * you call the `destroy` method.
-   * @prop {Boolean} removeOnDestroy=false
-   */
-  removeOnDestroy: false,
-
-  /**
-   * Callback called when the popper is created.<br />
-   * By default, is set to no-op.<br />
-   * Access Popper.js instance with `data.instance`.
-   * @prop {onCreate}
-   */
-  onCreate: function onCreate() {},
-
-  /**
-   * Callback called when the popper is updated, this callback is not called
-   * on the initialization/creation of the popper, but only on subsequent
-   * updates.<br />
-   * By default, is set to no-op.<br />
-   * Access Popper.js instance with `data.instance`.
-   * @prop {onUpdate}
-   */
-  onUpdate: function onUpdate() {},
-
-  /**
-   * List of modifiers used to modify the offsets before they are applied to the popper.
-   * They provide most of the functionalities of Popper.js
-   * @prop {modifiers}
-   */
-  modifiers: modifiers
-};
-
-/**
- * @callback onCreate
- * @param {dataObject} data
- */
-
-/**
- * @callback onUpdate
- * @param {dataObject} data
- */
-
-// Utils
-// Methods
-var Popper = function () {
-  /**
-   * Create a new Popper.js instance
-   * @class Popper
-   * @param {HTMLElement|referenceObject} reference - The reference element used to position the popper
-   * @param {HTMLElement} popper - The HTML element used as popper.
-   * @param {Object} options - Your custom options to override the ones defined in [Defaults](#defaults)
-   * @return {Object} instance - The generated Popper.js instance
-   */
-  function Popper(reference, popper) {
-    var _this = this;
-
-    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-    classCallCheck(this, Popper);
-
-    this.scheduleUpdate = function () {
-      return requestAnimationFrame(_this.update);
-    };
-
-    // make update() debounced, so that it only runs at most once-per-tick
-    this.update = debounce(this.update.bind(this));
-
-    // with {} we create a new object with the options inside it
-    this.options = _extends({}, Popper.Defaults, options);
-
-    // init state
-    this.state = {
-      isDestroyed: false,
-      isCreated: false,
-      scrollParents: []
-    };
-
-    // get reference and popper elements (allow jQuery wrappers)
-    this.reference = reference && reference.jquery ? reference[0] : reference;
-    this.popper = popper && popper.jquery ? popper[0] : popper;
-
-    // Deep merge modifiers options
-    this.options.modifiers = {};
-    Object.keys(_extends({}, Popper.Defaults.modifiers, options.modifiers)).forEach(function (name) {
-      _this.options.modifiers[name] = _extends({}, Popper.Defaults.modifiers[name] || {}, options.modifiers ? options.modifiers[name] : {});
-    });
-
-    // Refactoring modifiers' list (Object => Array)
-    this.modifiers = Object.keys(this.options.modifiers).map(function (name) {
-      return _extends({
-        name: name
-      }, _this.options.modifiers[name]);
-    })
-    // sort the modifiers by order
-    .sort(function (a, b) {
-      return a.order - b.order;
-    });
-
-    // modifiers have the ability to execute arbitrary code when Popper.js get inited
-    // such code is executed in the same order of its modifier
-    // they could add new properties to their options configuration
-    // BE AWARE: don't add options to `options.modifiers.name` but to `modifierOptions`!
-    this.modifiers.forEach(function (modifierOptions) {
-      if (modifierOptions.enabled && isFunction(modifierOptions.onLoad)) {
-        modifierOptions.onLoad(_this.reference, _this.popper, _this.options, modifierOptions, _this.state);
-      }
-    });
-
-    // fire the first update to position the popper in the right place
-    this.update();
-
-    var eventsEnabled = this.options.eventsEnabled;
-    if (eventsEnabled) {
-      // setup event listeners, they will take care of update the position in specific situations
-      this.enableEventListeners();
-    }
-
-    this.state.eventsEnabled = eventsEnabled;
-  }
-
-  // We can't use class properties because they don't get listed in the
-  // class prototype and break stuff like Sinon stubs
-
-
-  createClass(Popper, [{
-    key: 'update',
-    value: function update$$1() {
-      return update.call(this);
-    }
-  }, {
-    key: 'destroy',
-    value: function destroy$$1() {
-      return destroy.call(this);
-    }
-  }, {
-    key: 'enableEventListeners',
-    value: function enableEventListeners$$1() {
-      return enableEventListeners.call(this);
-    }
-  }, {
-    key: 'disableEventListeners',
-    value: function disableEventListeners$$1() {
-      return disableEventListeners.call(this);
-    }
-
-    /**
-     * Schedule an update, it will run on the next UI update available
-     * @method scheduleUpdate
-     * @memberof Popper
-     */
-
-
-    /**
-     * Collection of utilities useful when writing custom modifiers.
-     * Starting from version 1.7, this method is available only if you
-     * include `popper-utils.js` before `popper.js`.
-     *
-     * **DEPRECATION**: This way to access PopperUtils is deprecated
-     * and will be removed in v2! Use the PopperUtils module directly instead.
-     * Due to the high instability of the methods contained in Utils, we can't
-     * guarantee them to follow semver. Use them at your own risk!
-     * @static
-     * @private
-     * @type {Object}
-     * @deprecated since version 1.8
-     * @member Utils
-     * @memberof Popper
-     */
-
-  }]);
-  return Popper;
-}();
-
-/**
- * The `referenceObject` is an object that provides an interface compatible with Popper.js
- * and lets you use it as replacement of a real DOM node.<br />
- * You can use this method to position a popper relatively to a set of coordinates
- * in case you don't have a DOM node to use as reference.
- *
- * ```
- * new Popper(referenceObject, popperNode);
- * ```
- *
- * NB: This feature isn't supported in Internet Explorer 10
- * @name referenceObject
- * @property {Function} data.getBoundingClientRect
- * A function that returns a set of coordinates compatible with the native `getBoundingClientRect` method.
- * @property {number} data.clientWidth
- * An ES6 getter that will return the width of the virtual reference element.
- * @property {number} data.clientHeight
- * An ES6 getter that will return the height of the virtual reference element.
- */
-
-
-Popper.Utils = (typeof window !== 'undefined' ? window : global).PopperUtils;
-Popper.placements = placements;
-Popper.Defaults = Defaults;
-
-/* harmony default export */ __webpack_exports__["default"] = (Popper);
-//# sourceMappingURL=popper.js.map
-
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(180)))
-
-/***/ }),
-/* 255 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48595,7 +52184,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(5);
+var _propTypes = __webpack_require__(24);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -48654,13 +52243,13 @@ Arrow.propTypes = {
 exports.default = Arrow;
 
 /***/ }),
-/* 256 */
+/* 263 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 257 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48677,23 +52266,23 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 //Styles
-__webpack_require__(258);
+__webpack_require__(265);
 //Libs
 var React = __webpack_require__(1);
 //import * as SmoothCollapse from 'react-smooth-collapse';
 try {
-    var SmoothCollapse = __webpack_require__(181);
+    var SmoothCollapse = __webpack_require__(184);
 }
 catch (_a) {
     SmoothCollapse = undefined;
 }
-var PropTypes = __webpack_require__(5);
+var PropTypes = __webpack_require__(20);
 //Misc
-var Dropdown_1 = __webpack_require__(196);
-var MoreIcon = __webpack_require__(306);
-var PlusIcon = __webpack_require__(59);
+var Dropdown_1 = __webpack_require__(199);
+var MoreIcon = __webpack_require__(313);
+var PlusIcon = __webpack_require__(63);
 var Button_1 = __webpack_require__(7);
-var Guid_1 = __webpack_require__(56);
+var Guid_1 = __webpack_require__(60);
 exports.InputHeaderContextType = {
     registerInputHeader: PropTypes.func,
     unregisterInputHeader: PropTypes.func,
@@ -48880,34 +52469,34 @@ exports.default = InputHeader;
 
 
 /***/ }),
-/* 258 */
+/* 265 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 259 */
+/* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(260), __esModule: true };
+module.exports = { "default": __webpack_require__(267), __esModule: true };
 
 /***/ }),
-/* 260 */
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(261);
+__webpack_require__(268);
 module.exports = __webpack_require__(9).Object.getPrototypeOf;
 
 
 /***/ }),
-/* 261 */
+/* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 Object.getPrototypeOf(O)
-var toObject = __webpack_require__(182);
-var $getPrototypeOf = __webpack_require__(183);
+var toObject = __webpack_require__(185);
+var $getPrototypeOf = __webpack_require__(186);
 
-__webpack_require__(262)('getPrototypeOf', function () {
+__webpack_require__(269)('getPrototypeOf', function () {
   return function getPrototypeOf(it) {
     return $getPrototypeOf(toObject(it));
   };
@@ -48915,13 +52504,13 @@ __webpack_require__(262)('getPrototypeOf', function () {
 
 
 /***/ }),
-/* 262 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // most Object methods by ES6 should accept primitives
-var $export = __webpack_require__(13);
+var $export = __webpack_require__(15);
 var core = __webpack_require__(9);
-var fails = __webpack_require__(21);
+var fails = __webpack_require__(22);
 module.exports = function (KEY, exec) {
   var fn = (core.Object || {})[KEY] || Object[KEY];
   var exp = {};
@@ -48931,7 +52520,7 @@ module.exports = function (KEY, exec) {
 
 
 /***/ }),
-/* 263 */
+/* 270 */
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
@@ -48941,7 +52530,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 264 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48956,7 +52545,7 @@ exports.default = function (instance, Constructor) {
 };
 
 /***/ }),
-/* 265 */
+/* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48964,7 +52553,7 @@ exports.default = function (instance, Constructor) {
 
 exports.__esModule = true;
 
-var _defineProperty = __webpack_require__(266);
+var _defineProperty = __webpack_require__(273);
 
 var _defineProperty2 = _interopRequireDefault(_defineProperty);
 
@@ -48989,16 +52578,16 @@ exports.default = function () {
 }();
 
 /***/ }),
-/* 266 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(267), __esModule: true };
+module.exports = { "default": __webpack_require__(274), __esModule: true };
 
 /***/ }),
-/* 267 */
+/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(268);
+__webpack_require__(275);
 var $Object = __webpack_require__(9).Object;
 module.exports = function defineProperty(it, key, desc) {
   return $Object.defineProperty(it, key, desc);
@@ -49006,16 +52595,16 @@ module.exports = function defineProperty(it, key, desc) {
 
 
 /***/ }),
-/* 268 */
+/* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $export = __webpack_require__(13);
+var $export = __webpack_require__(15);
 // 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
 $export($export.S + $export.F * !__webpack_require__(12), 'Object', { defineProperty: __webpack_require__(11).f });
 
 
 /***/ }),
-/* 269 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49023,7 +52612,7 @@ $export($export.S + $export.F * !__webpack_require__(12), 'Object', { defineProp
 
 exports.__esModule = true;
 
-var _typeof2 = __webpack_require__(187);
+var _typeof2 = __webpack_require__(190);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
@@ -49038,30 +52627,30 @@ exports.default = function (self, call) {
 };
 
 /***/ }),
-/* 270 */
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(271), __esModule: true };
+module.exports = { "default": __webpack_require__(278), __esModule: true };
 
 /***/ }),
-/* 271 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(272);
-__webpack_require__(281);
-module.exports = __webpack_require__(44).f('iterator');
+__webpack_require__(279);
+__webpack_require__(288);
+module.exports = __webpack_require__(47).f('iterator');
 
 
 /***/ }),
-/* 272 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var $at = __webpack_require__(273)(true);
+var $at = __webpack_require__(280)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(188)(String, 'String', function (iterated) {
+__webpack_require__(191)(String, 'String', function (iterated) {
   this._t = String(iterated); // target
   this._i = 0;                // next index
 // 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -49077,11 +52666,11 @@ __webpack_require__(188)(String, 'String', function (iterated) {
 
 
 /***/ }),
-/* 273 */
+/* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(37);
-var defined = __webpack_require__(33);
+var toInteger = __webpack_require__(40);
+var defined = __webpack_require__(36);
 // true  -> String#at
 // false -> String#codePointAt
 module.exports = function (TO_STRING) {
@@ -49100,18 +52689,18 @@ module.exports = function (TO_STRING) {
 
 
 /***/ }),
-/* 274 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var create = __webpack_require__(40);
-var descriptor = __webpack_require__(25);
-var setToStringTag = __webpack_require__(43);
+var create = __webpack_require__(43);
+var descriptor = __webpack_require__(26);
+var setToStringTag = __webpack_require__(46);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(14)(IteratorPrototype, __webpack_require__(17)('iterator'), function () { return this; });
+__webpack_require__(16)(IteratorPrototype, __webpack_require__(19)('iterator'), function () { return this; });
 
 module.exports = function (Constructor, NAME, next) {
   Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
@@ -49120,12 +52709,12 @@ module.exports = function (Constructor, NAME, next) {
 
 
 /***/ }),
-/* 275 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(11);
-var anObject = __webpack_require__(20);
-var getKeys = __webpack_require__(41);
+var anObject = __webpack_require__(21);
+var getKeys = __webpack_require__(44);
 
 module.exports = __webpack_require__(12) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
@@ -49139,11 +52728,11 @@ module.exports = __webpack_require__(12) ? Object.defineProperties : function de
 
 
 /***/ }),
-/* 276 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(191);
+var cof = __webpack_require__(194);
 // eslint-disable-next-line no-prototype-builtins
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
   return cof(it) == 'String' ? it.split('') : Object(it);
@@ -49151,14 +52740,14 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 
 
 /***/ }),
-/* 277 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // false -> Array#indexOf
 // true  -> Array#includes
-var toIObject = __webpack_require__(16);
-var toLength = __webpack_require__(278);
-var toAbsoluteIndex = __webpack_require__(279);
+var toIObject = __webpack_require__(18);
+var toLength = __webpack_require__(285);
+var toAbsoluteIndex = __webpack_require__(286);
 module.exports = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
     var O = toIObject($this);
@@ -49180,11 +52769,11 @@ module.exports = function (IS_INCLUDES) {
 
 
 /***/ }),
-/* 278 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.15 ToLength
-var toInteger = __webpack_require__(37);
+var toInteger = __webpack_require__(40);
 var min = Math.min;
 module.exports = function (it) {
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
@@ -49192,10 +52781,10 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 279 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(37);
+var toInteger = __webpack_require__(40);
 var max = Math.max;
 var min = Math.min;
 module.exports = function (index, length) {
@@ -49205,7 +52794,7 @@ module.exports = function (index, length) {
 
 
 /***/ }),
-/* 280 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var document = __webpack_require__(8).document;
@@ -49213,14 +52802,14 @@ module.exports = document && document.documentElement;
 
 
 /***/ }),
-/* 281 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(282);
+__webpack_require__(289);
 var global = __webpack_require__(8);
-var hide = __webpack_require__(14);
-var Iterators = __webpack_require__(39);
-var TO_STRING_TAG = __webpack_require__(17)('toStringTag');
+var hide = __webpack_require__(16);
+var Iterators = __webpack_require__(42);
+var TO_STRING_TAG = __webpack_require__(19)('toStringTag');
 
 var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
   'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
@@ -49238,21 +52827,21 @@ for (var i = 0; i < DOMIterables.length; i++) {
 
 
 /***/ }),
-/* 282 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var addToUnscopables = __webpack_require__(283);
-var step = __webpack_require__(284);
-var Iterators = __webpack_require__(39);
-var toIObject = __webpack_require__(16);
+var addToUnscopables = __webpack_require__(290);
+var step = __webpack_require__(291);
+var Iterators = __webpack_require__(42);
+var toIObject = __webpack_require__(18);
 
 // 22.1.3.4 Array.prototype.entries()
 // 22.1.3.13 Array.prototype.keys()
 // 22.1.3.29 Array.prototype.values()
 // 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(188)(Array, 'Array', function (iterated, kind) {
+module.exports = __webpack_require__(191)(Array, 'Array', function (iterated, kind) {
   this._t = toIObject(iterated); // target
   this._i = 0;                   // next index
   this._k = kind;                // kind
@@ -49279,14 +52868,14 @@ addToUnscopables('entries');
 
 
 /***/ }),
-/* 283 */
+/* 290 */
 /***/ (function(module, exports) {
 
 module.exports = function () { /* empty */ };
 
 
 /***/ }),
-/* 284 */
+/* 291 */
 /***/ (function(module, exports) {
 
 module.exports = function (done, value) {
@@ -49295,24 +52884,24 @@ module.exports = function (done, value) {
 
 
 /***/ }),
-/* 285 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(286), __esModule: true };
+module.exports = { "default": __webpack_require__(293), __esModule: true };
 
 /***/ }),
-/* 286 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(287);
-__webpack_require__(292);
-__webpack_require__(293);
 __webpack_require__(294);
+__webpack_require__(299);
+__webpack_require__(300);
+__webpack_require__(301);
 module.exports = __webpack_require__(9).Symbol;
 
 
 /***/ }),
-/* 287 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49321,28 +52910,28 @@ module.exports = __webpack_require__(9).Symbol;
 var global = __webpack_require__(8);
 var has = __webpack_require__(10);
 var DESCRIPTORS = __webpack_require__(12);
-var $export = __webpack_require__(13);
-var redefine = __webpack_require__(189);
-var META = __webpack_require__(288).KEY;
-var $fails = __webpack_require__(21);
-var shared = __webpack_require__(35);
-var setToStringTag = __webpack_require__(43);
-var uid = __webpack_require__(24);
-var wks = __webpack_require__(17);
-var wksExt = __webpack_require__(44);
-var wksDefine = __webpack_require__(45);
-var enumKeys = __webpack_require__(289);
-var isArray = __webpack_require__(290);
-var anObject = __webpack_require__(20);
-var isObject = __webpack_require__(15);
-var toIObject = __webpack_require__(16);
-var toPrimitive = __webpack_require__(36);
-var createDesc = __webpack_require__(25);
-var _create = __webpack_require__(40);
-var gOPNExt = __webpack_require__(291);
-var $GOPD = __webpack_require__(194);
+var $export = __webpack_require__(15);
+var redefine = __webpack_require__(192);
+var META = __webpack_require__(295).KEY;
+var $fails = __webpack_require__(22);
+var shared = __webpack_require__(38);
+var setToStringTag = __webpack_require__(46);
+var uid = __webpack_require__(25);
+var wks = __webpack_require__(19);
+var wksExt = __webpack_require__(47);
+var wksDefine = __webpack_require__(48);
+var enumKeys = __webpack_require__(296);
+var isArray = __webpack_require__(297);
+var anObject = __webpack_require__(21);
+var isObject = __webpack_require__(17);
+var toIObject = __webpack_require__(18);
+var toPrimitive = __webpack_require__(39);
+var createDesc = __webpack_require__(26);
+var _create = __webpack_require__(43);
+var gOPNExt = __webpack_require__(298);
+var $GOPD = __webpack_require__(197);
 var $DP = __webpack_require__(11);
-var $keys = __webpack_require__(41);
+var $keys = __webpack_require__(44);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
 var gOPN = gOPNExt.f;
@@ -49465,11 +53054,11 @@ if (!USE_NATIVE) {
 
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
-  __webpack_require__(193).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(46).f = $propertyIsEnumerable;
-  __webpack_require__(192).f = $getOwnPropertySymbols;
+  __webpack_require__(196).f = gOPNExt.f = $getOwnPropertyNames;
+  __webpack_require__(49).f = $propertyIsEnumerable;
+  __webpack_require__(195).f = $getOwnPropertySymbols;
 
-  if (DESCRIPTORS && !__webpack_require__(38)) {
+  if (DESCRIPTORS && !__webpack_require__(41)) {
     redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
   }
 
@@ -49543,7 +53132,7 @@ $JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function () {
 });
 
 // 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
-$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(14)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(16)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
 // 19.4.3.5 Symbol.prototype[@@toStringTag]
 setToStringTag($Symbol, 'Symbol');
 // 20.2.1.9 Math[@@toStringTag]
@@ -49553,18 +53142,18 @@ setToStringTag(global.JSON, 'JSON', true);
 
 
 /***/ }),
-/* 288 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var META = __webpack_require__(24)('meta');
-var isObject = __webpack_require__(15);
+var META = __webpack_require__(25)('meta');
+var isObject = __webpack_require__(17);
 var has = __webpack_require__(10);
 var setDesc = __webpack_require__(11).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
   return true;
 };
-var FREEZE = !__webpack_require__(21)(function () {
+var FREEZE = !__webpack_require__(22)(function () {
   return isExtensible(Object.preventExtensions({}));
 });
 var setMeta = function (it) {
@@ -49612,13 +53201,13 @@ var meta = module.exports = {
 
 
 /***/ }),
-/* 289 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
-var getKeys = __webpack_require__(41);
-var gOPS = __webpack_require__(192);
-var pIE = __webpack_require__(46);
+var getKeys = __webpack_require__(44);
+var gOPS = __webpack_require__(195);
+var pIE = __webpack_require__(49);
 module.exports = function (it) {
   var result = getKeys(it);
   var getSymbols = gOPS.f;
@@ -49633,23 +53222,23 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 290 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
-var cof = __webpack_require__(191);
+var cof = __webpack_require__(194);
 module.exports = Array.isArray || function isArray(arg) {
   return cof(arg) == 'Array';
 };
 
 
 /***/ }),
-/* 291 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-var toIObject = __webpack_require__(16);
-var gOPN = __webpack_require__(193).f;
+var toIObject = __webpack_require__(18);
+var gOPN = __webpack_require__(196).f;
 var toString = {}.toString;
 
 var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
@@ -49669,27 +53258,27 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 
 /***/ }),
-/* 292 */
+/* 299 */
 /***/ (function(module, exports) {
 
 
 
 /***/ }),
-/* 293 */
+/* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(45)('asyncIterator');
+__webpack_require__(48)('asyncIterator');
 
 
 /***/ }),
-/* 294 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(45)('observable');
+__webpack_require__(48)('observable');
 
 
 /***/ }),
-/* 295 */
+/* 302 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49697,15 +53286,15 @@ __webpack_require__(45)('observable');
 
 exports.__esModule = true;
 
-var _setPrototypeOf = __webpack_require__(296);
+var _setPrototypeOf = __webpack_require__(303);
 
 var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
 
-var _create = __webpack_require__(300);
+var _create = __webpack_require__(307);
 
 var _create2 = _interopRequireDefault(_create);
 
-var _typeof2 = __webpack_require__(187);
+var _typeof2 = __webpack_require__(190);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
@@ -49728,36 +53317,36 @@ exports.default = function (subClass, superClass) {
 };
 
 /***/ }),
-/* 296 */
+/* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(297), __esModule: true };
+module.exports = { "default": __webpack_require__(304), __esModule: true };
 
 /***/ }),
-/* 297 */
+/* 304 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(298);
+__webpack_require__(305);
 module.exports = __webpack_require__(9).Object.setPrototypeOf;
 
 
 /***/ }),
-/* 298 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.3.19 Object.setPrototypeOf(O, proto)
-var $export = __webpack_require__(13);
-$export($export.S, 'Object', { setPrototypeOf: __webpack_require__(299).set });
+var $export = __webpack_require__(15);
+$export($export.S, 'Object', { setPrototypeOf: __webpack_require__(306).set });
 
 
 /***/ }),
-/* 299 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Works with __proto__ only. Old v8 can't work with null proto objects.
 /* eslint-disable no-proto */
-var isObject = __webpack_require__(15);
-var anObject = __webpack_require__(20);
+var isObject = __webpack_require__(17);
+var anObject = __webpack_require__(21);
 var check = function (O, proto) {
   anObject(O);
   if (!isObject(proto) && proto !== null) throw TypeError(proto + ": can't set as prototype!");
@@ -49766,7 +53355,7 @@ module.exports = {
   set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
     function (test, buggy, set) {
       try {
-        set = __webpack_require__(184)(Function.call, __webpack_require__(194).f(Object.prototype, '__proto__').set, 2);
+        set = __webpack_require__(187)(Function.call, __webpack_require__(197).f(Object.prototype, '__proto__').set, 2);
         set(test, []);
         buggy = !(test instanceof Array);
       } catch (e) { buggy = true; }
@@ -49782,16 +53371,16 @@ module.exports = {
 
 
 /***/ }),
-/* 300 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(301), __esModule: true };
+module.exports = { "default": __webpack_require__(308), __esModule: true };
 
 /***/ }),
-/* 301 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(302);
+__webpack_require__(309);
 var $Object = __webpack_require__(9).Object;
 module.exports = function create(P, D) {
   return $Object.create(P, D);
@@ -49799,21 +53388,21 @@ module.exports = function create(P, D) {
 
 
 /***/ }),
-/* 302 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $export = __webpack_require__(13);
+var $export = __webpack_require__(15);
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-$export($export.S, 'Object', { create: __webpack_require__(40) });
+$export($export.S, 'Object', { create: __webpack_require__(43) });
 
 
 /***/ }),
-/* 303 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root, factory) {
   if (true) {
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(195)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -49892,7 +53481,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 304 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49911,13 +53500,13 @@ module.exports = exports['default'];
 //# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9nZXRUcmFuc2l0aW9uVGltZU1zLmpzIl0sIm5hbWVzIjpbImdldFRyYW5zaXRpb25UaW1lTXMiLCJoZWlnaHRUcmFuc2l0aW9uIiwibSIsImV4ZWMiLCJFcnJvciIsIk51bWJlciIsImxlbmd0aCJdLCJtYXBwaW5ncyI6Ijs7Ozs7a0JBRXdCQSxtQjtBQUFULFNBQVNBLG1CQUFULENBQTZCQyxnQkFBN0IsRUFBK0Q7QUFDNUUsTUFBTUMsSUFBSSxnQ0FBZ0NDLElBQWhDLENBQXFDRixnQkFBckMsQ0FBVjtBQUNBLE1BQUksQ0FBQ0MsQ0FBTCxFQUFRLE1BQU0sSUFBSUUsS0FBSixDQUFVLDRDQUFWLENBQU47QUFDUixTQUFPQyxPQUFPSCxFQUFFLENBQUYsQ0FBUCxLQUFnQkEsRUFBRSxDQUFGLEVBQUtJLE1BQUwsS0FBZ0IsQ0FBaEIsR0FBb0IsSUFBcEIsR0FBMkIsQ0FBM0MsQ0FBUDtBQUNEIiwiZmlsZSI6ImdldFRyYW5zaXRpb25UaW1lTXMuanMiLCJzb3VyY2VzQ29udGVudCI6WyIvKiBAZmxvdyAqL1xuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBnZXRUcmFuc2l0aW9uVGltZU1zKGhlaWdodFRyYW5zaXRpb246IHN0cmluZyk6IG51bWJlciB7XG4gIGNvbnN0IG0gPSAvKFxcZCsoPzpcXC5cXGQrKT98XFwuXFxkKykobT9zKVxcYi9pLmV4ZWMoaGVpZ2h0VHJhbnNpdGlvbik7XG4gIGlmICghbSkgdGhyb3cgbmV3IEVycm9yKCdDb3VsZCBub3QgcGFyc2UgdGltZSBmcm9tIHRyYW5zaXRpb24gdmFsdWUnKTtcbiAgcmV0dXJuIE51bWJlcihtWzFdKSAqIChtWzJdLmxlbmd0aCA9PT0gMSA/IDEwMDAgOiAxKTtcbn1cbiJdfQ==
 
 /***/ }),
-/* 305 */
+/* 312 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 306 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var React = __webpack_require__(1);
@@ -49936,7 +53525,7 @@ IcMoreVert24px.default = IcMoreVert24px;
 
 
 /***/ }),
-/* 307 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49996,15 +53585,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 //Styles
-__webpack_require__(308);
+__webpack_require__(315);
 //Libs
-var react_onclickoutside_1 = __webpack_require__(179);
+var react_onclickoutside_1 = __webpack_require__(183);
 var React = __webpack_require__(1);
-var BaseInput = __webpack_require__(2);
-var InputGroup_1 = __webpack_require__(4);
-var Text_1 = __webpack_require__(30);
+var BaseInput = __webpack_require__(3);
+var InputGroup_1 = __webpack_require__(5);
+var Text_1 = __webpack_require__(32);
 var Button_1 = __webpack_require__(7);
-var PlusIcon = __webpack_require__(31);
+var PlusIcon = __webpack_require__(33);
 var Suggestions = /** @class */ (function (_super) {
     __extends(Suggestions, _super);
     function Suggestions() {
@@ -50152,13 +53741,13 @@ exports.default = Tags;
 
 
 /***/ }),
-/* 308 */
+/* 315 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 309 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50175,13 +53764,13 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 //Styles
-__webpack_require__(310);
+__webpack_require__(317);
 //Libs
 var React = __webpack_require__(1);
-var react_textarea_autosize_1 = __webpack_require__(311);
+var react_textarea_autosize_1 = __webpack_require__(318);
 //Misc
-var BaseInput = __webpack_require__(2);
-var InputGroup_1 = __webpack_require__(4);
+var BaseInput = __webpack_require__(3);
+var InputGroup_1 = __webpack_require__(5);
 var TextArea = /** @class */ (function (_super) {
     __extends(TextArea, _super);
     function TextArea(props) {
@@ -50205,20 +53794,20 @@ exports.default = TextArea;
 
 
 /***/ }),
-/* 310 */
+/* 317 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 311 */
+/* 318 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 
 
@@ -50641,10 +54230,10 @@ TextareaAutosize.defaultProps = {
 
 /* harmony default export */ __webpack_exports__["default"] = (TextareaAutosize);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
-/* 312 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50660,9 +54249,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-__webpack_require__(313);
+__webpack_require__(320);
 var React = __webpack_require__(1);
-var logo = __webpack_require__(314);
+var logo = __webpack_require__(321);
 var Header = /** @class */ (function (_super) {
     __extends(Header, _super);
     function Header() {
@@ -50680,13 +54269,13 @@ exports.default = Header;
 
 
 /***/ }),
-/* 313 */
+/* 320 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 314 */
+/* 321 */
 /***/ (function(module, exports) {
 
 module.exports = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyMS4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAyNjggNTAuNiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMjY4IDUwLjY7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+DQoJLnN0MHtmaWxsOm5vbmU7fQ0KCS5zdDF7ZmlsbDojRkZGRkZGO30NCgkuc3Qye2ZpbGw6IzEwQkRDNzt9DQo8L3N0eWxlPg0KPHBhdGggY2xhc3M9InN0MCIgZD0iTTE5MC41LDMwLjFjLTEuMS0wLjctMi41LTEuMS00LjEtMS40Yy0xLjYtMC4zLTMuNC0wLjQtNS4zLTAuNGgtOS4ydjE3LjVjMC42LDAuMSwxLjYsMC4yLDIuOSwwLjMNCgljMS4zLDAuMSwyLjYsMC4yLDMuOSwwLjJjMiwwLDMuOS0wLjEsNS43LTAuNGMxLjktMC4zLDMuNS0wLjcsNC45LTEuNHMyLjUtMS42LDMuNC0yLjhjMC45LTEuMiwxLjMtMi43LDEuMy00LjYNCgljMC0xLjctMC4zLTMuMS0wLjktNC4zQzE5Mi41LDMxLjcsMTkxLjYsMzAuOCwxOTAuNSwzMC4xeiIvPg0KPHBhdGggY2xhc3M9InN0MCIgZD0iTTIyMC4yLDE5LjVjLTEuNSwwLTIuOCwwLjMtNCwwLjljLTEuMiwwLjYtMi4yLDEuNC0zLjEsMi40Yy0wLjksMS0xLjYsMi4yLTIsMy41Yy0wLjUsMS4zLTAuOCwyLjctMC45LDQuMg0KCWgxOC45Yy0wLjEtMy41LTAuOS02LjEtMi40LTguMUMyMjUuMSwyMC41LDIyMywxOS41LDIyMC4yLDE5LjV6Ii8+DQo8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTg0LjgsMjQuM2MxLjQtMC4yLDIuNi0wLjcsMy43LTEuM2MxLTAuNiwxLjktMS40LDIuNS0yLjVjMC42LTEsMC45LTIuNCwwLjktNGMwLTEuNC0wLjMtMi43LTEtMy43DQoJYy0wLjYtMS0xLjUtMS44LTIuNy0yLjVjLTEuMi0wLjYtMi42LTEuMS00LjItMS40Yy0xLjYtMC4zLTMuNC0wLjQtNS40LTAuNGMtMS42LDAtMi45LDAtNCwwLjFjLTEuMSwwLjEtMiwwLjItMi43LDAuM3YxNS42aDguNA0KCUMxODEuOSwyNC42LDE4My40LDI0LjUsMTg0LjgsMjQuM3oiLz4NCjxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0yOS40LDQ1LjdjLTAuNSwwLjItMS41LDAuNC0zLDAuN2MtMS41LDAuMi0zLjMsMC40LTUuNSwwLjRjLTIuNywwLTUuMS0wLjQtNy4xLTEuM3MtMy44LTIuMi01LjItMy45DQoJYy0xLjQtMS43LTIuNC0zLjctMy4xLTYuMWMtMC43LTIuNC0xLTUtMS04YzAtMy4yLDAuNC01LjksMS4yLTguM2MwLjgtMi40LDItNC40LDMuNC02YzEuNS0xLjYsMy4yLTIuOCw1LjEtMy42DQoJYzItMC44LDQuMS0xLjIsNi4zLTEuMmMyLjQsMCw0LjYsMC4zLDYuNywwLjhjMiwwLjUsMy43LDEuMiw0LjksMi4xbDEuNS0zLjdjLTEtMC42LTIuNS0xLjMtNC43LTJjLTIuMS0wLjctNC44LTEuMS04LjEtMS4xDQoJYy0yLjksMC01LjUsMC41LTguMSwxLjVjLTIuNSwxLTQuNywyLjUtNi42LDQuNGMtMS45LDEuOS0zLjQsNC40LTQuNSw3LjJDMC42LDIwLjQsMCwyMy43LDAsMjcuNXMwLjUsNywxLjUsOS45DQoJYzEsMi45LDIuNCw1LjMsNC4zLDcuMmMxLjgsMS45LDQsMy40LDYuNCw0LjRjMi41LDEsNS4yLDEuNSw4LjEsMS41YzMuNSwwLDYuNC0wLjMsOC43LTAuOGMyLjQtMC41LDQtMSw0LjgtMS4zVjI4LjdoLTQuNFY0NS43eiIvPg0KPHBhdGggY2xhc3M9InN0MSIgZD0iTTY0LjksNDUuNmMtMC40LDAuMi0xLjMsMC40LTIuOCwwLjZjLTEuNSwwLjItMy4yLDAuMy01LjEsMC4zYy0xLjgsMC0zLjItMC4yLTQuNC0wLjdjLTEuMi0wLjQtMi4yLTEuMi0zLTIuMg0KCWMtMC44LTEtMS4zLTIuMy0xLjctMy45Yy0wLjMtMS42LTAuNS0zLjYtMC41LTZWMTYuNmgtNC4ydjE4LjZjMCwyLjMsMC4yLDQuMywwLjcsNi4yYzAuNCwxLjksMS4yLDMuNSwyLjIsNC44YzEsMS4zLDIuNCwyLjMsNCwzLjENCgljMS43LDAuNywzLjcsMS4xLDYuMiwxLjFjMywwLDUuNi0wLjIsNy43LTAuNmMyLjEtMC40LDMuOC0wLjgsNS0xLjJWMTYuNmgtNC4yVjQ1LjZ6Ii8+DQo8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTMxLjUsMzQuN2MtMC45LTAuNy0xLjktMS40LTMuMS0xLjljLTEuMi0wLjUtMi40LTEuMS0zLjctMS42Yy0xLjItMC41LTIuMy0xLTMuMy0xLjRjLTEtMC40LTEuOC0wLjktMi40LTEuNA0KCWMtMC43LTAuNS0xLjItMS4xLTEuNS0xLjdjLTAuMy0wLjYtMC41LTEuNC0wLjUtMi4zczAuMi0xLjcsMC42LTIuM2MwLjQtMC42LDAuOS0xLjEsMS41LTEuNWMwLjYtMC40LDEuNC0wLjcsMi4yLTAuOQ0KCXMxLjctMC4zLDIuNy0wLjNjMi4zLDAsNC4xLDAuMiw1LjMsMC42YzEuMiwwLjQsMi4xLDAuOCwyLjYsMWwxLTMuN2MtMC42LTAuMy0xLjYtMC42LTMuMS0xYy0xLjUtMC40LTMuMy0wLjYtNS42LTAuNg0KCWMtMy41LDAtNi4zLDAuOC04LjQsMi41Yy0yLDEuNy0zLDMuOC0zLDYuNWMwLDEuNCwwLjMsMi42LDAuOCwzLjZjMC41LDEsMS4yLDEuOCwyLDIuNWMwLjksMC43LDEuOCwxLjMsMi45LDEuOQ0KCWMxLjEsMC41LDIuMywxLjEsMy41LDEuNmMxLjUsMC42LDIuOCwxLjIsMy45LDEuN2MxLDAuNSwxLjksMSwyLjUsMS41YzAuNiwwLjUsMS4xLDEuMSwxLjQsMS43YzAuMywwLjYsMC40LDEuNCwwLjQsMi4zDQoJYzAsMS45LTAuOCwzLjItMi4zLDRjLTEuNiwwLjgtMy41LDEuMi01LjksMS4yYy0xLjMsMC0yLjUtMC4xLTMuNS0wLjNjLTEtMC4yLTEuOS0wLjQtMi42LTAuNmMtMC43LTAuMi0xLjMtMC40LTEuNy0wLjYNCgljLTAuNC0wLjItMC43LTAuMy0wLjgtMC40bC0xLjEsMy44YzAuNSwwLjMsMS41LDAuNiwzLjEsMS4xYzEuNSwwLjUsMy44LDAuNyw2LjcsMC43YzMuOSwwLDYuOS0wLjgsOS4yLTIuMw0KCWMyLjItMS41LDMuNC0zLjgsMy40LTYuOGMwLTEuNi0wLjMtMi45LTAuOC0zLjlDMTMzLjEsMzYuNCwxMzIuNCwzNS41LDEzMS41LDM0Ljd6Ii8+DQo8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTU3LjUsNDZjLTEuMSwwLjQtMi41LDAuNi00LjIsMC42Yy0xLDAtMi0wLjEtMi44LTAuM2MtMC45LTAuMi0xLjYtMC42LTIuMi0xLjNjLTAuNi0wLjYtMS4xLTEuNS0xLjQtMi43DQoJYy0wLjMtMS4yLTAuNS0yLjctMC41LTQuNlYyMC4xaDEzLjJ2LTMuNWgtMTMuMlY2LjFsLTQuMiwwLjh2MzAuNWMwLDIuMiwwLjIsNC4xLDAuNSw1LjhjMC4zLDEuNiwwLjksMywxLjgsNC4xDQoJYzAuOCwxLjEsMS45LDEuOSwzLjMsMi40YzEuNCwwLjUsMy4xLDAuOCw1LjIsMC44YzEuNywwLDMuNC0wLjIsNC45LTAuN2MxLjUtMC41LDIuNS0wLjksMy4xLTEuM2wtMS0zLjUNCglDMTU5LjQsNDUuMiwxNTguNiw0NS42LDE1Ny41LDQ2eiIvPg0KPHBhdGggY2xhc3M9InN0MiIgZD0iTTE5NiwyOS40Yy0wLjgtMC45LTEuOC0xLjYtMi44LTIuMWMtMS4xLTAuNi0yLjItMS0zLjUtMS4zYzItMC42LDMuNy0xLjgsNC45LTMuNWMxLjItMS43LDEuOC0zLjcsMS44LTYuMQ0KCWMwLTIuMi0wLjUtNC0xLjQtNS41Yy0xLTEuNS0yLjMtMi43LTMuOS0zLjVjLTEuNi0wLjktMy41LTEuNS01LjctMS45Yy0yLjItMC40LTQuNC0wLjYtNi44LTAuNmMtMC44LDAtMS43LDAtMi43LDAuMQ0KCWMtMSwwLTEuOSwwLjEtMi45LDAuMmMtMSwwLjEtMiwwLjItMi45LDAuNGMtMC45LDAuMS0xLjgsMC4zLTIuNiwwLjV2NDIuN2MwLjYsMC4yLDEuNCwwLjMsMi4zLDAuNWMwLjksMC4xLDEuOCwwLjMsMi44LDAuNA0KCWMxLDAuMSwyLDAuMiwyLjksMC4zczEuOCwwLjEsMi41LDAuMWM3LDAsMTIuMS0xLjEsMTUuNC0zLjNzNS01LjQsNS05LjZjMC0xLjgtMC4yLTMuMy0wLjctNC41QzE5Ny41LDMxLjQsMTk2LjgsMzAuMywxOTYsMjkuNHoNCgkgTTE3MS45LDkuMWMwLjctMC4xLDEuNi0wLjIsMi43LTAuM2MxLjEtMC4xLDIuNC0wLjEsNC0wLjFjMiwwLDMuOCwwLjEsNS40LDAuNGMxLjYsMC4zLDMsMC43LDQuMiwxLjRjMS4yLDAuNiwyLjEsMS41LDIuNywyLjUNCgljMC42LDEsMSwyLjIsMSwzLjdjMCwxLjYtMC4zLDIuOS0wLjksNGMtMC42LDEtMS40LDEuOS0yLjUsMi41Yy0xLDAuNi0yLjMsMS0zLjcsMS4zcy0yLjksMC40LTQuNSwwLjRoLTguNFY5LjF6IE0xOTIuNyw0MS43DQoJYy0wLjksMS4yLTIsMi4xLTMuNCwyLjhzLTMsMS4yLTQuOSwxLjRjLTEuOSwwLjMtMy44LDAuNC01LjcsMC40Yy0xLjMsMC0yLjYtMC4xLTMuOS0wLjJjLTEuMy0wLjEtMi4yLTAuMi0yLjktMC4zVjI4LjRoOS4yDQoJYzIsMCwzLjcsMC4xLDUuMywwLjRjMS42LDAuMywzLDAuNyw0LjEsMS40YzEuMSwwLjcsMiwxLjYsMi42LDIuN2MwLjYsMS4xLDAuOSwyLjYsMC45LDQuM0MxOTQsMzksMTkzLjYsNDAuNSwxOTIuNyw0MS43eiIvPg0KPHBhdGggY2xhc3M9InN0MiIgZD0iTTIyNy40LDQ2Yy0xLjMsMC40LTMuMSwwLjYtNS40LDAuNmMtNC4xLDAtNy4xLTEuMS05LTMuM2MtMS4xLTEuMi0xLjktMi44LTIuNC00LjdoLTQuNQ0KCWMwLjEsMC41LDAuMiwwLjksMC4zLDEuNGMwLjYsMi4xLDEuNiwzLjksMi45LDUuNWMxLjMsMS41LDMsMi43LDUuMSwzLjZzNC41LDEuMyw3LjQsMS4zYzIuMiwwLDQuMS0wLjIsNS44LTAuNw0KCWMxLjYtMC41LDIuOC0wLjksMy40LTEuMmwtMC44LTMuNkMyMjkuNyw0NS4yLDIyOC43LDQ1LjUsMjI3LjQsNDZ6Ii8+DQo8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjQ3LjksNDUuNWMtMC40LTAuNC0wLjctMC45LTAuOS0xLjVjLTAuMi0wLjYtMC4zLTEuNC0wLjMtMi41VjBsLTQuMiwwLjh2NDFjMCwxLjYsMC4yLDIuOSwwLjUsMy45DQoJYzAuNCwxLDAuOSwxLjksMS42LDIuNmMwLjcsMC43LDEuNiwxLjIsMi42LDEuNWMxLDAuMywyLjMsMC41LDMuNywwLjVsMC42LTMuNWMtMC45LTAuMS0xLjYtMC4zLTIuMi0wLjQNCglDMjQ4LjgsNDYuMiwyNDguMyw0NS45LDI0Ny45LDQ1LjV6Ii8+DQo8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjY1LjgsNDYuM2MtMC42LTAuMi0xLjEtMC40LTEuNS0wLjhjLTAuNC0wLjQtMC43LTAuOS0wLjktMS41Yy0wLjItMC42LTAuMy0xLjQtMC4zLTIuNVYwbC00LjIsMC44djQxDQoJYzAsMS42LDAuMiwyLjksMC41LDMuOWMwLjQsMSwwLjksMS45LDEuNiwyLjZjMC43LDAuNywxLjYsMS4yLDIuNiwxLjVjMSwwLjMsMi4zLDAuNSwzLjcsMC41bDAuNi0zLjUNCglDMjY3LjEsNDYuNywyNjYuNCw0Ni41LDI2NS44LDQ2LjN6Ii8+DQo8cGF0aCBjbGFzcz0ic3QxIiBkPSJNOTkuOCw0NmMtMS4zLDAuNC0zLjEsMC42LTUuNCwwLjZjLTQuMSwwLTcuMS0xLjEtOS0zLjNjLTEuMS0xLjItMS45LTIuOC0yLjQtNC43aC00LjUNCgljMC4xLDAuNSwwLjIsMC45LDAuMywxLjRjMC42LDIuMSwxLjYsMy45LDIuOSw1LjVjMS4zLDEuNSwzLDIuNyw1LjEsMy42czQuNSwxLjMsNy40LDEuM2MyLjIsMCw0LjEtMC4yLDUuOC0wLjcNCgljMS42LTAuNSwyLjgtMC45LDMuNC0xLjJsLTAuOC0zLjZDMTAyLjEsNDUuMiwxMDEuMiw0NS41LDk5LjgsNDZ6Ii8+DQo8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTAyLjIsMTkuOGMtMC43LTAuOC0xLjUtMS41LTIuNC0yYzAuMi0wLjcsMC4zLTEuNCwwLjMtMi4yYzAtNC41LTMuNi04LjEtOC4xLTguMWMtNC41LDAtOC4xLDMuNi04LjEsOC4xDQoJYzAsMSwwLjIsMiwwLjUsMi45Yy0wLjYsMC41LTEuMiwxLTEuOCwxLjZjLTEuMywxLjUtMi40LDMuMy0zLjMsNS40Yy0wLjgsMi4yLTEuMiw0LjctMS4yLDcuNmMwLDAuMywwLDAuNiwwLDAuOWg0LjRoMy4zaDIwDQoJYzAtMC4zLDAuMS0wLjYsMC4xLTFjMC0wLjMsMC0wLjcsMC0xQzEwNS45LDI2LjUsMTA0LjYsMjIuNCwxMDIuMiwxOS44eiBNOTIsMTAuN2MyLjcsMCw0LjgsMi4yLDQuOCw0LjhzLTIuMiw0LjgtNC44LDQuOA0KCXMtNC44LTIuMi00LjgtNC44Uzg5LjMsMTAuNyw5MiwxMC43eiBNODIuNiwzMC41YzAuMS0xLjQsMC40LTIuOCwwLjktNC4yYzAuNS0xLjMsMS4yLTIuNSwyLTMuNWMwLjMtMC40LDAuNy0wLjgsMS4xLTEuMQ0KCWMxLjQsMS4yLDMuMywyLDUuMywyYzIuMywwLDQuNC0xLDUuOS0yLjZjMC41LDAuNCwwLjksMC44LDEuMiwxLjJjMS41LDEuOSwyLjMsNC42LDIuNCw4LjFIODIuNnoiLz4NCjxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0yMjkuOCwxOS44Yy0yLTIuMi00LjctMy41LTcuOC0zLjh2LTVoMy42VjcuNGgtMTAuOFYxMWgzLjZ2NWMtMS4zLDAuMS0yLjUsMC40LTMuNywwLjkNCgljLTEuNywwLjctMy4zLDEuOC00LjYsMy4yYy0xLjMsMS41LTIuNCwzLjMtMy4zLDUuNGMtMC44LDIuMi0xLjIsNC43LTEuMiw3LjZjMCwwLjMsMCwwLjYsMCwwLjloMjdoMC42YzAtMC4zLDAuMS0wLjYsMC4xLTENCgljMC0wLjMsMC0wLjcsMC0xQzIzMy40LDI2LjUsMjMyLjIsMjIuNCwyMjkuOCwxOS44eiBNMjEwLjIsMzAuNWMwLjEtMS40LDAuNC0yLjgsMC45LTQuMmMwLjUtMS4zLDEuMi0yLjUsMi0zLjUNCgljMC45LTEsMS45LTEuOCwzLjEtMi40YzEuMi0wLjYsMi41LTAuOSw0LTAuOWMyLjgsMCw1LDEsNi41LDIuOWMxLjUsMS45LDIuMyw0LjYsMi40LDguMUgyMTAuMnoiLz4NCjwvc3ZnPg0K"

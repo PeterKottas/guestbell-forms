@@ -229,6 +229,7 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
                     position="bottom"
                     trigger="mouseenter"
                     interactive={true}
+                    className="label--help-icon__container"
                 >
                     <span className="label--help-icon">?</span>
                 </Tooltip>
