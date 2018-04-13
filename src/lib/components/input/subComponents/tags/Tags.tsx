@@ -171,9 +171,10 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
                             />}
                         </div >
                     }
+                    {this.renderLabel()}
                     {this.props.label && <label className={((this.state.value !== '')
                         || (this.state.textIsFocused) || (this.props.tags.length >= this.props.maxTags)) ? 'label--focused' : ''}
-                    >{this.props.label}</label>}
+                    >{this.renderLabel()}</label>}
                 </div>
             </InputGroup >
         );
