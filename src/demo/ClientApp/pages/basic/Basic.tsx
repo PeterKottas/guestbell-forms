@@ -331,6 +331,16 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                             value={this.state.name}
                                             title="Name"
                                         />
+                                        <div className="px-3">
+                                            <Text
+                                                touchOn={this.state.touchOn}
+                                                required={true} 
+                                                label="Your name (no title)"
+                                                onChange={(e) => this.setState({ name: e.target.value })}
+                                                value={this.state.name}
+                                                helpText={<p className="m-0">This is some help text. It can also do <b>bold</b> and other stuff.</p>}
+                                            />
+                                        </div>
                                         <Text
                                             touchOn={this.state.touchOn}
                                             required={true} label="Your name"
@@ -350,7 +360,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                         />
                                         <TextArea
                                             touchOn={this.state.touchOn}
-                                            required={true} 
+                                            required={true}
                                             label="Textarea"
                                             onChange={(e) => this.setState({ textAreaText: e.target.value })}
                                             value={this.state.textAreaText}
@@ -358,7 +368,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                         />
                                         <TextArea
                                             touchOn={this.state.touchOn}
-                                            required={true} 
+                                            required={true}
                                             label="Textarea"
                                             onChange={(e) => this.setState({ textAreaText: e.target.value })}
                                             value={this.state.textAreaText}

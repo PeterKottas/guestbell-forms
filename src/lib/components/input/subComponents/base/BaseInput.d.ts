@@ -6,6 +6,7 @@ export declare type BaseInputProps<HTMLType extends (HTMLInputElement | HTMLSele
     disabled?: boolean;
     className?: string;
     label?: string | JSX.Element;
+    helpText?: string | JSX.Element;
     value?: string;
     onChange?: (e: React.ChangeEvent<HTMLType>, isValid: boolean) => void;
     required?: boolean;

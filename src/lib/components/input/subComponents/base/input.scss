@@ -58,12 +58,27 @@
         color: $input-label-color;
         font-size: 18px;
         font-weight: normal;
-        position: absolute;
-        pointer-events: none;
+        position: absolute; // pointer-events: none;
         left: 5px;
         top: 5px;
         transition: 0.2s ease all;
         margin-bottom: 0;
+    }
+    .label--no-touch {
+        pointer-events: none;
+    }
+    $dim: 1.3rem;
+    .label--help-icon {
+        margin-left: 0.5rem;
+        background-color: $input-label-color;
+        border-radius: 50%;
+        color: $input-text-color--dark;
+        text-align: center;
+        height: $dim;
+        line-height: $dim;
+        width: $dim;
+        height: $dim;
+        display: inline-block;
     }
     /* active state */
     input:focus~label,

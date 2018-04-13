@@ -1,5 +1,6 @@
 // Styles 
 import './main.scss';
+import 'react-tippy/dist/tippy.css';
 
 // Libs
 import * as React from 'react';

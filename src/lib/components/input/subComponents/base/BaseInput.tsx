@@ -2,6 +2,9 @@
 
 //Libs
 import * as React from 'react';
+import {
+    Tooltip,
+} from 'react-tippy';
 
 //Styles
 import './input.scss';
@@ -15,6 +18,7 @@ export type BaseInputProps<HTMLType extends (HTMLInputElement | HTMLSelectElemen
     disabled?: boolean;
     className?: string;
     label?: string | JSX.Element;
+    helpText?: string | JSX.Element;
     value?: string;
     onChange?: (e: React.ChangeEvent<HTMLType>, isValid: boolean) => void;
     required?: boolean;
@@ -212,7 +216,24 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
     }
 
     protected renderLabel() {
-        return this.props.label;
+        if ((!this.props.helpText) || (this.props.helpText && this.props.title)) {
+            return this.props.label;
+        }
+        return (
+            <React.Fragment>
+                <span className="label--no-touch">
+                    {this.props.label}
+                </span>
+                <Tooltip
+                    html={this.props.helpText}
+                    position="bottom"
+                    trigger="mouseenter"
+                    interactive={true}
+                >
+                    <span className="label--help-icon">?</span>
+                </Tooltip>
+            </React.Fragment>
+        );
     }
 
     protected renderTitle() {

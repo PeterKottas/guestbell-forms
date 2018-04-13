@@ -19,7 +19,7 @@ module.exports = merge(require('./webpack.config.base'), {
         "react-day-picker": "react-day-picker",
         "react-day-picker/DayPickerInput": "react-day-picker/DayPickerInput",
         "react-smooth-collapse": "react-smooth-collapse",
-        "react-popper": "react-popper",
+        "react-tippy": "react-tippy",
         "react-textarea-autosize": "react-textarea-autosize"
     }
 });

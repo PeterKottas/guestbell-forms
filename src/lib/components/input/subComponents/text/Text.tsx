@@ -51,7 +51,7 @@ export class Text extends BaseInput.BaseInput<TextProps, TextState, HTMLInputEle
                 <span className="highlight"></span>
                 <span className="bar"></span>
                 {this.renderDefaultValidation()}
-                {this.props.label && <label>{this.props.label}</label>}
+                {this.props.label && <label>{this.renderLabel()}</label>}
             </div>
         </InputGroup>;
     }
