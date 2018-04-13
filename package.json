@@ -1,5 +1,5 @@
 {
-  "version": "1.0.185",
+  "version": "1.0.186",
   "description": "React forms with validation as used in GuestBell",
   "keywords": [
     "react",
@@ -12,8 +12,7 @@
   ],
   "main": "build/guestbell-forms.js",
   "style": "build/guestbell-forms.css",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "react-tippy": "1.2.2",
     "@types/react": "16.0.34",
