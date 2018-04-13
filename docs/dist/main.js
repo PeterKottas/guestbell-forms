@@ -53670,7 +53670,7 @@ var Tags = /** @class */ (function (_super) {
                             }); }, onBlur: function () { return _this.setState({ textIsFocused: false }); }, value: this.state.value, readOnly: this.props.readOnly, errors: this.state.value && this.props.allowNew ? (this.props.errors ? this.props.errors : []).concat(this.props.valueNotAddedError) : this.props.errors })),
                         this.state.suggestionsVisible && this.props.showSuggestions && React.createElement(SuggestionsWrapped, { loading: this.state.fetchingExistingTags, loadingComponent: this.props.suggestionsLoadingComponent, emptyComponent: this.props.suggestionsEmptyComponent, isVisible: this.state.suggestionsVisible, tags: suggestions, onSelected: function (tag) {
                                 _this.props.onTagsChanged(_this.props.tags.concat(tag));
-                                _this.setState({ value: '' });
+                                _this.setState({ value: '' }, function () { return _this.fetchExistingTags(); });
                             }, onClickOutside: function () { return _this.setState({ suggestionsVisible: false }); }, value: this.state.value })),
                 this.props.label && React.createElement("label", { className: ((this.state.value !== '')
                         || (this.state.textIsFocused) || (this.props.tags.length >= this.props.maxTags)) ? 'label--focused' : '' }, this.renderLabel()))));
@@ -53704,7 +53704,10 @@ var Tags = /** @class */ (function (_super) {
         var _this = this;
         return (React.createElement("div", { className: "tags-input__tag", key: index },
             tag.name,
-            !this.props.readOnly && React.createElement(Button_1.Button, { circular: true, type: 'blank--light', onClick: function () { return _this.props.onTagsChanged && _this.props.onTagsChanged(_this.props.tags.filter(function (sv) { return sv.id !== tag.id; })); }, className: "ml-1 transform-rotate--45 line-height--0 p-0" },
+            !this.props.readOnly && React.createElement(Button_1.Button, { circular: true, type: 'blank--light', onClick: function () {
+                    _this.props.onTagsChanged && _this.props.onTagsChanged(_this.props.tags.filter(function (sv) { return sv.id !== tag.id; }));
+                    _this.fetchExistingTags();
+                }, className: "ml-1 transform-rotate--45 line-height--0 p-0" },
                 React.createElement(PlusIcon, null))));
     };
     Tags.prototype.renderTags = function () {

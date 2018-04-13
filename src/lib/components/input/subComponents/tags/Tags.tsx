@@ -164,7 +164,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
                                 tags={suggestions}
                                 onSelected={tag => {
                                     this.props.onTagsChanged(this.props.tags.concat(tag));
-                                    this.setState({ value: '' });
+                                    this.setState({ value: '' }, () => this.fetchExistingTags());
                                 }}
                                 onClickOutside={() => this.setState({ suggestionsVisible: false })}
                                 value={this.state.value}
@@ -213,7 +213,10 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
                 {!this.props.readOnly && <Button
                     circular={true}
                     type={'blank--light'}
-                    onClick={() => this.props.onTagsChanged && this.props.onTagsChanged(this.props.tags.filter(sv => sv.id !== tag.id))}
+                    onClick={() => {
+                        this.props.onTagsChanged && this.props.onTagsChanged(this.props.tags.filter(sv => sv.id !== tag.id));
+                        this.fetchExistingTags();
+                    }}
                     className="ml-1 transform-rotate--45 line-height--0 p-0"
                 >
                     <PlusIcon />
