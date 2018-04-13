@@ -9381,7 +9381,7 @@ var Select = /** @class */ (function (_super) {
                         React.createElement("span", { className: "highlight" }),
                         React.createElement("span", { className: "bar" }),
                         this.renderDefaultValidation(),
-                        this.props.label && finalValues.length > 0 && React.createElement("label", null, this.props.label))));
+                        this.props.label && finalValues.length > 0 && React.createElement("label", null, this.renderLabel()))));
     };
     Select.prototype.handleChangeCustom = function (event) {
         if (this.props.multiple) {
@@ -53784,7 +53784,7 @@ var TextArea = /** @class */ (function (_super) {
                 React.createElement("span", { className: "highlight" }),
                 React.createElement("span", { className: "bar" }),
                 this.renderDefaultValidation(),
-                this.props.label && React.createElement("label", null, this.props.label)));
+                this.props.label && React.createElement("label", null, this.renderLabel())));
     };
     TextArea.defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "text", placeholder: '', stopClickPropagation: true, readOnly: false });
     return TextArea;

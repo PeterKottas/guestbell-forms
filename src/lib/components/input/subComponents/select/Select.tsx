@@ -82,7 +82,7 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState, HTMLSe
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         {this.renderDefaultValidation()}
-                        {this.props.label && finalValues.length > 0 && <label>{this.props.label}</label>}
+                        {this.props.label && finalValues.length > 0 && <label>{this.renderLabel()}</label>}
                     </div>
                 }
             </div>

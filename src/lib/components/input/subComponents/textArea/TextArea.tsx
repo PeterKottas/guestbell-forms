@@ -55,7 +55,7 @@ export class TextArea extends BaseInput.BaseInput<TextAreaProps, TextAreaState, 
                 <span className="highlight"></span>
                 <span className="bar"></span>
                 {this.renderDefaultValidation()}
-                {this.props.label && <label>{this.props.label}</label>}
+                {this.props.label && <label>{this.renderLabel()}</label>}
             </div>
         </InputGroup>;
     }
