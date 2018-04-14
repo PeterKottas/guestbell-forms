@@ -14,9 +14,14 @@
     background-color: $input-divider-color;
 }
 
+.label--help-icon{
+    cursor: pointer;
+}
+
 .input__base {
     position: relative;
     margin: 1rem 0 1.2rem 0;
+    padding-right: 0.8rem;
     border-bottom: 1px solid $input-border-color;
     width: 100%; // Chrome yellow tint fix
     input:-webkit-autofill {
@@ -63,12 +68,11 @@
         top: 5px;
         transition: 0.2s ease all;
         margin-bottom: 0;
-    }
-    .label--no-touch {
         pointer-events: none;
     }
     $dim: 1.1rem;
     .label--help-icon {
+        pointer-events: auto;
         position: absolute;
         bottom: 0.35rem;
         margin-left: 0.5rem;
@@ -77,10 +81,11 @@
         color: $input-text-color--dark;
         text-align: center;
         height: $dim;
+        width: $dim;
         line-height: $dim;
         font-size: $dim - 0.3;
-        width: $dim;
         display: inline-block;
+        transition: 0.2s ease all;
     }
     /* active state */
     input:focus~label,
@@ -92,6 +97,14 @@
         top: -1rem;
         font-size: 14px;
         color: $input-highlight-color;
+        $dim-dif:-0.2rem;
+        .label--help-icon {
+            bottom: 0.25rem;
+            height: $dim + $dim-dif;
+            width: $dim + $dim-dif;
+            line-height: $dim + $dim-dif;
+            font-size: $dim - 0.2 + $dim-dif;
+        }
     }
     /* BOTTOM BARS ================================= */
     .bar {

@@ -512,7 +512,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                                     <Button
                                                         type={'hero'}
                                                         onClick={() => this.setState({
-                                                            openingHoursSpecial: this.state.openingHoursSpecial.concat([{ date: new Date(), times: [] }])
+                                                            openingHoursSpecial: this.state.openingHoursSpecial.concat([{ date: undefined, times: [] }])
                                                         }, () => param.expand())}
                                                     >
                                                         Add
@@ -524,6 +524,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                                 required={false}
                                                 onDaysChange={(days => this.setState({ openingHoursSpecial: days }))}
                                                 days={this.state.openingHoursSpecial}
+                                                placeholder="Choose date"
                                             />
                                         </InputHeader>
                                         <InputHeader

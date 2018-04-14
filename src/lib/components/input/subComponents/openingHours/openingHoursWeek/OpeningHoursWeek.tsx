@@ -15,7 +15,6 @@ export interface OpeningHoursWeekDayObj extends OpeningHoursDayObj {
 }
 
 export interface OpeningHoursWeekProps extends BaseInput.BaseInputProps<never> {
-    helpContent?: string | JSX.Element;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     days: OpeningHoursWeekDayObj[];
     onDaysChange: (days: OpeningHoursWeekDayObj[]) => void;
@@ -30,12 +29,7 @@ export class OpeningHoursWeek extends BaseInput.BaseInput<OpeningHoursWeekProps,
     public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, {
         type: "openingHoursWeek",
         placeholder: '',
-        collapsable: false,
-        helpContent: (
-            <React.Fragment>
-                <p style={{marginBottom: 0}}>Tip: Use the "Standard day" if multiple days share the same opening hours. Finish by checking the "Standard day?" checkbox for each day that shares these opening hours.</p>
-            </React.Fragment>
-        )
+        collapsable: false
     });
 
     constructor(props: OpeningHoursWeekProps) {
@@ -73,14 +67,13 @@ export class OpeningHoursWeek extends BaseInput.BaseInput<OpeningHoursWeekProps,
 
     public render() {
 
-        return <div className={`openingHoursWeek-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}>
+        return <div className={'openingHoursWeek-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')}>
             {this.renderContent()}
         </div>;
     }
 
     private renderContent() {
         return <div className={``}>
-            {this.props.helpContent && <div style={{padding: 20}}>{this.props.helpContent}</div>}
             {this.props.standardDay && <OpeningHoursDay
                 label={<span>
                     {OpeningHoursUtil.getLabelSuffix(this.props.standardDay)}
@@ -92,6 +85,12 @@ export class OpeningHoursWeek extends BaseInput.BaseInput<OpeningHoursWeekProps,
                     this.props.onStandardDayChange(openingHours);
                 }}
                 title={'Standard day'}
+                helpText={(
+                    <p>
+                        We recommend to use <b>Standard day</b> if multiple days share the same opening hours.
+                        Check "Standard day?" checkbox for each of these days to make them share standard opening hours.
+                    </p>
+                )}
             />}
             {this.props.days.map((day, index) => (
                 <OpeningHoursDay
@@ -116,13 +115,9 @@ export class OpeningHoursWeek extends BaseInput.BaseInput<OpeningHoursWeekProps,
                         times: this.props.standardDay && day.isStandardDay ? this.props.standardDay.times : day.times
                     }}
                     onOpeningHoursChange={(openingHours) => {
-                        if (day.isStandardDay) {
-                            this.props.onStandardDayChange(openingHours);
-                        } else {
-                            let days = this.props.days.slice(0);
-                            days[index] = { ...day, ...openingHours };
-                            this.props.onDaysChange(days);
-                        }
+                        let days = this.props.days.slice(0);
+                        days[index] = { ...day, ...openingHours, isStandardDay: false };
+                        this.props.onDaysChange(days);
                     }}
                     title={day.dayLabel}
                 />

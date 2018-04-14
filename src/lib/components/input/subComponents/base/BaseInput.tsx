@@ -215,30 +215,48 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
         this.setState({ valid: false });
     }
 
-    protected renderLabel() {
+    protected renderLabel(touchable: boolean = false) {
         if ((!this.props.helpText) || (this.props.helpText && this.props.title)) {
-            return this.props.label;
+            return (
+                <span className={(touchable ? '' : 'label--no-touch')}>
+                    {this.props.label}
+                </span>
+            );
         }
         return (
             <React.Fragment>
-                <span className="label--no-touch">
+                <span className={(touchable ? '' : 'label--no-touch')}>
                     {this.props.label}
                 </span>
-                <Tooltip
-                    html={this.props.helpText}
-                    position="bottom"
-                    trigger="mouseenter"
-                    interactive={true}
-                    className="label--help-icon__container"
-                >
-                    <span className="label--help-icon">?</span>
-                </Tooltip>
+                {this.renderTooltip()}
             </React.Fragment>
         );
     }
 
+    private renderTooltip() {
+        return (
+            <Tooltip
+                html={this.props.helpText}
+                position="bottom"
+                trigger="mouseenter"
+                interactive={true}
+                className="label--help-icon__container"
+            >
+                <span className="label--help-icon">?</span>
+            </Tooltip>
+        );
+    }
+
     protected renderTitle() {
-        return this.props.title;
+        if (!this.props.helpText) {
+            return this.props.title;
+        }
+        return (
+            <React.Fragment>
+                {this.props.title}
+                {this.renderTooltip()}
+            </React.Fragment>
+        );
     }
 
     constructor(props) {

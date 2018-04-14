@@ -7,7 +7,7 @@ import * as React from 'react';
 //Misc
 import * as BaseInput from '../base/BaseInput';
 
-export type InputGroupProps = Pick<BaseInput.BaseInputProps<never>, 'title' | 'className'>;
+export type InputGroupProps = Pick<BaseInput.BaseInputProps<never>, 'title' | 'className' | 'helpText'>;
 
 export interface InputGroupState extends BaseInput.BaseInputState {
 }

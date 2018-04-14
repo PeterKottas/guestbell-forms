@@ -96,6 +96,7 @@ export class Money extends BaseInput.BaseInput<MoneyProps, MoneyState, never>  {
                                 key={index * 3 + 2}
                                 onClick={() => this.props.onPricesChange(this.props.prices.filter((item, itemIndex) => itemIndex !== index))}
                                 className="money-input__button--remove line-height--0"
+                                buttonProps={{ title: 'Remove price' }}
                                 circular={true}
                             >
                                 <PlusIcon />
@@ -112,6 +113,7 @@ export class Money extends BaseInput.BaseInput<MoneyProps, MoneyState, never>  {
                             className="line-height--0"
                             onClick={() => this.props.onPricesChange(this.props.prices.concat([{ value: 0, currency: unusedCurrencies[0] }]))}
                             circular={true}
+                            buttonProps={{ title: (this.props.prices && this.props.prices.length === 0 ? 'Add price' : 'Add new currency') }}
                         >
                             <PlusIcon />
                         </Button>

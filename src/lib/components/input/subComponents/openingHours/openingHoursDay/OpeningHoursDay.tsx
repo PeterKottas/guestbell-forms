@@ -40,7 +40,7 @@ export class OpeningHoursDay extends BaseInput.BaseInput<OpeningHoursDayProps, O
         if (newTime.getHours() < 23) {
             newTime.setHours(newTime.getHours() + 1);
         }
-        return <InputGroup title={this.props.title} className="input__group__openingHoursDay">
+        return <InputGroup title={this.props.title} className="input__group__openingHoursDay" helpText={this.props.helpText}>
             <div className={'input__base openingHoursDay-input ' + this.getValidationClass() + (this.props.className ? ' ' + this.props.className : '')}>
                 <div className="openingHoursDay-input__container">
                     {this.props.openingHours && this.props.openingHours.times && this.props.openingHours.times.map((item, index) => {
@@ -81,7 +81,7 @@ export class OpeningHoursDay extends BaseInput.BaseInput<OpeningHoursDayProps, O
                 </div>
                 {this.renderDefaultValidation()}
                 {this.props.openingHours && this.props.label && <span className={'label-classname ' + (this.props.openingHours && this.props.openingHours.times
-                    && this.props.openingHours.times.length ? 'label--focused' : 'label--focused label--closed')}>{this.renderLabel()}</span>}
+                    && this.props.openingHours.times.length ? 'label--focused' : 'label--focused label--closed')}>{this.renderLabel(true)}</span>}
             </div>
             {this.getBottomBorder()}
         </InputGroup>;

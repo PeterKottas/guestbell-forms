@@ -587,9 +587,13 @@ textarea {
   padding: 1rem;
   background-color: #f9f9f9; }
 
+.label--help-icon {
+  cursor: pointer; }
+
 .input__base {
   position: relative;
   margin: 1rem 0 1.2rem 0;
+  padding-right: 0.8rem;
   border-bottom: 1px solid #eeeeee;
   width: 100%;
   /* VALIDATION ======================================= */
@@ -633,10 +637,10 @@ textarea {
     left: 5px;
     top: 5px;
     transition: 0.2s ease all;
-    margin-bottom: 0; }
-  .input__base .label--no-touch {
+    margin-bottom: 0;
     pointer-events: none; }
   .input__base .label--help-icon {
+    pointer-events: auto;
     position: absolute;
     bottom: 0.35rem;
     margin-left: 0.5rem;
@@ -645,10 +649,11 @@ textarea {
     color: white;
     text-align: center;
     height: 1.1rem;
+    width: 1.1rem;
     line-height: 1.1rem;
     font-size: 0.8rem;
-    width: 1.1rem;
-    display: inline-block; }
+    display: inline-block;
+    transition: 0.2s ease all; }
   .input__base input:focus ~ label,
   .input__base .filled ~ label,
   .input__base select:focus ~ label,
@@ -658,6 +663,17 @@ textarea {
     top: -1rem;
     font-size: 14px;
     color: #10bdc7; }
+    .input__base input:focus ~ label .label--help-icon,
+    .input__base .filled ~ label .label--help-icon,
+    .input__base select:focus ~ label .label--help-icon,
+    .input__base textarea:focus ~ label .label--help-icon,
+    .input__base label.label--focused .label--help-icon,
+    .input__base span.label-classname.label--focused .label--help-icon {
+      bottom: 0.25rem;
+      height: 0.9rem;
+      width: 0.9rem;
+      line-height: 0.9rem;
+      font-size: 0.7rem; }
   .input__base .bar {
     display: block;
     width: 100%; }
@@ -821,7 +837,8 @@ textarea {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  cursor: pointer; }
+  cursor: pointer;
+  fill: #555555; }
   .guestbell-btn > svg {
     pointer-events: none; }
 
@@ -954,6 +971,16 @@ textarea {
     margin-top: 1.6rem;
     color: #555555;
     margin-bottom: 1.2rem; }
+    .input__group .row-header > .label--help-icon__container > .label--help-icon {
+      margin-left: 0.5rem;
+      background-color: #999999;
+      border-radius: 50%;
+      color: white;
+      text-align: center;
+      height: 1.2rem;
+      line-height: 1.2rem;
+      width: 1.2rem;
+      display: inline-block; }
 
 @media (max-width: 768px) {
   .input__group {
@@ -1198,9 +1225,11 @@ textarea {
     display: none; }
   .money-input .text-input .bar {
     display: none; }
-  .money-input .money-input__button--remove .material-design-icon {
-    -webkit-transform: rotate(45deg);
-            transform: rotate(45deg); }
+  .money-input .money-input__button--remove {
+    fill: #ff5d5d; }
+    .money-input .money-input__button--remove .material-design-icon {
+      -webkit-transform: rotate(45deg);
+              transform: rotate(45deg); }
   .money-input .money-input__select {
     border: none;
     display: inline-block;
@@ -1336,6 +1365,9 @@ textarea {
 .input__group__openingHoursDay .row-header {
   margin-top: 3.55rem; }
 
+.input__group__openingHoursDay:hover {
+  background-color: rgba(0, 0, 0, 0.01); }
+
 .openingHoursDay-input {
   margin-top: 1.9rem;
   position: relative;
@@ -1445,6 +1477,8 @@ textarea {
   border: none !important;
   position: relative;
   margin: 0; }
+  .input__base.openingHoursSpecial-input .input__group__openingHoursDay .row-header {
+    margin-top: 3.10rem; }
   .input__base.openingHoursSpecial-input > .input__group__border:first-child {
     border-top: none; }
   .input__base.openingHoursSpecial-input .label__checkbox {
@@ -1460,6 +1494,8 @@ textarea {
     padding: 10px 10px 10px 10px;
     opacity: 0.5;
     transition: 0.2s all; }
+    .input__base.openingHoursSpecial-input .openingHoursSpecial-input__button img {
+      vertical-align: top; }
     .input__base.openingHoursSpecial-input .openingHoursSpecial-input__button:hover {
       opacity: 1; }
     .input__base.openingHoursSpecial-input .openingHoursSpecial-input__button.openingHoursSpecial-input__button--remove img {
@@ -1473,11 +1509,19 @@ textarea {
       border: none;
       color: #999999;
       text-align: right; }
-  .input__base.openingHoursSpecial-input input:focus ~ label, .input__base.openingHoursSpecial-input input.filled ~ label, .input__base.openingHoursSpecial-input select:focus ~ label, .input__base.openingHoursSpecial-input select.filled ~ label, .input__base.openingHoursSpecial-input .label-classname.label--focused {
+  .input__base.openingHoursSpecial-input input:focus ~ label,
+  .input__base.openingHoursSpecial-input input.filled ~ label,
+  .input__base.openingHoursSpecial-input select:focus ~ label,
+  .input__base.openingHoursSpecial-input select.filled ~ label,
+  .input__base.openingHoursSpecial-input .label-classname.label--focused {
     top: -22px;
     font-size: 14px;
     color: inherit; }
-    .input__base.openingHoursSpecial-input input:focus ~ label .DayPickerInput > input, .input__base.openingHoursSpecial-input input.filled ~ label .DayPickerInput > input, .input__base.openingHoursSpecial-input select:focus ~ label .DayPickerInput > input, .input__base.openingHoursSpecial-input select.filled ~ label .DayPickerInput > input, .input__base.openingHoursSpecial-input .label-classname.label--focused .DayPickerInput > input {
+    .input__base.openingHoursSpecial-input input:focus ~ label .DayPickerInput > input,
+    .input__base.openingHoursSpecial-input input.filled ~ label .DayPickerInput > input,
+    .input__base.openingHoursSpecial-input select:focus ~ label .DayPickerInput > input,
+    .input__base.openingHoursSpecial-input select.filled ~ label .DayPickerInput > input,
+    .input__base.openingHoursSpecial-input .label-classname.label--focused .DayPickerInput > input {
       width: 70px;
       color: #10bdc7;
       background-color: transparent; }

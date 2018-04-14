@@ -31,7 +31,7 @@ export class OpeningHoursUtil {
             return <span>Open {hoursFormated}</span>;
         }
         if (minutesFormated) {
-            return <span>Oopen {minutesFormated}</span>;
+            return <span>Open {minutesFormated}</span>;
         }
         return <span>Closed</span>;
     }

@@ -7,7 +7,6 @@ export interface OpeningHoursWeekDayObj extends OpeningHoursDayObj {
     dayLabel?: string;
 }
 export interface OpeningHoursWeekProps extends BaseInput.BaseInputProps<never> {
-    helpContent?: string | JSX.Element;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     days: OpeningHoursWeekDayObj[];
     onDaysChange: (days: OpeningHoursWeekDayObj[]) => void;
@@ -21,7 +20,6 @@ export declare class OpeningHoursWeek extends BaseInput.BaseInput<OpeningHoursWe
         type: string;
         placeholder: string;
         collapsable: boolean;
-        helpContent: JSX.Element;
     };
     constructor(props: OpeningHoursWeekProps);
     componentWillMount(): void;

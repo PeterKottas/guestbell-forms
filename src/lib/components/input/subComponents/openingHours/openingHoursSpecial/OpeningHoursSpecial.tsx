@@ -1,6 +1,7 @@
 //Styles
 import './openingHoursSpecial.scss';
 import * as plusIconSrc from '../../assets/images/ic_add_circle_outline_black_24dp_1x.png';
+import * as DateIcon from 'material-design-icons/action/svg/production/ic_event_24px.svg';
 
 //Libs
 import * as React from 'react';
@@ -20,15 +21,16 @@ try {
 import * as BaseInput from '../../base/BaseInput';
 import { OpeningHoursDayObj, OpeningHoursDay } from '../../../Inputs';
 import OpeningHoursUtil from '../utils/OpeningHoursUtil';
+import Button from './../../../../buttons/Button';
 
 export interface OpeningHoursSpecialDayObj extends OpeningHoursDayObj {
-    date: Date;
+    date?: Date;
 }
 
 export interface OpeningHoursSpecialProps extends BaseInput.BaseInputProps<never> {
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     days: OpeningHoursSpecialDayObj[];
     onDaysChange: (days: OpeningHoursSpecialDayObj[]) => void;
+    placeholder?: string;
 }
 
 export interface OpeningHoursSpecialState extends BaseInput.BaseInputState {
@@ -36,18 +38,33 @@ export interface OpeningHoursSpecialState extends BaseInput.BaseInputState {
 
 const DAY_FORMAT = 'D/M/YYYY';
 
-export class OpeningHoursSpecial extends BaseInput.BaseInput<OpeningHoursSpecialProps, OpeningHoursSpecialState, never>  {
-    public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "openingHoursSpecial", placeholder: '' });
+class DateInput extends React.Component<{ value?: string, onClick?: () => void }> {
+    public render() {
+        return (
+            <Button
+                onClick={this.props.onClick}
+            >
+                <div style={{ display: 'flex' }}>
+                    <DateIcon style={{marginRight: 4}}/>
+                    {this.props.children ? this.props.children : this.props.value}
+                </div>
+            </Button>
+        );
+    }
+}
+
+export class OpeningHoursSpecial extends BaseInput.BaseInput<OpeningHoursSpecialProps, OpeningHoursSpecialState, never> {
+    public static defaultProps = Object.assign(BaseInput.BaseInput.defaultProps, { type: "openingHoursSpecial", placeholder: DAY_FORMAT });
 
     constructor(props) {
         super(props);
     }
 
     public render() {
-        if(!DatePicker){
+        if (!DatePicker) {
             throw new Error('You need to install react-datepicker in order to use special day picker');
         }
-        if(!Moment){
+        if (!Moment) {
             throw new Error('You need to install moment in order to use special day picker');
         }
         return <div className={'input__base openingHoursSpecial-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')}>
@@ -76,15 +93,16 @@ export class OpeningHoursSpecial extends BaseInput.BaseInput<OpeningHoursSpecial
                         this.props.onDaysChange(days);
                     }}
                     title={<DatePicker
-                        placeholder={DAY_FORMAT}
-                        selected={Moment(day.date)}
+                        customInput={<DateInput>{!day.date && 'Choose date'}</DateInput>}
+                        placeholder={this.props.placeholder}
+                        selected={day.date && Moment(day.date)}
                         dateFormat={DAY_FORMAT}
                         onChange={(date) => {
                             let days = this.props.days.slice(0);
                             days[index] = { ...day, date: date.toDate() };
                             this.props.onDaysChange(days);
                         }}
-                        excludeDates = {this.props.days.map(day=>Moment(day.date))}
+                        excludeDates={this.props.days.filter(day => day.date).map(d => Moment(d))}
                         withPortal={true}
                         minDate={Moment()}
                     />}

@@ -4,6 +4,9 @@
     .row-header{
         margin-top: 3.55rem;
     }
+    &:hover{
+        background-color: $hover-color;
+    }
 }
 .openingHoursDay-input {
     margin-top: 1.9rem;

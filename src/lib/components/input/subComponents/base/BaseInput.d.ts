@@ -59,7 +59,8 @@ export declare class BaseInput<P extends BaseInputProps<HTMLType>, S extends Bas
     protected getDisabled(): P["disabled"];
     protected setValid(): void;
     protected setInvalid(): void;
-    protected renderLabel(): P["label"];
+    protected renderLabel(touchable?: boolean): JSX.Element;
+    private renderTooltip();
     protected renderTitle(): P["title"];
     constructor(props: any);
 }

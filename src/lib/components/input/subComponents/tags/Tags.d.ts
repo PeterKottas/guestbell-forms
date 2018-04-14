@@ -19,6 +19,7 @@ export declare type TagsProps = {
     readonlyEmptyPlaceholder?: string;
     maxTags?: number;
     valueNotAddedError?: (string | JSX.Element);
+    maxTagsSurpassedError?: (string | JSX.Element);
     showSuggestions?: boolean;
     suggestionsLoadingComponent?: string | JSX.Element;
     suggestionsEmptyComponent?: string | JSX.Element;
@@ -36,6 +37,7 @@ export declare class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTML
     static defaultProps: TagsProps;
     constructor(props: TagsProps);
     render(): JSX.Element;
+    private getErrors();
     private fetchExistingTags(startsWith?);
     private getSuggestions();
     private renderTag(tag, index);

@@ -35,7 +35,7 @@ export class Time extends BaseInput.BaseInput<TimeProps, TimeState, HTMLInputEle
 
     public render() {
         return <InputGroup title={this.props.title}>
-            <div className={`input__base time-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}>
+            <div className={'input__base time-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')}>
                 <div className="">
                     <div className="time-input__arrows__container">
                         <button
@@ -54,7 +54,7 @@ export class Time extends BaseInput.BaseInput<TimeProps, TimeState, HTMLInputEle
                                 required={this.props.required}
                                 className={'time-input__time ' + (this.state.value ? 'filled' : '')}
                                 onChange={(e) => this.handleHoursChange(e.target.value)}
-                                value={this.props.time.getHours()}
+                                value={this.props.time.getHours().toString()}
                                 onBlur={this.handleBlur}
                                 onFocus={this.handleFocus}
                                 type="number"
@@ -134,19 +134,14 @@ export class Time extends BaseInput.BaseInput<TimeProps, TimeState, HTMLInputEle
 
     private handleLimits(time: Date) {
         if (this.props.min) {
-            if ((this.props.time.getTime() - this.props.min.getTime()) > 0) {
-                this.props.timeChange(time);
-            } else {
-                this.props.timeChange(this.props.min);
+            if ((time.getTime() - this.props.min.getTime()) <= 0) {
+                this.props.timeChange(new Date(this.props.min.getTime()));
                 return;
             }
         }
         if (this.props.max) {
-            if ((this.props.max.getTime() - this.props.time.getTime()) > 0) {
-                this.props.timeChange(time);
-                return;
-            } else {
-                this.props.timeChange(this.props.max);
+            if ((this.props.max.getTime() - time.getTime()) <= 0) {
+                this.props.timeChange(new Date(this.props.max.getTime()));
                 return;
             }
         }
@@ -154,18 +149,24 @@ export class Time extends BaseInput.BaseInput<TimeProps, TimeState, HTMLInputEle
     }
 
     private handleHoursChange(hoursString: string) {
-        const number = Number(hoursString);
+        let number = Number(hoursString);
+        if (hoursString === '') {
+            number = 0;
+        }
         if (!isNaN(number)) {
-            let newTime: Date = this.props.time;
+            let newTime: Date = new Date(this.props.time.getTime());
             newTime.setHours(number);
             this.handleLimits(newTime);
         }
     }
 
     private handleMinutesChange(minutesString: string) {
-        const number = Number(minutesString);
+        let number = Number(minutesString);
+        if (minutesString === '') {
+            number = 0;
+        }
         if (!isNaN(number)) {
-            let newTime: Date = this.props.time;
+            let newTime: Date = new Date(this.props.time.getTime());
             newTime.setMinutes(number);
             this.handleLimits(newTime);
         }

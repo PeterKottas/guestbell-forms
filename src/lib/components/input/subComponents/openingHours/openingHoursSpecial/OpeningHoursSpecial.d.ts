@@ -1,14 +1,13 @@
 import './openingHoursSpecial.scss';
-import * as React from 'react';
 import * as BaseInput from '../../base/BaseInput';
 import { OpeningHoursDayObj } from '../../../Inputs';
 export interface OpeningHoursSpecialDayObj extends OpeningHoursDayObj {
-    date: Date;
+    date?: Date;
 }
 export interface OpeningHoursSpecialProps extends BaseInput.BaseInputProps<never> {
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     days: OpeningHoursSpecialDayObj[];
     onDaysChange: (days: OpeningHoursSpecialDayObj[]) => void;
+    placeholder?: string;
 }
 export interface OpeningHoursSpecialState extends BaseInput.BaseInputState {
 }

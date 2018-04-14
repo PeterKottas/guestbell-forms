@@ -30,6 +30,7 @@
     }
 
     .money-input__button--remove {
+        fill: $input-validation-color;
         .material-design-icon {
             transform: rotate(45deg);
         }

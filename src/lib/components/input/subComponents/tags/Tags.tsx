@@ -31,6 +31,7 @@ export type TagsProps = {
     readonlyEmptyPlaceholder?: string;
     maxTags?: number;
     valueNotAddedError?: (string | JSX.Element);
+    maxTagsSurpassedError?: (string | JSX.Element);
     showSuggestions?: boolean;
     suggestionsLoadingComponent?: string | JSX.Element;
     suggestionsEmptyComponent?: string | JSX.Element;
@@ -98,6 +99,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
         onTagsChanged: () => undefined,
         onNewTagAdded: (newTagName) => Promise.resolve(({ name: newTagName, id: new Date().getTime() })),
         valueNotAddedError: <span>Press <b>ENTER</b> to confirm</span>,
+        maxTagsSurpassedError: <span>Maximum number of tags surpassed</span>,
         showSuggestions: true,
         suggestionsLoadingComponent: 'Loading...',
         suggestionsEmptyComponent: 'No data...',
@@ -111,7 +113,13 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
         this.state = { ...this.state, textIsFocused: false, suggestionsVisible: false, fetchingExistingTags: false };
     }
 
+
     public render() {
+        if (this.state.valid) {
+            if (this.props.tags && this.props.tags.length > this.props.maxTags) {
+                this.setInvalid();
+            }
+        }
         const textProps = this.props.textProps ? this.props.textProps : {};
         const suggestions = this.getSuggestions();
         return (
@@ -154,7 +162,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
                                 onBlur={() => this.setState({ textIsFocused: false })}
                                 value={this.state.value}
                                 readOnly={this.props.readOnly}
-                                errors={this.state.value && this.props.allowNew ? (this.props.errors ? this.props.errors : []).concat(this.props.valueNotAddedError) : this.props.errors}
+                                errors={this.getErrors()}
                             />
                             {this.state.suggestionsVisible && this.props.showSuggestions && <SuggestionsWrapped
                                 loading={this.state.fetchingExistingTags}
@@ -177,6 +185,17 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
                 </div>
             </InputGroup >
         );
+    }
+
+    private getErrors() {
+        let errors = (this.props.errors ? this.props.errors : []);
+        if (this.state.value && this.props.allowNew) {
+            errors.concat(this.props.valueNotAddedError);
+        }
+        if (this.props.maxTags < (this.props.tags && this.props.tags.length)) {
+            errors.concat(this.props.maxTagsSurpassedError);
+        }
+        return errors.filter(i => i);
     }
 
     private fetchExistingTags(startsWith: string = '') {

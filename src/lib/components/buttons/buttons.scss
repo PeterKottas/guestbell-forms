@@ -15,6 +15,7 @@
     vertical-align: middle;
     user-select: none;
     cursor: pointer;
+    fill: $input-text-color;
     >svg {
         pointer-events: none;
     }
@@ -126,7 +127,6 @@ $warning-color: #f0ad4e;
         background-color: lighten($warning-color, 2%);
     }
 }
-
 
 $gray-color: #555555;
 .guestbell-btn-gray {
