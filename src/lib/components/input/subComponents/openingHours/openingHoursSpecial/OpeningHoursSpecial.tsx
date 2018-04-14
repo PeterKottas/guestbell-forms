@@ -102,7 +102,7 @@ export class OpeningHoursSpecial extends BaseInput.BaseInput<OpeningHoursSpecial
                             days[index] = { ...day, date: date.toDate() };
                             this.props.onDaysChange(days);
                         }}
-                        excludeDates={this.props.days.filter(day => day.date).map(d => Moment(d))}
+                        excludeDates={this.props.days.filter(day => day.date).map(d => Moment(d.date))}
                         withPortal={true}
                         minDate={Moment()}
                     />}

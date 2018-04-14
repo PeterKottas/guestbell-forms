@@ -47753,7 +47753,7 @@ var OpeningHoursSpecial = /** @class */ (function (_super) {
                         var days = _this.props.days.slice(0);
                         days[index] = __assign({}, day, { date: date.toDate() });
                         _this.props.onDaysChange(days);
-                    }, excludeDates: _this.props.days.filter(function (day) { return day.date; }).map(function (d) { return Moment(d); }), withPortal: true, minDate: Moment() }) })); }),
+                    }, excludeDates: _this.props.days.filter(function (day) { return day.date; }).map(function (d) { return Moment(d.date); }), withPortal: true, minDate: Moment() }) })); }),
             React.createElement("span", { className: "bar" }),
             this.renderDefaultValidation());
     };
