@@ -143,7 +143,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
                                 }}
                                 onChange={(e, isValid) => {
                                     !this.state.suggestionsVisible && this.setState({ suggestionsVisible: true });
-                                    this.handleChange(e);
+                                    this.handleChange(e, isValid);
                                     this.fetchExistingTags(e.target.value);
                                 }}
                                 onFocus={async e => {
@@ -182,7 +182,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
 
     private getErrors() {
         let errors = [];
-        if (this.state.value && this.props.allowNew) {
+        if (this.state.valid && this.state.value && this.props.allowNew) {
             errors = errors.concat(this.props.valueNotAddedError);
         }
         if (this.props.maxTags < (this.props.tags && this.props.tags.length)) {

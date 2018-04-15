@@ -53707,7 +53707,7 @@ var Tags = /** @class */ (function (_super) {
                                 });
                             }); }, onChange: function (e, isValid) {
                                 !_this.state.suggestionsVisible && _this.setState({ suggestionsVisible: true });
-                                _this.handleChange(e);
+                                _this.handleChange(e, isValid);
                                 _this.fetchExistingTags(e.target.value);
                             }, onFocus: function (e) { return __awaiter(_this, void 0, void 0, function () {
                                 return __generator(this, function (_a) {
@@ -53726,7 +53726,7 @@ var Tags = /** @class */ (function (_super) {
     };
     Tags.prototype.getErrors = function () {
         var errors = [];
-        if (this.state.value && this.props.allowNew) {
+        if (this.state.valid && this.state.value && this.props.allowNew) {
             errors = errors.concat(this.props.valueNotAddedError);
         }
         if (this.props.maxTags < (this.props.tags && this.props.tags.length)) {
