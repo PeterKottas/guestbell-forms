@@ -115,11 +115,6 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
 
 
     public render() {
-        if (this.state.valid) {
-            if (this.props.tags && this.props.tags.length > this.props.maxTags) {
-                this.setInvalid();
-            }
-        }
         const textProps = this.props.textProps ? this.props.textProps : {};
         const suggestions = this.getSuggestions();
         return (
@@ -190,10 +185,10 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
     private getErrors() {
         let errors = (this.props.errors ? this.props.errors : []);
         if (this.state.value && this.props.allowNew) {
-            errors.concat(this.props.valueNotAddedError);
+            errors = errors.concat(this.props.valueNotAddedError);
         }
         if (this.props.maxTags < (this.props.tags && this.props.tags.length)) {
-            errors.concat(this.props.maxTagsSurpassedError);
+            errors = errors.concat(this.props.maxTagsSurpassedError);
         }
         return errors.filter(i => i);
     }

@@ -53661,11 +53661,6 @@ var Tags = /** @class */ (function (_super) {
     }
     Tags.prototype.render = function () {
         var _this = this;
-        if (this.state.valid) {
-            if (this.props.tags && this.props.tags.length > this.props.maxTags) {
-                this.setInvalid();
-            }
-        }
         var textProps = this.props.textProps ? this.props.textProps : {};
         var suggestions = this.getSuggestions();
         return (React.createElement(InputGroup_1.InputGroup, { title: this.props.title },
@@ -53720,10 +53715,10 @@ var Tags = /** @class */ (function (_super) {
     Tags.prototype.getErrors = function () {
         var errors = (this.props.errors ? this.props.errors : []);
         if (this.state.value && this.props.allowNew) {
-            errors.concat(this.props.valueNotAddedError);
+            errors = errors.concat(this.props.valueNotAddedError);
         }
         if (this.props.maxTags < (this.props.tags && this.props.tags.length)) {
-            errors.concat(this.props.maxTagsSurpassedError);
+            errors = errors.concat(this.props.maxTagsSurpassedError);
         }
         return errors.filter(function (i) { return i; });
     };
