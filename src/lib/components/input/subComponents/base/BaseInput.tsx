@@ -67,15 +67,16 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
     public static contextTypes = Form.FormContextType;
 
     protected getValidationClass(extraErrors?: ValidationError[]) {
-        return (
-            (this.state.valid || !this.state.touched)
+        if (!this.props.showValidation) {
+            return 'validation__success';
+        }
+        return ((this.state.valid || !this.state.touched)
             &&
             (!this.props.errors || this.props.errors.length === 0)
             &&
-            (!extraErrors || extraErrors.length === 0)
-        )
-            ||
-            !this.props.showValidation ? 'validation__success' : 'validation__error';
+            (!this.state.errors || this.state.errors.length === 0)
+            &&
+            (!extraErrors || extraErrors.length === 0)) ? 'validation__success' : 'validation__error';
     }
 
     protected renderDefaultValidation(extraErrors?: ValidationError[]) {

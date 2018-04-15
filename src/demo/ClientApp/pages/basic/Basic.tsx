@@ -595,7 +595,6 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                                 textProps={{
                                                     validators: ['email']
                                                 }}
-                                                errors={['Extra error']}
                                             />
                                             <Select
                                                 label="One or more"

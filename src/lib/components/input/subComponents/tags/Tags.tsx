@@ -118,9 +118,10 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
     public render() {
         const textProps = this.props.textProps ? this.props.textProps : {};
         const suggestions = this.getSuggestions();
+        const errors = this.getErrors();
         return (
             <InputGroup title={this.props.title}>
-                <div className={'input__base tags-input ' + this.getValidationClass() + (this.props.className ? ' ' + this.props.className : '') + ' ' + (this.props.readOnly ? 'readonly' : '')}>
+                <div className={'input__base tags-input ' + this.getValidationClass(errors) + (this.props.className ? ' ' + this.props.className : '') + ' ' + (this.props.readOnly ? 'readonly' : '')}>
                     {this.renderTags()}
                     {(!this.props.maxTags || (this.props.maxTags > (this.props.tags && this.props.tags.length))) && !this.props.readOnly &&
                         <div className="tags-input__tags__wrapper">
@@ -147,7 +148,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
                                     this.fetchExistingTags(e.target.value);
                                 }}
                                 onFocus={async e => {
-                                    this.setState({ textIsFocused: true, suggestionsVisible: true });
+                                    this.setState({ textIsFocused: true, suggestionsVisible: true, touched: true });
                                     this.fetchExistingTags();
                                 }}
                                 onBlur={() => this.setState({ textIsFocused: false })}
@@ -171,7 +172,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
                             />}
                         </div >
                     }
-                    {this.renderDefaultValidation(this.getErrors())}
+                    {this.renderDefaultValidation(errors)}
                     {this.props.label && <label className={((this.state.value !== '')
                         || (this.state.textIsFocused) || (this.props.tags.length >= this.props.maxTags)) ? 'label--focused' : ''}
                     >{this.renderLabel()}</label>}

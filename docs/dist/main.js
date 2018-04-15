@@ -4857,13 +4857,16 @@ var BaseInput = /** @class */ (function (_super) {
         return _this;
     }
     BaseInput.prototype.getValidationClass = function (extraErrors) {
+        if (!this.props.showValidation) {
+            return 'validation__success';
+        }
         return ((this.state.valid || !this.state.touched)
             &&
                 (!this.props.errors || this.props.errors.length === 0)
             &&
-                (!extraErrors || extraErrors.length === 0))
-            ||
-                !this.props.showValidation ? 'validation__success' : 'validation__error';
+                (!this.state.errors || this.state.errors.length === 0)
+            &&
+                (!extraErrors || extraErrors.length === 0)) ? 'validation__success' : 'validation__error';
     };
     BaseInput.prototype.renderDefaultValidation = function (extraErrors) {
         if (!this.props.showValidation) {
@@ -43416,7 +43419,7 @@ var Basic = /** @class */ (function (_super) {
                                         React.createElement(index_1.Tags, { title: "Tags max 3", maxTags: 2, readOnly: this.state.multipleReadonly, allowNew: true, tags: this.state.tags, onTagsChanged: function (tags) { return _this.setState({ tags: tags }); } }),
                                         React.createElement(index_1.Tags, { title: "Tags only email", label: "With label", maxTags: 2, allowNew: true, readOnly: this.state.multipleReadonly, tags: this.state.tags, onTagsChanged: function (tags) { return _this.setState({ tags: tags }); }, suggestionsEmptyComponent: null, textProps: {
                                                 validators: ['email']
-                                            }, errors: ['Extra error'] }),
+                                            } }),
                                         React.createElement(index_1.Select, { label: "One or more", title: "Multiselect", multiple: true, defaultEmpty: true, readOnly: this.state.multipleReadonly, selectedValues: this.state.selectedValues.map(function (item) { return ({
                                                 value: item
                                             }); }), values: this.state.multipleValues.map(function (item) { return ({
@@ -53680,8 +53683,9 @@ var Tags = /** @class */ (function (_super) {
         var _this = this;
         var textProps = this.props.textProps ? this.props.textProps : {};
         var suggestions = this.getSuggestions();
+        var errors = this.getErrors();
         return (React.createElement(InputGroup_1.InputGroup, { title: this.props.title },
-            React.createElement("div", { className: 'input__base tags-input ' + this.getValidationClass() + (this.props.className ? ' ' + this.props.className : '') + ' ' + (this.props.readOnly ? 'readonly' : '') },
+            React.createElement("div", { className: 'input__base tags-input ' + this.getValidationClass(errors) + (this.props.className ? ' ' + this.props.className : '') + ' ' + (this.props.readOnly ? 'readonly' : '') },
                 this.renderTags(),
                 (!this.props.maxTags || (this.props.maxTags > (this.props.tags && this.props.tags.length))) && !this.props.readOnly &&
                     React.createElement("div", { className: "tags-input__tags__wrapper" },
@@ -53711,7 +53715,7 @@ var Tags = /** @class */ (function (_super) {
                                 _this.fetchExistingTags(e.target.value);
                             }, onFocus: function (e) { return __awaiter(_this, void 0, void 0, function () {
                                 return __generator(this, function (_a) {
-                                    this.setState({ textIsFocused: true, suggestionsVisible: true });
+                                    this.setState({ textIsFocused: true, suggestionsVisible: true, touched: true });
                                     this.fetchExistingTags();
                                     return [2 /*return*/];
                                 });
@@ -53720,7 +53724,7 @@ var Tags = /** @class */ (function (_super) {
                                 _this.props.onTagsChanged(_this.props.tags.concat(tag));
                                 _this.setState({ value: '' }, function () { return _this.fetchExistingTags(); });
                             }, onClickOutside: function () { return _this.setState({ suggestionsVisible: false }); }, value: this.state.value })),
-                this.renderDefaultValidation(this.getErrors()),
+                this.renderDefaultValidation(errors),
                 this.props.label && React.createElement("label", { className: ((this.state.value !== '')
                         || (this.state.textIsFocused) || (this.props.tags.length >= this.props.maxTags)) ? 'label--focused' : '' }, this.renderLabel()))));
     };
