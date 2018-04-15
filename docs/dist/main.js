@@ -4857,10 +4857,10 @@ var BaseInput = /** @class */ (function (_super) {
         return _this;
     }
     BaseInput.prototype.getValidationClass = function (extraErrors) {
-        if (!this.props.showValidation) {
+        if (!this.props.showValidation || !this.state.touched) {
             return 'validation__success';
         }
-        return ((this.state.valid || !this.state.touched)
+        return (this.state.valid
             &&
                 (!this.props.errors || this.props.errors.length === 0)
             &&

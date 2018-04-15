@@ -67,10 +67,10 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
     public static contextTypes = Form.FormContextType;
 
     protected getValidationClass(extraErrors?: ValidationError[]) {
-        if (!this.props.showValidation) {
+        if (!this.props.showValidation || !this.state.touched) {
             return 'validation__success';
         }
-        return ((this.state.valid || !this.state.touched)
+        return (this.state.valid
             &&
             (!this.props.errors || this.props.errors.length === 0)
             &&
