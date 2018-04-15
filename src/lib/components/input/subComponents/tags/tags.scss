@@ -2,12 +2,12 @@
 
 .tags-input {
     display: inline-block;
-    border: none;
     margin-top: 20px;
     max-width: 37.5rem;
-    border-bottom: 0 !important;
     .tags-input__text-input {
         margin: 0;
+        padding-right: 0;
+        border-bottom: none;
     }
     .tags-input__tag {
         display: inline-flex;

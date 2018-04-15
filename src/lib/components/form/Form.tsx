@@ -119,19 +119,19 @@ export class Form extends React.Component<FormProps, FormState> {
     }
 
     private updateCallback(isComponentValid: boolean = true, inputId: string = '') {
-        this.setState(previousState => {
-            let valid = false;
-            if (isComponentValid) {
-                valid = true;
-                Object.keys(previousState.components).forEach(key => {
-                    const component = previousState.components[key];
-                    if (component && component.inputId != inputId && component.state && !component.state.valid) {
-                        valid = false;
-                    }
-                });
-            }
-            return { isFormValid: valid }
-        });
+        let valid = false;
+        if (isComponentValid) {
+            valid = true;
+            Object.keys(this.state.components).forEach(key => {
+                const component = this.state.components[key];
+                if (component && component.inputId != inputId && component.state && !component.state.valid) {
+                    valid = false;
+                }
+            });
+        }
+        if (valid !== this.state.isFormValid) {
+            this.setState({ isFormValid: valid });
+        }
     }
 
     constructor(props: FormProps) {

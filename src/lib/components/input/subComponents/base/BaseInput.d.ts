@@ -2,6 +2,7 @@ import * as React from 'react';
 import './input.scss';
 import * as Validators from '../../../../validators/index';
 import * as Form from '../../../form/Form';
+export declare type ValidationError = string | JSX.Element;
 export declare type BaseInputProps<HTMLType extends (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)> = {
     disabled?: boolean;
     className?: string;
@@ -20,12 +21,14 @@ export declare type BaseInputProps<HTMLType extends (HTMLInputElement | HTMLSele
     onBlur?: () => void;
     title?: string | JSX.Element;
     onKeyDown?: (e: React.KeyboardEvent<HTMLElement>) => void;
-    errors?: (string | JSX.Element)[];
+    errors?: ValidationError[];
+    onErrorsChanged?: (errors: ValidationError[]) => void;
+    showValidation?: boolean;
 };
 export interface BaseInputState {
     valid: boolean;
     value: string;
-    errors: (string | JSX.Element)[];
+    errors: ValidationError[];
     validator: undefined;
     touched: boolean;
     disabled: boolean;
@@ -43,8 +46,8 @@ export declare class BaseInput<P extends BaseInputProps<HTMLType>, S extends Bas
         enableInputs: any;
         disableInputs: any;
     };
-    protected getValidationClass(): "validation__success" | "validation__error";
-    protected renderDefaultValidation(): JSX.Element;
+    protected getValidationClass(extraErrors?: ValidationError[]): "validation__success" | "validation__error";
+    protected renderDefaultValidation(extraErrors?: ValidationError[]): JSX.Element;
     componentWillUnmount(): void;
     componentDidMount(): void;
     componentWillReceiveProps(nextProps: P): void;
@@ -52,8 +55,8 @@ export declare class BaseInput<P extends BaseInputProps<HTMLType>, S extends Bas
     unTouch(): void;
     disableInput(): void;
     enableInput(): void;
-    private handleValueChange(value);
-    protected handleChange(event: React.ChangeEvent<HTMLType>): void;
+    private handleValueChange(value, valid?);
+    protected handleChange(event: React.ChangeEvent<HTMLType>, isValid?: boolean): void;
     protected handleBlur(e: React.FocusEvent<HTMLType>): void;
     protected handleFocus(e: React.FocusEvent<HTMLType>): void;
     protected getDisabled(): P["disabled"];

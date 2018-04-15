@@ -593,7 +593,7 @@ textarea {
 .input__base {
   position: relative;
   margin: 1rem 0 1.2rem 0;
-  padding-right: 0.8rem;
+  margin-right: 0.8rem;
   border-bottom: 1px solid #eeeeee;
   width: 100%;
   /* VALIDATION ======================================= */
@@ -2322,12 +2322,12 @@ a.guestbell__dropdown-toggle {
   line-height: 25px; }
 .tags-input {
   display: inline-block;
-  border: none;
   margin-top: 20px;
-  max-width: 37.5rem;
-  border-bottom: 0 !important; }
+  max-width: 37.5rem; }
   .tags-input .tags-input__text-input {
-    margin: 0; }
+    margin: 0;
+    padding-right: 0;
+    border-bottom: none; }
   .tags-input .tags-input__tag {
     display: -webkit-inline-box;
     display: -ms-inline-flexbox;

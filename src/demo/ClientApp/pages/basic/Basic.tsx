@@ -591,6 +591,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                                 readOnly={this.state.multipleReadonly}
                                                 tags={this.state.tags}
                                                 onTagsChanged={(tags) => this.setState({ tags })}
+                                                suggestionsEmptyComponent={null}
                                                 textProps={{
                                                     validators: ['email']
                                                 }}

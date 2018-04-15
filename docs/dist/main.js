@@ -4856,17 +4856,30 @@ var BaseInput = /** @class */ (function (_super) {
         _this.setInvalid = _this.setInvalid.bind(_this);
         return _this;
     }
-    BaseInput.prototype.getValidationClass = function () {
-        return (this.state.valid || !this.state.touched) && (!this.props.errors || this.props.errors.length === 0) ? 'validation__success' : 'validation__error';
+    BaseInput.prototype.getValidationClass = function (extraErrors) {
+        return ((this.state.valid || !this.state.touched)
+            &&
+                (!this.props.errors || this.props.errors.length === 0)
+            &&
+                (!extraErrors || extraErrors.length === 0))
+            ||
+                !this.props.showValidation ? 'validation__success' : 'validation__error';
     };
-    BaseInput.prototype.renderDefaultValidation = function () {
+    BaseInput.prototype.renderDefaultValidation = function (extraErrors) {
+        if (!this.props.showValidation) {
+            return null;
+        }
         var finalErrors = this.state.errors;
         if (!finalErrors) {
             finalErrors = [];
         }
+        if (extraErrors) {
+            finalErrors = finalErrors.concat(extraErrors);
+        }
         if (this.props.errors) {
             finalErrors = finalErrors.concat(this.props.errors);
         }
+        finalErrors = finalErrors.filter(function (i) { return i; });
         return React.createElement("div", { className: "validation__container" },
             React.createElement("ul", { className: "validation__ul" }, finalErrors.map(function (item, index) { return React.createElement("span", { key: index, className: "validation__item" }, item); })));
     };
@@ -4899,10 +4912,10 @@ var BaseInput = /** @class */ (function (_super) {
     BaseInput.prototype.enableInput = function () {
         this.setState({ disabled: false });
     };
-    BaseInput.prototype.handleValueChange = function (value) {
+    BaseInput.prototype.handleValueChange = function (value, valid) {
         var _this = this;
+        if (valid === void 0) { valid = true; }
         var errors = [];
-        var valid = true;
         if (this.props.required && !value) {
             errors.push('Required');
             valid = false;
@@ -4956,16 +4969,17 @@ var BaseInput = /** @class */ (function (_super) {
                 }
             }
         }
+        this.props.onErrorsChanged && this.props.onErrorsChanged(errors);
         this.setState({ value: value, valid: valid, errors: errors });
         if (!this.props.ignoreContext) {
             this.context && this.context.updateCallback && this.context.updateCallback(valid, this.inputId);
         }
         return valid;
     };
-    BaseInput.prototype.handleChange = function (event) {
+    BaseInput.prototype.handleChange = function (event, isValid) {
         var value = event.target.value;
         if (!this.props.onTheFlightValidate || (this.props.onTheFlightValidate && this.props.onTheFlightValidate(value))) {
-            var valid = this.handleValueChange(value);
+            var valid = this.handleValueChange(value, isValid);
             if (this.props.onChange) {
                 this.props.onChange(event, valid);
             }
@@ -5026,6 +5040,7 @@ var BaseInput = /** @class */ (function (_super) {
         disabled: false,
         touchOn: "focus",
         ignoreContext: false,
+        showValidation: true
     };
     BaseInput.contextTypes = Form.FormContextType;
     return BaseInput;
@@ -5982,6 +5997,7 @@ var Text = /** @class */ (function (_super) {
     }
     Text.prototype.render = function () {
         var _this = this;
+        console.log('render');
         return React.createElement(InputGroup_1.default, { title: this.props.title },
             React.createElement("div", { className: "input__base text-input " + this.getValidationClass() + " " + (this.props.readOnly ? 'text-input--readOnly' : '') + " " + (this.props.className ? this.props.className : ''), onClick: function (e) { return _this.props.stopClickPropagation && e.stopPropagation(); } },
                 React.createElement("input", { ref: function (elem) { return _this.props.inputRef && _this.props.inputRef(elem); }, placeholder: this.props.placeholder, disabled: this.getDisabled(), required: this.props.required, className: this.state.value ? 'filled' : '', onChange: this.handleChange, value: this.state.value, onBlur: this.handleBlur, onFocus: this.handleFocus, readOnly: this.props.readOnly, onKeyDown: function (e) { return _this.props.onKeyDown && _this.props.onKeyDown(e); }, type: this.props.type }),
@@ -6729,21 +6745,22 @@ var Form = /** @class */ (function (_super) {
         setTimeout(function () { return _this.updateCallback(); }, 1);
     };
     Form.prototype.updateCallback = function (isComponentValid, inputId) {
+        var _this = this;
         if (isComponentValid === void 0) { isComponentValid = true; }
         if (inputId === void 0) { inputId = ''; }
-        this.setState(function (previousState) {
-            var valid = false;
-            if (isComponentValid) {
-                valid = true;
-                Object.keys(previousState.components).forEach(function (key) {
-                    var component = previousState.components[key];
-                    if (component && component.inputId != inputId && component.state && !component.state.valid) {
-                        valid = false;
-                    }
-                });
-            }
-            return { isFormValid: valid };
-        });
+        var valid = false;
+        if (isComponentValid) {
+            valid = true;
+            Object.keys(this.state.components).forEach(function (key) {
+                var component = _this.state.components[key];
+                if (component && component.inputId != inputId && component.state && !component.state.valid) {
+                    valid = false;
+                }
+            });
+        }
+        if (valid !== this.state.isFormValid) {
+            this.setState({ isFormValid: valid });
+        }
     };
     Form.prototype.render = function () {
         var _this = this;
@@ -43397,7 +43414,7 @@ var Basic = /** @class */ (function (_super) {
                                         React.createElement(index_1.Tags, { title: "Tags example", readOnly: this.state.multipleReadonly, allowNew: true, tags: this.state.tags, onTagsChanged: function (tags) { return _this.setState({ tags: tags }); } }),
                                         React.createElement(index_1.Tags, { title: "Tags suggestions", label: "Choose or create tags", readOnly: this.state.multipleReadonly, allowNew: true, existingTags: existingTags, tags: this.state.tags, onTagsChanged: function (tags) { return _this.setState({ tags: tags }); } }),
                                         React.createElement(index_1.Tags, { title: "Tags max 3", maxTags: 2, readOnly: this.state.multipleReadonly, allowNew: true, tags: this.state.tags, onTagsChanged: function (tags) { return _this.setState({ tags: tags }); } }),
-                                        React.createElement(index_1.Tags, { title: "Tags only email", label: "With label", maxTags: 2, allowNew: true, readOnly: this.state.multipleReadonly, tags: this.state.tags, onTagsChanged: function (tags) { return _this.setState({ tags: tags }); }, textProps: {
+                                        React.createElement(index_1.Tags, { title: "Tags only email", label: "With label", maxTags: 2, allowNew: true, readOnly: this.state.multipleReadonly, tags: this.state.tags, onTagsChanged: function (tags) { return _this.setState({ tags: tags }); }, suggestionsEmptyComponent: null, textProps: {
                                                 validators: ['email']
                                             }, errors: ['Extra error'] }),
                                         React.createElement(index_1.Select, { label: "One or more", title: "Multiselect", multiple: true, defaultEmpty: true, readOnly: this.state.multipleReadonly, selectedValues: this.state.selectedValues.map(function (item) { return ({
@@ -53668,7 +53685,7 @@ var Tags = /** @class */ (function (_super) {
                 this.renderTags(),
                 (!this.props.maxTags || (this.props.maxTags > (this.props.tags && this.props.tags.length))) && !this.props.readOnly &&
                     React.createElement("div", { className: "tags-input__tags__wrapper" },
-                        React.createElement(Text_1.Text, __assign({}, textProps, { className: 'tags-input__text-input ' + textProps.className, onKeyDown: function (e) { return __awaiter(_this, void 0, void 0, function () {
+                        React.createElement(Text_1.Text, __assign({}, textProps, { className: 'tags-input__text-input ' + (textProps.className ? textProps.className : ''), onKeyDown: function (e) { return __awaiter(_this, void 0, void 0, function () {
                                 var newTag;
                                 return __generator(this, function (_a) {
                                     switch (_a.label) {
@@ -53691,12 +53708,6 @@ var Tags = /** @class */ (function (_super) {
                             }); }, onChange: function (e, isValid) {
                                 !_this.state.suggestionsVisible && _this.setState({ suggestionsVisible: true });
                                 _this.handleChange(e);
-                                if (!isValid) {
-                                    _this.setInvalid();
-                                }
-                                else {
-                                    _this.setValid();
-                                }
                                 _this.fetchExistingTags(e.target.value);
                             }, onFocus: function (e) { return __awaiter(_this, void 0, void 0, function () {
                                 return __generator(this, function (_a) {
@@ -53704,16 +53715,17 @@ var Tags = /** @class */ (function (_super) {
                                     this.fetchExistingTags();
                                     return [2 /*return*/];
                                 });
-                            }); }, onBlur: function () { return _this.setState({ textIsFocused: false }); }, value: this.state.value, readOnly: this.props.readOnly, errors: this.getErrors() })),
+                            }); }, onBlur: function () { return _this.setState({ textIsFocused: false }); }, value: this.state.value, readOnly: this.props.readOnly, onErrorsChanged: function (errors) { return _this.setState({ errors: errors }); }, showValidation: false })),
                         this.state.suggestionsVisible && this.props.showSuggestions && React.createElement(SuggestionsWrapped, { loading: this.state.fetchingExistingTags, loadingComponent: this.props.suggestionsLoadingComponent, emptyComponent: this.props.suggestionsEmptyComponent, isVisible: this.state.suggestionsVisible, tags: suggestions, onSelected: function (tag) {
                                 _this.props.onTagsChanged(_this.props.tags.concat(tag));
                                 _this.setState({ value: '' }, function () { return _this.fetchExistingTags(); });
                             }, onClickOutside: function () { return _this.setState({ suggestionsVisible: false }); }, value: this.state.value })),
+                this.renderDefaultValidation(this.getErrors()),
                 this.props.label && React.createElement("label", { className: ((this.state.value !== '')
                         || (this.state.textIsFocused) || (this.props.tags.length >= this.props.maxTags)) ? 'label--focused' : '' }, this.renderLabel()))));
     };
     Tags.prototype.getErrors = function () {
-        var errors = (this.props.errors ? this.props.errors : []);
+        var errors = [];
         if (this.state.value && this.props.allowNew) {
             errors = errors.concat(this.props.valueNotAddedError);
         }
@@ -53765,26 +53777,10 @@ var Tags = /** @class */ (function (_super) {
                 this.props.readOnly && React.createElement("div", { className: "tags-input__tag__wrapper" },
                     React.createElement("div", { className: "tags-input__tag" }, this.props.readonlyEmptyPlaceholder));
     };
-    Tags.defaultProps = {
-        disabled: false,
-        className: '',
-        tags: [],
-        existingTags: [],
-        maxTags: 1000,
-        onTagsChanged: function () { return undefined; },
-        onNewTagAdded: function (newTagName) { return Promise.resolve(({ name: newTagName, id: new Date().getTime() })); },
-        valueNotAddedError: React.createElement("span", null,
+    Tags.defaultProps = __assign({}, BaseInput.BaseInput.defaultProps, { disabled: false, className: '', tags: [], existingTags: [], maxTags: 1000, onTagsChanged: function () { return undefined; }, onNewTagAdded: function (newTagName) { return Promise.resolve(({ name: newTagName, id: new Date().getTime() })); }, valueNotAddedError: React.createElement("span", null,
             "Press ",
             React.createElement("b", null, "ENTER"),
-            " to confirm"),
-        maxTagsSurpassedError: React.createElement("span", null, "Maximum number of tags surpassed"),
-        showSuggestions: true,
-        suggestionsLoadingComponent: 'Loading...',
-        suggestionsEmptyComponent: 'No data...',
-        loadingDelayMs: 500,
-        filterExistingTags: function (text, tags) { return tags.filter(function (tag) { return tag.name && tag.name.toLowerCase().startsWith(text); }); },
-        maxSuggestions: 5
-    };
+            " to confirm"), maxTagsSurpassedError: React.createElement("span", null, "Maximum number of tags surpassed"), showSuggestions: true, suggestionsLoadingComponent: 'Loading...', suggestionsEmptyComponent: 'No data...', loadingDelayMs: 500, filterExistingTags: function (text, tags) { return tags.filter(function (tag) { return tag.name && tag.name.toLowerCase().startsWith(text); }); }, maxSuggestions: 5 });
     return Tags;
 }(BaseInput.BaseInput));
 exports.Tags = Tags;

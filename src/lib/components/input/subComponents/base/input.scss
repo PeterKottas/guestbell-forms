@@ -21,7 +21,7 @@
 .input__base {
     position: relative;
     margin: 1rem 0 1.2rem 0;
-    padding-right: 0.8rem;
+    margin-right: 0.8rem;
     border-bottom: 1px solid $input-border-color;
     width: 100%; // Chrome yellow tint fix
     input:-webkit-autofill {

@@ -14,6 +14,8 @@ import * as Validators from '../../../../validators/index';
 import * as Form from '../../../form/Form';
 import guid from '../../../utils/Guid';
 
+export type ValidationError = string | JSX.Element;
+
 export type BaseInputProps<HTMLType extends (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)> = {
     disabled?: boolean;
     className?: string;
@@ -32,13 +34,15 @@ export type BaseInputProps<HTMLType extends (HTMLInputElement | HTMLSelectElemen
     onBlur?: () => void;
     title?: string | JSX.Element;
     onKeyDown?: (e: React.KeyboardEvent<HTMLElement>) => void;
-    errors?: (string | JSX.Element)[];
+    errors?: ValidationError[];
+    onErrorsChanged?: (errors: ValidationError[]) => void;
+    showValidation?: boolean;
 }
 
 export interface BaseInputState {
     valid: boolean;
     value: string;
-    errors: (string | JSX.Element)[];
+    errors: ValidationError[];
     validator: undefined;
     touched: boolean;
     disabled: boolean;
@@ -57,22 +61,38 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
         disabled: false,
         touchOn: "focus",
         ignoreContext: false,
+        showValidation: true
     };
 
     public static contextTypes = Form.FormContextType;
 
-    protected getValidationClass() {
-        return (this.state.valid || !this.state.touched) && (!this.props.errors || this.props.errors.length === 0) ? 'validation__success' : 'validation__error';
+    protected getValidationClass(extraErrors?: ValidationError[]) {
+        return (
+            (this.state.valid || !this.state.touched)
+            &&
+            (!this.props.errors || this.props.errors.length === 0)
+            &&
+            (!extraErrors || extraErrors.length === 0)
+        )
+            ||
+            !this.props.showValidation ? 'validation__success' : 'validation__error';
     }
 
-    protected renderDefaultValidation() {
-        let finalErrors = this.state.errors;
+    protected renderDefaultValidation(extraErrors?: ValidationError[]) {
+        if (!this.props.showValidation) {
+            return null;
+        }
+        let finalErrors: ValidationError[] = this.state.errors;
         if (!finalErrors) {
             finalErrors = [];
+        }
+        if (extraErrors) {
+            finalErrors = finalErrors.concat(extraErrors);
         }
         if (this.props.errors) {
             finalErrors = finalErrors.concat(this.props.errors);
         }
+        finalErrors = finalErrors.filter(i => i);
         return <div className="validation__container"><ul className="validation__ul">{finalErrors.map((item, index) => <span key={index} className="validation__item">{item}</span>)}</ul></div>;
     }
 
@@ -112,17 +132,15 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
         this.setState({ disabled: false });
     }
 
-    private handleValueChange(value: string): boolean {
+    private handleValueChange(value: string, valid: boolean = true): boolean {
         var errors = [];
-        var valid = true;
         if (this.props.required && !value) {
             errors.push('Required');
             valid = false;
         } else {
             if (!this.props.required && !value) {
                 valid = true;
-            }
-            else {
+            } else {
                 if (this.props.validators) {
                     valid = true;
                     this.props.validators.forEach(validator => {
@@ -166,17 +184,18 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
                 }
             }
         }
-        this.setState({ value: value, valid: valid, errors: errors });
+        this.props.onErrorsChanged && this.props.onErrorsChanged(errors);
+        this.setState({ value, valid, errors });
         if (!this.props.ignoreContext) {
             this.context && this.context.updateCallback && this.context.updateCallback(valid, this.inputId);
         }
         return valid;
     }
 
-    protected handleChange(event: React.ChangeEvent<HTMLType>) {
+    protected handleChange(event: React.ChangeEvent<HTMLType>, isValid?: boolean) {
         let value = event.target.value;
         if (!this.props.onTheFlightValidate || (this.props.onTheFlightValidate && this.props.onTheFlightValidate(value))) {
-            const valid = this.handleValueChange(value);
+            const valid = this.handleValueChange(value, isValid);
             if (this.props.onChange) {
                 this.props.onChange(event, valid);
             }

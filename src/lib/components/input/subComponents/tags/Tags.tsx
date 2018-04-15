@@ -91,6 +91,7 @@ const SuggestionsWrapped = onClickOutside<SuggestionsProps>(Suggestions);
 
 export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputElement>  {
     public static defaultProps: TagsProps = {
+        ...BaseInput.BaseInput.defaultProps,
         disabled: false,
         className: '',
         tags: [],
@@ -105,7 +106,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
         suggestionsEmptyComponent: 'No data...',
         loadingDelayMs: 500,
         filterExistingTags: (text, tags) => tags.filter(tag => tag.name && tag.name.toLowerCase().startsWith(text)),
-        maxSuggestions: 5
+        maxSuggestions: 5,
     }
 
     constructor(props: TagsProps) {
@@ -125,7 +126,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
                         <div className="tags-input__tags__wrapper">
                             <Text
                                 {...textProps}
-                                className={'tags-input__text-input ' + textProps.className}
+                                className={'tags-input__text-input ' + (textProps.className ? textProps.className : '')}
                                 onKeyDown={async e => {
                                     if (e.key === 'Enter' && this.state.value !== '' && this.state.valid) {
                                         e.preventDefault();
@@ -143,11 +144,6 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
                                 onChange={(e, isValid) => {
                                     !this.state.suggestionsVisible && this.setState({ suggestionsVisible: true });
                                     this.handleChange(e);
-                                    if (!isValid) {
-                                        this.setInvalid();
-                                    } else {
-                                        this.setValid();
-                                    }
                                     this.fetchExistingTags(e.target.value);
                                 }}
                                 onFocus={async e => {
@@ -157,7 +153,8 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
                                 onBlur={() => this.setState({ textIsFocused: false })}
                                 value={this.state.value}
                                 readOnly={this.props.readOnly}
-                                errors={this.getErrors()}
+                                onErrorsChanged={errors => this.setState({ errors })}
+                                showValidation={false}
                             />
                             {this.state.suggestionsVisible && this.props.showSuggestions && <SuggestionsWrapped
                                 loading={this.state.fetchingExistingTags}
@@ -174,6 +171,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
                             />}
                         </div >
                     }
+                    {this.renderDefaultValidation(this.getErrors())}
                     {this.props.label && <label className={((this.state.value !== '')
                         || (this.state.textIsFocused) || (this.props.tags.length >= this.props.maxTags)) ? 'label--focused' : ''}
                     >{this.renderLabel()}</label>}
@@ -183,7 +181,7 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
     }
 
     private getErrors() {
-        let errors = (this.props.errors ? this.props.errors : []);
+        let errors = [];
         if (this.state.value && this.props.allowNew) {
             errors = errors.concat(this.props.valueNotAddedError);
         }
