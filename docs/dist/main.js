@@ -6000,7 +6000,6 @@ var Text = /** @class */ (function (_super) {
     }
     Text.prototype.render = function () {
         var _this = this;
-        console.log('render');
         return React.createElement(InputGroup_1.default, { title: this.props.title },
             React.createElement("div", { className: "input__base text-input " + this.getValidationClass() + " " + (this.props.readOnly ? 'text-input--readOnly' : '') + " " + (this.props.className ? this.props.className : ''), onClick: function (e) { return _this.props.stopClickPropagation && e.stopPropagation(); } },
                 React.createElement("input", { ref: function (elem) { return _this.props.inputRef && _this.props.inputRef(elem); }, placeholder: this.props.placeholder, disabled: this.getDisabled(), required: this.props.required, className: this.state.value ? 'filled' : '', onChange: this.handleChange, value: this.state.value, onBlur: this.handleBlur, onFocus: this.handleFocus, readOnly: this.props.readOnly, onKeyDown: function (e) { return _this.props.onKeyDown && _this.props.onKeyDown(e); }, type: this.props.type }),

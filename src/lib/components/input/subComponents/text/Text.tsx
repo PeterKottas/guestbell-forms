@@ -29,7 +29,6 @@ export class Text extends BaseInput.BaseInput<TextProps, TextState, HTMLInputEle
     }
 
     public render() {
-        console.log('render');
         return <InputGroup title={this.props.title}>
             <div
                 className={`input__base text-input ${this.getValidationClass()} ${(this.props.readOnly ? 'text-input--readOnly' : '')} ${(this.props.className ? this.props.className : '')}`}
