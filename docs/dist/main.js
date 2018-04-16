@@ -25873,6 +25873,7 @@ var Dropdown = /** @class */ (function (_super) {
     };
     Dropdown.prototype.handleClick = function (e) {
         if (this.props.shouldHandleClick && !this.props.disabled) {
+            this.props.onClick && this.props.onClick();
             e.preventDefault();
             e.stopPropagation();
             if (!this.state.isDropdownVisible) {
@@ -25887,7 +25888,7 @@ var Dropdown = /** @class */ (function (_super) {
                 (!this.state.isDropdownVisible ? 'closed ' : 'open ') +
                 (!this.props.disabled ? 'disabled ' : '') +
                 (this.props.inline ? 'guestbell__dropdown--inline ' : '') +
-                (this.props.className ? this.props.className : ' '), onClick: function (e) { return _this.props.onClick && _this.props.onClick(e); } },
+                (this.props.className ? this.props.className : ' ') },
             React.createElement("div", { role: "button", className: "guestbell__dropdown-toggle \n                    " + (this.props.headerClassName ? this.props.headerClassName : '') + " \n                    " + (this.props.showArrow ? '' : 'guestbell__dropdown-toggle__arrow--hidden') + " \n                    " + (this.props.disabled && this.props.disabled ? 'disabled' : ''), onClick: function (e) {
                     _this.handleClick(e);
                 } },
@@ -52427,7 +52428,7 @@ var InputHeader = /** @class */ (function (_super) {
                     this.renderMainButton(),
                     this.props.extraButtons ?
                         React.createElement(Dropdown_1.default, { header: React.createElement(Button_1.default, { type: 'blank--light', circular: true },
-                                React.createElement(MoreIcon, null)), showArrow: false, headerClassName: 'line-height--0', className: '', onClick: function (e) { return e.stopPropagation(); } }, this.renderExtraButtons())
+                                React.createElement(MoreIcon, null)), showArrow: false, headerClassName: 'line-height--0', className: '' }, this.renderExtraButtons())
                         :
                             null,
                     this.props.collapsable &&

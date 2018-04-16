@@ -172,7 +172,6 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
                             showArrow={false}
                             headerClassName={'line-height--0'}
                             className={''}
-                            onClick={e => e.stopPropagation()}
                         >
                             {this.renderExtraButtons()}
                         </Dropdown>

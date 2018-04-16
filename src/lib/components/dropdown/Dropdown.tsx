@@ -21,7 +21,7 @@ export interface DropdownItemProps {
     wrapperTag?: string;
     shouldHandleClick?: boolean;
     showArrow?: boolean;
-    onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+    onClick?: () => void;
     disabled?: boolean;
     inline?: boolean;
 }
@@ -75,6 +75,7 @@ export class Dropdown extends React.Component<DropdownItemProps, DropdownItemSta
 
     private handleClick(e: React.SyntheticEvent<{}>) {
         if (this.props.shouldHandleClick && !this.props.disabled) {
+            this.props.onClick && this.props.onClick();
             e.preventDefault();
             e.stopPropagation();
             if (!this.state.isDropdownVisible) {
@@ -92,7 +93,6 @@ export class Dropdown extends React.Component<DropdownItemProps, DropdownItemSta
                     (!this.props.disabled ? 'disabled ' : '') + 
                     (this.props.inline ? 'guestbell__dropdown--inline ' : '') + 
                     (this.props.className ? this.props.className : ' ')}
-                onClick={e => this.props.onClick && this.props.onClick(e)}
             >
                 <div
                     role="button"

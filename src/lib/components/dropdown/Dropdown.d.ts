@@ -11,7 +11,7 @@ export interface DropdownItemProps {
     wrapperTag?: string;
     shouldHandleClick?: boolean;
     showArrow?: boolean;
-    onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+    onClick?: () => void;
     disabled?: boolean;
     inline?: boolean;
 }
