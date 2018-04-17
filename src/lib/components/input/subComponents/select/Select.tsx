@@ -49,7 +49,7 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState, HTMLSe
                     ''
             :
             props.value;
-        this.state = Object.assign(this.state, { value: val });
+        this.state = Object.assign(this.state, { value: val, handleValueChangeEnabled: props.multiple ? false : true });
         this.handleChangeCustom = this.handleChangeCustom.bind(this);
     }
 
@@ -93,6 +93,7 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState, HTMLSe
         if (this.props.multiple) {
             let value = event.target.value;
             let val = this.props.values.filter(item => item.value === value)[0];
+            let newValues = this.props.selectedValues.concat(val);
             if (!val) {
                 if (!isNaN(Number(value))) {
                     let valNumber = Number(value);
@@ -100,11 +101,22 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState, HTMLSe
                 }
             }
             if (val) {
-                this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(this.props.selectedValues.concat(val));
+                this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(newValues);
+                this.handleValid(newValues);
                 this.setState({ value: '' });
             }
         } else {
             this.handleChange(event);
+        }
+    }
+
+    private handleValid(newValues: SelectValue[]) {
+        if (this.props.required) {
+            if (newValues.length > 0) {
+                this.setValid();
+            } else {
+                this.setInvalid(['Required']);
+            }
         }
     }
 
@@ -126,13 +138,18 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState, HTMLSe
                             disabled={item.forceSelected}
                             circular={true}
                             type={'blank--light'}
-                            onClick={() => this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(this.props.selectedValues.filter(sv => sv.value !== item.value))}
+                            onClick={() => {
+                                const newValues = this.props.selectedValues.filter(sv => sv.value !== item.value);
+                                this.handleValid(newValues);
+                                this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(newValues)
+                            }}
                             className="ml-1 transform-rotate--45 line-height--0 p-0"
                         >
                             <PlusIcon />
                         </Button>}
                     </div>
-                ))}
+                ))
+                }
                 </div>
                 :
                 this.props.readOnly && <div className="select-input__selectedValue__wrapper">

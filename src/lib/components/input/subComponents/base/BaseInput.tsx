@@ -47,6 +47,7 @@ export interface BaseInputState {
     touched: boolean;
     disabled: boolean;
     focused: boolean;
+    handleValueChangeEnabled: boolean;
 }
 
 export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputState, HTMLType extends (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)> extends React.Component<P, S> {
@@ -134,6 +135,9 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
     }
 
     private handleValueChange(value: string, valid: boolean = true): boolean {
+        if (this.state.handleValueChangeEnabled) {
+            return valid;
+        }
         var errors = [];
         if (this.props.required && !value) {
             errors.push('Required');
@@ -228,11 +232,19 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
     }
 
     protected setValid() {
-        this.setState({ valid: true });
+        !this.state.valid && this.setState({ valid: true, errors: [] }, () => {
+            if (!this.props.ignoreContext) {
+                this.context && this.context.updateCallback && this.context.updateCallback(true, this.inputId);
+            }
+        });
     }
 
-    protected setInvalid() {
-        this.setState({ valid: false });
+    protected setInvalid(errors: ValidationError[] = []) {
+        this.setState({ valid: false, errors }, () => {
+            if (!this.props.ignoreContext) {
+                this.context && this.context.updateCallback && this.context.updateCallback(false, this.inputId);
+            }
+        });
     }
 
     protected renderLabel(touchable: boolean = false) {
@@ -286,7 +298,8 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
             value: props.value ? props.value : '',
             touched: false,
             disabled: false,
-            focused: false
+            focused: false,
+            handleValueChangeEnabled: true
         } as S;
         this.handleChange = this.handleChange.bind(this);
         this.handleBlur = this.handleBlur.bind(this);

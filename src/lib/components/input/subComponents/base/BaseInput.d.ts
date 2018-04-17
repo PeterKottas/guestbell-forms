@@ -33,6 +33,7 @@ export interface BaseInputState {
     touched: boolean;
     disabled: boolean;
     focused: boolean;
+    handleValueChangeEnabled: boolean;
 }
 export declare class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputState, HTMLType extends (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)> extends React.Component<P, S> {
     context: Form.FormContext;
@@ -61,7 +62,7 @@ export declare class BaseInput<P extends BaseInputProps<HTMLType>, S extends Bas
     protected handleFocus(e: React.FocusEvent<HTMLType>): void;
     protected getDisabled(): P["disabled"];
     protected setValid(): void;
-    protected setInvalid(): void;
+    protected setInvalid(errors?: ValidationError[]): void;
     protected renderLabel(touchable?: boolean): JSX.Element;
     private renderTooltip();
     protected renderTitle(): P["title"];

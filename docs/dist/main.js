@@ -4847,7 +4847,8 @@ var BaseInput = /** @class */ (function (_super) {
             value: props.value ? props.value : '',
             touched: false,
             disabled: false,
-            focused: false
+            focused: false,
+            handleValueChangeEnabled: true
         };
         _this.handleChange = _this.handleChange.bind(_this);
         _this.handleBlur = _this.handleBlur.bind(_this);
@@ -4918,6 +4919,9 @@ var BaseInput = /** @class */ (function (_super) {
     BaseInput.prototype.handleValueChange = function (value, valid) {
         var _this = this;
         if (valid === void 0) { valid = true; }
+        if (this.state.handleValueChangeEnabled) {
+            return valid;
+        }
         var errors = [];
         if (this.props.required && !value) {
             errors.push('Required');
@@ -5010,10 +5014,21 @@ var BaseInput = /** @class */ (function (_super) {
         return this.state.disabled ? this.state.disabled : this.props.disabled;
     };
     BaseInput.prototype.setValid = function () {
-        this.setState({ valid: true });
+        var _this = this;
+        !this.state.valid && this.setState({ valid: true, errors: [] }, function () {
+            if (!_this.props.ignoreContext) {
+                _this.context && _this.context.updateCallback && _this.context.updateCallback(true, _this.inputId);
+            }
+        });
     };
-    BaseInput.prototype.setInvalid = function () {
-        this.setState({ valid: false });
+    BaseInput.prototype.setInvalid = function (errors) {
+        var _this = this;
+        if (errors === void 0) { errors = []; }
+        this.setState({ valid: false, errors: errors }, function () {
+            if (!_this.props.ignoreContext) {
+                _this.context && _this.context.updateCallback && _this.context.updateCallback(false, _this.inputId);
+            }
+        });
     };
     BaseInput.prototype.renderLabel = function (touchable) {
         if (touchable === void 0) { touchable = false; }
@@ -9388,7 +9403,7 @@ var Select = /** @class */ (function (_super) {
                         ''
             :
                 props.value;
-        _this.state = Object.assign(_this.state, { value: val });
+        _this.state = Object.assign(_this.state, { value: val, handleValueChangeEnabled: props.multiple ? false : true });
         _this.handleChangeCustom = _this.handleChangeCustom.bind(_this);
         return _this;
     }
@@ -9415,6 +9430,7 @@ var Select = /** @class */ (function (_super) {
         if (this.props.multiple) {
             var value_1 = event.target.value;
             var val = this.props.values.filter(function (item) { return item.value === value_1; })[0];
+            var newValues = this.props.selectedValues.concat(val);
             if (!val) {
                 if (!isNaN(Number(value_1))) {
                     var valNumber_1 = Number(value_1);
@@ -9422,12 +9438,23 @@ var Select = /** @class */ (function (_super) {
                 }
             }
             if (val) {
-                this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(this.props.selectedValues.concat(val));
+                this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(newValues);
+                this.handleValid(newValues);
                 this.setState({ value: '' });
             }
         }
         else {
             this.handleChange(event);
+        }
+    };
+    Select.prototype.handleValid = function (newValues) {
+        if (this.props.required) {
+            if (newValues.length > 0) {
+                this.setValid();
+            }
+            else {
+                this.setInvalid(['Required']);
+            }
         }
     };
     Select.prototype.renderReadonly = function () {
@@ -9441,7 +9468,11 @@ var Select = /** @class */ (function (_super) {
             this.props.selectedValues.length > 0 ?
                 React.createElement("div", { className: "select-input__selectedValue__wrapper" }, this.props.selectedValues.map(function (item, index) { return (React.createElement("div", { className: "select-input__selectedValue", key: index },
                     item.label ? item.label : item.value,
-                    !_this.props.readOnly && React.createElement(Button_1.Button, { disabled: item.forceSelected, circular: true, type: 'blank--light', onClick: function () { return _this.props.onSelectedValuesChange && _this.props.onSelectedValuesChange(_this.props.selectedValues.filter(function (sv) { return sv.value !== item.value; })); }, className: "ml-1 transform-rotate--45 line-height--0 p-0" },
+                    !_this.props.readOnly && React.createElement(Button_1.Button, { disabled: item.forceSelected, circular: true, type: 'blank--light', onClick: function () {
+                            var newValues = _this.props.selectedValues.filter(function (sv) { return sv.value !== item.value; });
+                            _this.handleValid(newValues);
+                            _this.props.onSelectedValuesChange && _this.props.onSelectedValuesChange(newValues);
+                        }, className: "ml-1 transform-rotate--45 line-height--0 p-0" },
                         React.createElement(PlusIcon, null)))); }))
                 :
                     this.props.readOnly && React.createElement("div", { className: "select-input__selectedValue__wrapper" },
@@ -43420,7 +43451,7 @@ var Basic = /** @class */ (function (_super) {
                                         React.createElement(index_1.Tags, { title: "Tags only email", label: "With label", maxTags: 2, allowNew: true, readOnly: this.state.multipleReadonly, tags: this.state.tags, onTagsChanged: function (tags) { return _this.setState({ tags: tags }); }, suggestionsEmptyComponent: null, textProps: {
                                                 validators: ['email']
                                             } }),
-                                        React.createElement(index_1.Select, { label: "One or more", title: "Multiselect", multiple: true, defaultEmpty: true, readOnly: this.state.multipleReadonly, selectedValues: this.state.selectedValues.map(function (item) { return ({
+                                        React.createElement(index_1.Select, { required: true, label: "One or more", title: "Multiselect", multiple: true, defaultEmpty: true, readOnly: this.state.multipleReadonly, selectedValues: this.state.selectedValues.map(function (item) { return ({
                                                 value: item
                                             }); }), values: this.state.multipleValues.map(function (item) { return ({
                                                 value: item

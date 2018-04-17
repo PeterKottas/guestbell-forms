@@ -597,6 +597,7 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                                 }}
                                             />
                                             <Select
+                                                required={true}
                                                 label="One or more"
                                                 title="Multiselect"
                                                 multiple={true}
