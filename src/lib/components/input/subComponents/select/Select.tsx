@@ -93,13 +93,13 @@ export class Select extends BaseInput.BaseInput<SelectProps, SelectState, HTMLSe
         if (this.props.multiple) {
             let value = event.target.value;
             let val = this.props.values.filter(item => item.value === value)[0];
-            let newValues = this.props.selectedValues.concat(val);
             if (!val) {
                 if (!isNaN(Number(value))) {
                     let valNumber = Number(value);
                     val = this.props.values.filter(item => item.value === valNumber)[0];
                 }
             }
+            let newValues = this.props.selectedValues.concat(val);
             if (val) {
                 this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(newValues);
                 this.handleValid(newValues);
