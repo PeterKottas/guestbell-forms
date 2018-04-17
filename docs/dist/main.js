@@ -4919,7 +4919,7 @@ var BaseInput = /** @class */ (function (_super) {
     BaseInput.prototype.handleValueChange = function (value, valid) {
         var _this = this;
         if (valid === void 0) { valid = true; }
-        if (this.state.handleValueChangeEnabled) {
+        if (!this.state.handleValueChangeEnabled) {
             return valid;
         }
         var errors = [];

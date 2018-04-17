@@ -135,7 +135,7 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
     }
 
     private handleValueChange(value: string, valid: boolean = true): boolean {
-        if (this.state.handleValueChangeEnabled) {
+        if (!this.state.handleValueChangeEnabled) {
             return valid;
         }
         var errors = [];
