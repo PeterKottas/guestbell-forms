@@ -9533,15 +9533,15 @@ var Time = /** @class */ (function (_super) {
                     React.createElement("div", { className: "time-input__arrows__container" },
                         React.createElement("button", { className: "plus", onClick: function (e) {
                                 e.preventDefault();
-                                _this.handleHoursChange((_this.props.time.getHours() + 1).toString());
+                                _this.handleHoursChange((_this.props.time.getUTCHours() + 1).toString());
                             } },
                             React.createElement(ArrowIcon, null)),
                         React.createElement("div", { className: "input-padding" },
-                            React.createElement("input", { ref: function (el) { return _this.hoursEl = el; }, disabled: this.getDisabled(), required: this.props.required, className: 'time-input__time ' + (this.state.value ? 'filled' : ''), onChange: function (e) { return _this.handleHoursChange(e.target.value); }, value: this.props.time.getHours().toString(), onBlur: this.handleBlur, onFocus: this.handleFocus, type: "number" }),
+                            React.createElement("input", { ref: function (el) { return _this.hoursEl = el; }, disabled: this.getDisabled(), required: this.props.required, className: 'time-input__time ' + (this.state.value ? 'filled' : ''), onChange: function (e) { return _this.handleHoursChange(e.target.value); }, value: this.props.time.getUTCHours().toString(), onBlur: this.handleBlur, onFocus: this.handleFocus, type: "number" }),
                             React.createElement("span", { className: "highlight" })),
                         React.createElement("button", { className: "minus", onClick: function (e) {
                                 e.preventDefault();
-                                _this.handleHoursChange((_this.props.time.getHours() - 1).toString());
+                                _this.handleHoursChange((_this.props.time.getUTCHours() - 1).toString());
                             } },
                             React.createElement(ArrowIcon, null)))),
                 React.createElement("span", { className: "" }, ":"),
