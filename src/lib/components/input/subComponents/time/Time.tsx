@@ -42,7 +42,7 @@ export class Time extends BaseInput.BaseInput<TimeProps, TimeState, HTMLInputEle
                             className="plus"
                             onClick={(e) => {
                                 e.preventDefault();
-                                this.handleHoursChange((this.props.time.getUTCHours() + 1).toString());
+                                this.handleHoursChange((this.props.time.getHours() + 1).toString());
                             }}
                         >
                             <ArrowIcon />
@@ -54,7 +54,7 @@ export class Time extends BaseInput.BaseInput<TimeProps, TimeState, HTMLInputEle
                                 required={this.props.required}
                                 className={'time-input__time ' + (this.state.value ? 'filled' : '')}
                                 onChange={(e) => this.handleHoursChange(e.target.value)}
-                                value={this.props.time.getUTCHours().toString()}
+                                value={this.props.time.getHours().toString()}
                                 onBlur={this.handleBlur}
                                 onFocus={this.handleFocus}
                                 type="number"
@@ -65,7 +65,7 @@ export class Time extends BaseInput.BaseInput<TimeProps, TimeState, HTMLInputEle
                             className="minus"
                             onClick={(e) => {
                                 e.preventDefault();
-                                this.handleHoursChange((this.props.time.getUTCHours() - 1).toString());
+                                this.handleHoursChange((this.props.time.getHours() - 1).toString());
                             }}
                         >
                             <ArrowIcon />
@@ -114,7 +114,7 @@ export class Time extends BaseInput.BaseInput<TimeProps, TimeState, HTMLInputEle
                 </div>
                 <div>
                     <span className="time-input__am-pm">{(() => {
-                        var hours = this.props.time.getUTCHours();
+                        var hours = this.props.time.getHours();
                         var hours = (hours + 24) % 24;
                         var mid = 'AM';
                         if (hours == 0) { //At 00 hours we need to show 12 am
