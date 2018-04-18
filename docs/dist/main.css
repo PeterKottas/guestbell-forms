@@ -2342,8 +2342,22 @@ a.guestbell__dropdown-toggle {
     display: inline-flex;
     -ms-flex-wrap: wrap;
         flex-wrap: wrap; }
-  .tags-input.readonly .tags-input__tag__wrapper {
-    min-height: 34px; }
+  .tags-input.tags-input--readOnly {
+    border-bottom-color: transparent !important; }
+    .tags-input.tags-input--readOnly input:focus ~ .bar:before,
+    .tags-input.tags-input--readOnly input:focus ~ .bar:after,
+    .tags-input.tags-input--readOnly select:focus ~ .bar:before,
+    .tags-input.tags-input--readOnly select:focus ~ .bar:after,
+    .tags-input.tags-input--readOnly label:focus ~ .bar:before,
+    .tags-input.tags-input--readOnly label:focus ~ .bar:after,
+    .tags-input.tags-input--readOnly .bar.focused:before,
+    .tags-input.tags-input--readOnly .bar.focused:after {
+      width: initial; }
+    .tags-input.tags-input--readOnly input:focus ~ .highlight, .tags-input.tags-input--readOnly select:focus ~ .highlight {
+      -webkit-animation: none;
+              animation: none; }
+    .tags-input.tags-input--readOnly .tags-input__tag__wrapper {
+      min-height: 34px; }
   .tags-input.input__base label,
   .tags-input.input__base span.label-classname {
     top: calc(100% - 32px); }

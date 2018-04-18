@@ -18,7 +18,22 @@
         display: inline-flex;
         flex-wrap: wrap;
     }
-    &.readonly {
+    &.tags-input--readOnly {
+        border-bottom-color: transparent !important;
+        input:focus~.bar:before,
+        input:focus~.bar:after,
+        select:focus~.bar:before,
+        select:focus~.bar:after,
+        label:focus~.bar:before,
+        label:focus~.bar:after,
+        .bar.focused:before,
+        .bar.focused:after {
+            width: initial;
+        }
+        
+        input:focus ~ .highlight, select:focus ~ .highlight {
+            animation: none;
+        }
         .tags-input__tag__wrapper {
             min-height: 34px;
         }

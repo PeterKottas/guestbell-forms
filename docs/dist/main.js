@@ -53716,7 +53716,7 @@ var Tags = /** @class */ (function (_super) {
         var suggestions = this.getSuggestions();
         var errors = this.getErrors();
         return (React.createElement(InputGroup_1.InputGroup, { title: this.props.title },
-            React.createElement("div", { className: 'input__base tags-input ' + this.getValidationClass(errors) + (this.props.className ? ' ' + this.props.className : '') + ' ' + (this.props.readOnly ? 'readonly' : '') },
+            React.createElement("div", { className: 'input__base tags-input ' + this.getValidationClass(errors) + (this.props.className ? ' ' + this.props.className : '') + ' ' + (this.props.readOnly ? 'tags-input--readOnly' : '') },
                 this.renderTags(),
                 (!this.props.maxTags || (this.props.maxTags > (this.props.tags && this.props.tags.length))) && !this.props.readOnly &&
                     React.createElement("div", { className: "tags-input__tags__wrapper" },
