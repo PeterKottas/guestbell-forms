@@ -53693,7 +53693,8 @@ var Suggestions = /** @class */ (function (_super) {
             React.createElement("ul", null,
                 this.props.loading && this.props.loadingComponent && React.createElement("li", { className: "w-100 text-center p-2" }, this.props.loadingComponent),
                 !this.props.loading && this.props.tags.map(function (tag, index) { return (React.createElement("li", { key: index },
-                    React.createElement(Button_1.Button, { className: "w-100", type: "dropdown", onClick: function (e) { return _this.props.onSelected(tag); } }, tag.name))); }),
+                    React.createElement(Button_1.Button, { className: 'w-100 tags-input__suggestion ' + (_this.props.preselectedSuggestion !== undefined &&
+                            _this.props.preselectedSuggestion === index ? 'tags-input__suggestion--preselected' : ''), type: "dropdown", onClick: function (e) { return _this.props.onSelected(tag); } }, tag.name))); }),
                 !this.props.loading && this.props.emptyComponent && (this.props.tags.length === 0) && React.createElement("li", { className: "w-100 text-center p-2" }, this.props.emptyComponent)))) : null;
     };
     Suggestions.prototype.handleClickOutside = function (evt) {
@@ -53721,23 +53722,61 @@ var Tags = /** @class */ (function (_super) {
                 (!this.props.maxTags || (this.props.maxTags > (this.props.tags && this.props.tags.length))) && !this.props.readOnly &&
                     React.createElement("div", { className: "tags-input__tags__wrapper" },
                         React.createElement(Text_1.Text, __assign({}, textProps, { className: 'tags-input__text-input ' + (textProps.className ? textProps.className : ''), onKeyDown: function (e) { return __awaiter(_this, void 0, void 0, function () {
-                                var newTag;
+                                var _this = this;
+                                var existingTag, newTag, preselectedSuggestion, preselectedSuggestion;
                                 return __generator(this, function (_a) {
                                     switch (_a.label) {
                                         case 0:
-                                            if (!(e.key === 'Enter' && this.state.value !== '' && this.state.valid)) return [3 /*break*/, 2];
+                                            if (!(e.key === 'Enter' && (this.state.value !== '' || this.state.preselectedSuggestion !== undefined) && this.state.valid)) return [3 /*break*/, 4];
                                             e.preventDefault();
                                             e.stopPropagation();
-                                            if (!this.props.allowNew) return [3 /*break*/, 2];
-                                            return [4 /*yield*/, this.props.onNewTagAdded(this.state.value)];
+                                            existingTag = this.props.existingTags && this.props.existingTags.find(function (et) { return et.name === _this.state.value; });
+                                            if (!(this.state.preselectedSuggestion !== undefined)) return [3 /*break*/, 1];
+                                            this.props.onTagsChanged(this.props.tags.concat(suggestions[this.state.preselectedSuggestion]));
+                                            this.setState({ value: '', preselectedSuggestion: undefined }, function () { return _this.fetchExistingTags(); });
+                                            return [3 /*break*/, 4];
                                         case 1:
+                                            if (!existingTag) return [3 /*break*/, 2];
+                                            this.props.onTagsChanged(this.props.tags.concat(existingTag));
+                                            this.setState({ value: '' }, function () { return _this.fetchExistingTags(); });
+                                            return [3 /*break*/, 4];
+                                        case 2:
+                                            if (!this.props.allowNew) return [3 /*break*/, 4];
+                                            return [4 /*yield*/, this.props.onNewTagAdded(this.state.value)];
+                                        case 3:
                                             newTag = _a.sent();
                                             if (newTag) {
                                                 this.props.onTagsChanged(this.props.tags ? this.props.tags.concat(newTag) : [newTag]);
                                             }
                                             this.setState({ value: '' });
-                                            _a.label = 2;
-                                        case 2: return [2 /*return*/];
+                                            _a.label = 4;
+                                        case 4:
+                                            if (suggestions.length > 0 && this.state.suggestionsVisible) {
+                                                if (e.key === 'ArrowUp') {
+                                                    preselectedSuggestion = this.state.preselectedSuggestion === undefined ?
+                                                        suggestions.length - 1
+                                                        :
+                                                            this.state.preselectedSuggestion === 0 ?
+                                                                suggestions.length - 1
+                                                                :
+                                                                    this.state.preselectedSuggestion - 1;
+                                                    this.setState({ preselectedSuggestion: preselectedSuggestion });
+                                                }
+                                                else if (e.key === 'ArrowDown') {
+                                                    preselectedSuggestion = this.state.preselectedSuggestion === undefined ?
+                                                        0
+                                                        :
+                                                            this.state.preselectedSuggestion === suggestions.length - 1 ?
+                                                                0
+                                                                :
+                                                                    this.state.preselectedSuggestion + 1;
+                                                    this.setState({ preselectedSuggestion: preselectedSuggestion });
+                                                }
+                                                else {
+                                                    this.setState({ preselectedSuggestion: undefined });
+                                                }
+                                            }
+                                            return [2 /*return*/];
                                     }
                                 });
                             }); }, onChange: function (e, isValid) {
@@ -53750,11 +53789,11 @@ var Tags = /** @class */ (function (_super) {
                                     this.fetchExistingTags();
                                     return [2 /*return*/];
                                 });
-                            }); }, onBlur: function () { return _this.setState({ textIsFocused: false }); }, value: this.state.value, readOnly: this.props.readOnly, onErrorsChanged: function (errors) { return _this.setState({ errors: errors }); }, showValidation: false })),
-                        this.state.suggestionsVisible && this.props.showSuggestions && React.createElement(SuggestionsWrapped, { loading: this.state.fetchingExistingTags, loadingComponent: this.props.suggestionsLoadingComponent, emptyComponent: this.props.suggestionsEmptyComponent, isVisible: this.state.suggestionsVisible, tags: suggestions, onSelected: function (tag) {
+                            }); }, onBlur: function () { return _this.setState({ textIsFocused: false, preselectedSuggestion: undefined }); }, value: this.state.value, readOnly: this.props.readOnly, onErrorsChanged: function (errors) { return _this.setState({ errors: errors }); }, showValidation: false })),
+                        this.state.suggestionsVisible && this.props.showSuggestions && React.createElement(SuggestionsWrapped, { preselectedSuggestion: this.state.preselectedSuggestion, loading: this.state.fetchingExistingTags, loadingComponent: this.props.suggestionsLoadingComponent, emptyComponent: this.props.suggestionsEmptyComponent, isVisible: this.state.suggestionsVisible, tags: suggestions, onSelected: function (tag) {
                                 _this.props.onTagsChanged(_this.props.tags.concat(tag));
-                                _this.setState({ value: '' }, function () { return _this.fetchExistingTags(); });
-                            }, onClickOutside: function () { return _this.setState({ suggestionsVisible: false }); }, value: this.state.value })),
+                                _this.setState({ value: '', preselectedSuggestion: undefined }, function () { return _this.fetchExistingTags(); });
+                            }, onClickOutside: function () { return _this.setState({ suggestionsVisible: false, preselectedSuggestion: undefined }); }, value: this.state.value })),
                 this.renderDefaultValidation(errors),
                 this.props.label && React.createElement("label", { className: ((this.state.value !== '')
                         || (this.state.textIsFocused) || (this.props.tags.length >= this.props.maxTags)) ? 'label--focused' : '' }, this.renderLabel()))));

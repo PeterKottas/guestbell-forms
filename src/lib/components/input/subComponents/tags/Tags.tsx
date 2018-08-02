@@ -45,9 +45,11 @@ export interface TagsState extends BaseInput.BaseInputState {
     suggestionsVisible: boolean;
     fetchedExistingTags: Tag[];
     fetchingExistingTags: boolean;
+    preselectedSuggestion?: number;
 }
 
 type SuggestionsProps = {
+    preselectedSuggestion?: number;
     isVisible: boolean;
     tags: Tag[];
     onSelected: (tag: Tag) => void;
@@ -68,7 +70,8 @@ class Suggestions extends React.Component<SuggestionsProps & InjectedProps> {
                     {!this.props.loading && this.props.tags.map((tag, index) => (
                         <li key={index}>
                             <Button
-                                className="w-100"
+                                className={'w-100 tags-input__suggestion ' + (this.props.preselectedSuggestion !== undefined &&
+                                    this.props.preselectedSuggestion === index ? 'tags-input__suggestion--preselected' : '')}
                                 type="dropdown"
                                 onClick={e => this.props.onSelected(tag)}
                             >
@@ -129,16 +132,45 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
                                 {...textProps}
                                 className={'tags-input__text-input ' + (textProps.className ? textProps.className : '')}
                                 onKeyDown={async e => {
-                                    if (e.key === 'Enter' && this.state.value !== '' && this.state.valid) {
+                                    if (e.key === 'Enter' && (this.state.value !== '' || this.state.preselectedSuggestion !== undefined) && this.state.valid) {
                                         e.preventDefault();
                                         e.stopPropagation();
-
-                                        if (this.props.allowNew) {
+                                        const existingTag = this.props.existingTags && this.props.existingTags.find(et => et.name === this.state.value);
+                                        if (this.state.preselectedSuggestion !== undefined) {
+                                            this.props.onTagsChanged(this.props.tags.concat(suggestions[this.state.preselectedSuggestion]));
+                                            this.setState({ value: '', preselectedSuggestion: undefined }, () => this.fetchExistingTags());
+                                        } else if (existingTag) {
+                                            this.props.onTagsChanged(this.props.tags.concat(existingTag));
+                                            this.setState({ value: '' }, () => this.fetchExistingTags());
+                                        } else if (this.props.allowNew) {
                                             const newTag = await this.props.onNewTagAdded(this.state.value);
                                             if (newTag) {
                                                 this.props.onTagsChanged(this.props.tags ? this.props.tags.concat(newTag) : [newTag]);
                                             }
                                             this.setState({ value: '' });
+                                        }
+                                    }
+                                    if (suggestions.length > 0 && this.state.suggestionsVisible) {
+                                        if (e.key === 'ArrowUp') {
+                                            const preselectedSuggestion = this.state.preselectedSuggestion === undefined ?
+                                                suggestions.length - 1
+                                                :
+                                                this.state.preselectedSuggestion === 0 ?
+                                                    suggestions.length - 1
+                                                    :
+                                                    this.state.preselectedSuggestion - 1;
+                                            this.setState({ preselectedSuggestion })
+                                        } else if (e.key === 'ArrowDown') {
+                                            const preselectedSuggestion = this.state.preselectedSuggestion === undefined ?
+                                                0
+                                                :
+                                                this.state.preselectedSuggestion === suggestions.length - 1 ?
+                                                    0
+                                                    :
+                                                    this.state.preselectedSuggestion + 1;
+                                            this.setState({ preselectedSuggestion })
+                                        } else {
+                                            this.setState({ preselectedSuggestion: undefined })
                                         }
                                     }
                                 }}
@@ -151,13 +183,14 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
                                     this.setState({ textIsFocused: true, suggestionsVisible: true, touched: true });
                                     this.fetchExistingTags();
                                 }}
-                                onBlur={() => this.setState({ textIsFocused: false })}
+                                onBlur={() => this.setState({ textIsFocused: false, preselectedSuggestion: undefined })}
                                 value={this.state.value}
                                 readOnly={this.props.readOnly}
                                 onErrorsChanged={errors => this.setState({ errors })}
                                 showValidation={false}
                             />
                             {this.state.suggestionsVisible && this.props.showSuggestions && <SuggestionsWrapped
+                                preselectedSuggestion={this.state.preselectedSuggestion}
                                 loading={this.state.fetchingExistingTags}
                                 loadingComponent={this.props.suggestionsLoadingComponent}
                                 emptyComponent={this.props.suggestionsEmptyComponent}
@@ -165,9 +198,9 @@ export class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputEle
                                 tags={suggestions}
                                 onSelected={tag => {
                                     this.props.onTagsChanged(this.props.tags.concat(tag));
-                                    this.setState({ value: '' }, () => this.fetchExistingTags());
+                                    this.setState({ value: '', preselectedSuggestion: undefined }, () => this.fetchExistingTags());
                                 }}
-                                onClickOutside={() => this.setState({ suggestionsVisible: false })}
+                                onClickOutside={() => this.setState({ suggestionsVisible: false, preselectedSuggestion: undefined })}
                                 value={this.state.value}
                             />}
                         </div >

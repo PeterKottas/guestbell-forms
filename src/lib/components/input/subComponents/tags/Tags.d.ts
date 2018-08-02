@@ -32,6 +32,7 @@ export interface TagsState extends BaseInput.BaseInputState {
     suggestionsVisible: boolean;
     fetchedExistingTags: Tag[];
     fetchingExistingTags: boolean;
+    preselectedSuggestion?: number;
 }
 export declare class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTMLInputElement> {
     static defaultProps: TagsProps;

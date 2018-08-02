@@ -2353,7 +2353,8 @@ a.guestbell__dropdown-toggle {
     .tags-input.tags-input--readOnly .bar.focused:before,
     .tags-input.tags-input--readOnly .bar.focused:after {
       width: initial; }
-    .tags-input.tags-input--readOnly input:focus ~ .highlight, .tags-input.tags-input--readOnly select:focus ~ .highlight {
+    .tags-input.tags-input--readOnly input:focus ~ .highlight,
+    .tags-input.tags-input--readOnly select:focus ~ .highlight {
       -webkit-animation: none;
               animation: none; }
     .tags-input.tags-input--readOnly .tags-input__tag__wrapper {
@@ -2376,6 +2377,8 @@ a.guestbell__dropdown-toggle {
       margin: 0; }
       .tags-input .tags-input__suggestions > ul > li {
         list-style: none; }
+    .tags-input .tags-input__suggestions .tags-input__suggestion--preselected {
+      background-color: #eeeeee; }
 .textArea-input {
   display: inline-block;
   margin-top: 20px;

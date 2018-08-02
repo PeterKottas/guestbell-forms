@@ -1,5 +1,4 @@
 @import '../../../variables.scss';
-
 .tags-input {
     display: inline-block;
     margin-top: 20px;
@@ -30,8 +29,8 @@
         .bar.focused:after {
             width: initial;
         }
-        
-        input:focus ~ .highlight, select:focus ~ .highlight {
+        input:focus~.highlight,
+        select:focus~.highlight {
             animation: none;
         }
         .tags-input__tag__wrapper {
@@ -59,6 +58,9 @@
             >li {
                 list-style: none;
             }
+        }
+        .tags-input__suggestion--preselected {
+            background-color: $input-border-color;
         }
     }
 }
