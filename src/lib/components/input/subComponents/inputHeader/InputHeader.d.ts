@@ -1,5 +1,6 @@
 import './inputHeader.scss';
 import * as React from 'react';
+import { ButtonProps } from '../../../buttons/Button';
 export declare type ActionParam = {
     expand: () => void;
     collapse: () => void;
@@ -21,6 +22,7 @@ export declare type InputHeaderProps = {
     noBg?: boolean;
     headerClassName?: string;
     contentClassName?: string;
+    extraButtonsButtonProps?: ButtonProps;
 };
 export interface InputHeaderState {
     collapsed: boolean;

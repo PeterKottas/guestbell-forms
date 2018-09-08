@@ -15,7 +15,7 @@ import * as PropTypes from 'prop-types';
 import Dropdown from '../../../dropdown/Dropdown';
 import * as MoreIcon from 'material-design-icons/navigation/svg/production/ic_more_vert_24px.svg';
 import * as PlusIcon from 'material-design-icons/hardware/svg/production/ic_keyboard_arrow_down_24px.svg';
-import Button from '../../../buttons/Button';
+import Button, { ButtonProps } from '../../../buttons/Button';
 import guid from '../../../utils/Guid';
 
 export type ActionParam = {
@@ -40,6 +40,7 @@ export type InputHeaderProps = {
     noBg?: boolean;
     headerClassName?: string;
     contentClassName?: string;
+    extraButtonsButtonProps?: ButtonProps;
 }
 
 export interface InputHeaderState {
@@ -168,7 +169,7 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
                     {this.renderMainButton()}
                     {this.props.extraButtons ?
                         <Dropdown
-                            header={<Button type={'blank--light'} circular={true}><MoreIcon /></Button>}
+                            header={<Button type={'blank--light'} circular={true} {...this.props.extraButtonsButtonProps}><MoreIcon /></Button>}
                             showArrow={false}
                             headerClassName={'line-height--0'}
                             className={''}

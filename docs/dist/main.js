@@ -52352,6 +52352,14 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 //Styles
 __webpack_require__(266);
@@ -52458,7 +52466,7 @@ var InputHeader = /** @class */ (function (_super) {
                 React.createElement("div", { className: "input__header__top__button-container" },
                     this.renderMainButton(),
                     this.props.extraButtons ?
-                        React.createElement(Dropdown_1.default, { header: React.createElement(Button_1.default, { type: 'blank--light', circular: true },
+                        React.createElement(Dropdown_1.default, { header: React.createElement(Button_1.default, __assign({ type: 'blank--light', circular: true }, this.props.extraButtonsButtonProps),
                                 React.createElement(MoreIcon, null)), showArrow: false, headerClassName: 'line-height--0', className: '' }, this.renderExtraButtons())
                         :
                             null,
