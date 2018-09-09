@@ -1,4 +1,6 @@
-@import url(https://fonts.googleapis.com/css?family=Montserrat:200,400);@import url(https://fonts.googleapis.com/icon?family=Material+Icons);body,
+@import url(https://fonts.googleapis.com/css?family=Montserrat:200,400);
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+body,
 button,
 input,
 optgroup,
@@ -28,10 +30,12 @@ textarea {
 
 .buttons-row > button {
   margin-right: 1rem !important; }
+
 .tippy-touch {
   cursor: pointer !important; }
 
 .tippy-notransition {
+  -webkit-transition: none !important;
   transition: none !important; }
 
 .tippy-popper {
@@ -40,7 +44,8 @@ textarea {
   perspective: 800px;
   z-index: 9999;
   outline: 0;
-  transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+  -webkit-transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+          transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
   pointer-events: none; }
 
 .tippy-popper.html-template {
@@ -507,7 +512,8 @@ textarea {
 
 .tippy-popper .tippy-tooltip.light-theme {
   color: #26323d;
-  box-shadow: 0 4px 20px 4px rgba(0, 20, 60, 0.1), 0 4px 80px -8px rgba(0, 20, 60, 0.2);
+  -webkit-box-shadow: 0 4px 20px 4px rgba(0, 20, 60, 0.1), 0 4px 80px -8px rgba(0, 20, 60, 0.2);
+          box-shadow: 0 4px 20px 4px rgba(0, 20, 60, 0.1), 0 4px 80px -8px rgba(0, 20, 60, 0.2);
   background-color: #fff; }
 
 .tippy-popper .tippy-tooltip.light-theme[data-animatefill] {
@@ -541,7 +547,8 @@ textarea {
   pointer-events: auto; }
 
 .tippy-tooltip[data-inertia] {
-  transition-timing-function: cubic-bezier(0.53, 2, 0.36, 0.85); }
+  -webkit-transition-timing-function: cubic-bezier(0.53, 2, 0.36, 0.85);
+          transition-timing-function: cubic-bezier(0.53, 2, 0.36, 0.85); }
 
 .tippy-tooltip [x-arrow] {
   position: absolute;
@@ -559,6 +566,7 @@ textarea {
   top: 50%;
   z-index: -1;
   overflow: hidden;
+  -webkit-transition: all ease;
   transition: all ease; }
 
 .tippy-tooltip [x-circle]:before {
@@ -570,12 +578,16 @@ textarea {
   .tippy-popper {
     max-width: 96%;
     max-width: calc(100% - 20px); } }
+
 .line-height--0 {
   line-height: 0 !important; }
 
 .transform-rotate--45 {
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg); }
+
+
+
 .input__form > .input__group__border:first-child {
   border-top: none; }
 
@@ -618,6 +630,7 @@ textarea {
     margin: 0;
     position: relative;
     margin-top: -20px;
+    -webkit-transition: 0.5s;
     transition: 0.5s; }
     .input__base .validation__ul .validation__item {
       margin-left: 10px; }
@@ -636,6 +649,7 @@ textarea {
     position: absolute;
     left: 5px;
     top: 5px;
+    -webkit-transition: 0.2s ease all;
     transition: 0.2s ease all;
     margin-bottom: 0;
     pointer-events: none; }
@@ -653,6 +667,7 @@ textarea {
     line-height: 1.1rem;
     font-size: 0.8rem;
     display: inline-block;
+    -webkit-transition: 0.2s ease all;
     transition: 0.2s ease all; }
   .input__base input:focus ~ label,
   .input__base .filled ~ label,
@@ -685,6 +700,7 @@ textarea {
     bottom: 0px;
     position: absolute;
     background: #10bdc7;
+    -webkit-transition: 0.2s ease all;
     transition: 0.2s ease all; }
   .input__base .bar:before {
     left: 50%; }
@@ -725,6 +741,7 @@ textarea {
     padding: 6px 10px 7px 10px; }
     .input__base .input__button svg.material-design-icon, .input__base .input__button {
       font-weight: bold;
+      -webkit-transition: 0.2s all;
       transition: 0.2s all;
       color: #999999;
       fill: #999999;
@@ -819,6 +836,7 @@ textarea {
   to {
     width: 0;
     background: transparent; } }
+
 .guestbell-btn {
   background: none;
   color: inherit;
@@ -828,6 +846,7 @@ textarea {
   outline: inherit !important;
   position: relative;
   padding: 0.5rem;
+  -webkit-transition: background-color 0.5s, border 0.5s;
   transition: background-color 0.5s, border 0.5s;
   display: inline-block;
   text-align: center;
@@ -870,10 +889,12 @@ textarea {
   border-radius: 50%;
   display: inline-table; }
   .guestbell-btn-circular:not(.disabled):active {
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; }
+    -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; }
 
 .guestbell-btn.disabled {
-  box-shadow: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
   cursor: not-allowed;
   background-color: #eeeeee !important;
   color: #999999; }
@@ -884,7 +905,8 @@ textarea {
   background-color: #10bdc7 !important;
   fill: white;
   color: white;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; }
+  -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+          box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; }
   .guestbell-btn-hero:not(.disabled):hover {
     background-color: #11c6d0; }
 
@@ -892,7 +914,8 @@ textarea {
   background-color: #5cb85c !important;
   fill: white;
   color: white;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; }
+  -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+          box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; }
   .guestbell-btn-success:not(.disabled):hover {
     background-color: #63bb63; }
 
@@ -900,7 +923,8 @@ textarea {
   background-color: #A8DADC !important;
   fill: white;
   color: white;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; }
+  -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+          box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; }
   .guestbell-btn-info:not(.disabled):hover {
     background-color: #afdddf; }
 
@@ -908,7 +932,8 @@ textarea {
   background-color: #d9534f !important;
   fill: white;
   color: white;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; }
+  -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+          box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; }
   .guestbell-btn-error:not(.disabled):hover {
     background-color: #db5b57; }
 
@@ -916,7 +941,8 @@ textarea {
   background-color: #f0ad4e !important;
   fill: white;
   color: white;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; }
+  -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+          box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; }
   .guestbell-btn-warning:not(.disabled):hover {
     background-color: #f1b157; }
 
@@ -924,9 +950,11 @@ textarea {
   background-color: #555555 !important;
   fill: white;
   color: white;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; }
+  -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+          box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; }
   .guestbell-btn-gray:not(.disabled):hover {
     background-color: #5a5a5a; }
+
 .text-input {
   display: inline-block;
   margin-top: 20px;
@@ -956,6 +984,7 @@ textarea {
 
 .guestbell-forms--dark .text-input input {
   color: white; }
+
 .input__group {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -998,6 +1027,7 @@ textarea {
       margin-left: 0; }
     .input__group > .input__base {
       margin-right: 0; } }
+
 .select-input {
   display: inline-block;
   border: none;
@@ -1064,6 +1094,8 @@ textarea {
     color: white; }
   .guestbell-forms--dark .select-input::after {
     border-top: 6px solid white; }
+
+
 .input__base.checkbox-input {
   display: block;
   margin-top: 24px;
@@ -1081,6 +1113,7 @@ textarea {
     width: auto;
     top: 0; }
     .input__base.checkbox-input input:before {
+      -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
       transition: -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
       transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
       transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75), -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
@@ -1120,6 +1153,7 @@ textarea {
     position: relative;
     display: inline-block;
     cursor: pointer; }
+
 .radio-input {
   display: inline-block;
   margin-top: 20px;
@@ -1139,6 +1173,7 @@ textarea {
     margin-right: 10px;
     top: 0; }
     .radio-input input:before {
+      -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
       transition: -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
       transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
       transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75), -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
@@ -1177,6 +1212,7 @@ textarea {
     position: relative;
     display: inline-block;
     cursor: pointer; }
+
 .radio-input__container {
   border-bottom: none !important;
   display: -webkit-box;
@@ -1201,6 +1237,7 @@ textarea {
 @media (max-width: 768px) {
   .radio-input__container {
     margin-top: 0.5rem !important; } }
+
 .money-input {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1252,6 +1289,8 @@ textarea {
         color: #999999; }
       .money-input .money-input__text input:-ms-input-placeholder {
         color: #999999; }
+      .money-input .money-input__text input::-ms-input-placeholder {
+        color: #999999; }
       .money-input .money-input__text input::placeholder {
         color: #999999; }
 
@@ -1264,8 +1303,12 @@ textarea {
 .guestbell-forms--dark .money-input .money-input__text input:-ms-input-placeholder {
   color: #cccccc; }
 
+.guestbell-forms--dark .money-input .money-input__text input::-ms-input-placeholder {
+  color: #cccccc; }
+
 .guestbell-forms--dark .money-input .money-input__text input::placeholder {
   color: #cccccc; }
+
 .time-input {
   display: -webkit-box !important;
   display: -ms-flexbox !important;
@@ -1346,6 +1389,7 @@ textarea {
       border: none;
       outline: 0; }
     .time-input button svg {
+      -webkit-transition: 0.2s all;
       transition: 0.2s all;
       fill: #999999; }
     .time-input button:hover svg {
@@ -1362,6 +1406,7 @@ textarea {
 
 .guestbell-forms--dark .time-input__am-pm {
   color: #cccccc; }
+
 .input__group__openingHoursDay .row-header {
   margin-top: 3.55rem; }
 
@@ -1420,6 +1465,7 @@ textarea {
   display: inline-block;
   height: 0px;
   width: 0;
+  -webkit-transition: 0.5s all;
   transition: 0.5s all; }
 
 .openingHoursDay-input__bottom-border__container {
@@ -1458,6 +1504,7 @@ textarea {
 
 .guestbell-forms--dark .openingHoursDay-input__bottom-border--closed {
   background-color: #b3b3b3; }
+
 .openingHoursWeek-input {
   border: none;
   position: relative; }
@@ -1470,6 +1517,7 @@ textarea {
   .openingHoursWeek-input .label-classname.label--focused {
     pointer-events: auto;
     width: 100%; }
+
 .input__group .row-header .DayPickerInput > input {
   text-align: right; }
 
@@ -1493,6 +1541,7 @@ textarea {
     display: table;
     padding: 10px 10px 10px 10px;
     opacity: 0.5;
+    -webkit-transition: 0.2s all;
     transition: 0.2s all; }
     .input__base.openingHoursSpecial-input .openingHoursSpecial-input__button img {
       vertical-align: top; }
@@ -1527,6 +1576,7 @@ textarea {
       background-color: transparent; }
   .input__base.openingHoursSpecial-input .label-classname.label--focused.label--closed .DayPickerInput > input {
     color: #999999; }
+
 .react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^="top"] .react-datepicker__triangle, .react-datepicker__year-read-view--down-arrow,
 .react-datepicker__month-read-view--down-arrow,
 .react-datepicker__month-year-read-view--down-arrow {
@@ -1538,7 +1588,8 @@ textarea {
 .react-datepicker__month-year-read-view--down-arrow, .react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle::before, .react-datepicker-popper[data-placement^="top"] .react-datepicker__triangle::before, .react-datepicker__year-read-view--down-arrow::before,
 .react-datepicker__month-read-view--down-arrow::before,
 .react-datepicker__month-year-read-view--down-arrow::before {
-  box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
   position: absolute;
   border: 8px solid transparent;
   height: 0;
@@ -1598,6 +1649,18 @@ textarea {
   display: inline-block;
   position: relative; }
 
+.react-datepicker--time-only .react-datepicker__triangle {
+  left: 35px; }
+
+.react-datepicker--time-only .react-datepicker__time-container {
+  border-left: 0; }
+
+.react-datepicker--time-only .react-datepicker__time {
+  border-radius: 0.3rem; }
+
+.react-datepicker--time-only .react-datepicker__time-box {
+  border-radius: 0.3rem; }
+
 .react-datepicker__triangle {
   position: absolute;
   left: 50px; }
@@ -1635,7 +1698,9 @@ textarea {
   position: relative; }
 
 .react-datepicker__header--time {
-  padding-bottom: 8px; }
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px; }
 
 .react-datepicker__year-dropdown-container--select,
 .react-datepicker__month-dropdown-container--select,
@@ -1653,6 +1718,11 @@ textarea {
   font-weight: bold;
   font-size: 0.944rem; }
 
+.react-datepicker-time__header {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
+
 .react-datepicker__navigation {
   background: none;
   line-height: 1.7rem;
@@ -1663,7 +1733,11 @@ textarea {
   width: 0;
   padding: 0;
   border: 0.45rem solid transparent;
-  z-index: 1; }
+  z-index: 1;
+  height: 10px;
+  width: 10px;
+  text-indent: -999em;
+  overflow: hidden; }
 
 .react-datepicker__navigation--previous {
   left: 10px;
@@ -1720,7 +1794,8 @@ textarea {
 
 .react-datepicker__time-container {
   float: right;
-  border-left: 1px solid #aeaeae; }
+  border-left: 1px solid #aeaeae;
+  width: 70px; }
 
 .react-datepicker__time-container--with-today-button {
   display: inline;
@@ -1736,7 +1811,9 @@ textarea {
 
 .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box {
   width: 70px;
-  overflow-x: hidden; }
+  overflow-x: hidden;
+  margin: 0 auto;
+  text-align: center; }
 
 .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list {
   list-style: none;
@@ -1744,7 +1821,9 @@ textarea {
   height: calc(195px + (1.7rem / 2));
   overflow-y: scroll;
   padding-right: 30px;
-  width: 100%; }
+  width: 100%;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box; }
 
 .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item {
   padding: 5px 10px; }
@@ -1958,17 +2037,21 @@ textarea {
   background-color: transparent;
   border: 0;
   cursor: pointer;
-  display: inline-block;
-  height: 0;
   outline: 0;
   padding: 0;
-  vertical-align: middle; }
+  vertical-align: middle;
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  top: 25%;
+  right: 7px; }
 
 .react-datepicker__close-icon::after {
   background-color: #216ba5;
   border-radius: 50%;
   bottom: 0;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   color: #fff;
   content: "\D7";
   cursor: pointer;
@@ -1979,9 +2062,8 @@ textarea {
   margin: -8px auto 0;
   padding: 2px;
   position: absolute;
-  right: 7px;
-  text-align: center;
-  top: 50%; }
+  right: 0px;
+  text-align: center; }
 
 .react-datepicker__today-button {
   background: #f0f0f0;
@@ -2049,6 +2131,7 @@ textarea {
 .react-datepicker__portal .react-datepicker__navigation--next--disabled, .react-datepicker__portal .react-datepicker__navigation--next--disabled:hover {
   border-left-color: #e6e6e6;
   cursor: default; }
+
 .input__header {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2169,6 +2252,7 @@ textarea {
 .input__header__collapse-button {
   margin-right: -40px; }
   .input__header__collapse-button svg {
+    -webkit-transition: 0.2s all;
     transition: 0.2s all;
     -webkit-transform: scaleY(-1);
             transform: scaleY(-1); }
@@ -2225,6 +2309,7 @@ textarea {
     margin-bottom: 0.5rem;
     width: 100% !important;
     text-align: center; } }
+
 a.guestbell__dropdown-toggle {
   cursor: pointer;
   color: #555555;
@@ -2246,9 +2331,11 @@ a.guestbell__dropdown-toggle {
   z-index: 1000;
   display: block;
   border-radius: 0;
+  -webkit-transition: 0.5s;
   transition: 0.5s;
   right: 1px;
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.16); }
+  -webkit-box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.16);
+          box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.16); }
   .guestbell__dropdown-menu__container > .open {
     display: block; }
   .guestbell__dropdown-menu__container > .close {
@@ -2260,6 +2347,7 @@ a.guestbell__dropdown-toggle {
   text-align: left;
   list-style: none;
   background-color: white;
+  -webkit-background-clip: padding-box;
   background-clip: padding-box;
   border: 1px solid #eeeeee;
   margin-top: 0;
@@ -2320,6 +2408,7 @@ a.guestbell__dropdown-toggle {
 .guestbell__dropdown-menu > li > a {
   font-size: 14px;
   line-height: 25px; }
+
 .tags-input {
   display: inline-block;
   margin-top: 20px;
@@ -2370,7 +2459,8 @@ a.guestbell__dropdown-toggle {
     left: 0;
     right: 0;
     background-color: white;
-    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.16);
+    -webkit-box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.16);
+            box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.16);
     z-index: 999; }
     .tags-input .tags-input__suggestions > ul {
       padding: 0;
@@ -2379,6 +2469,7 @@ a.guestbell__dropdown-toggle {
         list-style: none; }
     .tags-input .tags-input__suggestions .tags-input__suggestion--preselected {
       background-color: #eeeeee; }
+
 .textArea-input {
   display: inline-block;
   margin-top: 20px;
@@ -2410,6 +2501,7 @@ a.guestbell__dropdown-toggle {
 
 .guestbell-forms--dark .textArea-input input {
   color: white; }
+
 .navbar {
   height: 96px;
   background-color: white;
@@ -2446,5 +2538,6 @@ a:hover {
   .navbar__text {
     font-size: 40px;
     line-height: 40px; } }
+
 
 /*# sourceMappingURL=main.css.map*/
