@@ -27,5 +27,6 @@ module.exports = merge(require('./webpack.config.base'), {
         "moment": "moment",
         "react-dom": "react-dom"
     },
-    devtool: 'source-map'
+    devtool: 'source-map',
+    mode: 'development'
 });
