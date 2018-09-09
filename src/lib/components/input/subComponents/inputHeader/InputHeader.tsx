@@ -36,6 +36,7 @@ export type InputHeaderProps = {
     headerClassName?: string;
     contentClassName?: string;
     extraButtonsButtonProps?: ButtonProps;
+    collapseButtonsButtonProps?: ButtonProps;
 }
 
 export interface InputHeaderState {
@@ -179,6 +180,7 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
                             circular={true}
                             className={`input__header__collapse-button line-height--0 ${(this.state.collapsed ? 'collapsed' : '')}`}
                             type={'blank--light'}
+                            {...this.props.collapseButtonsButtonProps}
                         >
                             <PlusIcon />
                         </Button>}

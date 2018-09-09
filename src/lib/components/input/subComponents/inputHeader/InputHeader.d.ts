@@ -24,6 +24,7 @@ export declare type InputHeaderProps = {
     headerClassName?: string;
     contentClassName?: string;
     extraButtonsButtonProps?: ButtonProps;
+    collapseButtonsButtonProps?: ButtonProps;
 };
 export interface InputHeaderState {
     collapsed: boolean;
