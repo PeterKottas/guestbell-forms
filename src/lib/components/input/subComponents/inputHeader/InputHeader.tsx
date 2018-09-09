@@ -3,12 +3,6 @@ import './inputHeader.scss';
 
 //Libs
 import * as React from 'react';
-//import * as SmoothCollapse from 'react-smooth-collapse';
-try {
-    var SmoothCollapse = require('react-smooth-collapse');
-} catch {
-    SmoothCollapse = undefined;
-}
 import * as PropTypes from 'prop-types';
 
 //Misc
@@ -17,6 +11,7 @@ import * as MoreIcon from 'material-design-icons/navigation/svg/production/ic_mo
 import * as PlusIcon from 'material-design-icons/hardware/svg/production/ic_keyboard_arrow_down_24px.svg';
 import Button, { ButtonProps } from '../../../buttons/Button';
 import guid from '../../../utils/Guid';
+import SmoothCollapse from '../../../smoothCollapse/SmoothCollapse';
 
 export type ActionParam = {
     expand: () => void;
@@ -195,13 +190,13 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
                 {
                     this.props.collapsable ?
                         <div className={(!this.state.collapsed && this.state.smoothCollapseDone ? 'smooth-collapse__container' : '')}>
-                            {SmoothCollapse ? <SmoothCollapse
+                            <SmoothCollapse
                                 collapsedHeight={'0.0001px'}
                                 expanded={this.props.collapsed !== undefined ? !this.props.collapsed : !this.state.collapsed}
                                 onChangeEnd={() => this.setState(previousState => ({ smoothCollapseDone: true }))}
                             >
                                 {this.props.children}
-                            </SmoothCollapse> : this.props.children}
+                            </SmoothCollapse>
                         </div>
                         :
                         this.props.children

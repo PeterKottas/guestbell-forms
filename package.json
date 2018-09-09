@@ -12,7 +12,10 @@
   ],
   "main": "build/guestbell-forms.js",
   "style": "build/guestbell-forms.css",
-  "dependencies": {},
+  "dependencies": {
+    "kefir": "^3.8.3",
+    "kefir-bus": "^2.2.1"
+  },
   "devDependencies": {
     "@types/react": "16.4.13",
     "@types/react-dom": "16.0.7",
@@ -41,7 +44,6 @@
     "react-hot-loader": "4.3.6",
     "react-ink": "6.4.0",
     "react-onclickoutside": "6.7.1",
-    "react-smooth-collapse": "1.5.0",
     "react-textarea-autosize": "7.0.4",
     "react-tippy": "1.2.2",
     "rimraf": "2.6.2",
@@ -89,10 +91,9 @@
     "moment": "*",
     "prop-types": "*",
     "react": "*",
-    "react-onclickoutside": "*",
     "react-datepicker": "*",
     "react-ink": "*",
-    "react-smooth-collapse": "*",
+    "react-onclickoutside": "*",
     "react-textarea-autosize": "*",
     "react-tippy": "*"
   }

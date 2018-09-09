@@ -3,17 +3,13 @@ import './dropdown.scss';
 
 // Libs
 import * as React from 'react';
-try {
-    var SmoothCollapse = require('react-smooth-collapse');
-} catch {
-    SmoothCollapse = undefined;
-}
+import SmoothCollapse from '../smoothCollapse/SmoothCollapse';
 
 export type HeaderFunction = (onClick: (e: React.SyntheticEvent<{}>) => void) => JSX.Element;
 export type HeaderPlain = JSX.Element | string;
 
 export interface DropdownItemProps {
-    header?:  HeaderPlain | HeaderFunction;
+    header?: HeaderPlain | HeaderFunction;
     className?: string;
     submenuClassName?: string;
     headerClassName?: string;
@@ -88,10 +84,10 @@ export class Dropdown extends React.Component<DropdownItemProps, DropdownItemSta
         //const Wrapper = this.props.wrapperTag;
         return (
             <div
-                className={'guestbell__dropdown ' + 
-                    (!this.state.isDropdownVisible ? 'closed ' : 'open ') + 
-                    (!this.props.disabled ? 'disabled ' : '') + 
-                    (this.props.inline ? 'guestbell__dropdown--inline ' : '') + 
+                className={'guestbell__dropdown ' +
+                    (!this.state.isDropdownVisible ? 'closed ' : 'open ') +
+                    (!this.props.disabled ? 'disabled ' : '') +
+                    (this.props.inline ? 'guestbell__dropdown--inline ' : '') +
                     (this.props.className ? this.props.className : ' ')}
             >
                 <div
@@ -110,18 +106,11 @@ export class Dropdown extends React.Component<DropdownItemProps, DropdownItemSta
                 <div
                     className={'guestbell__dropdown-menu__container'}
                 >
-                    {
-                        SmoothCollapse ?
-                            <SmoothCollapse
-                                expanded={this.state.isDropdownVisible}
-                            >
-                                {this.renderChildren()}
-                            </SmoothCollapse>
-                            :
-                            <div className={this.state.isDropdownVisible ? 'open' : 'close'}>
-                                {this.renderChildren()}
-                            </div>
-                    }
+                    <SmoothCollapse
+                        expanded={this.state.isDropdownVisible}
+                    >
+                        {this.renderChildren()}
+                    </SmoothCollapse>
                 </div>
             </div>
         );

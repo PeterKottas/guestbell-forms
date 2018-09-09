@@ -1,16 +1,23 @@
 {
   "compilerOptions": {
-    "noUnusedLocals": true,    
-    "declaration": true,
     "baseUrl": ".",
     "moduleResolution": "node",
     "target": "es5",
+    "module":"esnext",
     "jsx": "react",
     "experimentalDecorators": true,
     "sourceMap": true,
     "skipDefaultLibCheck": true,
-    "lib": [ "es6", "dom" ],
-    "types": [ "webpack-env", "node" ],
+    "noUnusedLocals": true,    
+    "declaration": true,
+    "lib": [ 
+      "es7", 
+      "dom" 
+    ],
+    "types": [ 
+      "webpack-env", 
+      "node" 
+    ],
     "paths": {
       "reusables/*": [
         "./ClientApp/components/reusables/*"
