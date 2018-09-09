@@ -1,6 +1,7 @@
 import './form.scss';
 import * as React from 'react';
 import * as BaseInput from '../input/subComponents/base/BaseInput';
+import * as PropTypes from 'prop-types';
 export interface FormValue {
     value: number | string;
     label?: string;
@@ -25,12 +26,12 @@ export interface FormContext {
     enableInputs: () => void;
 }
 export declare const FormContextType: {
-    register: any;
-    unregister: any;
-    isFormValid: any;
-    updateCallback: any;
-    enableInputs: any;
-    disableInputs: any;
+    register: PropTypes.Requireable<(...args: any[]) => any>;
+    unregister: PropTypes.Requireable<(...args: any[]) => any>;
+    isFormValid: PropTypes.Requireable<(...args: any[]) => any>;
+    updateCallback: PropTypes.Requireable<(...args: any[]) => any>;
+    enableInputs: PropTypes.Requireable<(...args: any[]) => any>;
+    disableInputs: PropTypes.Requireable<(...args: any[]) => any>;
 };
 export declare class Form extends React.Component<FormProps, FormState> {
     static defaultProps: {
@@ -38,22 +39,22 @@ export declare class Form extends React.Component<FormProps, FormState> {
         showExpandAll: boolean;
     };
     static childContextTypes: {
-        register: any;
-        unregister: any;
-        isFormValid: any;
-        updateCallback: any;
-        enableInputs: any;
-        disableInputs: any;
+        register: PropTypes.Requireable<(...args: any[]) => any>;
+        unregister: PropTypes.Requireable<(...args: any[]) => any>;
+        isFormValid: PropTypes.Requireable<(...args: any[]) => any>;
+        updateCallback: PropTypes.Requireable<(...args: any[]) => any>;
+        enableInputs: PropTypes.Requireable<(...args: any[]) => any>;
+        disableInputs: PropTypes.Requireable<(...args: any[]) => any>;
     };
-    private register(component);
-    private unregister(component);
+    private register;
+    private unregister;
     getChildContext(): FormContext;
     disableInputs(): void;
     enableInputs(): void;
     touchAll(): void;
     unTouchAll(): void;
     componentDidMount(): void;
-    private updateCallback(isComponentValid?, inputId?);
+    private updateCallback;
     constructor(props: FormProps);
     render(): JSX.Element;
 }

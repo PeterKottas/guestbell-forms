@@ -32,9 +32,9 @@ export declare class Dropdown extends React.Component<DropdownItemProps, Dropdow
     showNavigation(): void;
     componentDidMount(): void;
     componentWillUnmount(): void;
-    private isFunction(functionToCheck);
-    private handleClick(e);
+    private isFunction;
+    private handleClick;
     render(): JSX.Element;
-    private renderChildren();
+    private renderChildren;
 }
 export default Dropdown;

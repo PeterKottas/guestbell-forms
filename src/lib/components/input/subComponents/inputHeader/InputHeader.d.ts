@@ -1,5 +1,6 @@
 import './inputHeader.scss';
 import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { ButtonProps } from '../../../buttons/Button';
 export declare type ActionParam = {
     expand: () => void;
@@ -32,9 +33,9 @@ export interface InputHeaderState {
     smoothCollapseDone: boolean;
 }
 export declare const InputHeaderContextType: {
-    registerInputHeader: any;
-    unregisterInputHeader: any;
-    stateChanged: any;
+    registerInputHeader: PropTypes.Requireable<(...args: any[]) => any>;
+    unregisterInputHeader: PropTypes.Requireable<(...args: any[]) => any>;
+    stateChanged: PropTypes.Requireable<(...args: any[]) => any>;
 };
 export interface InputHeaderContext {
     registerInputHeader: (component: InputHeader) => void;
@@ -46,18 +47,18 @@ export declare class InputHeader extends React.Component<InputHeaderProps, Input
     id: string;
     context: InputHeaderContext;
     static contextTypes: {
-        registerInputHeader: any;
-        unregisterInputHeader: any;
-        stateChanged: any;
+        registerInputHeader: PropTypes.Requireable<(...args: any[]) => any>;
+        unregisterInputHeader: PropTypes.Requireable<(...args: any[]) => any>;
+        stateChanged: PropTypes.Requireable<(...args: any[]) => any>;
     };
     static childContextTypes: {
-        registerInputHeader: any;
-        unregisterInputHeader: any;
-        stateChanged: any;
+        registerInputHeader: PropTypes.Requireable<(...args: any[]) => any>;
+        unregisterInputHeader: PropTypes.Requireable<(...args: any[]) => any>;
+        stateChanged: PropTypes.Requireable<(...args: any[]) => any>;
     };
     constructor(props: InputHeaderProps);
-    private registerInputHeader(component);
-    private unregisterInputHeader(component);
+    private registerInputHeader;
+    private unregisterInputHeader;
     getChildContext(): InputHeaderContext;
     componentWillUnmount(): void;
     componentDidMount(): void;
@@ -65,9 +66,9 @@ export declare class InputHeader extends React.Component<InputHeaderProps, Input
     collapse(): void;
     toggle(): void;
     render(): JSX.Element;
-    private getTypeClass();
-    private renderMainButton();
-    private renderExtraButtons();
-    private renderCollapseExpandAll();
+    private getTypeClass;
+    private renderMainButton;
+    private renderExtraButtons;
+    private renderCollapseExpandAll;
 }
 export default InputHeader;

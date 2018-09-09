@@ -40,12 +40,12 @@ export declare class BaseInput<P extends BaseInputProps<HTMLType>, S extends Bas
     inputId: string;
     static defaultProps: BaseInputProps<any>;
     static contextTypes: {
-        register: any;
-        unregister: any;
-        isFormValid: any;
-        updateCallback: any;
-        enableInputs: any;
-        disableInputs: any;
+        register: import("prop-types").Requireable<(...args: any[]) => any>;
+        unregister: import("prop-types").Requireable<(...args: any[]) => any>;
+        isFormValid: import("prop-types").Requireable<(...args: any[]) => any>;
+        updateCallback: import("prop-types").Requireable<(...args: any[]) => any>;
+        enableInputs: import("prop-types").Requireable<(...args: any[]) => any>;
+        disableInputs: import("prop-types").Requireable<(...args: any[]) => any>;
     };
     protected getValidationClass(extraErrors?: ValidationError[]): "validation__success" | "validation__error";
     protected renderDefaultValidation(extraErrors?: ValidationError[]): JSX.Element;
@@ -56,15 +56,15 @@ export declare class BaseInput<P extends BaseInputProps<HTMLType>, S extends Bas
     unTouch(): void;
     disableInput(): void;
     enableInput(): void;
-    private handleValueChange(value, valid?);
+    private handleValueChange;
     protected handleChange(event: React.ChangeEvent<HTMLType>, isValid?: boolean): void;
     protected handleBlur(e: React.FocusEvent<HTMLType>): void;
     protected handleFocus(e: React.FocusEvent<HTMLType>): void;
-    protected getDisabled(): P["disabled"];
+    protected getDisabled(): S["disabled"];
     protected setValid(): void;
     protected setInvalid(errors?: ValidationError[]): void;
     protected renderLabel(touchable?: boolean): JSX.Element;
-    private renderTooltip();
+    private renderTooltip;
     protected renderTitle(): P["title"];
     constructor(props: any);
 }

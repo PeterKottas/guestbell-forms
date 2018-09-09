@@ -20,8 +20,8 @@ export declare class Time extends BaseInput.BaseInput<TimeProps, TimeState, HTML
     private minutesEl;
     constructor(props: any);
     render(): JSX.Element;
-    private handleLimits(time);
-    private handleHoursChange(hoursString);
-    private handleMinutesChange(minutesString);
+    private handleLimits;
+    private handleHoursChange;
+    private handleMinutesChange;
 }
 export default Time;

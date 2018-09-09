@@ -16,9 +16,9 @@ export declare class Checkbox extends BaseInput.BaseInput<CheckboxProps, Checkbo
         checked: boolean;
     };
     constructor(props: CheckboxProps);
-    private handleChecked(e);
+    private handleChecked;
     componentDidMount(): void;
-    private renderInput();
+    private renderInput;
     componentWillReceiveProps(newProps: CheckboxProps): void;
     render(): JSX.Element;
 }

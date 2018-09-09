@@ -19,8 +19,8 @@ export declare class Button extends React.Component<ButtonProps, ButtonState> {
     static defaultProps: ButtonProps;
     private preventMultipleClick;
     constructor(props: any);
-    private handleClick(e);
+    private handleClick;
     render(): JSX.Element;
-    private getButtonClassName();
+    private getButtonClassName;
 }
 export default Button;

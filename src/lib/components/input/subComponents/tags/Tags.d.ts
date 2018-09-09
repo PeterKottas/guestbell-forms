@@ -38,10 +38,10 @@ export declare class Tags extends BaseInput.BaseInput<TagsProps, TagsState, HTML
     static defaultProps: TagsProps;
     constructor(props: TagsProps);
     render(): JSX.Element;
-    private getErrors();
-    private fetchExistingTags(startsWith?);
-    private getSuggestions();
-    private renderTag(tag, index);
-    private renderTags();
+    private getErrors;
+    private fetchExistingTags;
+    private getSuggestions;
+    private renderTag;
+    private renderTags;
 }
 export default Tags;

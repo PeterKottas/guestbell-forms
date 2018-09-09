@@ -14,8 +14,8 @@ export declare class Submit extends BaseInput.BaseInput<SubmitProps, SubmitState
         validateForm: boolean;
     };
     constructor(props: any);
-    private handleClick(e);
-    private isDisabled();
+    private handleClick;
+    private isDisabled;
     render(): JSX.Element;
 }
 export default Submit;

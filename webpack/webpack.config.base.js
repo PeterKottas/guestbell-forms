@@ -1,13 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 var isLocalBuild = process.env && process.env.NODE_ENV && process.env.NODE_ENV.trim().toString() == 'local';
-
-const extractSass = new ExtractTextPlugin({
-    filename: "[name].css",
-    disable: isLocalBuild
-});
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     resolve: {
@@ -23,38 +18,41 @@ module.exports = {
             },
             {
                 test: /\.(scss|css)$/,
-                use: extractSass.extract({
-                    use: [{
-                        loader: "css-loader",
-                        options: {
-                            sourceMap: true,
-                        }
-                    },
-                    {
-                        loader: "postcss-loader",
-                        options: {
-                            sourceMap: true,
-                            plugins: (loader) => [
-                                require('autoprefixer')()
-                            ]
-                        }
-                    },
-                    {
-                        loader: "sass-loader",
-                        options: {
-                            sourceMap: true,
-                        }
-                    }],
-                    // use style-loader in development
-                    fallback: "style-loader"
-                })
+                use: [(isLocalBuild ? {
+                    loader: "style-loader",
+                    options: {
+                        sourceMap: true,
+                    }
+                } : {
+                    loader: MiniCssExtractPlugin.loader
+                }), {
+                    loader: "css-loader",
+                    options: {
+                        sourceMap: true,
+                    }
+                }, {
+                    loader: "postcss-loader",
+                    options: {
+                        sourceMap: true,
+                        plugins: (loader) => [
+                            require('autoprefixer')({
+                                'browsers': ['> 1%', 'last 2 versions']
+                            })
+                        ]
+                    }
+                }, {
+                    loader: "sass-loader",
+                    options: {
+                        sourceMap: true,
+                    }
+                }]
             },
             {
                 test: /\.(svg)$/,
                 use: {
                     loader: 'svg-react-loader',
                     query: {
-                        props:{
+                        props: {
                             className: 'material-design-icon'
                         }
                     }
@@ -69,14 +67,16 @@ module.exports = {
         ]
     },
     output:
-        {
-            path: path.join(__dirname, '../build'),
-            filename: '[name].js',
-            publicPath: '../build/', // Webpack dev middleware, if enabled, handles requests for this URL prefix
-            libraryTarget: 'umd'
-        },
+    {
+        path: path.join(__dirname, '../build'),
+        filename: '[name].js',
+        publicPath: '../build/', // Webpack dev middleware, if enabled, handles requests for this URL prefix
+        libraryTarget: 'umd'
+    },
     plugins: [
-        extractSass,
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+        }),
         new CheckerPlugin(),
         new webpack.SourceMapDevToolPlugin({
             filename: '[file].map', // Remove this line if you prefer inline source maps

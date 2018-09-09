@@ -22,7 +22,7 @@ export declare class OpeningHoursDay extends BaseInput.BaseInput<OpeningHoursDay
     private fullDayMilliseconds;
     constructor(props: OpeningHoursDayProps);
     render(): JSX.Element;
-    private getBottomBorder();
-    private getTime(hours, minutes);
+    private getBottomBorder;
+    private getTime;
 }
 export default OpeningHoursDay;
