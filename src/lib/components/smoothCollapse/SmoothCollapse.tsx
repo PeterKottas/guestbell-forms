@@ -10,10 +10,10 @@ import getTransitionTimeMs from './getTransitionTimeMs';
 export type SmoothCollapseProps = {
     expanded: boolean;
     onChangeEnd?: () => void;
-    collapsedHeight: string;
-    heightTransition: string;
-    className: string;
-    allowOverflowWhenOpen: boolean;
+    collapsedHeight?: string;
+    heightTransition?: string;
+    className?: string;
+    allowOverflowWhenOpen?: boolean;
 };
 type State = {
     hasBeenVisibleBefore: boolean;

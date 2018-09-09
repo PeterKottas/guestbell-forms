@@ -3,10 +3,10 @@ import * as PropTypes from 'prop-types';
 export declare type SmoothCollapseProps = {
     expanded: boolean;
     onChangeEnd?: () => void;
-    collapsedHeight: string;
-    heightTransition: string;
-    className: string;
-    allowOverflowWhenOpen: boolean;
+    collapsedHeight?: string;
+    heightTransition?: string;
+    className?: string;
+    allowOverflowWhenOpen?: boolean;
 };
 declare type State = {
     hasBeenVisibleBefore: boolean;
