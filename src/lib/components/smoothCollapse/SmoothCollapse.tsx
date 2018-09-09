@@ -21,7 +21,7 @@ type State = {
     height: string;
 };
 
-export default class SmoothCollapse extends React.Component<SmoothCollapseProps, State> {
+export class SmoothCollapse extends React.Component<SmoothCollapseProps, State> {
     _resetter = kefirBus();
     _mainEl: HTMLElement = null;
     _innerEl: HTMLElement = null;
@@ -174,3 +174,5 @@ export default class SmoothCollapse extends React.Component<SmoothCollapseProps,
         );
     }
 }
+
+export default SmoothCollapse;

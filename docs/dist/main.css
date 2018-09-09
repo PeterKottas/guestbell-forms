@@ -2241,7 +2241,6 @@ textarea {
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
-  margin-right: 40px;
   padding: 0.5rem 0; }
   .input__header__top__button-container > div {
     margin-left: auto; }
@@ -2249,16 +2248,15 @@ textarea {
   .input__header__top__button-container div.input__header__sub-title {
     margin-left: initial; }
 
-.input__header__collapse-button {
-  margin-right: -40px; }
-  .input__header__collapse-button svg {
-    -webkit-transition: 0.2s all;
-    transition: 0.2s all;
-    -webkit-transform: scaleY(-1);
-            transform: scaleY(-1); }
-  .input__header__collapse-button.collapsed svg {
-    -webkit-transform: scaleY(1);
-            transform: scaleY(1); }
+.input__header__collapse-button svg {
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
+  -webkit-transform: scaleY(-1);
+          transform: scaleY(-1); }
+
+.input__header__collapse-button.collapsed svg {
+  -webkit-transform: scaleY(1);
+          transform: scaleY(1); }
 
 .input__header__expand-collapse--all {
   font-size: 75%;

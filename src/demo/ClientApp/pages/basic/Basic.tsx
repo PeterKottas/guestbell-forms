@@ -290,21 +290,21 @@ export class Basic extends React.Component<BasicProps, BasicState>{
                                         </RadioContainer>
                                         <RadioContainer title="Drinks (horizontal)" horizontal={true}>
                                             <Radio
-                                                name="drink"
+                                                name="drink2"
                                                 value="wine"
                                                 label="Wine"
                                                 result={this.state.drink}
                                                 onChecked={(value) => this.setState({ drink: value })}
                                             />
                                             <Radio
-                                                name="drink"
+                                                name="drink2"
                                                 value="whiskey"
                                                 label="Whiskey"
                                                 result={this.state.drink}
                                                 onChecked={(value) => this.setState({ drink: value })}
                                             />
                                             <Radio
-                                                name="drink"
+                                                name="drink2"
                                                 value="water"
                                                 label="Water"
                                                 result={this.state.drink}

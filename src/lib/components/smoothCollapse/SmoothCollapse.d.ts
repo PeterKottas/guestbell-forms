@@ -13,7 +13,7 @@ declare type State = {
     fullyClosed: boolean;
     height: string;
 };
-export default class SmoothCollapse extends React.Component<SmoothCollapseProps, State> {
+export declare class SmoothCollapse extends React.Component<SmoothCollapseProps, State> {
     _resetter: any;
     _mainEl: HTMLElement;
     _innerEl: HTMLElement;
@@ -39,4 +39,4 @@ export default class SmoothCollapse extends React.Component<SmoothCollapseProps,
     componentWillReceiveProps(nextProps: SmoothCollapseProps): void;
     render(): JSX.Element;
 }
-export {};
+export default SmoothCollapse;
