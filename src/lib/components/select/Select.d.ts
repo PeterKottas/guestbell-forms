@@ -31,3 +31,4 @@ export declare class Select extends BaseInput<SelectProps, SelectState, HTMLSele
     private renderReadonly;
     private renderSelectedValues;
 }
+export default Select;

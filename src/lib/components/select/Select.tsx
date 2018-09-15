@@ -162,3 +162,4 @@ export class Select extends BaseInput<SelectProps, SelectState, HTMLSelectElemen
     }
 }
 
+export default Select;
