@@ -1,6 +1,5 @@
 //Styles
 import './time.scss';
-//import * as arrowSrc from '../assets/images/ic_keyboard_arrow_down_black_24dp_1x.png';
 import * as ArrowIcon from 'material-design-icons/hardware/svg/production/ic_keyboard_arrow_down_24px.svg';
 
 //Libs

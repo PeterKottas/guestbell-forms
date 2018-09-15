@@ -1,6 +1,6 @@
 //Styles
 import './openingHoursSpecial.scss';
-import * as plusIconSrc from '../../assets/images/ic_add_circle_outline_black_24dp_1x.png';
+import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_circle_outline_24px.svg';
 import * as DateIcon from 'material-design-icons/action/svg/production/ic_event_24px.svg';
 
 //Libs
@@ -79,7 +79,7 @@ export class OpeningHoursSpecial extends BaseInput<OpeningHoursSpecialProps, Ope
                                     role="button"
                                     className="openingHoursSpecial-input__button openingHoursSpecial-input__button--remove p-0"
                                     onClick={() => this.props.onDaysChange(this.props.days.filter((day, indexInner) => indexInner !== index))}>
-                                    <img src={plusIconSrc} />
+                                    <PlusIcon />
                                 </div>
                             </span>
                         </span>
