@@ -1,7 +1,7 @@
 import './form.scss';
 import * as React from 'react';
-import * as BaseInput from '../input/subComponents/base/BaseInput';
 import * as PropTypes from 'prop-types';
+import { BaseInput, BaseInputProps, BaseInputState } from '../base/input/BaseInput';
 export interface FormValue {
     value: number | string;
     label?: string;
@@ -14,12 +14,12 @@ export interface FormProps {
 export interface FormState {
     isFormValid: boolean;
     components: {
-        [name: string]: BaseInput.BaseInput<BaseInput.BaseInputProps<any>, BaseInput.BaseInputState, any>;
+        [name: string]: BaseInput<BaseInputProps<any>, BaseInputState, any>;
     };
 }
 export interface FormContext {
-    register: (component: BaseInput.BaseInput<BaseInput.BaseInputProps<any>, BaseInput.BaseInputState, any>) => void;
-    unregister: (component: BaseInput.BaseInput<BaseInput.BaseInputProps<any>, BaseInput.BaseInputState, any>) => void;
+    register: (component: BaseInput<BaseInputProps<any>, BaseInputState, any>) => void;
+    unregister: (component: BaseInput<BaseInputProps<any>, BaseInputState, any>) => void;
     isFormValid: () => boolean;
     updateCallback: (isComponentValid: boolean, inputId: string) => void;
     disableInputs: () => void;

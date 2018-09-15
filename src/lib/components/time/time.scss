@@ -1,0 +1,127 @@
+﻿@import '../variables.scss';
+
+.time-input {
+    > div, > span{
+        display: inline-block;
+        position: relative;
+        align-self: baseline;
+    }
+
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem !important;
+    border-bottom: none !important;
+    margin-bottom: 3px !important;
+    width: initial !important;
+
+    .input-padding{
+        margin: 10px 5px 10px 5px;
+        position: relative;
+    }
+
+    input {
+        padding: 0;
+        color: $input-text-color;
+        outline: 0;
+        border: none;
+        width: 100%;
+        text-align: center;
+        border: 1px solid $input-border-color;
+        height: 26px;
+        line-height: 0;
+        background-color: transparent;
+    }
+
+    .highlight {
+        position: absolute;
+        left: 3px;
+        right: 3px;
+        top: 3px;
+        bottom: 3px;
+        width: initial;
+        height: initial;
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    input[type=number] {
+        -webkit-appearance: textfield;
+        -moz-appearance: textfield;
+        appearance: textfield;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+    }
+
+    .time-input__arrows__container{
+        position: relative;
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+
+    input:focus ~ label, input.filled ~ label, select:focus ~ label, select.filled ~ label, label.label--focused {
+        top: -27px;
+        font-size: 14px;
+        color: $input-highlight-color;
+    }
+
+    button {
+        &.plus{
+            top: -12px;
+            svg{
+                transform: rotate(180deg);
+            }
+        }
+        &.minus{
+            bottom: -12px; 
+        }
+        padding: 0 5px;
+        line-height: 0;
+        overflow: hidden;
+        border: none;
+        background: transparent;
+        position: absolute;
+        left: 1px;
+        /* Styling the down arrow */
+        border: none;
+        cursor:pointer;
+        &:focus{
+            border: none;
+            outline: 0;
+        }
+        svg{
+            transition: 0.2s all;
+            fill: $input-label-color;
+        }
+        &:hover{
+            svg {
+                fill: $input-highlight-color;
+            }
+        }
+    }
+
+    .time-input__time {
+        width: 26px;
+        display: inline-block;
+    }
+
+    .time-input__am-pm{
+        color: $input-label-color;
+    }
+}
+
+.guestbell-forms--dark{
+    .time-input {
+        input {
+            color: $input-text-color--dark;
+            border: 1px solid $input-border-color--dark;
+        }
+    }
+
+    .time-input__am-pm{
+        color: $input-label-color--dark;
+    }
+}    

@@ -5,8 +5,8 @@ import './form.scss';
 import * as React from 'react';
 
 // Misc
-import * as BaseInput from '../input/subComponents/base/BaseInput';
 import * as PropTypes from 'prop-types';
+import { BaseInput, BaseInputProps, BaseInputState } from '../base/input/BaseInput';
 
 export interface FormValue {
     value: number | string;
@@ -21,12 +21,12 @@ export interface FormProps {
 
 export interface FormState {
     isFormValid: boolean;
-    components: { [name: string]: BaseInput.BaseInput<BaseInput.BaseInputProps<any>, BaseInput.BaseInputState, any> };
+    components: { [name: string]: BaseInput<BaseInputProps<any>, BaseInputState, any> };
 }
 
 export interface FormContext {
-    register: (component: BaseInput.BaseInput<BaseInput.BaseInputProps<any>, BaseInput.BaseInputState, any>) => void;
-    unregister: (component: BaseInput.BaseInput<BaseInput.BaseInputProps<any>, BaseInput.BaseInputState, any>) => void;
+    register: (component: BaseInput<BaseInputProps<any>, BaseInputState, any>) => void;
+    unregister: (component: BaseInput<BaseInputProps<any>, BaseInputState, any>) => void;
     isFormValid: () => boolean;
     updateCallback: (isComponentValid: boolean, inputId: string) => void;
     disableInputs: () => void;
@@ -51,7 +51,7 @@ export class Form extends React.Component<FormProps, FormState> {
 
     public static childContextTypes = FormContextType;
 
-    private register(component: BaseInput.BaseInput<BaseInput.BaseInputProps<any>, BaseInput.BaseInputState, any>) {
+    private register(component: BaseInput<BaseInputProps<any>, BaseInputState, any>) {
         if (component) {
             this.setState(previousState => {
                 let newComponents = Object.assign({}, previousState.components);
@@ -63,7 +63,7 @@ export class Form extends React.Component<FormProps, FormState> {
         }
     };
 
-    private unregister(component: BaseInput.BaseInput<BaseInput.BaseInputProps<any>, BaseInput.BaseInputState, any>) {
+    private unregister(component: BaseInput<BaseInputProps<any>, BaseInputState, any>) {
         if (component) {
             this.setState(previousState => {
                 let newComponents = Object.assign({}, previousState.components);

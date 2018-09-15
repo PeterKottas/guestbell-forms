@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { IBaseValidator, MoneyWithCurrency, OpeningHoursDayObj, OpeningHoursSpecialDayObj } from '../../../../lib/index';
-import { Tag } from 'src/lib/components/input/subComponents/tags/Tags';
+import { IBaseValidator, MoneyWithCurrency, OpeningHoursDayObj, OpeningHoursSpecialDayObj, Tag } from '../../../../lib/index';
 export interface BasicProps {
 }
 export interface BasicState {

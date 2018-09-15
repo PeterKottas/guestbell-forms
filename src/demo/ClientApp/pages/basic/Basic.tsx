@@ -6,10 +6,10 @@ import {
     Button,
     ButtonTypes,
     Tags,
+    Tag,
     NumberValidator,
     TextArea
 } from '../../../../lib/index';
-import { Tag } from 'src/lib/components/input/subComponents/tags/Tags';
 
 export interface BasicProps {
 

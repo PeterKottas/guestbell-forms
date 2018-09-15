@@ -1,0 +1,68 @@
+﻿@import '../variables.scss';
+$baseFontSize: 16;
+@function rem($val) {
+    @return #{$val / $baseFontSize}rem;
+}
+
+.input__base.checkbox-input {
+    display: block;
+    margin-top: 24px;
+    border: none;
+    &.validation__error {
+        border: none;
+    }
+    &.checkbox-input--with-label {
+        input {
+            margin-right: 1rem;
+        }
+    }
+    input {
+        position: relative;
+        padding: 10px 10px 5px 5px;
+        color: $input-text-color;
+        outline: 0;
+        border: none;
+        width: auto;
+        top: 0;
+        &:before {
+            transition: transform .4s cubic-bezier(.45, 1.8, .5, .75);
+            transform: rotate(-45deg) scale(0, 0);
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            width: rem(14);
+            height: rem(7);
+            border: 2px solid $input-highlight-color;
+            border-top-style: none;
+            border-right-style: none;
+            pointer-events: none;
+        }
+        &:checked {
+            &:before {
+                transform: rotate(-45deg) scale(1, 1);
+            }
+        }
+        &:after {
+            content: "";
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            width: 1.2rem;
+            height: 1.2rem;
+            background: #fff;
+            border: 2px solid $input-border-color;
+            cursor: pointer;
+        }
+    }
+    label {
+        top: 0;
+        user-select: none;
+        // margin-bottom: 4px;
+        pointer-events: auto;
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+}
