@@ -12,11 +12,11 @@ export interface OpeningHoursSpecialProps extends BaseInputProps<never> {
 export interface OpeningHoursSpecialState extends BaseInputState {
 }
 export declare class OpeningHoursSpecial extends BaseInput<OpeningHoursSpecialProps, OpeningHoursSpecialState, never> {
-    static defaultProps: BaseInputProps<any> & {
+    static defaultProps: BaseInputProps<never> & {
         type: string;
         placeholder: string;
     };
-    constructor(props: any);
+    constructor(props: OpeningHoursSpecialProps);
     render(): JSX.Element;
 }
 export default OpeningHoursSpecial;

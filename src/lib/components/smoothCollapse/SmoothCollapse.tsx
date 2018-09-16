@@ -22,15 +22,6 @@ type State = {
 };
 
 export class SmoothCollapse extends React.Component<SmoothCollapseProps, State> {
-    _resetter = kefirBus();
-    _mainEl: HTMLElement = null;
-    _innerEl: HTMLElement = null;
-    _mainElSetter = (el?: HTMLElement) => {
-        this._mainEl = el;
-    };
-    _innerElSetter = (el?: HTMLElement) => {
-        this._innerEl = el;
-    };
     static propTypes = {
         expanded: PropTypes.bool.isRequired,
         onChangeEnd: PropTypes.func,
@@ -45,6 +36,15 @@ export class SmoothCollapse extends React.Component<SmoothCollapseProps, State> 
         className: '',
         allowOverflowWhenOpen: false,
     };
+    _resetter = kefirBus();
+    _mainEl: HTMLElement = null;
+    _innerEl: HTMLElement = null;
+    _mainElSetter = (el?: HTMLElement) => {
+        this._mainEl = el;
+    }
+    _innerElSetter = (el?: HTMLElement) => {
+        this._innerEl = el;
+    }
 
     constructor(props: SmoothCollapseProps) {
         super(props);
@@ -56,7 +56,9 @@ export class SmoothCollapse extends React.Component<SmoothCollapseProps, State> 
     }
 
     _visibleWhenClosed(props?: SmoothCollapseProps) {
-        if (!props) props = this.props;
+        if (!props) { 
+            props = this.props; 
+        }
         return parseFloat(props.collapsedHeight) !== 0;
     }
 
@@ -77,7 +79,7 @@ export class SmoothCollapse extends React.Component<SmoothCollapseProps, State> 
             }, () => {
                 const mainEl = this._mainEl;
                 const innerEl = this._innerEl;
-                if (!mainEl || !innerEl) throw new Error('Should not happen');
+                if (!mainEl || !innerEl) { throw new Error('Should not happen'); }
 
                 // Set the collapser to the target height instead of auto so that it
                 // animates correctly. Then switch it to 'auto' after the animation so
@@ -111,13 +113,14 @@ export class SmoothCollapse extends React.Component<SmoothCollapseProps, State> 
         } else if (this.props.expanded && !nextProps.expanded) {
             this._resetter.emit(null);
 
-            if (!this._innerEl) throw new Error('Should not happen');
+            if (!this._innerEl) { throw new Error('Should not happen'); }
             this.setState({
                 height: `${this._innerEl.clientHeight}px`
             }, () => {
                 const mainEl = this._mainEl;
-                if (!mainEl) throw new Error('Should not happen');
+                if (!mainEl) { throw new Error('Should not happen'); }
 
+                // tslint:disable-next-line:no-unused-expression
                 mainEl.clientHeight; // force the page layout
                 this.setState({
                     height: nextProps.collapsedHeight

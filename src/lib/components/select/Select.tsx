@@ -1,10 +1,10 @@
-﻿//Styles
+﻿// Styles
 import './select.scss';
 
-//Libs
+// Libs
 import * as React from 'react';
 
-//Misc
+// Misc
 import InputGroup from '../inputGroup/InputGroup';
 import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_circle_outline_24px.svg';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
@@ -54,9 +54,13 @@ export class Select extends BaseInput<SelectProps, SelectState, HTMLSelectElemen
     }
 
     public render() {
-        const finalValues = this.props.multiple ? this.props.values.filter(item => this.props.selectedValues.findIndex((t) => t.value === item.value) < 0) : this.props.values;
+        const finalValues = this.props.multiple ? this.props.values.filter(item => this.props.selectedValues.
+            findIndex((t) => t.value === item.value) < 0) : this.props.values;
         return <InputGroup title={this.props.title}>
-            <div className={'input__base select-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '') + ' ' + (this.props.readOnly ? 'readonly' : '') + ' ' + (this.props.multiple ? 'multiple' : '')}>
+            <div 
+                className={'input__base select-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '') + 
+                    ' ' + (this.props.readOnly ? 'readonly' : '') + ' ' + (this.props.multiple ? 'multiple' : '')}
+            >
                 {this.renderSelectedValues()}
                 {finalValues.length > 0 && ((this.props.multiple && !this.props.readOnly) || !this.props.multiple) &&
                     <div className="select-input__select__wrapper">
@@ -67,7 +71,8 @@ export class Select extends BaseInput<SelectProps, SelectState, HTMLSelectElemen
                                 required={this.props.required}
                                 onChange={this.handleChangeCustom}
                                 value={this.state.value}
-                                className={'select-input__select ' + (this.state.value !== '' || (this.props.selectedValues && this.props.selectedValues.length > 0) ? 'filled' : '')}
+                                className={'select-input__select ' + (this.state.value !== '' || (this.props.selectedValues && 
+                                    this.props.selectedValues.length > 0) ? 'filled' : '')}
                                 onBlur={this.handleBlur}
                                 onFocus={this.handleFocus}
                             >
@@ -75,7 +80,10 @@ export class Select extends BaseInput<SelectProps, SelectState, HTMLSelectElemen
                                 {finalValues.map((value, index) => <option key={index} value={value.value}>{value.label ? value.label : value.value}</option>)}
                             </select>
                             :
-                            <span className={'select-input__select ' + (this.state.value !== '' || (this.props.selectedValues && this.props.selectedValues.length > 0) ? 'filled' : '')}>
+                            <span 
+                                className={'select-input__select ' + (this.state.value !== '' || (this.props.selectedValues && 
+                                    this.props.selectedValues.length > 0) ? 'filled' : '')}
+                            >
                                 {this.renderReadonly()}
                             </span>
                         }
@@ -141,7 +149,7 @@ export class Select extends BaseInput<SelectProps, SelectState, HTMLSelectElemen
                             onClick={() => {
                                 const newValues = this.props.selectedValues.filter(sv => sv.value !== item.value);
                                 this.handleValid(newValues);
-                                this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(newValues)
+                                this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(newValues);
                             }}
                             className="ml-1 transform-rotate--45 line-height--0 p-0"
                         >

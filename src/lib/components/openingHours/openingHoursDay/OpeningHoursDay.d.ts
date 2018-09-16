@@ -14,7 +14,7 @@ export interface OpeningHoursDayProps extends BaseInputProps<never> {
 export interface OpeningHoursState extends BaseInputState {
 }
 export declare class OpeningHoursDay extends BaseInput<OpeningHoursDayProps, OpeningHoursState, never> {
-    static defaultProps: BaseInputProps<any> & {
+    static defaultProps: BaseInputProps<never> & {
         type: string;
         allowMultiple: boolean;
         maxOpenCloseTimes: number;

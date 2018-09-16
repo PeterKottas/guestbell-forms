@@ -1,10 +1,10 @@
-﻿//Styles
+﻿// Styles
 import './text.scss';
 
-//Libs
+// Libs
 import * as React from 'react';
 
-//Misc
+// Misc
 import InputGroup from '../inputGroup/InputGroup';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
 
@@ -15,23 +15,24 @@ export interface TextProps extends BaseInputProps<HTMLInputElement> {
     stopClickPropagation?: boolean;
     inputRef?: (input: HTMLInputElement) => void;
     readOnly?: boolean;
-    type?:'number'|'text';
+    type?: 'number'|'text';
 }
 
 export interface TextState extends BaseInputState {
 }
 
 export class Text extends BaseInput<TextProps, TextState, HTMLInputElement>  {
-    public static defaultProps = Object.assign(BaseInput.defaultProps, { type: "text", placeholder: '', stopClickPropagation: true, readOnly: false });
+    public static defaultProps = Object.assign(BaseInput.defaultProps, { type: 'text', placeholder: '', stopClickPropagation: true, readOnly: false });
 
-    constructor(props) {
+    constructor(props: TextProps) {
         super(props);
     }
 
     public render() {
         return <InputGroup title={this.props.title}>
             <div
-                className={`input__base text-input ${this.getValidationClass()} ${(this.props.readOnly ? 'text-input--readOnly' : '')} ${(this.props.className ? this.props.className : '')}`}
+                className={`input__base text-input ${this.getValidationClass()} 
+                    ${(this.props.readOnly ? 'text-input--readOnly' : '')} ${(this.props.className ? this.props.className : '')}`}
                 onClick={e => this.props.stopClickPropagation && e.stopPropagation()}
             >
                 <input
@@ -45,7 +46,7 @@ export class Text extends BaseInput<TextProps, TextState, HTMLInputElement>  {
                     onBlur={this.handleBlur}
                     onFocus={this.handleFocus}
                     readOnly={this.props.readOnly}
-                    onKeyDown={e=>this.props.onKeyDown && this.props.onKeyDown(e)}
+                    onKeyDown={e => this.props.onKeyDown && this.props.onKeyDown(e)}
                     type={this.props.type}
                 />
                 <span className="highlight"></span>

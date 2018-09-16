@@ -25,12 +25,13 @@ export interface DynamicSubmitState extends BaseInputState {
     buttonState: DynamicSubmitMode;
 }
 export declare class DynamicSubmit extends BaseInput<DynamicSubmitProps, DynamicSubmitState, never> {
-    static defaultProps: BaseInputProps<any> & {
+    static defaultProps: BaseInputProps<never> & {
         validateForm: boolean;
         submitDisablesInputs: boolean;
         resetEnablesInputs: boolean;
     };
-    constructor(props: any);
+    constructor(props: DynamicSubmitProps);
+    render(): JSX.Element;
     private handleClick;
     private submitting;
     private error;
@@ -38,6 +39,5 @@ export declare class DynamicSubmit extends BaseInput<DynamicSubmitProps, Dynamic
     private reset;
     private renderChildren;
     private renderClassName;
-    render(): JSX.Element;
 }
 export default DynamicSubmit;

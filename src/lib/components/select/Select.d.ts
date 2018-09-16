@@ -18,7 +18,7 @@ export interface SelectProps extends BaseInputProps<HTMLSelectElement> {
 export interface SelectState extends BaseInputState {
 }
 export declare class Select extends BaseInput<SelectProps, SelectState, HTMLSelectElement> {
-    static defaultProps: BaseInputProps<any> & {
+    static defaultProps: BaseInputProps<never> & {
         defaultEmpty: boolean;
         multiple: boolean;
         readOnly: boolean;

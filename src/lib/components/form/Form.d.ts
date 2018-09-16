@@ -1,7 +1,7 @@
 import './form.scss';
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import { BaseInput, BaseInputProps, BaseInputState } from '../base/input/BaseInput';
+import { BaseInput, BaseInputProps, BaseInputState, AllowedHtmlElements } from '../base/input/BaseInput';
 export interface FormValue {
     value: number | string;
     label?: string;
@@ -14,12 +14,12 @@ export interface FormProps {
 export interface FormState {
     isFormValid: boolean;
     components: {
-        [name: string]: BaseInput<BaseInputProps<any>, BaseInputState, any>;
+        [name: string]: BaseInput<BaseInputProps<AllowedHtmlElements>, BaseInputState, AllowedHtmlElements>;
     };
 }
 export interface FormContext {
-    register: (component: BaseInput<BaseInputProps<any>, BaseInputState, any>) => void;
-    unregister: (component: BaseInput<BaseInputProps<any>, BaseInputState, any>) => void;
+    register: (component: BaseInput<BaseInputProps<AllowedHtmlElements>, BaseInputState, AllowedHtmlElements>) => void;
+    unregister: (component: BaseInput<BaseInputProps<AllowedHtmlElements>, BaseInputState, AllowedHtmlElements>) => void;
     isFormValid: () => boolean;
     updateCallback: (isComponentValid: boolean, inputId: string) => void;
     disableInputs: () => void;
@@ -46,16 +46,16 @@ export declare class Form extends React.Component<FormProps, FormState> {
         enableInputs: PropTypes.Requireable<(...args: any[]) => any>;
         disableInputs: PropTypes.Requireable<(...args: any[]) => any>;
     };
-    private register;
-    private unregister;
+    constructor(props: FormProps);
     getChildContext(): FormContext;
     disableInputs(): void;
     enableInputs(): void;
     touchAll(): void;
     unTouchAll(): void;
     componentDidMount(): void;
-    private updateCallback;
-    constructor(props: FormProps);
     render(): JSX.Element;
+    private register;
+    private unregister;
+    private updateCallback;
 }
 export default Form;

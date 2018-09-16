@@ -1,11 +1,11 @@
-//Styles
+// Styles
 import './buttons.scss';
 
-//Libs
+// Libs
 import * as React from 'react';
 var Ink = require('react-ink');
 
-//Misc
+// Misc
 
 export type ButtonTypes = 'hero' | 'blank' | 'blank--light' | 'dropdown' | 'success' | 'error' | 'warning' | 'info' | 'gray';
 
@@ -36,12 +36,33 @@ export class Button extends React.Component<ButtonProps, ButtonState>  {
         small: false,
         buttonType: 'button',
         disableAfterClickMs: 500
-    }
+    };
+
     private preventMultipleClick = false;
 
-    constructor(props) {
+    constructor(props: ButtonProps) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    public render() {
+        return (
+            <button
+                {...(this.props.buttonProps ? this.props.buttonProps : {})}
+                type={this.props.buttonType}
+                role="button"
+                className={`guestbell-btn ${this.getButtonClassName()} 
+                    ${(this.props.className ? this.props.className : '')} 
+                    ${(this.props.disabled ? 'disabled' : '')} 
+                    ${(this.props.circular ? 'guestbell-btn-circular' : '')} 
+                    ${(this.props.small ? 'guestbell-btn-small' : '')}`
+                }
+                onClick={this.handleClick}
+            >
+                {!this.props.noRipples && !this.props.disabled && Ink && <Ink />}
+                {this.props.children}
+            </button >
+        );
     }
 
     private handleClick(e: React.MouseEvent<HTMLButtonElement>) {
@@ -55,20 +76,6 @@ export class Button extends React.Component<ButtonProps, ButtonState>  {
                 }, this.props.disableAfterClickMs);
             }
         }
-    }
-
-    public render() {
-        return <button
-            {...(this.props.buttonProps ? this.props.buttonProps : {}) }
-            type={this.props.buttonType}
-            role={"button"}
-            className={`guestbell-btn ${this.getButtonClassName()} ${(this.props.className ? this.props.className : '')} ${(this.props.disabled ? 'disabled' : '')} ${(this.props.circular ? 'guestbell-btn-circular' : '')} ${(this.props.small ? 'guestbell-btn-small' : '')}`
-            }
-            onClick={this.handleClick}
-        >
-            {!this.props.noRipples && !this.props.disabled && Ink && <Ink />}
-            {this.props.children}
-        </button >;
     }
 
     private getButtonClassName() {

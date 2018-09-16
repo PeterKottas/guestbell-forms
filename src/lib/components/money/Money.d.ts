@@ -16,7 +16,7 @@ export interface MoneyProps extends BaseInputProps<never> {
 export interface MoneyState extends BaseInputState {
 }
 export declare class Money extends BaseInput<MoneyProps, MoneyState, never> {
-    static defaultProps: BaseInputProps<any> & {
+    static defaultProps: BaseInputProps<never> & {
         type: string;
         allowMultiple: boolean;
     };

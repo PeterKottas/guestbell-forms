@@ -12,13 +12,13 @@ export interface TimeProps extends BaseInputProps<HTMLInputElement> {
 export interface TimeState extends BaseInputState {
 }
 export declare class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
-    static defaultProps: BaseInputProps<any> & {
+    static defaultProps: BaseInputProps<never> & {
         type: string;
         placeholder: string;
     };
     private hoursEl;
     private minutesEl;
-    constructor(props: any);
+    constructor(props: TimeProps);
     render(): JSX.Element;
     private handleLimits;
     private handleHoursChange;

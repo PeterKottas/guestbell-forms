@@ -1,12 +1,12 @@
-﻿//Styles
+﻿// Styles
 import './dynamicSubmit.scss';
 
-//Libs
+// Libs
 import * as React from 'react';
 import { Button, ButtonProps } from '../button/Button';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
 
-//Misc
+// Misc
 
 export enum DynamicSubmitMode {
     Normal,
@@ -38,7 +38,7 @@ export interface DynamicSubmitState extends BaseInputState {
 export class DynamicSubmit extends BaseInput<DynamicSubmitProps, DynamicSubmitState, never>  {
     public static defaultProps = Object.assign(BaseInput.defaultProps, { validateForm: true, submitDisablesInputs: true, resetEnablesInputs: true });
 
-    constructor(props) {
+    constructor(props: DynamicSubmitProps) {
         super(props);
         this.state = Object.assign(this.state, {
             buttonState: DynamicSubmitMode.Normal
@@ -48,6 +48,19 @@ export class DynamicSubmit extends BaseInput<DynamicSubmitProps, DynamicSubmitSt
         this.error = this.error.bind(this);
         this.success = this.success.bind(this);
         this.reset = this.reset.bind(this);
+    }
+
+    public render() {
+        return (
+            <Button
+                {...this.props}
+                className={`${(this.props.className ? this.props.className : '')} ${this.renderClassName()}`}
+                onClick={this.handleClick}
+                disabled={this.getDisabled() ? this.getDisabled() : (this.props.validateForm ? this.context.isFormValid && !this.context.isFormValid() : false)}
+            >
+                {this.renderChildren()}
+            </Button>
+        );
     }
 
     private handleClick(e: React.MouseEvent<HTMLButtonElement>) {
@@ -75,39 +88,28 @@ export class DynamicSubmit extends BaseInput<DynamicSubmitProps, DynamicSubmitSt
 
     private renderChildren() {
         switch (this.state.buttonState) {
-            case DynamicSubmitMode.Normal:
-                return this.props.children;
             case DynamicSubmitMode.Error:
                 return this.props.errorChildren ? this.props.errorChildren : this.props.children;
             case DynamicSubmitMode.Submitting:
                 return this.props.submittingChildren ? this.props.submittingChildren : this.props.children;
             case DynamicSubmitMode.Success:
                 return this.props.successChildren ? this.props.successChildren : this.props.children;
+            default:
+                return this.props.children;
         }
     }
 
     private renderClassName() {
         switch (this.state.buttonState) {
-            case DynamicSubmitMode.Normal:
-                return this.props.normalClassName ? this.props.normalClassName : '';
             case DynamicSubmitMode.Error:
                 return this.props.errorClassName ? this.props.errorClassName : '';
             case DynamicSubmitMode.Submitting:
                 return this.props.submittingClassName ? this.props.submittingClassName : '';
             case DynamicSubmitMode.Success:
                 return this.props.successClassName ? this.props.successClassName : '';
+            default:
+                return this.props.normalClassName ? this.props.normalClassName : '';
         }
-    }
-
-    public render() {
-        return <Button
-            {...this.props}
-            className={`${(this.props.className ? this.props.className : '')} ${this.renderClassName()}`}
-            onClick={this.handleClick}
-            disabled={this.getDisabled() ? this.getDisabled() : (this.props.validateForm ? this.context.isFormValid && !this.context.isFormValid() : false)}
-        >
-            {this.renderChildren()}
-        </Button>;
     }
 }
 export default DynamicSubmit;

@@ -1,11 +1,11 @@
-//Styles
+// Styles
 import './inputGroup.scss';
 
-//Libs
+// Libs
 import * as React from 'react';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
 
-//Misc
+// Misc
 
 export type InputGroupProps = Pick<BaseInputProps<never>, 'title' | 'className' | 'helpText'>;
 

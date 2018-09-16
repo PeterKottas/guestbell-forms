@@ -10,10 +10,10 @@ export interface RadioProps extends BaseInputProps<HTMLInputElement> {
 export interface RadioState extends BaseInputState {
 }
 export declare class Radio extends BaseInput<RadioProps, RadioState, HTMLInputElement> {
-    static defaultProps: BaseInputProps<any>;
+    static defaultProps: BaseInputProps<never>;
     constructor(props: RadioProps);
+    render(): JSX.Element;
     private renderInput;
     private onChecked;
-    render(): JSX.Element;
 }
 export default Radio;

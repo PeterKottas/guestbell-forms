@@ -45,8 +45,6 @@ export interface InputHeaderContext {
 }
 export declare class InputHeader extends React.Component<InputHeaderProps, InputHeaderState> {
     static defaultProps: InputHeaderProps;
-    id: string;
-    context: InputHeaderContext;
     static contextTypes: {
         registerInputHeader: PropTypes.Requireable<(...args: any[]) => any>;
         unregisterInputHeader: PropTypes.Requireable<(...args: any[]) => any>;
@@ -57,9 +55,9 @@ export declare class InputHeader extends React.Component<InputHeaderProps, Input
         unregisterInputHeader: PropTypes.Requireable<(...args: any[]) => any>;
         stateChanged: PropTypes.Requireable<(...args: any[]) => any>;
     };
+    id: string;
+    context: InputHeaderContext;
     constructor(props: InputHeaderProps);
-    private registerInputHeader;
-    private unregisterInputHeader;
     getChildContext(): InputHeaderContext;
     componentWillUnmount(): void;
     componentDidMount(): void;
@@ -67,6 +65,8 @@ export declare class InputHeader extends React.Component<InputHeaderProps, Input
     collapse(): void;
     toggle(): void;
     render(): JSX.Element;
+    private registerInputHeader;
+    private unregisterInputHeader;
     private getTypeClass;
     private renderMainButton;
     private renderExtraButtons;

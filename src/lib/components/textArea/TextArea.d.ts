@@ -14,13 +14,13 @@ export interface TextAreaProps extends BaseInputProps<HTMLTextAreaElement> {
 export interface TextAreaState extends BaseInputState {
 }
 export declare class TextArea extends BaseInput<TextAreaProps, TextAreaState, HTMLTextAreaElement> {
-    static defaultProps: BaseInputProps<any> & {
+    static defaultProps: BaseInputProps<never> & {
         type: string;
         placeholder: string;
         stopClickPropagation: boolean;
         readOnly: boolean;
     };
-    constructor(props: any);
+    constructor(props: TextAreaProps);
     render(): JSX.Element;
 }
 export default TextArea;

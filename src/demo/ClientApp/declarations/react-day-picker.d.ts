@@ -1,1 +1,1 @@
-declare module 'react-day-picker/DayPickerInputer';
+declare module 'react-day-picker/DayPickerInput';

@@ -1,11 +1,11 @@
-//Styles
+// Styles
 import './time.scss';
 import * as ArrowIcon from 'material-design-icons/hardware/svg/production/ic_keyboard_arrow_down_24px.svg';
 
-//Libs
+// Libs
 import * as React from 'react';
 
-//Misc
+// Misc
 import InputGroup from '../inputGroup/InputGroup';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
 
@@ -22,11 +22,11 @@ export interface TimeState extends BaseInputState {
 }
 
 export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
-    public static defaultProps = Object.assign(BaseInput.defaultProps, { type: "time", placeholder: '' });
+    public static defaultProps = Object.assign(BaseInput.defaultProps, { type: 'time', placeholder: '' });
     private hoursEl: HTMLInputElement;
     private minutesEl: HTMLInputElement;
 
-    constructor(props) {
+    constructor(props: TimeProps) {
         super(props);
         this.handleHoursChange = this.handleHoursChange.bind(this);
         this.handleMinutesChange = this.handleMinutesChange.bind(this);
@@ -114,12 +114,11 @@ export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
                 <div>
                     <span className="time-input__am-pm">{(() => {
                         var hours = this.props.time.getHours();
-                        var hours = (hours + 24) % 24;
+                        hours = (hours + 24) % 24;
                         var mid = 'AM';
-                        if (hours == 0) { //At 00 hours we need to show 12 am
+                        if (hours === 0) { // At 00 hours we need to show 12 am
                             hours = 12;
-                        }
-                        else if (hours > 12) {
+                        } else if (hours > 12) {
                             hours = hours % 12;
                             mid = 'PM';
                         }
@@ -148,25 +147,25 @@ export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
     }
 
     private handleHoursChange(hoursString: string) {
-        let number = Number(hoursString);
+        let num = Number(hoursString);
         if (hoursString === '') {
-            number = 0;
+            num = 0;
         }
-        if (!isNaN(number)) {
+        if (!isNaN(num)) {
             let newTime: Date = new Date(this.props.time.getTime());
-            newTime.setHours(number);
+            newTime.setHours(num);
             this.handleLimits(newTime);
         }
     }
 
     private handleMinutesChange(minutesString: string) {
-        let number = Number(minutesString);
+        let num = Number(minutesString);
         if (minutesString === '') {
-            number = 0;
+            num = 0;
         }
-        if (!isNaN(number)) {
+        if (!isNaN(num)) {
             let newTime: Date = new Date(this.props.time.getTime());
-            newTime.setMinutes(number);
+            newTime.setMinutes(num);
             this.handleLimits(newTime);
         }
     }

@@ -1,11 +1,11 @@
-﻿//Styles
+﻿// Styles
 import './money.scss';
 import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_24px.svg';
 
-//Libs
+// Libs
 import * as React from 'react';
 
-//Misc
+// Misc
 import { Select, SelectValue } from '../select/Select';
 import { Text } from '../text/Text';
 import InputGroup from '../inputGroup/InputGroup';
@@ -29,7 +29,7 @@ export interface MoneyState extends BaseInputState {
 }
 
 export class Money extends BaseInput<MoneyProps, MoneyState, never>  {
-    public static defaultProps = Object.assign(BaseInput.defaultProps, { type: "money", allowMultiple: false });
+    public static defaultProps = Object.assign(BaseInput.defaultProps, { type: 'money', allowMultiple: false });
 
     constructor(props: MoneyProps) {
         super(props);
@@ -44,7 +44,9 @@ export class Money extends BaseInput<MoneyProps, MoneyState, never>  {
         return <InputGroup title={this.props.title}>
             <div className={'input__base money-input ' + this.getValidationClass() + (this.props.className ? ' ' + this.props.className : '')}>
                 {this.props.prices && this.props.prices.map((item, index) => {
-                    let currentCurrencies = this.props.currencies.filter(currency => this.props.prices.filter((priceCurrency, priceIndex) => priceIndex !== index && priceCurrency.currency.value === currency.value).length === 0);
+                    let currentCurrencies = this.props.currencies.
+                        filter(currency => this.props.prices.
+                            filter((priceCurrency, priceIndex) => priceIndex !== index && priceCurrency.currency.value === currency.value).length === 0);
                     let retComponents = currentCurrencies.length ? [
                         <Select
                             onFocus={() => this.setState({ focused: true })}
@@ -54,7 +56,7 @@ export class Money extends BaseInput<MoneyProps, MoneyState, never>  {
                             values={currentCurrencies}
                             onChange={(e) => {
                                 let newPrices: MoneyWithCurrency[] = [].concat(this.props.prices);
-                                newPrices[index].currency = currentCurrencies.filter(item => item.value.toString() === e.target.value)[0];
+                                newPrices[index].currency = currentCurrencies.filter(cc => cc.value.toString() === e.target.value)[0];
                                 this.props.onPricesChange(newPrices);
                             }}
                             value={item.currency.value.toString()}
@@ -63,28 +65,29 @@ export class Money extends BaseInput<MoneyProps, MoneyState, never>  {
                             onFocus={() => this.setState({ focused: true })}
                             onBlur={() => this.setState({ focused: false })}
                             onTheFlightValidate={value => {
-                                let number = Number(value);
+                                let num = Number(value);
                                 const parts = value.split('.');
                                 if (parts && parts.length > 1 && parts[parts.length - 1].length > 2) {
                                     return false;
                                 }
-                                if (!isNaN(number)) {
+                                if (!isNaN(num)) {
                                     return true;
                                 }
-                                if (number)
+                                if (num) {
                                     return false;
+                                }
                             }}
                             placeholder={'0.00'}
                             className={'money-input__text m-0'}
                             key={index * 3 + 1}
-                            validators={["number"]}
+                            validators={['number']}
                             value={item.value ? item.value.toString() : ''}
                             onChange={(e) => {
                                 let newPrices: MoneyWithCurrency[] = [].concat(this.props.prices);
                                 let str = e.target.value;
-                                let number = Number(str);
-                                if (!isNaN(number)) {
-                                    newPrices[index].value = number;
+                                let num = Number(str);
+                                if (!isNaN(num)) {
+                                    newPrices[index].value = num;
                                 }
                                 this.props.onPricesChange(newPrices);
                             }}
@@ -94,7 +97,7 @@ export class Money extends BaseInput<MoneyProps, MoneyState, never>  {
                             <Button
                                 type={'blank--light'}
                                 key={index * 3 + 2}
-                                onClick={() => this.props.onPricesChange(this.props.prices.filter((item, itemIndex) => itemIndex !== index))}
+                                onClick={() => this.props.onPricesChange(this.props.prices.filter((price, itemIndex) => itemIndex !== index))}
                                 className="money-input__button--remove line-height--0"
                                 buttonProps={{ title: 'Remove price' }}
                                 circular={true}
@@ -103,7 +106,7 @@ export class Money extends BaseInput<MoneyProps, MoneyState, never>  {
                             </Button>
                         )
                     ] : null;
-                    unusedCurrencies = unusedCurrencies.filter(currency => currency.value != item.currency.value);
+                    unusedCurrencies = unusedCurrencies.filter(currency => currency.value !== item.currency.value);
                     return retComponents;
                 })}
                 {(this.props.allowMultiple || this.props.prices && !this.props.prices.length) && unusedCurrencies.length ?

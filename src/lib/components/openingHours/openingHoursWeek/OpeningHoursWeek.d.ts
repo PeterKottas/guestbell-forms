@@ -16,7 +16,7 @@ export interface OpeningHoursWeekProps extends BaseInputProps<never> {
 export interface OpeningHoursWeekState extends BaseInputState {
 }
 export declare class OpeningHoursWeek extends BaseInput<OpeningHoursWeekProps, OpeningHoursWeekState, never> {
-    static defaultProps: BaseInputProps<any> & {
+    static defaultProps: BaseInputProps<never> & {
         type: string;
         placeholder: string;
         collapsable: boolean;

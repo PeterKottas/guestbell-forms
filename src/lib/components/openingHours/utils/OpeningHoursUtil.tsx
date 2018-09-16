@@ -1,4 +1,4 @@
-//Libs
+// Libs
 import * as React from 'react';
 import { OpeningHoursWeekDayObj } from '../openingHoursWeek/OpeningHoursWeek';
 

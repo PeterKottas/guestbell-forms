@@ -1,10 +1,10 @@
-//Styles
+// Styles
 import './openingHoursWeek.scss';
 
-//Libs
+// Libs
 import * as React from 'react';
 
-//Misc
+// Misc
 import OpeningHoursUtil from '../utils/OpeningHoursUtil';
 import { OpeningHoursDayObj, OpeningHoursDay } from '../openingHoursDay/OpeningHoursDay';
 import { BaseInputProps, BaseInputState, BaseInput } from '../../base/input/BaseInput';
@@ -28,7 +28,7 @@ export interface OpeningHoursWeekState extends BaseInputState {
 
 export class OpeningHoursWeek extends BaseInput<OpeningHoursWeekProps, OpeningHoursWeekState, never>  {
     public static defaultProps = Object.assign(BaseInput.defaultProps, {
-        type: "openingHoursWeek",
+        type: 'openingHoursWeek',
         placeholder: '',
         collapsable: false
     });

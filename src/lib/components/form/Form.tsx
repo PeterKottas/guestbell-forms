@@ -6,7 +6,7 @@ import * as React from 'react';
 
 // Misc
 import * as PropTypes from 'prop-types';
-import { BaseInput, BaseInputProps, BaseInputState } from '../base/input/BaseInput';
+import { BaseInput, BaseInputProps, BaseInputState, AllowedHtmlElements } from '../base/input/BaseInput';
 
 export interface FormValue {
     value: number | string;
@@ -21,12 +21,12 @@ export interface FormProps {
 
 export interface FormState {
     isFormValid: boolean;
-    components: { [name: string]: BaseInput<BaseInputProps<any>, BaseInputState, any> };
+    components: { [name: string]: BaseInput<BaseInputProps<AllowedHtmlElements>, BaseInputState, AllowedHtmlElements> };
 }
 
 export interface FormContext {
-    register: (component: BaseInput<BaseInputProps<any>, BaseInputState, any>) => void;
-    unregister: (component: BaseInput<BaseInputProps<any>, BaseInputState, any>) => void;
+    register: (component: BaseInput<BaseInputProps<AllowedHtmlElements>, BaseInputState, AllowedHtmlElements>) => void;
+    unregister: (component: BaseInput<BaseInputProps<AllowedHtmlElements>, BaseInputState, AllowedHtmlElements>) => void;
     isFormValid: () => boolean;
     updateCallback: (isComponentValid: boolean, inputId: string) => void;
     disableInputs: () => void;
@@ -47,33 +47,22 @@ export class Form extends React.Component<FormProps, FormState> {
     public static defaultProps = {
         noValidate: false,
         showExpandAll: true
-    }
+    };
 
     public static childContextTypes = FormContextType;
 
-    private register(component: BaseInput<BaseInputProps<any>, BaseInputState, any>) {
-        if (component) {
-            this.setState(previousState => {
-                let newComponents = Object.assign({}, previousState.components);
-                newComponents[component.inputId] = component;
-                return {
-                    components: newComponents
-                };
-            }, () => this.updateCallback());
-        }
-    };
-
-    private unregister(component: BaseInput<BaseInputProps<any>, BaseInputState, any>) {
-        if (component) {
-            this.setState(previousState => {
-                let newComponents = Object.assign({}, previousState.components);
-                delete newComponents[component.inputId];
-                return {
-                    components: newComponents
-                };
-            });
-        }
-    };
+    constructor(props: FormProps) {
+        super(props);
+        this.register = this.register.bind(this);
+        this.unregister = this.unregister.bind(this);
+        this.updateCallback = this.updateCallback.bind(this);
+        this.disableInputs = this.disableInputs.bind(this);
+        this.enableInputs = this.enableInputs.bind(this);
+        this.state = {
+            isFormValid: false,
+            components: {}
+        };
+    }
 
     public getChildContext(): FormContext {
         return {
@@ -114,37 +103,8 @@ export class Form extends React.Component<FormProps, FormState> {
         });
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         setTimeout(() => this.updateCallback(), 1);
-    }
-
-    private updateCallback(isComponentValid: boolean = true, inputId: string = '') {
-        let valid = false;
-        if (isComponentValid) {
-            valid = true;
-            Object.keys(this.state.components).forEach(key => {
-                const component = this.state.components[key];
-                if (component && component.inputId != inputId && component.state && !component.state.valid) {
-                    valid = false;
-                }
-            });
-        }
-        if (valid !== this.state.isFormValid) {
-            this.setState({ isFormValid: valid });
-        }
-    }
-
-    constructor(props: FormProps) {
-        super(props);
-        this.register = this.register.bind(this);
-        this.unregister = this.unregister.bind(this);
-        this.updateCallback = this.updateCallback.bind(this);
-        this.disableInputs = this.disableInputs.bind(this);
-        this.enableInputs = this.enableInputs.bind(this);
-        this.state = {
-            isFormValid: false,
-            components: {}
-        };
     }
 
     public render() {
@@ -157,7 +117,46 @@ export class Form extends React.Component<FormProps, FormState> {
             {this.props.children}
         </form>;
     }
+
+    private register(component: BaseInput<BaseInputProps<AllowedHtmlElements>, BaseInputState, AllowedHtmlElements>) {
+        if (component) {
+            this.setState(previousState => {
+                let newComponents = Object.assign({}, previousState.components);
+                newComponents[component.inputId] = component;
+                return {
+                    components: newComponents
+                };
+            }, () => this.updateCallback());
+        }
+    }
+
+    private unregister(component: BaseInput<BaseInputProps<AllowedHtmlElements>, BaseInputState, AllowedHtmlElements>) {
+        if (component) {
+            this.setState(previousState => {
+                let newComponents = Object.assign({}, previousState.components);
+                delete newComponents[component.inputId];
+                return {
+                    components: newComponents
+                };
+            });
+        }
+    }
+
+    private updateCallback(isComponentValid: boolean = true, inputId: string = '') {
+        let valid = false;
+        if (isComponentValid) {
+            valid = true;
+            Object.keys(this.state.components).forEach(key => {
+                const component = this.state.components[key];
+                if (component && component.inputId !== inputId && component.state && !component.state.valid) {
+                    valid = false;
+                }
+            });
+        }
+        if (valid !== this.state.isFormValid) {
+            this.setState({ isFormValid: valid });
+        }
+    }
 }
 
 export default Form;
-

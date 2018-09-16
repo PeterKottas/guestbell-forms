@@ -40,11 +40,11 @@ export declare class Basic extends React.Component<BasicProps, BasicState> {
     private form;
     private initialState;
     constructor(props: BasicProps);
+    render(): JSX.Element;
     private handleGenderChange;
     private submitForm;
     private dynamicSubmitSuccessForm;
     private dynamicSubmitErrorForm;
-    render(): JSX.Element;
     private renderButtons;
 }
 export default Basic;

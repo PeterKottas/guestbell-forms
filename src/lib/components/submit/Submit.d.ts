@@ -10,12 +10,12 @@ export declare type SubmitProps = BaseInputProps<never> & ButtonProps & {
 export interface SubmitState extends BaseInputState {
 }
 export declare class Submit extends BaseInput<SubmitProps, SubmitState, never> {
-    static defaultProps: BaseInputProps<any> & {
+    static defaultProps: BaseInputProps<never> & {
         validateForm: boolean;
     };
-    constructor(props: any);
+    constructor(props: SubmitProps);
+    render(): JSX.Element;
     private handleClick;
     private isDisabled;
-    render(): JSX.Element;
 }
 export default Submit;

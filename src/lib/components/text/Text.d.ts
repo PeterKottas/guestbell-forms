@@ -12,13 +12,13 @@ export interface TextProps extends BaseInputProps<HTMLInputElement> {
 export interface TextState extends BaseInputState {
 }
 export declare class Text extends BaseInput<TextProps, TextState, HTMLInputElement> {
-    static defaultProps: BaseInputProps<any> & {
+    static defaultProps: BaseInputProps<never> & {
         type: string;
         placeholder: string;
         stopClickPropagation: boolean;
         readOnly: boolean;
     };
-    constructor(props: any);
+    constructor(props: TextProps);
     render(): JSX.Element;
 }
 export default Text;

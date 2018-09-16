@@ -3,7 +3,8 @@ import './input.scss';
 import * as Validators from '../../../validators';
 import * as Form from '../../form/Form';
 export declare type ValidationError = string | JSX.Element;
-export declare type BaseInputProps<HTMLType extends (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)> = {
+export declare type AllowedHtmlElements = (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement);
+export declare type BaseInputProps<HTMLType extends AllowedHtmlElements> = {
     disabled?: boolean;
     className?: string;
     label?: string | JSX.Element;
@@ -12,9 +13,9 @@ export declare type BaseInputProps<HTMLType extends (HTMLInputElement | HTMLSele
     onChange?: (e: React.ChangeEvent<HTMLType>, isValid: boolean) => void;
     required?: boolean;
     customValidators?: Validators.IBaseValidator[];
-    validators?: ("email" | "number" | "latitude" | "longitude" | "url")[];
+    validators?: ('email' | 'number' | 'latitude' | 'longitude' | 'url')[];
     noValidate?: boolean;
-    touchOn?: "focus" | "blur";
+    touchOn?: 'focus' | 'blur';
     ignoreContext?: boolean;
     onTheFlightValidate?: (value: string) => boolean;
     onFocus?: (e: React.SyntheticEvent<{}>) => void;
@@ -35,10 +36,8 @@ export interface BaseInputState {
     focused: boolean;
     handleValueChangeEnabled: boolean;
 }
-export declare class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputState, HTMLType extends (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)> extends React.Component<P, S> {
-    context: Form.FormContext;
-    inputId: string;
-    static defaultProps: BaseInputProps<any>;
+export declare class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputState, HTMLType extends AllowedHtmlElements> extends React.Component<P, S> {
+    static defaultProps: BaseInputProps<never>;
     static contextTypes: {
         register: import("prop-types").Requireable<(...args: any[]) => any>;
         unregister: import("prop-types").Requireable<(...args: any[]) => any>;
@@ -47,6 +46,9 @@ export declare class BaseInput<P extends BaseInputProps<HTMLType>, S extends Bas
         enableInputs: import("prop-types").Requireable<(...args: any[]) => any>;
         disableInputs: import("prop-types").Requireable<(...args: any[]) => any>;
     };
+    context: Form.FormContext;
+    inputId: string;
+    constructor(props: P);
     protected getValidationClass(extraErrors?: ValidationError[]): "validation__success" | "validation__error";
     protected renderDefaultValidation(extraErrors?: ValidationError[]): JSX.Element;
     componentWillUnmount(): void;
@@ -56,7 +58,6 @@ export declare class BaseInput<P extends BaseInputProps<HTMLType>, S extends Bas
     unTouch(): void;
     disableInput(): void;
     enableInput(): void;
-    private handleValueChange;
     protected handleChange(event: React.ChangeEvent<HTMLType>, isValid?: boolean): void;
     protected handleBlur(e: React.FocusEvent<HTMLType>): void;
     protected handleFocus(e: React.FocusEvent<HTMLType>): void;
@@ -64,8 +65,8 @@ export declare class BaseInput<P extends BaseInputProps<HTMLType>, S extends Bas
     protected setValid(): void;
     protected setInvalid(errors?: ValidationError[]): void;
     protected renderLabel(touchable?: boolean): JSX.Element;
-    private renderTooltip;
     protected renderTitle(): P["title"];
-    constructor(props: any);
+    private handleValueChange;
+    private renderTooltip;
 }
 export default BaseInput;

@@ -12,14 +12,14 @@ export interface CheckboxState extends BaseInputState {
     checked: boolean;
 }
 export declare class Checkbox extends BaseInput<CheckboxProps, CheckboxState, HTMLInputElement> {
-    static defaultProps: BaseInputProps<any> & {
+    static defaultProps: BaseInputProps<never> & {
         checked: boolean;
     };
     constructor(props: CheckboxProps);
-    private handleChecked;
     componentDidMount(): void;
-    private renderInput;
     componentWillReceiveProps(newProps: CheckboxProps): void;
     render(): JSX.Element;
+    private handleChecked;
+    private renderInput;
 }
 export default Checkbox;

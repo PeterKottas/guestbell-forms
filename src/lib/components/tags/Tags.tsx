@@ -1,7 +1,7 @@
-//Styles
+// Styles
 import './tags.scss';
 
-//Libs
+// Libs
 import onClickOutside, { InjectedOnClickOutProps } from 'react-onclickoutside';
 import * as React from 'react';
 import { InputGroup } from '../inputGroup/InputGroup';
@@ -10,7 +10,7 @@ import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_c
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
 import { Button } from '../button/Button';
 
-//Misc
+// Misc
 export type Tag = {
     id: number | string;
     name: string;
@@ -78,16 +78,18 @@ class Suggestions extends React.Component<SuggestionsProps & InjectedProps> {
                             </Button>
                         </li>
                     ))}
-                    {!this.props.loading && this.props.emptyComponent && (this.props.tags.length === 0) && <li className="w-100 text-center p-2">{this.props.emptyComponent}</li>}
+                    {!this.props.loading && this.props.emptyComponent && (this.props.tags.length === 0) && (
+                        <li className="w-100 text-center p-2">{this.props.emptyComponent}</li>
+                    )}
                 </ul>
             </div>
         ) : null;
     }
 
-    public handleClickOutside(evt) {
+    public handleClickOutside() {
         this.props.onClickOutside();
     }
-};
+}
 
 const SuggestionsWrapped = onClickOutside<SuggestionsProps>(Suggestions);
 
@@ -109,13 +111,12 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
         loadingDelayMs: 500,
         filterExistingTags: (text, tags) => tags.filter(tag => tag.name && tag.name.toLowerCase().startsWith(text)),
         maxSuggestions: 5,
-    }
+    };
 
     constructor(props: TagsProps) {
         super(props);
         this.state = { ...this.state, textIsFocused: false, suggestionsVisible: false, fetchingExistingTags: false };
     }
-
 
     public render() {
         const textProps = this.props.textProps ? this.props.textProps : {};
@@ -123,7 +124,10 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
         const errors = this.getErrors();
         return (
             <InputGroup title={this.props.title}>
-                <div className={'input__base tags-input ' + this.getValidationClass(errors) + (this.props.className ? ' ' + this.props.className : '') + ' ' + (this.props.readOnly ? 'tags-input--readOnly' : '')}>
+                <div 
+                    className={'input__base tags-input ' + this.getValidationClass(errors) + (this.props.className ? ' ' + 
+                        this.props.className : '') + ' ' + (this.props.readOnly ? 'tags-input--readOnly' : '')}
+                >
                     {this.renderTags()}
                     {(!this.props.maxTags || (this.props.maxTags > (this.props.tags && this.props.tags.length))) && !this.props.readOnly &&
                         <div className="tags-input__tags__wrapper">
@@ -158,7 +162,7 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
                                                     suggestions.length - 1
                                                     :
                                                     this.state.preselectedSuggestion - 1;
-                                            this.setState({ preselectedSuggestion })
+                                            this.setState({ preselectedSuggestion });
                                         } else if (e.key === 'ArrowDown') {
                                             const preselectedSuggestion = this.state.preselectedSuggestion === undefined ?
                                                 0
@@ -167,9 +171,9 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
                                                     0
                                                     :
                                                     this.state.preselectedSuggestion + 1;
-                                            this.setState({ preselectedSuggestion })
+                                            this.setState({ preselectedSuggestion });
                                         } else {
-                                            this.setState({ preselectedSuggestion: undefined })
+                                            this.setState({ preselectedSuggestion: undefined });
                                         }
                                     }
                                 }}
@@ -185,7 +189,7 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
                                 onBlur={() => this.setState({ textIsFocused: false, preselectedSuggestion: undefined })}
                                 value={this.state.value}
                                 readOnly={this.props.readOnly}
-                                onErrorsChanged={errors => this.setState({ errors })}
+                                onErrorsChanged={err => this.setState({ errors: err })}
                                 showValidation={false}
                             />
                             {this.state.suggestionsVisible && this.props.showSuggestions && <SuggestionsWrapped
@@ -281,7 +285,7 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
                 <div className="tags-input__tag">
                     {this.props.readonlyEmptyPlaceholder}
                 </div>
-            </div>
+            </div>;
     }
 }
 export default Tags;

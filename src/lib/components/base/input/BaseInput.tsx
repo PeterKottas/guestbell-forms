@@ -1,22 +1,24 @@
-﻿//Styles
+﻿// Styles
 
-//Libs
+// Libs
 import * as React from 'react';
 import {
     Tooltip,
 } from 'react-tippy';
 
-//Styles
+// Styles
 import './input.scss';
 
-//Misc
+// Misc
 import * as Validators from '../../../validators';
 import * as Form from '../../form/Form';
 import guid from '../../utils/Guid';
 
 export type ValidationError = string | JSX.Element;
 
-export type BaseInputProps<HTMLType extends (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)> = {
+export type AllowedHtmlElements = (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement);
+
+export type BaseInputProps<HTMLType extends AllowedHtmlElements> = {
     disabled?: boolean;
     className?: string;
     label?: string | JSX.Element;
@@ -25,9 +27,9 @@ export type BaseInputProps<HTMLType extends (HTMLInputElement | HTMLSelectElemen
     onChange?: (e: React.ChangeEvent<HTMLType>, isValid: boolean) => void;
     required?: boolean;
     customValidators?: Validators.IBaseValidator[];
-    validators?: ("email" | "number" | "latitude" | "longitude" | "url")[];
+    validators?: ('email' | 'number' | 'latitude' | 'longitude' | 'url')[];
     noValidate?: boolean;
-    touchOn?: "focus" | "blur";
+    touchOn?: 'focus' | 'blur';
     ignoreContext?: boolean;
     onTheFlightValidate?: (value: string) => boolean;
     onFocus?: (e: React.SyntheticEvent<{}>) => void;
@@ -37,7 +39,7 @@ export type BaseInputProps<HTMLType extends (HTMLInputElement | HTMLSelectElemen
     errors?: ValidationError[];
     onErrorsChanged?: (errors: ValidationError[]) => void;
     showValidation?: boolean;
-}
+};
 
 export interface BaseInputState {
     valid: boolean;
@@ -50,22 +52,40 @@ export interface BaseInputState {
     handleValueChangeEnabled: boolean;
 }
 
-export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputState, HTMLType extends (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)> extends React.Component<P, S> {
-    context: Form.FormContext;
-
-    public inputId = guid();
-
-    public static defaultProps: BaseInputProps<any> = {
+export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputState, HTMLType extends
+    AllowedHtmlElements> extends React.Component<P, S> {
+    public static defaultProps: BaseInputProps<never> = {
         className: undefined,
         required: false,
         label: undefined,
         disabled: false,
-        touchOn: "focus",
+        touchOn: 'focus',
         ignoreContext: false,
         showValidation: true
     };
 
     public static contextTypes = Form.FormContextType;
+
+    public context: Form.FormContext;
+
+    public inputId = guid();
+
+    constructor(props: P) {
+        super(props);
+        this.state = {
+            valid: props.required ? false : true,
+            value: props.value ? props.value : '',
+            touched: false,
+            disabled: false,
+            focused: false,
+            handleValueChangeEnabled: true
+        } as S;
+        this.handleChange = this.handleChange.bind(this);
+        this.handleBlur = this.handleBlur.bind(this);
+        this.handleFocus = this.handleFocus.bind(this);
+        this.setValid = this.setValid.bind(this);
+        this.setInvalid = this.setInvalid.bind(this);
+    }
 
     protected getValidationClass(extraErrors?: ValidationError[]) {
         if (!this.props.showValidation || !this.state.touched) {
@@ -95,24 +115,30 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
             finalErrors = finalErrors.concat(this.props.errors);
         }
         finalErrors = finalErrors.filter(i => i);
-        return <div className="validation__container"><ul className="validation__ul">{finalErrors.map((item, index) => <span key={index} className="validation__item">{item}</span>)}</ul></div>;
+        return (
+            <div className="validation__container">
+                <ul className="validation__ul">
+                    {finalErrors.map((item, index) => <span key={index} className="validation__item">{item}</span>)}
+                </ul>
+            </div>
+        );
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount() {
         if (!this.props.ignoreContext) {
             this.context && this.context.unregister && this.context.unregister(this);
         }
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         if (!this.props.ignoreContext) {
             this.context && this.context.register && this.context.register(this);
         }
         this.handleValueChange(this.state.value);
     }
 
-    componentWillReceiveProps(nextProps: P) {
-        if (nextProps.value != this.props.value) {
+    public componentWillReceiveProps(nextProps: P) {
+        if (nextProps.value !== this.props.value) {
             this.handleValueChange(nextProps.value);
         }
     }
@@ -132,6 +158,86 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
 
     public enableInput() {
         this.setState({ disabled: false });
+    }
+
+    protected handleChange(event: React.ChangeEvent<HTMLType>, isValid?: boolean) {
+        let value = event.target.value;
+        if (!this.props.onTheFlightValidate || (this.props.onTheFlightValidate && this.props.onTheFlightValidate(value))) {
+            const valid = this.handleValueChange(value, isValid);
+            if (this.props.onChange) {
+                this.props.onChange(event, valid);
+            }
+        }
+    }
+
+    protected handleBlur(e: React.FocusEvent<HTMLType>) {
+        this.props.onBlur && this.props.onBlur();
+        let state = { focused: false };
+        if (this.props.touchOn === 'blur') {
+            state = Object.assign(state, { touched: true });
+            this.handleValueChange(this.state.value);
+        }
+        this.setState(state);
+    }
+
+    protected handleFocus(e: React.FocusEvent<HTMLType>) {
+        this.props.onFocus && this.props.onFocus(e);
+        let state = { focused: true };
+        if (this.props.touchOn === 'focus') {
+            state = Object.assign(state, { touched: true });
+            this.handleValueChange(this.state.value);
+        }
+        this.setState(state);
+    }
+
+    protected getDisabled() {
+        return this.state.disabled ? this.state.disabled : this.props.disabled;
+    }
+
+    protected setValid() {
+        !this.state.valid && this.setState({ valid: true, errors: [] }, () => {
+            if (!this.props.ignoreContext) {
+                this.context && this.context.updateCallback && this.context.updateCallback(true, this.inputId);
+            }
+        });
+    }
+
+    protected setInvalid(errors: ValidationError[] = []) {
+        this.setState({ valid: false, errors }, () => {
+            if (!this.props.ignoreContext) {
+                this.context && this.context.updateCallback && this.context.updateCallback(false, this.inputId);
+            }
+        });
+    }
+
+    protected renderLabel(touchable: boolean = false) {
+        if ((!this.props.helpText) || (this.props.helpText && this.props.title)) {
+            return (
+                <span className={(touchable ? '' : 'label--no-touch')}>
+                    {this.props.label}
+                </span>
+            );
+        }
+        return (
+            <React.Fragment>
+                <span className={(touchable ? '' : 'label--no-touch')}>
+                    {this.props.label}
+                </span>
+                {this.renderTooltip()}
+            </React.Fragment>
+        );
+    }
+
+    protected renderTitle() {
+        if (!this.props.helpText) {
+            return this.props.title;
+        }
+        return (
+            <React.Fragment>
+                {this.props.title}
+                {this.renderTooltip()}
+            </React.Fragment>
+        );
     }
 
     private handleValueChange(value: string, valid: boolean = true): boolean {
@@ -197,74 +303,6 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
         return valid;
     }
 
-    protected handleChange(event: React.ChangeEvent<HTMLType>, isValid?: boolean) {
-        let value = event.target.value;
-        if (!this.props.onTheFlightValidate || (this.props.onTheFlightValidate && this.props.onTheFlightValidate(value))) {
-            const valid = this.handleValueChange(value, isValid);
-            if (this.props.onChange) {
-                this.props.onChange(event, valid);
-            }
-        }
-    }
-
-    protected handleBlur(e: React.FocusEvent<HTMLType>) {
-        this.props.onBlur && this.props.onBlur();
-        let state = { focused: false };
-        if (this.props.touchOn == "blur") {
-            state = Object.assign(state, { touched: true });
-            this.handleValueChange(this.state.value);
-        }
-        this.setState(state);
-    }
-
-    protected handleFocus(e: React.FocusEvent<HTMLType>) {
-        this.props.onFocus && this.props.onFocus(e);
-        let state = { focused: true };
-        if (this.props.touchOn == "focus") {
-            state = Object.assign(state, { touched: true });
-            this.handleValueChange(this.state.value);
-        }
-        this.setState(state);
-    }
-
-    protected getDisabled() {
-        return this.state.disabled ? this.state.disabled : this.props.disabled;
-    }
-
-    protected setValid() {
-        !this.state.valid && this.setState({ valid: true, errors: [] }, () => {
-            if (!this.props.ignoreContext) {
-                this.context && this.context.updateCallback && this.context.updateCallback(true, this.inputId);
-            }
-        });
-    }
-
-    protected setInvalid(errors: ValidationError[] = []) {
-        this.setState({ valid: false, errors }, () => {
-            if (!this.props.ignoreContext) {
-                this.context && this.context.updateCallback && this.context.updateCallback(false, this.inputId);
-            }
-        });
-    }
-
-    protected renderLabel(touchable: boolean = false) {
-        if ((!this.props.helpText) || (this.props.helpText && this.props.title)) {
-            return (
-                <span className={(touchable ? '' : 'label--no-touch')}>
-                    {this.props.label}
-                </span>
-            );
-        }
-        return (
-            <React.Fragment>
-                <span className={(touchable ? '' : 'label--no-touch')}>
-                    {this.props.label}
-                </span>
-                {this.renderTooltip()}
-            </React.Fragment>
-        );
-    }
-
     private renderTooltip() {
         return (
             <Tooltip
@@ -277,35 +315,6 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
                 <span className="label--help-icon">?</span>
             </Tooltip>
         );
-    }
-
-    protected renderTitle() {
-        if (!this.props.helpText) {
-            return this.props.title;
-        }
-        return (
-            <React.Fragment>
-                {this.props.title}
-                {this.renderTooltip()}
-            </React.Fragment>
-        );
-    }
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            valid: props.required ? false : true,
-            value: props.value ? props.value : '',
-            touched: false,
-            disabled: false,
-            focused: false,
-            handleValueChangeEnabled: true
-        } as S;
-        this.handleChange = this.handleChange.bind(this);
-        this.handleBlur = this.handleBlur.bind(this);
-        this.handleFocus = this.handleFocus.bind(this);
-        this.setValid = this.setValid.bind(this);
-        this.setInvalid = this.setInvalid.bind(this);
     }
 }
 export default BaseInput;

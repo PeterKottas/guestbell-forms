@@ -14,11 +14,6 @@ declare type State = {
     height: string;
 };
 export declare class SmoothCollapse extends React.Component<SmoothCollapseProps, State> {
-    _resetter: any;
-    _mainEl: HTMLElement;
-    _innerEl: HTMLElement;
-    _mainElSetter: (el?: HTMLElement) => void;
-    _innerElSetter: (el?: HTMLElement) => void;
     static propTypes: {
         expanded: PropTypes.Validator<boolean>;
         onChangeEnd: PropTypes.Requireable<(...args: any[]) => any>;
@@ -33,6 +28,11 @@ export declare class SmoothCollapse extends React.Component<SmoothCollapseProps,
         className: string;
         allowOverflowWhenOpen: boolean;
     };
+    _resetter: any;
+    _mainEl: HTMLElement;
+    _innerEl: HTMLElement;
+    _mainElSetter: (el?: HTMLElement) => void;
+    _innerElSetter: (el?: HTMLElement) => void;
     constructor(props: SmoothCollapseProps);
     _visibleWhenClosed(props?: SmoothCollapseProps): boolean;
     componentWillUnmount(): void;

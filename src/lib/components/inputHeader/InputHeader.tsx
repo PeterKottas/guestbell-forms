@@ -1,11 +1,11 @@
-//Styles
+// Styles
 import './inputHeader.scss';
 
-//Libs
+// Libs
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 
-//Misc
+// Misc
 import * as MoreIcon from 'material-design-icons/navigation/svg/production/ic_more_vert_24px.svg';
 import * as PlusIcon from 'material-design-icons/hardware/svg/production/ic_keyboard_arrow_down_24px.svg';
 import { ButtonProps, Button } from '../button/Button';
@@ -37,7 +37,7 @@ export type InputHeaderProps = {
     contentClassName?: string;
     extraButtonsButtonProps?: ButtonProps;
     collapseButtonsButtonProps?: ButtonProps;
-}
+};
 
 export interface InputHeaderState {
     collapsed: boolean;
@@ -50,7 +50,6 @@ export const InputHeaderContextType = {
     unregisterInputHeader: PropTypes.func,
     stateChanged: PropTypes.func
 };
-
 
 export interface InputHeaderContext {
     registerInputHeader: (component: InputHeader) => void;
@@ -66,11 +65,11 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
         type: 'standard',
         noBg: false
     };
-
-    public id = guid();
-    context: InputHeaderContext;
     public static contextTypes = InputHeaderContextType;
     public static childContextTypes = InputHeaderContextType;
+
+    public id = guid();
+    public context: InputHeaderContext;
 
     constructor(props: InputHeaderProps) {
         super(props);
@@ -78,33 +77,13 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
             collapsed: props.collapsedDefault,
             inputHeaders: {},
             smoothCollapseDone: true
-        }
+        };
         this.registerInputHeader = this.registerInputHeader.bind(this);
         this.unregisterInputHeader = this.unregisterInputHeader.bind(this);
         this.expand = this.expand.bind(this);
         this.collapse = this.collapse.bind(this);
         this.toggle = this.toggle.bind(this);
     }
-
-    private registerInputHeader(component: InputHeader) {
-        this.setState(previousState => {
-            let newInputHeaders = Object.assign({}, previousState.inputHeaders);
-            newInputHeaders[component.id] = component;
-            return {
-                inputHeaders: newInputHeaders
-            };
-        });
-    };
-
-    private unregisterInputHeader(component: InputHeader) {
-        this.setState(previousState => {
-            let newInputHeaders = Object.assign({}, previousState.inputHeaders);
-            delete newInputHeaders[component.id];
-            return {
-                inputHeaders: newInputHeaders
-            };
-        });
-    };
 
     public getChildContext(): InputHeaderContext {
         return {
@@ -127,15 +106,18 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
     }
 
     public expand() {
-        this.props.collapsable && this.setState({ collapsed: false, smoothCollapseDone: false }, () => this.context.stateChanged && this.context.stateChanged());
+        this.props.collapsable && this.setState({ collapsed: false, smoothCollapseDone: false }, 
+            () => this.context.stateChanged && this.context.stateChanged());
     }
 
     public collapse() {
-        this.props.collapsable && this.setState({ collapsed: true, smoothCollapseDone: false }, () => this.context.stateChanged && this.context.stateChanged());
+        this.props.collapsable && this.setState({ collapsed: true, smoothCollapseDone: false }, 
+            () => this.context.stateChanged && this.context.stateChanged());
     }
 
     public toggle() {
-        this.props.collapsable && this.setState({ collapsed: !this.state.collapsed, smoothCollapseDone: false }, () => this.context.stateChanged && this.context.stateChanged());
+        this.props.collapsable && this.setState({ collapsed: !this.state.collapsed, smoothCollapseDone: false }, 
+            () => this.context.stateChanged && this.context.stateChanged());
     }
 
     public render() {
@@ -207,6 +189,26 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
         </div >;
     }
 
+    private registerInputHeader(component: InputHeader) {
+        this.setState(previousState => {
+            let newInputHeaders = Object.assign({}, previousState.inputHeaders);
+            newInputHeaders[component.id] = component;
+            return {
+                inputHeaders: newInputHeaders
+            };
+        });
+    }
+
+    private unregisterInputHeader(component: InputHeader) {
+        this.setState(previousState => {
+            let newInputHeaders = Object.assign({}, previousState.inputHeaders);
+            delete newInputHeaders[component.id];
+            return {
+                inputHeaders: newInputHeaders
+            };
+        });
+    }
+
     private getTypeClass() {
         switch (this.props.type) {
             case 'hero':
@@ -261,8 +263,7 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
             if (inputHeader) {
                 if (inputHeader.state.collapsed) {
                     allExpanded = false;
-                }
-                else {
+                } else {
                     allCollapsed = false;
                 }
             }

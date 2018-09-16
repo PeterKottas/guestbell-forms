@@ -1,4 +1,4 @@
-import { IBaseValidator} from './base';
+import { IBaseValidator } from './base';
 
 export class EmailValidator implements IBaseValidator {
     public Validate(value: string, isRequired: boolean, addError: (error: string) => void): boolean {

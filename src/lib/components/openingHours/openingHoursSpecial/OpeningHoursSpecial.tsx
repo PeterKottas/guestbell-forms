@@ -1,9 +1,9 @@
-//Styles
+// Styles
 import './openingHoursSpecial.scss';
 import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_circle_outline_24px.svg';
 import * as DateIcon from 'material-design-icons/action/svg/production/ic_event_24px.svg';
 
-//Libs
+// Libs
 import * as React from 'react';
 try {
     var Moment = require('moment');
@@ -17,7 +17,7 @@ try {
     DatePicker = undefined;
 }
 
-//Misc
+// Misc
 import OpeningHoursUtil from '../utils/OpeningHoursUtil';
 import { OpeningHoursDayObj, OpeningHoursDay } from '../openingHoursDay/OpeningHoursDay';
 import { BaseInputProps, BaseInputState, BaseInput } from '../../base/input/BaseInput';
@@ -45,7 +45,7 @@ class DateInput extends React.Component<{ value?: string, onClick?: () => void }
                 onClick={this.props.onClick}
             >
                 <div style={{ display: 'flex' }}>
-                    <DateIcon style={{marginRight: 4}}/>
+                    <DateIcon style={{ marginRight: 4 }} />
                     {this.props.children ? this.props.children : this.props.value}
                 </div>
             </Button>
@@ -54,9 +54,9 @@ class DateInput extends React.Component<{ value?: string, onClick?: () => void }
 }
 
 export class OpeningHoursSpecial extends BaseInput<OpeningHoursSpecialProps, OpeningHoursSpecialState, never> {
-    public static defaultProps = Object.assign(BaseInput.defaultProps, { type: "openingHoursSpecial", placeholder: DAY_FORMAT });
+    public static defaultProps = Object.assign(BaseInput.defaultProps, { type: 'openingHoursSpecial', placeholder: DAY_FORMAT });
 
-    constructor(props) {
+    constructor(props: OpeningHoursSpecialProps) {
         super(props);
     }
 
@@ -78,7 +78,7 @@ export class OpeningHoursSpecial extends BaseInput<OpeningHoursSpecialProps, Ope
                                 <div
                                     role="button"
                                     className="openingHoursSpecial-input__button openingHoursSpecial-input__button--remove p-0"
-                                    onClick={() => this.props.onDaysChange(this.props.days.filter((day, indexInner) => indexInner !== index))}>
+                                    onClick={() => this.props.onDaysChange(this.props.days.filter((d, indexInner) => indexInner !== index))}>
                                     <PlusIcon />
                                 </div>
                             </span>
@@ -102,7 +102,7 @@ export class OpeningHoursSpecial extends BaseInput<OpeningHoursSpecialProps, Ope
                             days[index] = { ...day, date: date.toDate() };
                             this.props.onDaysChange(days);
                         }}
-                        excludeDates={this.props.days.filter(day => day.date).map(d => Moment(d.date))}
+                        excludeDates={this.props.days.filter(d => d.date).map(d => Moment(d.date))}
                         withPortal={true}
                         minDate={Moment()}
                     />}

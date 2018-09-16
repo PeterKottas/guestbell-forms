@@ -64,24 +64,7 @@ export class Dropdown extends React.Component<DropdownItemProps, DropdownItemSta
         document.removeEventListener('click', this.hideNavigation);
     }
 
-    private isFunction(functionToCheck) {
-        var getType = {};
-        return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
-    }
-
-    private handleClick(e: React.SyntheticEvent<{}>) {
-        if (this.props.shouldHandleClick && !this.props.disabled) {
-            this.props.onClick && this.props.onClick();
-            e.preventDefault();
-            e.stopPropagation();
-            if (!this.state.isDropdownVisible) {
-                this.showNavigation();
-            }
-        }
-    }
-
     public render() {
-        //const Wrapper = this.props.wrapperTag;
         return (
             <div
                 className={'guestbell__dropdown ' +
@@ -114,6 +97,22 @@ export class Dropdown extends React.Component<DropdownItemProps, DropdownItemSta
                 </div>
             </div>
         );
+    }
+
+    private isFunction(functionToCheck: HeaderPlain | HeaderFunction) {
+        var getType = {};
+        return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+    }
+
+    private handleClick(e: React.SyntheticEvent<{}>) {
+        if (this.props.shouldHandleClick && !this.props.disabled) {
+            this.props.onClick && this.props.onClick();
+            e.preventDefault();
+            e.stopPropagation();
+            if (!this.state.isDropdownVisible) {
+                this.showNavigation();
+            }
+        }
     }
 
     private renderChildren() {
