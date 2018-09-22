@@ -1,5 +1,5 @@
 ﻿// Styles
-import './submit.scss';
+require('./submit.scss');
 
 // Libs
 import * as React from 'react';
@@ -26,19 +26,21 @@ export class Submit extends BaseInput<SubmitProps, SubmitState, never>  {
     }
 
     public render() {
-        return <Button
-            {...this.props}
-            buttonType="submit"
-            className={`${(this.props.className ? this.props.className : '')}`}
-            onClick={this.handleClick}
-            disabled={this.isDisabled()}
-            buttonProps={{
-                ...this.props.buttonProps,
-                title: this.isDisabled() ? this.props.disabledTitle : this.props.buttonProps && this.props.buttonProps.title
-            }}
-        >
-            {this.props.children}
-        </Button >;
+        return (
+            <Button
+                {...this.props}
+                buttonType="submit"
+                className={`${(this.props.className ? this.props.className : '')}`}
+                onClick={this.handleClick}
+                disabled={this.isDisabled()}
+                buttonProps={{
+                    ...this.props.buttonProps,
+                    title: this.isDisabled() ? this.props.disabledTitle : this.props.buttonProps && this.props.buttonProps.title
+                }}
+            >
+                {this.props.children}
+            </Button >
+        );
     }
 
     private handleClick(e: React.MouseEvent<HTMLButtonElement>) {

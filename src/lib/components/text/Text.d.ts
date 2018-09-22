@@ -1,4 +1,3 @@
-import './text.scss';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
 export interface TextProps extends BaseInputProps<HTMLInputElement> {
     mask?: string;

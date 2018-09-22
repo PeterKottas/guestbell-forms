@@ -1,5 +1,5 @@
 ﻿// Styles
-import './dropdown.scss';
+require('./dropdown.scss');
 
 // Libs
 import * as React from 'react';
@@ -116,11 +116,13 @@ export class Dropdown extends React.Component<DropdownItemProps, DropdownItemSta
     }
 
     private renderChildren() {
-        return <ul
-            className={'guestbell__dropdown-menu ' + (this.props.submenuClassName ? this.props.submenuClassName : '')}
-        >
-            {this.props.children}
-        </ul>;
+        return (
+            <ul
+                className={'guestbell__dropdown-menu ' + (this.props.submenuClassName ? this.props.submenuClassName : '')}
+            >
+                {this.props.children}
+            </ul>
+        );
     }
 }
 

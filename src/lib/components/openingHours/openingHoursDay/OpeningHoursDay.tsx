@@ -1,5 +1,5 @@
 // Styles
-import './openingHoursDay.scss';
+require('./openingHoursDay.scss');
 import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_circle_outline_24px.svg';
 
 // Libs
@@ -36,63 +36,70 @@ export class OpeningHoursDay extends BaseInput<OpeningHoursDayProps, OpeningHour
     }
 
     public render() {
-        let newTime = new Date((this.props.openingHours && this.props.openingHours.times && this.props.openingHours.times.length ? 
+        let newTime = new Date((this.props.openingHours && this.props.openingHours.times && this.props.openingHours.times.length ?
             this.props.openingHours.times[this.props.openingHours.times.length - 1] : this.getTime(8, 0)));
         if (newTime.getHours() < 23) {
             newTime.setHours(newTime.getHours() + 1);
         }
-        return <InputGroup title={this.props.title} className="input__group__openingHoursDay" helpText={this.props.helpText}>
-            <div className={'input__base openingHoursDay-input ' + this.getValidationClass() + (this.props.className ? ' ' + this.props.className : '')}>
-                <div className="openingHoursDay-input__container">
-                    {this.props.openingHours && this.props.openingHours.times && this.props.openingHours.times.map((item, index) => {
-                        const previousTime = index > 0 ? new Date(this.props.openingHours.times[index - 1]) : this.getTime(0, 0);
-                        const nextTime = this.props.openingHours.times.length - 1 > index ? 
-                            new Date(this.props.openingHours.times[index + 1]) 
-                            : 
-                            this.getTime(23, 59);
-                        return <div className="openingHoursDay-input__time__container" key={index}>
-                            <span className="openingHoursDay-input__label">{index % 2 === 0 ? 'Opens' : 'Closes'}</span>
-                            <Time
-                                className={'openingHoursDay-input__time'}
-                                timeChange={(time) => {
-                                    let newOpeningHours: OpeningHoursDayObj = { ...this.props.openingHours, times: this.props.openingHours.times.slice(0) };
-                                    newOpeningHours.times[index] = time;
-                                    this.props.onOpeningHoursChange(newOpeningHours);
-                                }}
-                                time={item}
-                                min={previousTime}
-                                max={nextTime}
-                            />
+        return (
+            <InputGroup title={this.props.title} className="input__group__openingHoursDay" helpText={this.props.helpText}>
+                <div className={'input__base openingHoursDay-input ' + this.getValidationClass() + (this.props.className ? ' ' + this.props.className : '')}>
+                    <div className="openingHoursDay-input__container">
+                        {this.props.openingHours && this.props.openingHours.times && this.props.openingHours.times.map((item, index) => {
+                            const previousTime = index > 0 ? new Date(this.props.openingHours.times[index - 1]) : this.getTime(0, 0);
+                            const nextTime = this.props.openingHours.times.length - 1 > index ?
+                                new Date(this.props.openingHours.times[index + 1])
+                                :
+                                this.getTime(23, 59);
+                            return <div className="openingHoursDay-input__time__container" key={index}>
+                                <span className="openingHoursDay-input__label">{index % 2 === 0 ? 'Opens' : 'Closes'}</span>
+                                <Time
+                                    className={'openingHoursDay-input__time'}
+                                    timeChange={(time) => {
+                                        let newOpeningHours: OpeningHoursDayObj = { ...this.props.openingHours, times: this.props.openingHours.times.slice(0) };
+                                        newOpeningHours.times[index] = time;
+                                        this.props.onOpeningHoursChange(newOpeningHours);
+                                    }}
+                                    time={item}
+                                    min={previousTime}
+                                    max={nextTime}
+                                />
+                                <Button
+                                    type={'blank--light'}
+                                    onClick={() => this.props.onOpeningHoursChange({
+                                        ...this.props.openingHours,
+                                        times: this.props.openingHours.times.filter((time, itemIndex) => itemIndex !== index)
+                                    })}
+                                    className="openingHoursDay-input__button--remove mr-5 line-height--0"
+                                    circular={true}
+                                >
+                                    <PlusIcon />
+                                </Button>
+                            </div>;
+                        })}
+                        {this.props.maxOpenCloseTimes > this.props.openingHours.times.length &&
                             <Button
-                                type={'blank--light'}
-                                onClick={() => this.props.onOpeningHoursChange({ 
-                                    ...this.props.openingHours, 
-                                    times: this.props.openingHours.times.filter((time, itemIndex) => itemIndex !== index) })}
-                                className="openingHoursDay-input__button--remove mr-5 line-height--0"
-                                circular={true}
+                                className="openingHoursDay-input__button-open-close"
+                                onClick={() => this.props.onOpeningHoursChange({
+                                    ...this.props.openingHours,
+                                    times: this.props.openingHours.times.concat([newTime])
+                                })}
+                                type={'hero'}
                             >
-                                <PlusIcon />
+                                {this.props.openingHours && this.props.openingHours.times && this.props.openingHours.times.length % 2 === 0 ? 'Open' : 'Close'}
                             </Button>
-                        </div>;
-                    })}
-                    {this.props.maxOpenCloseTimes > this.props.openingHours.times.length &&
-                        <Button
-                            className="openingHoursDay-input__button-open-close"
-                            onClick={() => this.props.onOpeningHoursChange({ 
-                                ...this.props.openingHours, 
-                                times: this.props.openingHours.times.concat([newTime]) })}
-                            type={'hero'}
-                        >
-                            {this.props.openingHours && this.props.openingHours.times && this.props.openingHours.times.length % 2 === 0 ? 'Open' : 'Close'}
-                        </Button>
-                    }
+                        }
+                    </div>
+                    {this.renderDefaultValidation()}
+                    {this.props.openingHours && this.props.label && <span
+                        className={'label-classname ' + (this.props.openingHours && this.props.openingHours.times
+                            && this.props.openingHours.times.length ? 'label--focused' : 'label--focused label--closed')}
+                    >{this.renderLabel(true)}
+                    </span>}
                 </div>
-                {this.renderDefaultValidation()}
-                {this.props.openingHours && this.props.label && <span className={'label-classname ' + (this.props.openingHours && this.props.openingHours.times
-                    && this.props.openingHours.times.length ? 'label--focused' : 'label--focused label--closed')}>{this.renderLabel(true)}</span>}
-            </div>
-            {this.getBottomBorder()}
-        </InputGroup>;
+                {this.getBottomBorder()}
+            </InputGroup>
+        );
     }
 
     private getBottomBorder() {
@@ -110,18 +117,20 @@ export class OpeningHoursDay extends BaseInput<OpeningHoursDayProps, OpeningHour
             parts = parts.concat([(this.fullDayMilliseconds - OpeningHoursUtil.getTimeFromMidnight(this.props.openingHours.
                 times[this.props.openingHours.times.length - 1])) / this.fullDayMilliseconds]);
         }
-        return <div className="openingHoursDay-input__bottom-border__container">
-            {parts.map((part, i) => (
-                <div
-                    key={i}
-                    className={'openingHoursDay-input__bottom-border ' + (i % 2 === 0 ? 
-                        'openingHoursDay-input__bottom-border--closed' 
-                        : 
-                        'openingHoursDay-input__bottom-border--open')}
-                    style={{ width: (part ? ((part * 100).toFixed(2) + '%') : '0') }}
-                />
-            ))}
-        </div>;
+        return (
+            <div className="openingHoursDay-input__bottom-border__container">
+                {parts.map((part, i) => (
+                    <div
+                        key={i}
+                        className={'openingHoursDay-input__bottom-border ' + (i % 2 === 0 ?
+                            'openingHoursDay-input__bottom-border--closed'
+                            :
+                            'openingHoursDay-input__bottom-border--open')}
+                        style={{ width: (part ? ((part * 100).toFixed(2) + '%') : '0') }}
+                    />
+                ))}
+            </div>
+        );
     }
 
     private getTime(hours: number, minutes: number) {

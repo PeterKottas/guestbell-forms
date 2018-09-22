@@ -143,7 +143,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                         <div className="card">
                             <div className="card-block p-0">
                                 <Form
-                                    noValidate
+                                    noValidate={true}
                                     className="input__form"
                                     ref={form => this.form = form}
                                 >
@@ -156,7 +156,8 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                     <RadioContainer title="Touch on">
                                         <Radio
                                             name="touch"
-                                            value="blur" label="Blur"
+                                            value="blur"
+                                            label="Blur"
                                             result={this.state.touchOn}
                                             onChecked={(value) => this.setState({ touchOn: value as 'blur' | 'focus' })}
                                         />
@@ -207,7 +208,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                             <div className="card-block p-0">
                                 {!this.state.simulateUnmount &&
                                     <Form
-                                        noValidate
+                                        noValidate={true}
                                         ref={form => this.form = form}
                                         onSubmit={() => this.submitForm()}
                                     >
@@ -224,16 +225,21 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                     type={'hero'}
                                                     onClick={this.submitForm}
                                                     validateForm={this.state.validateFormSubmit}
-                                                >Submit</Submit>}
+                                                >Submit
+                                                </Submit>}
                                             extraButtons={[
                                                 <Button
+                                                    key={1}
                                                     className="mx-2"
                                                     onClick={(e) => { e.preventDefault(); this.form.touchAll(); }}
-                                                >Touch all</Button>,
+                                                >Touch all
+                                                </Button>,
                                                 <Button
+                                                    key={2}
                                                     className="mr-2"
                                                     onClick={(e) => { e.preventDefault(); this.form.unTouchAll(); }}
-                                                >Un-touch all</Button>]}
+                                                >Un-touch all
+                                                </Button>]}
                                         >
                                             <RadioContainer title="Drinks">
                                                 <Radio
@@ -296,7 +302,8 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                             />
                                             <Text
                                                 touchOn={this.state.touchOn}
-                                                required={true} label="Your name"
+                                                required={true}
+                                                label="Your name"
                                                 onChange={(e) => this.setState({ name: e.target.value })}
                                                 value={this.state.name}
                                                 title="Name"
@@ -313,7 +320,8 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                             </div>
                                             <Text
                                                 touchOn={this.state.touchOn}
-                                                required={true} label="Your name"
+                                                required={true}
+                                                label="Your name"
                                                 onChange={(e) => this.setState({ name: e.target.value })}
                                                 value={this.state.name}
                                                 title="Name readonly"
@@ -450,20 +458,24 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                         type={'hero'}
                                                     >
                                                         Hero button
-                                                </Button>
+                                                    </Button>
                                                 }
-                                                extraButtons={[<Button
-                                                    onClick={() => null}
-                                                    type={'dropdown'}
-                                                >
-                                                    Extra button 1
-                                            </Button>,
-                                                <Button
-                                                    onClick={() => null}
-                                                    type={'dropdown'}
-                                                >
-                                                    Extra button 2
-                                            </Button>]}
+                                                extraButtons={[
+                                                    <Button
+                                                        key={1}
+                                                        onClick={() => null}
+                                                        type={'dropdown'}
+                                                    >
+                                                        Extra button 1
+                                                    </Button>,
+                                                    <Button
+                                                        key={2}
+                                                        onClick={() => null}
+                                                        type={'dropdown'}
+                                                    >
+                                                        Extra button 2
+                                                    </Button>
+                                                ]}
                                             >
                                                 <OpeningHoursWeek
                                                     touchOn={this.state.touchOn}
@@ -479,7 +491,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                 title={'Special days opening hours'}
                                                 collapsable={true}
                                                 mainButton={
-                                                    (param) =>
+                                                    (param) => (
                                                         <Button
                                                             type={'hero'}
                                                             onClick={() => this.setState({
@@ -487,8 +499,8 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                             }, () => param.expand())}
                                                         >
                                                             Add
-                                                    </Button>
-                                                }
+                                                        </Button>
+                                                    )}
                                             >
                                                 <OpeningHoursSpecial
                                                     touchOn={this.state.touchOn}
@@ -508,7 +520,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                         type={'hero'}
                                                     >
                                                         Hero button
-                                                </Button>
+                                                    </Button>
                                                 }
                                             >
                                                 <div className="p-3 buttons-row">
@@ -634,7 +646,8 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                     submittingChildren={'Working on it'}
                                                     onClick={this.dynamicSubmitSuccessForm}
                                                     validateForm={this.state.validateFormSubmit}
-                                                >Ajax Error</DynamicSubmit>
+                                                >Ajax Error
+                                                </DynamicSubmit>
                                                 <DynamicSubmit
                                                     submitDisablesInputs={this.state.submitDisablesInputs}
                                                     className="ml-2"
@@ -646,7 +659,8 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                     successChildren={'That worked'}
                                                     onClick={this.dynamicSubmitErrorForm}
                                                     validateForm={this.state.validateFormSubmit}
-                                                >Ajax Success</DynamicSubmit>
+                                                >Ajax Success
+                                                </DynamicSubmit>
                                             </div>
                                         </InputHeader>
                                     </Form>}
@@ -691,13 +705,15 @@ export class Basic extends React.Component<BasicProps, BasicState> {
 
     private renderButtons(disabled: boolean) {
         const types: ButtonTypes[] = ['blank', 'blank--light', 'hero', 'warning', 'error', 'info', 'success', 'gray'];
-        return types.map((item, index) => <Button
-            type={item}
-            disabled={disabled}
-            key={index}
-        >
-            {item}
-        </Button>);
+        return types.map((item, index) => (
+            <Button
+                type={item}
+                disabled={disabled}
+                key={index}
+            >
+                {item}
+            </Button>
+        ));
     }
 }
 

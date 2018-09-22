@@ -1,4 +1,3 @@
-import './dynamicSubmit.scss';
 import * as React from 'react';
 import { ButtonProps } from '../button/Button';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';

@@ -1,4 +1,3 @@
-import './money.scss';
 import * as React from 'react';
 import { SelectValue } from '../select/Select';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';

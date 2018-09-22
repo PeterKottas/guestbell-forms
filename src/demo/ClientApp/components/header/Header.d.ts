@@ -1,4 +1,3 @@
-import './header.scss';
 import * as React from 'react';
 export interface HeaderCustomProps {
 }

@@ -1,5 +1,5 @@
 // Styles
-import './inputGroup.scss';
+require('./inputGroup.scss');
 
 // Libs
 import * as React from 'react';
@@ -18,13 +18,14 @@ export class InputGroup extends BaseInput<InputGroupProps, InputGroupState, neve
     }
 
     public render() {
-        return this.props.title ?
+        return this.props.title ? (
             <div className={`input__group input__group__border ` + (this.props.className ? this.props.className : '')}>
                 {this.props.title && <div className="row-header">
                     {this.renderTitle()}
                 </div>}
                 {this.props.children}
-            </div> :
+            </div>
+        ) :
             this.props.children;
     }
 }

@@ -1,4 +1,3 @@
-import './textArea.scss';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
 export interface TextAreaProps extends BaseInputProps<HTMLTextAreaElement> {
     mask?: string;

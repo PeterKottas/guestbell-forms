@@ -1,4 +1,3 @@
-import './select.scss';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
 export interface SelectValue {
     value: number | string;

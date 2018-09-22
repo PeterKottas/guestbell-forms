@@ -1,5 +1,5 @@
 ﻿// Styles
-import './dynamicSubmit.scss';
+require('./dynamicSubmit.scss');
 
 // Libs
 import * as React from 'react';

@@ -1,5 +1,5 @@
 // Styles
-import './openingHoursWeek.scss';
+require('./openingHoursWeek.scss');
 
 // Libs
 import * as React from 'react';
@@ -68,64 +68,68 @@ export class OpeningHoursWeek extends BaseInput<OpeningHoursWeekProps, OpeningHo
 
     public render() {
 
-        return <div className={'openingHoursWeek-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')}>
-            {this.renderContent()}
-        </div>;
+        return (
+            <div className={'openingHoursWeek-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')}>
+                {this.renderContent()}
+            </div>
+        );
     }
 
     private renderContent() {
-        return <div className={``}>
-            {this.props.standardDay && <OpeningHoursDay
-                label={<span>
-                    {OpeningHoursUtil.getLabelSuffix(this.props.standardDay)}
-                </span>}
-                openingHours={{
-                    times: this.props.standardDay.times
-                }}
-                onOpeningHoursChange={(openingHours) => {
-                    this.props.onStandardDayChange(openingHours);
-                }}
-                title={'Standard day'}
-                helpText={(
-                    <p>
-                        We recommend to use <b>Standard day</b> if multiple days share the same opening hours.
-                        Check "Standard day?" checkbox for each of these days to make them share standard opening hours.
-                    </p>
-                )}
-            />}
-            {this.props.days.map((day, index) => (
-                <OpeningHoursDay
-                    className={''}
-                    key={index}
-                    label={this.props.standardDay ? <span>
-                        {OpeningHoursUtil.getLabelSuffix(this.props.standardDay && day.isStandardDay ? this.props.standardDay : day)}
-                        <span className="float-right">
-                            Standard day?&nbsp;
-                            <Checkbox
-                                className="label__checkbox m-0"
-                                checked={day.isStandardDay}
-                                onChecked={(checked) => {
-                                    let days = this.props.days.slice(0);
-                                    days[index] = { ...day, isStandardDay: checked.target.checked };
-                                    this.props.onDaysChange(days);
-                                }}
-                            />
-                        </span>
-                    </span> : day.dayLabel}
+        return (
+            <div className={``}>
+                {this.props.standardDay && <OpeningHoursDay
+                    label={<span>
+                        {OpeningHoursUtil.getLabelSuffix(this.props.standardDay)}
+                    </span>}
                     openingHours={{
-                        times: this.props.standardDay && day.isStandardDay ? this.props.standardDay.times : day.times
+                        times: this.props.standardDay.times
                     }}
                     onOpeningHoursChange={(openingHours) => {
-                        let days = this.props.days.slice(0);
-                        days[index] = { ...day, ...openingHours, isStandardDay: false };
-                        this.props.onDaysChange(days);
+                        this.props.onStandardDayChange(openingHours);
                     }}
-                    title={day.dayLabel}
-                />
-            ))}
-            <span className="bar"></span>
-            {this.renderDefaultValidation()}
-        </div>;
+                    title={'Standard day'}
+                    helpText={(
+                        <p>
+                            We recommend to use <b>Standard day</b> if multiple days share the same opening hours.
+                            Check "Standard day?" checkbox for each of these days to make them share standard opening hours.
+                    </p>
+                    )}
+                />}
+                {this.props.days.map((day, index) => (
+                    <OpeningHoursDay
+                        className={''}
+                        key={index}
+                        label={this.props.standardDay ? <span>
+                            {OpeningHoursUtil.getLabelSuffix(this.props.standardDay && day.isStandardDay ? this.props.standardDay : day)}
+                            <span className="float-right">
+                                Standard day?&nbsp;
+                                <Checkbox
+                                    className="label__checkbox m-0"
+                                    checked={day.isStandardDay}
+                                    onChecked={(checked) => {
+                                        let days = this.props.days.slice(0);
+                                        days[index] = { ...day, isStandardDay: checked.target.checked };
+                                        this.props.onDaysChange(days);
+                                    }}
+                                />
+                            </span>
+                        </span> : day.dayLabel}
+                        openingHours={{
+                            times: this.props.standardDay && day.isStandardDay ? this.props.standardDay.times : day.times
+                        }}
+                        onOpeningHoursChange={(openingHours) => {
+                            let days = this.props.days.slice(0);
+                            days[index] = { ...day, ...openingHours, isStandardDay: false };
+                            this.props.onDaysChange(days);
+                        }}
+                        title={day.dayLabel}
+                    />
+                ))}
+                <span className="bar" />
+                {this.renderDefaultValidation()}
+            </div>
+        );
     }
 }
 export default OpeningHoursWeek;

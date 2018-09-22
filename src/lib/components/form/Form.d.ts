@@ -1,4 +1,3 @@
-import './form.scss';
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { BaseInput, BaseInputProps, BaseInputState, AllowedHtmlElements } from '../base/input/BaseInput';

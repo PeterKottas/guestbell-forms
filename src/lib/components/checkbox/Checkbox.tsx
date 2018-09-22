@@ -1,5 +1,5 @@
 ﻿// Styles
-import './checkbox.scss';
+require('./checkbox.scss');
 
 // Libs
 import * as React from 'react';
@@ -71,15 +71,17 @@ export class Checkbox extends BaseInput<CheckboxProps, CheckboxState, HTMLInputE
     }
 
     private renderInput() {
-        return <input
-            disabled={this.getDisabled()}
-            type="checkbox"
-            required={this.props.required}
-            checked={this.state.checked}
-            onChange={this.handleChecked}
-            onBlur={this.handleBlur}
-            onFocus={this.handleFocus}
-        />;
+        return (
+            <input
+                disabled={this.getDisabled()}
+                type="checkbox"
+                required={this.props.required}
+                checked={this.state.checked}
+                onChange={this.handleChecked}
+                onBlur={this.handleBlur}
+                onFocus={this.handleFocus}
+            />
+        );
     }
 }
 export default Checkbox;

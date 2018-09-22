@@ -1,5 +1,5 @@
 // Styles
-import './time.scss';
+require('./time.scss');
 import * as ArrowIcon from 'material-design-icons/hardware/svg/production/ic_keyboard_arrow_down_24px.svg';
 
 // Libs
@@ -33,101 +33,103 @@ export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
     }
 
     public render() {
-        return <InputGroup title={this.props.title}>
-            <div className={'input__base time-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')}>
-                <div className="">
-                    <div className="time-input__arrows__container">
-                        <button
-                            className="plus"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                this.handleHoursChange((this.props.time.getHours() + 1).toString());
-                            }}
-                        >
-                            <ArrowIcon />
-                        </button>
-                        <div className="input-padding">
-                            <input
-                                ref={el => this.hoursEl = el}
-                                disabled={this.getDisabled()}
-                                required={this.props.required}
-                                className={'time-input__time ' + (this.state.value ? 'filled' : '')}
-                                onChange={(e) => this.handleHoursChange(e.target.value)}
-                                value={this.props.time.getHours().toString()}
-                                onBlur={this.handleBlur}
-                                onFocus={this.handleFocus}
-                                type="number"
-                            />
-                            <span className="highlight"></span>
+        return (
+            <InputGroup title={this.props.title}>
+                <div className={'input__base time-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')}>
+                    <div className="">
+                        <div className="time-input__arrows__container">
+                            <button
+                                className="plus"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    this.handleHoursChange((this.props.time.getHours() + 1).toString());
+                                }}
+                            >
+                                <ArrowIcon />
+                            </button>
+                            <div className="input-padding">
+                                <input
+                                    ref={el => this.hoursEl = el}
+                                    disabled={this.getDisabled()}
+                                    required={this.props.required}
+                                    className={'time-input__time ' + (this.state.value ? 'filled' : '')}
+                                    onChange={(e) => this.handleHoursChange(e.target.value)}
+                                    value={this.props.time.getHours().toString()}
+                                    onBlur={this.handleBlur}
+                                    onFocus={this.handleFocus}
+                                    type="number"
+                                />
+                                <span className="highlight" />
+                            </div>
+                            <button
+                                className="minus"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    this.handleHoursChange((this.props.time.getHours() - 1).toString());
+                                }}
+                            >
+                                <ArrowIcon />
+                            </button>
                         </div>
-                        <button
-                            className="minus"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                this.handleHoursChange((this.props.time.getHours() - 1).toString());
-                            }}
-                        >
-                            <ArrowIcon />
-                        </button>
                     </div>
-                </div>
-                <span className="">:</span>
-                <div className="">
-                    <div className="time-input__arrows__container">
-                        <button
-                            className="plus"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                this.handleMinutesChange((this.props.time.getMinutes() + 1).toString());
-                            }}
-                        >
-                            <ArrowIcon />
-                        </button>
-                        <div className="input-padding">
-                            <input
-                                ref={el => this.minutesEl = el}
-                                disabled={this.getDisabled()}
-                                required={this.props.required}
-                                className={'time-input__time ' + (this.state.value ? 'filled' : '')}
-                                onChange={(e) => this.handleMinutesChange(e.target.value)}
-                                value={this.props.time.getMinutes() < 10 ?
-                                    '0' + this.props.time.getMinutes().toString()
-                                    :
-                                    this.props.time.getMinutes().toString()}
-                                onBlur={this.handleBlur}
-                                onFocus={this.handleFocus}
-                                type="number"
-                            />
-                            <span className="highlight"></span>
+                    <span className="">:</span>
+                    <div className="">
+                        <div className="time-input__arrows__container">
+                            <button
+                                className="plus"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    this.handleMinutesChange((this.props.time.getMinutes() + 1).toString());
+                                }}
+                            >
+                                <ArrowIcon />
+                            </button>
+                            <div className="input-padding">
+                                <input
+                                    ref={el => this.minutesEl = el}
+                                    disabled={this.getDisabled()}
+                                    required={this.props.required}
+                                    className={'time-input__time ' + (this.state.value ? 'filled' : '')}
+                                    onChange={(e) => this.handleMinutesChange(e.target.value)}
+                                    value={this.props.time.getMinutes() < 10 ?
+                                        '0' + this.props.time.getMinutes().toString()
+                                        :
+                                        this.props.time.getMinutes().toString()}
+                                    onBlur={this.handleBlur}
+                                    onFocus={this.handleFocus}
+                                    type="number"
+                                />
+                                <span className="highlight" />
+                            </div>
+                            <button
+                                className="minus"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    this.handleMinutesChange((this.props.time.getMinutes() - 1).toString());
+                                }}
+                            >
+                                <ArrowIcon />
+                            </button>
                         </div>
-                        <button
-                            className="minus"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                this.handleMinutesChange((this.props.time.getMinutes() - 1).toString());
-                            }}
-                        >
-                            <ArrowIcon />
-                        </button>
                     </div>
+                    <div>
+                        <span className="time-input__am-pm">{(() => {
+                            var hours = this.props.time.getHours();
+                            hours = (hours + 24) % 24;
+                            var mid = 'AM';
+                            if (hours === 0) { // At 00 hours we need to show 12 am
+                                hours = 12;
+                            } else if (hours > 12) {
+                                hours = hours % 12;
+                                mid = 'PM';
+                            }
+                            return mid;
+                        })()}</span>
+                    </div>
+                    {this.renderDefaultValidation()}
                 </div>
-                <div>
-                    <span className="time-input__am-pm">{(() => {
-                        var hours = this.props.time.getHours();
-                        hours = (hours + 24) % 24;
-                        var mid = 'AM';
-                        if (hours === 0) { // At 00 hours we need to show 12 am
-                            hours = 12;
-                        } else if (hours > 12) {
-                            hours = hours % 12;
-                            mid = 'PM';
-                        }
-                        return mid;
-                    })()}</span>
-                </div>
-                {this.renderDefaultValidation()}
-            </div>
-        </InputGroup>;
+            </InputGroup>
+        );
     }
 
     private handleLimits(time: Date) {

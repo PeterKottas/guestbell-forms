@@ -1,4 +1,4 @@
-import './components/base.scss';
+require('./components/base.scss');
 export * from './validators/index';
 export * from './components/button';
 export * from './components/checkbox';
@@ -20,4 +20,3 @@ export * from './components/tags';
 export * from './components/text';
 export * from './components/textArea';
 export * from './components/time';
-

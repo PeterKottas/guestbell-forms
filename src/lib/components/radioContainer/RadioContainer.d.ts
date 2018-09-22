@@ -1,4 +1,3 @@
-import './radioContainer.scss';
 import * as React from 'react';
 export interface RadioContainerProps {
     className?: string;

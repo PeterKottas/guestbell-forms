@@ -1,5 +1,5 @@
 // Styles
-import './tags.scss';
+require('./tags.scss');
 
 // Libs
 import onClickOutside, { InjectedOnClickOutProps } from 'react-onclickoutside';
@@ -124,8 +124,8 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
         const errors = this.getErrors();
         return (
             <InputGroup title={this.props.title}>
-                <div 
-                    className={'input__base tags-input ' + this.getValidationClass(errors) + (this.props.className ? ' ' + 
+                <div
+                    className={'input__base tags-input ' + this.getValidationClass(errors) + (this.props.className ? ' ' +
                         this.props.className : '') + ' ' + (this.props.readOnly ? 'tags-input--readOnly' : '')}
                 >
                     {this.renderTags()}
@@ -209,9 +209,11 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
                         </div >
                     }
                     {this.renderDefaultValidation(errors)}
-                    {this.props.label && <label className={((this.state.value !== '')
-                        || (this.state.textIsFocused) || (this.props.tags.length >= this.props.maxTags)) ? 'label--focused' : ''}
-                    >{this.renderLabel()}</label>}
+                    {this.props.label && <label
+                        className={((this.state.value !== '')
+                            || (this.state.textIsFocused) || (this.props.tags.length >= this.props.maxTags)) ? 'label--focused' : ''}
+                    >{this.renderLabel()}
+                    </label>}
                 </div>
             </InputGroup >
         );
@@ -275,17 +277,20 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
     }
 
     private renderTags() {
-        return this.props.tags && this.props.tags.length > 0 ?
+        return this.props.tags && this.props.tags.length > 0 ? (
             <div className="tags-input__tag__wrapper">{this.props.tags.map((item, index) => (
                 this.renderTag(item, index)
             ))}
             </div>
+        )
             :
-            this.props.readOnly && <div className="tags-input__tag__wrapper">
-                <div className="tags-input__tag">
-                    {this.props.readonlyEmptyPlaceholder}
+            this.props.readOnly && (
+                <div className="tags-input__tag__wrapper">
+                    <div className="tags-input__tag">
+                        {this.props.readonlyEmptyPlaceholder}
+                    </div>
                 </div>
-            </div>;
+            );
     }
 }
 export default Tags;

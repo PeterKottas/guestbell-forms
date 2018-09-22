@@ -1,4 +1,3 @@
-import './submit.scss';
 import * as React from 'react';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
 import { ButtonProps } from '../button/Button';

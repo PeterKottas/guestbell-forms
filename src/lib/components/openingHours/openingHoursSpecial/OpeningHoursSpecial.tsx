@@ -1,5 +1,5 @@
 // Styles
-import './openingHoursSpecial.scss';
+require('./openingHoursSpecial.scss');
 import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_circle_outline_24px.svg';
 import * as DateIcon from 'material-design-icons/action/svg/production/ic_event_24px.svg';
 
@@ -67,50 +67,53 @@ export class OpeningHoursSpecial extends BaseInput<OpeningHoursSpecialProps, Ope
         if (!Moment) {
             throw new Error('You need to install moment in order to use special day picker');
         }
-        return <div className={'input__base openingHoursSpecial-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')}>
-            {this.props.days.map((day, index) => (
-                <OpeningHoursDay
-                    key={index}
-                    label={(
-                        <span>
-                            {OpeningHoursUtil.getLabelSuffix(day)}
-                            <span className="float-right">
-                                <div
-                                    role="button"
-                                    className="openingHoursSpecial-input__button openingHoursSpecial-input__button--remove p-0"
-                                    onClick={() => this.props.onDaysChange(this.props.days.filter((d, indexInner) => indexInner !== index))}>
-                                    <PlusIcon />
-                                </div>
+        return (
+            <div className={'input__base openingHoursSpecial-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')}>
+                {this.props.days.map((day, index) => (
+                    <OpeningHoursDay
+                        key={index}
+                        label={(
+                            <span>
+                                {OpeningHoursUtil.getLabelSuffix(day)}
+                                <span className="float-right">
+                                    <div
+                                        role="button"
+                                        className="openingHoursSpecial-input__button openingHoursSpecial-input__button--remove"
+                                        onClick={() => this.props.onDaysChange(this.props.days.filter((d, indexInner) => indexInner !== index))}
+                                    >
+                                        <PlusIcon />
+                                    </div>
+                                </span>
                             </span>
-                        </span>
-                    )}
-                    openingHours={{
-                        times: day.times
-                    }}
-                    onOpeningHoursChange={(openingHours) => {
-                        let days = this.props.days.slice(0);
-                        days[index] = { ...day, ...openingHours };
-                        this.props.onDaysChange(days);
-                    }}
-                    title={<DatePicker
-                        customInput={<DateInput>{!day.date && 'Choose date'}</DateInput>}
-                        placeholder={this.props.placeholder}
-                        selected={day.date && Moment(day.date)}
-                        dateFormat={DAY_FORMAT}
-                        onChange={(date) => {
+                        )}
+                        openingHours={{
+                            times: day.times
+                        }}
+                        onOpeningHoursChange={(openingHours) => {
                             let days = this.props.days.slice(0);
-                            days[index] = { ...day, date: date.toDate() };
+                            days[index] = { ...day, ...openingHours };
                             this.props.onDaysChange(days);
                         }}
-                        excludeDates={this.props.days.filter(d => d.date).map(d => Moment(d.date))}
-                        withPortal={true}
-                        minDate={Moment()}
-                    />}
-                />
-            ))}
-            <span className="bar"></span>
-            {this.renderDefaultValidation()}
-        </div>;
+                        title={<DatePicker
+                            customInput={<DateInput>{!day.date && 'Choose date'}</DateInput>}
+                            placeholder={this.props.placeholder}
+                            selected={day.date && Moment(day.date)}
+                            dateFormat={DAY_FORMAT}
+                            onChange={(date) => {
+                                let days = this.props.days.slice(0);
+                                days[index] = { ...day, date: date.toDate() };
+                                this.props.onDaysChange(days);
+                            }}
+                            excludeDates={this.props.days.filter(d => d.date).map(d => Moment(d.date))}
+                            withPortal={true}
+                            minDate={Moment()}
+                        />}
+                    />
+                ))}
+                <span className="bar" />
+                {this.renderDefaultValidation()}
+            </div>
+        );
     }
 }
 export default OpeningHoursSpecial;

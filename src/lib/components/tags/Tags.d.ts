@@ -1,4 +1,3 @@
-import './tags.scss';
 import { TextProps } from '../text/Text';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
 export declare type Tag = {

@@ -1,4 +1,3 @@
-import './buttons.scss';
 import * as React from 'react';
 export declare type ButtonTypes = 'hero' | 'blank' | 'blank--light' | 'dropdown' | 'success' | 'error' | 'warning' | 'info' | 'gray';
 export declare type ButtonProps = {

@@ -1,4 +1,3 @@
-import './time.scss';
 import * as React from 'react';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
 export interface TimeProps extends BaseInputProps<HTMLInputElement> {

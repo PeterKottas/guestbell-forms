@@ -1,4 +1,3 @@
-import './dropdown.scss';
 import * as React from 'react';
 export declare type HeaderFunction = (onClick: (e: React.SyntheticEvent<{}>) => void) => JSX.Element;
 export declare type HeaderPlain = JSX.Element | string;

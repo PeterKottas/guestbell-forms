@@ -1,5 +1,5 @@
 // Styles
-import './buttons.scss';
+require('./buttons.scss');
 
 // Libs
 import * as React from 'react';
@@ -55,8 +55,7 @@ export class Button extends React.Component<ButtonProps, ButtonState>  {
                     ${(this.props.className ? this.props.className : '')} 
                     ${(this.props.disabled ? 'disabled' : '')} 
                     ${(this.props.circular ? 'guestbell-btn-circular' : '')} 
-                    ${(this.props.small ? 'guestbell-btn-small' : '')}`
-                }
+                    ${(this.props.small ? 'guestbell-btn-small' : '')}`}
                 onClick={this.handleClick}
             >
                 {!this.props.noRipples && !this.props.disabled && Ink && <Ink />}

@@ -1713,10 +1713,10 @@ a.guestbell__dropdown-toggle {
     pointer-events: auto;
     width: 100%; }
   .input__base.openingHoursSpecial-input .openingHoursSpecial-input__button {
+    line-height: 0;
     margin: auto;
     position: relative;
     display: table;
-    padding: 10px 10px 10px 10px;
     opacity: 0.5;
     -webkit-transition: 0.2s all;
     transition: 0.2s all; }
@@ -1724,7 +1724,7 @@ a.guestbell__dropdown-toggle {
       vertical-align: top; }
     .input__base.openingHoursSpecial-input .openingHoursSpecial-input__button:hover {
       opacity: 1; }
-    .input__base.openingHoursSpecial-input .openingHoursSpecial-input__button.openingHoursSpecial-input__button--remove img {
+    .input__base.openingHoursSpecial-input .openingHoursSpecial-input__button.openingHoursSpecial-input__button--remove {
       -webkit-transform: rotate(45deg);
               transform: rotate(45deg); }
   .input__base.openingHoursSpecial-input .react-datepicker__input-container {
@@ -2537,5 +2537,3 @@ a:hover {
     font-size: 40px;
     line-height: 40px; } }
 
-
-/*# sourceMappingURL=main.css.map*/

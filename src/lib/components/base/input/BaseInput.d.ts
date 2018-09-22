@@ -1,5 +1,4 @@
 import * as React from 'react';
-import './input.scss';
 import * as Validators from '../../../validators';
 import * as Form from '../../form/Form';
 export declare type ValidationError = string | JSX.Element;

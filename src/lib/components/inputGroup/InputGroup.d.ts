@@ -1,4 +1,3 @@
-import './inputGroup.scss';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
 export declare type InputGroupProps = Pick<BaseInputProps<never>, 'title' | 'className' | 'helpText'>;
 export interface InputGroupState extends BaseInputState {

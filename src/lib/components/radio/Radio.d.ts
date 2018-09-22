@@ -1,4 +1,3 @@
-import './radio.scss';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
 export interface RadioProps extends BaseInputProps<HTMLInputElement> {
     onChange?: never;

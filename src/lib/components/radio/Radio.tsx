@@ -1,5 +1,5 @@
 ﻿// Styles
-import './radio.scss';
+require('./radio.scss');
 
 // Libs
 import * as React from 'react';
@@ -27,24 +27,28 @@ export class Radio extends BaseInput<RadioProps, RadioState, HTMLInputElement>  
     }
 
     public render() {
-        return <div className={`input__group radio-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}>
-            {!this.props.label && this.renderInput()}
-            {this.props.label && <label>{this.renderInput()}{this.props.label}</label>}
-        </div>;
+        return (
+            <div className={`input__group radio-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}>
+                {!this.props.label && this.renderInput()}
+                {this.props.label && <label>{this.renderInput()}{this.props.label}</label>}
+            </div>
+        );
     }
 
     private renderInput() {
-        return <input
-            disabled={this.getDisabled()}
-            name={this.props.name}
-            value={this.props.value}
-            type="radio"
-            required={this.props.required}
-            checked={this.props.value === this.props.result}
-            onChange={this.onChecked}
-            onBlur={this.handleBlur}
-            onFocus={this.handleFocus}
-        />;
+        return (
+            <input
+                disabled={this.getDisabled()}
+                name={this.props.name}
+                value={this.props.value}
+                type="radio"
+                required={this.props.required}
+                checked={this.props.value === this.props.result}
+                onChange={this.onChecked}
+                onBlur={this.handleBlur}
+                onFocus={this.handleFocus}
+            />
+        );
     }
 
     private onChecked(e: React.ChangeEvent<HTMLInputElement>) {

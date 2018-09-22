@@ -1,4 +1,3 @@
-import './openingHoursWeek.scss';
 import * as React from 'react';
 import { OpeningHoursDayObj } from '../openingHoursDay/OpeningHoursDay';
 import { BaseInputProps, BaseInputState, BaseInput } from '../../base/input/BaseInput';

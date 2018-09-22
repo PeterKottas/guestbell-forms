@@ -7,7 +7,7 @@ import {
 } from 'react-tippy';
 
 // Styles
-import './input.scss';
+require('./input.scss');
 
 // Misc
 import * as Validators from '../../../validators';

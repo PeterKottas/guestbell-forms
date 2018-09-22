@@ -1,5 +1,5 @@
 ﻿// Styles
-import './text.scss';
+require('./text.scss');
 
 // Libs
 import * as React from 'react';
@@ -15,7 +15,7 @@ export interface TextProps extends BaseInputProps<HTMLInputElement> {
     stopClickPropagation?: boolean;
     inputRef?: (input: HTMLInputElement) => void;
     readOnly?: boolean;
-    type?: 'number'|'text';
+    type?: 'number' | 'text';
 }
 
 export interface TextState extends BaseInputState {
@@ -29,32 +29,34 @@ export class Text extends BaseInput<TextProps, TextState, HTMLInputElement>  {
     }
 
     public render() {
-        return <InputGroup title={this.props.title}>
-            <div
-                className={`input__base text-input ${this.getValidationClass()} 
+        return (
+            <InputGroup title={this.props.title}>
+                <div
+                    className={`input__base text-input ${this.getValidationClass()} 
                     ${(this.props.readOnly ? 'text-input--readOnly' : '')} ${(this.props.className ? this.props.className : '')}`}
-                onClick={e => this.props.stopClickPropagation && e.stopPropagation()}
-            >
-                <input
-                    ref={elem => this.props.inputRef && this.props.inputRef(elem)}
-                    placeholder={this.props.placeholder}
-                    disabled={this.getDisabled()}
-                    required={this.props.required}
-                    className={this.state.value ? 'filled' : ''}
-                    onChange={this.handleChange}
-                    value={this.state.value}
-                    onBlur={this.handleBlur}
-                    onFocus={this.handleFocus}
-                    readOnly={this.props.readOnly}
-                    onKeyDown={e => this.props.onKeyDown && this.props.onKeyDown(e)}
-                    type={this.props.type}
-                />
-                <span className="highlight"></span>
-                <span className="bar"></span>
-                {this.renderDefaultValidation()}
-                {this.props.label && <label>{this.renderLabel()}</label>}
-            </div>
-        </InputGroup>;
+                    onClick={e => this.props.stopClickPropagation && e.stopPropagation()}
+                >
+                    <input
+                        ref={elem => this.props.inputRef && this.props.inputRef(elem)}
+                        placeholder={this.props.placeholder}
+                        disabled={this.getDisabled()}
+                        required={this.props.required}
+                        className={this.state.value ? 'filled' : ''}
+                        onChange={this.handleChange}
+                        value={this.state.value}
+                        onBlur={this.handleBlur}
+                        onFocus={this.handleFocus}
+                        readOnly={this.props.readOnly}
+                        onKeyDown={e => this.props.onKeyDown && this.props.onKeyDown(e)}
+                        type={this.props.type}
+                    />
+                    <span className="highlight" />
+                    <span className="bar" />
+                    {this.renderDefaultValidation()}
+                    {this.props.label && <label>{this.renderLabel()}</label>}
+                </div>
+            </InputGroup>
+        );
     }
 }
 export default Text;

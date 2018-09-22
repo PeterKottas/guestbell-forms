@@ -1,4 +1,3 @@
-import './checkbox.scss';
 import * as React from 'react';
 import { BaseInputProps, BaseInput, BaseInputState } from '../base/input/BaseInput';
 export interface CheckboxProps extends BaseInputProps<HTMLInputElement> {

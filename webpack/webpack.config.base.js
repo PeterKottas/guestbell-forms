@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 var isLocalBuild = process.env && process.env.NODE_ENV && process.env.NODE_ENV.trim().toString() == 'local';
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
@@ -8,13 +7,22 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx']
     },
-    entry: { 'guestbell-forms': './src/lib/index.ts' },
+    entry: {
+        'guestbell-forms': './src/lib/index.ts'
+    },
     module: {
         rules: [
             {
                 test: /\.tsx?$/,
                 include: /src/,
-                use: 'awesome-typescript-loader?silent=true'
+                use: {
+                    loader: 'ts-loader',//'awesome-typescript-loader?silent=true',
+                    options: {
+                        // disable type checker - we will use it in fork plugin
+                        transpileOnly: isLocalBuild ? true : false,
+                        experimentalWatchApi: isLocalBuild ? true : false,
+                    }
+                }
             },
             {
                 test: /\.(scss|css)$/,
@@ -24,8 +32,8 @@ module.exports = {
                         sourceMap: true,
                     }
                 } : {
-                    loader: MiniCssExtractPlugin.loader
-                }), {
+                        loader: MiniCssExtractPlugin.loader
+                    }), {
                     loader: "css-loader",
                     options: {
                         sourceMap: true,
@@ -75,13 +83,9 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: "[name].css",
+            filename: "dist/[name].[hash].css",
         }),
-        new CheckerPlugin(),
-        new webpack.SourceMapDevToolPlugin({
-            filename: '[file].map', // Remove this line if you prefer inline source maps
-            moduleFilenameTemplate: path.relative('../build', '[resourcePath]') // Point sourcemap entries to the original file locations on disk
-        }),
+
         //new DtsBundlePlugin()
     ]
 };
