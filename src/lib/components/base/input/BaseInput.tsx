@@ -27,7 +27,7 @@ export type BaseInputProps<HTMLType extends AllowedHtmlElements> = {
     onChange?: (e: React.ChangeEvent<HTMLType>, isValid: boolean) => void;
     required?: boolean;
     customValidators?: Validators.IBaseValidator[];
-    validators?: ('email' | 'number' | 'latitude' | 'longitude' | 'url')[];
+    validators?: Validators.ValidatorTypes[];
     noValidate?: boolean;
     touchOn?: 'focus' | 'blur';
     ignoreContext?: boolean;

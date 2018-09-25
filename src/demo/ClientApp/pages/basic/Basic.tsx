@@ -27,18 +27,10 @@ import {
     OpeningHoursWeekDayObj,
     ActionParam,
     SelectValue,
-    TextProps
+    TextProps,
+    ValidatorTypes,
+    IBaseValidator
 } from '../../../../lib/index';
-
-const currencies1 = [{ label: 'GBP', value: 'GBP' }, { label: 'EUR', value: 'EUR' }];
-
-const currencies2 = [{ label: 'GBP', value: 'GBP' }, { label: 'EUR', value: 'EUR' }, { label: 'USD', value: 'USD' }];
-
-const genderValues = [{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }];
-
-const tagsEmailTextProps: TextProps = {
-    validators: ['email']
-};
 
 export interface BasicProps {
 
@@ -69,8 +61,8 @@ export interface BasicState {
     openingHoursSpecial: OpeningHoursSpecialDayObj[];
     website: string;
     tags: Tag[];
-    selectedValues: string[];
-    multipleValues: string[];
+    selectedValues: SelectValue[];
+    multipleValues: SelectValue[];
     multipleReadonly: boolean;
     textAreaText: string;
 }
@@ -116,6 +108,24 @@ const existingTags: Tag[] = [{
     name: 'Fruit'
 }
 ];
+
+const currencies1 = [{ label: 'GBP', value: 'GBP' }, { label: 'EUR', value: 'EUR' }];
+
+const currencies2 = [{ label: 'GBP', value: 'GBP' }, { label: 'EUR', value: 'EUR' }, { label: 'USD', value: 'USD' }];
+
+const genderValues = [{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }];
+
+const tagsEmailTextProps: TextProps = {
+    validators: ['email']
+};
+
+const emailValidators: ValidatorTypes[] = ['email'];
+
+const urlValidators: ValidatorTypes[] = ['url'];
+
+const customAgeValidator: IBaseValidator[] = [AgeValidator.instance];
+
+const customNumberValidator: IBaseValidator[] = [new NumberValidator({ min: 0 })];
 
 const types: ButtonTypes[] = ['blank', 'blank--light', 'hero', 'warning', 'error', 'info', 'success', 'gray'];
 const ButtonsShowcase: React.SFC<{ disabled: boolean }> = props => {
@@ -165,7 +175,13 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
         website: '',
         tags: [],
         selectedValues: [],
-        multipleValues: ['One option', 'Second option', 'Third option', 'one more option', 'rly long last option'],
+        multipleValues: [
+            { value: 'One option' },
+            { value: 'Second option' },
+            { value: 'Third option' },
+            { value: 'one more option' },
+            { value: 'rly long last option' }
+        ],
         multipleReadonly: false,
         textAreaText: ''
     };
@@ -412,7 +428,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                             >
                                                 <Text
                                                     touchOn={this.state.touchOn}
-                                                    validators={['email']}
+                                                    validators={emailValidators}
                                                     required={false}
                                                     label="Email"
                                                     value={this.state.email}
@@ -427,7 +443,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                 />
                                                 <Text
                                                     touchOn={this.state.touchOn}
-                                                    validators={['url']}
+                                                    validators={urlValidators}
                                                     required={false}
                                                     label="Website"
                                                     value={this.state.website}
@@ -436,7 +452,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                 />
                                                 <Text
                                                     touchOn={this.state.touchOn}
-                                                    customValidators={[AgeValidator.instance]}
+                                                    customValidators={customAgeValidator}
                                                     label="Your age (optional)"
                                                     value={this.state.age}
                                                     onChange={this.ageChanged}
@@ -444,7 +460,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                 />
                                                 <Text
                                                     touchOn={this.state.touchOn}
-                                                    customValidators={[new NumberValidator({ min: 0 })]}
+                                                    customValidators={customNumberValidator}
                                                     label="Min 1"
                                                     value={this.state.min1}
                                                     onChange={this.min1Changed}
@@ -619,12 +635,8 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                     multiple={true}
                                                     defaultEmpty={true}
                                                     readOnly={this.state.multipleReadonly}
-                                                    selectedValues={this.state.selectedValues.map(item => ({
-                                                        value: item
-                                                    }))}
-                                                    values={this.state.multipleValues.map(item => ({
-                                                        value: item
-                                                    }))}
+                                                    selectedValues={this.state.selectedValues}
+                                                    values={this.state.multipleValues}
                                                     onSelectedValuesChange={this.selectedValuesChanged}
                                                 />
                                             </InputHeader>
@@ -707,7 +719,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
         <Button onClick={e => clickHandler(e)} type="hero">Function header</Button>
     )
 
-    private selectedValuesChanged = (selectedValues: SelectValue[]) => this.setState({ selectedValues: selectedValues.map((item) => item.value as string) });
+    private selectedValuesChanged = (selectedValues: SelectValue[]) => this.setState({ selectedValues });
 
     private tagsChanged = (tags: Tag[]) => this.setState({ tags });
 
