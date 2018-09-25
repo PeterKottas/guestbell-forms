@@ -85,9 +85,7 @@ export class OpeningHoursWeek extends BaseInput<OpeningHoursWeekProps, OpeningHo
                     openingHours={{
                         times: this.props.standardDay.times
                     }}
-                    onOpeningHoursChange={(openingHours) => {
-                        this.props.onStandardDayChange(openingHours);
-                    }}
+                    onOpeningHoursChange={this.standardDayChanged}
                     title={'Standard day'}
                     helpText={(
                         <p>
@@ -107,22 +105,14 @@ export class OpeningHoursWeek extends BaseInput<OpeningHoursWeekProps, OpeningHo
                                 <Checkbox
                                     className="label__checkbox m-0"
                                     checked={day.isStandardDay}
-                                    onChecked={(checked) => {
-                                        let days = this.props.days.slice(0);
-                                        days[index] = { ...day, isStandardDay: checked.target.checked };
-                                        this.props.onDaysChange(days);
-                                    }}
+                                    onChecked={this.isStandardDayChecked(index, day)}
                                 />
                             </span>
                         </span> : day.dayLabel}
                         openingHours={{
                             times: this.props.standardDay && day.isStandardDay ? this.props.standardDay.times : day.times
                         }}
-                        onOpeningHoursChange={(openingHours) => {
-                            let days = this.props.days.slice(0);
-                            days[index] = { ...day, ...openingHours, isStandardDay: false };
-                            this.props.onDaysChange(days);
-                        }}
+                        onOpeningHoursChange={this.onOpeningHoursChange(index, day)}
                         title={day.dayLabel}
                     />
                 ))}
@@ -130,6 +120,22 @@ export class OpeningHoursWeek extends BaseInput<OpeningHoursWeekProps, OpeningHo
                 {this.renderDefaultValidation()}
             </div>
         );
+    }
+
+    private onOpeningHoursChange = (index: number, day: OpeningHoursDayObj) => (openingHours: OpeningHoursWeekDayObj) => {
+        let days = this.props.days.slice(0);
+        days[index] = { ...day, ...openingHours, isStandardDay: false };
+        this.props.onDaysChange(days);
+    }
+
+    private isStandardDayChecked = (index: number, day: OpeningHoursWeekDayObj) => (checked) => {
+        let days = this.props.days.slice(0);
+        days[index] = { ...day, isStandardDay: checked.target.checked };
+        this.props.onDaysChange(days);
+    }
+
+    private standardDayChanged = (openingHours: OpeningHoursDayObj) => {
+        this.props.onStandardDayChange(openingHours);
     }
 }
 export default OpeningHoursWeek;

@@ -25,7 +25,7 @@ export type ButtonProps = {
 export interface ButtonState {
 }
 
-export class Button extends React.Component<ButtonProps, ButtonState>  {
+export class Button extends React.PureComponent<ButtonProps, ButtonState>  {
     public static defaultProps: ButtonProps = {
         type: 'blank',
         disabled: false,

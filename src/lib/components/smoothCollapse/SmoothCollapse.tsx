@@ -21,7 +21,7 @@ type State = {
     height: string;
 };
 
-export class SmoothCollapse extends React.Component<SmoothCollapseProps, State> {
+export class SmoothCollapse extends React.PureComponent<SmoothCollapseProps, State> {
     static propTypes = {
         expanded: PropTypes.bool.isRequired,
         onChangeEnd: PropTypes.func,
@@ -56,8 +56,8 @@ export class SmoothCollapse extends React.Component<SmoothCollapseProps, State> 
     }
 
     _visibleWhenClosed(props?: SmoothCollapseProps) {
-        if (!props) { 
-            props = this.props; 
+        if (!props) {
+            props = this.props;
         }
         return parseFloat(props.collapsedHeight) !== 0;
     }
@@ -153,12 +153,16 @@ export class SmoothCollapse extends React.Component<SmoothCollapseProps, State> 
         const visibleWhenClosed = this._visibleWhenClosed();
         const { allowOverflowWhenOpen } = this.props;
         const { height, fullyClosed, hasBeenVisibleBefore } = this.state;
-        const innerEl = hasBeenVisibleBefore ?
-            <div ref={this._innerElSetter} style={{
-                overflow: allowOverflowWhenOpen && height === 'auto' ? 'visible' : 'hidden'
-            }}>
+        const innerEl = hasBeenVisibleBefore ? (
+            <div
+                ref={this._innerElSetter}
+                style={{
+                    overflow: allowOverflowWhenOpen && height === 'auto' ? 'visible' : 'hidden'
+                }}
+            >
                 {this.props.children}
             </div>
+        )
             : null;
 
         return (

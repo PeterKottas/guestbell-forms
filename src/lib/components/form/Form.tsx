@@ -42,7 +42,7 @@ export const FormContextType = {
     disableInputs: PropTypes.func
 };
 
-export class Form extends React.Component<FormProps, FormState> {
+export class Form extends React.PureComponent<FormProps, FormState> {
 
     public static defaultProps = {
         noValidate: false,
@@ -113,12 +113,14 @@ export class Form extends React.Component<FormProps, FormState> {
                 noValidate={true}
                 role="form"
                 className={`input__form validation-form ${(this.props.className ? this.props.className : '')}`}
-                onSubmit={(e) => e.preventDefault() || this.props.onSubmit && this.props.onSubmit()}
+                onSubmit={this.onSubmit}
             >
                 {this.props.children}
             </form>
         );
     }
+
+    private onSubmit = (e: React.FormEvent) => e.preventDefault() || this.props.onSubmit && this.props.onSubmit();
 
     private register(component: BaseInput<BaseInputProps<AllowedHtmlElements>, BaseInputState, AllowedHtmlElements>) {
         if (component) {

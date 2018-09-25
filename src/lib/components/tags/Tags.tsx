@@ -7,7 +7,7 @@ import * as React from 'react';
 import { InputGroup } from '../inputGroup/InputGroup';
 import { Text, TextProps } from '../text/Text';
 import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_circle_outline_24px.svg';
-import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
+import { BaseInputProps, BaseInputState, BaseInput, ValidationError } from '../base/input/BaseInput';
 import { Button } from '../button/Button';
 
 // Misc
@@ -60,7 +60,7 @@ type SuggestionsProps = {
 };
 
 type InjectedProps = InjectedOnClickOutProps;
-class Suggestions extends React.Component<SuggestionsProps & InjectedProps> {
+class Suggestions extends React.PureComponent<SuggestionsProps & InjectedProps> {
     public render() {
         return this.props.isVisible ? (
             <div className="tags-input__suggestions">
@@ -72,7 +72,7 @@ class Suggestions extends React.Component<SuggestionsProps & InjectedProps> {
                                 className={'w-100 tags-input__suggestion ' + (this.props.preselectedSuggestion !== undefined &&
                                     this.props.preselectedSuggestion === index ? 'tags-input__suggestion--preselected' : '')}
                                 type="dropdown"
-                                onClick={e => this.props.onSelected(tag)}
+                                onClick={this.onSelected(tag)}
                             >
                                 {tag.name}
                             </Button>
@@ -89,6 +89,8 @@ class Suggestions extends React.Component<SuggestionsProps & InjectedProps> {
     public handleClickOutside() {
         this.props.onClickOutside();
     }
+
+    private onSelected = (tag: Tag) => () => this.props.onSelected(tag);
 }
 
 const SuggestionsWrapped = onClickOutside<SuggestionsProps>(Suggestions);
@@ -126,70 +128,21 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
             <InputGroup title={this.props.title}>
                 <div
                     className={'input__base tags-input ' + this.getValidationClass(errors) + (this.props.className ? ' ' +
-                        this.props.className : '') + ' ' + (this.props.readOnly ? 'tags-input--readOnly' : '')}
+                        this.props.className : '') + ' ' + (this.props.readOnly ? 'tags-input--readOnly ' : '')}
                 >
                     {this.renderTags()}
                     {(!this.props.maxTags || (this.props.maxTags > (this.props.tags && this.props.tags.length))) && !this.props.readOnly &&
-                        <div className="tags-input__tags__wrapper">
+                        <div className={'tags-input__tags__wrapper ' + (this.props.readOnly ? 'filled ' : '')}>
                             <Text
                                 {...textProps}
                                 className={'tags-input__text-input ' + (textProps.className ? textProps.className : '')}
-                                onKeyDown={async e => {
-                                    if (e.key === 'Enter' && (this.state.value !== '' || this.state.preselectedSuggestion !== undefined) && this.state.valid) {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        const existingTag = this.props.existingTags && this.props.existingTags.find(et => et.name === this.state.value);
-                                        if (this.state.preselectedSuggestion !== undefined) {
-                                            this.props.onTagsChanged(this.props.tags.concat(suggestions[this.state.preselectedSuggestion]));
-                                            this.setState({ value: '', preselectedSuggestion: undefined }, () => this.fetchExistingTags());
-                                        } else if (existingTag) {
-                                            this.props.onTagsChanged(this.props.tags.concat(existingTag));
-                                            this.setState({ value: '' }, () => this.fetchExistingTags());
-                                        } else if (this.props.allowNew) {
-                                            const newTag = await this.props.onNewTagAdded(this.state.value);
-                                            if (newTag) {
-                                                this.props.onTagsChanged(this.props.tags ? this.props.tags.concat(newTag) : [newTag]);
-                                            }
-                                            this.setState({ value: '' });
-                                        }
-                                    }
-                                    if (suggestions.length > 0 && this.state.suggestionsVisible) {
-                                        if (e.key === 'ArrowUp') {
-                                            const preselectedSuggestion = this.state.preselectedSuggestion === undefined ?
-                                                suggestions.length - 1
-                                                :
-                                                this.state.preselectedSuggestion === 0 ?
-                                                    suggestions.length - 1
-                                                    :
-                                                    this.state.preselectedSuggestion - 1;
-                                            this.setState({ preselectedSuggestion });
-                                        } else if (e.key === 'ArrowDown') {
-                                            const preselectedSuggestion = this.state.preselectedSuggestion === undefined ?
-                                                0
-                                                :
-                                                this.state.preselectedSuggestion === suggestions.length - 1 ?
-                                                    0
-                                                    :
-                                                    this.state.preselectedSuggestion + 1;
-                                            this.setState({ preselectedSuggestion });
-                                        } else {
-                                            this.setState({ preselectedSuggestion: undefined });
-                                        }
-                                    }
-                                }}
-                                onChange={(e, isValid) => {
-                                    !this.state.suggestionsVisible && this.setState({ suggestionsVisible: true });
-                                    this.handleChange(e, isValid);
-                                    this.fetchExistingTags(e.target.value);
-                                }}
-                                onFocus={async e => {
-                                    this.setState({ textIsFocused: true, suggestionsVisible: true, touched: true });
-                                    this.fetchExistingTags();
-                                }}
-                                onBlur={() => this.setState({ textIsFocused: false, preselectedSuggestion: undefined })}
+                                onKeyDown={this.onKeyDown(suggestions)}
+                                onChange={this.onTextChanged}
+                                onFocus={this.onFocus}
+                                onBlur={this.onBlur}
                                 value={this.state.value}
                                 readOnly={this.props.readOnly}
-                                onErrorsChanged={err => this.setState({ errors: err })}
+                                onErrorsChanged={this.onErrChanged}
                                 showValidation={false}
                             />
                             {this.state.suggestionsVisible && this.props.showSuggestions && <SuggestionsWrapped
@@ -199,24 +152,87 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
                                 emptyComponent={this.props.suggestionsEmptyComponent}
                                 isVisible={this.state.suggestionsVisible}
                                 tags={suggestions}
-                                onSelected={tag => {
-                                    this.props.onTagsChanged(this.props.tags.concat(tag));
-                                    this.setState({ value: '', preselectedSuggestion: undefined }, () => this.fetchExistingTags());
-                                }}
-                                onClickOutside={() => this.setState({ suggestionsVisible: false, preselectedSuggestion: undefined })}
+                                onSelected={this.onSuggestionSelected}
+                                onClickOutside={this.onClickOutside}
                                 value={this.state.value}
                             />}
                         </div >
                     }
                     {this.renderDefaultValidation(errors)}
                     {this.props.label && <label
-                        className={((this.state.value !== '')
-                            || (this.state.textIsFocused) || (this.props.tags.length >= this.props.maxTags)) ? 'label--focused' : ''}
+                        className={(((this.state.value !== '')
+                            || (this.state.textIsFocused) || this.props.readOnly || (this.props.tags.length >= this.props.maxTags)) ? 'label--focused' : '')}
                     >{this.renderLabel()}
                     </label>}
                 </div>
             </InputGroup >
         );
+    }
+
+    private onErrChanged = (err: ValidationError[]) => this.setState({ errors: err });
+
+    private onFocus = () => {
+        this.setState({ textIsFocused: true, suggestionsVisible: true, touched: true });
+        this.fetchExistingTags();
+    }
+
+    private onKeyDown = (suggestions: Tag[]) => async e => {
+        if (e.key === 'Enter' && (this.state.value !== '' || this.state.preselectedSuggestion !== undefined) && this.state.valid) {
+            e.preventDefault();
+            e.stopPropagation();
+            const existingTag = this.props.existingTags && this.props.existingTags.find(et => et.name === this.state.value);
+            if (this.state.preselectedSuggestion !== undefined) {
+                this.props.onTagsChanged(this.props.tags.concat(suggestions[this.state.preselectedSuggestion]));
+                this.setState({ value: '', preselectedSuggestion: undefined }, () => this.fetchExistingTags());
+            } else if (existingTag) {
+                this.props.onTagsChanged(this.props.tags.concat(existingTag));
+                this.setState({ value: '' }, () => this.fetchExistingTags());
+            } else if (this.props.allowNew) {
+                const newTag = await this.props.onNewTagAdded(this.state.value);
+                if (newTag) {
+                    this.props.onTagsChanged(this.props.tags ? this.props.tags.concat(newTag) : [newTag]);
+                }
+                this.setState({ value: '' });
+            }
+        }
+        if (suggestions.length > 0 && this.state.suggestionsVisible) {
+            if (e.key === 'ArrowUp') {
+                const preselectedSuggestion = this.state.preselectedSuggestion === undefined ?
+                    suggestions.length - 1
+                    :
+                    this.state.preselectedSuggestion === 0 ?
+                        suggestions.length - 1
+                        :
+                        this.state.preselectedSuggestion - 1;
+                this.setState({ preselectedSuggestion });
+            } else if (e.key === 'ArrowDown') {
+                const preselectedSuggestion = this.state.preselectedSuggestion === undefined ?
+                    0
+                    :
+                    this.state.preselectedSuggestion === suggestions.length - 1 ?
+                        0
+                        :
+                        this.state.preselectedSuggestion + 1;
+                this.setState({ preselectedSuggestion });
+            } else {
+                this.setState({ preselectedSuggestion: undefined });
+            }
+        }
+    }
+
+    private onSuggestionSelected = tag => {
+        this.props.onTagsChanged(this.props.tags.concat(tag));
+        this.setState({ value: '', preselectedSuggestion: undefined }, () => this.fetchExistingTags());
+    }
+
+    private onBlur = () => this.setState({ textIsFocused: false, preselectedSuggestion: undefined });
+
+    private onClickOutside = () => this.setState({ suggestionsVisible: false, preselectedSuggestion: undefined });
+
+    private onTextChanged = (e: React.ChangeEvent<HTMLInputElement>, isValid: boolean) => {
+        !this.state.suggestionsVisible && this.setState({ suggestionsVisible: true });
+        this.handleChange(e, isValid);
+        this.fetchExistingTags(e.target.value);
     }
 
     private getErrors() {
@@ -264,16 +280,18 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
                 {!this.props.readOnly && <Button
                     circular={true}
                     type={'blank--light'}
-                    onClick={() => {
-                        this.props.onTagsChanged && this.props.onTagsChanged(this.props.tags.filter(sv => sv.id !== tag.id));
-                        this.fetchExistingTags();
-                    }}
+                    onClick={this.tagRemoveClick(tag)}
                     className="ml-1 transform-rotate--45 line-height--0 p-0"
                 >
                     <PlusIcon />
                 </Button>}
             </div>
         );
+    }
+
+    private tagRemoveClick = (tag: Tag) => () => {
+        this.props.onTagsChanged && this.props.onTagsChanged(this.props.tags.filter(sv => sv.id !== tag.id));
+        this.fetchExistingTags();
     }
 
     private renderTags() {

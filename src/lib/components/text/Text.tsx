@@ -34,10 +34,10 @@ export class Text extends BaseInput<TextProps, TextState, HTMLInputElement>  {
                 <div
                     className={`input__base text-input ${this.getValidationClass()} 
                     ${(this.props.readOnly ? 'text-input--readOnly' : '')} ${(this.props.className ? this.props.className : '')}`}
-                    onClick={e => this.props.stopClickPropagation && e.stopPropagation()}
+                    onClick={this.containerClick}
                 >
                     <input
-                        ref={elem => this.props.inputRef && this.props.inputRef(elem)}
+                        ref={this.onRef}
                         placeholder={this.props.placeholder}
                         disabled={this.getDisabled()}
                         required={this.props.required}
@@ -47,16 +47,22 @@ export class Text extends BaseInput<TextProps, TextState, HTMLInputElement>  {
                         onBlur={this.handleBlur}
                         onFocus={this.handleFocus}
                         readOnly={this.props.readOnly}
-                        onKeyDown={e => this.props.onKeyDown && this.props.onKeyDown(e)}
+                        onKeyDown={this.onKeyDown}
                         type={this.props.type}
                     />
                     <span className="highlight" />
                     <span className="bar" />
                     {this.renderDefaultValidation()}
-                    {this.props.label && <label>{this.renderLabel()}</label>}
+                    {this.props.label && <label className={(this.props.readOnly ? 'label--focused' : '')}>{this.renderLabel()}</label>}
                 </div>
             </InputGroup>
         );
     }
+
+    private containerClick = (e: React.MouseEvent<HTMLDivElement>) => this.props.stopClickPropagation && e.stopPropagation();
+
+    private onRef = (elem: HTMLInputElement) => this.props.inputRef && this.props.inputRef(elem);
+
+    private onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => this.props.onKeyDown && this.props.onKeyDown(e);
 }
 export default Text;

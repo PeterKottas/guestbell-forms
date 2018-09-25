@@ -38,7 +38,7 @@ export interface OpeningHoursSpecialState extends BaseInputState {
 
 const DAY_FORMAT = 'D/M/YYYY';
 
-class DateInput extends React.Component<{ value?: string, onClick?: () => void }> {
+class DateInput extends React.PureComponent<{ value?: string, onClick?: () => void }> {
     public render() {
         return (
             <Button
@@ -76,34 +76,26 @@ export class OpeningHoursSpecial extends BaseInput<OpeningHoursSpecialProps, Ope
                             <span>
                                 {OpeningHoursUtil.getLabelSuffix(day)}
                                 <span className="float-right">
-                                    <div
-                                        role="button"
+                                    <Button
+                                        type="blank"
                                         className="openingHoursSpecial-input__button openingHoursSpecial-input__button--remove"
-                                        onClick={() => this.props.onDaysChange(this.props.days.filter((d, indexInner) => indexInner !== index))}
+                                        onClick={this.removeDayClick(index)}
                                     >
                                         <PlusIcon />
-                                    </div>
+                                    </Button>
                                 </span>
                             </span>
                         )}
                         openingHours={{
                             times: day.times
                         }}
-                        onOpeningHoursChange={(openingHours) => {
-                            let days = this.props.days.slice(0);
-                            days[index] = { ...day, ...openingHours };
-                            this.props.onDaysChange(days);
-                        }}
+                        onOpeningHoursChange={this.openingHoursChanged(index, day)}
                         title={<DatePicker
                             customInput={<DateInput>{!day.date && 'Choose date'}</DateInput>}
                             placeholder={this.props.placeholder}
                             selected={day.date && Moment(day.date)}
                             dateFormat={DAY_FORMAT}
-                            onChange={(date) => {
-                                let days = this.props.days.slice(0);
-                                days[index] = { ...day, date: date.toDate() };
-                                this.props.onDaysChange(days);
-                            }}
+                            onChange={this.dateChanged(index, day)}
                             excludeDates={this.props.days.filter(d => d.date).map(d => Moment(d.date))}
                             withPortal={true}
                             minDate={Moment()}
@@ -114,6 +106,20 @@ export class OpeningHoursSpecial extends BaseInput<OpeningHoursSpecialProps, Ope
                 {this.renderDefaultValidation()}
             </div>
         );
+    }
+
+    private removeDayClick = (index: number) => () => this.props.onDaysChange(this.props.days.filter((d, indexInner) => indexInner !== index));
+
+    private dateChanged = (index: number, day: OpeningHoursDayObj) => (date) => {
+        let days = this.props.days.slice(0);
+        days[index] = { ...day, date: date.toDate() };
+        this.props.onDaysChange(days);
+    }
+
+    private openingHoursChanged = (index: number, day: OpeningHoursDayObj) => (openingHours) => {
+        let days = this.props.days.slice(0);
+        days[index] = { ...day, ...openingHours };
+        this.props.onDaysChange(days);
     }
 }
 export default OpeningHoursSpecial;

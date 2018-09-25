@@ -1,15 +1,44 @@
 import * as React from 'react';
 import {
-    Dropdown, Form, Time, Text, Select, Submit, DynamicSubmit, IBaseValidator, Checkbox, Radio,
-    RadioContainer, Money, OpeningHoursDay, MoneyWithCurrency, OpeningHoursDayObj, OpeningHoursWeek, OpeningHoursSpecialDayObj, OpeningHoursSpecial,
+    Dropdown,
+    Form,
+    Time,
+    Text,
+    Select,
+    Submit,
+    DynamicSubmit,
+    Checkbox,
+    Radio,
+    RadioContainer,
+    Money,
+    OpeningHoursDay,
+    MoneyWithCurrency,
+    OpeningHoursDayObj,
+    OpeningHoursWeek,
+    OpeningHoursSpecialDayObj,
+    OpeningHoursSpecial,
     InputHeader,
     Button,
     ButtonTypes,
     Tags,
     Tag,
     NumberValidator,
-    TextArea
+    TextArea,
+    OpeningHoursWeekDayObj,
+    ActionParam,
+    SelectValue,
+    TextProps
 } from '../../../../lib/index';
+
+const currencies1 = [{ label: 'GBP', value: 'GBP' }, { label: 'EUR', value: 'EUR' }];
+
+const currencies2 = [{ label: 'GBP', value: 'GBP' }, { label: 'EUR', value: 'EUR' }, { label: 'USD', value: 'USD' }];
+
+const genderValues = [{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }];
+
+const tagsEmailTextProps: TextProps = {
+    validators: ['email']
+};
 
 export interface BasicProps {
 
@@ -46,7 +75,7 @@ export interface BasicState {
     textAreaText: string;
 }
 
-export class AgeValidator implements IBaseValidator {
+export class AgeValidator {
     public static instance = new AgeValidator();
     public Validate(value: string, isRequired: boolean, addError: (error: string) => void): boolean {
         let num = Number(value);
@@ -88,7 +117,22 @@ const existingTags: Tag[] = [{
 }
 ];
 
-export class Basic extends React.Component<BasicProps, BasicState> {
+const types: ButtonTypes[] = ['blank', 'blank--light', 'hero', 'warning', 'error', 'info', 'success', 'gray'];
+const ButtonsShowcase: React.SFC<{ disabled: boolean }> = props => {
+    return (
+        <React.Fragment>{types.map((item, index) => (
+            <Button
+                type={item}
+                disabled={props.disabled}
+                key={index}
+            >
+                {item}
+            </Button>
+        ))}</React.Fragment>
+    );
+};
+
+export class Basic extends React.PureComponent<BasicProps, BasicState> {
     private form: Form;
 
     private initialState: BasicState = {
@@ -136,6 +180,14 @@ export class Basic extends React.Component<BasicProps, BasicState> {
     }
 
     public render() {
+        let time2Max = new Date();
+        time2Max.setHours(time2Max.getHours() + 1);
+        time2Max.setMinutes(time2Max.getMinutes() + 5);
+
+        let time2Min = new Date();
+        time2Min.setHours(time2Min.getHours() - 1);
+        time2Min.setMinutes(time2Min.getMinutes() - 5);
+
         return (
             <div className="container">
                 <div className="row  mt-5">
@@ -149,7 +201,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                 >
                                     <Checkbox
                                         label="Turn form validation on or off"
-                                        onChecked={(e) => this.setState({ validateFormSubmit: !this.state.validateFormSubmit })}
+                                        onChecked={this.formValidationToggle}
                                         checked={this.state.validateFormSubmit}
                                         title="Validate form submit"
                                     />
@@ -159,14 +211,14 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                             value="blur"
                                             label="Blur"
                                             result={this.state.touchOn}
-                                            onChecked={(value) => this.setState({ touchOn: value as 'blur' | 'focus' })}
+                                            onChecked={this.touchOnChecked}
                                         />
                                         <Radio
                                             name="touch"
                                             value="focus"
                                             label="Focus"
                                             result={this.state.touchOn}
-                                            onChecked={(value) => this.setState({ touchOn: value as 'blur' | 'focus' })}
+                                            onChecked={this.touchOnChecked}
                                         />
                                     </RadioContainer>
                                     <RadioContainer title="Theme">
@@ -175,25 +227,25 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                             value="guestbell-forms--dark bg-dark"
                                             label="Dark"
                                             result={this.state.theme}
-                                            onChecked={(value) => this.setState({ theme: value })}
+                                            onChecked={this.themeChecked}
                                         />
                                         <Radio
                                             name="theme"
                                             value=""
                                             label="Light"
                                             result={this.state.theme}
-                                            onChecked={(value) => this.setState({ theme: value })}
+                                            onChecked={this.themeChecked}
                                         />
                                     </RadioContainer>
                                     <Checkbox
                                         label="Disables inputs"
-                                        onChecked={(e) => this.setState({ submitDisablesInputs: !this.state.submitDisablesInputs })}
+                                        onChecked={this.disablesInputsChecked}
                                         checked={this.state.submitDisablesInputs}
                                         title="Submit"
                                     />
                                     <Checkbox
                                         label="Unmount"
-                                        onChecked={(e) => this.setState({ simulateUnmount: !this.state.simulateUnmount })}
+                                        onChecked={this.simulateUnmountChecked}
                                         checked={this.state.simulateUnmount}
                                         title="Simulate"
                                     />
@@ -210,7 +262,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                     <Form
                                         noValidate={true}
                                         ref={form => this.form = form}
-                                        onSubmit={() => this.submitForm()}
+                                        onSubmit={this.submitForm}
                                     >
                                         <InputHeader
                                             icon={<i className="material-icons md-48">edit</i>}
@@ -231,13 +283,13 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                 <Button
                                                     key={1}
                                                     className="mx-2"
-                                                    onClick={(e) => { e.preventDefault(); this.form.touchAll(); }}
+                                                    onClick={this.touchAll}
                                                 >Touch all
                                                 </Button>,
                                                 <Button
                                                     key={2}
                                                     className="mr-2"
-                                                    onClick={(e) => { e.preventDefault(); this.form.unTouchAll(); }}
+                                                    onClick={this.untouchAll}
                                                 >Un-touch all
                                                 </Button>]}
                                         >
@@ -247,21 +299,21 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                     value="wine"
                                                     label="Wine"
                                                     result={this.state.drink}
-                                                    onChecked={(value) => this.setState({ drink: value })}
+                                                    onChecked={this.drinksChecked}
                                                 />
                                                 <Radio
                                                     name="drink"
                                                     value="whiskey"
                                                     label="Whiskey"
                                                     result={this.state.drink}
-                                                    onChecked={(value) => this.setState({ drink: value })}
+                                                    onChecked={this.drinksChecked}
                                                 />
                                                 <Radio
                                                     name="drink"
                                                     value="water"
                                                     label="Water"
                                                     result={this.state.drink}
-                                                    onChecked={(value) => this.setState({ drink: value })}
+                                                    onChecked={this.drinksChecked}
                                                 />
                                             </RadioContainer>
                                             <RadioContainer title="Drinks (horizontal)" horizontal={true}>
@@ -270,33 +322,33 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                     value="wine"
                                                     label="Wine"
                                                     result={this.state.drink}
-                                                    onChecked={(value) => this.setState({ drink: value })}
+                                                    onChecked={this.drinksChecked}
                                                 />
                                                 <Radio
                                                     name="drink2"
                                                     value="whiskey"
                                                     label="Whiskey"
                                                     result={this.state.drink}
-                                                    onChecked={(value) => this.setState({ drink: value })}
+                                                    onChecked={this.drinksChecked}
                                                 />
                                                 <Radio
                                                     name="drink2"
                                                     value="water"
                                                     label="Water"
                                                     result={this.state.drink}
-                                                    onChecked={(value) => this.setState({ drink: value })}
+                                                    onChecked={this.drinksChecked}
                                                 />
                                             </RadioContainer>
                                             <Checkbox
                                                 required={true}
                                                 label="Smart"
-                                                onChecked={(e) => this.setState({ checkbox1: !this.state.checkbox1 })}
+                                                onChecked={this.checkbox1Checked}
                                                 checked={this.state.checkbox1}
                                                 title="Dress code"
                                             />
                                             <Checkbox
                                                 label="(optional)"
-                                                onChecked={(e) => this.setState({ checkbox2: !this.state.checkbox2 })}
+                                                onChecked={this.checkbox2Checked}
                                                 checked={this.state.checkbox2}
                                                 title="Wallet parking"
                                             />
@@ -304,7 +356,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                 touchOn={this.state.touchOn}
                                                 required={true}
                                                 label="Your name"
-                                                onChange={(e) => this.setState({ name: e.target.value })}
+                                                onChange={this.nameChanged}
                                                 value={this.state.name}
                                                 title="Name"
                                             />
@@ -313,7 +365,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                     touchOn={this.state.touchOn}
                                                     required={true}
                                                     label="Your name (no title)"
-                                                    onChange={(e) => this.setState({ name: e.target.value })}
+                                                    onChange={this.nameChanged}
                                                     value={this.state.name}
                                                     helpText={<p className="m-0">This is some help text. It can also do <b>bold</b> and other stuff.</p>}
                                                 />
@@ -322,7 +374,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                 touchOn={this.state.touchOn}
                                                 required={true}
                                                 label="Your name"
-                                                onChange={(e) => this.setState({ name: e.target.value })}
+                                                onChange={this.nameChanged}
                                                 value={this.state.name}
                                                 title="Name readonly"
                                                 readOnly={true}
@@ -331,7 +383,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                 touchOn={this.state.touchOn}
                                                 required={false}
                                                 label={'Your gender'}
-                                                values={[{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }]}
+                                                values={genderValues}
                                                 onChange={this.handleGenderChange}
                                                 value={this.state.gender}
                                                 title="Gender"
@@ -340,7 +392,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                 touchOn={this.state.touchOn}
                                                 required={true}
                                                 label="Textarea"
-                                                onChange={(e) => this.setState({ textAreaText: e.target.value })}
+                                                onChange={this.textAreaChanged}
                                                 value={this.state.textAreaText}
                                                 title="Textarea"
                                             />
@@ -348,7 +400,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                 touchOn={this.state.touchOn}
                                                 required={true}
                                                 label="Textarea"
-                                                onChange={(e) => this.setState({ textAreaText: e.target.value })}
+                                                onChange={this.textAreaChanged}
                                                 value={this.state.textAreaText}
                                                 title="Readonly"
                                                 readOnly={true}
@@ -364,7 +416,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                     required={false}
                                                     label="Email"
                                                     value={this.state.email}
-                                                    onChange={(e) => this.setState({ email: e.target.value })}
+                                                    onChange={this.emailChanged}
                                                     title="Your email"
                                                 />
                                                 <Text
@@ -379,7 +431,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                     required={false}
                                                     label="Website"
                                                     value={this.state.website}
-                                                    onChange={(e) => this.setState({ website: e.target.value })}
+                                                    onChange={this.websiteChanged}
                                                     title="Your website"
                                                 />
                                                 <Text
@@ -387,7 +439,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                     customValidators={[AgeValidator.instance]}
                                                     label="Your age (optional)"
                                                     value={this.state.age}
-                                                    onChange={(e) => this.setState({ age: e.target.value })}
+                                                    onChange={this.ageChanged}
                                                     title="Age"
                                                 />
                                                 <Text
@@ -395,56 +447,46 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                     customValidators={[new NumberValidator({ min: 0 })]}
                                                     label="Min 1"
                                                     value={this.state.min1}
-                                                    onChange={(e) => this.setState({ min1: e.target.value })}
+                                                    onChange={this.min1Changed}
                                                     title="Number"
                                                 />
                                             </InputHeader>
                                             <Money
-                                                currencies={[{ label: 'GBP', value: 'GBP' }, { label: 'EUR', value: 'EUR' }]}
+                                                currencies={currencies1}
                                                 prices={this.state.prices1}
                                                 touchOn={this.state.touchOn}
                                                 required={false}
-                                                onPricesChange={(prices) => this.setState({ prices1: prices })}
+                                                onPricesChange={this.prices1Changed}
                                                 title="Price"
                                             />
                                             <Money
-                                                currencies={[{ label: 'GBP', value: 'GBP' }, { label: 'EUR', value: 'EUR' }, { label: 'USD', value: 'USD' }]}
+                                                currencies={currencies2}
                                                 prices={this.state.prices2}
                                                 allowMultiple={true}
                                                 touchOn={this.state.touchOn}
                                                 required={false}
-                                                onPricesChange={(prices) => this.setState({ prices2: prices })}
+                                                onPricesChange={this.prices2Changed}
                                                 title="Price multiple"
                                             />
                                             <Time
                                                 touchOn={this.state.touchOn}
                                                 time={this.state.time1}
-                                                timeChange={(time) => this.setState({ time1: time })}
+                                                timeChange={this.time1Changed}
                                                 title="Time"
                                             />
                                             <Time
-                                                max={(() => {
-                                                    let time = new Date();
-                                                    time.setHours(time.getHours() + 1);
-                                                    time.setMinutes(time.getMinutes() + 5);
-                                                    return time;
-                                                })()}
-                                                min={(() => {
-                                                    let time = new Date();
-                                                    time.setHours(time.getHours() - 1);
-                                                    time.setMinutes(time.getMinutes() - 5);
-                                                    return time;
-                                                })()}
+                                                max={time2Max}
+                                                min={time2Min}
                                                 touchOn={this.state.touchOn}
                                                 time={this.state.time2}
-                                                timeChange={(time) => this.setState({ time2: time })}
+                                                timeChange={this.time2Changed}
                                                 title="With Min/Max"
                                             />
                                             <OpeningHoursDay
                                                 label={'Opening hours sample day'}
                                                 touchOn={this.state.touchOn}
                                                 required={false}
-                                                onOpeningHoursChange={(openingHours => this.setState({ openingHours: openingHours }))}
+                                                onOpeningHoursChange={this.openingHoursChanged}
                                                 openingHours={this.state.openingHours}
                                                 title="Opening hours"
                                             />
@@ -453,8 +495,6 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                 collapsable={true}
                                                 mainButton={
                                                     <Button
-                                                        // tslint:disable-next-line:no-console
-                                                        onClick={() => console.log('click')}
                                                         type={'hero'}
                                                     >
                                                         Hero button
@@ -463,14 +503,12 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                 extraButtons={[
                                                     <Button
                                                         key={1}
-                                                        onClick={() => null}
                                                         type={'dropdown'}
                                                     >
                                                         Extra button 1
                                                     </Button>,
                                                     <Button
                                                         key={2}
-                                                        onClick={() => null}
                                                         type={'dropdown'}
                                                     >
                                                         Extra button 2
@@ -480,10 +518,10 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                 <OpeningHoursWeek
                                                     touchOn={this.state.touchOn}
                                                     required={false}
-                                                    onDaysChange={(days => this.setState({ openingHoursWeek: days }))}
+                                                    onDaysChange={this.openingHoursWeekChanged}
                                                     days={this.state.openingHoursWeek}
                                                     standardDay={this.state.openingHoursWeekDay}
-                                                    onStandardDayChange={(day => this.setState({ openingHoursWeekDay: day }))}
+                                                    onStandardDayChange={this.openingHoursWeekStandardDayChanged}
                                                 />
                                             </InputHeader>
                                             <InputHeader
@@ -494,9 +532,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                     (param) => (
                                                         <Button
                                                             type={'hero'}
-                                                            onClick={() => this.setState({
-                                                                openingHoursSpecial: this.state.openingHoursSpecial.concat([{ date: undefined, times: [] }])
-                                                            }, () => param.expand())}
+                                                            onClick={this.specialDaysAddClick(param)}
                                                         >
                                                             Add
                                                         </Button>
@@ -505,7 +541,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                 <OpeningHoursSpecial
                                                     touchOn={this.state.touchOn}
                                                     required={false}
-                                                    onDaysChange={(days => this.setState({ openingHoursSpecial: days }))}
+                                                    onDaysChange={this.openingHoursSpecialChanged}
                                                     days={this.state.openingHoursSpecial}
                                                     placeholder="Choose date"
                                                 />
@@ -515,8 +551,6 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                 title={'Buttons'}
                                                 mainButton={
                                                     <Button
-                                                        // tslint:disable-next-line:no-console
-                                                        onClick={() => console.log('click')}
                                                         type={'hero'}
                                                     >
                                                         Hero button
@@ -524,11 +558,11 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                 }
                                             >
                                                 <div className="p-3 buttons-row">
-                                                    {this.renderButtons(false)}
+                                                    <ButtonsShowcase disabled={false} />
                                                 </div>
                                                 <div className="p-3 buttons-row">
                                                     <div className="text-center">Disabled</div>
-                                                    {this.renderButtons(true)}
+                                                    <ButtonsShowcase disabled={true} />
                                                 </div>
                                             </InputHeader>
                                             <InputHeader
@@ -539,7 +573,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                             >
                                                 <Checkbox
                                                     // label="Multiple readonly"
-                                                    onChecked={(e) => this.setState({ multipleReadonly: !this.state.multipleReadonly })}
+                                                    onChecked={this.multipleReadonlyChecked}
                                                     checked={this.state.multipleReadonly}
                                                     title="Multiple readonly"
                                                 />
@@ -548,7 +582,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                     readOnly={this.state.multipleReadonly}
                                                     allowNew={true}
                                                     tags={this.state.tags}
-                                                    onTagsChanged={(tags) => this.setState({ tags })}
+                                                    onTagsChanged={this.tagsChanged}
                                                 />
                                                 <Tags
                                                     title="Tags suggestions"
@@ -557,7 +591,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                     allowNew={true}
                                                     existingTags={existingTags}
                                                     tags={this.state.tags}
-                                                    onTagsChanged={(tags) => this.setState({ tags })}
+                                                    onTagsChanged={this.tagsChanged}
                                                 />
                                                 <Tags
                                                     title="Tags max 3"
@@ -565,7 +599,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                     readOnly={this.state.multipleReadonly}
                                                     allowNew={true}
                                                     tags={this.state.tags}
-                                                    onTagsChanged={(tags) => this.setState({ tags })}
+                                                    onTagsChanged={this.tagsChanged}
                                                 />
                                                 <Tags
                                                     title="Tags only email"
@@ -574,11 +608,9 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                     allowNew={true}
                                                     readOnly={this.state.multipleReadonly}
                                                     tags={this.state.tags}
-                                                    onTagsChanged={(tags) => this.setState({ tags })}
+                                                    onTagsChanged={this.tagsChanged}
                                                     suggestionsEmptyComponent={null}
-                                                    textProps={{
-                                                        validators: ['email']
-                                                    }}
+                                                    textProps={tagsEmailTextProps}
                                                 />
                                                 <Select
                                                     required={true}
@@ -593,9 +625,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                     values={this.state.multipleValues.map(item => ({
                                                         value: item
                                                     }))}
-                                                    onSelectedValuesChange={selectedValues =>
-                                                        this.setState({ selectedValues: selectedValues.map((item) => item.value as string) })
-                                                    }
+                                                    onSelectedValuesChange={this.selectedValuesChanged}
                                                 />
                                             </InputHeader>
                                             <InputHeader
@@ -613,7 +643,7 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                     >
                                                         <li>
                                                             Item
-                                                </li>
+                                                        </li>
                                                     </Dropdown>
                                                     <Dropdown
                                                         className="position-relative mr-3"
@@ -622,15 +652,15 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                     >
                                                         <li>
                                                             Item
-                                                </li>
+                                                        </li>
                                                     </Dropdown>
                                                     <Dropdown
                                                         className="position-relative"
-                                                        header={(clickHandler) => <Button onClick={e => clickHandler(e)} type="hero">Function header</Button>}
+                                                        header={this.functionHeader}
                                                     >
                                                         <li>
                                                             Item
-                                                </li>
+                                                        </li>
                                                     </Dropdown>
                                                 </div>
                                             </InputHeader>
@@ -663,7 +693,8 @@ export class Basic extends React.Component<BasicProps, BasicState> {
                                                 </DynamicSubmit>
                                             </div>
                                         </InputHeader>
-                                    </Form>}
+                                    </Form>
+                                }
                             </div>
                         </div>
                     </div>
@@ -671,6 +702,70 @@ export class Basic extends React.Component<BasicProps, BasicState> {
             </div >
         );
     }
+
+    private functionHeader = (clickHandler: (e: React.MouseEvent<HTMLButtonElement>) => void) => (
+        <Button onClick={e => clickHandler(e)} type="hero">Function header</Button>
+    )
+
+    private selectedValuesChanged = (selectedValues: SelectValue[]) => this.setState({ selectedValues: selectedValues.map((item) => item.value as string) });
+
+    private tagsChanged = (tags: Tag[]) => this.setState({ tags });
+
+    private multipleReadonlyChecked = () => this.setState({ multipleReadonly: !this.state.multipleReadonly });
+
+    private openingHoursSpecialChanged = (days: OpeningHoursSpecialDayObj[]) => this.setState({ openingHoursSpecial: days });
+
+    private specialDaysAddClick = (param: ActionParam) => () => {
+        this.setState({
+            openingHoursSpecial: this.state.openingHoursSpecial.concat([{ date: undefined, times: [] }])
+        }, () => param.expand());
+    }
+
+    private openingHoursWeekStandardDayChanged = (day: OpeningHoursWeekDayObj) => this.setState({ openingHoursWeekDay: day });
+
+    private openingHoursWeekChanged = (days: OpeningHoursWeekDayObj[]) => this.setState({ openingHoursWeek: days });
+
+    private openingHoursChanged = (openingHours: OpeningHoursDayObj) => this.setState({ openingHours: openingHours });
+
+    private time2Changed = (time: Date) => this.setState({ time2: time });
+
+    private time1Changed = (time: Date) => this.setState({ time1: time });
+
+    private prices2Changed = (prices: MoneyWithCurrency[]) => this.setState({ prices2: prices });
+
+    private prices1Changed = (prices: MoneyWithCurrency[]) => this.setState({ prices1: prices });
+
+    private min1Changed = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ min1: e.target.value });
+
+    private ageChanged = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ age: e.target.value });
+
+    private websiteChanged = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ website: e.target.value });
+
+    private emailChanged = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ email: e.target.value });
+
+    private textAreaChanged = (e: React.ChangeEvent<HTMLTextAreaElement>) => this.setState({ textAreaText: e.target.value });
+
+    private nameChanged = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ name: e.target.value });
+
+    private checkbox2Checked = () => this.setState({ checkbox2: !this.state.checkbox2 });
+
+    private checkbox1Checked = () => this.setState({ checkbox1: !this.state.checkbox1 });
+
+    private drinksChecked = (value: string) => this.setState({ drink: value });
+
+    private untouchAll = (e: React.MouseEvent<HTMLButtonElement>) => { e.preventDefault(); this.form.unTouchAll(); };
+
+    private simulateUnmountChecked = () => this.setState({ simulateUnmount: !this.state.simulateUnmount });
+
+    private disablesInputsChecked = () => this.setState({ submitDisablesInputs: !this.state.submitDisablesInputs });
+
+    private themeChecked = (value: string) => this.setState({ theme: value });
+
+    private touchOnChecked = (value: 'blur' | 'focus') => this.setState({ touchOn: value });
+
+    private formValidationToggle = () => this.setState({ validateFormSubmit: !this.state.validateFormSubmit });
+
+    private touchAll = (e: React.MouseEvent<HTMLButtonElement>) => { e.preventDefault(); this.form.touchAll(); };
 
     private handleGenderChange(e: React.ChangeEvent<HTMLSelectElement>) {
         const val = e.target.value;
@@ -701,19 +796,6 @@ export class Basic extends React.Component<BasicProps, BasicState> {
             success();
             setTimeout(() => reset(), 3000);
         }, 1000);
-    }
-
-    private renderButtons(disabled: boolean) {
-        const types: ButtonTypes[] = ['blank', 'blank--light', 'hero', 'warning', 'error', 'info', 'success', 'gray'];
-        return types.map((item, index) => (
-            <Button
-                type={item}
-                disabled={disabled}
-                key={index}
-            >
-                {item}
-            </Button>
-        ));
     }
 }
 

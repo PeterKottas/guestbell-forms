@@ -28,6 +28,7 @@
         width: 100%;
     }
     .openingHoursSpecial-input__button {
+        padding: 0;
         line-height: 0;
         margin: auto;
         position: relative;
@@ -41,7 +42,9 @@
             opacity: 1;
         }
         &.openingHoursSpecial-input__button--remove {
-            transform: rotate(45deg);
+            svg {
+                transform: rotate(45deg);
+            }
         }
     }
     .react-datepicker__input-container {

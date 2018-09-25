@@ -16,7 +16,7 @@ export interface RadioContainerProps {
 export interface RadioContainerState {
 }
 
-export class RadioContainer extends React.Component<RadioContainerProps, RadioContainerState>  {
+export class RadioContainer extends React.PureComponent<RadioContainerProps, RadioContainerState>  {
     constructor(props: RadioContainerProps) {
         super(props);
     }

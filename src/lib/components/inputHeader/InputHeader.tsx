@@ -57,7 +57,7 @@ export interface InputHeaderContext {
     stateChanged: () => void;
 }
 
-export class InputHeader extends React.Component<InputHeaderProps, InputHeaderState>  {
+export class InputHeader extends React.PureComponent<InputHeaderProps, InputHeaderState>  {
     public static defaultProps: InputHeaderProps = {
         ignoreContext: false,
         showExpandAll: false,
@@ -128,7 +128,7 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
                         (this.props.showExpandAll ? 'input__header__top--tall ' : '') +
                         (this.props.noBg ? 'input__header__top--no-bg ' : '') +
                         (this.props.headerClassName ? this.props.headerClassName : '')}
-                    onClick={() => this.toggle()}
+                    onClick={this.toggleClick}
                     role={this.props.collapsable ? 'button' : ''}
                 >
                     <div className={'input__header__top__header-container '}>
@@ -178,7 +178,7 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
                                 <SmoothCollapse
                                     collapsedHeight={'0.0001px'}
                                     expanded={this.props.collapsed !== undefined ? !this.props.collapsed : !this.state.collapsed}
-                                    onChangeEnd={() => this.setState(previousState => ({ smoothCollapseDone: true }))}
+                                    onChangeEnd={this.smoothCollapseDone}
                                 >
                                     {this.props.children}
                                 </SmoothCollapse>
@@ -190,6 +190,10 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
             </div >
         );
     }
+
+    private smoothCollapseDone = () => this.setState(previousState => ({ smoothCollapseDone: true }));
+
+    private toggleClick = () => this.toggle();
 
     private registerInputHeader(component: InputHeader) {
         this.setState(previousState => {
@@ -222,6 +226,8 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
         }
     }
 
+    private mainButtonClick = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
+
     private renderMainButton() {
         let child = undefined;
         if (typeof this.props.mainButton === 'function') {
@@ -233,7 +239,7 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
         } else {
             child = this.props.mainButton;
         }
-        return <div onClick={e => e.stopPropagation()}>{child}</div>;
+        return <div onClick={this.mainButtonClick}>{child}</div>;
     }
 
     private renderExtraButtons() {
@@ -273,35 +279,41 @@ export class InputHeader extends React.Component<InputHeaderProps, InputHeaderSt
         return (
             <div
                 className="input__header__expand-collapse--all"
-                onClick={e => e.stopPropagation()}
+                onClick={this.containerClick}
             >
                 {(allCollapsed || !allExpanded) && <Button
                     noRipples={true}
                     small={true}
                     className={((allExpanded || !allCollapsed) ? 'mr-2' : '')}
-                    onClick={() => {
-                        Object.keys(this.state.inputHeaders).forEach(key => {
-                            const inputHeader = this.state.inputHeaders[key];
-                            inputHeader.expand();
-                        });
-                    }}
+                    onClick={this.expandAllClick}
                 >
                     Expand all
                 </Button>}
                 {(allExpanded || !allCollapsed) && <Button
                     noRipples={true}
                     small={true}
-                    onClick={() => {
-                        Object.keys(this.state.inputHeaders).forEach(key => {
-                            const inputHeader = this.state.inputHeaders[key];
-                            inputHeader.collapse();
-                        });
-                    }}
+                    onClick={this.collapseAllClick}
                 >
                     Collapse all
                 </Button>}
             </div>
         );
+    }
+
+    private containerClick = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
+
+    private expandAllClick = () => {
+        Object.keys(this.state.inputHeaders).forEach(key => {
+            const inputHeader = this.state.inputHeaders[key];
+            inputHeader.expand();
+        });
+    }
+
+    private collapseAllClick = () => {
+        Object.keys(this.state.inputHeaders).forEach(key => {
+            const inputHeader = this.state.inputHeaders[key];
+            inputHeader.collapse();
+        });
     }
 }
 export default InputHeader;

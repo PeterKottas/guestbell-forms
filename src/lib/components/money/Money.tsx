@@ -50,55 +50,31 @@ export class Money extends BaseInput<MoneyProps, MoneyState, never>  {
                                 filter((priceCurrency, priceIndex) => priceIndex !== index && priceCurrency.currency.value === currency.value).length === 0);
                         let retComponents = currentCurrencies.length ? [
                             <Select
-                                onFocus={() => this.setState({ focused: true })}
-                                onBlur={() => this.setState({ focused: false })}
+                                onFocus={this.onFocus}
+                                onBlur={this.onBlur}
                                 className={'money-input__select m-0'}
                                 key={index * 3}
                                 values={currentCurrencies}
-                                onChange={(e) => {
-                                    let newPrices: MoneyWithCurrency[] = [].concat(this.props.prices);
-                                    newPrices[index].currency = currentCurrencies.filter(cc => cc.value.toString() === e.target.value)[0];
-                                    this.props.onPricesChange(newPrices);
-                                }}
+                                onChange={this.onCurrencyChanged(index, currentCurrencies)}
                                 value={item.currency.value.toString()}
                             />,
                             <Text
-                                onFocus={() => this.setState({ focused: true })}
-                                onBlur={() => this.setState({ focused: false })}
-                                onTheFlightValidate={value => {
-                                    let num = Number(value);
-                                    const parts = value.split('.');
-                                    if (parts && parts.length > 1 && parts[parts.length - 1].length > 2) {
-                                        return false;
-                                    }
-                                    if (!isNaN(num)) {
-                                        return true;
-                                    }
-                                    if (num) {
-                                        return false;
-                                    }
-                                }}
+                                onFocus={this.onFocus}
+                                onBlur={this.onBlur}
+                                onTheFlightValidate={this.onTheFlightValidate}
                                 placeholder={'0.00'}
                                 className={'money-input__text m-0'}
                                 key={index * 3 + 1}
                                 validators={['number']}
                                 value={item.value ? item.value.toString() : ''}
-                                onChange={(e) => {
-                                    let newPrices: MoneyWithCurrency[] = [].concat(this.props.prices);
-                                    let str = e.target.value;
-                                    let num = Number(str);
-                                    if (!isNaN(num)) {
-                                        newPrices[index].value = num;
-                                    }
-                                    this.props.onPricesChange(newPrices);
-                                }}
+                                onChange={this.onPriceChanged(index)}
                                 type="number"
                             />,
                             this.props.prices.length > 0 && (
                                 <Button
                                     type={'blank--light'}
                                     key={index * 3 + 2}
-                                    onClick={() => this.props.onPricesChange(this.props.prices.filter((price, itemIndex) => itemIndex !== index))}
+                                    onClick={this.removePriceClick(index)}
                                     className="money-input__button--remove line-height--0"
                                     buttonProps={{ title: 'Remove price' }}
                                     circular={true}
@@ -115,7 +91,7 @@ export class Money extends BaseInput<MoneyProps, MoneyState, never>  {
                             <Button
                                 type={'blank--light'}
                                 className="line-height--0"
-                                onClick={() => this.props.onPricesChange(this.props.prices.concat([{ value: 0, currency: unusedCurrencies[0] }]))}
+                                onClick={this.addPriceClick(unusedCurrencies)}
                                 circular={true}
                                 buttonProps={{ title: (this.props.prices && this.props.prices.length === 0 ? 'Add price' : 'Add new currency') }}
                             >
@@ -133,5 +109,44 @@ export class Money extends BaseInput<MoneyProps, MoneyState, never>  {
             </InputGroup>
         );
     }
+
+    private onCurrencyChanged = (index: number, currentCurrencies: SelectValue[]) => (e) => {
+        let newPrices: MoneyWithCurrency[] = [].concat(this.props.prices);
+        newPrices[index].currency = currentCurrencies.filter(cc => cc.value.toString() === e.target.value)[0];
+        this.props.onPricesChange(newPrices);
+    }
+
+    private onTheFlightValidate = value => {
+        let num = Number(value);
+        const parts = value.split('.');
+        if (parts && parts.length > 1 && parts[parts.length - 1].length > 2) {
+            return false;
+        }
+        if (!isNaN(num)) {
+            return true;
+        }
+        if (num) {
+            return false;
+        }
+    }
+
+    private onPriceChanged = (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        let newPrices: MoneyWithCurrency[] = [].concat(this.props.prices);
+        let str = e.target.value;
+        let num = Number(str);
+        if (!isNaN(num)) {
+            newPrices[index].value = num;
+        }
+        this.props.onPricesChange(newPrices);
+    }
+
+    private removePriceClick = (index: number) => () => this.props.onPricesChange(this.props.prices.filter((price, itemIndex) => itemIndex !== index));
+
+    private addPriceClick = (unusedCurrencies: SelectValue[]) => () =>
+        this.props.onPricesChange(this.props.prices.concat([{ value: 0, currency: unusedCurrencies[0] }]))
+
+    private onFocus = () => this.setState({ focused: true });
+
+    private onBlur = () => this.setState({ focused: false });
 }
 export default Money;

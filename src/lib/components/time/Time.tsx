@@ -33,6 +33,15 @@ export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
     }
 
     public render() {
+        var hours = this.props.time.getHours();
+        hours = (hours + 24) % 24;
+        var mid = 'AM';
+        if (hours === 0) { // At 00 hours we need to show 12 am
+            hours = 12;
+        } else if (hours > 12) {
+            hours = hours % 12;
+            mid = 'PM';
+        }
         return (
             <InputGroup title={this.props.title}>
                 <div className={'input__base time-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')}>
@@ -40,10 +49,7 @@ export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
                         <div className="time-input__arrows__container">
                             <button
                                 className="plus"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    this.handleHoursChange((this.props.time.getHours() + 1).toString());
-                                }}
+                                onClick={this.addHourClick}
                             >
                                 <ArrowIcon />
                             </button>
@@ -53,7 +59,7 @@ export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
                                     disabled={this.getDisabled()}
                                     required={this.props.required}
                                     className={'time-input__time ' + (this.state.value ? 'filled' : '')}
-                                    onChange={(e) => this.handleHoursChange(e.target.value)}
+                                    onChange={this.onHoursChanged}
                                     value={this.props.time.getHours().toString()}
                                     onBlur={this.handleBlur}
                                     onFocus={this.handleFocus}
@@ -63,10 +69,7 @@ export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
                             </div>
                             <button
                                 className="minus"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    this.handleHoursChange((this.props.time.getHours() - 1).toString());
-                                }}
+                                onClick={this.removeHourClick}
                             >
                                 <ArrowIcon />
                             </button>
@@ -77,10 +80,7 @@ export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
                         <div className="time-input__arrows__container">
                             <button
                                 className="plus"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    this.handleMinutesChange((this.props.time.getMinutes() + 1).toString());
-                                }}
+                                onClick={this.addMinuteClick}
                             >
                                 <ArrowIcon />
                             </button>
@@ -90,7 +90,7 @@ export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
                                     disabled={this.getDisabled()}
                                     required={this.props.required}
                                     className={'time-input__time ' + (this.state.value ? 'filled' : '')}
-                                    onChange={(e) => this.handleMinutesChange(e.target.value)}
+                                    onChange={this.onMinutesChanged}
                                     value={this.props.time.getMinutes() < 10 ?
                                         '0' + this.props.time.getMinutes().toString()
                                         :
@@ -103,33 +103,43 @@ export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
                             </div>
                             <button
                                 className="minus"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    this.handleMinutesChange((this.props.time.getMinutes() - 1).toString());
-                                }}
+                                onClick={this.removeMinuteClick}
                             >
                                 <ArrowIcon />
                             </button>
                         </div>
                     </div>
                     <div>
-                        <span className="time-input__am-pm">{(() => {
-                            var hours = this.props.time.getHours();
-                            hours = (hours + 24) % 24;
-                            var mid = 'AM';
-                            if (hours === 0) { // At 00 hours we need to show 12 am
-                                hours = 12;
-                            } else if (hours > 12) {
-                                hours = hours % 12;
-                                mid = 'PM';
-                            }
-                            return mid;
-                        })()}</span>
+                        <span className="time-input__am-pm">{mid}</span>
                     </div>
                     {this.renderDefaultValidation()}
                 </div>
             </InputGroup>
         );
+    }
+
+    private onMinutesChanged = (e: React.ChangeEvent<HTMLInputElement>) => this.handleMinutesChange(e.target.value);
+
+    private removeMinuteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        this.handleMinutesChange((this.props.time.getMinutes() - 1).toString());
+    }
+
+    private addMinuteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        this.handleMinutesChange((this.props.time.getMinutes() + 1).toString());
+    }
+
+    private removeHourClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        this.handleHoursChange((this.props.time.getHours() - 1).toString());
+    }
+
+    private onHoursChanged = (e: React.ChangeEvent<HTMLInputElement>) => this.handleHoursChange(e.target.value);
+
+    private addHourClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        this.handleHoursChange((this.props.time.getHours() + 1).toString());
     }
 
     private handleLimits(time: Date) {

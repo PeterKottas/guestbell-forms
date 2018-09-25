@@ -17,12 +17,18 @@
     "kefir-bus": "2.2.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.1.0",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.1.0",
     "@types/react": "16.4.14",
     "@types/react-dom": "16.0.7",
     "@types/react-onclickoutside": "6.0.4",
     "@types/webpack": "4.4.12",
     "@types/webpack-env": "1.13.6",
     "autoprefixer": "9.1.5",
+    "babel-loader": "^8.0.2",
     "cash-true": "0.0.2",
     "clean-webpack-plugin": "^0.1.19",
     "connect-history-api-fallback": "^1.5.0",
@@ -66,7 +72,8 @@
     "webpack-dev-server": "3.1.8",
     "webpack-hot-middleware": "2.24.2",
     "webpack-merge": "4.1.4",
-    "webpack-serve": "^2.0.2"
+    "webpack-serve": "^2.0.2",
+    "why-did-you-update": "^0.1.1"
   },
   "name": "guestbell-forms",
   "scripts": {

@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 var isLocalBuild = process.env && process.env.NODE_ENV && process.env.NODE_ENV.trim().toString() == 'local';
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
     resolve: {
@@ -13,17 +14,42 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.(j|t)sx?$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        cacheDirectory: true,
+                        babelrc: false,
+                        presets: [
+                            [
+                                "@babel/preset-env",
+                                { targets: { browsers: "last 2 versions" } } // or whatever your project requires
+                            ],
+                            "@babel/preset-typescript",
+                            "@babel/preset-react"
+                        ],
+                        plugins: [
+                            // plugin-proposal-decorators is only needed if you're using experimental decorators in TypeScript
+                            // ["@babel/plugin-proposal-decorators", { legacy: true }],
+                            ["@babel/plugin-proposal-class-properties", { loose: true }],
+                            "react-hot-loader/babel"
+                        ]
+                    }
+                }
+            },
+            /*{
                 test: /\.tsx?$/,
                 include: /src/,
                 use: {
                     loader: 'ts-loader',//'awesome-typescript-loader?silent=true',
                     options: {
                         // disable type checker - we will use it in fork plugin
-                        transpileOnly: isLocalBuild ? true : false,
-                        experimentalWatchApi: isLocalBuild ? true : false,
+                        transpileOnly: true,
+                        experimentalWatchApi: true,
                     }
                 }
-            },
+            },*/
             {
                 test: /\.(scss|css)$/,
                 use: [(isLocalBuild ? {
@@ -85,7 +111,7 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: "dist/[name].[hash].css",
         }),
-
+        new ForkTsCheckerWebpackPlugin(),
         //new DtsBundlePlugin()
     ]
 };

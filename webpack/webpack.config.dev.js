@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 var isLocalBuild = process.env.NODE_ENV === 'local';
 const merge = require('webpack-merge');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const history = require('connect-history-api-fallback');
 const convert = require('koa-connect');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -63,7 +62,6 @@ module.exports = merge(
         new CleanWebpackPlugin(['src/demo/ClientApp/wwwroot'], {
             root: path.join(__dirname, '..')
         }),
-        new ForkTsCheckerWebpackPlugin(),
         new HtmlWebpackPlugin(htmlPluginOptions),
         new CopyWebpackPlugin([
             {

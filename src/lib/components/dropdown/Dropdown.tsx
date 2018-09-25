@@ -26,7 +26,7 @@ export interface DropdownItemState {
     isDropdownVisible: boolean;
 }
 
-export class Dropdown extends React.Component<DropdownItemProps, DropdownItemState> {
+export class Dropdown extends React.PureComponent<DropdownItemProps, DropdownItemState> {
     public static defaultProps = {
         shouldHandleClick: true,
         wrapperTag: 'div',
@@ -79,9 +79,7 @@ export class Dropdown extends React.Component<DropdownItemProps, DropdownItemSta
                     ${(this.props.headerClassName ? this.props.headerClassName : '')} 
                     ${(this.props.showArrow ? '' : 'guestbell__dropdown-toggle__arrow--hidden')} 
                     ${(this.props.disabled && this.props.disabled ? 'disabled' : '')}`}
-                    onClick={(e) => {
-                        this.handleClick(e);
-                    }}
+                    onClick={this.containerClick}
                 >
                     {this.isFunction(this.props.header) ? (this.props.header as HeaderFunction)((e) => this.handleClick(e)) : this.props.header as HeaderPlain}
                     {this.props.notificationCount > 0 && <span className="guestbell__label-count">{this.props.notificationCount}</span>}
@@ -97,6 +95,10 @@ export class Dropdown extends React.Component<DropdownItemProps, DropdownItemSta
                 </div>
             </div>
         );
+    }
+
+    private containerClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        this.handleClick(e);
     }
 
     private isFunction(functionToCheck: HeaderPlain | HeaderFunction) {

@@ -5,7 +5,7 @@ import * as logo from '../../assets/images/logo.svg';
 export interface HeaderCustomProps {
 }
 
-export default class Header extends React.Component<HeaderCustomProps, {}> {
+export default class Header extends React.PureComponent<HeaderCustomProps, {}> {
     public render() {
         return (
             <div className="navbar z-depth-1 p-0">

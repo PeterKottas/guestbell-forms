@@ -53,7 +53,7 @@ export interface BaseInputState {
 }
 
 export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputState, HTMLType extends
-    AllowedHtmlElements> extends React.Component<P, S> {
+    AllowedHtmlElements> extends React.PureComponent<P, S> {
     public static defaultProps: BaseInputProps<never> = {
         className: undefined,
         required: false,

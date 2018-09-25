@@ -67,7 +67,7 @@ export class Select extends BaseInput<SelectProps, SelectState, HTMLSelectElemen
                         <div className="select-input__select__wrapper">
                             {((!this.props.multiple && !this.props.readOnly) || this.props.multiple) ?
                                 <select
-                                    ref={elem => this.props.inputRef && this.props.inputRef(elem)}
+                                    ref={this.selectRef}
                                     disabled={this.getDisabled()}
                                     required={this.props.required}
                                     onChange={this.handleChangeCustom}
@@ -102,6 +102,8 @@ export class Select extends BaseInput<SelectProps, SelectState, HTMLSelectElemen
             </InputGroup>
         );
     }
+
+    private selectRef = (elem: HTMLSelectElement) => this.props.inputRef && this.props.inputRef(elem);
 
     private handleChangeCustom(event: React.ChangeEvent<HTMLSelectElement>) {
         if (this.props.multiple) {
@@ -152,11 +154,7 @@ export class Select extends BaseInput<SelectProps, SelectState, HTMLSelectElemen
                             disabled={item.forceSelected}
                             circular={true}
                             type={'blank--light'}
-                            onClick={() => {
-                                const newValues = this.props.selectedValues.filter(sv => sv.value !== item.value);
-                                this.handleValid(newValues);
-                                this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(newValues);
-                            }}
+                            onClick={this.removeItemClick(item)}
                             className="ml-1 transform-rotate--45 line-height--0 p-0"
                         >
                             <PlusIcon />
@@ -176,6 +174,12 @@ export class Select extends BaseInput<SelectProps, SelectState, HTMLSelectElemen
                 )
             :
             null;
+    }
+
+    private removeItemClick = (item: SelectValue) => () => {
+        const newValues = this.props.selectedValues.filter(sv => sv.value !== item.value);
+        this.handleValid(newValues);
+        this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(newValues);
     }
 }
 
