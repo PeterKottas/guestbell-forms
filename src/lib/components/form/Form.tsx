@@ -1,7 +1,4 @@
-﻿// Styles
-require('./form.scss');
-
-// Libs
+﻿// Libs
 import * as React from 'react';
 
 // Misc

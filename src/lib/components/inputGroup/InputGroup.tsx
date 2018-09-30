@@ -1,6 +1,3 @@
-// Styles
-require('./inputGroup.scss');
-
 // Libs
 import * as React from 'react';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';

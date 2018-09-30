@@ -5,6 +5,10 @@ const merge = require('webpack-merge');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+var _ = require('lodash');
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 let htmlPluginOptions = {
     alwaysWriteToDisk: true,
@@ -16,6 +20,10 @@ module.exports = merge(
     {
         customizeArray(a, b, key) {
             if (key === 'plugins') {
+                a = _.remove(a, function (plugin) {
+                    // console.log(JSON.stringify(plugin));
+                    return !(plugin.options && plugin.options.filename === '[name].css');
+                });
                 return a.concat(b);
             }
 
@@ -58,7 +66,20 @@ module.exports = merge(
                 from: './src/demo/ClientApp/assets/favicon/icons',
                 to: 'dist/icons'
             }
-        ])
+        ]),
+        new MiniCssExtractPlugin({
+            filename: "dist/[name].[hash].css",
+        }),
     ],
-    mode: 'production'
+    mode: 'production',
+    optimization: {
+        minimizer: [
+            new UglifyJsPlugin({
+                cache: true,
+                parallel: true,
+                sourceMap: true // set to true if you want JS source maps
+            }),
+            new OptimizeCSSAssetsPlugin({})
+        ]
+    }
 });

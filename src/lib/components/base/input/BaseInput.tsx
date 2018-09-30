@@ -1,13 +1,8 @@
-﻿// Styles
-
-// Libs
+﻿// Libs
 import * as React from 'react';
 import {
     Tooltip,
 } from 'react-tippy';
-
-// Styles
-require('./input.scss');
 
 // Misc
 import * as Validators from '../../../validators';
@@ -118,7 +113,7 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
         return (
             <div className="validation__container">
                 <ul className="validation__ul">
-                    {finalErrors.map((item, index) => <span key={index} className="validation__item">{item}</span>)}
+                    {finalErrors.map((item, index) => <li key={index} className="validation__item">{item}</li>)}
                 </ul>
             </div>
         );
@@ -283,11 +278,7 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
                 if (this.props.customValidators) {
                     this.props.customValidators.forEach(customValidator => {
                         let validInner = false;
-                        try {
-                            validInner = customValidator.Validate(value, this.props.required, (error) => errors.push(error));
-                        } catch (e) {
-                            throw new Error(`Custom validator exception ${e} on input ${this.inputId}`);
-                        }
+                        validInner = customValidator.Validate(value, this.props.required, (error) => errors.push(error));
                         if (valid && !validInner) {
                             valid = validInner;
                         }

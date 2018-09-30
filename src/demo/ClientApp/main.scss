@@ -9,19 +9,6 @@ textarea {
     font-family: 'Montserrat', sans-serif;
 }
 
-.bg-dark {
-    background-color: gray;
-    color: white;
-    .card-header{
-        background-color: rgb(163, 163, 163);
-    }
-
-    .openingHoursWeek-input .openingHoursWeek-input__fade{
-        background: -moz-linear-gradient(top, rgba(255,255,255,0), gray);
-        background: -webkit-linear-gradient(top, rgba(255,255,255,0), gray);
-    }
-}
-
 .material-icons {
     &.md-18 { font-size: 18px; }
     &.md-24 { font-size: 24px; }

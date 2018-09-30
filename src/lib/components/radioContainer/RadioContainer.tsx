@@ -1,6 +1,3 @@
-// Styles
-require('./radioContainer.scss');
-
 // Libs
 import * as React from 'react';
 import InputGroup from '../inputGroup/InputGroup';

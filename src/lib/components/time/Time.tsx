@@ -1,5 +1,3 @@
-// Styles
-require('./time.scss');
 import * as ArrowIcon from 'material-design-icons/hardware/svg/production/ic_keyboard_arrow_down_24px.svg';
 
 // Libs
@@ -19,6 +17,8 @@ export interface TimeProps extends BaseInputProps<HTMLInputElement> {
 }
 
 export interface TimeState extends BaseInputState {
+    hoursText?: string;
+    minutesText?: string;
 }
 
 export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
@@ -60,8 +60,8 @@ export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
                                     required={this.props.required}
                                     className={'time-input__time ' + (this.state.value ? 'filled' : '')}
                                     onChange={this.onHoursChanged}
-                                    value={this.props.time.getHours().toString()}
-                                    onBlur={this.handleBlur}
+                                    value={this.state.hoursText !== undefined ? this.state.hoursText : this.props.time.getHours().toString()}
+                                    onBlur={this.onBlur}
                                     onFocus={this.handleFocus}
                                     type="number"
                                 />
@@ -91,11 +91,12 @@ export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
                                     required={this.props.required}
                                     className={'time-input__time ' + (this.state.value ? 'filled' : '')}
                                     onChange={this.onMinutesChanged}
-                                    value={this.props.time.getMinutes() < 10 ?
-                                        '0' + this.props.time.getMinutes().toString()
-                                        :
-                                        this.props.time.getMinutes().toString()}
-                                    onBlur={this.handleBlur}
+                                    value={this.state.minutesText !== undefined ? this.state.minutesText :
+                                        this.props.time.getMinutes() < 10 ?
+                                            '0' + this.props.time.getMinutes().toString()
+                                            :
+                                            this.props.time.getMinutes().toString()}
+                                    onBlur={this.onBlur}
                                     onFocus={this.handleFocus}
                                     type="number"
                                 />
@@ -118,7 +119,20 @@ export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
         );
     }
 
-    private onMinutesChanged = (e: React.ChangeEvent<HTMLInputElement>) => this.handleMinutesChange(e.target.value);
+    private onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+        if (this.state.hoursText) {
+            this.handleHoursChange(this.state.hoursText);
+        }
+        if (this.state.minutesText) {
+            this.handleMinutesChange(this.state.minutesText);
+        }
+        this.setState({ minutesText: undefined, hoursText: undefined }, () => this.handleBlur(e));
+    }
+
+    private onMinutesChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // this.handleMinutesChange(e.target.value);
+        this.setState({ minutesText: e.target.value });
+    }
 
     private removeMinuteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -135,7 +149,10 @@ export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
         this.handleHoursChange((this.props.time.getHours() - 1).toString());
     }
 
-    private onHoursChanged = (e: React.ChangeEvent<HTMLInputElement>) => this.handleHoursChange(e.target.value);
+    private onHoursChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // this.handleHoursChange(e.target.value);
+        this.setState({ hoursText: e.target.value });
+    }
 
     private addHourClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();

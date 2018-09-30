@@ -1,6 +1,3 @@
-// Styles
-require('./openingHoursWeek.scss');
-
 // Libs
 import * as React from 'react';
 
@@ -101,9 +98,9 @@ export class OpeningHoursWeek extends BaseInput<OpeningHoursWeekProps, OpeningHo
                         label={this.props.standardDay ? <span>
                             {OpeningHoursUtil.getLabelSuffix(this.props.standardDay && day.isStandardDay ? this.props.standardDay : day)}
                             <span className="float-right">
-                                Standard day?&nbsp;
+                                Standard day?
                                 <Checkbox
-                                    className="label__checkbox m-0"
+                                    className="label__checkbox"
                                     checked={day.isStandardDay}
                                     onChecked={this.isStandardDayChecked(index, day)}
                                 />

@@ -102,14 +102,14 @@ module.exports = {
     },
     output:
     {
-        path: path.join(__dirname, '../build'),
+        path: path.join(__dirname, '../build/dist'),
         filename: '[name].js',
         publicPath: '../build/', // Webpack dev middleware, if enabled, handles requests for this URL prefix
         libraryTarget: 'umd'
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: "dist/[name].[hash].css",
+            filename: "[name].css",
         }),
         new ForkTsCheckerWebpackPlugin(),
         //new DtsBundlePlugin()

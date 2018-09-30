@@ -1,6 +1,3 @@
-// Styles
-require('./tags.scss');
-
 // Libs
 import onClickOutside, { InjectedOnClickOutProps } from 'react-onclickoutside';
 import * as React from 'react';
@@ -279,7 +276,7 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
                 {tag.name}
                 {!this.props.readOnly && <Button
                     circular={true}
-                    type={'blank--light'}
+                    blank={true}
                     onClick={this.tagRemoveClick(tag)}
                     className="ml-1 transform-rotate--45 line-height--0 p-0"
                 >

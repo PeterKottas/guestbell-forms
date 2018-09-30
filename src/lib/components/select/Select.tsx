@@ -1,7 +1,4 @@
-﻿// Styles
-require('./select.scss');
-
-// Libs
+﻿// Libs
 import * as React from 'react';
 
 // Misc
@@ -153,7 +150,7 @@ export class Select extends BaseInput<SelectProps, SelectState, HTMLSelectElemen
                         {!this.props.readOnly && <Button
                             disabled={item.forceSelected}
                             circular={true}
-                            type={'blank--light'}
+                            blank={true}
                             onClick={this.removeItemClick(item)}
                             className="ml-1 transform-rotate--45 line-height--0 p-0"
                         >

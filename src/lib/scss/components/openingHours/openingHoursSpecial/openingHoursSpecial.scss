@@ -1,0 +1,79 @@
+
+.input__group {
+    .row-header {
+        .DayPickerInput>input {
+            text-align: right;
+        }
+    }
+}
+
+.input__base.openingHoursSpecial-input {
+    .input__group__openingHoursDay {
+        .row-header {
+            margin-top: 3.10rem;
+        }
+    }
+    >.input__group__border:first-child {
+        border-top: none;
+    }
+    border: none !important;
+    position: relative;
+    margin: 0;
+    .label__checkbox {
+        display: inline-block;
+        top: 3px;
+    }
+    .label-classname.label--focused {
+        pointer-events: auto;
+        width: 100%;
+    }
+    .openingHoursSpecial-input__button {
+        padding: 0;
+        line-height: 0;
+        margin: auto;
+        position: relative;
+        display: table;
+        opacity: 0.5;
+        transition: 0.2s all;
+        img {
+            vertical-align: top;
+        }
+        &:hover {
+            opacity: 1;
+        }
+        &.openingHoursSpecial-input__button--remove {
+            svg {
+                transform: rotate(45deg);
+            }
+        }
+    }
+    .react-datepicker__input-container {
+        width: 100%;
+        >input {
+            width: 100%;
+            padding: 0;
+            border: none;
+            color: $input-label-color;
+            text-align: right;
+        }
+    }
+    input:focus~label,
+    input.filled~label,
+    select:focus~label,
+    select.filled~label,
+    .label-classname.label--focused {
+        top: -22px;
+        font-size: 14px;
+        color: inherit;
+        .DayPickerInput>input {
+            width: 70px;
+            color: $primary-color;
+            background-color: transparent;
+        }
+    }
+    .label-classname.label--focused.label--closed {
+        .DayPickerInput>input {
+            color: $input-label-color;
+        }
+    }
+}

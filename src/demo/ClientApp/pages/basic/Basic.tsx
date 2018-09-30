@@ -29,7 +29,9 @@ import {
     SelectValue,
     TextProps,
     ValidatorTypes,
-    IBaseValidator
+    IBaseValidator,
+    DropdownHeaderFunctionConfig,
+    ButtonProps
 } from '../../../../lib/index';
 
 export interface BasicProps {
@@ -48,7 +50,6 @@ export interface BasicState {
     food: string;
     drink: string;
     touchOn: 'blur' | 'focus';
-    theme: string;
     submitDisablesInputs: boolean;
     simulateUnmount: boolean;
     prices1: MoneyWithCurrency[];
@@ -127,18 +128,27 @@ const customAgeValidator: IBaseValidator[] = [AgeValidator.instance];
 
 const customNumberValidator: IBaseValidator[] = [new NumberValidator({ min: 0 })];
 
-const types: ButtonTypes[] = ['blank', 'blank--light', 'hero', 'warning', 'error', 'info', 'success', 'gray'];
-const ButtonsShowcase: React.SFC<{ disabled: boolean }> = props => {
+const types: ButtonTypes[] = ['primary', 'warning', 'error', 'info', 'success', 'gray', 'white'];
+const ButtonsShowcase: React.SFC<ButtonProps> = props => {
     return (
-        <React.Fragment>{types.map((item, index) => (
+        <div
+            className="px-2"
+            style={{
+                backgroundColor: 'rgb(248, 247, 247)',
+                display: 'flex',
+                flexWrap: 'wrap'
+            }}
+        >{types.map((item, index) => (
             <Button
-                type={item}
-                disabled={props.disabled}
                 key={index}
+                className="my-2 mr-2"
+                type={item}
+                {...props}
             >
                 {item}
             </Button>
-        ))}</React.Fragment>
+        ))}
+        </div>
     );
 };
 
@@ -157,7 +167,6 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
         food: 'breakfast',
         drink: 'breakfast',
         touchOn: 'focus',
-        theme: '',
         submitDisablesInputs: true,
         simulateUnmount: false,
         prices1: [],
@@ -237,22 +246,6 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                             onChecked={this.touchOnChecked}
                                         />
                                     </RadioContainer>
-                                    <RadioContainer title="Theme">
-                                        <Radio
-                                            name="theme"
-                                            value="guestbell-forms--dark bg-dark"
-                                            label="Dark"
-                                            result={this.state.theme}
-                                            onChecked={this.themeChecked}
-                                        />
-                                        <Radio
-                                            name="theme"
-                                            value=""
-                                            label="Light"
-                                            result={this.state.theme}
-                                            onChecked={this.themeChecked}
-                                        />
-                                    </RadioContainer>
                                     <Checkbox
                                         label="Disables inputs"
                                         onChecked={this.disablesInputsChecked}
@@ -272,7 +265,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                 </div>
                 <div className="row my-5">
                     <div className="col-lg-12">
-                        <div className={'card ' + this.state.theme}>
+                        <div className={'card '}>
                             <div className="card-block p-0">
                                 {!this.state.simulateUnmount &&
                                     <Form
@@ -290,7 +283,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                             collapsedDefault={false}
                                             mainButton={
                                                 <Submit
-                                                    type={'hero'}
+                                                    type={'primary'}
                                                     onClick={this.submitForm}
                                                     validateForm={this.state.validateFormSubmit}
                                                 >Submit
@@ -298,13 +291,11 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                             extraButtons={[
                                                 <Button
                                                     key={1}
-                                                    className="mx-2"
                                                     onClick={this.touchAll}
                                                 >Touch all
                                                 </Button>,
                                                 <Button
                                                     key={2}
-                                                    className="mr-2"
                                                     onClick={this.untouchAll}
                                                 >Un-touch all
                                                 </Button>]}
@@ -511,7 +502,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                 collapsable={true}
                                                 mainButton={
                                                     <Button
-                                                        type={'hero'}
+                                                        type={'primary'}
                                                     >
                                                         Hero button
                                                     </Button>
@@ -547,7 +538,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                 mainButton={
                                                     (param) => (
                                                         <Button
-                                                            type={'hero'}
+                                                            type={'primary'}
                                                             onClick={this.specialDaysAddClick(param)}
                                                         >
                                                             Add
@@ -567,18 +558,43 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                 title={'Buttons'}
                                                 mainButton={
                                                     <Button
-                                                        type={'hero'}
+                                                        type={'primary'}
                                                     >
                                                         Hero button
                                                     </Button>
                                                 }
                                             >
                                                 <div className="p-3 buttons-row">
-                                                    <ButtonsShowcase disabled={false} />
+                                                    <h3 className="text-center">Standard</h3>
+                                                    <ButtonsShowcase />
                                                 </div>
                                                 <div className="p-3 buttons-row">
-                                                    <div className="text-center">Disabled</div>
+                                                    <h3 className="text-center">No shadow</h3>
+                                                    <ButtonsShowcase noShadow={true} />
+                                                </div>
+                                                <div className="p-3 buttons-row">
+                                                    <h3 className="text-center">Hero</h3>
+                                                    <ButtonsShowcase hero={true} />
+                                                </div>
+                                                <div className="p-3 buttons-row">
+                                                    <h3 className="text-center">Outlined</h3>
+                                                    <ButtonsShowcase outlined={true} />
+                                                </div>
+                                                <div className="p-3 buttons-row">
+                                                    <h3 className="text-center">Blank</h3>
+                                                    <ButtonsShowcase blank={true} />
+                                                </div>
+                                                <div className="p-3 buttons-row">
+                                                    <h3 className="text-center">Disabled</h3>
                                                     <ButtonsShowcase disabled={true} />
+                                                </div>
+                                                <div className="p-3 buttons-row">
+                                                    <h3 className="text-center">Small</h3>
+                                                    <ButtonsShowcase small={true} />
+                                                </div>
+                                                <div className="p-3 buttons-row">
+                                                    <h3 className="text-center">Circular</h3>
+                                                    <ButtonsShowcase circular={true} />
                                                 </div>
                                             </InputHeader>
                                             <InputHeader
@@ -651,6 +667,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                         className="position-relative mr-3"
                                                         header={<i className="material-icons">notifications</i>}
                                                         notificationCount={5}
+                                                        submenuClassName="p-2"
                                                         showArrow={false}
                                                     >
                                                         <li>
@@ -661,6 +678,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                         className="position-relative mr-3"
                                                         header={'String header'}
                                                         notificationCount={5}
+                                                        submenuClassName="p-2"
                                                     >
                                                         <li>
                                                             Item
@@ -669,6 +687,8 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                     <Dropdown
                                                         className="position-relative"
                                                         header={this.functionHeader}
+                                                        showArrow={false}
+                                                        submenuClassName="p-2"
                                                     >
                                                         <li>
                                                             Item
@@ -680,7 +700,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                 <DynamicSubmit
                                                     submitDisablesInputs={this.state.submitDisablesInputs}
                                                     className="ml-2"
-                                                    type={'hero'}
+                                                    type={'primary'}
                                                     normalClassName=""
                                                     errorClassName="btn-danger"
                                                     submittingClassName="btn-secondary"
@@ -694,7 +714,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                     submitDisablesInputs={this.state.submitDisablesInputs}
                                                     className="ml-2"
                                                     normalClassName=""
-                                                    type={'hero'}
+                                                    type={'primary'}
                                                     submittingClassName="btn-secondary"
                                                     successClassName="btn-success"
                                                     submittingChildren={'Working on it'}
@@ -715,8 +735,8 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
         );
     }
 
-    private functionHeader = (clickHandler: (e: React.MouseEvent<HTMLButtonElement>) => void) => (
-        <Button onClick={e => clickHandler(e)} type="hero">Function header</Button>
+    private functionHeader = (props: DropdownHeaderFunctionConfig) => (
+        <Button onClick={e => props.onClick(e)} type="primary">Function header</Button>
     )
 
     private selectedValuesChanged = (selectedValues: SelectValue[]) => this.setState({ selectedValues });
@@ -770,8 +790,6 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
     private simulateUnmountChecked = () => this.setState({ simulateUnmount: !this.state.simulateUnmount });
 
     private disablesInputsChecked = () => this.setState({ submitDisablesInputs: !this.state.submitDisablesInputs });
-
-    private themeChecked = (value: string) => this.setState({ theme: value });
 
     private touchOnChecked = (value: 'blur' | 'focus') => this.setState({ touchOn: value });
 

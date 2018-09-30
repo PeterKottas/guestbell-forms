@@ -1,6 +1,4 @@
-﻿// Styles
-require('./money.scss');
-import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_24px.svg';
+﻿import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_24px.svg';
 
 // Libs
 import * as React from 'react';
@@ -72,10 +70,11 @@ export class Money extends BaseInput<MoneyProps, MoneyState, never>  {
                             />,
                             this.props.prices.length > 0 && (
                                 <Button
-                                    type={'blank--light'}
+                                    blank={true}
+                                    type="error"
                                     key={index * 3 + 2}
                                     onClick={this.removePriceClick(index)}
-                                    className="money-input__button--remove line-height--0"
+                                    className="transform-rotate--45 line-height--0"
                                     buttonProps={{ title: 'Remove price' }}
                                     circular={true}
                                 >
@@ -89,7 +88,8 @@ export class Money extends BaseInput<MoneyProps, MoneyState, never>  {
                     {(this.props.allowMultiple || this.props.prices && !this.props.prices.length) && unusedCurrencies.length ?
                         (
                             <Button
-                                type={'blank--light'}
+                                blank={true}
+                                type="primary"
                                 className="line-height--0"
                                 onClick={this.addPriceClick(unusedCurrencies)}
                                 circular={true}

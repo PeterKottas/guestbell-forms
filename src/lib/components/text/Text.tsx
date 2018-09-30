@@ -1,7 +1,4 @@
-﻿// Styles
-require('./text.scss');
-
-// Libs
+﻿// Libs
 import * as React from 'react';
 
 // Misc

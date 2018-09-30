@@ -1,12 +1,10 @@
-﻿// Styles
-require('./checkbox.scss');
-
-// Libs
+﻿// Libs
 import * as React from 'react';
 
 // Misc
 import InputGroup from '../inputGroup/InputGroup';
 import { BaseInputProps, BaseInput, BaseInputState } from '../base/input/BaseInput';
+import * as classNames from 'classnames';
 
 export interface CheckboxProps extends BaseInputProps<HTMLInputElement> {
     onChecked?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -42,14 +40,15 @@ export class Checkbox extends BaseInput<CheckboxProps, CheckboxState, HTMLInputE
     }
 
     public render() {
+        const containerClassName = classNames([
+            'input__base checkbox-input',
+            this.getValidationClass(),
+            this.props.className,
+            { ['checkbox-input--with-label']: Boolean(this.props.label) }
+        ]);
         return (
             <InputGroup title={this.props.title}>
-                <div
-                    className={`input__base checkbox-input 
-                        ${this.getValidationClass()} 
-                        ${(this.props.className ? this.props.className : '')} 
-                        ${(this.props.label ? 'checkbox-input--with-label' : '')}`}
-                >
+                <div className={containerClassName}>
                     {!this.props.label && this.renderInput()}
                     {this.renderDefaultValidation()}
                     {this.props.label && <label>{this.renderInput()}{this.renderLabel()}</label>}
@@ -65,7 +64,7 @@ export class Checkbox extends BaseInput<CheckboxProps, CheckboxState, HTMLInputE
             this.setValid();
         } else {
             if (this.props.required) {
-                this.setInvalid();
+                this.setInvalid(['Required']);
             }
         }
     }

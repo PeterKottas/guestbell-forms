@@ -1,7 +1,4 @@
-﻿// Styles
-require('./submit.scss');
-
-// Libs
+﻿// Libs
 import * as React from 'react';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
 import { Button, ButtonProps } from '../button/Button';

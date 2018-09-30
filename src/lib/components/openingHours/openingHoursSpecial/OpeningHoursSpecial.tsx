@@ -1,5 +1,3 @@
-// Styles
-require('./openingHoursSpecial.scss');
 import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_circle_outline_24px.svg';
 import * as DateIcon from 'material-design-icons/action/svg/production/ic_event_24px.svg';
 
@@ -42,6 +40,8 @@ class DateInput extends React.PureComponent<{ value?: string, onClick?: () => vo
     public render() {
         return (
             <Button
+                blank={true}
+                type="primary"
                 onClick={this.props.onClick}
             >
                 <div style={{ display: 'flex' }}>
@@ -77,7 +77,7 @@ export class OpeningHoursSpecial extends BaseInput<OpeningHoursSpecialProps, Ope
                                 {OpeningHoursUtil.getLabelSuffix(day)}
                                 <span className="float-right">
                                     <Button
-                                        type="blank"
+                                        blank={true}
                                         className="openingHoursSpecial-input__button openingHoursSpecial-input__button--remove"
                                         onClick={this.removeDayClick(index)}
                                     >

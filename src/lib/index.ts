@@ -1,4 +1,3 @@
-require('./components/base.scss');
 export * from './validators/index';
 export * from './components/button';
 export * from './components/checkbox';

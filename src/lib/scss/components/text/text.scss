@@ -1,0 +1,32 @@
+﻿
+.text-input {
+    display: inline-block;
+    margin-top: 20px;
+    max-width: 37.5rem;
+    &.text-input--readOnly {
+        border-bottom-color: transparent !important;
+        input:focus~.bar:before,
+        input:focus~.bar:after,
+        select:focus~.bar:before,
+        select:focus~.bar:after,
+        label:focus~.bar:before,
+        label:focus~.bar:after,
+        .bar.focused:before,
+        .bar.focused:after {
+            width: initial;
+        }
+        
+        input:focus ~ .highlight, select:focus ~ .highlight {
+            animation: none;
+        }
+    }
+    input {
+        padding: 6px 10px 5px 5px;
+        color: $input-text-color;
+        outline: 0;
+        border: none;
+        width: 100%;
+        background-color: transparent;
+        text-overflow: ellipsis;
+    }
+}

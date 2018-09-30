@@ -1,6 +1,7 @@
 // Styles 
 require('./main.scss');
-import 'react-tippy/dist/tippy.css';
+require('react-tippy/dist/tippy.css');
+require('../../lib/scss/index.scss');
 
 // Libs
 import * as React from 'react';

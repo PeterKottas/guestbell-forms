@@ -1,5 +1,5 @@
 {
-  "version": "1.0.221",
+  "version": "2.0.0",
   "description": "React forms with validation as used in GuestBell",
   "keywords": [
     "react",
@@ -10,18 +10,21 @@
     "input validation",
     "react input"
   ],
-  "main": "build/guestbell-forms.js",
-  "style": "build/guestbell-forms.css",
+  "main": "build/index.js",
+  "style": "build/dist/guestbell-forms.min.css",
   "dependencies": {
+    "classnames": "^2.2.6",
     "kefir": "3.8.5",
     "kefir-bus": "2.2.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.0",
-    "@babel/plugin-proposal-class-properties": "^7.1.0",
-    "@babel/preset-env": "^7.1.0",
-    "@babel/preset-react": "^7.0.0",
-    "@babel/preset-typescript": "^7.1.0",
+    "@babel/cli": "7.1.0",
+    "@babel/core": "7.1.0",
+    "@babel/plugin-proposal-class-properties": "7.1.0",
+    "@babel/preset-env": "7.1.0",
+    "@babel/preset-react": "7.0.0",
+    "@babel/preset-typescript": "7.1.0",
+    "@types/classnames": "^2.2.6",
     "@types/react": "16.4.14",
     "@types/react-dom": "16.0.7",
     "@types/react-onclickoutside": "6.0.4",
@@ -29,6 +32,7 @@
     "@types/webpack-env": "1.13.6",
     "autoprefixer": "9.1.5",
     "babel-loader": "^8.0.2",
+    "babel-plugin-inline-react-svg": "^0.5.4",
     "cash-true": "0.0.2",
     "clean-webpack-plugin": "^0.1.19",
     "connect-history-api-fallback": "^1.5.0",
@@ -46,6 +50,7 @@
     "mini-css-extract-plugin": "0.4.3",
     "moment": "2.22.2",
     "node-sass": "4.9.3",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "3.0.0",
     "prop-types": "15.6.2",
     "react": "16.5.2",
@@ -64,7 +69,7 @@
     "tslint": "5.11.0",
     "tslint-react": "3.6.0",
     "typescript": "3.0.3",
-    "uglifyjs-webpack-plugin": "2.0.1",
+    "uglifyjs-webpack-plugin": "^2.0.1",
     "url-loader": "1.1.1",
     "webpack": "4.19.1",
     "webpack-bundle-analyzer": "3.0.2",
@@ -77,12 +82,14 @@
   },
   "name": "guestbell-forms",
   "scripts": {
+    "generate-d-ts": "tsc -p src/lib && rimraf build/**/*.js && rimraf build/**/*.js.map",
+    "transpile": "babel ./src/lib --out-dir build --source-maps --copy-files --only **/*.ts,**/*.tsx --extensions .ts,.tsx --ignore **/*.d.ts && rimraf build/declarations && rimraf build/tsconfig.json",
     "start": "yarn install && set NODE_ENV=local && webpack-serve ./webpack/webpack.config.dev.js",
     "start-old": "yarn && set NODE_ENV=local && xcopy src\\demo\\ClientApp\\assets\\favicon\\icons src\\demo\\wwwroot\\dist\\icons /e /i /h /y && webpack-dev-server --config webpack/webpack.config.dev.js --content-base src/demo/wwwroot --hot --inline --open --history-api-fallback",
     "build:clean": "rimraf build/",
     "build:lib": "webpack --config ./webpack/webpack.config.js && webpack --config ./webpack/webpack.config.min.js",
     "build:min": "webpack --config ./webpack/webpack.config.min.js",
-    "build": "npm run build:clean && npm run build:lib",
+    "build": "npm run build:clean && npm run generate-d-ts && npm run transpile && npm run build:lib",
     "build:dev": "set NODE_ENV=development && npm run build",
     "build:prod": "set NODE_ENV=production && npm run build",
     "build:gh-pages": "set NODE_ENV=production && webpack --config ./webpack/webpack.config.gh-pages.js",
@@ -93,7 +100,7 @@
     "create:patch": "npm run version:patch && npm run push:git",
     "deploy": ".env.bat && npm run build:gh-pages && npm run build:prod && npm run commit:build && npm publish && npm run conventional-github-releaser -p angular && npm run create:patch"
   },
-  "typings": "src/lib/index.d.ts",
+  "typings": "src/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/PeterKottas/guestbell-forms.git"

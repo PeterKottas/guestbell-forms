@@ -1,6 +1,3 @@
-// Styles
-require('./inputHeader.scss');
-
 // Libs
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
@@ -148,7 +145,7 @@ export class InputHeader extends React.PureComponent<InputHeaderProps, InputHead
                         {this.renderMainButton()}
                         {this.props.extraButtons ?
                             <Dropdown
-                                header={<Button type={'blank--light'} circular={true} {...this.props.extraButtonsButtonProps}><MoreIcon /></Button>}
+                                header={<Button blank={true} circular={true} {...this.props.extraButtonsButtonProps}><MoreIcon /></Button>}
                                 showArrow={false}
                                 headerClassName={'line-height--0'}
                                 className={''}
@@ -161,8 +158,8 @@ export class InputHeader extends React.PureComponent<InputHeaderProps, InputHead
                         {this.props.collapsable &&
                             <Button
                                 circular={true}
+                                blank={true}
                                 className={`input__header__collapse-button line-height--0 ${(this.state.collapsed ? 'collapsed' : '')}`}
-                                type={'blank--light'}
                                 {...this.props.collapseButtonsButtonProps}
                             >
                                 <PlusIcon />
@@ -286,6 +283,7 @@ export class InputHeader extends React.PureComponent<InputHeaderProps, InputHead
                     small={true}
                     className={((allExpanded || !allCollapsed) ? 'mr-2' : '')}
                     onClick={this.expandAllClick}
+                    blank={true}
                 >
                     Expand all
                 </Button>}
@@ -293,6 +291,7 @@ export class InputHeader extends React.PureComponent<InputHeaderProps, InputHead
                     noRipples={true}
                     small={true}
                     onClick={this.collapseAllClick}
+                    blank={true}
                 >
                     Collapse all
                 </Button>}

@@ -1,5 +1,3 @@
-// Styles
-require('./openingHoursDay.scss');
 import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_circle_outline_24px.svg';
 
 // Libs
@@ -56,10 +54,11 @@ export class OpeningHoursDay extends BaseInput<OpeningHoursDayProps, OpeningHour
                                     max={nextTime}
                                 />
                                 <Button
-                                    type={'blank--light'}
                                     onClick={this.removeTimeClick(index)}
                                     className="openingHoursDay-input__button--remove mr-5 line-height--0"
                                     circular={true}
+                                    blank={true}
+                                    type="error"
                                 >
                                     <PlusIcon />
                                 </Button>
@@ -69,7 +68,8 @@ export class OpeningHoursDay extends BaseInput<OpeningHoursDayProps, OpeningHour
                             <Button
                                 className="openingHoursDay-input__button-open-close"
                                 onClick={this.addTimeClick}
-                                type={'hero'}
+                                type={'primary'}
+                                hero={true}
                             >
                                 {this.props.openingHours && this.props.openingHours.times && this.props.openingHours.times.length % 2 === 0 ? 'Open' : 'Close'}
                             </Button>

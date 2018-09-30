@@ -7,6 +7,8 @@ const convert = require('koa-connect');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+var _ = require('lodash');
 
 let htmlPluginOptions = {
     alwaysWriteToDisk: true,
@@ -18,6 +20,9 @@ module.exports = merge(
     {
         customizeArray(a, b, key) {
             if (key === 'plugins') {
+                a = _.remove(a, function (plugin) {
+                    return !(plugin.filename && plugin.filename === '[name].css');
+                });
                 return a.concat(b);
             }
 
@@ -59,6 +64,9 @@ module.exports = merge(
     mode: 'development',
     devtool: 'inline-source-map',
     plugins: [
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+        }),
         new CleanWebpackPlugin(['src/demo/ClientApp/wwwroot'], {
             root: path.join(__dirname, '..')
         }),

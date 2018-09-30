@@ -1,15 +1,16 @@
-﻿// Styles
-require('./dropdown.scss');
-
-// Libs
+﻿// Libs
 import * as React from 'react';
 import SmoothCollapse from '../smoothCollapse/SmoothCollapse';
+import * as classNames from 'classnames';
 
-export type HeaderFunction = (onClick: (e: React.SyntheticEvent<{}>) => void) => JSX.Element;
-export type HeaderPlain = JSX.Element | string;
+export type DropdownHeaderFunctionConfig = {
+    onClick: (e: React.SyntheticEvent<{}>) => void
+};
+export type DropdownHeaderFunction = (config: DropdownHeaderFunctionConfig) => JSX.Element;
+export type DropdownHeaderPlain = JSX.Element | string;
 
 export interface DropdownItemProps {
-    header?: HeaderPlain | HeaderFunction;
+    header?: DropdownHeaderPlain | DropdownHeaderFunction;
     className?: string;
     submenuClassName?: string;
     headerClassName?: string;
@@ -40,6 +41,8 @@ export class Dropdown extends React.PureComponent<DropdownItemProps, DropdownIte
         this.state = {
             isDropdownVisible: false
         };
+        this.showNavigation = this.showNavigation.bind(this);
+        this.hideNavigation = this.hideNavigation.bind(this);
     }
 
     handleClickOutside() {
@@ -47,12 +50,12 @@ export class Dropdown extends React.PureComponent<DropdownItemProps, DropdownIte
     }
 
     public hideNavigation() {
-        this.setState(Object.assign(this.state, { isDropdownVisible: false }));
+        this.setState({ isDropdownVisible: false });
         document.removeEventListener('click', this.hideNavigation);
     }
 
     public showNavigation() {
-        this.setState(Object.assign(this.state, { isDropdownVisible: true }));
+        this.setState({ isDropdownVisible: true });
         document.addEventListener('click', this.hideNavigation);
     }
 
@@ -65,23 +68,28 @@ export class Dropdown extends React.PureComponent<DropdownItemProps, DropdownIte
     }
 
     public render() {
+        const containerClassName = classNames([
+            'guestbell__dropdown',
+            (!this.state.isDropdownVisible ? 'guestbell__dropdown--closed' : 'guestbell__dropdown--opened'),
+            { ['guestbell__dropdown--disabled']: this.props.disabled },
+            { ['guestbell__dropdown--inline']: this.props.inline },
+            this.props.className,
+        ]);
+        const headerClassName = classNames([
+            'guestbell__dropdown-toggle',
+            { ['guestbell__dropdown-toggle__arrow--hidden']: !this.props.showArrow },
+            { ['guestbell__dropdown-toggle--disabled']: this.props.disabled },
+        ]);
         return (
-            <div
-                className={'guestbell__dropdown ' +
-                    (!this.state.isDropdownVisible ? 'closed ' : 'open ') +
-                    (!this.props.disabled ? 'disabled ' : '') +
-                    (this.props.inline ? 'guestbell__dropdown--inline ' : '') +
-                    (this.props.className ? this.props.className : ' ')}
-            >
+            <div className={containerClassName}>
                 <div
                     role="button"
-                    className={`guestbell__dropdown-toggle 
-                    ${(this.props.headerClassName ? this.props.headerClassName : '')} 
-                    ${(this.props.showArrow ? '' : 'guestbell__dropdown-toggle__arrow--hidden')} 
-                    ${(this.props.disabled && this.props.disabled ? 'disabled' : '')}`}
+                    className={headerClassName}
                     onClick={this.containerClick}
                 >
-                    {this.isFunction(this.props.header) ? (this.props.header as HeaderFunction)((e) => this.handleClick(e)) : this.props.header as HeaderPlain}
+                    {this.isFunction(this.props.header) ? (this.props.header as DropdownHeaderFunction)({
+                        onClick: this.handleClick
+                    }) : this.props.header as DropdownHeaderPlain}
                     {this.props.notificationCount > 0 && <span className="guestbell__label-count">{this.props.notificationCount}</span>}
                 </div>
                 <div
@@ -101,12 +109,12 @@ export class Dropdown extends React.PureComponent<DropdownItemProps, DropdownIte
         this.handleClick(e);
     }
 
-    private isFunction(functionToCheck: HeaderPlain | HeaderFunction) {
+    private isFunction(functionToCheck: DropdownHeaderPlain | DropdownHeaderFunction) {
         var getType = {};
         return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
     }
 
-    private handleClick(e: React.SyntheticEvent<{}>) {
+    private handleClick = (e: React.SyntheticEvent<{}>) => {
         if (this.props.shouldHandleClick && !this.props.disabled) {
             this.props.onClick && this.props.onClick();
             e.preventDefault();

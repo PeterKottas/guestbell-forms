@@ -1,7 +1,4 @@
-﻿// Styles
-require('./textArea.scss');
-
-// Libs
+﻿// Libs
 import * as React from 'react';
 import Textarea from 'react-textarea-autosize';
 
@@ -25,7 +22,12 @@ export interface TextAreaState extends BaseInputState {
 }
 
 export class TextArea extends BaseInput<TextAreaProps, TextAreaState, HTMLTextAreaElement>  {
-    public static defaultProps = Object.assign(BaseInput.defaultProps, { type: 'text', placeholder: '', stopClickPropagation: true, readOnly: false });
+    public static defaultProps = Object.assign(BaseInput.defaultProps, {
+        type: 'text',
+        placeholder: '',
+        stopClickPropagation: true,
+        readOnly: false,
+    });
 
     constructor(props: TextAreaProps) {
         super(props);
@@ -38,10 +40,10 @@ export class TextArea extends BaseInput<TextAreaProps, TextAreaState, HTMLTextAr
                     className={`input__base textArea-input ${this.getValidationClass()} 
                     ${(this.props.readOnly ? 'textArea-input--readOnly' : '')} 
                     ${this.props.className ? this.props.className : ''}`}
-                    onClick={e => this.props.stopClickPropagation && e.stopPropagation()}
+                    onClick={this.onContainerClick}
                 >
                     <Textarea
-                        ref={elem => this.props.inputRef && this.props.inputRef(elem)}
+                        ref={this.elemRef}
                         placeholder={this.props.placeholder}
                         disabled={this.getDisabled()}
                         required={this.props.required}
@@ -51,7 +53,7 @@ export class TextArea extends BaseInput<TextAreaProps, TextAreaState, HTMLTextAr
                         onBlur={this.handleBlur}
                         onFocus={this.handleFocus}
                         readOnly={this.props.readOnly}
-                        onKeyDown={e => this.props.onKeyDown && this.props.onKeyDown(e)}
+                        onKeyDown={this.onKeyDown}
                         minRows={this.props.minRows}
                         maxRows={this.props.maxRows}
                     />
@@ -63,5 +65,11 @@ export class TextArea extends BaseInput<TextAreaProps, TextAreaState, HTMLTextAr
             </InputGroup>
         );
     }
+
+    private onKeyDown = e => this.props.onKeyDown && this.props.onKeyDown(e);
+
+    private elemRef = elem => this.props.inputRef && this.props.inputRef(elem);
+
+    private onContainerClick = e => this.props.stopClickPropagation && e.stopPropagation();
 }
 export default TextArea;

@@ -1,7 +1,4 @@
-﻿// Styles
-require('./dynamicSubmit.scss');
-
-// Libs
+﻿// Libs
 import * as React from 'react';
 import { Button, ButtonProps } from '../button/Button';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';

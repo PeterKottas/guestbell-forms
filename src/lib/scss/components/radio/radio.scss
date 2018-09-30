@@ -1,0 +1,74 @@
+﻿
+$baseFontSize: 16;
+
+@function rem($val) {
+    @return #{$val / $baseFontSize}rem;
+}
+
+.radio-input {
+    display: inline-block;
+    margin-top: 20px;
+    border: none;
+    margin-right: 20px;
+
+    &:last-child {
+        margin-right: 0;
+    }
+
+    &.validation__error {
+        border: none;
+    }
+
+    input {
+        position: relative;
+        padding: 10px 10px 10px 5px;
+        color: $input-text-color;
+        outline: 0;
+        border: none;
+        width: auto;
+        margin-right: 10px;
+        top: 0;
+
+        &:before {
+            transition: transform .4s cubic-bezier(.45,1.8,.5,.75);
+            transform: scale(0,0);
+            content: "";
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            z-index: 1;
+            width: 10px;
+            height: 10px;
+            background: $primary-color;
+            border-radius: 50%;
+        }
+
+        &:checked {
+            &:before {
+                transform: scale(1,1);
+            }
+        }
+
+        &:after {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            border: 2px solid $input-border-color;
+            border-radius: 50%;
+        }
+    }
+
+    label {
+        top: 0;
+        user-select: none;
+        margin-bottom: 8px;
+        pointer-events: auto;
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+}
