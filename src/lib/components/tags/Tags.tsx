@@ -68,8 +68,8 @@ class Suggestions extends React.PureComponent<SuggestionsProps & InjectedProps> 
                             <Button
                                 className={'w-100 tags-input__suggestion ' + (this.props.preselectedSuggestion !== undefined &&
                                     this.props.preselectedSuggestion === index ? 'tags-input__suggestion--preselected' : '')}
-                                type="dropdown"
                                 onClick={this.onSelected(tag)}
+                                dropdown={true}
                             >
                                 {tag.name}
                             </Button>
