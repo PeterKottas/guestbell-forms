@@ -52,8 +52,8 @@ module.exports = merge(
     },
     output: {
         path: path.join(__dirname, '..', 'docs'),
-        publicPath: '/',
-        filename: 'guestbell-forms/[name].[hash].js',
+        publicPath: '/guestbell-forms',
+        filename: 'dist/[name].[hash].js',
     },
     externals: {},
     plugins: [
@@ -64,11 +64,11 @@ module.exports = merge(
         new CopyWebpackPlugin([
             {
                 from: './src/demo/ClientApp/assets/favicon/icons',
-                to: 'guestbell-forms/dist/icons'
+                to: 'dist/icons'
             }
         ]),
         new MiniCssExtractPlugin({
-            filename: "guestbell-forms/dist/[name].[hash].css",
+            filename: "dist/[name].[hash].css",
         }),
     ],
     mode: 'production',
