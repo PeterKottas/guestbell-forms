@@ -24,6 +24,7 @@
     margin-right: 0.8rem;
     border-bottom: 1px solid $input-border-color;
     width: 100%; // Chrome yellow tint fix
+    transition: 0.5s ease border-color;
     input:-webkit-autofill {
         box-shadow: 0 0 0 1000px white inset !important;
         -webkit-box-shadow: 0 0 0 1000px white inset !important;
@@ -48,6 +49,7 @@
         .validation__item {
             white-space: nowrap;
             margin-left: 10px;
+            list-style: none;
         }
     }
     &.validation__error {
@@ -56,7 +58,7 @@
         }
         .bar:before,
         .bar:after {
-            background: $input-validation-error-bar-color;
+            background-color: $input-validation-error-bar-color;
         }
         border-bottom: 1px solid $input-validation-error-border-color !important;
     }
@@ -121,8 +123,8 @@
         width: 0;
         bottom: 0px;
         position: absolute;
-        background: $primary-color;
-        transition: 0.2s ease all;
+        background-color: $primary-color;
+        transition: 0.2s ease height, 0.5s ease background-color;
     }
     .bar:before {
         left: 50%;

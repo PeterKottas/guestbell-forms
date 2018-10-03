@@ -10,19 +10,13 @@ import guid from '../utils/Guid';
 import { Dropdown } from '../dropdown/Dropdown';
 import { SmoothCollapse } from '../smoothCollapse/SmoothCollapse';
 
-export type ActionParam = {
-    expand: () => void;
-    collapse: () => void;
-    toggle: () => void;
-};
-
 export type InputHeaderProps = {
     className?: string;
     title?: string | JSX.Element;
     icon?: string | JSX.Element;
     subTitle?: string | JSX.Element;
-    mainButton?: JSX.Element | ((param: ActionParam) => JSX.Element);
-    extraButtons?: JSX.Element[] | ((param: ActionParam) => JSX.Element[]);
+    mainButton?: JSX.Element;
+    extraButtons?: JSX.Element[];
     collapsable?: boolean;
     collapsed?: boolean;
     collapsedDefault?: boolean;
@@ -235,11 +229,7 @@ export class InputHeader extends React.PureComponent<InputHeaderProps, InputHead
     private renderMainButton() {
         let child = undefined;
         if (typeof this.props.mainButton === 'function') {
-            child = this.props.mainButton({
-                expand: this.expand,
-                collapse: this.collapse,
-                toggle: this.toggle
-            });
+            child = this.props.mainButton;
         } else {
             child = this.props.mainButton;
         }
@@ -249,11 +239,7 @@ export class InputHeader extends React.PureComponent<InputHeaderProps, InputHead
     private renderExtraButtons() {
         let arr = [];
         if (typeof this.props.extraButtons === 'function') {
-            arr = this.props.extraButtons({
-                expand: this.expand,
-                collapse: this.collapse,
-                toggle: this.toggle
-            });
+            arr = this.props.extraButtons;
         } else {
             arr = this.props.extraButtons;
         }

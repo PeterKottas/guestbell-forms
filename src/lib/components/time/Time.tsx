@@ -55,7 +55,7 @@ export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
                             </button>
                             <div className="input-padding">
                                 <input
-                                    ref={el => this.hoursEl = el}
+                                    ref={this.hoursRef}
                                     disabled={this.getDisabled()}
                                     required={this.props.required}
                                     className={'time-input__time ' + (this.state.value ? 'filled' : '')}
@@ -86,7 +86,7 @@ export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
                             </button>
                             <div className="input-padding">
                                 <input
-                                    ref={el => this.minutesEl = el}
+                                    ref={this.minutesRef}
                                     disabled={this.getDisabled()}
                                     required={this.props.required}
                                     className={'time-input__time ' + (this.state.value ? 'filled' : '')}
@@ -118,6 +118,10 @@ export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
             </InputGroup>
         );
     }
+
+    private hoursRef = (el: HTMLInputElement) => this.hoursEl = el;
+
+    private minutesRef = (el: HTMLInputElement) => this.minutesEl = el;
 
     private onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         if (this.state.hoursText) {

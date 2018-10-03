@@ -65,6 +65,8 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
 
     public inputId = guid();
 
+    private lastValidation: JSX.Element[];
+
     constructor(props: P) {
         super(props);
         this.state = {
@@ -110,10 +112,13 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
             finalErrors = finalErrors.concat(this.props.errors);
         }
         finalErrors = finalErrors.filter(i => i);
+        if (finalErrors.length > 0) {
+            this.lastValidation = finalErrors.map((item, index) => <li key={index} className="validation__item">{item}</li>);
+        }
         return (
             <div className="validation__container">
                 <ul className="validation__ul">
-                    {finalErrors.map((item, index) => <li key={index} className="validation__item">{item}</li>)}
+                    {this.lastValidation}
                 </ul>
             </div>
         );

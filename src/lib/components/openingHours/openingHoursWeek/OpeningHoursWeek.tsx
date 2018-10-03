@@ -76,6 +76,7 @@ export class OpeningHoursWeek extends BaseInput<OpeningHoursWeekProps, OpeningHo
         return (
             <div className={``}>
                 {this.props.standardDay && <OpeningHoursDay
+                    className="openingHoursWeek__standard-day"
                     label={<span>
                         {OpeningHoursUtil.getLabelSuffix(this.props.standardDay)}
                     </span>}

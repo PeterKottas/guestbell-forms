@@ -25,12 +25,10 @@ import {
     NumberValidator,
     TextArea,
     OpeningHoursWeekDayObj,
-    ActionParam,
     SelectValue,
     TextProps,
     ValidatorTypes,
     IBaseValidator,
-    DropdownHeaderFunctionConfig,
     ButtonProps
 } from '../../../../lib/index';
 
@@ -158,6 +156,10 @@ ButtonsShowcase.defaultProps = {
 export class Basic extends React.PureComponent<BasicProps, BasicState> {
     private form: Form;
 
+    private specialDaysInputHeader: InputHeader;
+
+    private dropdownFunctionHeader: Dropdown;
+
     private initialState: BasicState = {
         gender: '',
         name: '',
@@ -225,7 +227,6 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                 <Form
                                     noValidate={true}
                                     className="input__form"
-                                    ref={form => this.form = form}
                                 >
                                     <Checkbox
                                         label="Turn form validation on or off"
@@ -273,7 +274,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                 {!this.state.simulateUnmount &&
                                     <Form
                                         noValidate={true}
-                                        ref={form => this.form = form}
+                                        ref={this.formRef}
                                         onSubmit={this.submitForm}
                                     >
                                         <InputHeader
@@ -540,15 +541,15 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                 className={''}
                                                 title={'Special days opening hours'}
                                                 collapsable={true}
-                                                mainButton={
-                                                    (param) => (
-                                                        <Button
-                                                            type={'primary'}
-                                                            onClick={this.specialDaysAddClick(param)}
-                                                        >
-                                                            Add
-                                                        </Button>
-                                                    )}
+                                                ref={this.specialDaysInputHeaderRef}
+                                                mainButton={(
+                                                    < Button
+                                                        type={'primary'}
+                                                        onClick={this.specialDaysAddClick}
+                                                    >
+                                                        Add
+                                                    </Button>
+                                                )}
                                             >
                                                 <OpeningHoursSpecial
                                                     touchOn={this.state.touchOn}
@@ -695,7 +696,8 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                     </Dropdown>
                                                     <Dropdown
                                                         className="position-relative"
-                                                        header={this.functionHeader}
+                                                        ref={this.dropdownFunctionHeaderRef}
+                                                        header={<Button onClick={this.functionHeaderClick} type="primary">Function header</Button>}
                                                         showArrow={false}
                                                         submenuClassName="p-2"
                                                     >
@@ -744,9 +746,13 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
         );
     }
 
-    private functionHeader = (props: DropdownHeaderFunctionConfig) => (
-        <Button onClick={e => props.onClick(e)} type="primary">Function header</Button>
-    )
+    private specialDaysInputHeaderRef = (el: InputHeader) => this.specialDaysInputHeader = el;
+
+    private formRef = (el: Form) => this.form = el;
+
+    private dropdownFunctionHeaderRef = (el: Dropdown) => this.dropdownFunctionHeader = el;
+
+    private functionHeaderClick = () => this.dropdownFunctionHeader.showNavigation();
 
     private selectedValuesChanged = (selectedValues: SelectValue[]) => this.setState({ selectedValues });
 
@@ -756,10 +762,10 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
 
     private openingHoursSpecialChanged = (days: OpeningHoursSpecialDayObj[]) => this.setState({ openingHoursSpecial: days });
 
-    private specialDaysAddClick = (param: ActionParam) => () => {
+    private specialDaysAddClick = () => {
         this.setState({
             openingHoursSpecial: this.state.openingHoursSpecial.concat([{ date: undefined, times: [] }])
-        }, () => param.expand());
+        }, () => this.specialDaysInputHeader.expand());
     }
 
     private openingHoursWeekStandardDayChanged = (day: OpeningHoursWeekDayObj) => this.setState({ openingHoursWeekDay: day });

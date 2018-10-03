@@ -3,14 +3,8 @@ import * as React from 'react';
 import SmoothCollapse from '../smoothCollapse/SmoothCollapse';
 import * as classNames from 'classnames';
 
-export type DropdownHeaderFunctionConfig = {
-    onClick: (e: React.SyntheticEvent<{}>) => void
-};
-export type DropdownHeaderFunction = (config: DropdownHeaderFunctionConfig) => JSX.Element;
-export type DropdownHeaderPlain = JSX.Element | string;
-
 export interface DropdownItemProps {
-    header?: DropdownHeaderPlain | DropdownHeaderFunction;
+    header?: JSX.Element | string;
     className?: string;
     submenuClassName?: string;
     headerClassName?: string;
@@ -87,9 +81,7 @@ export class Dropdown extends React.PureComponent<DropdownItemProps, DropdownIte
                     className={headerClassName}
                     onClick={this.containerClick}
                 >
-                    {this.isFunction(this.props.header) ? (this.props.header as DropdownHeaderFunction)({
-                        onClick: this.handleClick
-                    }) : this.props.header as DropdownHeaderPlain}
+                    {this.props.header}
                     {this.props.notificationCount > 0 && <span className="guestbell__label-count">{this.props.notificationCount}</span>}
                 </div>
                 <div
@@ -107,11 +99,6 @@ export class Dropdown extends React.PureComponent<DropdownItemProps, DropdownIte
 
     private containerClick = (e: React.MouseEvent<HTMLDivElement>) => {
         this.handleClick(e);
-    }
-
-    private isFunction(functionToCheck: DropdownHeaderPlain | DropdownHeaderFunction) {
-        var getType = {};
-        return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
     }
 
     private handleClick = (e: React.SyntheticEvent<{}>) => {

@@ -1,11 +1,11 @@
 // Libs
-import onClickOutside, { InjectedOnClickOutProps } from 'react-onclickoutside';
 import * as React from 'react';
 import { InputGroup } from '../inputGroup/InputGroup';
 import { Text, TextProps } from '../text/Text';
 import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_circle_outline_24px.svg';
 import { BaseInputProps, BaseInputState, BaseInput, ValidationError } from '../base/input/BaseInput';
 import { Button } from '../button/Button';
+import TagsSuggestions from './subComponents/TagsSuggestions';
 
 // Misc
 export type Tag = {
@@ -44,54 +44,6 @@ export interface TagsState extends BaseInputState {
     preselectedSuggestion?: number;
 }
 
-type SuggestionsProps = {
-    preselectedSuggestion?: number;
-    isVisible: boolean;
-    tags: Tag[];
-    onSelected: (tag: Tag) => void;
-    onClickOutside: () => void;
-    value: string;
-    loading: boolean;
-    loadingComponent?: string | JSX.Element;
-    emptyComponent?: string | JSX.Element;
-};
-
-type InjectedProps = InjectedOnClickOutProps;
-class Suggestions extends React.PureComponent<SuggestionsProps & InjectedProps> {
-    public render() {
-        return this.props.isVisible ? (
-            <div className="tags-input__suggestions">
-                <ul>
-                    {this.props.loading && this.props.loadingComponent && <li className="w-100 text-center p-2">{this.props.loadingComponent}</li>}
-                    {!this.props.loading && this.props.tags.map((tag, index) => (
-                        <li key={index}>
-                            <Button
-                                className={'w-100 tags-input__suggestion ' + (this.props.preselectedSuggestion !== undefined &&
-                                    this.props.preselectedSuggestion === index ? 'tags-input__suggestion--preselected' : '')}
-                                onClick={this.onSelected(tag)}
-                                dropdown={true}
-                            >
-                                {tag.name}
-                            </Button>
-                        </li>
-                    ))}
-                    {!this.props.loading && this.props.emptyComponent && (this.props.tags.length === 0) && (
-                        <li className="w-100 text-center p-2">{this.props.emptyComponent}</li>
-                    )}
-                </ul>
-            </div>
-        ) : null;
-    }
-
-    public handleClickOutside() {
-        this.props.onClickOutside();
-    }
-
-    private onSelected = (tag: Tag) => () => this.props.onSelected(tag);
-}
-
-const SuggestionsWrapped = onClickOutside<SuggestionsProps>(Suggestions);
-
 export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
     public static defaultProps: TagsProps = {
         ...BaseInput.defaultProps,
@@ -102,11 +54,11 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
         maxTags: 1000,
         onTagsChanged: () => undefined,
         onNewTagAdded: (newTagName) => Promise.resolve(({ name: newTagName, id: new Date().getTime() })),
-        valueNotAddedError: <span>Press <b>ENTER</b> to confirm</span>,
+        valueNotAddedError: <span>You forgot to add tag</span>,
         maxTagsSurpassedError: <span>Maximum number of tags surpassed</span>,
         showSuggestions: true,
         suggestionsLoadingComponent: 'Loading...',
-        suggestionsEmptyComponent: 'No data...',
+        suggestionsEmptyComponent: 'No existing tags...',
         loadingDelayMs: 500,
         filterExistingTags: (text, tags) => tags.filter(tag => tag.name && tag.name.toLowerCase().startsWith(text)),
         maxSuggestions: 5,
@@ -142,16 +94,25 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
                                 onErrorsChanged={this.onErrChanged}
                                 showValidation={false}
                             />
-                            {this.state.suggestionsVisible && this.props.showSuggestions && <SuggestionsWrapped
+                            {this.state.suggestionsVisible && this.props.showSuggestions && <TagsSuggestions
+                                allowNew={this.props.allowNew}
                                 preselectedSuggestion={this.state.preselectedSuggestion}
                                 loading={this.state.fetchingExistingTags}
-                                loadingComponent={this.props.suggestionsLoadingComponent}
-                                emptyComponent={this.props.suggestionsEmptyComponent}
+                                LoadingComponent={this.props.suggestionsLoadingComponent}
                                 isVisible={this.state.suggestionsVisible}
+                                EmptyComponent={this.props.suggestionsEmptyComponent}
                                 tags={suggestions}
                                 onSelected={this.onSuggestionSelected}
                                 onClickOutside={this.onClickOutside}
                                 value={this.state.value}
+                                AddNewTagComponent={this.props.allowNew && this.state.value !== '' && this.state.valid && (
+                                    <Button
+                                        dropdown={true}
+                                        onClick={this.addNewTag}
+                                    >
+                                        Add new "{this.state.value}"
+                                    </Button>
+                                )}
                             />}
                         </div >
                     }
@@ -185,11 +146,7 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
                 this.props.onTagsChanged(this.props.tags.concat(existingTag));
                 this.setState({ value: '' }, () => this.fetchExistingTags());
             } else if (this.props.allowNew) {
-                const newTag = await this.props.onNewTagAdded(this.state.value);
-                if (newTag) {
-                    this.props.onTagsChanged(this.props.tags ? this.props.tags.concat(newTag) : [newTag]);
-                }
-                this.setState({ value: '' });
+                await this.addNewTag();
             }
         }
         if (suggestions.length > 0 && this.state.suggestionsVisible) {
@@ -217,6 +174,14 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
         }
     }
 
+    private addNewTag = async () => {
+        const newTag = await this.props.onNewTagAdded(this.state.value);
+        if (newTag) {
+            this.props.onTagsChanged(this.props.tags ? this.props.tags.concat(newTag) : [newTag]);
+        }
+        this.setState({ value: '' });
+    }
+
     private onSuggestionSelected = tag => {
         this.props.onTagsChanged(this.props.tags.concat(tag));
         this.setState({ value: '', preselectedSuggestion: undefined }, () => this.fetchExistingTags());
@@ -234,7 +199,7 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
 
     private getErrors() {
         let errors = [];
-        if (this.state.valid && this.state.value && this.props.allowNew) {
+        if (this.state.valid && this.state.value && this.props.allowNew && !this.state.textIsFocused) {
             errors = errors.concat(this.props.valueNotAddedError);
         }
         if (this.props.maxTags < (this.props.tags && this.props.tags.length)) {
@@ -261,7 +226,7 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
         const existingTags: Tag[] = [].concat((this.props.existingTags ? this.props.existingTags : [])).
             concat(this.state.fetchedExistingTags ? this.state.fetchedExistingTags : []);
         const filteredTags = this.props.filterExistingTags(this.state.value ? this.state.value.toLowerCase() : '', existingTags);
-        const suggestions = filteredTags.
+        let suggestions = filteredTags.
             filter(tag => !this.props.tags.some(t => t.id === tag.id)).
             slice(0, this.props.maxSuggestions);
         return suggestions;

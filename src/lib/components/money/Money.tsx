@@ -46,12 +46,11 @@ export class Money extends BaseInput<MoneyProps, MoneyState, never>  {
                         let currentCurrencies = this.props.currencies.
                             filter(currency => this.props.prices.
                                 filter((priceCurrency, priceIndex) => priceIndex !== index && priceCurrency.currency.value === currency.value).length === 0);
-                        let retComponents = currentCurrencies.length ? <div>
+                        let retComponents = currentCurrencies.length ? <div key={index}>
                             <Select
                                 onFocus={this.onFocus}
                                 onBlur={this.onBlur}
                                 className={'money-input__select m-0'}
-                                key={index * 3}
                                 values={currentCurrencies}
                                 onChange={this.onCurrencyChanged(index, currentCurrencies)}
                                 value={item.currency.value.toString()}
@@ -62,7 +61,6 @@ export class Money extends BaseInput<MoneyProps, MoneyState, never>  {
                                 onTheFlightValidate={this.onTheFlightValidate}
                                 placeholder={'0.00'}
                                 className={'money-input__text m-0'}
-                                key={index * 3 + 1}
                                 validators={['number']}
                                 value={item.value ? item.value.toString() : ''}
                                 onChange={this.onPriceChanged(index)}
@@ -72,7 +70,6 @@ export class Money extends BaseInput<MoneyProps, MoneyState, never>  {
                                 <Button
                                     blank={true}
                                     type="error"
-                                    key={index * 3 + 2}
                                     onClick={this.removePriceClick(index)}
                                     className="transform-rotate--45 line-height--0"
                                     buttonProps={{ title: 'Remove price' }}
