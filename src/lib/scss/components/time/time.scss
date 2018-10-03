@@ -96,7 +96,7 @@
             transition: 0.2s all;
             fill: $input-label-color;
         }
-        &:hover{
+        &:hover, &:active, &:focus{
             svg {
                 fill: $primary-color;
             }

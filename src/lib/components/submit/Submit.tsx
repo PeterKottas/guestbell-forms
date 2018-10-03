@@ -26,12 +26,12 @@ export class Submit extends BaseInput<SubmitProps, SubmitState, never>  {
         return (
             <Button
                 {...this.props}
-                buttonType="submit"
                 className={`${(this.props.className ? this.props.className : '')}`}
                 onClick={this.handleClick}
                 disabled={this.isDisabled()}
                 buttonProps={{
                     ...this.props.buttonProps,
+                    type: 'submit',
                     title: this.isDisabled() ? this.props.disabledTitle : this.props.buttonProps && this.props.buttonProps.title
                 }}
             >

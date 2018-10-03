@@ -46,7 +46,7 @@ export class Money extends BaseInput<MoneyProps, MoneyState, never>  {
                         let currentCurrencies = this.props.currencies.
                             filter(currency => this.props.prices.
                                 filter((priceCurrency, priceIndex) => priceIndex !== index && priceCurrency.currency.value === currency.value).length === 0);
-                        let retComponents = currentCurrencies.length ? [
+                        let retComponents = currentCurrencies.length ? <div>
                             <Select
                                 onFocus={this.onFocus}
                                 onBlur={this.onBlur}
@@ -55,7 +55,7 @@ export class Money extends BaseInput<MoneyProps, MoneyState, never>  {
                                 values={currentCurrencies}
                                 onChange={this.onCurrencyChanged(index, currentCurrencies)}
                                 value={item.currency.value.toString()}
-                            />,
+                            />
                             <Text
                                 onFocus={this.onFocus}
                                 onBlur={this.onBlur}
@@ -67,8 +67,8 @@ export class Money extends BaseInput<MoneyProps, MoneyState, never>  {
                                 value={item.value ? item.value.toString() : ''}
                                 onChange={this.onPriceChanged(index)}
                                 type="number"
-                            />,
-                            this.props.prices.length > 0 && (
+                            />
+                            {this.props.prices.length > 0 && (
                                 <Button
                                     blank={true}
                                     type="error"
@@ -80,8 +80,8 @@ export class Money extends BaseInput<MoneyProps, MoneyState, never>  {
                                 >
                                     <PlusIcon />
                                 </Button>
-                            )
-                        ] : null;
+                            )}
+                        </div> : null;
                         unusedCurrencies = unusedCurrencies.filter(currency => currency.value !== item.currency.value);
                         return retComponents;
                     })}

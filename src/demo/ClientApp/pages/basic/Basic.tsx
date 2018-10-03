@@ -128,7 +128,7 @@ const customAgeValidator: IBaseValidator[] = [AgeValidator.instance];
 
 const customNumberValidator: IBaseValidator[] = [new NumberValidator({ min: 0 })];
 
-const types: ButtonTypes[] = ['primary', 'warning', 'error', 'info', 'success', 'gray', 'white'];
+const types: ButtonTypes[] = ['primary', 'warning', 'error', 'info', 'success', 'gray', 'white', 'none'];
 const ButtonsShowcase: React.SFC<ButtonProps> = props => {
     return (
         <div
@@ -141,7 +141,6 @@ const ButtonsShowcase: React.SFC<ButtonProps> = props => {
         >{types.map((item, index) => (
             <Button
                 key={index}
-                className="my-2 mr-2"
                 type={item}
                 {...props}
             >
@@ -150,6 +149,10 @@ const ButtonsShowcase: React.SFC<ButtonProps> = props => {
         ))}
         </div>
     );
+};
+
+ButtonsShowcase.defaultProps = {
+    className: 'my-2 mr-2'
 };
 
 export class Basic extends React.PureComponent<BasicProps, BasicState> {
@@ -291,11 +294,13 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                             extraButtons={[
                                                 <Button
                                                     key={1}
+                                                    dropdown={true}
                                                     onClick={this.touchAll}
                                                 >Touch all
                                                 </Button>,
                                                 <Button
                                                     key={2}
+                                                    dropdown={true}
                                                     onClick={this.untouchAll}
                                                 >Un-touch all
                                                 </Button>]}
@@ -510,13 +515,13 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                 extraButtons={[
                                                     <Button
                                                         key={1}
-                                                        type={'dropdown'}
+                                                        dropdown={true}
                                                     >
                                                         Extra button 1
                                                     </Button>,
                                                     <Button
                                                         key={2}
-                                                        type={'dropdown'}
+                                                        dropdown={true}
                                                     >
                                                         Extra button 2
                                                     </Button>
@@ -595,6 +600,10 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                 <div className="p-3 buttons-row">
                                                     <h3 className="text-center">Circular</h3>
                                                     <ButtonsShowcase circular={true} />
+                                                </div>
+                                                <div className="p-3 buttons-row">
+                                                    <h3 className="text-center">Dropdown</h3>
+                                                    <ButtonsShowcase dropdown={true} className="" />
                                                 </div>
                                             </InputHeader>
                                             <InputHeader

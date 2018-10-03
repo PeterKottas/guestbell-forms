@@ -5,14 +5,19 @@ import * as classNames from 'classnames';
 
 // Misc
 
-export type ButtonTypes = 'primary' | 'dropdown' | 'success' | 'error' | 'warning' | 'info' | 'gray' | 'white';
+export type ButtonTypes = 'primary' | 'success' | 'error' | 'warning' | 'info' | 'gray' | 'white' | 'none';
+
+export type ButtonComponentProps = {
+    onClick: (e: React.MouseEvent<HTMLElement>) => void;
+    className: string;
+    buttonProps: React.ButtonHTMLAttributes<HTMLButtonElement>;
+};
 
 export type ButtonProps = {
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     className?: string;
     disabled?: boolean;
     type?: ButtonTypes;
-    buttonType?: 'button' | 'submit';
     circular?: boolean;
     noRipples?: boolean;
     small?: boolean;
@@ -22,10 +27,23 @@ export type ButtonProps = {
     hero?: boolean;
     noShadow?: boolean;
     blank?: boolean;
+    dropdown?: boolean;
+    Component?: (props: ButtonComponentProps) => JSX.Element;
 };
 
 export interface ButtonState {
 }
+
+const DefaultButtonComponent: React.SFC<ButtonComponentProps> = props => (
+    <button
+        {...(props.buttonProps ? props.buttonProps : {})}
+        role="button"
+        className={props.className}
+        onClick={props.onClick}
+    >
+        {props.children}
+    </button>
+);
 
 export class Button extends React.PureComponent<ButtonProps, ButtonState>  {
     public static defaultProps: ButtonProps = {
@@ -35,8 +53,12 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState>  {
         circular: false,
         noRipples: false,
         small: false,
-        buttonType: 'button',
-        disableAfterClickMs: 500
+        disableAfterClickMs: 500,
+        Component: DefaultButtonComponent,
+        buttonProps: {
+            type: 'button'
+        },
+        type: 'none'
     };
 
     private preventMultipleClick = false;
@@ -57,19 +79,18 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState>  {
             { ['guestbell-btn--no-shadow']: this.props.noShadow },
             { ['guestbell-btn--blank']: this.props.blank },
             { ['guestbell-btn--outlined']: this.props.outlined },
+            { ['guestbell-btn--dropdown']: this.props.dropdown },
             { ['guestbell-btn--hero']: this.props.hero },
         ]);
         return (
-            <button
-                {...(this.props.buttonProps ? this.props.buttonProps : {})}
-                type={this.props.buttonType}
-                role="button"
-                className={btnClassName}
+            <this.props.Component
                 onClick={this.handleClick}
+                buttonProps={this.props.buttonProps}
+                className={btnClassName}
             >
                 {!this.props.noRipples && !this.props.disabled && Ink && <Ink />}
                 {this.props.children}
-            </button >
+            </this.props.Component>
         );
     }
 

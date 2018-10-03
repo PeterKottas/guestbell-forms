@@ -5,7 +5,7 @@ import * as PropTypes from 'prop-types';
 // Misc
 import * as MoreIcon from 'material-design-icons/navigation/svg/production/ic_more_vert_24px.svg';
 import * as PlusIcon from 'material-design-icons/hardware/svg/production/ic_keyboard_arrow_down_24px.svg';
-import { ButtonProps, Button } from '../button/Button';
+import { ButtonProps, Button, ButtonComponentProps } from '../button/Button';
 import guid from '../utils/Guid';
 import { Dropdown } from '../dropdown/Dropdown';
 import { SmoothCollapse } from '../smoothCollapse/SmoothCollapse';
@@ -53,6 +53,12 @@ export interface InputHeaderContext {
     unregisterInputHeader: (component: InputHeader) => void;
     stateChanged: () => void;
 }
+
+const CollapseExpandButtonComponent: React.SFC<ButtonComponentProps> = props => (
+    <a className={props.className} onClick={props.onClick} href="#">
+        {props.children}
+    </a>
+);
 
 export class InputHeader extends React.PureComponent<InputHeaderProps, InputHeaderState>  {
     public static defaultProps: InputHeaderProps = {
@@ -119,14 +125,14 @@ export class InputHeader extends React.PureComponent<InputHeaderProps, InputHead
 
     public render() {
         return (
-            <div className={`input__header ` + (this.props.className ? this.props.className : '') + ' ' + (this.getTypeClass())}>
+            <div
+                className={`input__header ` + (this.props.className ? this.props.className : '') + ' ' + (this.getTypeClass())}
+            >
                 <div
                     className={'input__header__top ' +
                         (this.props.showExpandAll ? 'input__header__top--tall ' : '') +
                         (this.props.noBg ? 'input__header__top--no-bg ' : '') +
                         (this.props.headerClassName ? this.props.headerClassName : '')}
-                    onClick={this.toggleClick}
-                    role={this.props.collapsable ? 'button' : ''}
                 >
                     <div className={'input__header__top__header-container '}>
                         {this.props.icon && <div className="input__header__icon line-height--0">
@@ -161,6 +167,7 @@ export class InputHeader extends React.PureComponent<InputHeaderProps, InputHead
                                 blank={true}
                                 className={`input__header__collapse-button line-height--0 ${(this.state.collapsed ? 'collapsed' : '')}`}
                                 {...this.props.collapseButtonsButtonProps}
+                                onClick={this.toggleClick}
                             >
                                 <PlusIcon />
                             </Button>}
@@ -265,7 +272,7 @@ export class InputHeader extends React.PureComponent<InputHeaderProps, InputHead
         let allExpanded = true;
         Object.keys(this.state.inputHeaders).forEach(key => {
             const inputHeader = this.state.inputHeaders[key];
-            if (inputHeader) {
+            if (inputHeader && inputHeader.props.collapsable) {
                 if (inputHeader.state.collapsed) {
                     allExpanded = false;
                 } else {
@@ -284,6 +291,7 @@ export class InputHeader extends React.PureComponent<InputHeaderProps, InputHead
                     className={((allExpanded || !allCollapsed) ? 'mr-2' : '')}
                     onClick={this.expandAllClick}
                     blank={true}
+                    Component={CollapseExpandButtonComponent}
                 >
                     Expand all
                 </Button>}
@@ -292,6 +300,7 @@ export class InputHeader extends React.PureComponent<InputHeaderProps, InputHead
                     small={true}
                     onClick={this.collapseAllClick}
                     blank={true}
+                    Component={CollapseExpandButtonComponent}
                 >
                     Collapse all
                 </Button>}
