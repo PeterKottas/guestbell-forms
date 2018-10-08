@@ -213,7 +213,7 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
     }
 
     protected setValid() {
-        !this.state.isValid && this.setState(() => ({ isValid: true, errors: [] }), () => {
+        this.setState(() => ({ isValid: true, errors: [] }), () => {
             if (!this.props.ignoreContext) {
                 this.props.formContext && this.props.formContext.updateCallback(this.componentId, {
                     validation: {

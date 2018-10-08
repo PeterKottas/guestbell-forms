@@ -142,7 +142,7 @@ class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement>  {
     }
 
     private onKeyDown = (suggestions: Tag[]) => async e => {
-        if (e.key === 'Enter' && (this.state.value !== '' || this.state.preselectedSuggestion !== undefined) && this.state.isValid) {
+        if (e.key === 'Enter' && (this.state.value !== '' || this.state.preselectedSuggestion !== undefined) && this.state.textErrors.length === 0) {
             e.preventDefault();
             e.stopPropagation();
             const existingTag = this.props.existingTags && this.props.existingTags.find(et => et.name === this.state.value);
@@ -205,16 +205,16 @@ class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement>  {
 
     private onTextChanged = (e: React.ChangeEvent<HTMLInputElement>, isValid: boolean) => {
         const value = e.target.value;
-        this.setState(prevState => ({
+        this.setState(() => ({
             value,
             isValid: isValid,
-            suggestionsVisible: !prevState.suggestionsVisible && true
+            suggestionsVisible: true
         }), () => this.handleErrors());
         this.fetchExistingTags(e.target.value);
     }
 
-    private handleErrors = () => {
-        let errors = this.getErrors();
+    private handleErrors = (tags: Tag[] = this.props.tags) => {
+        let errors = this.getErrors(tags);
         if (errors.length > 0) {
             this.setInvalid(errors);
         } else {
@@ -222,9 +222,12 @@ class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement>  {
         }
     }
 
-    private getErrors() {
+    private getErrors(tags: Tag[]) {
         let errors = [];
         errors = errors.concat(this.state.textErrors);
+        if (this.state.value !== '' && tags.length === 0) {
+            errors = errors.concat('Required');
+        }
         if (this.state.isValid && this.state.value && this.props.allowNew && !this.state.textIsFocused) {
             errors = errors.concat(this.props.valueNotAddedError);
         }
@@ -278,8 +281,9 @@ class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement>  {
     }
 
     private tagRemoveClick = (tag: Tag) => () => {
-        this.props.onTagsChanged && this.props.onTagsChanged(this.props.tags.filter(sv => sv.id !== tag.id));
-        this.handleErrors();
+        const newTags = this.props.tags.filter(sv => sv.id !== tag.id);
+        this.props.onTagsChanged && this.props.onTagsChanged(newTags);
+        this.handleErrors(newTags);
         this.fetchExistingTags();
     }
 
