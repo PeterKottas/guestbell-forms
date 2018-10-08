@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { Button, ButtonProps } from '../button/Button';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
+import { withFormContext } from '../form/withFormContext';
 
 // Misc
 
@@ -12,7 +13,7 @@ export enum DynamicSubmitMode {
     Success
 }
 
-export interface DynamicSubmitProps extends ButtonProps, BaseInputProps<never> {
+interface DynamicSubmitRawProps extends ButtonProps, BaseInputProps<never> {
     onClick?: (e: React.MouseEvent<HTMLButtonElement>, submitting?: () => void, error?: () => void, success?: () => void, reset?: () => void) => void;
     validateForm?: boolean;
     submittingChildren?: JSX.Element | string;
@@ -32,10 +33,10 @@ export interface DynamicSubmitState extends BaseInputState {
     buttonState: DynamicSubmitMode;
 }
 
-export class DynamicSubmit extends BaseInput<DynamicSubmitProps, DynamicSubmitState, never>  {
-    public static defaultProps = Object.assign(BaseInput.defaultProps, { validateForm: true, submitDisablesInputs: true, resetEnablesInputs: true });
+class DynamicSubmitRaw extends BaseInput<DynamicSubmitRawProps, DynamicSubmitState, never>  {
+    public static defaultProps = Object.assign({}, BaseInput.defaultProps, { validateForm: true, submitDisablesInputs: true, resetEnablesInputs: true });
 
-    constructor(props: DynamicSubmitProps) {
+    constructor(props: DynamicSubmitRawProps) {
         super(props);
         this.state = Object.assign(this.state, {
             buttonState: DynamicSubmitMode.Normal
@@ -53,7 +54,10 @@ export class DynamicSubmit extends BaseInput<DynamicSubmitProps, DynamicSubmitSt
                 {...this.props}
                 className={`${(this.props.className ? this.props.className : '')} ${this.renderClassName()}`}
                 onClick={this.handleClick}
-                disabled={this.getDisabled() ? this.getDisabled() : (this.props.validateForm ? this.context.isFormValid && !this.context.isFormValid() : false)}
+                disabled={this.getDisabled() ?
+                    this.getDisabled()
+                    :
+                    (this.props.validateForm ? this.props.formContext.isFormValid && !this.props.formContext.isFormValid : false)}
             >
                 {this.renderChildren()}
             </Button>
@@ -62,7 +66,7 @@ export class DynamicSubmit extends BaseInput<DynamicSubmitProps, DynamicSubmitSt
 
     private handleClick(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
-        this.props.submitDisablesInputs && this.context.disableInputs();
+        this.props.submitDisablesInputs && this.props.formContext.disableComponents();
         this.props.onClick && this.props.onClick(e, this.submitting, this.error, this.success, this.reset);
     }
 
@@ -79,7 +83,7 @@ export class DynamicSubmit extends BaseInput<DynamicSubmitProps, DynamicSubmitSt
     }
 
     private reset() {
-        this.props.resetEnablesInputs && this.context.enableInputs();
+        this.props.resetEnablesInputs && this.props.formContext.enableComponents();
         this.setState({ buttonState: DynamicSubmitMode.Normal });
     }
 
@@ -109,4 +113,7 @@ export class DynamicSubmit extends BaseInput<DynamicSubmitProps, DynamicSubmitSt
         }
     }
 }
+
+export const DynamicSubmit = withFormContext(DynamicSubmitRaw);
+
 export default DynamicSubmit;

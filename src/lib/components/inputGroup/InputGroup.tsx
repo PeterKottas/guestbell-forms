@@ -4,12 +4,17 @@ import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInp
 
 // Misc
 
-export type InputGroupProps = Pick<BaseInputProps<never>, 'title' | 'className' | 'helpText'>;
+export type InputGroupProps = Pick<BaseInputProps<never>, 'title' | 'className' | 'helpText' | 'formContext'>;
 
 export interface InputGroupState extends BaseInputState {
 }
 
 export class InputGroup extends BaseInput<InputGroupProps, InputGroupState, never>  {
+    // tslint:disable-next-line:no-any
+    public static defaultProps: any = {
+        ignoreContext: true
+    };
+
     constructor(props: InputGroupProps) {
         super(props);
     }

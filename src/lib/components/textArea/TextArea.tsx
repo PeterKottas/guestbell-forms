@@ -5,8 +5,10 @@ import Textarea from 'react-textarea-autosize';
 // Misc
 import InputGroup from '../inputGroup/InputGroup';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
+import { withFormContext } from '../form/withFormContext';
+import { OmitFormContext } from '../form/FormContext';
 
-export interface TextAreaProps extends BaseInputProps<HTMLTextAreaElement> {
+interface TextAreaRawProps extends BaseInputProps<HTMLTextAreaElement> {
     mask?: string;
     reverse?: boolean;
     placeholder?: string;
@@ -18,18 +20,20 @@ export interface TextAreaProps extends BaseInputProps<HTMLTextAreaElement> {
     maxRows?: number;
 }
 
+export type TextAreaProps = OmitFormContext<TextAreaRawProps>;
+
 export interface TextAreaState extends BaseInputState {
 }
 
-export class TextArea extends BaseInput<TextAreaProps, TextAreaState, HTMLTextAreaElement>  {
-    public static defaultProps = Object.assign(BaseInput.defaultProps, {
+class TextAreaRaw extends BaseInput<TextAreaRawProps, TextAreaState, HTMLTextAreaElement>  {
+    public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
         type: 'text',
         placeholder: '',
         stopClickPropagation: true,
         readOnly: false,
     });
 
-    constructor(props: TextAreaProps) {
+    constructor(props: TextAreaRawProps) {
         super(props);
     }
 
@@ -72,4 +76,7 @@ export class TextArea extends BaseInput<TextAreaProps, TextAreaState, HTMLTextAr
 
     private onContainerClick = e => this.props.stopClickPropagation && e.stopPropagation();
 }
+
+export const TextArea = withFormContext(TextAreaRaw);
+
 export default TextArea;

@@ -1,0 +1,21 @@
+.formValidationSummary{
+    background-color: $input-validation-error-border-color;
+    color: $input-validation-color;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    .formValidationSummary__header {
+        text-align: center;
+        font-size: 130%;
+        margin-bottom: 1rem;
+    }
+    .formValidationSummary__item {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .formValidationSummary__item__header {
+        width: 10rem;
+        margin-left: 1rem;
+        margin-right: 1.6rem;
+        text-align: right;
+    }
+}

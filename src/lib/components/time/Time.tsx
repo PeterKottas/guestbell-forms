@@ -6,8 +6,10 @@ import * as React from 'react';
 // Misc
 import InputGroup from '../inputGroup/InputGroup';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
+import { withFormContext } from '../form/withFormContext';
+import { OmitFormContext } from '../form/FormContext';
 
-export interface TimeProps extends BaseInputProps<HTMLInputElement> {
+interface TimeRawProps extends BaseInputProps<HTMLInputElement> {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     timeChange: (time: Date) => void;
     time: Date;
@@ -16,17 +18,19 @@ export interface TimeProps extends BaseInputProps<HTMLInputElement> {
     label?: never;
 }
 
+export type TimeProps = OmitFormContext<TimeRawProps>;
+
 export interface TimeState extends BaseInputState {
     hoursText?: string;
     minutesText?: string;
 }
 
-export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
-    public static defaultProps = Object.assign(BaseInput.defaultProps, { type: 'time', placeholder: '' });
+class TimeRaw extends BaseInput<TimeRawProps, TimeState, HTMLInputElement>  {
+    public static defaultProps = Object.assign({}, BaseInput.defaultProps, { type: 'time', placeholder: '' });
     private hoursEl: HTMLInputElement;
     private minutesEl: HTMLInputElement;
 
-    constructor(props: TimeProps) {
+    constructor(props: TimeRawProps) {
         super(props);
         this.handleHoursChange = this.handleHoursChange.bind(this);
         this.handleMinutesChange = this.handleMinutesChange.bind(this);
@@ -203,4 +207,7 @@ export class Time extends BaseInput<TimeProps, TimeState, HTMLInputElement>  {
         }
     }
 }
+
+export const Time = withFormContext(TimeRaw);
+
 export default Time;

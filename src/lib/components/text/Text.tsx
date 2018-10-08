@@ -4,8 +4,10 @@ import * as React from 'react';
 // Misc
 import InputGroup from '../inputGroup/InputGroup';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
+import { withFormContext } from '../form/withFormContext';
+import { OmitFormContext } from '../form/FormContext';
 
-export interface TextProps extends BaseInputProps<HTMLInputElement> {
+interface TextRawProps extends BaseInputProps<HTMLInputElement> {
     mask?: string;
     reverse?: boolean;
     placeholder?: string;
@@ -15,13 +17,15 @@ export interface TextProps extends BaseInputProps<HTMLInputElement> {
     type?: 'number' | 'text';
 }
 
+export type TextProps = OmitFormContext<TextRawProps>;
+
 export interface TextState extends BaseInputState {
 }
 
-export class Text extends BaseInput<TextProps, TextState, HTMLInputElement>  {
-    public static defaultProps = Object.assign(BaseInput.defaultProps, { type: 'text', placeholder: '', stopClickPropagation: true, readOnly: false });
+class TextRaw extends BaseInput<TextRawProps, TextState, HTMLInputElement>  {
+    public static defaultProps = Object.assign({}, BaseInput.defaultProps, { type: 'text', placeholder: '', stopClickPropagation: true, readOnly: false });
 
-    constructor(props: TextProps) {
+    constructor(props: TextRawProps) {
         super(props);
     }
 
@@ -62,4 +66,7 @@ export class Text extends BaseInput<TextProps, TextState, HTMLInputElement>  {
 
     private onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => this.props.onKeyDown && this.props.onKeyDown(e);
 }
+
+export const Text = withFormContext(TextRaw);
+
 export default Text;

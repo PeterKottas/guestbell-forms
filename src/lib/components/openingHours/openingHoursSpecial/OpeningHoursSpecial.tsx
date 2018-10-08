@@ -20,16 +20,20 @@ import OpeningHoursUtil from '../utils/OpeningHoursUtil';
 import { OpeningHoursDayObj, OpeningHoursDay } from '../openingHoursDay/OpeningHoursDay';
 import { BaseInputProps, BaseInputState, BaseInput } from '../../base/input/BaseInput';
 import { Button } from '../../button/Button';
+import { OmitFormContext } from '../../form/FormContext';
+import { withFormContext } from '../../form/withFormContext';
 
 export interface OpeningHoursSpecialDayObj extends OpeningHoursDayObj {
     date?: Date;
 }
 
-export interface OpeningHoursSpecialProps extends BaseInputProps<never> {
+interface OpeningHoursSpecialRawProps extends BaseInputProps<never> {
     days: OpeningHoursSpecialDayObj[];
     onDaysChange: (days: OpeningHoursSpecialDayObj[]) => void;
     placeholder?: string;
 }
+
+export type OpeningHoursSpecialProps = OmitFormContext<OpeningHoursSpecialRawProps>;
 
 export interface OpeningHoursSpecialState extends BaseInputState {
 }
@@ -53,10 +57,10 @@ class DateInput extends React.PureComponent<{ value?: string, onClick?: () => vo
     }
 }
 
-export class OpeningHoursSpecial extends BaseInput<OpeningHoursSpecialProps, OpeningHoursSpecialState, never> {
-    public static defaultProps = Object.assign(BaseInput.defaultProps, { type: 'openingHoursSpecial', placeholder: DAY_FORMAT });
+class OpeningHoursSpecialRaw extends BaseInput<OpeningHoursSpecialRawProps, OpeningHoursSpecialState, never> {
+    public static defaultProps = Object.assign({}, BaseInput.defaultProps, { type: 'openingHoursSpecial', placeholder: DAY_FORMAT });
 
-    constructor(props: OpeningHoursSpecialProps) {
+    constructor(props: OpeningHoursSpecialRawProps) {
         super(props);
     }
 
@@ -122,4 +126,7 @@ export class OpeningHoursSpecial extends BaseInput<OpeningHoursSpecialProps, Ope
         this.props.onDaysChange(days);
     }
 }
+
+export const OpeningHoursSpecial = withFormContext(OpeningHoursSpecialRaw);
+
 export default OpeningHoursSpecial;

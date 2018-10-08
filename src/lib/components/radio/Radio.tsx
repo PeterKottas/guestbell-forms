@@ -1,10 +1,12 @@
 ﻿// Libs
 import * as React from 'react';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
+import { withFormContext } from '../form/withFormContext';
+import { OmitFormContext } from '../form/FormContext';
 
 // Misc
 
-export interface RadioProps extends BaseInputProps<HTMLInputElement> {
+interface RadioRawProps extends BaseInputProps<HTMLInputElement> {
     onChange?: never;
     onChecked: (value: string) => void;
     result: string;
@@ -12,13 +14,15 @@ export interface RadioProps extends BaseInputProps<HTMLInputElement> {
     name: string;
 }
 
+export type RadioProps = OmitFormContext<RadioRawProps>;
+
 export interface RadioState extends BaseInputState {
 }
 
-export class Radio extends BaseInput<RadioProps, RadioState, HTMLInputElement>  {
-    public static defaultProps = Object.assign(BaseInput.defaultProps, {});
+class RadioRaw extends BaseInput<RadioRawProps, RadioState, HTMLInputElement>  {
+    public static defaultProps = Object.assign({}, BaseInput.defaultProps, {});
 
-    constructor(props: RadioProps) {
+    constructor(props: RadioRawProps) {
         super(props);
         this.onChecked = this.onChecked.bind(this);
     }
@@ -53,4 +57,7 @@ export class Radio extends BaseInput<RadioProps, RadioState, HTMLInputElement>  
         this.props.onChecked && this.props.onChecked(e.target.value);
     }
 }
+
+export const Radio = withFormContext(RadioRaw);
+
 export default Radio;

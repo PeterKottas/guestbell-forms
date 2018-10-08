@@ -6,8 +6,15 @@ import {
 
 // Misc
 import * as Validators from '../../../validators';
-import * as Form from '../../form/Form';
 import guid from '../../utils/Guid';
+import { FormContextProps } from '../../form/FormContext';
+
+export interface ComponentApi {
+    touch: () => void;
+    unTouch: () => void;
+    enableComponent: () => void;
+    disableComponent: () => void;
+}
 
 export type ValidationError = string | JSX.Element;
 
@@ -24,6 +31,7 @@ export type BaseInputProps<HTMLType extends AllowedHtmlElements> = {
     customValidators?: Validators.IBaseValidator[];
     validators?: Validators.ValidatorTypes[];
     noValidate?: boolean;
+    validationName?: string;
     touchOn?: 'focus' | 'blur';
     ignoreContext?: boolean;
     onTheFlightValidate?: (value: string) => boolean;
@@ -34,10 +42,10 @@ export type BaseInputProps<HTMLType extends AllowedHtmlElements> = {
     errors?: ValidationError[];
     onErrorsChanged?: (errors: ValidationError[]) => void;
     showValidation?: boolean;
-};
+} & FormContextProps;
 
 export interface BaseInputState {
-    valid: boolean;
+    isValid: boolean;
     value: string;
     errors: ValidationError[];
     validator: undefined;
@@ -48,7 +56,7 @@ export interface BaseInputState {
 }
 
 export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputState, HTMLType extends
-    AllowedHtmlElements> extends React.PureComponent<P, S> {
+    AllowedHtmlElements> extends React.PureComponent<P, S> implements ComponentApi {
     public static defaultProps: BaseInputProps<never> = {
         className: undefined,
         required: false,
@@ -56,21 +64,18 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
         disabled: false,
         touchOn: 'focus',
         ignoreContext: false,
-        showValidation: true
+        showValidation: true,
+        formContext: undefined
     };
 
-    public static contextTypes = Form.FormContextType;
-
-    public context: Form.FormContext;
-
-    public inputId = guid();
+    public componentId = guid();
 
     private lastValidation: JSX.Element[];
 
     constructor(props: P) {
         super(props);
         this.state = {
-            valid: props.required ? false : true,
+            isValid: props.required ? false : true,
             value: props.value ? props.value : '',
             touched: false,
             disabled: false,
@@ -82,13 +87,29 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
         this.handleFocus = this.handleFocus.bind(this);
         this.setValid = this.setValid.bind(this);
         this.setInvalid = this.setInvalid.bind(this);
+        if (!props.ignoreContext && props.formContext) {
+            props.formContext.subscribe(this.componentId, {
+                componentId: this.componentId,
+                componentApi: {
+                    disableComponent: this.disableComponent,
+                    enableComponent: this.enableComponent,
+                    touch: this.touch,
+                    unTouch: this.unTouch
+                },
+                validation: {
+                    isValid: this.state.isValid,
+                    errors: this.state.errors,
+                    name: this.props.validationName
+                }
+            });
+        }
     }
 
     protected getValidationClass(extraErrors?: ValidationError[]) {
         if (!this.props.showValidation || !this.state.touched) {
             return 'validation__success';
         }
-        return (this.state.valid
+        return (this.state.isValid
             &&
             (!this.props.errors || this.props.errors.length === 0)
             &&
@@ -126,14 +147,11 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
 
     public componentWillUnmount() {
         if (!this.props.ignoreContext) {
-            this.context && this.context.unregister && this.context.unregister(this);
+            this.props.formContext && this.props.formContext.unSubscribe(this.componentId);
         }
     }
 
     public componentDidMount() {
-        if (!this.props.ignoreContext) {
-            this.context && this.context.register && this.context.register(this);
-        }
         this.handleValueChange(this.state.value);
     }
 
@@ -152,18 +170,18 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
         this.setState({ touched: false });
     }
 
-    public disableInput() {
+    public disableComponent() {
         this.setState({ disabled: true });
     }
 
-    public enableInput() {
+    public enableComponent() {
         this.setState({ disabled: false });
     }
 
-    protected handleChange(event: React.ChangeEvent<HTMLType>, isValid?: boolean) {
+    protected handleChange(event: React.ChangeEvent<HTMLType>, isValid?: boolean, errors: ValidationError[] = []) {
         let value = event.target.value;
         if (!this.props.onTheFlightValidate || (this.props.onTheFlightValidate && this.props.onTheFlightValidate(value))) {
-            const valid = this.handleValueChange(value, isValid);
+            const valid = this.handleValueChange(value, isValid, errors);
             if (this.props.onChange) {
                 this.props.onChange(event, valid);
             }
@@ -183,7 +201,7 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
     protected handleFocus(e: React.FocusEvent<HTMLType>) {
         this.props.onFocus && this.props.onFocus(e);
         let state = { focused: true };
-        if (this.props.touchOn === 'focus') {
+        if (!this.state.touched && this.props.touchOn === 'focus') {
             state = Object.assign(state, { touched: true });
             this.handleValueChange(this.state.value);
         }
@@ -195,17 +213,27 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
     }
 
     protected setValid() {
-        !this.state.valid && this.setState({ valid: true, errors: [] }, () => {
+        !this.state.isValid && this.setState(() => ({ isValid: true, errors: [] }), () => {
             if (!this.props.ignoreContext) {
-                this.context && this.context.updateCallback && this.context.updateCallback(true, this.inputId);
+                this.props.formContext && this.props.formContext.updateCallback(this.componentId, {
+                    validation: {
+                        isValid: true,
+                        errors: [],
+                    }
+                });
             }
         });
     }
 
     protected setInvalid(errors: ValidationError[] = []) {
-        this.setState({ valid: false, errors }, () => {
+        this.setState(() => ({ isValid: false, errors }), () => {
             if (!this.props.ignoreContext) {
-                this.context && this.context.updateCallback && this.context.updateCallback(false, this.inputId);
+                this.props.formContext && this.props.formContext.updateCallback(this.componentId, {
+                    validation: {
+                        isValid: false,
+                        errors: errors,
+                    }
+                });
             }
         });
     }
@@ -240,20 +268,19 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
         );
     }
 
-    private handleValueChange(value: string, valid: boolean = true): boolean {
+    protected handleValueChange(value: string, isValid: boolean = true, errors: ValidationError[] = []): boolean {
         if (!this.state.handleValueChangeEnabled) {
-            return valid;
+            return isValid;
         }
-        var errors = [];
         if (this.props.required && !value) {
             errors.push('Required');
-            valid = false;
+            isValid = false;
         } else {
             if (!this.props.required && !value) {
-                valid = true;
+                isValid = true;
             } else {
                 if (this.props.validators) {
-                    valid = true;
+                    isValid = true;
                     this.props.validators.forEach(validator => {
                         let validInner = false;
                         switch (validator) {
@@ -275,8 +302,8 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
                             default:
                                 throw new Error(`Validator ${validator} not implemented`);
                         }
-                        if (valid && !validInner) {
-                            valid = validInner;
+                        if (isValid && !validInner) {
+                            isValid = validInner;
                         }
                     });
                 }
@@ -284,19 +311,24 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
                     this.props.customValidators.forEach(customValidator => {
                         let validInner = false;
                         validInner = customValidator.Validate(value, this.props.required, (error) => errors.push(error));
-                        if (valid && !validInner) {
-                            valid = validInner;
+                        if (isValid && !validInner) {
+                            isValid = validInner;
                         }
                     });
                 }
             }
         }
         this.props.onErrorsChanged && this.props.onErrorsChanged(errors);
-        this.setState({ value, valid, errors });
+        this.setState({ value, isValid, errors });
         if (!this.props.ignoreContext) {
-            this.context && this.context.updateCallback && this.context.updateCallback(valid, this.inputId);
+            this.props.formContext && this.props.formContext.updateCallback(this.componentId, {
+                validation: {
+                    isValid: isValid,
+                    errors: errors,
+                }
+            });
         }
-        return valid;
+        return isValid;
     }
 
     private renderTooltip() {

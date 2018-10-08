@@ -29,7 +29,9 @@ import {
     TextProps,
     ValidatorTypes,
     IBaseValidator,
-    ButtonProps
+    ButtonProps,
+    FormValidationSummary,
+    InputHeaderRaw
 } from '../../../../lib/index';
 
 export interface BasicProps {
@@ -156,7 +158,7 @@ ButtonsShowcase.defaultProps = {
 export class Basic extends React.PureComponent<BasicProps, BasicState> {
     private form: Form;
 
-    private specialDaysInputHeader: InputHeader;
+    private specialDaysInputHeader: InputHeaderRaw;
 
     private dropdownFunctionHeader: Dropdown;
 
@@ -411,7 +413,6 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                             />
                                             <TextArea
                                                 touchOn={this.state.touchOn}
-                                                required={true}
                                                 label="Textarea"
                                                 onChange={this.textAreaChanged}
                                                 value={this.state.textAreaText}
@@ -541,7 +542,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                 className={''}
                                                 title={'Special days opening hours'}
                                                 collapsable={true}
-                                                ref={this.specialDaysInputHeaderRef}
+                                                innerRef={this.specialDaysInputHeaderRef}
                                                 mainButton={(
                                                     < Button
                                                         type={'primary'}
@@ -707,6 +708,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                     </Dropdown>
                                                 </div>
                                             </InputHeader>
+                                            <FormValidationSummary />
                                             <div className="row justify-content-center align-items-center my-2">
                                                 <DynamicSubmit
                                                     submitDisablesInputs={this.state.submitDisablesInputs}
@@ -746,7 +748,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
         );
     }
 
-    private specialDaysInputHeaderRef = (el: InputHeader) => this.specialDaysInputHeader = el;
+    private specialDaysInputHeaderRef = (el: InputHeaderRaw) => this.specialDaysInputHeader = el;
 
     private formRef = (el: Form) => this.form = el;
 

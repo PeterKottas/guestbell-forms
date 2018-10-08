@@ -1,6 +1,5 @@
 // Libs
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
 
 // Misc
 import * as MoreIcon from 'material-design-icons/navigation/svg/production/ic_more_vert_24px.svg';
@@ -9,8 +8,10 @@ import { ButtonProps, Button, ButtonComponentProps } from '../button/Button';
 import guid from '../utils/Guid';
 import { Dropdown } from '../dropdown/Dropdown';
 import { SmoothCollapse } from '../smoothCollapse/SmoothCollapse';
+import { OmitInputHeaderContext, InputHeaderContextProps, InputHeaderContextState, InputHeaderComponentContextState } from '../InputHeader/InputHeaderContext';
+import { withInputHeaderContext } from './withInputHeaderContext';
 
-export type InputHeaderProps = {
+type InputHeaderRawProps = {
     className?: string;
     title?: string | JSX.Element;
     icon?: string | JSX.Element;
@@ -28,24 +29,20 @@ export type InputHeaderProps = {
     contentClassName?: string;
     extraButtonsButtonProps?: ButtonProps;
     collapseButtonsButtonProps?: ButtonProps;
-};
+} & InputHeaderContextProps;
+
+export type InputHeaderProps = OmitInputHeaderContext<InputHeaderRawProps>;
+
+export interface InputHeaderApi {
+    expand: () => void;
+    collapse: () => void;
+    toggle: () => void;
+}
 
 export interface InputHeaderState {
     collapsed: boolean;
-    inputHeaders: { [name: string]: InputHeader };
+    inputHeaderContext: InputHeaderContextState;
     smoothCollapseDone: boolean;
-}
-
-export const InputHeaderContextType = {
-    registerInputHeader: PropTypes.func,
-    unregisterInputHeader: PropTypes.func,
-    stateChanged: PropTypes.func
-};
-
-export interface InputHeaderContext {
-    registerInputHeader: (component: InputHeader) => void;
-    unregisterInputHeader: (component: InputHeader) => void;
-    stateChanged: () => void;
 }
 
 const CollapseExpandButtonComponent: React.SFC<ButtonComponentProps> = props => (
@@ -54,7 +51,7 @@ const CollapseExpandButtonComponent: React.SFC<ButtonComponentProps> = props => 
     </a>
 );
 
-export class InputHeader extends React.PureComponent<InputHeaderProps, InputHeaderState>  {
+export class InputHeaderRaw extends React.PureComponent<InputHeaderRawProps, InputHeaderState> implements InputHeaderApi {
     public static defaultProps: InputHeaderProps = {
         ignoreContext: false,
         showExpandAll: false,
@@ -62,17 +59,19 @@ export class InputHeader extends React.PureComponent<InputHeaderProps, InputHead
         type: 'standard',
         noBg: false
     };
-    public static contextTypes = InputHeaderContextType;
-    public static childContextTypes = InputHeaderContextType;
 
-    public id = guid();
-    public context: InputHeaderContext;
+    public componentId = guid();
 
-    constructor(props: InputHeaderProps) {
+    constructor(props: InputHeaderRawProps) {
         super(props);
         this.state = {
             collapsed: props.collapsedDefault,
-            inputHeaders: {},
+            inputHeaderContext: {
+                registerInputHeader: this.registerInputHeader,
+                unregisterInputHeader: this.unregisterInputHeader,
+                stateChanged: () => this.forceUpdate(),
+                components: {}
+            },
             smoothCollapseDone: true
         };
         this.registerInputHeader = this.registerInputHeader.bind(this);
@@ -82,39 +81,40 @@ export class InputHeader extends React.PureComponent<InputHeaderProps, InputHead
         this.toggle = this.toggle.bind(this);
     }
 
-    public getChildContext(): InputHeaderContext {
-        return {
-            registerInputHeader: this.registerInputHeader,
-            unregisterInputHeader: this.unregisterInputHeader,
-            stateChanged: () => this.forceUpdate()
-        };
-    }
-
     public componentWillUnmount() {
-        if (!this.props.ignoreContext) {
-            this.context.unregisterInputHeader && this.context.unregisterInputHeader(this);
+        if (!this.props.ignoreContext && this.props.inputHeaderContext) {
+            this.props.inputHeaderContext.unregisterInputHeader(this.componentId);
         }
     }
 
     public componentDidMount() {
-        if (!this.props.ignoreContext) {
-            this.context.registerInputHeader && this.context.registerInputHeader(this);
+        if (!this.props.ignoreContext && this.props.inputHeaderContext) {
+            this.props.inputHeaderContext.registerInputHeader(this.componentId, {
+                componentId: this.componentId,
+                componentApi: {
+                    expand: this.expand,
+                    collapse: this.collapse,
+                    toggle: this.toggle,
+                },
+                props: { ...{}, ...this.props as InputHeaderProps },
+                state: { ...{}, ...this.state }
+            });
         }
     }
 
     public expand() {
         this.props.collapsable && this.setState({ collapsed: false, smoothCollapseDone: false },
-            () => this.context.stateChanged && this.context.stateChanged());
+            () => this.props.inputHeaderContext.stateChanged && this.props.inputHeaderContext.stateChanged());
     }
 
     public collapse() {
         this.props.collapsable && this.setState({ collapsed: true, smoothCollapseDone: false },
-            () => this.context.stateChanged && this.context.stateChanged());
+            () => this.props.inputHeaderContext.stateChanged && this.props.inputHeaderContext.stateChanged());
     }
 
     public toggle() {
         this.props.collapsable && this.setState({ collapsed: !this.state.collapsed, smoothCollapseDone: false },
-            () => this.context.stateChanged && this.context.stateChanged());
+            () => this.props.inputHeaderContext.stateChanged && this.props.inputHeaderContext.stateChanged());
     }
 
     public render() {
@@ -166,7 +166,7 @@ export class InputHeader extends React.PureComponent<InputHeaderProps, InputHead
                                 <PlusIcon />
                             </Button>}
                     </div>
-                    {this.props.showExpandAll && Object.keys(this.state.inputHeaders).length > 0 &&
+                    {this.props.showExpandAll && Object.keys(this.state.inputHeaderContext.components).length > 0 &&
                         this.renderCollapseExpandAll()}
                 </div>
                 <div className={'input__header__bottom ' + (this.props.contentClassName ? this.props.contentClassName : '')}>
@@ -193,22 +193,22 @@ export class InputHeader extends React.PureComponent<InputHeaderProps, InputHead
 
     private toggleClick = () => this.toggle();
 
-    private registerInputHeader(component: InputHeader) {
+    private registerInputHeader(componentId: string, component: InputHeaderComponentContextState) {
         this.setState(previousState => {
-            let newInputHeaders = Object.assign({}, previousState.inputHeaders);
-            newInputHeaders[component.id] = component;
+            let components = Object.assign({}, previousState.inputHeaderContext.components);
+            components[componentId] = component;
             return {
-                inputHeaders: newInputHeaders
+                inputHeaderContext: { ...previousState.inputHeaderContext, components }
             };
         });
     }
 
-    private unregisterInputHeader(component: InputHeader) {
+    private unregisterInputHeader(componentId: string) {
         this.setState(previousState => {
-            let newInputHeaders = Object.assign({}, previousState.inputHeaders);
-            delete newInputHeaders[component.id];
+            let components = Object.assign({}, previousState.inputHeaderContext.components);
+            delete components[componentId];
             return {
-                inputHeaders: newInputHeaders
+                inputHeaderContext: { ...previousState.inputHeaderContext, components }
             };
         });
     }
@@ -256,10 +256,10 @@ export class InputHeader extends React.PureComponent<InputHeaderProps, InputHead
     private renderCollapseExpandAll() {
         let allCollapsed = true;
         let allExpanded = true;
-        Object.keys(this.state.inputHeaders).forEach(key => {
-            const inputHeader = this.state.inputHeaders[key];
-            if (inputHeader && inputHeader.props.collapsable) {
-                if (inputHeader.state.collapsed) {
+        Object.keys(this.state.inputHeaderContext.components).forEach(key => {
+            const component = this.state.inputHeaderContext.components[key];
+            if (component && component.props.collapsable) {
+                if (component.state.collapsed) {
                     allExpanded = false;
                 } else {
                     allCollapsed = false;
@@ -297,17 +297,20 @@ export class InputHeader extends React.PureComponent<InputHeaderProps, InputHead
     private containerClick = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
 
     private expandAllClick = () => {
-        Object.keys(this.state.inputHeaders).forEach(key => {
-            const inputHeader = this.state.inputHeaders[key];
-            inputHeader.expand();
+        Object.keys(this.state.inputHeaderContext.components).forEach(key => {
+            const component = this.state.inputHeaderContext.components[key];
+            component.componentApi.expand();
         });
     }
 
     private collapseAllClick = () => {
-        Object.keys(this.state.inputHeaders).forEach(key => {
-            const inputHeader = this.state.inputHeaders[key];
-            inputHeader.collapse();
+        Object.keys(this.state.inputHeaderContext.components).forEach(key => {
+            const component = this.state.inputHeaderContext.components[key];
+            component.componentApi.collapse();
         });
     }
 }
+
+export const InputHeader = withInputHeaderContext(InputHeaderRaw);
+
 export default InputHeader;

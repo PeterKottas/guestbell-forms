@@ -5,8 +5,10 @@ import * as React from 'react';
 import InputGroup from '../inputGroup/InputGroup';
 import { BaseInputProps, BaseInput, BaseInputState } from '../base/input/BaseInput';
 import * as classNames from 'classnames';
+import { withFormContext } from '../form/withFormContext';
+import { OmitFormContext } from '../form/FormContext';
 
-export interface CheckboxProps extends BaseInputProps<HTMLInputElement> {
+interface CheckboxRawProps extends BaseInputProps<HTMLInputElement> {
     onChecked?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onChange?: never;
     value?: never;
@@ -14,23 +16,19 @@ export interface CheckboxProps extends BaseInputProps<HTMLInputElement> {
     checked?: boolean;
 }
 
+export type CheckboxProps = OmitFormContext<CheckboxRawProps>;
+
 export interface CheckboxState extends BaseInputState {
     checked: boolean;
 }
 
-export class Checkbox extends BaseInput<CheckboxProps, CheckboxState, HTMLInputElement>  {
-    public static defaultProps = Object.assign(BaseInput.defaultProps, { checked: false });
+class CheckboxRaw extends BaseInput<CheckboxRawProps, CheckboxState, HTMLInputElement>  {
+    public static defaultProps = Object.assign({}, BaseInput.defaultProps, { checked: false });
 
-    constructor(props: CheckboxProps) {
+    constructor(props: CheckboxRawProps) {
         super(props);
         this.state = Object.assign(this.state, { checked: props.checked, valid: props.required ? props.checked : true });
         this.handleChecked = this.handleChecked.bind(this);
-    }
-
-    public componentDidMount() {
-        if (!this.props.ignoreContext) {
-            this.context && this.context.updateCallback && this.context.updateCallback(this.state.valid, this.inputId);
-        }
     }
 
     public componentWillReceiveProps(newProps: CheckboxProps) {
@@ -83,4 +81,7 @@ export class Checkbox extends BaseInput<CheckboxProps, CheckboxState, HTMLInputE
         );
     }
 }
+
+export const Checkbox = withFormContext(CheckboxRaw);
+
 export default Checkbox;

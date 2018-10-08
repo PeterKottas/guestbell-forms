@@ -2,8 +2,7 @@
 import * as React from 'react';
 
 // Misc
-import * as PropTypes from 'prop-types';
-import { BaseInput, BaseInputProps, BaseInputState, AllowedHtmlElements } from '../base/input/BaseInput';
+import { FormContextState, FormComponentContextState, FormContextProvider } from './FormContext';
 
 export interface FormValue {
     value: number | string;
@@ -17,27 +16,8 @@ export interface FormProps {
 }
 
 export interface FormState {
-    isFormValid: boolean;
-    components: { [name: string]: BaseInput<BaseInputProps<AllowedHtmlElements>, BaseInputState, AllowedHtmlElements> };
+    contextState: FormContextState;
 }
-
-export interface FormContext {
-    register: (component: BaseInput<BaseInputProps<AllowedHtmlElements>, BaseInputState, AllowedHtmlElements>) => void;
-    unregister: (component: BaseInput<BaseInputProps<AllowedHtmlElements>, BaseInputState, AllowedHtmlElements>) => void;
-    isFormValid: () => boolean;
-    updateCallback: (isComponentValid: boolean, inputId: string) => void;
-    disableInputs: () => void;
-    enableInputs: () => void;
-}
-
-export const FormContextType = {
-    register: PropTypes.func,
-    unregister: PropTypes.func,
-    isFormValid: PropTypes.func,
-    updateCallback: PropTypes.func,
-    enableInputs: PropTypes.func,
-    disableInputs: PropTypes.func
-};
 
 export class Form extends React.PureComponent<FormProps, FormState> {
 
@@ -46,62 +26,52 @@ export class Form extends React.PureComponent<FormProps, FormState> {
         showExpandAll: true
     };
 
-    public static childContextTypes = FormContextType;
-
     constructor(props: FormProps) {
         super(props);
-        this.register = this.register.bind(this);
-        this.unregister = this.unregister.bind(this);
+        this.subscribe = this.subscribe.bind(this);
+        this.unSubscribe = this.unSubscribe.bind(this);
         this.updateCallback = this.updateCallback.bind(this);
-        this.disableInputs = this.disableInputs.bind(this);
-        this.enableInputs = this.enableInputs.bind(this);
+        this.disableComponents = this.disableComponents.bind(this);
+        this.enableComponents = this.enableComponents.bind(this);
         this.state = {
-            isFormValid: false,
-            components: {}
+            contextState: {
+                subscribe: this.subscribe,
+                unSubscribe: this.unSubscribe,
+                isFormValid: false,
+                updateCallback: this.updateCallback,
+                disableComponents: this.disableComponents,
+                enableComponents: this.enableComponents,
+                components: {}
+            },
         };
     }
 
-    public getChildContext(): FormContext {
-        return {
-            register: this.register,
-            unregister: this.unregister,
-            isFormValid: () => this.state.isFormValid,
-            updateCallback: this.updateCallback,
-            disableInputs: this.disableInputs,
-            enableInputs: this.enableInputs
-        };
-    }
-
-    public disableInputs() {
-        Object.keys(this.state.components).forEach(key => {
-            const component = this.state.components[key];
-            component.disableInput();
+    public disableComponents() {
+        Object.keys(this.state.contextState.components).forEach(key => {
+            const component = this.state.contextState.components[key];
+            component.componentApi.disableComponent();
         });
     }
 
-    public enableInputs() {
-        Object.keys(this.state.components).forEach(key => {
-            const component = this.state.components[key];
-            component.enableInput();
+    public enableComponents() {
+        Object.keys(this.state.contextState.components).forEach(key => {
+            const component = this.state.contextState.components[key];
+            component.componentApi.enableComponent();
         });
     }
 
     public touchAll() {
-        Object.keys(this.state.components).forEach(key => {
-            const component = this.state.components[key];
-            component.touch();
+        Object.keys(this.state.contextState.components).forEach(key => {
+            const component = this.state.contextState.components[key];
+            component.componentApi.touch();
         });
     }
 
     public unTouchAll() {
-        Object.keys(this.state.components).forEach(key => {
-            const component = this.state.components[key];
-            component.unTouch();
+        Object.keys(this.state.contextState.components).forEach(key => {
+            const component = this.state.contextState.components[key];
+            component.componentApi.unTouch();
         });
-    }
-
-    public componentDidMount() {
-        setTimeout(() => this.updateCallback(), 1);
     }
 
     public render() {
@@ -112,51 +82,73 @@ export class Form extends React.PureComponent<FormProps, FormState> {
                 className={`input__form validation-form ${(this.props.className ? this.props.className : '')}`}
                 onSubmit={this.onSubmit}
             >
-                {this.props.children}
+                <FormContextProvider value={this.state.contextState}>
+                    {this.props.children}
+                </FormContextProvider>
             </form>
         );
     }
 
     private onSubmit = (e: React.FormEvent) => e.preventDefault() || this.props.onSubmit && this.props.onSubmit();
 
-    private register(component: BaseInput<BaseInputProps<AllowedHtmlElements>, BaseInputState, AllowedHtmlElements>) {
-        if (component) {
+    private subscribe(componentId: string, componentState: FormComponentContextState) {
+        if (componentId) {
             this.setState(previousState => {
-                let newComponents = Object.assign({}, previousState.components);
-                newComponents[component.inputId] = component;
-                return {
-                    components: newComponents
-                };
-            }, () => this.updateCallback());
-        }
-    }
-
-    private unregister(component: BaseInput<BaseInputProps<AllowedHtmlElements>, BaseInputState, AllowedHtmlElements>) {
-        if (component) {
-            this.setState(previousState => {
-                let newComponents = Object.assign({}, previousState.components);
-                delete newComponents[component.inputId];
-                return {
-                    components: newComponents
-                };
-            });
-        }
-    }
-
-    private updateCallback(isComponentValid: boolean = true, inputId: string = '') {
-        let valid = false;
-        if (isComponentValid) {
-            valid = true;
-            Object.keys(this.state.components).forEach(key => {
-                const component = this.state.components[key];
-                if (component && component.inputId !== inputId && component.state && !component.state.valid) {
-                    valid = false;
+                let components = Object.assign({}, previousState.contextState.components);
+                if (componentState) {
+                    components[componentId] = componentState;
                 }
+                return {
+                    contextState: {
+                        ...previousState.contextState,
+                        components
+                    },
+                };
             });
         }
-        if (valid !== this.state.isFormValid) {
-            this.setState({ isFormValid: valid });
+    }
+
+    private unSubscribe(componentId: string) {
+        if (componentId) {
+            this.setState(previousState => {
+                let components = Object.assign({}, previousState.contextState.components);
+                delete components[componentId];
+                return {
+                    contextState: { ...previousState.contextState, components },
+                };
+            });
         }
+    }
+
+    private updateCallback(componentId: string, componentState: FormComponentContextState) {
+        this.setState(previousState => {
+            let valid = componentState.validation && componentState.validation.isValid;
+            let components = Object.assign({}, previousState.contextState.components);
+            const previousComponent = components[componentId];
+            if (componentState && previousComponent) {
+                components[componentId] = {
+                    ...previousComponent,
+                    ...componentState,
+                    validation: {
+                        ...previousComponent.validation,
+                        ...componentState.validation
+                    },
+                };
+                Object.keys(components).forEach(key => {
+                    const component = components[key];
+                    if (component && component.componentId !== componentId && component.validation && !component.validation.isValid) {
+                        valid = false;
+                    }
+                });
+            }
+            return {
+                contextState: {
+                    ...this.state.contextState,
+                    components,
+                    isFormValid: valid
+                },
+            };
+        });
     }
 }
 

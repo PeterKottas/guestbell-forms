@@ -9,13 +9,15 @@ import { Text } from '../text/Text';
 import InputGroup from '../inputGroup/InputGroup';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
 import { Button } from '../button/Button';
+import { withFormContext } from '../form/withFormContext';
+import { OmitFormContext } from '../form/FormContext';
 
 export interface MoneyWithCurrency {
     value: number;
     currency: SelectValue;
 }
 
-export interface MoneyProps extends BaseInputProps<never> {
+interface MoneyRawProps extends BaseInputProps<never> {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onPricesChange: (prices: MoneyWithCurrency[]) => void;
     allowMultiple?: boolean;
@@ -23,13 +25,15 @@ export interface MoneyProps extends BaseInputProps<never> {
     prices: MoneyWithCurrency[];
 }
 
+export type MoneyProps = OmitFormContext<MoneyRawProps>;
+
 export interface MoneyState extends BaseInputState {
 }
 
-export class Money extends BaseInput<MoneyProps, MoneyState, never>  {
-    public static defaultProps = Object.assign(BaseInput.defaultProps, { type: 'money', allowMultiple: false });
+class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never>  {
+    public static defaultProps = Object.assign({}, BaseInput.defaultProps, { type: 'money', allowMultiple: false });
 
-    constructor(props: MoneyProps) {
+    constructor(props: MoneyRawProps) {
         super(props);
         if (!props.currencies || !props.currencies.length) {
             throw Error('No currencies supplied to money input');
@@ -146,4 +150,7 @@ export class Money extends BaseInput<MoneyProps, MoneyState, never>  {
 
     private onBlur = () => this.setState({ focused: false });
 }
+
+export const Money = withFormContext(MoneyRaw);
+
 export default Money;

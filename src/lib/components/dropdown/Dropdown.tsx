@@ -40,7 +40,7 @@ export class Dropdown extends React.PureComponent<DropdownItemProps, DropdownIte
     }
 
     handleClickOutside() {
-        this.setState(Object.assign(this.state, { isDropdownVisible: false }));
+        this.setState({ isDropdownVisible: false });
     }
 
     public hideNavigation() {

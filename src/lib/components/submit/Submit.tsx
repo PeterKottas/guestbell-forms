@@ -2,22 +2,26 @@
 import * as React from 'react';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
 import { Button, ButtonProps } from '../button/Button';
+import { withFormContext } from '../form/withFormContext';
+import { OmitFormContext } from '../form/FormContext';
 
 // Misc
 
-export type SubmitProps = BaseInputProps<never> & ButtonProps & {
+type SubmitRawProps = BaseInputProps<never> & ButtonProps & {
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     validateForm?: boolean;
     disabledTitle?: string;
 };
 
+export type SubmitProps = OmitFormContext<SubmitRawProps>;
+
 export interface SubmitState extends BaseInputState {
 }
 
-export class Submit extends BaseInput<SubmitProps, SubmitState, never>  {
-    public static defaultProps = Object.assign(BaseInput.defaultProps, { validateForm: true });
+class SubmitRaw extends BaseInput<SubmitRawProps, SubmitState, never>  {
+    public static defaultProps = Object.assign({}, BaseInput.defaultProps, { validateForm: true, ignoreContext: true });
 
-    constructor(props: SubmitProps) {
+    constructor(props: SubmitRawProps) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
     }
@@ -46,7 +50,13 @@ export class Submit extends BaseInput<SubmitProps, SubmitState, never>  {
     }
 
     private isDisabled() {
-        return this.getDisabled() ? this.getDisabled() : (this.props.validateForm ? this.context.isFormValid && !this.context.isFormValid() : false);
+        return this.getDisabled() ?
+            this.getDisabled()
+            :
+            (this.props.validateForm ? this.props.formContext.isFormValid && !this.props.formContext.isFormValid : false);
     }
 }
+
+export const Submit = withFormContext(SubmitRaw);
+
 export default Submit;

@@ -6,13 +6,15 @@ import OpeningHoursUtil from '../utils/OpeningHoursUtil';
 import { OpeningHoursDayObj, OpeningHoursDay } from '../openingHoursDay/OpeningHoursDay';
 import { BaseInputProps, BaseInputState, BaseInput } from '../../base/input/BaseInput';
 import { Checkbox } from '../../checkbox/Checkbox';
+import { OmitFormContext } from '../../form/FormContext';
+import { withFormContext } from '../../form/withFormContext';
 
 export interface OpeningHoursWeekDayObj extends OpeningHoursDayObj {
     isStandardDay?: boolean;
     dayLabel?: string;
 }
 
-export interface OpeningHoursWeekProps extends BaseInputProps<never> {
+interface OpeningHoursWeekRawProps extends BaseInputProps<never> {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     days: OpeningHoursWeekDayObj[];
     onDaysChange: (days: OpeningHoursWeekDayObj[]) => void;
@@ -20,17 +22,19 @@ export interface OpeningHoursWeekProps extends BaseInputProps<never> {
     onStandardDayChange?: (day: OpeningHoursWeekDayObj) => void;
 }
 
+export type OpeningHoursWeekProps = OmitFormContext<OpeningHoursWeekRawProps>;
+
 export interface OpeningHoursWeekState extends BaseInputState {
 }
 
-export class OpeningHoursWeek extends BaseInput<OpeningHoursWeekProps, OpeningHoursWeekState, never>  {
-    public static defaultProps = Object.assign(BaseInput.defaultProps, {
+class OpeningHoursWeekRaw extends BaseInput<OpeningHoursWeekRawProps, OpeningHoursWeekState, never>  {
+    public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
         type: 'openingHoursWeek',
         placeholder: '',
         collapsable: false
     });
 
-    constructor(props: OpeningHoursWeekProps) {
+    constructor(props: OpeningHoursWeekRawProps) {
         super(props);
         this.state = { ...this.state };
     }
@@ -136,4 +140,7 @@ export class OpeningHoursWeek extends BaseInput<OpeningHoursWeekProps, OpeningHo
         this.props.onStandardDayChange(openingHours);
     }
 }
+
+export const OpeningHoursWeek = withFormContext(OpeningHoursWeekRaw);
+
 export default OpeningHoursWeek;

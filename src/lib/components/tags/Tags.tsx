@@ -6,6 +6,8 @@ import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_c
 import { BaseInputProps, BaseInputState, BaseInput, ValidationError } from '../base/input/BaseInput';
 import { Button } from '../button/Button';
 import TagsSuggestions from './subComponents/TagsSuggestions';
+import { OmitFormContext } from '../form/FormContext';
+import { withFormContext } from '../form/withFormContext';
 
 // Misc
 export type Tag = {
@@ -13,7 +15,7 @@ export type Tag = {
     name: string;
 };
 
-export type TagsProps = {
+type TagsRawProps = {
     className?: string;
     disabled?: boolean;
     tags: Tag[];
@@ -36,16 +38,19 @@ export type TagsProps = {
     maxSuggestions?: number;
 } & BaseInputProps<HTMLInputElement>;
 
+export type TagsProps = OmitFormContext<TagsRawProps>;
+
 export interface TagsState extends BaseInputState {
     textIsFocused: boolean;
+    textErrors: ValidationError[];
     suggestionsVisible: boolean;
     fetchedExistingTags: Tag[];
     fetchingExistingTags: boolean;
     preselectedSuggestion?: number;
 }
 
-export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
-    public static defaultProps: TagsProps = {
+class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement>  {
+    public static defaultProps: TagsRawProps = {
         ...BaseInput.defaultProps,
         disabled: false,
         className: '',
@@ -64,19 +69,18 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
         maxSuggestions: 5,
     };
 
-    constructor(props: TagsProps) {
+    constructor(props: TagsRawProps) {
         super(props);
-        this.state = { ...this.state, textIsFocused: false, suggestionsVisible: false, fetchingExistingTags: false };
+        this.state = { ...this.state, textErrors: [], textIsFocused: false, suggestionsVisible: false, fetchingExistingTags: false };
     }
 
     public render() {
         const textProps = this.props.textProps ? this.props.textProps : {};
         const suggestions = this.getSuggestions();
-        const errors = this.getErrors();
         return (
             <InputGroup title={this.props.title}>
                 <div
-                    className={'input__base tags-input ' + this.getValidationClass(errors) + (this.props.className ? ' ' +
+                    className={'input__base tags-input ' + this.getValidationClass() + (this.props.className ? ' ' +
                         this.props.className : '') + ' ' + (this.props.readOnly ? 'tags-input--readOnly ' : '')}
                 >
                     {this.renderTags()}
@@ -84,15 +88,18 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
                         <div className={'tags-input__tags__wrapper ' + (this.props.readOnly ? 'filled ' : '')}>
                             <Text
                                 {...textProps}
+                                required={this.props.tags.length > 0 ? false : this.props.required}
                                 className={'tags-input__text-input ' + (textProps.className ? textProps.className : '')}
                                 onKeyDown={this.onKeyDown(suggestions)}
+                                onErrorsChanged={this.onTextErrorsChanged}
                                 onChange={this.onTextChanged}
                                 onFocus={this.onFocus}
                                 onBlur={this.onBlur}
                                 value={this.state.value}
                                 readOnly={this.props.readOnly}
-                                onErrorsChanged={this.onErrChanged}
                                 showValidation={false}
+                                ignoreContext={true}
+                                validators={this.props.validators}
                             />
                             {this.state.suggestionsVisible && this.props.showSuggestions && <TagsSuggestions
                                 allowNew={this.props.allowNew}
@@ -105,7 +112,7 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
                                 onSelected={this.onSuggestionSelected}
                                 onClickOutside={this.onClickOutside}
                                 value={this.state.value}
-                                AddNewTagComponent={this.props.allowNew && this.state.value !== '' && this.state.valid && (
+                                AddNewTagComponent={this.props.allowNew && this.state.value !== '' && this.state.isValid && (
                                     <Button
                                         dropdown={true}
                                         onClick={this.addNewTag}
@@ -116,7 +123,7 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
                             />}
                         </div >
                     }
-                    {this.renderDefaultValidation(errors)}
+                    {this.renderDefaultValidation()}
                     {this.props.label && <label
                         className={(((this.state.value !== '')
                             || (this.state.textIsFocused) || this.props.readOnly || (this.props.tags.length >= this.props.maxTags)) ? 'label--focused' : '')}
@@ -127,24 +134,24 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
         );
     }
 
-    private onErrChanged = (err: ValidationError[]) => this.setState({ errors: err });
+    private onTextErrorsChanged = (textErrors: ValidationError[]) => this.setState(() => ({ textErrors }), () => this.handleErrors());
 
     private onFocus = () => {
-        this.setState({ textIsFocused: true, suggestionsVisible: true, touched: true });
+        this.setState({ textIsFocused: true, suggestionsVisible: true, touched: true }, () => this.handleErrors());
         this.fetchExistingTags();
     }
 
     private onKeyDown = (suggestions: Tag[]) => async e => {
-        if (e.key === 'Enter' && (this.state.value !== '' || this.state.preselectedSuggestion !== undefined) && this.state.valid) {
+        if (e.key === 'Enter' && (this.state.value !== '' || this.state.preselectedSuggestion !== undefined) && this.state.isValid) {
             e.preventDefault();
             e.stopPropagation();
             const existingTag = this.props.existingTags && this.props.existingTags.find(et => et.name === this.state.value);
             if (this.state.preselectedSuggestion !== undefined) {
                 this.props.onTagsChanged(this.props.tags.concat(suggestions[this.state.preselectedSuggestion]));
-                this.setState({ value: '', preselectedSuggestion: undefined }, () => this.fetchExistingTags());
+                this.setState({ value: '', preselectedSuggestion: undefined, textErrors: [] }, () => this.fetchExistingTags());
             } else if (existingTag) {
                 this.props.onTagsChanged(this.props.tags.concat(existingTag));
-                this.setState({ value: '' }, () => this.fetchExistingTags());
+                this.setState({ value: '', textErrors: [] }, () => this.fetchExistingTags());
             } else if (this.props.allowNew) {
                 await this.addNewTag();
             }
@@ -179,27 +186,46 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
         if (newTag) {
             this.props.onTagsChanged(this.props.tags ? this.props.tags.concat(newTag) : [newTag]);
         }
-        this.setState({ value: '' });
+        this.setState({ value: '', textErrors: [] });
     }
 
     private onSuggestionSelected = tag => {
         this.props.onTagsChanged(this.props.tags.concat(tag));
-        this.setState({ value: '', preselectedSuggestion: undefined }, () => this.fetchExistingTags());
+        this.setState({ value: '', preselectedSuggestion: undefined, textErrors: [] }, () => this.fetchExistingTags());
     }
 
-    private onBlur = () => this.setState({ textIsFocused: false, preselectedSuggestion: undefined });
+    private onBlur = () => {
+        this.setState({
+            textIsFocused: false,
+            preselectedSuggestion: undefined
+        });
+    }
 
     private onClickOutside = () => this.setState({ suggestionsVisible: false, preselectedSuggestion: undefined });
 
     private onTextChanged = (e: React.ChangeEvent<HTMLInputElement>, isValid: boolean) => {
-        !this.state.suggestionsVisible && this.setState({ suggestionsVisible: true });
-        this.handleChange(e, isValid);
+        const value = e.target.value;
+        this.setState(prevState => ({
+            value,
+            isValid: isValid,
+            suggestionsVisible: !prevState.suggestionsVisible && true
+        }), () => this.handleErrors());
         this.fetchExistingTags(e.target.value);
+    }
+
+    private handleErrors = () => {
+        let errors = this.getErrors();
+        if (errors.length > 0) {
+            this.setInvalid(errors);
+        } else {
+            this.setValid();
+        }
     }
 
     private getErrors() {
         let errors = [];
-        if (this.state.valid && this.state.value && this.props.allowNew && !this.state.textIsFocused) {
+        errors = errors.concat(this.state.textErrors);
+        if (this.state.isValid && this.state.value && this.props.allowNew && !this.state.textIsFocused) {
             errors = errors.concat(this.props.valueNotAddedError);
         }
         if (this.props.maxTags < (this.props.tags && this.props.tags.length)) {
@@ -253,6 +279,7 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
 
     private tagRemoveClick = (tag: Tag) => () => {
         this.props.onTagsChanged && this.props.onTagsChanged(this.props.tags.filter(sv => sv.id !== tag.id));
+        this.handleErrors();
         this.fetchExistingTags();
     }
 
@@ -273,4 +300,7 @@ export class Tags extends BaseInput<TagsProps, TagsState, HTMLInputElement>  {
             );
     }
 }
+
+export const Tags = withFormContext(TagsRaw);
+
 export default Tags;

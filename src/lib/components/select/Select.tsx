@@ -6,6 +6,8 @@ import InputGroup from '../inputGroup/InputGroup';
 import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_circle_outline_24px.svg';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
 import { Button } from '../button/Button';
+import { OmitFormContext } from '../form/FormContext';
+import { withFormContext } from '../form/withFormContext';
 
 export interface SelectValue {
     value: number | string;
@@ -13,7 +15,7 @@ export interface SelectValue {
     forceSelected?: boolean;
 }
 
-export interface SelectProps extends BaseInputProps<HTMLSelectElement> {
+interface SelectRawProps extends BaseInputProps<HTMLSelectElement> {
     values?: SelectValue[];
     defaultEmpty?: boolean;
     multiple?: boolean;
@@ -24,18 +26,20 @@ export interface SelectProps extends BaseInputProps<HTMLSelectElement> {
     readonlyEmptyPlaceholder?: string;
 }
 
+export type SelectProps = OmitFormContext<SelectRawProps>;
+
 export interface SelectState extends BaseInputState {
 }
 
-export class Select extends BaseInput<SelectProps, SelectState, HTMLSelectElement> {
-    public static defaultProps = Object.assign(BaseInput.defaultProps, {
+class SelectRaw extends BaseInput<SelectRawProps, SelectState, HTMLSelectElement> {
+    public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
         defaultEmpty: true,
         multiple: false,
         readOnly: false,
         readonlyEmptyPlaceholder: 'N/A'
     });
 
-    constructor(props: SelectProps) {
+    constructor(props: SelectRawProps) {
         super(props);
         const val = !props.value ?
             props.defaultEmpty ?
@@ -46,8 +50,12 @@ export class Select extends BaseInput<SelectProps, SelectState, HTMLSelectElemen
                     ''
             :
             props.value;
-        this.state = Object.assign(this.state, { value: val, handleValueChangeEnabled: props.multiple ? false : true });
+        this.state = Object.assign(this.state, { value: val });
         this.handleChangeCustom = this.handleChangeCustom.bind(this);
+    }
+
+    public componentDidMount() {
+        this.props.multiple && this.handleValid(this.props.selectedValues);
     }
 
     public render() {
@@ -179,5 +187,7 @@ export class Select extends BaseInput<SelectProps, SelectState, HTMLSelectElemen
         this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(newValues);
     }
 }
+
+export const Select = withFormContext(SelectRaw);
 
 export default Select;
