@@ -100,7 +100,7 @@
     "create:patch": "npm run version:patch && npm run push:git",
     "deploy": ".env.bat && npm run build:gh-pages && npm run build:prod && npm run commit:build && npm publish && npm run conventional-github-releaser -p angular && npm run create:patch"
   },
-  "typings": "src/index.d.ts",
+  "typings": "build/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/PeterKottas/guestbell-forms.git"
