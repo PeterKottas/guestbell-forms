@@ -59,7 +59,7 @@
     "react-hot-loader": "4.3.11",
     "react-ink": "6.4.0",
     "react-onclickoutside": "6.7.1",
-    "react-textarea-autosize": "7.0.4",
+    "react-autosize-textarea": "5.0.0",
     "react-tippy": "1.2.2",
     "rimraf": "2.6.2",
     "sass-loader": "7.1.0",

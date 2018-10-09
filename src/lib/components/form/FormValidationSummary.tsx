@@ -2,6 +2,9 @@ import * as React from 'react';
 import guid from '../utils/Guid';
 import { withFormContext } from './withFormContext';
 import { FormContextProps, OmitFormContext } from './FormContext';
+import { Button } from './../button/Button';
+
+import * as ArrowIcon from 'material-design-icons/maps/svg/production/ic_my_location_24px.svg';
 
 type FormValidationSummaryRawProps = {
     title?: string;
@@ -42,8 +45,29 @@ class FormValidationSummaryRaw extends React.PureComponent<FormValidationSummary
                                 }
                             </div>
                             <div className="formValidationSummary__item__errors">
-                                {component.validation.errors}
+                                {component.validation.errors && component.validation.errors.map((err, errIndex) => (
+                                    <span
+                                        className="formValidationSummary__item__error"
+                                        key={errIndex}
+                                    >
+                                        {err}
+                                    </span>
+                                ))}
                             </div>
+                            <div style={{ flex: 'auto' }} />
+                            <Button
+                                className="formValidationSummary__item__locate-button"
+                                circular={true}
+                                type="white"
+                                small={true}
+                                blank={true}
+                                onClick={() => {
+                                    component.componentApi.scrollTo();
+                                    component.componentApi.focus();
+                                }}
+                            >
+                                <ArrowIcon />
+                            </Button>
                         </div>
                     );
                 })}

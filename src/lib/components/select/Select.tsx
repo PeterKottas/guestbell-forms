@@ -66,13 +66,14 @@ class SelectRaw extends BaseInput<SelectRawProps, SelectState, HTMLSelectElement
                 <div
                     className={'input__base select-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '') +
                         ' ' + (this.props.readOnly ? 'readonly' : '') + ' ' + (this.props.multiple ? 'multiple' : '')}
+                    ref={this.containerRef}
                 >
                     {this.renderSelectedValues()}
                     {finalValues.length > 0 && ((this.props.multiple && !this.props.readOnly) || !this.props.multiple) &&
                         <div className="select-input__select__wrapper">
                             {((!this.props.multiple && !this.props.readOnly) || this.props.multiple) ?
                                 <select
-                                    ref={this.selectRef}
+                                    ref={this.inputRef}
                                     disabled={this.getDisabled()}
                                     required={this.props.required}
                                     onChange={this.handleChangeCustom}
@@ -107,8 +108,6 @@ class SelectRaw extends BaseInput<SelectRawProps, SelectState, HTMLSelectElement
             </InputGroup>
         );
     }
-
-    private selectRef = (elem: HTMLSelectElement) => this.props.inputRef && this.props.inputRef(elem);
 
     private handleChangeCustom(event: React.ChangeEvent<HTMLSelectElement>) {
         if (this.props.multiple) {

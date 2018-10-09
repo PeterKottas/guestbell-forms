@@ -57,7 +57,7 @@ class DynamicSubmitRaw extends BaseInput<DynamicSubmitRawProps, DynamicSubmitSta
                 disabled={this.getDisabled() ?
                     this.getDisabled()
                     :
-                    (this.props.validateForm ? this.props.formContext.isFormValid && !this.props.formContext.isFormValid : false)}
+                    (this.props.validateForm ? this.props.formContext && !this.props.formContext.isFormValid : false)}
             >
                 {this.renderChildren()}
             </Button>

@@ -19,7 +19,7 @@ export interface SubmitState extends BaseInputState {
 }
 
 class SubmitRaw extends BaseInput<SubmitRawProps, SubmitState, never>  {
-    public static defaultProps = Object.assign({}, BaseInput.defaultProps, { validateForm: true, ignoreContext: true });
+    public static defaultProps = Object.assign({}, BaseInput.defaultProps, { validateForm: true, ignoreContext: true, reRendersWhenContextChanges: true });
 
     constructor(props: SubmitRawProps) {
         super(props);
@@ -53,7 +53,7 @@ class SubmitRaw extends BaseInput<SubmitRawProps, SubmitState, never>  {
         return this.getDisabled() ?
             this.getDisabled()
             :
-            (this.props.validateForm ? this.props.formContext.isFormValid && !this.props.formContext.isFormValid : false);
+            (this.props.validateForm ? this.props.formContext && !this.props.formContext.isFormValid : false);
     }
 }
 

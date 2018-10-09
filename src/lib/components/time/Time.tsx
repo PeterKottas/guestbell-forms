@@ -27,8 +27,6 @@ export interface TimeState extends BaseInputState {
 
 class TimeRaw extends BaseInput<TimeRawProps, TimeState, HTMLInputElement>  {
     public static defaultProps = Object.assign({}, BaseInput.defaultProps, { type: 'time', placeholder: '' });
-    private hoursEl: HTMLInputElement;
-    private minutesEl: HTMLInputElement;
 
     constructor(props: TimeRawProps) {
         super(props);
@@ -48,7 +46,10 @@ class TimeRaw extends BaseInput<TimeRawProps, TimeState, HTMLInputElement>  {
         }
         return (
             <InputGroup title={this.props.title}>
-                <div className={'input__base time-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')}>
+                <div 
+                    className={'input__base time-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')}
+                    ref={this.containerRef}
+                >
                     <div className="">
                         <div className="time-input__arrows__container">
                             <button
@@ -59,7 +60,6 @@ class TimeRaw extends BaseInput<TimeRawProps, TimeState, HTMLInputElement>  {
                             </button>
                             <div className="input-padding">
                                 <input
-                                    ref={this.hoursRef}
                                     disabled={this.getDisabled()}
                                     required={this.props.required}
                                     className={'time-input__time ' + (this.state.value ? 'filled' : '')}
@@ -90,7 +90,6 @@ class TimeRaw extends BaseInput<TimeRawProps, TimeState, HTMLInputElement>  {
                             </button>
                             <div className="input-padding">
                                 <input
-                                    ref={this.minutesRef}
                                     disabled={this.getDisabled()}
                                     required={this.props.required}
                                     className={'time-input__time ' + (this.state.value ? 'filled' : '')}
@@ -122,10 +121,6 @@ class TimeRaw extends BaseInput<TimeRawProps, TimeState, HTMLInputElement>  {
             </InputGroup>
         );
     }
-
-    private hoursRef = (el: HTMLInputElement) => this.hoursEl = el;
-
-    private minutesRef = (el: HTMLInputElement) => this.minutesEl = el;
 
     private onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         if (this.state.hoursText) {

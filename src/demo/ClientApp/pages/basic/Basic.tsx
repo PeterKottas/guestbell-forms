@@ -304,7 +304,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                 <Button
                                                     key={2}
                                                     dropdown={true}
-                                                    onClick={this.untouchAll}
+                                                    onClick={this.unTouchAll}
                                                 >Un-touch all
                                                 </Button>]}
                                         >
@@ -387,7 +387,6 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                             </div>
                                             <Text
                                                 touchOn={this.state.touchOn}
-                                                required={true}
                                                 label="Your name"
                                                 onChange={this.nameChanged}
                                                 value={this.state.name}
@@ -396,7 +395,6 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                             />
                                             <Select
                                                 touchOn={this.state.touchOn}
-                                                required={false}
                                                 label={'Your gender'}
                                                 values={genderValues}
                                                 onChange={this.handleGenderChange}
@@ -469,7 +467,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                 currencies={currencies1}
                                                 prices={this.state.prices1}
                                                 touchOn={this.state.touchOn}
-                                                required={false}
+                                                required={true}
                                                 onPricesChange={this.prices1Changed}
                                                 title="Price"
                                             />
@@ -483,6 +481,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                 title="Price multiple"
                                             />
                                             <Time
+                                                required={true}
                                                 touchOn={this.state.touchOn}
                                                 time={this.state.time1}
                                                 timeChange={this.time1Changed}
@@ -802,7 +801,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
 
     private drinksChecked = (value: string) => this.setState({ drink: value });
 
-    private untouchAll = (e: React.MouseEvent<HTMLButtonElement>) => { e.preventDefault(); this.form.unTouchAll(); };
+    private unTouchAll = (e: React.MouseEvent<HTMLButtonElement>) => { e.preventDefault(); this.form.unTouchAll(); };
 
     private simulateUnmountChecked = () => this.setState({ simulateUnmount: !this.state.simulateUnmount });
 

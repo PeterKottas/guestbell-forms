@@ -1,5 +1,6 @@
 ﻿// Libs
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import {
     Tooltip,
 } from 'react-tippy';
@@ -8,12 +9,15 @@ import {
 import * as Validators from '../../../validators';
 import guid from '../../utils/Guid';
 import { FormContextProps } from '../../form/FormContext';
+import { shallowEqual } from '../../utils/ShallowEqual';
 
 export interface ComponentApi {
+    focus: () => void;
     touch: () => void;
     unTouch: () => void;
     enableComponent: () => void;
     disableComponent: () => void;
+    scrollTo: () => void;
 }
 
 export type ValidationError = string | JSX.Element;
@@ -42,6 +46,7 @@ export type BaseInputProps<HTMLType extends AllowedHtmlElements> = {
     errors?: ValidationError[];
     onErrorsChanged?: (errors: ValidationError[]) => void;
     showValidation?: boolean;
+    reRendersWhenContextChanges?: boolean;
 } & FormContextProps;
 
 export interface BaseInputState {
@@ -56,7 +61,7 @@ export interface BaseInputState {
 }
 
 export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputState, HTMLType extends
-    AllowedHtmlElements> extends React.PureComponent<P, S> implements ComponentApi {
+    AllowedHtmlElements> extends React.Component<P, S> implements ComponentApi {
     public static defaultProps: BaseInputProps<never> = {
         className: undefined,
         required: false,
@@ -65,43 +70,41 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
         touchOn: 'focus',
         ignoreContext: false,
         showValidation: true,
-        formContext: undefined
+        formContext: undefined,
+        reRendersWhenContextChanges: false
     };
 
     public componentId = guid();
 
+    public inputRef: React.Ref<HTMLType> | React.RefObject<HTMLType>;
+    
+    protected containerRef: React.Ref<HTMLDivElement> | React.RefObject<HTMLDivElement>;
+
     private lastValidation: JSX.Element[];
 
-    constructor(props: P) {
+    constructor(props: P, subscribe: boolean = true) {
         super(props);
+        const res = this.handleValueChange(this.props.value, true, [], props, true);
         this.state = {
-            isValid: props.required ? false : true,
+            isValid: res.isValid,
+            errors: res.errors,
             value: props.value ? props.value : '',
             touched: false,
             disabled: false,
             focused: false,
             handleValueChangeEnabled: true
         } as S;
+        this.containerRef = React.createRef<HTMLDivElement>();
+        this.inputRef = React.createRef<HTMLType>();
         this.handleChange = this.handleChange.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
         this.handleFocus = this.handleFocus.bind(this);
         this.setValid = this.setValid.bind(this);
+        this.focus = this.focus.bind(this);
+        this.scrollTo = this.scrollTo.bind(this);
         this.setInvalid = this.setInvalid.bind(this);
-        if (!props.ignoreContext && props.formContext) {
-            props.formContext.subscribe(this.componentId, {
-                componentId: this.componentId,
-                componentApi: {
-                    disableComponent: this.disableComponent,
-                    enableComponent: this.enableComponent,
-                    touch: this.touch,
-                    unTouch: this.unTouch
-                },
-                validation: {
-                    isValid: this.state.isValid,
-                    errors: this.state.errors,
-                    name: this.props.validationName
-                }
-            });
+        if (subscribe) {
+            this.subscribeSelf(props);
         }
     }
 
@@ -151,14 +154,22 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
         }
     }
 
-    public componentDidMount() {
-        this.handleValueChange(this.state.value);
+    public componentWillReceiveProps(nextProps: P) {
+        if (nextProps.value !== this.props.value
+            ||
+            nextProps.validators !== this.props.validators
+            ||
+            nextProps.customValidators !== this.props.customValidators
+            ||
+            nextProps.required !== this.props.required
+        ) {
+            this.handleValueChange(nextProps.value, true, [], nextProps);
+        }
     }
 
-    public componentWillReceiveProps(nextProps: P) {
-        if (nextProps.value !== this.props.value) {
-            this.handleValueChange(nextProps.value);
-        }
+    public scrollTo() {
+        const domNode: HTMLDivElement = ReactDOM.findDOMNode((this.containerRef as React.RefObject<HTMLDivElement>).current) as HTMLDivElement;
+        domNode && domNode.scrollIntoView({ behavior: 'smooth' });
     }
 
     public touch() {
@@ -178,13 +189,41 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
         this.setState({ disabled: false });
     }
 
+    public focus() {
+        if (this.inputRef) {
+            const domNode: HTMLElement = ReactDOM.findDOMNode((this.inputRef as React.RefObject<HTMLElement>).current) as HTMLElement;
+            domNode && domNode.focus();
+        }
+    }
+
     protected handleChange(event: React.ChangeEvent<HTMLType>, isValid?: boolean, errors: ValidationError[] = []) {
         let value = event.target.value;
         if (!this.props.onTheFlightValidate || (this.props.onTheFlightValidate && this.props.onTheFlightValidate(value))) {
-            const valid = this.handleValueChange(value, isValid, errors);
+            const res = this.handleValueChange(value, isValid, errors);
             if (this.props.onChange) {
-                this.props.onChange(event, valid);
+                this.props.onChange(event, res.isValid);
             }
+        }
+    }
+
+    protected subscribeSelf(props: P) {
+        if (!props.ignoreContext && props.formContext) {
+            props.formContext.subscribe(this.componentId, {
+                componentId: this.componentId,
+                componentApi: {
+                    disableComponent: this.disableComponent,
+                    enableComponent: this.enableComponent,
+                    touch: this.touch,
+                    unTouch: this.unTouch,
+                    scrollTo: this.scrollTo,
+                    focus: this.focus
+                },
+                validation: {
+                    isValid: this.state.isValid,
+                    errors: this.state.errors,
+                    name: this.props.validationName ? this.props.validationName : this.props.title ? this.props.title : this.props.label
+                }
+            });
         }
     }
 
@@ -268,36 +307,45 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
         );
     }
 
-    protected handleValueChange(value: string, isValid: boolean = true, errors: ValidationError[] = []): boolean {
-        if (!this.state.handleValueChangeEnabled) {
-            return isValid;
+    public shouldComponentUpdate(nextProps: P, nextState: S) {
+        let shouldUpdate = !shallowEqual(this.props, nextProps, !this.props.reRendersWhenContextChanges ? 'formContext' : undefined)
+            || !shallowEqual(this.state, nextState);
+        return shouldUpdate;
+    }
+
+    protected handleValueChange(value: string, isValid: boolean = true, errors: ValidationError[] = [], props: P = this.props, initializing: boolean = false): {
+        isValid: boolean;
+        errors: ValidationError[];
+    } {
+        if (!initializing && !this.state.handleValueChangeEnabled) {
+            return { isValid, errors: [] };
         }
-        if (this.props.required && !value) {
+        if (props.required && !value) {
             errors.push('Required');
             isValid = false;
         } else {
-            if (!this.props.required && !value) {
+            if (!props.required && !value) {
                 isValid = true;
             } else {
-                if (this.props.validators) {
+                if (props.validators) {
                     isValid = true;
-                    this.props.validators.forEach(validator => {
+                    props.validators.forEach(validator => {
                         let validInner = false;
                         switch (validator) {
                             case 'email':
-                                validInner = new Validators.EmailValidator().Validate(value, this.props.required, (error) => errors.push(error));
+                                validInner = new Validators.EmailValidator().Validate(value, props.required, (error) => errors.push(error));
                                 break;
                             case 'number':
-                                validInner = new Validators.NumberValidator().Validate(value, this.props.required, (error) => errors.push(error));
+                                validInner = new Validators.NumberValidator().Validate(value, props.required, (error) => errors.push(error));
                                 break;
                             case 'latitude':
-                                validInner = new Validators.LatitudeValidator().Validate(value, this.props.required, (error) => errors.push(error));
+                                validInner = new Validators.LatitudeValidator().Validate(value, props.required, (error) => errors.push(error));
                                 break;
                             case 'longitude':
-                                validInner = new Validators.LongitudeValidator().Validate(value, this.props.required, (error) => errors.push(error));
+                                validInner = new Validators.LongitudeValidator().Validate(value, props.required, (error) => errors.push(error));
                                 break;
                             case 'url':
-                                validInner = new Validators.UrlValidator().Validate(value, this.props.required, (error) => errors.push(error));
+                                validInner = new Validators.UrlValidator().Validate(value, props.required, (error) => errors.push(error));
                                 break;
                             default:
                                 throw new Error(`Validator ${validator} not implemented`);
@@ -307,10 +355,10 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
                         }
                     });
                 }
-                if (this.props.customValidators) {
-                    this.props.customValidators.forEach(customValidator => {
+                if (props.customValidators) {
+                    props.customValidators.forEach(customValidator => {
                         let validInner = false;
-                        validInner = customValidator.Validate(value, this.props.required, (error) => errors.push(error));
+                        validInner = customValidator.Validate(value, props.required, (error) => errors.push(error));
                         if (isValid && !validInner) {
                             isValid = validInner;
                         }
@@ -318,17 +366,19 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
                 }
             }
         }
-        this.props.onErrorsChanged && this.props.onErrorsChanged(errors);
-        this.setState({ value, isValid, errors });
-        if (!this.props.ignoreContext) {
-            this.props.formContext && this.props.formContext.updateCallback(this.componentId, {
-                validation: {
-                    isValid: isValid,
-                    errors: errors,
-                }
-            });
+        if (!initializing) {
+            props.onErrorsChanged && props.onErrorsChanged(errors);
+            this.setState({ value, isValid, errors });
+            if (!props.ignoreContext) {
+                props.formContext && props.formContext.updateCallback(this.componentId, {
+                    validation: {
+                        isValid: isValid,
+                        errors: errors,
+                    }
+                });
+            }
         }
-        return isValid;
+        return { isValid, errors };
     }
 
     private renderTooltip() {

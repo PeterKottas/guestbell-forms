@@ -44,7 +44,7 @@ class OpeningHoursDayRaw extends BaseInput<OpeningHoursDayRawProps, OpeningHours
                 className={'input__group__openingHoursDay ' + (this.props.className ? ' ' + this.props.className : '')}
                 helpText={this.props.helpText}
             >
-                <div className={'input__base openingHoursDay-input ' + this.getValidationClass()}>
+                <div className={'input__base openingHoursDay-input ' + this.getValidationClass()} ref={this.containerRef}>
                     <div className="openingHoursDay-input__container">
                         {this.props.openingHours && this.props.openingHours.times && this.props.openingHours.times.map((item, index) => {
                             const previousTime = index > 0 ? new Date(this.props.openingHours.times[index - 1]) : this.getTime(0, 0);

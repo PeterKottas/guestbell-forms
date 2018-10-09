@@ -34,18 +34,26 @@ class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never>  {
     public static defaultProps = Object.assign({}, BaseInput.defaultProps, { type: 'money', allowMultiple: false });
 
     constructor(props: MoneyRawProps) {
-        super(props);
+        super(props, false);
         if (!props.currencies || !props.currencies.length) {
             throw Error('No currencies supplied to money input');
         }
-
+        this.state = Object.assign(this.state, {
+            isValid: props.required ? props.prices.length > 0 : true,
+            errors: props.required && props.prices.length === 0 ? ['Required'] : [],
+            handleValueChangeEnabled: false
+        });
+        this.subscribeSelf(props);
     }
 
     public render() {
         let unusedCurrencies = this.props.currencies;
         return (
             <InputGroup title={this.props.title}>
-                <div className={'input__base money-input ' + this.getValidationClass() + (this.props.className ? ' ' + this.props.className : '')}>
+                <div
+                    className={'input__base money-input ' + this.getValidationClass() + (this.props.className ? ' ' + this.props.className : '')}
+                    ref={this.containerRef}
+                >
                     {this.props.prices && this.props.prices.map((item, index) => {
                         let currentCurrencies = this.props.currencies.
                             filter(currency => this.props.prices.
@@ -139,12 +147,29 @@ class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never>  {
             newPrices[index].value = num;
         }
         this.props.onPricesChange(newPrices);
+        if (!this.state.touched) {
+            this.touch();
+        }
     }
 
-    private removePriceClick = (index: number) => () => this.props.onPricesChange(this.props.prices.filter((price, itemIndex) => itemIndex !== index));
+    private removePriceClick = (index: number) => () => {
+        const newPrices = this.props.prices.filter((price, itemIndex) => itemIndex !== index);
+        this.props.onPricesChange(newPrices);
+        if (newPrices.length === 0 && this.props.required) {
+            this.setInvalid(['Required']);
+        }
+        if (!this.state.touched) {
+            this.touch();
+        }
+    }
 
-    private addPriceClick = (unusedCurrencies: SelectValue[]) => () =>
-        this.props.onPricesChange(this.props.prices.concat([{ value: 0, currency: unusedCurrencies[0] }]))
+    private addPriceClick = (unusedCurrencies: SelectValue[]) => () => {
+        this.props.onPricesChange(this.props.prices.concat([{ value: 0, currency: unusedCurrencies[0] }]));
+        this.setValid();
+        if (!this.state.touched) {
+            this.touch();
+        }
+    }
 
     private onFocus = () => this.setState({ focused: true });
 

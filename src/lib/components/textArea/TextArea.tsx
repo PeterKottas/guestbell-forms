@@ -1,6 +1,6 @@
 ﻿// Libs
 import * as React from 'react';
-import Textarea from 'react-textarea-autosize';
+import Textarea from 'react-autosize-textarea';
 
 // Misc
 import InputGroup from '../inputGroup/InputGroup';
@@ -33,6 +33,8 @@ class TextAreaRaw extends BaseInput<TextAreaRawProps, TextAreaState, HTMLTextAre
         readOnly: false,
     });
 
+    private textArea: HTMLTextAreaElement;
+
     constructor(props: TextAreaRawProps) {
         super(props);
     }
@@ -45,6 +47,7 @@ class TextAreaRaw extends BaseInput<TextAreaRawProps, TextAreaState, HTMLTextAre
                     ${(this.props.readOnly ? 'textArea-input--readOnly' : '')} 
                     ${this.props.className ? this.props.className : ''}`}
                     onClick={this.onContainerClick}
+                    ref={this.containerRef}
                 >
                     <Textarea
                         ref={this.elemRef}
@@ -58,8 +61,9 @@ class TextAreaRaw extends BaseInput<TextAreaRawProps, TextAreaState, HTMLTextAre
                         onFocus={this.handleFocus}
                         readOnly={this.props.readOnly}
                         onKeyDown={this.onKeyDown}
-                        minRows={this.props.minRows}
+                        rows={this.props.minRows}
                         maxRows={this.props.maxRows}
+                        innerRef={el => this.textArea = el}
                     />
                     <span className="highlight" />
                     <span className="bar" />
@@ -68,6 +72,10 @@ class TextAreaRaw extends BaseInput<TextAreaRawProps, TextAreaState, HTMLTextAre
                 </div>
             </InputGroup>
         );
+    }
+
+    public focus() {
+        this.textArea && this.textArea.focus();
     }
 
     private onKeyDown = e => this.props.onKeyDown && this.props.onKeyDown(e);

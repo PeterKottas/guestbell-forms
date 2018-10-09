@@ -1,14 +1,14 @@
 import * as React from 'react';
 import Basic from './pages/basic/Basic';
+import ValidationPage from './pages/validationPage/ValidationPage';
 import Header from './components/header/Header';
 import { hot } from 'react-hot-loader';
-import { Test } from './pages/test/Test';
 
 const App = () => (
     <div>
         <Header />
-        {false && <Basic />}
-        {true && <Test />}
+        {true && <Basic />}
+        {false && <ValidationPage />}
     </div>
 );
 

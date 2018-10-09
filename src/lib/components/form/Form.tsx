@@ -89,7 +89,10 @@ export class Form extends React.PureComponent<FormProps, FormState> {
         );
     }
 
-    private onSubmit = (e: React.FormEvent) => e.preventDefault() || this.props.onSubmit && this.props.onSubmit();
+    private onSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        this.props.onSubmit && this.props.onSubmit();
+    }
 
     private subscribe(componentId: string, componentState: FormComponentContextState) {
         if (componentId) {

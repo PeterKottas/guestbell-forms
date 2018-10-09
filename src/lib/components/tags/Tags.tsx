@@ -43,6 +43,7 @@ export type TagsProps = OmitFormContext<TagsRawProps>;
 export interface TagsState extends BaseInputState {
     textIsFocused: boolean;
     textErrors: ValidationError[];
+    textIsValid: boolean;
     suggestionsVisible: boolean;
     fetchedExistingTags: Tag[];
     fetchingExistingTags: boolean;
@@ -71,7 +72,7 @@ class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement>  {
 
     constructor(props: TagsRawProps) {
         super(props);
-        this.state = { ...this.state, textErrors: [], textIsFocused: false, suggestionsVisible: false, fetchingExistingTags: false };
+        this.state = { ...this.state, textErrors: [], textIsFocused: false, suggestionsVisible: false, fetchingExistingTags: false, textIsValid: false };
     }
 
     public render() {
@@ -82,6 +83,7 @@ class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement>  {
                 <div
                     className={'input__base tags-input ' + this.getValidationClass() + (this.props.className ? ' ' +
                         this.props.className : '') + ' ' + (this.props.readOnly ? 'tags-input--readOnly ' : '')}
+                    ref={this.containerRef}
                 >
                     {this.renderTags()}
                     {(!this.props.maxTags || (this.props.maxTags > (this.props.tags && this.props.tags.length))) && !this.props.readOnly &&
@@ -112,7 +114,7 @@ class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement>  {
                                 onSelected={this.onSuggestionSelected}
                                 onClickOutside={this.onClickOutside}
                                 value={this.state.value}
-                                AddNewTagComponent={this.props.allowNew && this.state.value !== '' && this.state.isValid && (
+                                AddNewTagComponent={this.props.allowNew && this.state.value !== '' && this.state.textIsValid && (
                                     <Button
                                         dropdown={true}
                                         onClick={this.addNewTag}
@@ -198,7 +200,7 @@ class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement>  {
         this.setState({
             textIsFocused: false,
             preselectedSuggestion: undefined
-        });
+        }, () => this.handleErrors());
     }
 
     private onClickOutside = () => this.setState({ suggestionsVisible: false, preselectedSuggestion: undefined });
@@ -208,6 +210,7 @@ class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement>  {
         this.setState(() => ({
             value,
             isValid: isValid,
+            textIsValid: isValid,
             suggestionsVisible: true
         }), () => this.handleErrors());
         this.fetchExistingTags(e.target.value);
@@ -228,7 +231,7 @@ class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement>  {
         if (this.state.value !== '' && tags.length === 0) {
             errors = errors.concat('Required');
         }
-        if (this.state.isValid && this.state.value && this.props.allowNew && !this.state.textIsFocused) {
+        if (this.state.value && this.props.allowNew && !this.state.textIsFocused) {
             errors = errors.concat(this.props.valueNotAddedError);
         }
         if (this.props.maxTags < (this.props.tags && this.props.tags.length)) {

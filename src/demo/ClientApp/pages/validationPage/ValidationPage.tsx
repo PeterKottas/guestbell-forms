@@ -16,9 +16,9 @@ import {
     Tag,
     SelectValue,
     ButtonProps,
-    FormValidationSummary
+    FormValidationSummary,
+    ValidatorTypes
 } from '../../../../lib/index';
-import { ValidatorTypes } from 'build';
 
 export interface TestProps {
 
@@ -244,7 +244,7 @@ export class Test extends React.PureComponent<TestProps, TestState> {
                                                 <Button
                                                     key={2}
                                                     dropdown={true}
-                                                    onClick={this.untouchAll}
+                                                    onClick={this.unTouchAll}
                                                 >Un-touch all
                                                 </Button>]}
                                         >
@@ -254,7 +254,7 @@ export class Test extends React.PureComponent<TestProps, TestState> {
                                                 collapsable={true}
                                                 collapsedDefault={false}
                                             >
-                                                <Tags
+                                                {false && <Tags
                                                     title="Tags only email"
                                                     required={true}
                                                     validationName="Tags only email"
@@ -266,8 +266,8 @@ export class Test extends React.PureComponent<TestProps, TestState> {
                                                     onTagsChanged={this.tagsChanged}
                                                     suggestionsEmptyComponent={null}
                                                     validators={tagsValidators}
-                                                />
-                                                <Select
+                                                />}
+                                                {false && <Select
                                                     required={true}
                                                     label="One or more"
                                                     title="Multiselect"
@@ -278,6 +278,13 @@ export class Test extends React.PureComponent<TestProps, TestState> {
                                                     selectedValues={this.state.selectedValues}
                                                     values={this.state.multipleValues}
                                                     onSelectedValuesChange={this.selectedValuesChanged}
+                                                />}
+                                                <Checkbox
+                                                    required={true}
+                                                    label="Smart"
+                                                    onChecked={this.checkbox1Checked}
+                                                    checked={this.state.checkbox1}
+                                                    title="Dress code"
                                                 />
                                             </InputHeader>
                                             <FormValidationSummary />
@@ -291,6 +298,8 @@ export class Test extends React.PureComponent<TestProps, TestState> {
             </div >
         );
     }
+    
+    private checkbox1Checked = () => this.setState({ checkbox1: !this.state.checkbox1 });
 
     private formRef = (el: Form) => this.form = el;
 
@@ -298,7 +307,7 @@ export class Test extends React.PureComponent<TestProps, TestState> {
 
     private tagsChanged = (tags: Tag[]) => this.setState({ tags });
 
-    private untouchAll = (e: React.MouseEvent<HTMLButtonElement>) => { e.preventDefault(); this.form.unTouchAll(); };
+    private unTouchAll = (e: React.MouseEvent<HTMLButtonElement>) => { e.preventDefault(); this.form.unTouchAll(); };
 
     private simulateUnmountChecked = () => this.setState({ simulateUnmount: !this.state.simulateUnmount });
 

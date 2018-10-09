@@ -26,9 +26,14 @@ class CheckboxRaw extends BaseInput<CheckboxRawProps, CheckboxState, HTMLInputEl
     public static defaultProps = Object.assign({}, BaseInput.defaultProps, { checked: false });
 
     constructor(props: CheckboxRawProps) {
-        super(props);
-        this.state = Object.assign(this.state, { checked: props.checked, valid: props.required ? props.checked : true });
+        super(props, false);
+        this.state = Object.assign(this.state, {
+            checked: props.checked,
+            isValid: props.required ? props.checked : true,
+            errors: props.required && !props.checked ? ['Required'] : []
+        });
         this.handleChecked = this.handleChecked.bind(this);
+        this.subscribeSelf(props);
     }
 
     public componentWillReceiveProps(newProps: CheckboxProps) {
@@ -46,7 +51,10 @@ class CheckboxRaw extends BaseInput<CheckboxRawProps, CheckboxState, HTMLInputEl
         ]);
         return (
             <InputGroup title={this.props.title}>
-                <div className={containerClassName}>
+                <div
+                    className={containerClassName}
+                    ref={this.containerRef}
+                >
                     {!this.props.label && this.renderInput()}
                     {this.renderDefaultValidation()}
                     {this.props.label && <label>{this.renderInput()}{this.renderLabel()}</label>}

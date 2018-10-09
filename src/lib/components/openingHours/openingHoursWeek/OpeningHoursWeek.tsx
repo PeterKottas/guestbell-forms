@@ -70,7 +70,10 @@ class OpeningHoursWeekRaw extends BaseInput<OpeningHoursWeekRawProps, OpeningHou
     public render() {
 
         return (
-            <div className={'openingHoursWeek-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')}>
+            <div 
+                className={'openingHoursWeek-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')} 
+                ref={this.containerRef}
+            >
                 {this.renderContent()}
             </div>
         );

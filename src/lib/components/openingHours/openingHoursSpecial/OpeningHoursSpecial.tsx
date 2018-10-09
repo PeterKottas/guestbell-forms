@@ -72,7 +72,10 @@ class OpeningHoursSpecialRaw extends BaseInput<OpeningHoursSpecialRawProps, Open
             throw new Error('You need to install moment in order to use special day picker');
         }
         return (
-            <div className={'input__base openingHoursSpecial-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')}>
+            <div 
+                className={'input__base openingHoursSpecial-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')} 
+                ref={this.containerRef}
+            >
                 {this.props.days.map((day, index) => (
                     <OpeningHoursDay
                         key={index}

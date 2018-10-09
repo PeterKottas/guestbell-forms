@@ -22,7 +22,7 @@ export type TextProps = OmitFormContext<TextRawProps>;
 export interface TextState extends BaseInputState {
 }
 
-class TextRaw extends BaseInput<TextRawProps, TextState, HTMLInputElement>  {
+export class TextRaw extends BaseInput<TextRawProps, TextState, HTMLInputElement>  {
     public static defaultProps = Object.assign({}, BaseInput.defaultProps, { type: 'text', placeholder: '', stopClickPropagation: true, readOnly: false });
 
     constructor(props: TextRawProps) {
@@ -36,9 +36,10 @@ class TextRaw extends BaseInput<TextRawProps, TextState, HTMLInputElement>  {
                     className={`input__base text-input ${this.getValidationClass()} 
                     ${(this.props.readOnly ? 'text-input--readOnly' : '')} ${(this.props.className ? this.props.className : '')}`}
                     onClick={this.containerClick}
+                    ref={this.containerRef}
                 >
                     <input
-                        ref={this.onRef}
+                        ref={this.inputRef}
                         placeholder={this.props.placeholder}
                         disabled={this.getDisabled()}
                         required={this.props.required}
@@ -61,8 +62,6 @@ class TextRaw extends BaseInput<TextRawProps, TextState, HTMLInputElement>  {
     }
 
     private containerClick = (e: React.MouseEvent<HTMLDivElement>) => this.props.stopClickPropagation && e.stopPropagation();
-
-    private onRef = (elem: HTMLInputElement) => this.props.inputRef && this.props.inputRef(elem);
 
     private onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => this.props.onKeyDown && this.props.onKeyDown(e);
 }

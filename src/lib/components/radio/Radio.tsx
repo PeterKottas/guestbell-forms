@@ -29,7 +29,10 @@ class RadioRaw extends BaseInput<RadioRawProps, RadioState, HTMLInputElement>  {
 
     public render() {
         return (
-            <div className={`input__group radio-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}>
+            <div 
+                className={`input__group radio-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}
+                ref={this.containerRef}
+            >
                 {!this.props.label && this.renderInput()}
                 {this.props.label && <label>{this.renderInput()}{this.props.label}</label>}
             </div>
