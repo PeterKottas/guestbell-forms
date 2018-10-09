@@ -1,7 +1,6 @@
 // lib copied from https://github.com/StreakYC/react-smooth-collapse because the npm package they provide didn't work with webpack 4
 
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
 import Kefir from 'kefir';
 import kefirBus from 'kefir-bus';
 
@@ -22,14 +21,6 @@ type State = {
 };
 
 export class SmoothCollapse extends React.PureComponent<SmoothCollapseProps, State> {
-    static propTypes = {
-        expanded: PropTypes.bool.isRequired,
-        onChangeEnd: PropTypes.func,
-        collapsedHeight: PropTypes.string,
-        heightTransition: PropTypes.string,
-        className: PropTypes.string,
-        allowOverflowWhenOpen: PropTypes.bool
-    };
     static defaultProps = {
         collapsedHeight: '0',
         heightTransition: '.25s ease',

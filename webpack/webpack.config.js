@@ -13,7 +13,6 @@ module.exports = merge(require('./webpack.config.base'), {
     ],
     externals: {
         "react": "react",
-        "prop-types": "prop-types",
         "react-ink": "react-ink",
         "react-onclickoutside": "react-onclickoutside",
         "react-day-picker": "react-day-picker",

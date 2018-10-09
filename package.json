@@ -52,7 +52,6 @@
     "node-sass": "4.9.3",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "3.0.0",
-    "prop-types": "15.6.2",
     "react": "16.5.2",
     "react-datepicker": "1.6.0",
     "react-dom": "16.5.2",
@@ -112,7 +111,6 @@
   "homepage": "https://github.com/PeterKottas/guestbell-forms",
   "peerDependencies": {
     "moment": "*",
-    "prop-types": "*",
     "react": "*",
     "react-datepicker": "*",
     "react-ink": "*",
