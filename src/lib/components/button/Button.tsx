@@ -1,7 +1,7 @@
 // Libs
 import * as React from 'react';
 var Ink = require('react-ink');
-import * as classNames from 'classnames';
+var classNames = require('classnames');
 
 // Misc
 

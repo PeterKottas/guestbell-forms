@@ -1,7 +1,7 @@
 ﻿// Libs
 import * as React from 'react';
 import SmoothCollapse from '../smoothCollapse/SmoothCollapse';
-import * as classNames from 'classnames';
+var classNames = require('classnames');
 
 export interface DropdownItemProps {
     header?: JSX.Element | string;

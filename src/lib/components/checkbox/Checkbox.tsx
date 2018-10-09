@@ -4,7 +4,7 @@ import * as React from 'react';
 // Misc
 import InputGroup from '../inputGroup/InputGroup';
 import { BaseInputProps, BaseInput, BaseInputState } from '../base/input/BaseInput';
-import * as classNames from 'classnames';
+var classNames = require('classnames');
 import { withFormContext } from '../form/withFormContext';
 import { OmitFormContext } from '../form/FormContext';
 
