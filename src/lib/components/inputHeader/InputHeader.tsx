@@ -104,17 +104,17 @@ export class InputHeaderRaw extends React.PureComponent<InputHeaderRawProps, Inp
 
     public expand() {
         this.props.collapsable && this.setState({ collapsed: false, smoothCollapseDone: false },
-            () => this.props.inputHeaderContext.stateChanged && this.props.inputHeaderContext.stateChanged());
+            () => this.props.inputHeaderContext && this.props.inputHeaderContext.stateChanged());
     }
 
     public collapse() {
         this.props.collapsable && this.setState({ collapsed: true, smoothCollapseDone: false },
-            () => this.props.inputHeaderContext.stateChanged && this.props.inputHeaderContext.stateChanged());
+            () => this.props.inputHeaderContext && this.props.inputHeaderContext.stateChanged());
     }
 
     public toggle() {
         this.props.collapsable && this.setState({ collapsed: !this.state.collapsed, smoothCollapseDone: false },
-            () => this.props.inputHeaderContext.stateChanged && this.props.inputHeaderContext.stateChanged());
+            () => this.props.inputHeaderContext && this.props.inputHeaderContext.stateChanged());
     }
 
     public render() {
