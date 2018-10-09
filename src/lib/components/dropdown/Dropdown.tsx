@@ -73,6 +73,7 @@ export class Dropdown extends React.PureComponent<DropdownItemProps, DropdownIte
             'guestbell__dropdown-toggle',
             { ['guestbell__dropdown-toggle__arrow--hidden']: !this.props.showArrow },
             { ['guestbell__dropdown-toggle--disabled']: this.props.disabled },
+            this.props.headerClassName
         ]);
         return (
             <div className={containerClassName}>
