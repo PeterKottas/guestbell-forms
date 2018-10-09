@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FormContextConsumer, FormContextProps, OmitFormContext } from './FormContext';
-import InnerRefProps from '../types/InnerRefProps';
+import InnerRefProps from '../../types/InnerRefProps';
 
 export function withFormContext<
     P extends FormContextProps & React.ClassAttributes<React.ComponentType<P>>,
@@ -17,6 +17,5 @@ export function withFormContext<
             </FormContextConsumer>
         );
     };
-    // tslint:disable-next-line:no-any
     return WithFormContext;
 }

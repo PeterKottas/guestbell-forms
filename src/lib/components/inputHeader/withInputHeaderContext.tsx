@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { InputHeaderContextConsumer, InputHeaderContextProps, OmitInputHeaderContext } from './InputHeaderContext';
-import InnerRefProps from '../types/InnerRefProps';
+import InnerRefProps from '../../types/InnerRefProps';
 
 export function withInputHeaderContext<
     P extends InputHeaderContextProps & React.ClassAttributes<React.ComponentType<P>>
@@ -16,6 +16,5 @@ export function withInputHeaderContext<
             </InputHeaderContextConsumer>
         );
     };
-    // tslint:disable-next-line:no-any
     return WithInputHeaderContext;
 }
