@@ -9,7 +9,8 @@ module.exports = {
         extensions: ['.js', '.jsx', '.ts', '.tsx']
     },
     entry: {
-        'guestbell-forms': './src/lib/index.ts'
+        'guestbell-forms': './src/lib/index.ts',
+        'guestbell-forms': './src/lib/scss/index.scss',
     },
     module: {
         rules: [

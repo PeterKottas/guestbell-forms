@@ -10,7 +10,6 @@ try {
 }
 try {
     var DatePicker = require('react-datepicker').default;
-    require('react-datepicker/dist/react-datepicker.css');
 } catch {
     DatePicker = undefined;
 }
