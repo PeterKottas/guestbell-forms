@@ -13,7 +13,6 @@ export interface FormComponentValidationContextState {
 export interface FormComponentContextState {
     validation: FormComponentValidationContextState;
     componentApi: ComponentApi;
-    componentId: string;
 }
 
 export interface FormContextProps {

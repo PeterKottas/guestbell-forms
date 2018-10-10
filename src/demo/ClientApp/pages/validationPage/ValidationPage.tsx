@@ -218,6 +218,18 @@ export class Test extends React.PureComponent<TestProps, TestState> {
                                         noValidate={true}
                                         ref={this.formRef}
                                         onSubmit={this.submitForm}
+                                        foreignContext={{
+                                            components: {
+                                                'extra-check': {
+                                                    validation: {
+                                                        isValid: this.state.checkbox2,
+                                                        errors: this.state.checkbox2 ? [] : ['Please check custom context'],
+                                                        name: 'Extra context'
+                                                    },
+                                                    componentApi: undefined,
+                                                }
+                                            }
+                                        }}
                                     >
                                         <InputHeader
                                             icon={<i className="material-icons md-48">edit</i>}
@@ -287,6 +299,12 @@ export class Test extends React.PureComponent<TestProps, TestState> {
                                                     checked={this.state.checkbox1}
                                                     title="Dress code"
                                                 />
+                                                <Checkbox
+                                                    label="Foreign context check"
+                                                    onChecked={this.checkbox2Checked}
+                                                    checked={this.state.checkbox2}
+                                                    title="Custom context"
+                                                />
                                             </InputHeader>
                                             <FormValidationSummary />
                                         </InputHeader>
@@ -301,6 +319,8 @@ export class Test extends React.PureComponent<TestProps, TestState> {
     }
 
     private checkbox1Checked = () => this.setState({ checkbox1: !this.state.checkbox1 });
+
+    private checkbox2Checked = () => this.setState({ checkbox2: !this.state.checkbox2 });
 
     private formRef = (el: Form) => this.form = el;
 

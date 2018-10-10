@@ -213,7 +213,6 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
     protected subscribeSelf(props: P) {
         if (!props.ignoreContext && props.formContext) {
             props.formContext.subscribe(this.componentId, {
-                componentId: this.componentId,
                 componentApi: {
                     disableComponent: this.disableComponent,
                     enableComponent: this.enableComponent,
