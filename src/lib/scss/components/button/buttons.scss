@@ -40,6 +40,10 @@
         box-shadow: none;
     }
 
+    &.guestbell-btn--icon {
+        line-height: 0;
+    }
+
     &.guestbell-btn--blank {
         background-color: transparent;
         box-shadow: none;

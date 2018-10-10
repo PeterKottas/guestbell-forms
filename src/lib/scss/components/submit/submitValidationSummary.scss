@@ -1,40 +1,36 @@
 .tippy-tooltip.validation-theme {
-    background-color: $input-validation-error-border-color;
-    color: $input-validation-color;
+    /*background-color: $background-color;
+    border-top: 2px solid $input-validation-color;
+    color: $input-validation-color;*/
+    background-color: $input-validation-color;
+    color: $input-text-color--white;
+    min-width: 14rem;
 }
 
 .submitValidationSummary__header {
     text-align: center;
-    font-size: 130%;
-    margin-bottom: 1rem;
+    font-size: 110%;
+    margin-bottom: 0.5rem;
+}
+
+.submitValidationSummary__footer {
+    text-align: right;
+    font-size: 110%;
+    margin-top: 0.5rem;
 }
 
 .submitValidationSummary__item {
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
-}
-
-.submitValidationSummary__item__header {
-    width: 7rem;
-    min-width: 7rem;
-    margin-right: 1rem;
-    text-align: right;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+    // padding-right: 1.5rem;
+    // padding-left: 1.5rem;
 }
 
 .submitValidationSummary__item__locate-button {
     margin-left: 0.5rem;
-}
-
-.submitValidationSummary__item__errors {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.submitValidationSummary__item__error {
-    margin-right: 0.5rem;
-    text-align: left;
+    svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
 }

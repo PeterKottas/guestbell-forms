@@ -7,8 +7,8 @@ import { hot } from 'react-hot-loader';
 const App = () => (
     <div>
         <Header />
-        {false && <Basic />}
-        {true && <ValidationPage />}
+        {true && <Basic />}
+        {false && <ValidationPage />}
     </div>
 );
 

@@ -19,7 +19,7 @@ const SubmitValidationSummary: React.SFC<SubmitValidationSummaryProps> = props =
                                 'unknown'
                             }
                         </div>
-                        <div className="submitValidationSummary__item__errors">
+                        {/*<div className="submitValidationSummary__item__errors">
                             {component.validation.errors && component.validation.errors.map((err, errIndex) => (
                                 <span
                                     className="submitValidationSummary__item__error"
@@ -28,9 +28,10 @@ const SubmitValidationSummary: React.SFC<SubmitValidationSummaryProps> = props =
                                     {err}
                                 </span>
                             ))}
-                        </div>
+                            </div>*/}
                         <div style={{ flex: 'auto' }} />
-                        <Button
+                        {component.componentApi && component.componentApi.focus && component.componentApi.scrollTo && <Button
+                            icon={true}
                             className="submitValidationSummary__item__locate-button"
                             circular={true}
                             type="white"
@@ -42,7 +43,7 @@ const SubmitValidationSummary: React.SFC<SubmitValidationSummaryProps> = props =
                             }}
                         >
                             <ArrowIcon />
-                        </Button>
+                        </Button>}
                     </div>
                 );
             })}

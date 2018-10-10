@@ -13,8 +13,11 @@ export interface FormValidationSummaryComponentProps {
 }
 
 export type FormValidationSummaryRawProps = {
-    containerClass?: string;
-    title?: string;
+    containerClassName?: string;
+    headerClassName?: string;
+    footerClassName?: string;
+    title?: string | JSX.Element;
+    footer?: string | JSX.Element;
     Component?: React.ComponentType<FormValidationSummaryComponentProps> | React.StatelessComponent<FormValidationSummaryComponentProps>
 } & FormContextProps;
 
@@ -46,10 +49,11 @@ export const DefaultComponent: React.SFC<FormValidationSummaryComponentProps> = 
                             ))}
                         </div>
                         <div style={{ flex: 'auto' }} />
-                        <Button
+                        {component.componentApi && component.componentApi.focus && component.componentApi.scrollTo && <Button
+                            icon={true}
                             className="formValidationSummary__item__locate-button"
                             circular={true}
-                            type="white"
+                            type="error"
                             small={true}
                             blank={true}
                             onClick={() => {
@@ -58,7 +62,7 @@ export const DefaultComponent: React.SFC<FormValidationSummaryComponentProps> = 
                             }}
                         >
                             <ArrowIcon />
-                        </Button>
+                        </Button>}
                     </div>
                 );
             })}
@@ -67,9 +71,12 @@ export const DefaultComponent: React.SFC<FormValidationSummaryComponentProps> = 
 
 export class FormValidationSummaryRaw extends React.PureComponent<FormValidationSummaryRawProps, FormValidationSummaryState> {
     public static defaultProps = {
-        title: 'This form has some errors',
+        title: 'Hang on',
+        footer: '... needs fixing',
         Component: DefaultComponent,
-        containerClass: 'formValidationSummary'
+        containerClassName: 'formValidationSummary',
+        headerClassName: 'formValidationSummary__header',
+        footerClassName: 'formValidationSummary__footer'
     };
 
     public componentId = guid();
@@ -83,11 +90,14 @@ export class FormValidationSummaryRaw extends React.PureComponent<FormValidation
                 }
                 return !component.validation.isValid;
             }) : [];
-        const containerClassName = classNames(this.props.containerClass);
+        const containerClassName = classNames(this.props.containerClassName);
+        const headerClassName = classNames(this.props.headerClassName);
+        const footerClassName = classNames(this.props.footerClassName);
         return componentsWithErrors.length > 0 && (
             <div className={containerClassName}>
-                {this.props.title && <div className="formValidationSummary__header">{this.props.title}</div>}
+                {this.props.title && <div className={headerClassName}>{this.props.title}</div>}
                 <this.props.Component componentsWithErrors={componentsWithErrors}/>
+                {this.props.footer && <div className={footerClassName}>{this.props.footer}</div>}
             </div>
         );
     }

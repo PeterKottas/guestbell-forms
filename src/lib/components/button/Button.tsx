@@ -23,6 +23,7 @@ export type ButtonProps = {
     circular?: boolean;
     noRipples?: boolean;
     small?: boolean;
+    icon?: boolean;
     outlined?: boolean;
     disableAfterClickMs?: number;
     buttonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
@@ -86,6 +87,7 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState>  {
             { ['guestbell-btn--blank']: this.props.blank },
             { ['guestbell-btn--outlined']: this.props.outlined },
             { ['guestbell-btn--dropdown']: this.props.dropdown },
+            { ['guestbell-btn--icon']: this.props.icon },
             { ['guestbell-btn--hero']: this.props.hero },
         ]);
         const button = (

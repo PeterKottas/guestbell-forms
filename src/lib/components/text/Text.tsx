@@ -13,7 +13,7 @@ export interface TextRawProps extends BaseInputProps<HTMLInputElement> {
     reverse?: boolean;
     placeholder?: string;
     stopClickPropagation?: boolean;
-    inputRef?: (input: HTMLInputElement) => void;
+    inputRef?: React.Ref<HTMLInputElement>;
     readOnly?: boolean;
     type?: 'number' | 'text';
 }

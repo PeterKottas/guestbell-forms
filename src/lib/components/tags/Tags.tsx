@@ -1,7 +1,7 @@
 // Libs
 import * as React from 'react';
 import { InputGroup } from '../inputGroup/InputGroup';
-import { Text, TextProps } from '../text/Text';
+import { Text, TextProps, TextRaw } from '../text/Text';
 import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_circle_outline_24px.svg';
 import { BaseInputProps, BaseInputState, BaseInput, ValidationError } from '../base/input/BaseInput';
 import { Button } from '../button/Button';
@@ -9,6 +9,7 @@ import TagsSuggestions from './subComponents/TagsSuggestions';
 import { OmitFormContext } from '../form/FormContext';
 import { withFormContext } from '../form/withFormContext';
 import { InnerRefProps } from './../../types/InnerRefProps';
+import * as ReactDOM from 'react-dom';
 
 // Misc
 export type Tag = {
@@ -71,9 +72,19 @@ export class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement
         maxSuggestions: 5,
     };
 
+    private textRef: React.RefObject<TextRaw>;
+
     constructor(props: TagsRawProps) {
         super(props);
         this.state = { ...this.state, textErrors: [], textIsFocused: false, suggestionsVisible: false, fetchingExistingTags: false, textIsValid: false };
+        this.textRef = React.createRef();
+    }
+
+    public focus() {
+        if (this.textRef.current && this.textRef.current.inputRef) {
+            const domNode: HTMLElement = ReactDOM.findDOMNode((this.textRef.current.inputRef as React.RefObject<HTMLElement>).current) as HTMLElement;
+            domNode && domNode.focus();
+        }
     }
 
     public render() {
@@ -91,6 +102,7 @@ export class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement
                         <div className={'tags-input__tags__wrapper ' + (this.props.readOnly ? 'filled ' : '')}>
                             <Text
                                 {...textProps}
+                                innerRef={this.textRef}
                                 required={this.props.tags.length > 0 ? false : this.props.required}
                                 className={'tags-input__text-input ' + (textProps.className ? textProps.className : '')}
                                 onKeyDown={this.onKeyDown(suggestions)}

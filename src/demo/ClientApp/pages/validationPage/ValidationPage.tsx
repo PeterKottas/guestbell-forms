@@ -279,6 +279,7 @@ export class Test extends React.PureComponent<TestProps, TestState> {
                                                     suggestionsEmptyComponent={null}
                                                     validators={tagsValidators}
                                                     existingTags={[{ id: 1, name: 'petokottas@gmail.com' }]}
+                                                    valueNotAddedError={'Email not added'}
                                                 />}
                                                 {false && <Select
                                                     required={true}
