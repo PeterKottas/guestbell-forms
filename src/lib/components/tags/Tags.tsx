@@ -87,6 +87,19 @@ export class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement
         }
     }
 
+    public componentWillReceiveProps(nextProps: TagsRawProps) {
+        if (nextProps.tags !== this.props.tags
+            ||
+            nextProps.validators !== this.props.validators
+            ||
+            nextProps.customValidators !== this.props.customValidators
+            ||
+            nextProps.required !== this.props.required
+        ) {
+            this.handleErrors(this.props.tags);
+        }
+    }
+
     public render() {
         const textProps = this.props.textProps ? this.props.textProps : {};
         const suggestions = this.getSuggestions();
