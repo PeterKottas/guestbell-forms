@@ -12,11 +12,12 @@
 .submitValidationSummary__item {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 .submitValidationSummary__item__header {
     width: 7rem;
+    min-width: 7rem;
     margin-right: 1rem;
     text-align: right;
     display: flex;
@@ -26,6 +27,11 @@
 
 .submitValidationSummary__item__locate-button {
     margin-left: 0.5rem;
+}
+
+.submitValidationSummary__item__errors {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .submitValidationSummary__item__error {
