@@ -74,15 +74,6 @@ export class Form extends React.PureComponent<FormProps, FormState> {
         });
     }
 
-    public componentWillReceiveProps(props: FormProps) {
-        if (this.props.extraComponents !== props.extraComponents && props.extraComponents) {
-            const isFormValid = this.getIsFormValid(this.state.contextState.components, props.extraComponents);
-            if (isFormValid !== this.state.contextState.isFormValid) {
-                this.setState(prevState => ({ contextState: { ...prevState.contextState, isFormValid } }));
-            }
-        }
-    }
-
     public render() {
         return (
             <form
@@ -102,12 +93,14 @@ export class Form extends React.PureComponent<FormProps, FormState> {
         if (!this.props.extraComponents) {
             return this.state.contextState;
         }
+        const isFormValid = this.state.contextState.isFormValid && this.getIsFormValid(this.props.extraComponents);
         return {
             ...this.state.contextState,
             components: {
                 ...this.state.contextState.components,
                 ...this.props.extraComponents
-            }
+            },
+            isFormValid
         };
     }
 
@@ -152,12 +145,10 @@ export class Form extends React.PureComponent<FormProps, FormState> {
         }
     }
 
-    private getIsFormValid(components: ComponentsDict = this.state.contextState.components,
-        extraComponents: ComponentsDict = this.props.extraComponents, initialValid: boolean = true): boolean {
+    private getIsFormValid(components: ComponentsDict = this.state.contextState.components, initialValid: boolean = true): boolean {
         let isFormValid = initialValid;
-        const finalComponents = { ...components, extraComponents };
-        Object.keys(finalComponents).forEach(key => {
-            const component = finalComponents[key];
+        Object.keys(components).forEach(key => {
+            const component = components[key];
             if (component && component.validation && !component.validation.isValid) {
                 isFormValid = false;
             }
