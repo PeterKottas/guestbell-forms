@@ -251,7 +251,7 @@ export class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement
     private getErrors(tags: Tag[]) {
         let errors = [];
         errors = errors.concat(this.state.textErrors);
-        if (this.state.value !== '' && tags.length === 0) {
+        if (this.state.value !== '' && tags.length === 0 && this.props.required) {
             errors = errors.concat('Required');
         }
         if (this.state.value && this.props.allowNew && !this.state.textIsFocused) {

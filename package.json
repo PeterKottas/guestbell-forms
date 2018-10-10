@@ -115,7 +115,7 @@
     "react-datepicker": "*",
     "react-ink": "*",
     "react-onclickoutside": "*",
-    "react-textarea-autosize": "*",
+    "react-autosize-textarea": "*",
     "react-tippy": "*"
   }
 }

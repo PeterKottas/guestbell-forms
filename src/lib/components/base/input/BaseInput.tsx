@@ -198,6 +198,7 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
             const domNode: HTMLElement = ReactDOM.findDOMNode((this.inputRef as React.RefObject<HTMLElement>).current) as HTMLElement;
             domNode && domNode.focus();
         }
+        this.touch();
     }
 
     protected handleChange(event: React.ChangeEvent<HTMLType>, isValid?: boolean, errors: ValidationError[] = []) {
