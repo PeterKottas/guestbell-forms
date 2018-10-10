@@ -218,16 +218,14 @@ export class Test extends React.PureComponent<TestProps, TestState> {
                                         noValidate={true}
                                         ref={this.formRef}
                                         onSubmit={this.submitForm}
-                                        foreignContext={{
-                                            components: {
-                                                'extra-check': {
-                                                    validation: {
-                                                        isValid: this.state.checkbox2,
-                                                        errors: this.state.checkbox2 ? [] : ['Please check custom context'],
-                                                        name: 'Extra context'
-                                                    },
-                                                    componentApi: undefined,
-                                                }
+                                        extraComponents={{
+                                            'extra-check': {
+                                                validation: {
+                                                    isValid: this.state.checkbox2,
+                                                    errors: this.state.checkbox2 ? [] : ['Please check custom context'],
+                                                    name: 'Extra context'
+                                                },
+                                                componentApi: undefined,
                                             }
                                         }}
                                     >

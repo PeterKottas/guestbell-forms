@@ -8,7 +8,7 @@ export interface FormProps {
     className?: string;
     noValidate?: boolean;
     onSubmit?: () => void;
-    foreignContext?: Partial<FormContextState>;
+    extraComponents?: ComponentsDict;
 }
 
 export interface FormState {
@@ -43,54 +43,43 @@ export class Form extends React.PureComponent<FormProps, FormState> {
     }
 
     public disableComponents() {
-        Object.keys(this.state.contextState.components).forEach(key => {
-            const component = this.state.contextState.components[key];
-            component.componentApi.disableComponent();
+        const components = { ...this.state.contextState.components, ...this.props.extraComponents };
+        Object.keys(components).forEach(key => {
+            const component = components[key];
+            component && component.componentApi && component.componentApi.disableComponent && component.componentApi.disableComponent();
         });
-        if (this.props.foreignContext && this.props.foreignContext.components) {
-            Object.keys(this.props.foreignContext.components).forEach(key => {
-                const component = this.state.contextState.components[key];
-                component && component.componentApi && component.componentApi.disableComponent && component.componentApi.disableComponent();
-            });
-        }
     }
 
     public enableComponents() {
-        Object.keys(this.state.contextState.components).forEach(key => {
-            const component = this.state.contextState.components[key];
-            component.componentApi.enableComponent();
+        const components = { ...this.state.contextState.components, ...this.props.extraComponents };
+        Object.keys(components).forEach(key => {
+            const component = components[key];
+            component && component.componentApi && component.componentApi.enableComponent && component.componentApi.enableComponent();
         });
-        if (this.props.foreignContext && this.props.foreignContext.components) {
-            Object.keys(this.props.foreignContext.components).forEach(key => {
-                const component = this.state.contextState.components[key];
-                component && component.componentApi && component.componentApi.enableComponent && component.componentApi.enableComponent();
-            });
-        }
     }
 
     public touchAll() {
-        Object.keys(this.state.contextState.components).forEach(key => {
-            const component = this.state.contextState.components[key];
-            component.componentApi.touch();
+        const components = { ...this.state.contextState.components, ...this.props.extraComponents };
+        Object.keys(components).forEach(key => {
+            const component = components[key];
+            component && component.componentApi && component.componentApi.touch && component.componentApi.touch();
         });
-        if (this.props.foreignContext && this.props.foreignContext.components) {
-            Object.keys(this.props.foreignContext.components).forEach(key => {
-                const component = this.state.contextState.components[key];
-                component && component.componentApi && component.componentApi.touch && component.componentApi.touch();
-            });
-        }
     }
 
     public unTouchAll() {
-        Object.keys(this.state.contextState.components).forEach(key => {
-            const component = this.state.contextState.components[key];
-            component.componentApi.unTouch();
+        const components = { ...this.state.contextState.components, ...this.props.extraComponents };
+        Object.keys(components).forEach(key => {
+            const component = components[key];
+            component && component.componentApi && component.componentApi.unTouch && component.componentApi.unTouch();
         });
-        if (this.props.foreignContext && this.props.foreignContext.components) {
-            Object.keys(this.props.foreignContext.components).forEach(key => {
-                const component = this.state.contextState.components[key];
-                component && component.componentApi && component.componentApi.unTouch && component.componentApi.unTouch();
-            });
+    }
+
+    public componentWillReceiveProps(props: FormProps) {
+        if (this.props.extraComponents !== props.extraComponents && props.extraComponents) {
+            const isFormValid = this.getIsFormValid(this.state.contextState.components, props.extraComponents);
+            if (isFormValid !== this.state.contextState.isFormValid) {
+                this.setState(prevState => ({ contextState: { ...prevState.contextState, isFormValid } }));
+            }
         }
     }
 
@@ -110,15 +99,14 @@ export class Form extends React.PureComponent<FormProps, FormState> {
     }
 
     private mergeContext(): FormContextState {
-        if (!this.props.foreignContext) {
+        if (!this.props.extraComponents) {
             return this.state.contextState;
         }
         return {
             ...this.state.contextState,
-            ...this.props.foreignContext,
             components: {
                 ...this.state.contextState.components,
-                ...this.props.foreignContext.components
+                ...this.props.extraComponents
             }
         };
     }
@@ -164,22 +152,16 @@ export class Form extends React.PureComponent<FormProps, FormState> {
         }
     }
 
-    private getIsFormValid(components: ComponentsDict, initialValid: boolean = true): boolean {
+    private getIsFormValid(components: ComponentsDict = this.state.contextState.components,
+        extraComponents: ComponentsDict = this.props.extraComponents, initialValid: boolean = true): boolean {
         let isFormValid = initialValid;
-        Object.keys(components).forEach(key => {
-            const component = components[key];
+        const finalComponents = { ...components, extraComponents };
+        Object.keys(finalComponents).forEach(key => {
+            const component = finalComponents[key];
             if (component && component.validation && !component.validation.isValid) {
                 isFormValid = false;
             }
         });
-        if (this.props.foreignContext && this.props.foreignContext.components) {
-            Object.keys(this.props.foreignContext.components).forEach(key => {
-                const component = components[key];
-                if (component && component.validation && !component.validation.isValid) {
-                    isFormValid = false;
-                }
-            });
-        }
         return isFormValid;
     }
 
