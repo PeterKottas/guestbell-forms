@@ -101,10 +101,18 @@ export class Form extends React.PureComponent<FormProps, FormState> {
                 if (componentState) {
                     components[componentId] = componentState;
                 }
+                let isFormValid = previousState.contextState.isFormValid;
+                Object.keys(components).forEach(key => {
+                    const component = components[key];
+                    if (component && component.componentId !== componentId && component.validation && !component.validation.isValid) {
+                        isFormValid = false;
+                    }
+                });
                 return {
                     contextState: {
                         ...previousState.contextState,
-                        components
+                        components,
+                        isFormValid
                     },
                 };
             });
