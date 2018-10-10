@@ -19,7 +19,7 @@ export interface SubmitState extends BaseInputState {
 }
 
 class SubmitRaw extends BaseInput<SubmitRawProps, SubmitState, never>  {
-    public static defaultProps = Object.assign({}, BaseInput.defaultProps, { validateForm: true, reRendersWhenContextChanges: true });
+    public static defaultProps = Object.assign({}, BaseInput.defaultProps, { validateForm: true, ignoreContext: true, reRendersWhenContextChanges: true });
 
     constructor(props: SubmitRawProps) {
         super(props);
