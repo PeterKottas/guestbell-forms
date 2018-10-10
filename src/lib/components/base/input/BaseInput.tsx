@@ -105,6 +105,8 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
         this.focus = this.focus.bind(this);
         this.scrollTo = this.scrollTo.bind(this);
         this.setInvalid = this.setInvalid.bind(this);
+        this.disableComponent = this.disableComponent.bind(this);
+        this.enableComponent = this.enableComponent.bind(this);
         if (subscribe) {
             this.subscribeSelf(props);
         }
