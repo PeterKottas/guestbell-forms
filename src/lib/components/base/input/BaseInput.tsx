@@ -230,7 +230,7 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
     protected handleBlur(e: React.FocusEvent<HTMLType>) {
         this.props.onBlur && this.props.onBlur();
         let state = { focused: false };
-        if (this.props.touchOn === 'blur') {
+        if (!this.state.touched && this.props.touchOn === 'blur') {
             state = Object.assign(state, { touched: true });
             this.handleValueChange(this.state.value);
         }

@@ -54,7 +54,7 @@ class SubmitRaw extends BaseInput<SubmitRawProps, SubmitState, never>  {
         return disabled ?
             disabled
             :
-            (this.props.validateForm && !this.props.ignoreContext && this.props.formContext ? !this.props.formContext.isFormValid : false);
+            (this.props.validateForm && this.props.formContext ? !this.props.formContext.isFormValid : false);
     }
 }
 
