@@ -50,12 +50,15 @@ export class SubmitRaw extends BaseInput<SubmitRawProps, SubmitState, never>  {
                     type: 'submit',
                     title: disabled ? this.props.disabledTitle : this.props.buttonProps && this.props.buttonProps.title
                 }}
-                tooltip={this.props.showValidationSummaryTooltip && !this.props.formContext.isFormValid && <FormValidationSummaryRaw
-                    title=""
-                    containerClass=""
-                    Component={SubmitValidationSummary}
-                    formContext={this.props.formContext}
-                />}
+                tooltip={this.props.tooltip ?
+                    this.props.tooltip
+                    :
+                    this.props.showValidationSummaryTooltip && !this.props.formContext.isFormValid && <FormValidationSummaryRaw
+                        title=""
+                        containerClass=""
+                        Component={SubmitValidationSummary}
+                        formContext={this.props.formContext}
+                    />}
                 tooltipProps={{
                     className: 'submitValidationTooltip',
                     theme: 'validation',
