@@ -23,13 +23,13 @@ export interface SubmitState extends BaseInputState {
 
 export class SubmitRaw extends BaseInput<SubmitRawProps, SubmitState, never>  {
     public static defaultProps = Object.assign(
-        {}, 
-        BaseInput.defaultProps, 
-        { 
-            validateForm: true, 
-            ignoreContext: true, 
-            reRendersWhenContextChanges: true, 
-            showValidationSummaryTooltip: true 
+        {},
+        BaseInput.defaultProps,
+        {
+            validateForm: true,
+            ignoreContext: true,
+            reRendersWhenContextChanges: true,
+            showValidationSummaryTooltip: true
         });
 
     constructor(props: SubmitRawProps) {
@@ -38,21 +38,22 @@ export class SubmitRaw extends BaseInput<SubmitRawProps, SubmitState, never>  {
     }
 
     public render() {
+        const disabled = this.isDisabled();
         return (
             <Button
                 {...this.props}
                 className={`${(this.props.className ? this.props.className : '')}`}
                 onClick={this.handleClick}
-                disabled={this.isDisabled()}
+                disabled={disabled}
                 buttonProps={{
                     ...this.props.buttonProps,
                     type: 'submit',
-                    title: this.isDisabled() ? this.props.disabledTitle : this.props.buttonProps && this.props.buttonProps.title
+                    title: disabled ? this.props.disabledTitle : this.props.buttonProps && this.props.buttonProps.title
                 }}
-                tooltip={this.props.showValidationSummaryTooltip && <FormValidationSummaryRaw
+                tooltip={this.props.showValidationSummaryTooltip && disabled && <FormValidationSummaryRaw
                     title=""
                     containerClass=""
-                    Component={SubmitValidationSummary} 
+                    Component={SubmitValidationSummary}
                     formContext={this.props.formContext}
                 />}
                 tooltipProps={{
