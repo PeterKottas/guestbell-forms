@@ -1,5 +1,6 @@
 // Libs
 import * as React from 'react';
+import { Tooltip } from 'react-tippy';
 var Ink = require('react-ink');
 var classNames = require('classnames');
 
@@ -30,6 +31,9 @@ export type ButtonProps = {
     blank?: boolean;
     dropdown?: boolean;
     Component?: (props: ButtonComponentProps) => JSX.Element;
+    tooltip?: JSX.Element | string;
+    // tslint:disable-next-line:no-any
+    tooltipProps?: any;
 };
 
 export interface ButtonState {
@@ -84,7 +88,7 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState>  {
             { ['guestbell-btn--dropdown']: this.props.dropdown },
             { ['guestbell-btn--hero']: this.props.hero },
         ]);
-        return (
+        const button = (
             <this.props.Component
                 onClick={this.handleClick}
                 buttonProps={this.props.buttonProps}
@@ -94,6 +98,21 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState>  {
                 {this.props.children}
             </this.props.Component>
         );
+        if (this.props.tooltip) {
+            return (
+                <Tooltip
+                    html={this.props.tooltip}
+                    position="bottom"
+                    trigger="mouseenter"
+                    interactive={true}
+                    animateFill={false}
+                    {...this.props.tooltipProps}
+                >
+                    {button}
+                </Tooltip>
+            );
+        }
+        return button;
     }
 
     private handleClick(e: React.MouseEvent<HTMLButtonElement>) {

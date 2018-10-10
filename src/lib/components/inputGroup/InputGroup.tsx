@@ -4,7 +4,7 @@ import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInp
 
 // Misc
 
-export type InputGroupProps = Pick<BaseInputProps<never>, 'title' | 'className' | 'helpText' | 'formContext'>;
+export type InputGroupProps = Pick<BaseInputProps<never>, 'title' | 'className' | 'tooltip' | 'formContext'>;
 
 export interface InputGroupState extends BaseInputState {
 }

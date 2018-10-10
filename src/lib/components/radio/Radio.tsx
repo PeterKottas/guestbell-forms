@@ -3,10 +3,11 @@ import * as React from 'react';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
 import { OmitFormContext } from '../form/FormContext';
+import { InnerRefProps } from './../../types/InnerRefProps';
 
 // Misc
 
-interface RadioRawProps extends BaseInputProps<HTMLInputElement> {
+export interface RadioRawProps extends BaseInputProps<HTMLInputElement> {
     onChange?: never;
     onChecked: (value: string) => void;
     result: string;
@@ -14,12 +15,12 @@ interface RadioRawProps extends BaseInputProps<HTMLInputElement> {
     name: string;
 }
 
-export type RadioProps = OmitFormContext<RadioRawProps>;
+export type RadioProps = OmitFormContext<RadioRawProps> & InnerRefProps<RadioRaw>;
 
 export interface RadioState extends BaseInputState {
 }
 
-class RadioRaw extends BaseInput<RadioRawProps, RadioState, HTMLInputElement>  {
+export class RadioRaw extends BaseInput<RadioRawProps, RadioState, HTMLInputElement>  {
     public static defaultProps = Object.assign({}, BaseInput.defaultProps, {});
 
     constructor(props: RadioRawProps) {
@@ -61,6 +62,6 @@ class RadioRaw extends BaseInput<RadioRawProps, RadioState, HTMLInputElement>  {
     }
 }
 
-export const Radio = withFormContext(RadioRaw);
+export const Radio = withFormContext<RadioRawProps, RadioProps>(RadioRaw);
 
 export default Radio;

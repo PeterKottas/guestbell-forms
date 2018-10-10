@@ -28,7 +28,9 @@ export type BaseInputProps<HTMLType extends AllowedHtmlElements> = {
     disabled?: boolean;
     className?: string;
     label?: string | JSX.Element;
-    helpText?: string | JSX.Element;
+    tooltip?: string | JSX.Element;
+    // tslint:disable-next-line:no-any
+    tooltipProps?: any;
     value?: string;
     onChange?: (e: React.ChangeEvent<HTMLType>, isValid: boolean) => void;
     required?: boolean;
@@ -278,7 +280,7 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
     }
 
     protected renderLabel(touchable: boolean = false) {
-        if ((!this.props.helpText) || (this.props.helpText && this.props.title)) {
+        if ((!this.props.tooltip) || (this.props.tooltip && this.props.title)) {
             return (
                 <span className={(touchable ? '' : 'label--no-touch')}>
                     {this.props.label}
@@ -296,7 +298,7 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
     }
 
     protected renderTitle() {
-        if (!this.props.helpText) {
+        if (!this.props.tooltip) {
             return this.props.title;
         }
         return (
@@ -384,11 +386,13 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
     private renderTooltip() {
         return (
             <Tooltip
-                html={this.props.helpText}
+                html={this.props.tooltip}
                 position="bottom"
                 trigger="mouseenter"
                 interactive={true}
                 className="label--help-icon__container"
+                animateFill={false}
+                {...this.props.tooltipProps}
             >
                 <span className="label--help-icon">?</span>
             </Tooltip>

@@ -8,13 +8,14 @@ import { BaseInputProps, BaseInputState, BaseInput } from '../../base/input/Base
 import { Checkbox } from '../../checkbox/Checkbox';
 import { OmitFormContext } from '../../form/FormContext';
 import { withFormContext } from '../../form/withFormContext';
+import { InnerRefProps } from './../../../types/InnerRefProps';
 
 export interface OpeningHoursWeekDayObj extends OpeningHoursDayObj {
     isStandardDay?: boolean;
     dayLabel?: string;
 }
 
-interface OpeningHoursWeekRawProps extends BaseInputProps<never> {
+export interface OpeningHoursWeekRawProps extends BaseInputProps<never> {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     days: OpeningHoursWeekDayObj[];
     onDaysChange: (days: OpeningHoursWeekDayObj[]) => void;
@@ -22,12 +23,12 @@ interface OpeningHoursWeekRawProps extends BaseInputProps<never> {
     onStandardDayChange?: (day: OpeningHoursWeekDayObj) => void;
 }
 
-export type OpeningHoursWeekProps = OmitFormContext<OpeningHoursWeekRawProps>;
+export type OpeningHoursWeekProps = OmitFormContext<OpeningHoursWeekRawProps> & InnerRefProps<OpeningHoursWeekRaw>;
 
 export interface OpeningHoursWeekState extends BaseInputState {
 }
 
-class OpeningHoursWeekRaw extends BaseInput<OpeningHoursWeekRawProps, OpeningHoursWeekState, never>  {
+export class OpeningHoursWeekRaw extends BaseInput<OpeningHoursWeekRawProps, OpeningHoursWeekState, never>  {
     public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
         type: 'openingHoursWeek',
         placeholder: '',
@@ -92,7 +93,7 @@ class OpeningHoursWeekRaw extends BaseInput<OpeningHoursWeekRawProps, OpeningHou
                     }}
                     onOpeningHoursChange={this.standardDayChanged}
                     title={'Standard day'}
-                    helpText={(
+                    tooltip={(
                         <p>
                             We recommend to use <b>Standard day</b> if multiple days share the same opening hours.
                             Check "Standard day?" checkbox for each of these days to make them share standard opening hours.
@@ -144,6 +145,6 @@ class OpeningHoursWeekRaw extends BaseInput<OpeningHoursWeekRawProps, OpeningHou
     }
 }
 
-export const OpeningHoursWeek = withFormContext(OpeningHoursWeekRaw);
+export const OpeningHoursWeek = withFormContext<OpeningHoursWeekRawProps, OpeningHoursWeekProps>(OpeningHoursWeekRaw);
 
 export default OpeningHoursWeek;

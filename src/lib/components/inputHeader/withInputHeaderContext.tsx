@@ -3,11 +3,11 @@ import { InputHeaderContextConsumer, InputHeaderContextProps, OmitInputHeaderCon
 import { InnerRefProps } from '../../types/InnerRefProps';
 
 export function withInputHeaderContext<
-    P extends InputHeaderContextProps & React.ClassAttributes<React.ComponentType<P>>
+    P extends InputHeaderContextProps & React.ClassAttributes<React.ComponentType<P>>,
+    R extends OmitInputHeaderContext<P> & InnerRefProps<React.Component<P>>
     >(
         Component: React.ComponentType<P>
     ) {
-    type R = OmitInputHeaderContext<P> | InnerRefProps<typeof Component>;
     const WithInputHeaderContext: React.SFC<R> = props => {
         const { innerRef, ...rest } = props as InnerRefProps<typeof Component>;
         return (

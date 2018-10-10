@@ -11,12 +11,13 @@ import { BaseInputProps, BaseInputState, BaseInput } from '../../base/input/Base
 import { Button } from '../../button/Button';
 import { withFormContext } from '../../form/withFormContext';
 import { OmitFormContext } from '../../form/FormContext';
+import { InnerRefProps } from './../../../types/InnerRefProps';
 
 export interface OpeningHoursDayObj {
     times: Date[];
 }
 
-interface OpeningHoursDayRawProps extends BaseInputProps<never> {
+export interface OpeningHoursDayRawProps extends BaseInputProps<never> {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onOpeningHoursChange: (openingHours: OpeningHoursDayObj) => void;
     openingHours: OpeningHoursDayObj;
@@ -24,12 +25,12 @@ interface OpeningHoursDayRawProps extends BaseInputProps<never> {
     maxOpenCloseTimes?: number;
 }
 
-export type OpeningHoursDayProps = OmitFormContext<OpeningHoursDayRawProps>;
+export type OpeningHoursDayProps = OmitFormContext<OpeningHoursDayRawProps> & InnerRefProps<OpeningHoursDayRaw>;
 
 export interface OpeningHoursState extends BaseInputState {
 }
 
-class OpeningHoursDayRaw extends BaseInput<OpeningHoursDayRawProps, OpeningHoursState, never>  {
+export class OpeningHoursDayRaw extends BaseInput<OpeningHoursDayRawProps, OpeningHoursState, never>  {
     public static defaultProps = Object.assign({}, BaseInput.defaultProps, { type: 'openingHours', allowMultiple: false, maxOpenCloseTimes: 10 });
     private fullDayMilliseconds: number = 24 * 60 * 60 * 1000;
 
@@ -42,7 +43,7 @@ class OpeningHoursDayRaw extends BaseInput<OpeningHoursDayRawProps, OpeningHours
             <InputGroup
                 title={this.props.title}
                 className={'input__group__openingHoursDay ' + (this.props.className ? ' ' + this.props.className : '')}
-                helpText={this.props.helpText}
+                tooltip={this.props.tooltip}
             >
                 <div className={'input__base openingHoursDay-input ' + this.getValidationClass()} ref={this.containerRef}>
                     <div className="openingHoursDay-input__container">
@@ -158,6 +159,6 @@ class OpeningHoursDayRaw extends BaseInput<OpeningHoursDayRawProps, OpeningHours
     }
 }
 
-export const OpeningHoursDay = withFormContext(OpeningHoursDayRaw);
+export const OpeningHoursDay = withFormContext<OpeningHoursDayRawProps, OpeningHoursDayProps>(OpeningHoursDayRaw);
 
 export default OpeningHoursDay;

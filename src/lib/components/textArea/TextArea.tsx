@@ -7,8 +7,9 @@ import InputGroup from '../inputGroup/InputGroup';
 import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
 import { OmitFormContext } from '../form/FormContext';
+import InnerRefProps from '../../types/InnerRefProps';
 
-interface TextAreaRawProps extends BaseInputProps<HTMLTextAreaElement> {
+export interface TextAreaRawProps extends BaseInputProps<HTMLTextAreaElement> {
     mask?: string;
     reverse?: boolean;
     placeholder?: string;
@@ -20,12 +21,12 @@ interface TextAreaRawProps extends BaseInputProps<HTMLTextAreaElement> {
     maxRows?: number;
 }
 
-export type TextAreaProps = OmitFormContext<TextAreaRawProps>;
+export type TextAreaProps = OmitFormContext<TextAreaRawProps> & InnerRefProps<TextAreaRaw>;
 
 export interface TextAreaState extends BaseInputState {
 }
 
-class TextAreaRaw extends BaseInput<TextAreaRawProps, TextAreaState, HTMLTextAreaElement>  {
+export class TextAreaRaw extends BaseInput<TextAreaRawProps, TextAreaState, HTMLTextAreaElement>  {
     public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
         type: 'text',
         placeholder: '',
@@ -85,6 +86,6 @@ class TextAreaRaw extends BaseInput<TextAreaRawProps, TextAreaState, HTMLTextAre
     private onContainerClick = e => this.props.stopClickPropagation && e.stopPropagation();
 }
 
-export const TextArea = withFormContext(TextAreaRaw);
+export const TextArea = withFormContext<TextAreaRawProps, TextAreaProps>(TextAreaRaw);
 
 export default TextArea;

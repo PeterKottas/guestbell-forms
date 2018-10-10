@@ -21,25 +21,26 @@ import { BaseInputProps, BaseInputState, BaseInput } from '../../base/input/Base
 import { Button } from '../../button/Button';
 import { OmitFormContext } from '../../form/FormContext';
 import { withFormContext } from '../../form/withFormContext';
+import { InnerRefProps } from './../../../types/InnerRefProps';
 
 export interface OpeningHoursSpecialDayObj extends OpeningHoursDayObj {
     date?: Date;
 }
 
-interface OpeningHoursSpecialRawProps extends BaseInputProps<never> {
+export interface OpeningHoursSpecialRawProps extends BaseInputProps<never> {
     days: OpeningHoursSpecialDayObj[];
     onDaysChange: (days: OpeningHoursSpecialDayObj[]) => void;
     placeholder?: string;
 }
 
-export type OpeningHoursSpecialProps = OmitFormContext<OpeningHoursSpecialRawProps>;
+export type OpeningHoursSpecialProps = OmitFormContext<OpeningHoursSpecialRawProps> & InnerRefProps<OpeningHoursSpecialRaw>;
 
 export interface OpeningHoursSpecialState extends BaseInputState {
 }
 
 const DAY_FORMAT = 'D/M/YYYY';
 
-class DateInput extends React.PureComponent<{ value?: string, onClick?: () => void }> {
+export class DateInput extends React.PureComponent<{ value?: string, onClick?: () => void }> {
     public render() {
         return (
             <Button
@@ -56,7 +57,7 @@ class DateInput extends React.PureComponent<{ value?: string, onClick?: () => vo
     }
 }
 
-class OpeningHoursSpecialRaw extends BaseInput<OpeningHoursSpecialRawProps, OpeningHoursSpecialState, never> {
+export class OpeningHoursSpecialRaw extends BaseInput<OpeningHoursSpecialRawProps, OpeningHoursSpecialState, never> {
     public static defaultProps = Object.assign({}, BaseInput.defaultProps, { type: 'openingHoursSpecial', placeholder: DAY_FORMAT });
 
     constructor(props: OpeningHoursSpecialRawProps) {
@@ -129,6 +130,6 @@ class OpeningHoursSpecialRaw extends BaseInput<OpeningHoursSpecialRawProps, Open
     }
 }
 
-export const OpeningHoursSpecial = withFormContext(OpeningHoursSpecialRaw);
+export const OpeningHoursSpecial = withFormContext<OpeningHoursSpecialRawProps, OpeningHoursSpecialProps>(OpeningHoursSpecialRaw);
 
 export default OpeningHoursSpecial;

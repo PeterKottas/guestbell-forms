@@ -1,0 +1,33 @@
+.tippy-tooltip.validation-theme {
+    background-color: $input-validation-error-border-color;
+    color: $input-validation-color;
+}
+
+.submitValidationSummary__header {
+    text-align: center;
+    font-size: 130%;
+    margin-bottom: 1rem;
+}
+
+.submitValidationSummary__item {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.submitValidationSummary__item__header {
+    width: 7rem;
+    margin-right: 1rem;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.submitValidationSummary__item__locate-button {
+    margin-left: 0.5rem;
+}
+
+.submitValidationSummary__item__error {
+    margin-right: 0.5rem;
+}

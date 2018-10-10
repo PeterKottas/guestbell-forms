@@ -7,8 +7,9 @@ import { BaseInputProps, BaseInput, BaseInputState } from '../base/input/BaseInp
 var classNames = require('classnames');
 import { withFormContext } from '../form/withFormContext';
 import { OmitFormContext } from '../form/FormContext';
+import { InnerRefProps } from './../../types/InnerRefProps';
 
-interface CheckboxRawProps extends BaseInputProps<HTMLInputElement> {
+export interface CheckboxRawProps extends BaseInputProps<HTMLInputElement> {
     onChecked?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onChange?: never;
     value?: never;
@@ -16,13 +17,13 @@ interface CheckboxRawProps extends BaseInputProps<HTMLInputElement> {
     checked?: boolean;
 }
 
-export type CheckboxProps = OmitFormContext<CheckboxRawProps>;
+export type CheckboxProps = OmitFormContext<CheckboxRawProps> & InnerRefProps<CheckboxRaw>;
 
 export interface CheckboxState extends BaseInputState {
     checked: boolean;
 }
 
-class CheckboxRaw extends BaseInput<CheckboxRawProps, CheckboxState, HTMLInputElement>  {
+export class CheckboxRaw extends BaseInput<CheckboxRawProps, CheckboxState, HTMLInputElement>  {
     public static defaultProps = Object.assign({}, BaseInput.defaultProps, { checked: false });
 
     constructor(props: CheckboxRawProps) {
@@ -90,6 +91,6 @@ class CheckboxRaw extends BaseInput<CheckboxRawProps, CheckboxState, HTMLInputEl
     }
 }
 
-export const Checkbox = withFormContext(CheckboxRaw);
+export const Checkbox = withFormContext<CheckboxRawProps, CheckboxProps>(CheckboxRaw);
 
 export default Checkbox;

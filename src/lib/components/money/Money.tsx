@@ -11,13 +11,14 @@ import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInp
 import { Button } from '../button/Button';
 import { withFormContext } from '../form/withFormContext';
 import { OmitFormContext } from '../form/FormContext';
+import { InnerRefProps } from './../../types/InnerRefProps';
 
 export interface MoneyWithCurrency {
     value: number;
     currency: SelectValue;
 }
 
-interface MoneyRawProps extends BaseInputProps<never> {
+export interface MoneyRawProps extends BaseInputProps<never> {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onPricesChange: (prices: MoneyWithCurrency[]) => void;
     allowMultiple?: boolean;
@@ -25,12 +26,12 @@ interface MoneyRawProps extends BaseInputProps<never> {
     prices: MoneyWithCurrency[];
 }
 
-export type MoneyProps = OmitFormContext<MoneyRawProps>;
+export type MoneyProps = OmitFormContext<MoneyRawProps> & InnerRefProps<MoneyRaw>;
 
 export interface MoneyState extends BaseInputState {
 }
 
-class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never>  {
+export class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never>  {
     public static defaultProps = Object.assign({}, BaseInput.defaultProps, { type: 'money', allowMultiple: false });
 
     constructor(props: MoneyRawProps) {
@@ -176,6 +177,6 @@ class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never>  {
     private onBlur = () => this.setState({ focused: false });
 }
 
-export const Money = withFormContext(MoneyRaw);
+export const Money = withFormContext<MoneyRawProps, MoneyProps>(MoneyRaw);
 
 export default Money;

@@ -8,6 +8,7 @@ import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInp
 import { Button } from '../button/Button';
 import { OmitFormContext } from '../form/FormContext';
 import { withFormContext } from '../form/withFormContext';
+import InnerRefProps from '../../types/InnerRefProps';
 
 export interface SelectValue {
     value: number | string;
@@ -15,7 +16,7 @@ export interface SelectValue {
     forceSelected?: boolean;
 }
 
-interface SelectRawProps extends BaseInputProps<HTMLSelectElement> {
+export interface SelectRawProps extends BaseInputProps<HTMLSelectElement> {
     values?: SelectValue[];
     defaultEmpty?: boolean;
     multiple?: boolean;
@@ -26,7 +27,7 @@ interface SelectRawProps extends BaseInputProps<HTMLSelectElement> {
     readonlyEmptyPlaceholder?: string;
 }
 
-export type SelectProps = OmitFormContext<SelectRawProps>;
+export type SelectProps = OmitFormContext<SelectRawProps> & InnerRefProps<SelectRaw>;
 
 export interface SelectState extends BaseInputState {
 }
@@ -187,6 +188,6 @@ class SelectRaw extends BaseInput<SelectRawProps, SelectState, HTMLSelectElement
     }
 }
 
-export const Select = withFormContext(SelectRaw);
+export const Select = withFormContext<SelectRawProps, SelectProps>(SelectRaw);
 
 export default Select;

@@ -10,8 +10,9 @@ import { Dropdown } from '../dropdown/Dropdown';
 import { SmoothCollapse } from '../smoothCollapse/SmoothCollapse';
 import { OmitInputHeaderContext, InputHeaderContextProps, InputHeaderContextState, InputHeaderComponentContextState } from '../InputHeader/InputHeaderContext';
 import { withInputHeaderContext } from './withInputHeaderContext';
+import { InnerRefProps } from './../../types/InnerRefProps';
 
-type InputHeaderRawProps = {
+export type InputHeaderRawProps = {
     className?: string;
     title?: string | JSX.Element;
     icon?: string | JSX.Element;
@@ -31,7 +32,7 @@ type InputHeaderRawProps = {
     collapseButtonsButtonProps?: ButtonProps;
 } & InputHeaderContextProps;
 
-export type InputHeaderProps = OmitInputHeaderContext<InputHeaderRawProps>;
+export type InputHeaderProps = OmitInputHeaderContext<InputHeaderRawProps> & InnerRefProps<InputHeaderRaw>;
 
 export interface InputHeaderApi {
     expand: () => void;
@@ -311,6 +312,6 @@ export class InputHeaderRaw extends React.PureComponent<InputHeaderRawProps, Inp
     }
 }
 
-export const InputHeader = withInputHeaderContext(InputHeaderRaw);
+export const InputHeader = withInputHeaderContext<InputHeaderRawProps, InputHeaderProps>(InputHeaderRaw);
 
 export default InputHeader;

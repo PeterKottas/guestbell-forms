@@ -382,7 +382,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                     label="Your name (no title)"
                                                     onChange={this.nameChanged}
                                                     value={this.state.name}
-                                                    helpText={<p className="m-0">This is some help text. It can also do <b>bold</b> and other stuff.</p>}
+                                                    tooltip={<p className="m-0">This is some help text. It can also do <b>bold</b> and other stuff.</p>}
                                                 />
                                             </div>
                                             <Text
@@ -481,7 +481,6 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                 title="Price multiple"
                                             />
                                             <Time
-                                                required={true}
                                                 touchOn={this.state.touchOn}
                                                 time={this.state.time1}
                                                 timeChange={this.time1Changed}

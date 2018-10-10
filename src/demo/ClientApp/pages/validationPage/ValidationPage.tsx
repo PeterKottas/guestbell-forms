@@ -229,7 +229,7 @@ export class Test extends React.PureComponent<TestProps, TestState> {
                                             collapsedDefault={false}
                                             mainButton={
                                                 <Submit
-                                                    type={'primary'}
+                                                    type="primary"
                                                     onClick={this.submitForm}
                                                     validateForm={this.state.validateFormSubmit}
                                                 >Submit
@@ -254,7 +254,7 @@ export class Test extends React.PureComponent<TestProps, TestState> {
                                                 collapsable={true}
                                                 collapsedDefault={false}
                                             >
-                                                {false && <Tags
+                                                {true && <Tags
                                                     title="Tags only email"
                                                     required={true}
                                                     validationName="Tags only email"
@@ -266,6 +266,7 @@ export class Test extends React.PureComponent<TestProps, TestState> {
                                                     onTagsChanged={this.tagsChanged}
                                                     suggestionsEmptyComponent={null}
                                                     validators={tagsValidators}
+                                                    existingTags={[{ id: 1, name: 'petokottas@gmail.com' }]}
                                                 />}
                                                 {false && <Select
                                                     required={true}
@@ -298,7 +299,7 @@ export class Test extends React.PureComponent<TestProps, TestState> {
             </div >
         );
     }
-    
+
     private checkbox1Checked = () => this.setState({ checkbox1: !this.state.checkbox1 });
 
     private formRef = (el: Form) => this.form = el;

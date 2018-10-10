@@ -8,6 +8,7 @@ import { Button } from '../button/Button';
 import TagsSuggestions from './subComponents/TagsSuggestions';
 import { OmitFormContext } from '../form/FormContext';
 import { withFormContext } from '../form/withFormContext';
+import { InnerRefProps } from './../../types/InnerRefProps';
 
 // Misc
 export type Tag = {
@@ -15,7 +16,7 @@ export type Tag = {
     name: string;
 };
 
-type TagsRawProps = {
+export type TagsRawProps = {
     className?: string;
     disabled?: boolean;
     tags: Tag[];
@@ -38,7 +39,7 @@ type TagsRawProps = {
     maxSuggestions?: number;
 } & BaseInputProps<HTMLInputElement>;
 
-export type TagsProps = OmitFormContext<TagsRawProps>;
+export type TagsProps = OmitFormContext<TagsRawProps> & InnerRefProps<TagsRaw>;
 
 export interface TagsState extends BaseInputState {
     textIsFocused: boolean;
@@ -50,7 +51,7 @@ export interface TagsState extends BaseInputState {
     preselectedSuggestion?: number;
 }
 
-class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement>  {
+export class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement>  {
     public static defaultProps: TagsRawProps = {
         ...BaseInput.defaultProps,
         disabled: false,
@@ -150,12 +151,19 @@ class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement>  {
             const existingTag = this.props.existingTags && this.props.existingTags.find(et => et.name === this.state.value);
             if (this.state.preselectedSuggestion !== undefined) {
                 this.props.onTagsChanged(this.props.tags.concat(suggestions[this.state.preselectedSuggestion]));
-                this.setState({ value: '', preselectedSuggestion: undefined, textErrors: [] }, () => this.fetchExistingTags());
+                this.setState({ value: '', preselectedSuggestion: undefined }, () => {
+                    this.fetchExistingTags();
+                    this.handleErrors();
+                });
             } else if (existingTag) {
                 this.props.onTagsChanged(this.props.tags.concat(existingTag));
-                this.setState({ value: '', textErrors: [] }, () => this.fetchExistingTags());
+                this.setState({ value: '' }, () => {
+                    this.fetchExistingTags();
+                    this.handleErrors();
+                });
             } else if (this.props.allowNew) {
                 await this.addNewTag();
+                this.handleErrors();
             }
         }
         if (suggestions.length > 0 && this.state.suggestionsVisible) {
@@ -193,7 +201,10 @@ class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement>  {
 
     private onSuggestionSelected = tag => {
         this.props.onTagsChanged(this.props.tags.concat(tag));
-        this.setState({ value: '', preselectedSuggestion: undefined, textErrors: [] }, () => this.fetchExistingTags());
+        this.setState({ value: '', preselectedSuggestion: undefined, textErrors: [] }, () => {
+            this.fetchExistingTags();
+            this.handleErrors();
+        });
     }
 
     private onBlur = () => {
@@ -308,6 +319,6 @@ class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement>  {
     }
 }
 
-export const Tags = withFormContext(TagsRaw);
+export const Tags = withFormContext<TagsRawProps, TagsProps>(TagsRaw);
 
 export default Tags;
