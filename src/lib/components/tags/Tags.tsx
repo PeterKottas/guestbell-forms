@@ -128,6 +128,7 @@ export class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement
                                 showValidation={false}
                                 ignoreContext={true}
                                 validators={this.props.validators}
+                                customValidators={this.props.customValidators}
                             />
                             {this.state.suggestionsVisible && this.props.showSuggestions && <TagsSuggestions
                                 allowNew={this.props.allowNew}
