@@ -33,7 +33,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
             contextState: {
                 subscribe: this.subscribe,
                 unSubscribe: this.unSubscribe,
-                isFormValid: false,
+                isFormValid: true,
                 updateCallback: this.updateCallback,
                 disableComponents: this.disableComponents,
                 enableComponents: this.enableComponents,
