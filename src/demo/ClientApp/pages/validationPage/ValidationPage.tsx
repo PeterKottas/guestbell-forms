@@ -269,7 +269,7 @@ export class Test extends React.PureComponent<TestProps, TestState> {
                                                     required={true}
                                                     validationName="Tags only email"
                                                     label="With label"
-                                                    maxTags={2}
+                                                    maxTags={1}
                                                     allowNew={true}
                                                     readOnly={this.state.multipleReadonly}
                                                     tags={this.state.tags}

@@ -221,7 +221,10 @@ export class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement
         if (newTag) {
             this.props.onTagsChanged(this.props.tags ? this.props.tags.concat(newTag) : [newTag]);
         }
-        this.setState({ value: '', textErrors: [] });
+        this.setState({ value: '', textErrors: [] }, () => {
+            this.fetchExistingTags();
+            this.handleErrors();
+        });
     }
 
     private onSuggestionSelected = tag => {
