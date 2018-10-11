@@ -96,7 +96,7 @@ export class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement
             ||
             nextProps.required !== this.props.required
         ) {
-            this.handleErrors(this.props.tags);
+            this.handleErrors(nextProps.tags);
         }
     }
 

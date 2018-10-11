@@ -370,8 +370,8 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
                 }
             }
         }
+        props.onErrorsChanged && props.onErrorsChanged(errors);
         if (!initializing) {
-            props.onErrorsChanged && props.onErrorsChanged(errors);
             this.setState({ value, isValid, errors });
             if (!props.ignoreContext) {
                 props.formContext && props.formContext.updateCallback(this.componentId, {
