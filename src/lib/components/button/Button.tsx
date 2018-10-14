@@ -12,6 +12,7 @@ export type ButtonComponentProps = {
     onClick: (e: React.MouseEvent<HTMLElement>) => void;
     className: string;
     buttonProps: React.ButtonHTMLAttributes<HTMLButtonElement>;
+    children: React.ReactNode;
 };
 
 export type ButtonProps = {
