@@ -420,6 +420,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                             <InputHeader
                                                 title={'Some collapsed stuff'}
                                                 collapsable={true}
+                                                shouldToggleCollapseOnHeaderClick={true}
                                                 subTitle={'Helpful text that describes what\'s collapsed here'}
                                             >
                                                 <Text

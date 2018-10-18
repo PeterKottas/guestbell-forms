@@ -1,5 +1,6 @@
 // Libs
 import * as React from 'react';
+const classNames = require('classnames');
 
 // Misc
 import * as MoreIcon from 'material-design-icons/navigation/svg/production/ic_more_vert_24px.svg';
@@ -30,6 +31,7 @@ export type InputHeaderRawProps = {
     contentClassName?: string;
     extraButtonsButtonProps?: ButtonProps;
     collapseButtonsButtonProps?: ButtonProps;
+    shouldToggleCollapseOnHeaderClick?: boolean;
 } & InputHeaderContextProps;
 
 export type InputHeaderProps = OmitInputHeaderContext<InputHeaderRawProps> & InnerRefProps<InputHeaderRaw>;
@@ -58,7 +60,8 @@ export class InputHeaderRaw extends React.PureComponent<InputHeaderRawProps, Inp
         showExpandAll: false,
         collapsedDefault: true,
         type: 'standard',
-        noBg: false
+        noBg: false,
+        shouldToggleCollapseOnHeaderClick: false
     };
 
     public componentId = guid();
@@ -124,10 +127,13 @@ export class InputHeaderRaw extends React.PureComponent<InputHeaderRawProps, Inp
                 className={`input__header ` + (this.props.className ? this.props.className : '') + ' ' + (this.getTypeClass())}
             >
                 <div
-                    className={'input__header__top ' +
-                        (this.props.showExpandAll ? 'input__header__top--tall ' : '') +
-                        (this.props.noBg ? 'input__header__top--no-bg ' : '') +
-                        (this.props.headerClassName ? this.props.headerClassName : '')}
+                    className={classNames('input__header__top',
+                        { 'input__header__top--tall': this.props.showExpandAll },
+                        { 'input__header__top--no-bg': this.props.noBg },
+                        { 'input__header__top--clickable': this.props.shouldToggleCollapseOnHeaderClick },
+                        this.props.headerClassName)}
+                    role={(this.props.shouldToggleCollapseOnHeaderClick ? 'button' : undefined)}
+                    onClick={(this.props.collapsable && this.props.shouldToggleCollapseOnHeaderClick ? this.toggleClick : undefined)}
                 >
                     <div className={'input__header__top__header-container '}>
                         {this.props.icon && <div className="input__header__icon line-height--0">
