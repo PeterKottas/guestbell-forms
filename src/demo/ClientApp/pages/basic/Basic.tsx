@@ -139,13 +139,23 @@ const ButtonsShowcase: React.SFC<ButtonProps> = props => {
                 flexWrap: 'wrap'
             }}
         >{types.map((item, index) => (
-            <Button
-                key={index}
-                type={item}
-                {...props}
-            >
-                {item}
-            </Button>
+            <>
+                <Button
+                    key={index}
+                    type={item}
+                    {...props}
+                >
+                    {item}
+                </Button>
+                <Button
+                    key={index}
+                    type={item}
+                    disabled={true}
+                    {...props}
+                >
+                    Disabled
+                </Button>
+            </>
         ))}
         </div>
     );
@@ -589,10 +599,6 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                                                 <div className="p-3 buttons-row">
                                                     <h3 className="text-center">Blank</h3>
                                                     <ButtonsShowcase blank={true} />
-                                                </div>
-                                                <div className="p-3 buttons-row">
-                                                    <h3 className="text-center">Disabled</h3>
-                                                    <ButtonsShowcase disabled={true} />
                                                 </div>
                                                 <div className="p-3 buttons-row">
                                                     <h3 className="text-center">Small</h3>
