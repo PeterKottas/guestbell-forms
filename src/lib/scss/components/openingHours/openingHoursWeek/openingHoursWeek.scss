@@ -1,22 +1,19 @@
-
-
 .openingHoursWeek-input {
-    border: none;
-    position: relative;
-    
-    .label__checkbox{
-        display: inline-block !important;
-        top: 3px !important;
-        border-bottom: none !important;
-        margin: 0 0 0 0.5rem !important;
-        width: initial !important;
-    }
-    .label-classname.label--focused{
-        pointer-events: auto;
-        width: 100%;
-    }
+  border: none;
+  position: relative;
+  .label__checkbox {
+    display: inline-block !important;
+    top: 3px !important;
+    border-bottom: none !important;
+    margin: 0 0 0 0.5rem !important;
+    width: initial !important;
+  }
+  .label-classname.label--focused {
+    pointer-events: auto;
+    width: 100%;
+  }
 }
 
-.openingHoursWeek__standard-day{
-    background-color: $hover-color;
+.openingHoursWeek__standard-day {
+  background-color: $hover-color;
 }

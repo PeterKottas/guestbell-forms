@@ -1,51 +1,50 @@
 .navbar {
-    height: 96px;
-    background-color: white;
-    z-index: 5;
-    background-color: #323232;
-    border-radius: 0;
-    border-bottom: 1px solid black;
+  height: 96px;
+  background-color: white;
+  z-index: 5;
+  background-color: #323232;
+  border-radius: 0;
+  border-bottom: 1px solid black;
 }
 
 .navbar__logo {
-    margin: auto;
-    height: 100%;
-    display: inline-block;
-
-    &:hover {
-        .navbar__text {
-            text-decoration: none;
-        }
+  margin: auto;
+  height: 100%;
+  display: inline-block;
+  &:hover {
+    .navbar__text {
+      text-decoration: none;
     }
+  }
 }
 
 a:hover {
-    text-decoration: none !important;
-} 
+  text-decoration: none !important;
+}
 
 .navbar__text {
-    color: white;
-    font-size: 66px;
-    line-height: 66px;
-    vertical-align: middle;
+  color: white;
+  font-size: 66px;
+  line-height: 66px;
+  vertical-align: middle;
 }
 
 @media only screen and (max-width: 529px) {
-    .navbar {
-        height: 60px;
-    }
-    .navbar__text {
-        font-size: 30px;
-        line-height: 30px;
-    }
+  .navbar {
+    height: 60px;
+  }
+  .navbar__text {
+    font-size: 30px;
+    line-height: 30px;
+  }
 }
 
 @media only screen and (min-width: 530px) and (max-width: 949px) {
-    .navbar {
-        height: 70px;
-    }
-    .navbar__text {
-        font-size: 40px;
-        line-height: 40px;
-    }
+  .navbar {
+    height: 70px;
+  }
+  .navbar__text {
+    font-size: 40px;
+    line-height: 40px;
+  }
 }

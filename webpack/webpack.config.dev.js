@@ -11,71 +11,71 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var _ = require('lodash');
 
 let htmlPluginOptions = {
-    alwaysWriteToDisk: true,
-    filename: 'index.html',
-    template: './src/demo/ClientApp/index.template.ejs',
+  alwaysWriteToDisk: true,
+  filename: 'index.html',
+  template: './src/demo/ClientApp/index.template.ejs',
 };
 
 module.exports = merge(
-    {
-        customizeArray(a, b, key) {
-            if (key === 'plugins') {
-                a = _.remove(a, function (plugin) {
-                    return !(plugin.filename && plugin.filename === '[name].css');
-                });
-                return a.concat(b);
-            }
+  {
+    customizeArray(a, b, key) {
+      if (key === 'plugins') {
+        a = _.remove(a, function (plugin) {
+          return !(plugin.filename && plugin.filename === '[name].css');
+        });
+        return a.concat(b);
+      }
 
-            // Fall back to default merging
-            return undefined;
-        },
-        customizeObject(a, b, key) {
-            if (key === 'entry') {
-                return b;
-            }
+      // Fall back to default merging
+      return undefined;
+    },
+    customizeObject(a, b, key) {
+      if (key === 'entry') {
+        return b;
+      }
 
-            // Fall back to default merging
-            return undefined;
-        }
+      // Fall back to default merging
+      return undefined;
     }
+  }
 )(require('./webpack.config.base'), {
-    entry: {
-        'main': './src/demo/ClientApp/Main.tsx'
-    },
-    output: {
-        path: path.join(__dirname, '..', 'src', 'demo', 'wwwroot'),
-        publicPath: '/',
-        filename: 'dist/[name].[hash].js'
-    },
-    serve: {
-        port: 8080,
-        clipboard: false,
-        content: path.join(__dirname, '..', 'src', 'demo', 'wwwroot'),
-        open: true,
-        add: (app, middleware, options) => {
-            const historyOptions = {
-                // ... see: https://github.com/bripkens/connect-history-api-fallback#options
-            };
+  entry: {
+    'main': './src/demo/ClientApp/Main.tsx'
+  },
+  output: {
+    path: path.join(__dirname, '..', 'src', 'demo', 'wwwroot'),
+    publicPath: '/',
+    filename: 'dist/[name].[hash].js'
+  },
+  serve: {
+    port: 8080,
+    clipboard: false,
+    content: path.join(__dirname, '..', 'src', 'demo', 'wwwroot'),
+    open: true,
+    add: (app, middleware, options) => {
+      const historyOptions = {
+        // ... see: https://github.com/bripkens/connect-history-api-fallback#options
+      };
 
-            app.use(convert(history(historyOptions)));
-        },
+      app.use(convert(history(historyOptions)));
     },
-    externals: {},
-    mode: 'development',
-    devtool: 'inline-source-map',
-    plugins: [
-        new MiniCssExtractPlugin({
-            filename: "[name].css",
-        }),
-        new CleanWebpackPlugin(['src/demo/ClientApp/wwwroot'], {
-            root: path.join(__dirname, '..')
-        }),
-        new HtmlWebpackPlugin(htmlPluginOptions),
-        new CopyWebpackPlugin([
-            {
-                from: './src/demo/ClientApp/assets/favicon/icons',
-                to: 'dist/icons'
-            }
-        ])
-    ]
+  },
+  externals: {},
+  mode: 'development',
+  devtool: 'inline-source-map',
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+    }),
+    new CleanWebpackPlugin(['src/demo/ClientApp/wwwroot'], {
+      root: path.join(__dirname, '..')
+    }),
+    new HtmlWebpackPlugin(htmlPluginOptions),
+    new CopyWebpackPlugin([
+      {
+        from: './src/demo/ClientApp/assets/favicon/icons',
+        to: 'dist/icons'
+      }
+    ])
+  ]
 });

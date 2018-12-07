@@ -5,11 +5,11 @@ import Header from './components/header/Header';
 import { hot } from 'react-hot-loader';
 
 const App = () => (
-    <div>
-        <Header />
-        {true && <Basic />}
-        {false && <ValidationPage />}
-    </div>
+  <div>
+    <Header />
+    {true && <Basic />}
+    {false && <ValidationPage />}
+  </div>
 );
 
 export default hot(module)(App);
