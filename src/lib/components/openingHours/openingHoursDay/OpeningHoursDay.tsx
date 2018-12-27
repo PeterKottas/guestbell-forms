@@ -71,7 +71,6 @@ export class OpeningHoursDayRaw extends BaseInput<
         <div
           className={classNames(
             'input__base openingHoursDay-input',
-            this.props.className,
             {
               'openingHoursDay-input--closed':
                 this.props.openingHours &&
