@@ -5,10 +5,15 @@ import * as React from 'react';
 
 // Misc
 import InputGroup from '../inputGroup/InputGroup';
-import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
+import {
+  BaseInputProps,
+  BaseInputState,
+  BaseInput
+} from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
 import { OmitFormContext } from '../form/FormContext';
 import { InnerRefProps } from './../../types/InnerRefProps';
+import TimeUtil from '../utils/TimeUtil';
 
 export interface TimeRawProps extends BaseInputProps<HTMLInputElement> {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -17,6 +22,7 @@ export interface TimeRawProps extends BaseInputProps<HTMLInputElement> {
   min?: Date;
   max?: Date;
   label?: never;
+  showDateDiff?: boolean;
 }
 
 export type TimeProps = OmitFormContext<TimeRawProps> & InnerRefProps<TimeRaw>;
@@ -26,8 +32,15 @@ export interface TimeState extends BaseInputState {
   minutesText?: string;
 }
 
-export class TimeRaw extends BaseInput<TimeRawProps, TimeState, HTMLInputElement>  {
-  public static defaultProps = Object.assign({}, BaseInput.defaultProps, { type: 'time', placeholder: '' });
+export class TimeRaw extends BaseInput<
+  TimeRawProps,
+  TimeState,
+  HTMLInputElement
+> {
+  public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
+    type: 'time',
+    placeholder: ''
+  });
 
   constructor(props: TimeRawProps) {
     super(props);
@@ -39,43 +52,56 @@ export class TimeRaw extends BaseInput<TimeRawProps, TimeState, HTMLInputElement
     var hours = this.props.time.getHours();
     hours = (hours + 24) % 24;
     var mid = 'AM';
-    if (hours === 0) { // At 00 hours we need to show 12 am
-      hours = 12;
-    } else if (hours > 12) {
+    if (hours % 24 >= 12) {
       hours = hours % 12;
       mid = 'PM';
+    }
+    if (hours % 12 === 0) {
+      // At 00 hours we need to show 12 am
+      hours = 12;
+    }
+    if (this.props.showDateDiff && this.props.min) {
+      const diffDays = TimeUtil.dayDiff(this.props.min, this.props.time);
+      if (diffDays > 0) {
+        mid += ' +' + diffDays.toString();
+      }
     }
     return (
       <InputGroup title={this.props.title}>
         <div
-          className={'input__base time-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')}
+          className={
+            'input__base time-input ' +
+            this.getValidationClass() +
+            ' ' +
+            (this.props.className ? this.props.className : '')
+          }
           ref={this.containerRef}
         >
           <div className="">
             <div className="time-input__arrows__container">
-              <button
-                className="plus"
-                onClick={this.addHourClick}
-              >
+              <button className="plus" onClick={this.addHourClick}>
                 <ArrowIcon />
               </button>
               <div className="input-padding">
                 <input
                   disabled={this.getDisabled()}
                   required={this.props.required}
-                  className={'time-input__time ' + (this.state.value ? 'filled' : '')}
+                  className={
+                    'time-input__time ' + (this.state.value ? 'filled' : '')
+                  }
                   onChange={this.onHoursChanged}
-                  value={this.state.hoursText !== undefined ? this.state.hoursText : this.props.time.getHours().toString()}
+                  value={
+                    this.state.hoursText !== undefined
+                      ? this.state.hoursText
+                      : hours
+                  }
                   onBlur={this.onBlur}
                   onFocus={this.handleFocus}
                   type="number"
                 />
                 <span className="highlight" />
               </div>
-              <button
-                className="minus"
-                onClick={this.removeHourClick}
-              >
+              <button className="minus" onClick={this.removeHourClick}>
                 <ArrowIcon />
               </button>
             </div>
@@ -83,33 +109,31 @@ export class TimeRaw extends BaseInput<TimeRawProps, TimeState, HTMLInputElement
           <span className="">:</span>
           <div className="">
             <div className="time-input__arrows__container">
-              <button
-                className="plus"
-                onClick={this.addMinuteClick}
-              >
+              <button className="plus" onClick={this.addMinuteClick}>
                 <ArrowIcon />
               </button>
               <div className="input-padding">
                 <input
                   disabled={this.getDisabled()}
                   required={this.props.required}
-                  className={'time-input__time ' + (this.state.value ? 'filled' : '')}
+                  className={
+                    'time-input__time ' + (this.state.value ? 'filled' : '')
+                  }
                   onChange={this.onMinutesChanged}
-                  value={this.state.minutesText !== undefined ? this.state.minutesText :
-                    this.props.time.getMinutes() < 10 ?
-                      '0' + this.props.time.getMinutes().toString()
-                      :
-                      this.props.time.getMinutes().toString()}
+                  value={
+                    this.state.minutesText !== undefined
+                      ? this.state.minutesText
+                      : this.props.time.getMinutes() < 10
+                      ? '0' + this.props.time.getMinutes().toString()
+                      : this.props.time.getMinutes().toString()
+                  }
                   onBlur={this.onBlur}
                   onFocus={this.handleFocus}
                   type="number"
                 />
                 <span className="highlight" />
               </div>
-              <button
-                className="minus"
-                onClick={this.removeMinuteClick}
-              >
+              <button className="minus" onClick={this.removeMinuteClick}>
                 <ArrowIcon />
               </button>
             </div>
@@ -130,7 +154,9 @@ export class TimeRaw extends BaseInput<TimeRawProps, TimeState, HTMLInputElement
     if (this.state.minutesText) {
       this.handleMinutesChange(this.state.minutesText);
     }
-    this.setState({ minutesText: undefined, hoursText: undefined }, () => this.handleBlur(e));
+    this.setState({ minutesText: undefined, hoursText: undefined }, () =>
+      this.handleBlur(e)
+    );
   }
 
   private onMinutesChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -165,13 +191,13 @@ export class TimeRaw extends BaseInput<TimeRawProps, TimeState, HTMLInputElement
 
   private handleLimits(time: Date) {
     if (this.props.min) {
-      if ((time.getTime() - this.props.min.getTime()) <= 0) {
+      if (time.getTime() - this.props.min.getTime() <= 0) {
         this.props.timeChange(new Date(this.props.min.getTime()));
         return;
       }
     }
     if (this.props.max) {
-      if ((this.props.max.getTime() - time.getTime()) <= 0) {
+      if (this.props.max.getTime() - time.getTime() <= 0) {
         this.props.timeChange(new Date(this.props.max.getTime()));
         return;
       }
