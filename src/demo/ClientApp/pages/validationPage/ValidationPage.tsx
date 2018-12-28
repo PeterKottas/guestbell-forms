@@ -20,9 +20,7 @@ import {
   ValidatorTypes
 } from '../../../../lib/index';
 
-export interface TestProps {
-
-}
+export interface TestProps {}
 
 export interface TestState {
   name: string;
@@ -56,7 +54,11 @@ export interface TestState {
 
 export class AgeValidator {
   public static instance = new AgeValidator();
-  public Validate(value: string, isRequired: boolean, addError: (error: string) => void): boolean {
+  public Validate(
+    value: string,
+    isRequired: boolean,
+    addError: (error: string) => void
+  ): boolean {
     let num = Number(value);
     if (!isNaN(num)) {
       if (num <= 0) {
@@ -77,7 +79,16 @@ export class AgeValidator {
 
 const tagsValidators: ValidatorTypes[] = ['email'];
 
-const types: ButtonTypes[] = ['primary', 'warning', 'error', 'info', 'success', 'gray', 'white', 'none'];
+const types: ButtonTypes[] = [
+  'primary',
+  'warning',
+  'error',
+  'info',
+  'success',
+  'gray',
+  'white',
+  'none'
+];
 const ButtonsShowcase: React.SFC<ButtonProps> = props => {
   return (
     <div
@@ -87,15 +98,12 @@ const ButtonsShowcase: React.SFC<ButtonProps> = props => {
         display: 'flex',
         flexWrap: 'wrap'
       }}
-    >{types.map((item, index) => (
-      <Button
-        key={index}
-        type={item}
-        {...props}
-      >
-        {item}
-      </Button>
-    ))}
+    >
+      {types.map((item, index) => (
+        <Button key={index} type={item} {...props}>
+          {item}
+        </Button>
+      ))}
     </div>
   );
 };
@@ -213,7 +221,7 @@ export class Test extends React.PureComponent<TestProps, TestState> {
           <div className="col-lg-12">
             <div className={'card '}>
               <div className="card-block p-0">
-                {!this.state.simulateUnmount &&
+                {!this.state.simulateUnmount && (
                   <Form
                     noValidate={true}
                     ref={this.formRef}
@@ -222,17 +230,21 @@ export class Test extends React.PureComponent<TestProps, TestState> {
                       'extra-check': {
                         validation: {
                           isValid: this.state.checkbox2,
-                          errors: this.state.checkbox2 ? [] : ['Please check custom context'],
+                          errors: this.state.checkbox2
+                            ? []
+                            : ['Please check custom context'],
                           name: 'Extra context'
                         },
-                        componentApi: undefined,
+                        componentApi: undefined
                       }
                     }}
                   >
                     <InputHeader
                       icon={<i className="material-icons md-48">edit</i>}
                       title={'Example form'}
-                      subTitle={'And this is subtitle. There\'s also icon on the left'}
+                      subTitle={
+                        'And this is subtitle. There\'s also icon on the left'
+                      }
                       showExpandAll={true}
                       type="hero"
                       collapsable={true}
@@ -242,21 +254,22 @@ export class Test extends React.PureComponent<TestProps, TestState> {
                           type="primary"
                           onClick={this.submitForm}
                           validateForm={this.state.validateFormSubmit}
-                        >Submit
-                                                </Submit>}
+                        >
+                          Submit
+                        </Submit>
+                      }
                       extraButtons={[
-                        <Button
-                          key={1}
-                          dropdown={true}
-                          onClick={this.touchAll}
-                        >Touch all
-                                                </Button>,
+                        <Button key={1} dropdown={true} onClick={this.touchAll}>
+                          Touch all
+                        </Button>,
                         <Button
                           key={2}
                           dropdown={true}
                           onClick={this.unTouchAll}
-                        >Un-touch all
-                                                </Button>]}
+                        >
+                          Un-touch all
+                        </Button>
+                      ]}
                     >
                       <InputHeader
                         className={''}
@@ -264,33 +277,39 @@ export class Test extends React.PureComponent<TestProps, TestState> {
                         collapsable={true}
                         collapsedDefault={false}
                       >
-                        {true && <Tags
-                          title="Tags only email"
-                          required={true}
-                          validationName="Tags only email"
-                          label="With label"
-                          maxTags={1}
-                          allowNew={true}
-                          readOnly={this.state.multipleReadonly}
-                          tags={this.state.tags}
-                          onTagsChanged={this.tagsChanged}
-                          suggestionsEmptyComponent={null}
-                          validators={tagsValidators}
-                          existingTags={[{ id: 1, name: 'petokottas@gmail.com' }]}
-                          valueNotAddedError={'Email not added'}
-                        />}
-                        {false && <Select
-                          required={true}
-                          label="One or more"
-                          title="Multiselect"
-                          validationName="Multiselect"
-                          multiple={true}
-                          defaultEmpty={true}
-                          readOnly={this.state.multipleReadonly}
-                          selectedValues={this.state.selectedValues}
-                          values={this.state.multipleValues}
-                          onSelectedValuesChange={this.selectedValuesChanged}
-                        />}
+                        {true && (
+                          <Tags
+                            title="Tags only email"
+                            required={true}
+                            validationName="Tags only email"
+                            label="With label"
+                            maxTags={1}
+                            allowNew={true}
+                            readOnly={this.state.multipleReadonly}
+                            tags={this.state.tags}
+                            onTagsChanged={this.tagsChanged}
+                            suggestionsEmptyComponent={null}
+                            validators={tagsValidators}
+                            existingTags={[
+                              { id: 1, name: 'petokottas@gmail.com' }
+                            ]}
+                            valueNotAddedError={'Email not added'}
+                          />
+                        )}
+                        {false && (
+                          <Select
+                            required={true}
+                            label="One or more"
+                            title="Multiselect"
+                            validationName="Multiselect"
+                            multiple={true}
+                            defaultEmpty={true}
+                            readOnly={this.state.multipleReadonly}
+                            selectedValues={this.state.selectedValues}
+                            values={this.state.multipleValues}
+                            onSelectedValuesChange={this.selectedValuesChanged}
+                          />
+                        )}
                         <Checkbox
                           required={true}
                           label="Smart"
@@ -308,36 +327,49 @@ export class Test extends React.PureComponent<TestProps, TestState> {
                       <FormValidationSummary />
                     </InputHeader>
                   </Form>
-                }
+                )}
               </div>
             </div>
           </div>
         </div>
-      </div >
+      </div>
     );
   }
 
-  private checkbox1Checked = () => this.setState({ checkbox1: !this.state.checkbox1 });
+  private checkbox1Checked = () =>
+    this.setState({ checkbox1: !this.state.checkbox1 })
 
-  private checkbox2Checked = () => this.setState({ checkbox2: !this.state.checkbox2 });
+  private checkbox2Checked = () =>
+    this.setState({ checkbox2: !this.state.checkbox2 })
 
-  private formRef = (el: Form) => this.form = el;
+  private formRef = (el: Form) => (this.form = el);
 
-  private selectedValuesChanged = (selectedValues: SelectValue[]) => this.setState({ selectedValues });
+  private selectedValuesChanged = (selectedValues: SelectValue[]) =>
+    this.setState({ selectedValues })
 
   private tagsChanged = (tags: Tag[]) => this.setState({ tags });
 
-  private unTouchAll = (e: React.MouseEvent<HTMLButtonElement>) => { e.preventDefault(); this.form.unTouchAll(); };
+  private unTouchAll = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    this.form.unTouchAll();
+  }
 
-  private simulateUnmountChecked = () => this.setState({ simulateUnmount: !this.state.simulateUnmount });
+  private simulateUnmountChecked = () =>
+    this.setState({ simulateUnmount: !this.state.simulateUnmount })
 
-  private disablesInputsChecked = () => this.setState({ submitDisablesInputs: !this.state.submitDisablesInputs });
+  private disablesInputsChecked = () =>
+    this.setState({ submitDisablesInputs: !this.state.submitDisablesInputs })
 
-  private touchOnChecked = (value: 'blur' | 'focus') => this.setState({ touchOn: value });
+  private touchOnChecked = (value: 'blur' | 'focus') =>
+    this.setState({ touchOn: value })
 
-  private formValidationToggle = () => this.setState({ validateFormSubmit: !this.state.validateFormSubmit });
+  private formValidationToggle = () =>
+    this.setState({ validateFormSubmit: !this.state.validateFormSubmit })
 
-  private touchAll = (e: React.MouseEvent<HTMLButtonElement>) => { e.preventDefault(); this.form.touchAll(); };
+  private touchAll = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    this.form.touchAll();
+  }
 
   private handleGenderChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const val = e.target.value;
@@ -351,8 +383,13 @@ export class Test extends React.PureComponent<TestProps, TestState> {
     this.setState(this.initialState);
   }
 
-  private dynamicSubmitSuccessForm(e: React.MouseEvent<HTMLButtonElement>, submitting: () => void,
-    error: () => void, success: () => void, reset: () => void) {
+  private dynamicSubmitSuccessForm(
+    e: React.MouseEvent<HTMLButtonElement>,
+    submitting: () => void,
+    error: () => void,
+    success: () => void,
+    reset: () => void
+  ) {
     e.preventDefault();
     submitting();
     setTimeout(() => {
@@ -361,7 +398,13 @@ export class Test extends React.PureComponent<TestProps, TestState> {
     }, 1000);
   }
 
-  private dynamicSubmitErrorForm(e: React.MouseEvent<HTMLButtonElement>, submitting: () => void, error: () => void, success: () => void, reset: () => void) {
+  private dynamicSubmitErrorForm(
+    e: React.MouseEvent<HTMLButtonElement>,
+    submitting: () => void,
+    error: () => void,
+    success: () => void,
+    reset: () => void
+  ) {
     e.preventDefault();
     submitting();
     setTimeout(() => {
