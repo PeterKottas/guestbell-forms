@@ -15,7 +15,7 @@ export interface RadioRawProps extends BaseInputProps<HTMLInputElement> {
   name: string;
 }
 
-export type RadioProps = OmitFormContext<RadioRawProps> & InnerRefProps<RadioRaw>;
+export type RadioProps = OmitFormContext<RadioRawProps> & InnerRefProps<RadioRawProps>;
 
 export interface RadioState extends BaseInputState {
 }

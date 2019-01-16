@@ -25,7 +25,7 @@ export interface TimeRawProps extends BaseInputProps<HTMLInputElement> {
   showDateDiff?: boolean;
 }
 
-export type TimeProps = OmitFormContext<TimeRawProps> & InnerRefProps<TimeRaw>;
+export type TimeProps = OmitFormContext<TimeRawProps> & InnerRefProps<TimeRawProps>;
 
 export interface TimeState extends BaseInputState {
   hoursText?: string;

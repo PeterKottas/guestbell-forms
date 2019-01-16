@@ -31,7 +31,7 @@ export interface OpeningHoursWeekRawProps extends BaseInputProps<never> {
 }
 
 export type OpeningHoursWeekProps = OmitFormContext<OpeningHoursWeekRawProps> &
-  InnerRefProps<OpeningHoursWeekRaw>;
+  InnerRefProps<OpeningHoursWeekRawProps>;
 
 export interface OpeningHoursWeekState extends BaseInputState {}
 

@@ -4,7 +4,7 @@ import { InnerRefProps } from '../../types/InnerRefProps';
 
 export function withInputHeaderContext<
   P extends InputHeaderContextProps & React.ClassAttributes<React.ComponentType<P>>,
-  R extends OmitInputHeaderContext<P> & InnerRefProps<React.Component<P>>
+  R extends OmitInputHeaderContext<P> & InnerRefProps<P>
   >(
     Component: React.ComponentType<P>
   ) {
@@ -12,7 +12,7 @@ export function withInputHeaderContext<
     const { innerRef, ...rest } = props as InnerRefProps<typeof Component>;
     return (
       <InputHeaderContextConsumer>
-        {value => <Component ref={innerRef} {...rest} inputHeaderContext={value} />}
+        {value => <Component ref={innerRef} {...(rest as unknown as P)} inputHeaderContext={value} />}
       </InputHeaderContextConsumer>
     );
   };

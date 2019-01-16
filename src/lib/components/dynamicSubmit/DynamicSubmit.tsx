@@ -32,7 +32,7 @@ export type DynamicSubmitRawProps = Omit<SubmitProps, 'onClick'> & {
   resetEnablesInputs?: boolean;
 } & FormContextProps;
 
-export type DynamicSubmitProps = OmitFormContext<DynamicSubmitRawProps> & InnerRefProps<DynamicSubmitRaw>;
+export type DynamicSubmitProps = OmitFormContext<DynamicSubmitRawProps> & InnerRefProps<DynamicSubmitRawProps>;
 
 export interface DynamicSubmitState {
   buttonState: DynamicSubmitMode;

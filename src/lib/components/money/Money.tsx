@@ -26,7 +26,7 @@ export interface MoneyRawProps extends BaseInputProps<never> {
   prices: MoneyWithCurrency[];
 }
 
-export type MoneyProps = OmitFormContext<MoneyRawProps> & InnerRefProps<MoneyRaw>;
+export type MoneyProps = OmitFormContext<MoneyRawProps> & InnerRefProps<MoneyRawProps>;
 
 export interface MoneyState extends BaseInputState {
 }

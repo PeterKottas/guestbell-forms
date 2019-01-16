@@ -21,7 +21,7 @@ export interface TextAreaRawProps extends BaseInputProps<HTMLTextAreaElement> {
   maxRows?: number;
 }
 
-export type TextAreaProps = OmitFormContext<TextAreaRawProps> & InnerRefProps<TextAreaRaw>;
+export type TextAreaProps = OmitFormContext<TextAreaRawProps> & InnerRefProps<TextAreaRawProps>;
 
 export interface TextAreaState extends BaseInputState {
 }

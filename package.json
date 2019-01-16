@@ -52,7 +52,7 @@
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "3.0.0",
     "react": "16.5.2",
-    "react-datepicker": "1.6.0",
+    "react-datepicker": "2.0.0",
     "react-dom": "16.5.2",
     "react-hot-loader": "4.3.11",
     "react-ink": "6.4.0",

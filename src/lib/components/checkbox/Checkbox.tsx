@@ -17,7 +17,7 @@ export interface CheckboxRawProps extends BaseInputProps<HTMLInputElement> {
   checked?: boolean;
 }
 
-export type CheckboxProps = OmitFormContext<CheckboxRawProps> & InnerRefProps<CheckboxRaw>;
+export type CheckboxProps = OmitFormContext<CheckboxRawProps> & InnerRefProps<CheckboxRawProps>;
 
 export interface CheckboxState extends BaseInputState {
   checked: boolean;

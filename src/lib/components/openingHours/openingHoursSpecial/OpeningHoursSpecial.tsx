@@ -28,7 +28,7 @@ export interface OpeningHoursSpecialRawProps extends BaseInputProps<never> {
   placeholder?: string;
 }
 
-export type OpeningHoursSpecialProps = OmitFormContext<OpeningHoursSpecialRawProps> & InnerRefProps<OpeningHoursSpecialRaw>;
+export type OpeningHoursSpecialProps = OmitFormContext<OpeningHoursSpecialRawProps> & InnerRefProps<OpeningHoursSpecialRawProps>;
 
 export interface OpeningHoursSpecialState extends BaseInputState {
 }

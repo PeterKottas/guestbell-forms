@@ -27,7 +27,7 @@ export interface SelectRawProps extends BaseInputProps<HTMLSelectElement> {
   readonlyEmptyPlaceholder?: string;
 }
 
-export type SelectProps = OmitFormContext<SelectRawProps> & InnerRefProps<SelectRaw>;
+export type SelectProps = OmitFormContext<SelectRawProps> & InnerRefProps<SelectRawProps>;
 
 export interface SelectState extends BaseInputState {
 }

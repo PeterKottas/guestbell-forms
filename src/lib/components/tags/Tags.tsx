@@ -45,7 +45,7 @@ export type TagsRawProps = {
   maxSuggestions?: number;
 } & BaseInputProps<HTMLInputElement>;
 
-export type TagsProps = OmitFormContext<TagsRawProps> & InnerRefProps<TagsRaw>;
+export type TagsProps = OmitFormContext<TagsRawProps> & InnerRefProps<TagsRawProps>;
 
 export interface TagsState extends BaseInputState {
   textIsFocused: boolean;

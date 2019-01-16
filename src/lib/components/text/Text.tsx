@@ -18,7 +18,7 @@ export interface TextRawProps extends BaseInputProps<HTMLInputElement> {
   type?: 'number' | 'text';
 }
 
-export type TextProps = OmitFormContext<TextRawProps> & InnerRefProps<TextRaw>;
+export type TextProps = OmitFormContext<TextRawProps> & InnerRefProps<TextRawProps>;
 
 export interface TextState extends BaseInputState {
 }
