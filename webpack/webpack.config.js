@@ -22,7 +22,6 @@ module.exports = merge(require('./webpack.config.base'), {
     "react-smooth-collapse": "react-smooth-collapse",
     "react-tippy": "react-tippy",
     "react-textarea-autosize": "react-textarea-autosize",
-    "moment": "moment",
     "react-dom": "react-dom"
   },
   devtool: 'source-map',

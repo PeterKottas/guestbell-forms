@@ -48,7 +48,6 @@
     "lodash": "4.17.11",
     "material-design-icons": "3.0.1",
     "mini-css-extract-plugin": "0.4.3",
-    "moment": "2.22.2",
     "node-sass": "4.9.3",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "3.0.0",
@@ -110,7 +109,6 @@
   },
   "homepage": "https://github.com/PeterKottas/guestbell-forms",
   "peerDependencies": {
-    "moment": "*",
     "react": "*",
     "react-datepicker": "*",
     "react-ink": "*",

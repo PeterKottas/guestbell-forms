@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-export interface InnerRefProps<ComponentT> {
+// tslint:disable-next-line:no-any
+export interface InnerRefProps<ComponentT extends React.Component<any>> {
   innerRef?: React.Ref<ComponentT>;
 }
 

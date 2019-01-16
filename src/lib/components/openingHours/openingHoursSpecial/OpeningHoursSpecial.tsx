@@ -4,11 +4,6 @@ import * as DateIcon from 'material-design-icons/action/svg/production/ic_event_
 // Libs
 import * as React from 'react';
 try {
-  var Moment = require('moment');
-} catch {
-  Moment = undefined;
-}
-try {
   var DatePicker = require('react-datepicker').default;
 } catch {
   DatePicker = undefined;
@@ -68,9 +63,6 @@ export class OpeningHoursSpecialRaw extends BaseInput<OpeningHoursSpecialRawProp
     if (!DatePicker) {
       throw new Error('You need to install react-datepicker in order to use special day picker');
     }
-    if (!Moment) {
-      throw new Error('You need to install moment in order to use special day picker');
-    }
     return (
       <div
         className={'input__base openingHoursSpecial-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '')}
@@ -100,12 +92,12 @@ export class OpeningHoursSpecialRaw extends BaseInput<OpeningHoursSpecialRawProp
             title={<DatePicker
               customInput={<DateInput>{!day.date && 'Choose date'}</DateInput>}
               placeholder={this.props.placeholder}
-              selected={day.date && Moment(day.date)}
+              selected={day.date}
               dateFormat={DAY_FORMAT}
               onChange={this.dateChanged(index, day)}
-              excludeDates={this.props.days.filter(d => d.date).map(d => Moment(d.date))}
+              excludeDates={this.props.days.filter(d => d.date)}
               withPortal={true}
-              minDate={Moment()}
+              minDate={new Date()}
             />}
           />
         ))}

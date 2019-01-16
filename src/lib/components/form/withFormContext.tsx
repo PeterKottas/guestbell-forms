@@ -6,10 +6,10 @@ export function withFormContext<
   P extends FormContextProps & React.ClassAttributes<React.ComponentType<P>>,
   R extends OmitFormContext<P> & InnerRefProps<React.Component<P>>
   >(
-    Component: React.ComponentType<P>
+    Component: React.ComponentClass<P>
   ) {
   const WithFormContext: React.SFC<R> = props => {
-    const { innerRef, ...rest } = props as InnerRefProps<React.ComponentClass<P>>;
+    const { innerRef, ...rest } = props as InnerRefProps<typeof Component>;
     return (
       <FormContextConsumer>
         {value => <Component ref={innerRef} {...rest} formContext={value} />}
