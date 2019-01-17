@@ -109,9 +109,9 @@ export class OpeningHoursSpecialRaw extends BaseInput<OpeningHoursSpecialRawProp
 
   private removeDayClick = (index: number) => () => this.props.onDaysChange(this.props.days.filter((d, indexInner) => indexInner !== index));
 
-  private dateChanged = (index: number, day: OpeningHoursDayObj) => (date) => {
+  private dateChanged = (index: number, day: OpeningHoursDayObj) => (date: Date) => {
     let days = this.props.days.slice(0);
-    days[index] = { ...day, date: date.toDate() };
+    days[index] = { ...day, date };
     this.props.onDaysChange(days);
   }
 
