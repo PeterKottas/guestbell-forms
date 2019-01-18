@@ -180,8 +180,9 @@ export class TagsRaw extends BaseInput<
                     AddNewTagComponent={
                       this.props.allowNew &&
                       this.state.value !== '' &&
+                      !this.props.existingTags.find(e => e.name === this.state.value) &&
                       this.state.textIsValid && (
-                        <Button dropdown={true} onClick={this.addNewTag}>
+                        <Button className="tags-input__suggestion tags-input__add-new" dropdown={true} onClick={this.addNewTag}>
                           Add new "{this.state.value}"
                         </Button>
                       )
