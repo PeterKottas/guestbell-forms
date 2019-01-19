@@ -25,7 +25,8 @@ export interface TimeRawProps extends BaseInputProps<HTMLInputElement> {
   showDateDiff?: boolean;
 }
 
-export type TimeProps = OmitFormContext<TimeRawProps> & InnerRefProps<TimeRawProps>;
+export type TimeProps = OmitFormContext<TimeRawProps> &
+  InnerRefProps<TimeRawProps>;
 
 export interface TimeState extends BaseInputState {
   hoursText?: string;
@@ -69,6 +70,9 @@ export class TimeRaw extends BaseInput<
     return (
       <InputGroup title={this.props.title}>
         <div
+          {...this.props.id && {
+            id: this.props.id
+          }}
           className={
             'input__base time-input ' +
             this.getValidationClass() +
@@ -79,11 +83,20 @@ export class TimeRaw extends BaseInput<
         >
           <div className="">
             <div className="time-input__arrows__container">
-              <button className="plus" onClick={this.addHourClick}>
+              <button
+                className="plus"
+                onClick={this.addHourClick}
+                {...this.props.id && {
+                  id: this.props.id + '-add-hours-button'
+                }}
+              >
                 <ArrowIcon />
               </button>
               <div className="input-padding">
                 <input
+                  {...this.props.id && {
+                    id: this.props.id + '-hours-input'
+                  }}
                   disabled={this.getDisabled()}
                   required={this.props.required}
                   className={
@@ -101,7 +114,13 @@ export class TimeRaw extends BaseInput<
                 />
                 <span className="highlight" />
               </div>
-              <button className="minus" onClick={this.removeHourClick}>
+              <button
+                className="minus"
+                onClick={this.removeHourClick}
+                {...this.props.id && {
+                  id: this.props.id + '-subtract-hours-button'
+                }}
+              >
                 <ArrowIcon />
               </button>
             </div>
@@ -109,11 +128,20 @@ export class TimeRaw extends BaseInput<
           <span className="">:</span>
           <div className="">
             <div className="time-input__arrows__container">
-              <button className="plus" onClick={this.addMinuteClick}>
+              <button
+                className="plus"
+                onClick={this.addMinuteClick}
+                {...this.props.id && {
+                  id: this.props.id + '-add-minutes-button'
+                }}
+              >
                 <ArrowIcon />
               </button>
               <div className="input-padding">
                 <input
+                  {...this.props.id && {
+                    id: this.props.id + '-minutes-input'
+                  }}
                   disabled={this.getDisabled()}
                   required={this.props.required}
                   className={
@@ -133,7 +161,13 @@ export class TimeRaw extends BaseInput<
                 />
                 <span className="highlight" />
               </div>
-              <button className="minus" onClick={this.removeMinuteClick}>
+              <button
+                className="minus"
+                onClick={this.removeMinuteClick}
+                {...this.props.id && {
+                  id: this.props.id + '-subtract-minutes-button'
+                }}
+              >
                 <ArrowIcon />
               </button>
             </div>

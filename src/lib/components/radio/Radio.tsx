@@ -1,6 +1,10 @@
 ﻿// Libs
 import * as React from 'react';
-import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
+import {
+  BaseInputProps,
+  BaseInputState,
+  BaseInput
+} from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
 import { OmitFormContext } from '../form/FormContext';
 import { InnerRefProps } from './../../types/InnerRefProps';
@@ -15,12 +19,16 @@ export interface RadioRawProps extends BaseInputProps<HTMLInputElement> {
   name: string;
 }
 
-export type RadioProps = OmitFormContext<RadioRawProps> & InnerRefProps<RadioRawProps>;
+export type RadioProps = OmitFormContext<RadioRawProps> &
+  InnerRefProps<RadioRawProps>;
 
-export interface RadioState extends BaseInputState {
-}
+export interface RadioState extends BaseInputState {}
 
-export class RadioRaw extends BaseInput<RadioRawProps, RadioState, HTMLInputElement>  {
+export class RadioRaw extends BaseInput<
+  RadioRawProps,
+  RadioState,
+  HTMLInputElement
+> {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {});
 
   constructor(props: RadioRawProps) {
@@ -31,11 +39,18 @@ export class RadioRaw extends BaseInput<RadioRawProps, RadioState, HTMLInputElem
   public render() {
     return (
       <div
-        className={`input__group radio-input ${this.getValidationClass()} ${this.props.className ? this.props.className : ''}`}
+        className={`input__group radio-input ${this.getValidationClass()} ${
+          this.props.className ? this.props.className : ''
+        }`}
         ref={this.containerRef}
       >
         {!this.props.label && this.renderInput()}
-        {this.props.label && <label>{this.renderInput()}{this.props.label}</label>}
+        {this.props.label && (
+          <label>
+            {this.renderInput()}
+            {this.props.label}
+          </label>
+        )}
       </div>
     );
   }
@@ -43,6 +58,9 @@ export class RadioRaw extends BaseInput<RadioRawProps, RadioState, HTMLInputElem
   private renderInput() {
     return (
       <input
+        {...this.props.id && {
+          id: this.props.id
+        }}
         disabled={this.getDisabled()}
         name={this.props.name}
         value={this.props.value}

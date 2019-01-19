@@ -51,6 +51,9 @@ export class TextAreaRaw extends BaseInput<TextAreaRawProps, TextAreaState, HTML
           ref={this.containerRef}
         >
           <Textarea
+            {...this.props.id && {
+              id: this.props.id
+            }}
             ref={this.elemRef}
             placeholder={this.props.placeholder}
             disabled={this.getDisabled()}

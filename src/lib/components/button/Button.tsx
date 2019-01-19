@@ -6,7 +6,15 @@ var classNames = require('classnames');
 
 // Misc
 
-export type ButtonTypes = 'primary' | 'success' | 'error' | 'warning' | 'info' | 'gray' | 'white' | 'none';
+export type ButtonTypes =
+  | 'primary'
+  | 'success'
+  | 'error'
+  | 'warning'
+  | 'info'
+  | 'gray'
+  | 'white'
+  | 'none';
 
 export type ButtonComponentProps = {
   onClick: (e: React.MouseEvent<HTMLElement>) => void;
@@ -16,6 +24,7 @@ export type ButtonComponentProps = {
 };
 
 export type ButtonProps = {
+  id?: string;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   style?: React.StyleHTMLAttributes<HTMLButtonElement>;
   className?: string;
@@ -38,13 +47,13 @@ export type ButtonProps = {
   tooltipProps?: any;
 };
 
-export interface ButtonState {
-}
+export interface ButtonState {}
 
 const DefaultButtonComponent: React.SFC<ButtonComponentProps> = props => (
   <button
     // tslint:disable-next-line:no-any
     {...(props.buttonProps ? props.buttonProps : {}) as any}
+    {...this.props.id && { id: this.props.id }}
     role="button"
     className={props.className}
     onClick={props.onClick}
@@ -53,7 +62,7 @@ const DefaultButtonComponent: React.SFC<ButtonComponentProps> = props => (
   </button>
 );
 
-export class Button extends React.PureComponent<ButtonProps, ButtonState>  {
+export class Button extends React.PureComponent<ButtonProps, ButtonState> {
   public static defaultProps: ButtonProps = {
     disabled: false,
     className: '',
@@ -89,10 +98,11 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState>  {
       { ['guestbell-btn--outlined']: this.props.outlined },
       { ['guestbell-btn--dropdown']: this.props.dropdown },
       { ['guestbell-btn--icon']: this.props.icon },
-      { ['guestbell-btn--hero']: this.props.hero },
+      { ['guestbell-btn--hero']: this.props.hero }
     ]);
     const button = (
       <this.props.Component
+        {...this.props.id && { id: this.props.id }}
         onClick={this.handleClick}
         buttonProps={this.props.buttonProps}
         className={btnClassName}

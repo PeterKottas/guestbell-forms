@@ -100,6 +100,9 @@ export class OpeningHoursWeekRaw extends BaseInput<
       <div className={``}>
         {this.props.standardDay && (
           <OpeningHoursDay
+            {...this.props.id && {
+              id: this.props.id + '-standard-day'
+            }}
             className="openingHoursWeek__standard-day"
             label={
               <span>
@@ -122,6 +125,9 @@ export class OpeningHoursWeekRaw extends BaseInput<
         )}
         {this.props.days.map((day, index) => (
           <OpeningHoursDay
+            {...this.props.id && {
+              id: this.props.id + '-opening-hours-day-' + index.toString()
+            }}
             className={''}
             key={index}
             label={

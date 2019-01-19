@@ -45,7 +45,8 @@ export type TagsRawProps = {
   maxSuggestions?: number;
 } & BaseInputProps<HTMLInputElement>;
 
-export type TagsProps = OmitFormContext<TagsRawProps> & InnerRefProps<TagsRawProps>;
+export type TagsProps = OmitFormContext<TagsRawProps> &
+  InnerRefProps<TagsRawProps>;
 
 export interface TagsState extends BaseInputState {
   textIsFocused: boolean;
@@ -124,6 +125,9 @@ export class TagsRaw extends BaseInput<
     return (
       <InputGroup title={this.props.title}>
         <div
+          {...this.props.id && {
+            id: this.props.id
+          }}
           className={
             'input__base tags-input ' +
             this.getValidationClass() +
@@ -145,6 +149,9 @@ export class TagsRaw extends BaseInput<
               >
                 <Text
                   {...textProps}
+                  {...this.props.id && {
+                    id: this.props.id + '-text-input'
+                  }}
                   innerRef={this.textRef}
                   required={
                     this.props.tags.length > 0 ? false : this.props.required
@@ -167,6 +174,9 @@ export class TagsRaw extends BaseInput<
                 />
                 {this.state.suggestionsVisible && this.props.showSuggestions && (
                   <TagsSuggestions
+                    {...this.props.id && {
+                      id: this.props.id + '-text-input'
+                    }}
                     allowNew={this.props.allowNew}
                     preselectedSuggestion={this.state.preselectedSuggestion}
                     loading={this.state.fetchingExistingTags}
@@ -180,9 +190,18 @@ export class TagsRaw extends BaseInput<
                     AddNewTagComponent={
                       this.props.allowNew &&
                       this.state.value !== '' &&
-                      !this.props.existingTags.find(e => e.name === this.state.value) &&
+                      !this.props.existingTags.find(
+                        e => e.name === this.state.value
+                      ) &&
                       this.state.textIsValid && (
-                        <Button className="tags-input__suggestion tags-input__add-new" dropdown={true} onClick={this.addNewTag}>
+                        <Button
+                          {...this.props.id && {
+                            id: this.props.id + '-add-new-button'
+                          }}
+                          className="tags-input__suggestion tags-input__add-new"
+                          dropdown={true}
+                          onClick={this.addNewTag}
+                        >
                           Add new "{this.state.value}"
                         </Button>
                       )
@@ -397,6 +416,9 @@ export class TagsRaw extends BaseInput<
         {tag.name}
         {!this.props.readOnly && (
           <Button
+            {...this.props.id && {
+              id: this.props.id + '-tag-' + index.toString()
+            }}
             circular={true}
             blank={true}
             onClick={this.tagRemoveClick(tag)}

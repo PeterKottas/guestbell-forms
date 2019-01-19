@@ -40,6 +40,9 @@ export class TextRaw extends BaseInput<TextRawProps, TextState, HTMLInputElement
           ref={this.containerRef}
         >
           <input
+            {...this.props.id && {
+              id: this.props.id
+            }}
             ref={this.inputRef}
             placeholder={this.props.placeholder}
             disabled={this.getDisabled()}

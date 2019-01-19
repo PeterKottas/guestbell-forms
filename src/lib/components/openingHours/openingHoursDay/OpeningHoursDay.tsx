@@ -69,6 +69,9 @@ export class OpeningHoursDayRaw extends BaseInput<
         tooltip={this.props.tooltip}
       >
         <div
+          {...this.props.id && {
+            id: this.props.id
+          }}
           className={classNames(
             'input__base openingHoursDay-input',
             {
@@ -110,6 +113,9 @@ export class OpeningHoursDayRaw extends BaseInput<
                       {index % 2 === 0 ? 'Opens' : 'Closes'}
                     </span>
                     <Time
+                      {...this.props.id && {
+                        id: this.props.id + '-time-' + index.toString()
+                      }}
                       className={'openingHoursDay-input__time'}
                       timeChange={this.timeChanged(index)}
                       time={item}
@@ -119,6 +125,12 @@ export class OpeningHoursDayRaw extends BaseInput<
                     />
                     {index % 2 === 1 && (
                       <Button
+                        {...this.props.id && {
+                          id:
+                            this.props.id +
+                            '-remove-button-' +
+                            ((index - 1) / 2).toString()
+                        }}
                         onClick={this.removeTimeClick(index - 1)}
                         className="openingHoursDay-input__button--remove mr-5 line-height--0"
                         circular={true}
@@ -134,6 +146,9 @@ export class OpeningHoursDayRaw extends BaseInput<
             {this.props.maxOpenCloseTimes >
               this.props.openingHours.times.length && (
               <Button
+                {...this.props.id && {
+                  id: this.props.id + '-add-button'
+                }}
                 className="openingHoursDay-input__button-open-close"
                 onClick={this.addTimeClick}
                 disabled={this.isAddTimeClickDisabled()}

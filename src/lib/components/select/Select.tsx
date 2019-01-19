@@ -4,7 +4,11 @@ import * as React from 'react';
 // Misc
 import InputGroup from '../inputGroup/InputGroup';
 import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_circle_outline_24px.svg';
-import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
+import {
+  BaseInputProps,
+  BaseInputState,
+  BaseInput
+} from '../base/input/BaseInput';
 import { Button } from '../button/Button';
 import { OmitFormContext } from '../form/FormContext';
 import { withFormContext } from '../form/withFormContext';
@@ -27,12 +31,16 @@ export interface SelectRawProps extends BaseInputProps<HTMLSelectElement> {
   readonlyEmptyPlaceholder?: string;
 }
 
-export type SelectProps = OmitFormContext<SelectRawProps> & InnerRefProps<SelectRawProps>;
+export type SelectProps = OmitFormContext<SelectRawProps> &
+  InnerRefProps<SelectRawProps>;
 
-export interface SelectState extends BaseInputState {
-}
+export interface SelectState extends BaseInputState {}
 
-class SelectRaw extends BaseInput<SelectRawProps, SelectState, HTMLSelectElement> {
+class SelectRaw extends BaseInput<
+  SelectRawProps,
+  SelectState,
+  HTMLSelectElement
+> {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     defaultEmpty: true,
     multiple: false,
@@ -42,15 +50,13 @@ class SelectRaw extends BaseInput<SelectRawProps, SelectState, HTMLSelectElement
 
   constructor(props: SelectRawProps) {
     super(props);
-    const val = !props.value ?
-      props.defaultEmpty ?
-        '' :
-        props.values && props.values.length > 0 ?
-          props.values[0]
-          :
-          ''
-      :
-      props.value;
+    const val = !props.value
+      ? props.defaultEmpty
+        ? ''
+        : props.values && props.values.length > 0
+        ? props.values[0]
+        : ''
+      : props.value;
     this.state = Object.assign(this.state, { value: val });
     this.handleChangeCustom = this.handleChangeCustom.bind(this);
   }
@@ -60,51 +66,90 @@ class SelectRaw extends BaseInput<SelectRawProps, SelectState, HTMLSelectElement
   }
 
   public render() {
-    const finalValues = this.props.multiple ? this.props.values.filter(item => this.props.selectedValues.
-      findIndex((t) => t.value === item.value) < 0) : this.props.values;
+    const finalValues = this.props.multiple
+      ? this.props.values.filter(
+          item =>
+            this.props.selectedValues.findIndex(t => t.value === item.value) < 0
+        )
+      : this.props.values;
     return (
       <InputGroup title={this.props.title}>
         <div
-          className={'input__base select-input ' + this.getValidationClass() + ' ' + (this.props.className ? this.props.className : '') +
-            ' ' + (this.props.readOnly ? 'readonly' : '') + ' ' + (this.props.multiple ? 'multiple' : '')}
+          className={
+            'input__base select-input ' +
+            this.getValidationClass() +
+            ' ' +
+            (this.props.className ? this.props.className : '') +
+            ' ' +
+            (this.props.readOnly ? 'readonly' : '') +
+            ' ' +
+            (this.props.multiple ? 'multiple' : '')
+          }
           ref={this.containerRef}
         >
           {this.renderSelectedValues()}
-          {finalValues.length > 0 && ((this.props.multiple && !this.props.readOnly) || !this.props.multiple) &&
-            <div className="select-input__select__wrapper">
-              {((!this.props.multiple && !this.props.readOnly) || this.props.multiple) ?
-                <select
-                  ref={this.inputRef}
-                  disabled={this.getDisabled()}
-                  required={this.props.required}
-                  onChange={this.handleChangeCustom}
-                  value={this.state.value}
-                  className={'select-input__select ' + (this.state.value !== '' || (this.props.selectedValues &&
-                    this.props.selectedValues.length > 0) ? 'filled' : '')}
-                  onBlur={this.handleBlur}
-                  onFocus={this.handleFocus}
-                >
-                  {this.props.defaultEmpty && (
-                    <option key={-1} disabled={true} value="" style={{ display: 'none' }} />
-                  )}
-                  {finalValues.map((value, index) => (
-                    <option key={index} value={value.value}>{value.label ? value.label : value.value}</option>
-                  ))}
-                </select>
-                :
-                <span
-                  className={'select-input__select ' + (this.state.value !== '' || (this.props.selectedValues &&
-                    this.props.selectedValues.length > 0) ? 'filled' : '')}
-                >
-                  {this.renderReadonly()}
-                </span>
-              }
-              <span className="highlight" />
-              <span className="bar" />
-              {this.renderDefaultValidation()}
-              {this.props.label && finalValues.length > 0 && <label>{this.renderLabel()}</label>}
-            </div>
-          }
+          {finalValues.length > 0 &&
+            ((this.props.multiple && !this.props.readOnly) ||
+              !this.props.multiple) && (
+              <div className="select-input__select__wrapper">
+                {(!this.props.multiple && !this.props.readOnly) ||
+                this.props.multiple ? (
+                  <select
+                    {...this.props.id && {
+                      id: this.props.id
+                    }}
+                    ref={this.inputRef}
+                    disabled={this.getDisabled()}
+                    required={this.props.required}
+                    onChange={this.handleChangeCustom}
+                    value={this.state.value}
+                    className={
+                      'select-input__select ' +
+                      (this.state.value !== '' ||
+                      (this.props.selectedValues &&
+                        this.props.selectedValues.length > 0)
+                        ? 'filled'
+                        : '')
+                    }
+                    onBlur={this.handleBlur}
+                    onFocus={this.handleFocus}
+                  >
+                    {this.props.defaultEmpty && (
+                      <option
+                        key={-1}
+                        disabled={true}
+                        value=""
+                        style={{ display: 'none' }}
+                      />
+                    )}
+                    {finalValues.map((value, index) => (
+                      <option key={index} value={value.value}>
+                        {value.label ? value.label : value.value}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <span
+                    className={
+                      'select-input__select ' +
+                      (this.state.value !== '' ||
+                      (this.props.selectedValues &&
+                        this.props.selectedValues.length > 0)
+                        ? 'filled'
+                        : '')
+                    }
+                  >
+                    {this.renderReadonly()}
+                  </span>
+                )}
+                <span className="highlight" />
+                <span className="bar" />
+                {this.renderDefaultValidation()}
+                {this.props.label && finalValues.length > 0 && (
+                  <label>{this.renderLabel()}</label>
+                )}
+              </div>
+            )}
         </div>
       </InputGroup>
     );
@@ -122,7 +167,8 @@ class SelectRaw extends BaseInput<SelectRawProps, SelectState, HTMLSelectElement
       }
       let newValues = this.props.selectedValues.concat(val);
       if (val) {
-        this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(newValues);
+        this.props.onSelectedValuesChange &&
+          this.props.onSelectedValuesChange(newValues);
         this.handleValid(newValues);
         this.setState({ value: '' });
       }
@@ -142,34 +188,34 @@ class SelectRaw extends BaseInput<SelectRawProps, SelectState, HTMLSelectElement
   }
 
   private renderReadonly() {
-    const value = this.props.values.filter(item => item.value.toString() === this.state.value)[0];
-    return value ? value.label ? value.label : value.value : '';
+    const value = this.props.values.filter(
+      item => item.value.toString() === this.state.value
+    )[0];
+    return value ? (value.label ? value.label : value.value) : '';
   }
 
   private renderSelectedValues() {
-    return this.props.multiple ?
+    return this.props.multiple ? (
       this.props.selectedValues.length > 0 ? (
-        <div className="select-input__selectedValue__wrapper">{this.props.selectedValues.map((item, index) => (
-          <div
-            className="select-input__selectedValue"
-            key={index}
-          >
-            {item.label ? item.label : item.value}
-            {!this.props.readOnly && <Button
-              disabled={item.forceSelected}
-              circular={true}
-              blank={true}
-              onClick={this.removeItemClick(item)}
-              className="ml-1 transform-rotate--45 line-height--0 p-0"
-            >
-              <PlusIcon />
-            </Button>}
-          </div>
-        ))
-        }
+        <div className="select-input__selectedValue__wrapper">
+          {this.props.selectedValues.map((item, index) => (
+            <div className="select-input__selectedValue" key={index}>
+              {item.label ? item.label : item.value}
+              {!this.props.readOnly && (
+                <Button
+                  disabled={item.forceSelected}
+                  circular={true}
+                  blank={true}
+                  onClick={this.removeItemClick(item)}
+                  className="ml-1 transform-rotate--45 line-height--0 p-0"
+                >
+                  <PlusIcon />
+                </Button>
+              )}
+            </div>
+          ))}
         </div>
-      )
-        :
+      ) : (
         this.props.readOnly && (
           <div className="select-input__selectedValue__wrapper">
             <div className="select-input__selectedValue">
@@ -177,14 +223,17 @@ class SelectRaw extends BaseInput<SelectRawProps, SelectState, HTMLSelectElement
             </div>
           </div>
         )
-      :
-      null;
+      )
+    ) : null;
   }
 
   private removeItemClick = (item: SelectValue) => () => {
-    const newValues = this.props.selectedValues.filter(sv => sv.value !== item.value);
+    const newValues = this.props.selectedValues.filter(
+      sv => sv.value !== item.value
+    );
     this.handleValid(newValues);
-    this.props.onSelectedValuesChange && this.props.onSelectedValuesChange(newValues);
+    this.props.onSelectedValuesChange &&
+      this.props.onSelectedValuesChange(newValues);
   }
 }
 

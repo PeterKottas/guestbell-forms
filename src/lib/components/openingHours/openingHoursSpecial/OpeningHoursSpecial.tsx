@@ -82,6 +82,9 @@ export class OpeningHoursSpecialRaw extends BaseInput<
     }
     return (
       <div
+        {...this.props.id && {
+          id: this.props.id
+        }}
         className={
           'input__base openingHoursSpecial-input ' +
           this.getValidationClass() +
@@ -92,12 +95,18 @@ export class OpeningHoursSpecialRaw extends BaseInput<
       >
         {this.props.days.map((day, index) => (
           <OpeningHoursDay
+            {...this.props.id && {
+              id: this.props.id + '-opening-hours-day-' + index.toString()
+            }}
             key={index}
             label={
               <span>
                 {OpeningHoursUtil.getLabelSuffix(day)}
                 <span className="float-right">
                   <Button
+                    {...this.props.id && {
+                      id: this.props.id + '-remove-button-' + index.toString()
+                    }}
                     blank={true}
                     className="openingHoursSpecial-input__button openingHoursSpecial-input__button--remove"
                     onClick={this.removeDayClick(index)}
@@ -113,6 +122,9 @@ export class OpeningHoursSpecialRaw extends BaseInput<
             onOpeningHoursChange={this.openingHoursChanged(index, day)}
             title={
               <DatePicker
+                {...this.props.id && {
+                  id: this.props.id + '-date-picker-' + index.toString()
+                }}
                 customInput={
                   <DateInput>{!day.date && 'Choose date'}</DateInput>}
                 placeholder={this.props.placeholder}

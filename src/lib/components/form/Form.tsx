@@ -5,6 +5,7 @@ import * as React from 'react';
 import { FormContextState, FormComponentContextState, FormContextProvider, ComponentsDict } from './FormContext';
 
 export interface FormProps {
+  id?: string;
   className?: string;
   noValidate?: boolean;
   onSubmit?: () => void;
@@ -77,6 +78,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
   public render() {
     return (
       <form
+        {...this.props.id && { id: this.props.id }}
         noValidate={true}
         role="form"
         className={`input__form validation-form ${(this.props.className ? this.props.className : '')}`}

@@ -3,16 +3,15 @@ import * as React from 'react';
 import SmoothCollapse from '../smoothCollapse/SmoothCollapse';
 var classNames = require('classnames');
 
-export interface DropdownItemProps {
+export interface DropdownProps {
+  id?: string;
   header?: JSX.Element | string;
   className?: string;
   submenuClassName?: string;
   headerClassName?: string;
   notificationCount?: number;
-  wrapperTag?: Exclude<keyof HTMLElementTagNameMap,
-  'applet' | 'basefont' | 'dir' | 'font' | 'frame' | 'frameset' | 'marquee' | 'slot' | 'template' | 'acronym'
-  | 'center' | 'acronym' | 'isindex' | 'listing' | 'nextid' | 'nobr' | 'plaintext' | 'noframes' | 'strike' | 'tt' | 'xmp'
-  >;
+  // tslint:disable-next-line:no-any
+  wrapperTag?: any;
   shouldHandleClick?: boolean;
   showArrow?: boolean;
   onClick?: () => void;
@@ -20,12 +19,15 @@ export interface DropdownItemProps {
   inline?: boolean;
 }
 
-export interface DropdownItemState {
+export interface DropdownState {
   isDropdownVisible: boolean;
 }
 
-export class Dropdown extends React.PureComponent<DropdownItemProps, DropdownItemState> {
-  public static defaultProps: DropdownItemProps = {
+export class Dropdown extends React.PureComponent<
+  DropdownProps,
+  DropdownState
+> {
+  public static defaultProps: DropdownProps = {
     shouldHandleClick: true,
     wrapperTag: 'div',
     notificationCount: 0,
@@ -33,7 +35,7 @@ export class Dropdown extends React.PureComponent<DropdownItemProps, DropdownIte
     inline: true
   };
 
-  constructor(props: DropdownItemProps) {
+  constructor(props: DropdownProps) {
     super(props);
     this.state = {
       isDropdownVisible: false
@@ -67,10 +69,12 @@ export class Dropdown extends React.PureComponent<DropdownItemProps, DropdownIte
   public render() {
     const containerClassName = classNames([
       'guestbell__dropdown',
-      (!this.state.isDropdownVisible ? 'guestbell__dropdown--closed' : 'guestbell__dropdown--opened'),
+      !this.state.isDropdownVisible
+        ? 'guestbell__dropdown--closed'
+        : 'guestbell__dropdown--opened',
       { ['guestbell__dropdown--disabled']: this.props.disabled },
       { ['guestbell__dropdown--inline']: this.props.inline },
-      this.props.className,
+      this.props.className
     ]);
     const headerClassName = classNames([
       'guestbell__dropdown-toggle',
@@ -79,21 +83,24 @@ export class Dropdown extends React.PureComponent<DropdownItemProps, DropdownIte
       this.props.headerClassName
     ]);
     return (
-      <this.props.wrapperTag className={containerClassName}>
+      <this.props.wrapperTag
+        {...this.props.id && { id: this.props.id }}
+        className={containerClassName}
+      >
         <div
           role="button"
           className={headerClassName}
           onClick={this.containerClick}
         >
           {this.props.header}
-          {this.props.notificationCount > 0 && <span className="guestbell__label-count">{this.props.notificationCount}</span>}
+          {this.props.notificationCount > 0 && (
+            <span className="guestbell__label-count">
+              {this.props.notificationCount}
+            </span>
+          )}
         </div>
-        <div
-          className={'guestbell__dropdown-menu__container'}
-        >
-          <SmoothCollapse
-            expanded={this.state.isDropdownVisible}
-          >
+        <div className={'guestbell__dropdown-menu__container'}>
+          <SmoothCollapse expanded={this.state.isDropdownVisible}>
             {this.renderChildren()}
           </SmoothCollapse>
         </div>
@@ -119,7 +126,10 @@ export class Dropdown extends React.PureComponent<DropdownItemProps, DropdownIte
   private renderChildren() {
     return (
       <ul
-        className={'guestbell__dropdown-menu ' + (this.props.submenuClassName ? this.props.submenuClassName : '')}
+        className={
+          'guestbell__dropdown-menu ' +
+          (this.props.submenuClassName ? this.props.submenuClassName : '')
+        }
       >
         {this.props.children}
       </ul>

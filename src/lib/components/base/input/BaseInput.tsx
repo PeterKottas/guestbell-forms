@@ -25,6 +25,7 @@ export type ValidationError = string | JSX.Element;
 export type AllowedHtmlElements = (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement);
 
 export type BaseInputProps<HTMLType extends AllowedHtmlElements> = {
+  id?: string;
   disabled?: boolean;
   className?: string;
   label?: string | JSX.Element;
