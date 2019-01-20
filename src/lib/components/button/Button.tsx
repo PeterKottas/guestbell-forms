@@ -17,6 +17,7 @@ export type ButtonTypes =
   | 'none';
 
 export type ButtonComponentProps = {
+  id?: string;
   onClick: (e: React.MouseEvent<HTMLElement>) => void;
   className: string;
   buttonProps: React.ButtonHTMLAttributes<HTMLButtonElement>;
@@ -53,7 +54,7 @@ const DefaultButtonComponent: React.SFC<ButtonComponentProps> = props => (
   <button
     // tslint:disable-next-line:no-any
     {...(props.buttonProps ? props.buttonProps : {}) as any}
-    {...this.props.id && { id: this.props.id }}
+    {...props.id && { id: props.id }}
     role="button"
     className={props.className}
     onClick={props.onClick}
