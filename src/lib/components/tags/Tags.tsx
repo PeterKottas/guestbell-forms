@@ -94,7 +94,8 @@ export class TagsRaw extends BaseInput<
       textIsFocused: false,
       suggestionsVisible: false,
       fetchingExistingTags: false,
-      textIsValid: false
+      textIsValid: false,
+      fetchedExistingTags: []
     };
     this.textRef = React.createRef();
   }
@@ -190,9 +191,14 @@ export class TagsRaw extends BaseInput<
                     AddNewTagComponent={
                       this.props.allowNew &&
                       this.state.value !== '' &&
-                      !this.props.existingTags.find(
-                        e => e.name === this.state.value
-                      ) &&
+                      (!this.props.existingTags ||
+                        !this.props.existingTags.find(
+                          e => e.name === this.state.value
+                        )) &&
+                      (!this.state.fetchedExistingTags ||
+                        !this.state.fetchedExistingTags.find(
+                          e => e.name === this.state.value
+                        )) &&
                       this.state.textIsValid && (
                         <Button
                           {...this.props.id && {
