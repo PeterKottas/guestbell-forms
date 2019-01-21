@@ -98,6 +98,10 @@ export class OpeningHoursSpecialRaw extends BaseInput<
     }
   }
 
+  public touch() {
+    return;
+  }
+
   public render() {
     if (!DatePicker) {
       throw new Error(
