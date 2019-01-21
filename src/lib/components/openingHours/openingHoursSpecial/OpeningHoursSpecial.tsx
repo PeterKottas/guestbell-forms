@@ -75,6 +75,17 @@ export class OpeningHoursSpecialRaw extends BaseInput<
     this.state = { ...this.state, ...{ touched: true } };
   }
 
+  public componentDidMount() {
+    if (this.props.days) {
+      const allDaysHaveDates = this.props.days.every(d => Boolean(d.date));
+      if (allDaysHaveDates) {
+        this.setValid();
+      } else {
+        this.setInvalid(['Please choose date']);
+      }
+    }
+  }
+
   public componentWillReceiveProps(nextProps: OpeningHoursSpecialRawProps) {
     if (this.props.days !== nextProps.days) {
       const allDaysHaveDates =
