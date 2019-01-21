@@ -12,6 +12,22 @@
       margin-top: 3.10rem;
     }
   }
+  /* VALIDATION ======================================= */
+  .validation__container {
+    bottom: 0;
+    top: initial;
+    right: 0.25rem;
+  }
+  .validation__ul {
+    transform: translateY(100%);
+    transition: 0.5s;
+    margin-bottom: 0;
+  }
+  &.validation__error {
+    .validation__ul {
+      transform: translateY(0);
+    }
+  }
   >.input__group__border:first-child {
     border-top: none;
   }
