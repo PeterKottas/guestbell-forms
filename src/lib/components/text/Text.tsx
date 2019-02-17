@@ -32,7 +32,7 @@ export class TextRaw extends BaseInput<TextRawProps, TextState, HTMLInputElement
 
   public render() {
     return (
-      <InputGroup title={this.props.title}>
+      <InputGroup title={this.props.title} tooltip={this.props.tooltip}>
         <div
           className={`input__base text-input ${this.getValidationClass()} 
                     ${(this.props.readOnly ? 'text-input--readOnly' : '')} ${(this.props.className ? this.props.className : '')}`}
