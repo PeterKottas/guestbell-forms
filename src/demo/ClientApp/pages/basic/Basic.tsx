@@ -440,6 +440,15 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         value={this.state.gender}
                         title="Gender"
                       />
+                      <Button
+                        onClick={e =>
+                          this.setState({
+                            gender: 'F'
+                          })
+                        }
+                      >
+                        Test
+                      </Button>
                       <TextArea
                         touchOn={this.state.touchOn}
                         required={true}
