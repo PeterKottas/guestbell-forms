@@ -65,6 +65,40 @@ class SelectRaw extends BaseInput<
     this.props.multiple && this.handleValid(this.props.selectedValues);
   }
 
+  public componentWillReceiveProps(nextProps: SelectRawProps) {
+    if (nextProps.selectedValues !== this.props.selectedValues) {
+      this.props.multiple && this.handleValid(nextProps.selectedValues);
+    }
+  }
+
+  protected handleBlur(e: React.FocusEvent<HTMLSelectElement>) {
+    this.props.onBlur && this.props.onBlur();
+    let state = { focused: false };
+    if (!this.state.touched && this.props.touchOn === 'blur') {
+      state = Object.assign(state, { touched: true });
+      if (!this.props.multiple) {
+        this.handleValueChange(this.state.value);
+      } else {
+        this.handleValid(this.props.selectedValues);
+      }
+    }
+    this.setState(state);
+  }
+
+  protected handleFocus(e: React.FocusEvent<HTMLSelectElement>) {
+    this.props.onFocus && this.props.onFocus(e);
+    let state = { focused: true };
+    if (!this.state.touched && this.props.touchOn === 'focus') {
+      state = Object.assign(state, { touched: true });
+      if (!this.props.multiple) {
+        this.handleValueChange(this.state.value);
+      } else {
+        this.handleValid(this.props.selectedValues);
+      }
+    }
+    this.setState(state);
+  }
+
   public render() {
     const finalValues = this.props.multiple
       ? this.props.values.filter(

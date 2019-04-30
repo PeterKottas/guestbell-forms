@@ -688,6 +688,15 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                           values={this.state.multipleValues}
                           onSelectedValuesChange={this.selectedValuesChanged}
                         />
+                        <Button
+                          onClick={e =>
+                            this.setState({
+                              selectedValues: [{ value: 'One option' }]
+                            })
+                          }
+                        >
+                          Test
+                        </Button>
                       </InputHeader>
                       <InputHeader
                         className={''}
