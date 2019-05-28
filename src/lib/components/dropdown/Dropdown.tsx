@@ -17,7 +17,7 @@ export interface DropdownProps {
   onClick?: () => void;
   disabled?: boolean;
   inline?: boolean;
-  smoothCollapseProps?: SmoothCollapseProps;
+  smoothCollapseProps?: Partial<SmoothCollapseProps>;
 }
 
 export interface DropdownState {
