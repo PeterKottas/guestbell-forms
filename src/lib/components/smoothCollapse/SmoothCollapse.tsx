@@ -13,6 +13,7 @@ export type SmoothCollapseProps = {
   heightTransition?: string;
   className?: string;
   allowOverflowWhenOpen?: boolean;
+  allowDisplayWhenClosed?: boolean;
 };
 type State = {
   hasBeenVisibleBefore: boolean;
@@ -50,7 +51,7 @@ export class SmoothCollapse extends React.PureComponent<SmoothCollapseProps, Sta
     if (!props) {
       props = this.props;
     }
-    return parseFloat(props.collapsedHeight) !== 0;
+    return parseFloat(props.collapsedHeight) !== 0 || props.allowDisplayWhenClosed;
   }
 
   componentWillUnmount() {

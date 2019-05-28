@@ -1,6 +1,6 @@
 ﻿// Libs
 import * as React from 'react';
-import SmoothCollapse from '../smoothCollapse/SmoothCollapse';
+import SmoothCollapse, { SmoothCollapseProps } from '../smoothCollapse/SmoothCollapse';
 var classNames = require('classnames');
 
 export interface DropdownProps {
@@ -17,6 +17,7 @@ export interface DropdownProps {
   onClick?: () => void;
   disabled?: boolean;
   inline?: boolean;
+  smoothCollapseProps?: SmoothCollapseProps;
 }
 
 export interface DropdownState {
@@ -100,7 +101,7 @@ export class Dropdown extends React.PureComponent<
           )}
         </div>
         <div className={'guestbell__dropdown-menu__container'}>
-          <SmoothCollapse expanded={this.state.isDropdownVisible}>
+          <SmoothCollapse {...this.props.smoothCollapseProps} expanded={this.state.isDropdownVisible}>
             {this.renderChildren()}
           </SmoothCollapse>
         </div>
