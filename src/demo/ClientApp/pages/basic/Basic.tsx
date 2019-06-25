@@ -338,6 +338,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                           Un-touch all
                         </Button>
                       ]}
+                      shouldToggleCollapseOnHeaderClick={true}
                     >
                       <RadioContainer title="Drinks">
                         <Radio

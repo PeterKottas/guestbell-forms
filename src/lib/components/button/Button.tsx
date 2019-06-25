@@ -22,12 +22,13 @@ export type ButtonComponentProps = {
   className: string;
   buttonProps: React.ButtonHTMLAttributes<HTMLButtonElement>;
   children: React.ReactNode;
+  style: React.CSSProperties;
 };
 
 export type ButtonProps = {
   id?: string;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  style?: React.StyleHTMLAttributes<HTMLButtonElement>;
+  style?: React.CSSProperties;
   className?: string;
   disabled?: boolean;
   type?: ButtonTypes;
@@ -58,6 +59,7 @@ const DefaultButtonComponent: React.SFC<ButtonComponentProps> = props => (
     role="button"
     className={props.className}
     onClick={props.onClick}
+    style={props.style}
   >
     {props.children}
   </button>
@@ -107,6 +109,7 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
         onClick={this.handleClick}
         buttonProps={this.props.buttonProps}
         className={btnClassName}
+        style={this.props.style}
       >
         {this.props.children}
         {!this.props.noRipples && !this.props.disabled && Ink && <Ink />}
