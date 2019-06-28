@@ -111,8 +111,8 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
         className={btnClassName}
         style={this.props.style}
       >
-        {this.props.children}
         {!this.props.noRipples && !this.props.disabled && Ink && <Ink />}
+        {this.props.children}
       </this.props.Component>
     );
     if (this.props.tooltip) {
