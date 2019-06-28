@@ -133,6 +133,7 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
   }
 
   private handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
     if (!this.preventMultipleClick) {
       !this.props.disabled && this.props.onClick && this.props.onClick(e);
       if (this.props.disableAfterClickMs !== 0) {
