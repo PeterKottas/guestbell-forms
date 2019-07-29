@@ -117,7 +117,7 @@ class SelectRaw extends BaseInput<
         )
       : this.props.values;
     return (
-      <InputGroup title={this.props.title}>
+      <InputGroup title={this.props.title} tooltip={this.props.tooltip}>
         <div
           className={
             'input__base select-input ' +
