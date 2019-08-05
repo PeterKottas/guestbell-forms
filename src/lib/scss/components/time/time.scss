@@ -1,6 +1,9 @@
 ﻿.time-input {
-  >div,
-  >span {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  margin-right: 0.5rem;
+  > div,
+  > span {
     display: inline-block;
     position: relative;
     align-self: baseline;
@@ -8,9 +11,7 @@
   display: flex !important;
   align-items: center;
   justify-content: center;
-  margin-top: 1rem !important;
   border-bottom: none !important;
-  margin-bottom: 3px !important;
   width: initial !important;
   .input-padding {
     margin: 10px 5px 10px 5px;
@@ -39,24 +40,23 @@
     pointer-events: none;
     opacity: 0.5;
   }
-  input[type=number] {
+  input[type="number"] {
     -webkit-appearance: textfield;
     -moz-appearance: textfield;
     appearance: textfield;
   }
-  input[type=number]::-webkit-inner-spin-button,
-  input[type=number]::-webkit-outer-spin-button {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
   }
   .time-input__arrows__container {
     position: relative;
     display: inline-block;
-    margin-bottom: 10px;
   }
-  input:focus~label,
-  input.filled~label,
-  select:focus~label,
-  select.filled~label,
+  input:focus ~ label,
+  input.filled ~ label,
+  select:focus ~ label,
+  select.filled ~ label,
   label.label--focused {
     top: -27px;
     font-size: 14px;
@@ -81,7 +81,7 @@
     left: 1px;
     /* Styling the down arrow */
     border: none;
-    cursor:pointer;
+    cursor: pointer;
     &:focus {
       border: none;
       outline: 0;

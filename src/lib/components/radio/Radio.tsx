@@ -39,7 +39,7 @@ export class RadioRaw extends BaseInput<
   public render() {
     return (
       <div
-        className={`input__group radio-input ${this.getValidationClass()} ${
+        className={`radio-input ${this.getValidationClass()} ${
           this.props.className ? this.props.className : ''
         }`}
         ref={this.containerRef}

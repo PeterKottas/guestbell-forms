@@ -1,23 +1,21 @@
 ﻿.textArea-input {
-  display: inline-block;
-  margin-top: 20px;
   max-width: 37.5rem;
   &.textArea-input--readOnly {
     border-bottom-color: transparent !important;
-    input:focus~.bar:before,
-    input:focus~.bar:after,
-    textarea:focus~.bar:before,
-    textarea:focus~.bar:after,
-    select:focus~.bar:before,
-    select:focus~.bar:after,
-    label:focus~.bar:before,
-    label:focus~.bar:after,
+    input:focus ~ .bar:before,
+    input:focus ~ .bar:after,
+    textarea:focus ~ .bar:before,
+    textarea:focus ~ .bar:after,
+    select:focus ~ .bar:before,
+    select:focus ~ .bar:after,
+    label:focus ~ .bar:before,
+    label:focus ~ .bar:after,
     .bar.focused:before,
     .bar.focused:after {
       width: initial;
     }
-    textArea:focus~.highlight,
-    select:focus~.highlight {
+    textarea:focus ~ .highlight,
+    select:focus ~ .highlight {
       animation: none;
     }
   }
@@ -29,5 +27,6 @@
     width: 100%;
     background-color: transparent;
     text-overflow: ellipsis;
+    display: block;
   }
 }

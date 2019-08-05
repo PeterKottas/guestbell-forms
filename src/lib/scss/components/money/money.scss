@@ -1,12 +1,11 @@
-﻿.money-input {
+﻿.input__base.money-input {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  margin-top: 17px;
   position: relative; // border-bottom: none !important;
-  margin-bottom: 16px;
   max-width: 37.5rem;
   min-height: 40px;
+  border-bottom: none;
   input,
   select {
     padding: 10px 10px 5px 5px !important;

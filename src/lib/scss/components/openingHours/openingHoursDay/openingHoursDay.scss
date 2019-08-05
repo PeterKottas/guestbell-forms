@@ -1,14 +1,13 @@
 ﻿.input__group__openingHoursDay {
-  .row-header {
-    margin-top: 3.55rem;
-  }
+  /*.inputGroup__header {
+  }*/
   &:hover {
     background-color: $hover-color;
   }
 }
 
 .openingHoursDay-input {
-  margin-top: 1.9rem;
+  padding-top: 2.5rem;
   position: relative;
   min-height: 77px;
   border-bottom: none !important;
@@ -39,7 +38,7 @@
   select:focus~label,
   span.filled~label,
   span.label-classname.label--focused {
-    top: -27px;
+    top: 0;
   }
   .openingHoursDay-input__button--remove {
     svg {

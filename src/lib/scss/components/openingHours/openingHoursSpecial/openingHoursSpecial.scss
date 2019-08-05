@@ -1,5 +1,5 @@
-.input__group {
-  .row-header {
+.inputGroup {
+  .inputGroup__header {
     .DayPickerInput>input {
       text-align: right;
     }
@@ -7,11 +7,11 @@
 }
 
 .input__base.openingHoursSpecial-input {
-  .input__group__openingHoursDay {
-    .row-header {
+  /*.input__group__openingHoursDay {
+    .inputGroup__header {
       margin-top: 3.10rem;
     }
-  }
+  }*/
   /* VALIDATION ======================================= */
   .validation__container {
     bottom: 0;
@@ -77,7 +77,7 @@
   select:focus~label,
   select.filled~label,
   .label-classname.label--focused {
-    top: -22px;
+    top: 0;
     font-size: 14px;
     .DayPickerInput>input {
       width: 70px;

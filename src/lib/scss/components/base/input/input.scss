@@ -19,11 +19,11 @@
 
 .input__base {
   position: relative;
-  margin: 1rem 0 1.25rem 0;
-  margin-right: 0.8rem;
   border-bottom: 1px solid $input-border-color;
   width: 100%; // Chrome yellow tint fix
   transition: 0.5s ease border-color;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
   input:-webkit-autofill {
     box-shadow: 0 0 0 1000px white inset !important;
     -webkit-box-shadow: 0 0 0 1000px white inset !important;

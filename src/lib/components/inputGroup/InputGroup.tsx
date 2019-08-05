@@ -1,15 +1,25 @@
 // Libs
 import * as React from 'react';
-import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
+import {
+  BaseInputProps,
+  BaseInputState,
+  BaseInput
+} from '../base/input/BaseInput';
 
 // Misc
 
-export type InputGroupProps = Pick<BaseInputProps<never>, 'title' | 'className' | 'tooltip' | 'formContext'>;
+export type InputGroupProps = Pick<
+  BaseInputProps<never>,
+  'title' | 'className' | 'tooltip' | 'formContext'
+>;
 
-export interface InputGroupState extends BaseInputState {
-}
+export interface InputGroupState extends BaseInputState {}
 
-export class InputGroup extends BaseInput<InputGroupProps, InputGroupState, never>  {
+export class InputGroup extends BaseInput<
+  InputGroupProps,
+  InputGroupState,
+  never
+> {
   // tslint:disable-next-line:no-any
   public static defaultProps: any = {
     ignoreContext: true
@@ -21,14 +31,22 @@ export class InputGroup extends BaseInput<InputGroupProps, InputGroupState, neve
 
   public render() {
     return this.props.title ? (
-      <div className={`input__group input__group__border ` + (this.props.className ? this.props.className : '')}>
-        {this.props.title && <div className="row-header">
-          {this.renderTitle()}
-        </div>}
-        {this.props.children}
+      <div
+        className={
+          `inputGroup input__group__border ` +
+          (this.props.className ? this.props.className : '')
+        }
+      >
+        {this.props.title && (
+          <div className="inputGroup__header">{this.renderTitle()}</div>
+        )}
+        {React.Children.count(this.props.children) > 0 && (
+          <div className="inputGroup__body">{this.props.children}</div>
+        )}
       </div>
-    ) :
-      this.props.children;
+    ) : (
+      this.props.children
+    );
   }
 }
 export default InputGroup;

@@ -109,9 +109,6 @@ export class OpeningHoursDayRaw extends BaseInput<
                     className="openingHoursDay-input__time__container"
                     key={index}
                   >
-                    <span className="openingHoursDay-input__label">
-                      {index % 2 === 0 ? 'Opens' : 'Closes'}
-                    </span>
                     <Time
                       {...this.props.id && {
                         id: this.props.id + '-time-' + index.toString()
@@ -122,6 +119,7 @@ export class OpeningHoursDayRaw extends BaseInput<
                       min={previousTime}
                       max={nextTime}
                       showDateDiff={true}
+                      label={index % 2 === 0 ? 'Opens' : 'Closes'}
                     />
                     {index % 2 === 1 && (
                       <Button

@@ -1,8 +1,7 @@
 ﻿.radio-input__container {
   border-bottom: none !important;
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
-  margin-top: 1.6rem !important; //margin-bottom: 0 !important;
   .radio-input {
     margin: 0;
   }
@@ -12,11 +11,5 @@
   flex-direction: row !important;
   >div {
     margin-right: 1rem !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .radio-input__container {
-    margin-top: 0.5rem !important;
   }
 }

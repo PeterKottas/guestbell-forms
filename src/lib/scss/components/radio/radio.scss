@@ -5,9 +5,7 @@
 
 .radio-input {
   display: inline-block;
-  margin-top: 20px;
   border: none;
-  margin-right: 20px;
   &:last-child {
     margin-right: 0;
   }
@@ -56,7 +54,6 @@
   label {
     top: 0;
     user-select: none;
-    margin-bottom: 8px;
     pointer-events: auto;
     position: relative;
     display: inline-block;

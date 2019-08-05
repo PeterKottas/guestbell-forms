@@ -21,7 +21,6 @@ export interface TimeRawProps extends BaseInputProps<HTMLInputElement> {
   time: Date;
   min?: Date;
   max?: Date;
-  label?: never;
   showDateDiff?: boolean;
 }
 
@@ -50,6 +49,7 @@ export class TimeRaw extends BaseInput<
   }
 
   public render() {
+    const { label } = this.props;
     var hours = this.props.time.getHours();
     hours = (hours + 24) % 24;
     var mid = 'AM';
@@ -81,6 +81,7 @@ export class TimeRaw extends BaseInput<
           }
           ref={this.containerRef}
         >
+          {label && <div className="time-input__label">{label}</div>}
           <div className="">
             <div className="time-input__arrows__container">
               <button
@@ -172,10 +173,8 @@ export class TimeRaw extends BaseInput<
               </button>
             </div>
           </div>
-          <div>
-            <span className="time-input__am-pm">{mid}</span>
-          </div>
           {this.renderDefaultValidation()}
+          <span className="time-input__am-pm">{mid}</span>
         </div>
       </InputGroup>
     );
