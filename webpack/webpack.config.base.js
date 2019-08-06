@@ -2,11 +2,10 @@ const path = require('path');
 const webpack = require('webpack');
 var isLocalBuild = process.env && process.env.NODE_ENV && process.env.NODE_ENV.trim().toString() == 'local';
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx']
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
   entry: {
     'guestbell-forms': './src/lib/index.ts',
@@ -55,9 +54,6 @@ module.exports = {
         test: /\.(scss|css)$/,
         use: [(isLocalBuild ? {
           loader: "style-loader",
-          options: {
-            sourceMap: true,
-          }
         } : {
             loader: MiniCssExtractPlugin.loader
           }), {
@@ -70,9 +66,7 @@ module.exports = {
           options: {
             sourceMap: true,
             plugins: (loader) => [
-              require('autoprefixer')({
-                'browsers': ['> 1%', 'last 2 versions']
-              })
+              require('autoprefixer')()
             ]
           }
         }, {
@@ -112,7 +106,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "[name].css",
     }),
-    new ForkTsCheckerWebpackPlugin(),
+    // new ForkTsCheckerWebpackPlugin(),
     //new DtsBundlePlugin()
   ]
 };

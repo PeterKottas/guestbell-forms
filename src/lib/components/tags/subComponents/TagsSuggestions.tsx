@@ -78,6 +78,7 @@ class Suggestions extends React.PureComponent<
   private onSelected = (tag: Tag) => () => this.props.onSelected(tag);
 }
 
-const SuggestionsWrapped = onClickOutside<SuggestionsProps>(Suggestions);
+// tslint:disable-next-line: no-any
+const SuggestionsWrapped: React.ComponentClass<SuggestionsProps> = onClickOutside(Suggestions as any) as any;
 
 export default SuggestionsWrapped;

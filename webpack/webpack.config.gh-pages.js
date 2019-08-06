@@ -3,7 +3,7 @@ const webpack = require('webpack');
 var isLocalBuild = process.env.NODE_ENV === 'local';
 const merge = require('webpack-merge');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 var _ = require('lodash');
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
@@ -57,9 +57,7 @@ module.exports = merge(
   },
   externals: {},
   plugins: [
-    new CleanWebpackPlugin(['docs'], {
-      root: path.join(__dirname, '..')
-    }),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin(htmlPluginOptions),
     new CopyWebpackPlugin([
       {
