@@ -5,7 +5,7 @@
 }
 
 .input__header--hero {
-  >.input__header__top {
+  > .input__header__top {
     // min-height: 5.063rem;
     .input__header__title {
       text-align: left;
@@ -25,7 +25,7 @@
     padding-top: 0rem;
     padding-bottom: 0rem;
   }
-  >.input__header__top .input__header__title {
+  > .input__header__top .input__header__title {
     text-align: left;
     font-size: 100%;
     width: initial;
@@ -67,7 +67,7 @@
   display: inline-block;
   margin-right: 1.6rem;
   color: $input-text-color;
-  >div {
+  > div {
     display: flex;
     align-items: center;
   }
@@ -83,19 +83,20 @@
   flex-wrap: wrap;
   align-items: center;
   padding: 0.5rem 0;
+  flex: 1;
 }
 
 .input__header__top__button-container {
   display: inline-flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
-  flex-grow: 1;
   padding: 0.5rem 0;
-  >div {
+  flex: 0;
+  > div {
     margin-left: auto;
   }
-  >div:not(.input__header__sub-title)~div:not(.input__header__sub-title),
+  > div:not(.input__header__sub-title) ~ div:not(.input__header__sub-title),
   div.input__header__sub-title {
     margin-left: initial;
   }
@@ -104,11 +105,11 @@
 .input__header__collapse-button {
   svg {
     transition: 0.2s all;
-    transform: scaleY(-1)
+    transform: scaleY(-1);
   }
   &.collapsed {
     svg {
-      transform: scaleY(1)
+      transform: scaleY(1);
     }
   }
 }
@@ -118,7 +119,7 @@
   position: absolute;
   bottom: 0.2rem;
   right: 1rem;
-  >div {
+  > div {
     display: inline-block;
     margin-left: 1rem;
   }
@@ -129,22 +130,21 @@
 }
 
 .smooth-collapse__container {
-  >div,
-  >div>div {
+  > div,
+  > div > div {
     overflow: visible !important;
   }
 }
 
 @media (max-width: 768px) {
   .input__header__top__header-container {
+    margin-right: 0.5rem;
     div:last-child {
       margin-bottom: 0;
     }
   }
   .input__header__top {
-    flex-direction: column;
-    align-items: flex-start !important;
-    padding-right: 1rem;
+    padding-right: 0.5rem;
   }
   .input__header__title {
     margin-bottom: 0.5rem;
@@ -160,7 +160,6 @@
   }
   .input__header__icon {
     margin-bottom: 0.5rem;
-    width: 100% !important;
     text-align: center;
   }
 }
