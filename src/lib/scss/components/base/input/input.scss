@@ -1,10 +1,8 @@
-﻿.input__form {
-  >.input__group__border:first-child {
-    border-top: none;
-  }
-  .input__group__border {
-    border-top: 1px solid $input-border-color;
-  }
+﻿> .input__group__border:first-child {
+  border-top: none;
+}
+.input__group__border {
+  border-top: 1px solid $input-border-color;
 }
 
 .input__divider {
@@ -92,10 +90,10 @@
     transition: 0.2s ease all;
   }
   /* active state */
-  input:focus~label,
-  .filled~label,
-  select:focus~label,
-  textarea:focus~label,
+  input:focus ~ label,
+  .filled ~ label,
+  select:focus ~ label,
+  textarea:focus ~ label,
   label.label--focused,
   span.label-classname.label--focused {
     top: -1rem;
@@ -117,7 +115,7 @@
   }
   .bar:before,
   .bar:after {
-    content: '';
+    content: "";
     height: 2px;
     width: 0;
     bottom: 0px;
@@ -132,14 +130,14 @@
     right: 50%;
   }
   /* active state */
-  input:focus~.bar:before,
-  input:focus~.bar:after,
-  textarea:focus~.bar:before,
-  textarea:focus~.bar:after,
-  select:focus~.bar:before,
-  select:focus~.bar:after,
-  label:focus~.bar:before,
-  label:focus~.bar:after,
+  input:focus ~ .bar:before,
+  input:focus ~ .bar:after,
+  textarea:focus ~ .bar:before,
+  textarea:focus ~ .bar:after,
+  select:focus ~ .bar:before,
+  select:focus ~ .bar:after,
+  label:focus ~ .bar:before,
+  label:focus ~ .bar:after,
   .bar.focused:before,
   .bar.focused:after {
     width: 50%;
@@ -155,8 +153,8 @@
     opacity: 0.5;
   }
   /* active state */
-  input:focus~.highlight,
-  select:focus~.highlight {
+  input:focus ~ .highlight,
+  select:focus ~ .highlight {
     animation: inputHighlighter 0.3s ease;
   }
   input:focus {

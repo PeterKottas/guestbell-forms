@@ -2,10 +2,7 @@
   display: flex;
   position: relative;
   min-height: 5rem;
-  padding-top: 0.5rem;
-  padding-right: 0.5rem;
-  padding-bottom: 0.5rem;
-  .input__base{
+  .input__base {
     margin-top: 0;
     margin-bottom: 0;
   }
@@ -17,10 +14,10 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-right: 0.5rem;
+    margin-right: 1rem;
     color: inherit;
     $dim: 1.2rem;
-    >.label--help-icon__container>.label--help-icon {
+    > .label--help-icon__container > .label--help-icon {
       margin-left: 0.5rem;
       background-color: $input-label-color;
       border-radius: 50%;
@@ -33,9 +30,19 @@
     }
   }
   .inputGroup__body {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
     width: 100%;
     display: flex;
     align-items: center;
+  }
+  .inputGroup__header {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  .inputGroup__body {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 }
 
@@ -43,13 +50,15 @@
   .inputGroup {
     flex-direction: column;
     align-items: flex-start !important;
-    padding-right: 1rem;
-    padding: 0 1rem 0 1rem;
     .inputGroup__header {
       text-align: left;
       margin-left: 0;
+      margin-right: 0;
+      max-width: initial;
+      width: 100%;
+      justify-content: center;
     }
-    >.input__base {
+    > .input__base {
       margin-right: 0;
     }
   }
