@@ -162,13 +162,17 @@ export class InputHeaderRaw
             { 'input__header__top--tall': this.props.showExpandAll },
             { 'input__header__top--no-bg': this.props.noBg },
             {
-              'input__header__top--clickable': this.props
-                .shouldToggleCollapseOnHeaderClick
+              'input__header__top--clickable':
+                this.props.collapsable &&
+                this.props.shouldToggleCollapseOnHeaderClick
             },
             this.props.headerClassName
           )}
           role={
-            this.props.shouldToggleCollapseOnHeaderClick ? 'button' : undefined
+            this.props.collapsable &&
+            this.props.shouldToggleCollapseOnHeaderClick
+              ? 'button'
+              : undefined
           }
           onClick={
             this.props.collapsable &&
