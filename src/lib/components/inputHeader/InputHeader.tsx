@@ -313,13 +313,8 @@ export class InputHeaderRaw
     e.stopPropagation()
 
   private renderMainButton() {
-    let child = undefined;
-    if (typeof this.props.mainButton === 'function') {
-      child = this.props.mainButton;
-    } else {
-      child = this.props.mainButton;
-    }
-    return <div onClick={this.mainButtonClick}>{child}</div>;
+    let child = this.props.mainButton;
+    return child && <div onClick={this.mainButtonClick}>{child}</div>;
   }
 
   private renderExtraButtons() {
