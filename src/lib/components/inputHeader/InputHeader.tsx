@@ -187,14 +187,16 @@ export class InputHeaderRaw
                 {this.props.icon}
               </div>
             )}
-            {this.props.title && (
-              <div className="input__header__title">{this.props.title}</div>
-            )}
-            {this.props.subTitle && (
-              <div className="input__header__sub-title">
-                {this.props.subTitle}
-              </div>
-            )}
+            <div className="input__header__title__container">
+              {this.props.title && (
+                <div className="input__header__title">{this.props.title}</div>
+              )}
+              {this.props.subTitle && (
+                <div className="input__header__sub-title">
+                  {this.props.subTitle}
+                </div>
+              )}
+            </div>
           </div>
           <div className="input__header__top__button-container">
             {this.renderMainButton()}

@@ -16,7 +16,7 @@
     }
   }
   .input__header__icon {
-    margin-right: 0.25rem;
+    margin-right: 0.5rem;
   }
 }
 
@@ -77,7 +77,7 @@
 
 .input__header__top__header-container {
   display: inline-flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: nowrap;
   align-items: flex-start;
   padding: 1rem 0;
@@ -137,6 +137,7 @@
 
 @media (max-width: 768px) {
   .input__header__top__header-container {
+    flex-direction: column;
     margin-right: 0.5rem;
     div:last-child {
       margin-bottom: 0;
