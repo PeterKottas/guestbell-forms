@@ -45,7 +45,7 @@
 
 .input__header__top {
   position: relative;
-  padding: 0.5rem 1rem;
+  padding: 0 1rem;
   background-color: $input-divider-color;
   position: relative;
   display: flex;
@@ -62,8 +62,6 @@
 .input__header__title {
   font-size: 115%;
   text-align: right;
-  width: 10rem;
-  min-width: 10rem;
   display: inline-block;
   margin-right: 1.6rem;
   color: $input-text-color;
@@ -79,11 +77,12 @@
 
 .input__header__top__header-container {
   display: inline-flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  padding: 0.5rem 0;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  padding: 1rem 0;
   flex: 1;
+  width: 100%;
 }
 
 .input__header__top__button-container {
