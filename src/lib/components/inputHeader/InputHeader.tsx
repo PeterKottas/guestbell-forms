@@ -198,8 +198,8 @@ export class InputHeaderRaw
               )}
             </div>
           </div>
-          <div className="input__header__top__button-container">
-            {this.renderMainButton()}
+          <div className="input__header__top__button-container" onClick={this.mainButtonClick}>
+            {this.props.mainButton && this.props.mainButton}
             {this.props.extraButtons ? (
               <Dropdown
                 header={
@@ -317,11 +317,6 @@ export class InputHeaderRaw
 
   private mainButtonClick = (e: React.MouseEvent<HTMLDivElement>) =>
     e.stopPropagation()
-
-  private renderMainButton() {
-    let child = this.props.mainButton;
-    return child && <div onClick={this.mainButtonClick}>{child}</div>;
-  }
 
   private renderExtraButtons() {
     let arr = [];
