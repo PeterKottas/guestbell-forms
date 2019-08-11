@@ -392,7 +392,6 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
         placement="bottom"
         trigger="mouseenter"
         interactive={true}
-        className="label--help-icon__container"
         animateFill={false}
         {...this.props.tooltipProps}
       >
