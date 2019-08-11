@@ -1,9 +1,7 @@
 ﻿// Libs
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {
-  Tooltip,
-} from 'react-tippy';
+import Tippy, { TippyProps }  from '@tippy.js/react';
 
 // Misc
 import * as Validators from '../../../validators';
@@ -30,8 +28,7 @@ export type BaseInputProps<HTMLType extends AllowedHtmlElements> = {
   className?: string;
   label?: string | JSX.Element;
   tooltip?: string | JSX.Element;
-  // tslint:disable-next-line:no-any
-  tooltipProps?: any;
+  tooltipProps?: TippyProps;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLType>, isValid: boolean) => void;
   required?: boolean;
@@ -390,9 +387,9 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
 
   private renderTooltip() {
     return (
-      <Tooltip
-        html={this.props.tooltip}
-        position="bottom"
+      <Tippy
+        content={this.props.tooltip}
+        placement="bottom"
         trigger="mouseenter"
         interactive={true}
         className="label--help-icon__container"
@@ -400,7 +397,7 @@ export class BaseInput<P extends BaseInputProps<HTMLType>, S extends BaseInputSt
         {...this.props.tooltipProps}
       >
         <span className="label--help-icon">?</span>
-      </Tooltip>
+      </Tippy>
     );
   }
 }

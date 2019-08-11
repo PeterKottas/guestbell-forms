@@ -1,6 +1,5 @@
 // Styles 
 require('./main.scss');
-require('react-tippy/dist/tippy.css');
 require('../../lib/scss/index.scss');
 
 // Libs

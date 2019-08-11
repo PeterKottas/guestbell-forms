@@ -1,6 +1,6 @@
 // Libs
 import * as React from 'react';
-import { Tooltip } from 'react-tippy';
+import Tippy, { TippyProps } from '@tippy.js/react';
 var Ink = require('react-ink');
 var classNames = require('classnames');
 
@@ -45,14 +45,14 @@ export type ButtonProps = {
   dropdown?: boolean;
   Component?: (props: ButtonComponentProps) => JSX.Element;
   tooltip?: JSX.Element | string;
-  // tslint:disable-next-line:no-any
-  tooltipProps?: any;
+  tooltipProps?: TippyProps;
 };
 
 export interface ButtonState {}
 
-const DefaultButtonComponent: React.SFC<ButtonComponentProps> = props => (
+const DefaultButtonComponent: React.FC<ButtonComponentProps> = React.forwardRef((props, ref) => (
   <button
+    ref={ref}
     // tslint:disable-next-line:no-any
     {...(props.buttonProps ? props.buttonProps : {}) as any}
     {...props.id && { id: props.id }}
@@ -63,7 +63,7 @@ const DefaultButtonComponent: React.SFC<ButtonComponentProps> = props => (
   >
     {props.children}
   </button>
-);
+));
 
 export class Button extends React.PureComponent<ButtonProps, ButtonState> {
   public static defaultProps: ButtonProps = {
@@ -117,16 +117,16 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
     );
     if (this.props.tooltip) {
       return (
-        <Tooltip
-          html={this.props.tooltip}
-          position="bottom"
+        <Tippy
+          content={this.props.tooltip}
+          placement="bottom"
           trigger="mouseenter"
           interactive={true}
           animateFill={false}
           {...this.props.tooltipProps}
         >
           {button}
-        </Tooltip>
+        </Tippy>
       );
     }
     return button;

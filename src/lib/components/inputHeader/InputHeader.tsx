@@ -1,6 +1,6 @@
 // Libs
 import * as React from 'react';
-const classNames = require('classnames');
+import classNames from 'classnames';
 
 // Misc
 import * as MoreIcon from 'material-design-icons/navigation/svg/production/ic_more_vert_24px.svg';
