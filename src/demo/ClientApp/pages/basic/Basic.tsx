@@ -655,6 +655,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                           label="Choose or create tags"
                           readOnly={this.state.multipleReadonly}
                           allowNew={true}
+                          maxTags={1}
                           existingTags={existingTags}
                           tags={this.state.tags}
                           onTagsChanged={this.tagsChanged}
