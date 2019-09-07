@@ -31,7 +31,7 @@ import {
   IBaseValidator,
   ButtonProps,
   FormValidationSummary,
-  InputHeaderRaw
+  InputHeaderRaw,
 } from '../../../../lib/index';
 
 export interface BasicProps {}
@@ -94,48 +94,48 @@ export class AgeValidator {
 const existingTags: Tag[] = [
   {
     id: 1,
-    name: 'Food'
+    name: 'Food',
   },
   {
     id: 2,
-    name: 'Drink'
+    name: 'Drink',
   },
   {
     id: 3,
-    name: 'Beer'
+    name: 'Beer',
   },
   {
     id: 4,
-    name: 'Wine'
+    name: 'Wine',
   },
   {
     id: 5,
-    name: 'Gluten free'
+    name: 'Gluten free',
   },
   {
     id: 6,
-    name: 'Fruit'
-  }
+    name: 'Fruit',
+  },
 ];
 
 const currencies1 = [
   { label: 'GBP', value: 'GBP' },
-  { label: 'EUR', value: 'EUR' }
+  { label: 'EUR', value: 'EUR' },
 ];
 
 const currencies2 = [
   { label: 'GBP', value: 'GBP' },
   { label: 'EUR', value: 'EUR' },
-  { label: 'USD', value: 'USD' }
+  { label: 'USD', value: 'USD' },
 ];
 
 const genderValues = [
   { value: 'M', label: 'Male' },
-  { value: 'F', label: 'Female' }
+  { value: 'F', label: 'Female' },
 ];
 
 const tagsEmailTextProps: TextProps = {
-  validators: ['email']
+  validators: ['email'],
 };
 
 const emailValidators: ValidatorTypes[] = ['email'];
@@ -145,7 +145,7 @@ const urlValidators: ValidatorTypes[] = ['url'];
 const customAgeValidator: IBaseValidator[] = [AgeValidator.instance];
 
 const customNumberValidator: IBaseValidator[] = [
-  new NumberValidator({ min: 0 })
+  new NumberValidator({ min: 0 }),
 ];
 
 const types: ButtonTypes[] = [
@@ -156,7 +156,7 @@ const types: ButtonTypes[] = [
   'success',
   'gray',
   'white',
-  'none'
+  'none',
 ];
 const ButtonsShowcase: React.SFC<ButtonProps> = props => {
   return (
@@ -165,7 +165,7 @@ const ButtonsShowcase: React.SFC<ButtonProps> = props => {
       style={{
         backgroundColor: 'rgb(248, 247, 247)',
         display: 'flex',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
       }}
     >
       {types.map((item, index) => (
@@ -183,7 +183,7 @@ const ButtonsShowcase: React.SFC<ButtonProps> = props => {
 };
 
 ButtonsShowcase.defaultProps = {
-  className: 'my-2 mr-2'
+  className: 'my-2 mr-2',
 };
 
 export class Basic extends React.PureComponent<BasicProps, BasicState> {
@@ -212,11 +212,11 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
     time1: new Date(),
     time2: new Date(),
     openingHours: {
-      times: []
+      times: [],
     },
     openingHoursWeek: [],
     openingHoursWeekDay: {
-      times: []
+      times: [],
     },
     openingHoursSpecial: [],
     website: '',
@@ -227,10 +227,10 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
       { value: 'Second option' },
       { value: 'Third option' },
       { value: 'one more option' },
-      { value: 'rly long last option' }
+      { value: 'rly long last option' },
     ],
     multipleReadonly: false,
-    textAreaText: ''
+    textAreaText: '',
   };
 
   constructor(props: BasicProps) {
@@ -311,7 +311,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                       icon={<i className="material-icons md-48">edit</i>}
                       title={'Example form'}
                       subTitle={
-                        'And this is subtitle. There\'s also icon on the left'
+                        "And this is subtitle. There's also icon on the left"
                       }
                       showExpandAll={true}
                       type="hero"
@@ -336,7 +336,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                           onClick={this.unTouchAll}
                         >
                           Un-touch all
-                        </Button>
+                        </Button>,
                       ]}
                       shouldToggleCollapseOnHeaderClick={true}
                     >
@@ -462,7 +462,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         collapsable={true}
                         shouldToggleCollapseOnHeaderClick={true}
                         subTitle={
-                          'Helpful text that describes what\'s collapsed here'
+                          "Helpful text that describes what's collapsed here"
                         }
                       >
                         <Text
@@ -549,14 +549,15 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         title={'Opening hours'}
                         collapsable={true}
                         mainButton={
-                          <Button type={'primary'}>Hero button</Button>}
+                          <Button type={'primary'}>Hero button</Button>
+                        }
                         extraButtons={[
                           <Button key={1} dropdown={true}>
                             Extra button 1
                           </Button>,
                           <Button key={2} dropdown={true}>
                             Extra button 2
-                          </Button>
+                          </Button>,
                         ]}
                       >
                         <OpeningHoursWeek
@@ -596,7 +597,8 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         className={''}
                         title={'Buttons'}
                         mainButton={
-                          <Button type={'primary'}>Hero button</Button>}
+                          <Button type={'primary'}>Hero button</Button>
+                        }
                       >
                         <div className="p-3 buttons-row">
                           <h3 className="text-center">Standard</h3>
@@ -693,7 +695,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         <Button
                           onClick={e =>
                             this.setState({
-                              selectedValues: [{ value: 'One option' }]
+                              selectedValues: [{ value: 'One option' }],
                             })
                           }
                         >
@@ -787,104 +789,104 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
   }
 
   private specialDaysInputHeaderRef = (el: InputHeaderRaw) =>
-    (this.specialDaysInputHeader = el)
+    (this.specialDaysInputHeader = el);
 
   private formRef = (el: Form) => (this.form = el);
 
   private dropdownFunctionHeaderRef = (el: Dropdown) =>
-    (this.dropdownFunctionHeader = el)
+    (this.dropdownFunctionHeader = el);
 
   private functionHeaderClick = () =>
-    this.dropdownFunctionHeader.showNavigation()
+    this.dropdownFunctionHeader.showNavigation();
 
   private selectedValuesChanged = (selectedValues: SelectValue[]) =>
-    this.setState({ selectedValues })
+    this.setState({ selectedValues });
 
   private tagsChanged = (tags: Tag[]) => this.setState({ tags });
 
   private multipleReadonlyChecked = () =>
-    this.setState({ multipleReadonly: !this.state.multipleReadonly })
+    this.setState({ multipleReadonly: !this.state.multipleReadonly });
 
   private openingHoursSpecialChanged = (days: OpeningHoursSpecialDayObj[]) =>
-    this.setState({ openingHoursSpecial: days })
+    this.setState({ openingHoursSpecial: days });
 
   private specialDaysAddClick = () => {
     this.setState(
       {
         openingHoursSpecial: this.state.openingHoursSpecial.concat([
-          { date: undefined, times: [] }
-        ])
+          { date: undefined, times: [] },
+        ]),
       },
       () => this.specialDaysInputHeader.expand()
     );
-  }
+  };
 
   private openingHoursWeekStandardDayChanged = (day: OpeningHoursWeekDayObj) =>
-    this.setState({ openingHoursWeekDay: day })
+    this.setState({ openingHoursWeekDay: day });
 
   private openingHoursWeekChanged = (days: OpeningHoursWeekDayObj[]) =>
-    this.setState({ openingHoursWeek: days })
+    this.setState({ openingHoursWeek: days });
 
   private openingHoursChanged = (openingHours: OpeningHoursDayObj) =>
-    this.setState({ openingHours: openingHours })
+    this.setState({ openingHours: openingHours });
 
   private time2Changed = (time: Date) => this.setState({ time2: time });
 
   private time1Changed = (time: Date) => this.setState({ time1: time });
 
   private prices2Changed = (prices: MoneyWithCurrency[]) =>
-    this.setState({ prices2: prices })
+    this.setState({ prices2: prices });
 
   private prices1Changed = (prices: MoneyWithCurrency[]) =>
-    this.setState({ prices1: prices })
+    this.setState({ prices1: prices });
 
   private min1Changed = (e: React.ChangeEvent<HTMLInputElement>) =>
-    this.setState({ min1: e.target.value })
+    this.setState({ min1: e.target.value });
 
   private ageChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
-    this.setState({ age: e.target.value })
+    this.setState({ age: e.target.value });
 
   private websiteChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
-    this.setState({ website: e.target.value })
+    this.setState({ website: e.target.value });
 
   private emailChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
-    this.setState({ email: e.target.value })
+    this.setState({ email: e.target.value });
 
   private textAreaChanged = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
-    this.setState({ textAreaText: e.target.value })
+    this.setState({ textAreaText: e.target.value });
 
   private nameChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
-    this.setState({ name: e.target.value })
+    this.setState({ name: e.target.value });
 
   private checkbox2Checked = () =>
-    this.setState({ checkbox2: !this.state.checkbox2 })
+    this.setState({ checkbox2: !this.state.checkbox2 });
 
   private checkbox1Checked = () =>
-    this.setState({ checkbox1: !this.state.checkbox1 })
+    this.setState({ checkbox1: !this.state.checkbox1 });
 
   private drinksChecked = (value: string) => this.setState({ drink: value });
 
   private unTouchAll = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     this.form.unTouchAll();
-  }
+  };
 
   private simulateUnmountChecked = () =>
-    this.setState({ simulateUnmount: !this.state.simulateUnmount })
+    this.setState({ simulateUnmount: !this.state.simulateUnmount });
 
   private disablesInputsChecked = () =>
-    this.setState({ submitDisablesInputs: !this.state.submitDisablesInputs })
+    this.setState({ submitDisablesInputs: !this.state.submitDisablesInputs });
 
   private touchOnChecked = (value: 'blur' | 'focus') =>
-    this.setState({ touchOn: value })
+    this.setState({ touchOn: value });
 
   private formValidationToggle = () =>
-    this.setState({ validateFormSubmit: !this.state.validateFormSubmit })
+    this.setState({ validateFormSubmit: !this.state.validateFormSubmit });
 
   private touchAll = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     this.form.touchAll();
-  }
+  };
 
   private handleGenderChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const val = e.target.value;

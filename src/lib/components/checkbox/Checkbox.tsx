@@ -6,7 +6,7 @@ import InputGroup from '../inputGroup/InputGroup';
 import {
   BaseInputProps,
   BaseInput,
-  BaseInputState
+  BaseInputState,
 } from '../base/input/BaseInput';
 var classNames = require('classnames');
 import { withFormContext } from '../form/withFormContext';
@@ -34,7 +34,7 @@ export class CheckboxRaw extends BaseInput<
   HTMLInputElement
 > {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
-    checked: false
+    checked: false,
   });
 
   constructor(props: CheckboxRawProps) {
@@ -42,7 +42,7 @@ export class CheckboxRaw extends BaseInput<
     this.state = Object.assign(this.state, {
       checked: props.checked,
       isValid: props.required ? props.checked : true,
-      errors: props.required && !props.checked ? ['Required'] : []
+      errors: props.required && !props.checked ? ['Required'] : [],
     });
     this.handleChecked = this.handleChecked.bind(this);
     this.subscribeSelf(props);
@@ -59,7 +59,8 @@ export class CheckboxRaw extends BaseInput<
       'input__base checkbox-input',
       this.getValidationClass(),
       this.props.className,
-      { ['checkbox-input--with-label']: Boolean(this.props.label) }
+      { ['checkbox-input--with-label']: Boolean(this.props.label) },
+      { ['checkbox-input--disabled']: this.props.disabled },
     ]);
     return (
       <InputGroup title={this.props.title}>
@@ -92,7 +93,7 @@ export class CheckboxRaw extends BaseInput<
   private renderInput() {
     return (
       <input
-        {...this.props.id && { id: this.props.id }}
+        {...(this.props.id && { id: this.props.id })}
         disabled={this.getDisabled()}
         type="checkbox"
         required={this.props.required}
