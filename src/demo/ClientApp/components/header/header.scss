@@ -1,10 +1,12 @@
+$navbar-bg: #323232;
+$brand-primary: #10bdc7;
 .navbar {
   height: 96px;
   background-color: white;
   z-index: 5;
   background-color: #323232;
   border-radius: 0;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid $navbar-bg;
 }
 
 .navbar__logo {
@@ -46,5 +48,45 @@ a:hover {
   .navbar__text {
     font-size: 40px;
     line-height: 40px;
+  }
+}
+
+.github-corner > svg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  border: 0;
+  fill: $brand-primary;
+  color: $navbar-bg;
+  filter: drop-shadow(0 0 2px black);
+}
+
+.github-corner:hover .octo-arm {
+  animation: octocat-wave 560ms ease-in-out alternate-reverse infinite;
+  transform-origin: 130px 106px;
+}
+
+@keyframes octocat-wave {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  20%,
+  60% {
+    transform: rotate(-25deg);
+  }
+  40%,
+  80% {
+    transform: rotate(10deg);
+  }
+}
+
+@media (max-width: 500px) {
+  .github-corner:hover .octo-arm {
+    animation: none;
+  }
+  .github-corner .octo-arm {
+    transform-origin: 130px 106px;
+    animation: octocat-wave 560ms ease-in-out alternate-reverse infinite;
   }
 }
