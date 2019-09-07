@@ -296,7 +296,9 @@ export class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement
 	private onSuggestionSelected = tag => {
 		this.props.onTagsChanged(this.props.tags.concat(tag));
 		this.setState({ value: '', preselectedSuggestion: undefined, textErrors: [] }, () => {
-			this.fetchExistingTags();
+			if (!this.props.maxTags && this.props.tags.length + 1 < this.props.maxTags) {
+				this.fetchExistingTags();
+			}
 			this.handleErrors();
 		});
 	};
@@ -413,7 +415,7 @@ export class TagsRaw extends BaseInput<TagsRawProps, TagsState, HTMLInputElement
 		const newTags = this.props.tags.filter(sv => sv.id !== tag.id);
 		this.props.onTagsChanged && this.props.onTagsChanged(newTags);
 		this.handleErrors(newTags);
-		this.fetchExistingTags();
+		// this.fetchExistingTags();
 	};
 
 	private renderTags() {
