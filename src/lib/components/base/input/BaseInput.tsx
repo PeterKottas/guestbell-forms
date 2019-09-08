@@ -195,6 +195,9 @@ export class BaseInput<
   }
 
   protected renderDefaultValidation(extraErrors?: ValidationError[]) {
+    if (this.props.disabled) {
+      return null;
+    }
     if (!this.props.showValidation) {
       return null;
     }
@@ -275,13 +278,15 @@ export class BaseInput<
   }
 
   protected handleFocus(e: React.FocusEvent<HTMLType>) {
-    this.props.onFocus && this.props.onFocus(e);
-    let state = { focused: true };
-    if (!this.state.touched && this.props.touchOn === 'focus') {
-      state = Object.assign(state, { touched: true });
-      this.handleValueChange(this.state.value);
+    if (!this.props.disabled) {
+      this.props.onFocus && this.props.onFocus(e);
+      let state = { focused: true };
+      if (!this.state.touched && this.props.touchOn === 'focus') {
+        state = Object.assign(state, { touched: true });
+        this.handleValueChange(this.state.value);
+      }
+      this.setState(state);
     }
-    this.setState(state);
   }
 
   protected getDisabled() {

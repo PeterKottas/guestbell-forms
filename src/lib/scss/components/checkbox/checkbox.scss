@@ -15,10 +15,9 @@
     }
   }
   &.checkbox-input--disabled {
-    input::after {
-      cursor: not-allowed;
-    }
-    label {
+    input::after,
+    label,
+    input::before {
       cursor: not-allowed;
     }
   }

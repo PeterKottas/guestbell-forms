@@ -79,13 +79,15 @@ export class CheckboxRaw extends BaseInput<
   }
 
   private handleChecked(e: React.ChangeEvent<HTMLInputElement>) {
-    this.props.onChecked && this.props.onChecked(e);
-    this.setState({ checked: !this.state.checked });
-    if (!this.state.checked) {
-      this.setValid();
-    } else {
-      if (this.props.required) {
-        this.setInvalid(['Required']);
+    if (!this.props.disabled) {
+      this.props.onChecked && this.props.onChecked(e);
+      this.setState({ checked: !this.state.checked });
+      if (!this.state.checked) {
+        this.setValid();
+      } else {
+        if (this.props.required) {
+          this.setInvalid(['Required']);
+        }
       }
     }
   }
@@ -94,7 +96,6 @@ export class CheckboxRaw extends BaseInput<
     return (
       <input
         {...(this.props.id && { id: this.props.id })}
-        disabled={this.getDisabled()}
         type="checkbox"
         required={this.props.required}
         checked={this.state.checked}
