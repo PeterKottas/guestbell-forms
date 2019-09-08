@@ -22,6 +22,9 @@
       cursor: not-allowed;
     }
   }
+  > input {
+    margin-left: 5px;
+  }
   input {
     position: relative;
     padding: 10px 10px 5px 5px;

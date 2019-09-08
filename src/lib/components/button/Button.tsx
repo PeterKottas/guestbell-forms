@@ -50,20 +50,22 @@ export type ButtonProps = {
 
 export interface ButtonState {}
 
-const DefaultButtonComponent: React.FC<ButtonComponentProps> = React.forwardRef((props, ref) => (
-  <button
-    ref={ref}
-    // tslint:disable-next-line:no-any
-    {...(props.buttonProps ? props.buttonProps : {}) as any}
-    {...props.id && { id: props.id }}
-    role="button"
-    className={props.className}
-    onClick={props.onClick}
-    style={props.style}
-  >
-    {props.children}
-  </button>
-));
+const DefaultButtonComponent: React.FC<ButtonComponentProps> = React.forwardRef(
+  (props, ref) => (
+    <button
+      ref={ref}
+      // tslint:disable-next-line:no-any
+      {...((props.buttonProps ? props.buttonProps : {}) as any)}
+      {...(props.id && { id: props.id })}
+      role="button"
+      className={props.className}
+      onClick={props.onClick}
+      style={props.style}
+    >
+      {props.children}
+    </button>
+  )
+);
 
 export class Button extends React.PureComponent<ButtonProps, ButtonState> {
   public static defaultProps: ButtonProps = {
@@ -76,9 +78,9 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
     disableAfterClickMs: 500,
     Component: DefaultButtonComponent,
     buttonProps: {
-      type: 'button'
+      type: 'button',
     },
-    type: 'none'
+    type: 'none',
   };
 
   private preventMultipleClick = false;
@@ -101,11 +103,11 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
       { ['guestbell-btn--outlined']: this.props.outlined },
       { ['guestbell-btn--dropdown']: this.props.dropdown },
       { ['guestbell-btn--icon']: this.props.icon },
-      { ['guestbell-btn--hero']: this.props.hero }
+      { ['guestbell-btn--hero']: this.props.hero },
     ]);
     const button = (
       <this.props.Component
-        {...this.props.id && { id: this.props.id }}
+        {...(this.props.id && { id: this.props.id })}
         onClick={this.handleClick}
         buttonProps={this.props.buttonProps}
         className={btnClassName}

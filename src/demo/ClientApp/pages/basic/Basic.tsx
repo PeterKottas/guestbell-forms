@@ -395,6 +395,20 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         onChecked={this.checkbox1Checked}
                         checked={this.state.checkbox1}
                         title="Dress code"
+                        tooltip="With tooltip"
+                      />
+                      <Checkbox
+                        required={true}
+                        label="Smart"
+                        onChecked={this.checkbox1Checked}
+                        checked={this.state.checkbox1}
+                        tooltip="With tooltip"
+                      />
+                      <Checkbox
+                        required={true}
+                        onChecked={this.checkbox1Checked}
+                        checked={this.state.checkbox1}
+                        tooltip="With tooltip"
                       />
                       <Checkbox
                         label="(optional)"

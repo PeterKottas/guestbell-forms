@@ -63,9 +63,9 @@ export class CheckboxRaw extends BaseInput<
       { ['checkbox-input--disabled']: this.props.disabled },
     ]);
     return (
-      <InputGroup title={this.props.title}>
+      <InputGroup title={this.props.title} tooltip={this.props.tooltip}>
         <div className={containerClassName} ref={this.containerRef}>
-          {!this.props.label && this.renderInput()}
+          {!this.props.label && this.renderTooltip(this.renderInput())}
           {this.renderDefaultValidation()}
           {this.props.label && (
             <label>
