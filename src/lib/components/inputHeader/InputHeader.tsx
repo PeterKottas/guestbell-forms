@@ -13,7 +13,7 @@ import {
   OmitInputHeaderContext,
   InputHeaderContextProps,
   InputHeaderContextState,
-  InputHeaderComponentContextState
+  InputHeaderComponentContextState,
 } from '../InputHeader/InputHeaderContext';
 import { withInputHeaderContext } from './withInputHeaderContext';
 import { InnerRefProps } from './../../types/InnerRefProps';
@@ -71,7 +71,7 @@ export class InputHeaderRaw
     collapsedDefault: true,
     type: 'standard',
     noBg: false,
-    shouldToggleCollapseOnHeaderClick: false
+    shouldToggleCollapseOnHeaderClick: false,
   };
 
   public componentId = guid();
@@ -84,9 +84,9 @@ export class InputHeaderRaw
         registerInputHeader: this.registerInputHeader,
         unregisterInputHeader: this.unregisterInputHeader,
         stateChanged: () => this.forceUpdate(),
-        components: {}
+        components: {},
       },
-      smoothCollapseDone: true
+      smoothCollapseDone: true,
     };
     this.registerInputHeader = this.registerInputHeader.bind(this);
     this.unregisterInputHeader = this.unregisterInputHeader.bind(this);
@@ -108,10 +108,10 @@ export class InputHeaderRaw
         componentApi: {
           expand: this.expand,
           collapse: this.collapse,
-          toggle: this.toggle
+          toggle: this.toggle,
         },
         props: { ...{}, ...(this.props as InputHeaderProps) },
-        state: { ...{}, ...this.state }
+        state: { ...{}, ...this.state },
       });
     }
   }
@@ -164,7 +164,7 @@ export class InputHeaderRaw
             {
               'input__header__top--clickable':
                 this.props.collapsable &&
-                this.props.shouldToggleCollapseOnHeaderClick
+                this.props.shouldToggleCollapseOnHeaderClick,
             },
             this.props.headerClassName
           )}
@@ -198,7 +198,10 @@ export class InputHeaderRaw
               )}
             </div>
           </div>
-          <div className="input__header__top__button-container" onClick={this.mainButtonClick}>
+          <div
+            className="input__header__top__button-container"
+            onClick={this.mainButtonClick}
+          >
             {this.props.mainButton && this.props.mainButton}
             {this.props.extraButtons ? (
               <Dropdown
@@ -271,7 +274,7 @@ export class InputHeaderRaw
   }
 
   private smoothCollapseDone = () =>
-    this.setState(previousState => ({ smoothCollapseDone: true }))
+    this.setState(previousState => ({ smoothCollapseDone: true }));
 
   private toggleClick = () => this.toggle();
 
@@ -286,7 +289,7 @@ export class InputHeaderRaw
       );
       components[componentId] = component;
       return {
-        inputHeaderContext: { ...previousState.inputHeaderContext, components }
+        inputHeaderContext: { ...previousState.inputHeaderContext, components },
       };
     });
   }
@@ -299,7 +302,7 @@ export class InputHeaderRaw
       );
       delete components[componentId];
       return {
-        inputHeaderContext: { ...previousState.inputHeaderContext, components }
+        inputHeaderContext: { ...previousState.inputHeaderContext, components },
       };
     });
   }
@@ -316,7 +319,7 @@ export class InputHeaderRaw
   }
 
   private mainButtonClick = (e: React.MouseEvent<HTMLDivElement>) =>
-    e.stopPropagation()
+    e.stopPropagation();
 
   private renderExtraButtons() {
     let arr = [];
@@ -375,21 +378,21 @@ export class InputHeaderRaw
   }
 
   private containerClick = (e: React.MouseEvent<HTMLDivElement>) =>
-    e.stopPropagation()
+    e.stopPropagation();
 
   private expandAllClick = () => {
     Object.keys(this.state.inputHeaderContext.components).forEach(key => {
       const component = this.state.inputHeaderContext.components[key];
       component.componentApi.expand();
     });
-  }
+  };
 
   private collapseAllClick = () => {
     Object.keys(this.state.inputHeaderContext.components).forEach(key => {
       const component = this.state.inputHeaderContext.components[key];
       component.componentApi.collapse();
     });
-  }
+  };
 }
 
 export const InputHeader = withInputHeaderContext<
