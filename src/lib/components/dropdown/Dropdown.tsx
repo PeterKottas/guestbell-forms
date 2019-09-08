@@ -1,6 +1,8 @@
 ﻿// Libs
 import * as React from 'react';
-import SmoothCollapse, { SmoothCollapseProps } from '../smoothCollapse/SmoothCollapse';
+import SmoothCollapse, {
+  SmoothCollapseProps,
+} from '../smoothCollapse/SmoothCollapse';
 var classNames = require('classnames');
 
 export interface DropdownProps {
@@ -33,13 +35,13 @@ export class Dropdown extends React.PureComponent<
     wrapperTag: 'div',
     notificationCount: 0,
     showArrow: true,
-    inline: true
+    inline: true,
   };
 
   constructor(props: DropdownProps) {
     super(props);
     this.state = {
-      isDropdownVisible: false
+      isDropdownVisible: false,
     };
     this.showNavigation = this.showNavigation.bind(this);
     this.hideNavigation = this.hideNavigation.bind(this);
@@ -75,17 +77,17 @@ export class Dropdown extends React.PureComponent<
         : 'guestbell__dropdown--opened',
       { ['guestbell__dropdown--disabled']: this.props.disabled },
       { ['guestbell__dropdown--inline']: this.props.inline },
-      this.props.className
+      this.props.className,
     ]);
     const headerClassName = classNames([
       'guestbell__dropdown-toggle',
       { ['guestbell__dropdown-toggle__arrow--hidden']: !this.props.showArrow },
       { ['guestbell__dropdown-toggle--disabled']: this.props.disabled },
-      this.props.headerClassName
+      this.props.headerClassName,
     ]);
     return (
       <this.props.wrapperTag
-        {...this.props.id && { id: this.props.id }}
+        {...(this.props.id && { id: this.props.id })}
         className={containerClassName}
       >
         <div
@@ -101,7 +103,10 @@ export class Dropdown extends React.PureComponent<
           )}
         </div>
         <div className={'guestbell__dropdown-menu__container'}>
-          <SmoothCollapse {...this.props.smoothCollapseProps} expanded={this.state.isDropdownVisible}>
+          <SmoothCollapse
+            {...this.props.smoothCollapseProps}
+            expanded={this.state.isDropdownVisible}
+          >
             {this.renderChildren()}
           </SmoothCollapse>
         </div>
@@ -111,7 +116,7 @@ export class Dropdown extends React.PureComponent<
 
   private containerClick = (e: React.MouseEvent<HTMLDivElement>) => {
     this.handleClick(e);
-  }
+  };
 
   private handleClick = (e: React.SyntheticEvent<{}>) => {
     if (this.props.shouldHandleClick && !this.props.disabled) {
@@ -122,7 +127,7 @@ export class Dropdown extends React.PureComponent<
         this.showNavigation();
       }
     }
-  }
+  };
 
   private renderChildren() {
     return (
