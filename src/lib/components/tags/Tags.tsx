@@ -15,7 +15,7 @@ import { OmitFormContext } from '../form/FormContext';
 import { withFormContext } from '../form/withFormContext';
 import { InnerRefProps } from './../../types/InnerRefProps';
 import * as ReactDOM from 'react-dom';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 
 // Misc
 export type Tag = {
