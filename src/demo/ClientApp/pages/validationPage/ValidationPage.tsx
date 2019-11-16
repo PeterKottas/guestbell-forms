@@ -17,7 +17,7 @@ import {
   SelectValue,
   ButtonProps,
   FormValidationSummary,
-  ValidatorTypes
+  ValidatorTypes,
 } from '../../../../lib/index';
 
 export interface TestProps {}
@@ -87,7 +87,7 @@ const types: ButtonTypes[] = [
   'success',
   'gray',
   'white',
-  'none'
+  'none',
 ];
 const ButtonsShowcase: React.SFC<ButtonProps> = props => {
   return (
@@ -96,7 +96,7 @@ const ButtonsShowcase: React.SFC<ButtonProps> = props => {
       style={{
         backgroundColor: 'rgb(248, 247, 247)',
         display: 'flex',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
       }}
     >
       {types.map((item, index) => (
@@ -109,7 +109,7 @@ const ButtonsShowcase: React.SFC<ButtonProps> = props => {
 };
 
 ButtonsShowcase.defaultProps = {
-  className: 'my-2 mr-2'
+  className: 'my-2 mr-2',
 };
 
 export class Test extends React.PureComponent<TestProps, TestState> {
@@ -134,11 +134,11 @@ export class Test extends React.PureComponent<TestProps, TestState> {
     time1: new Date(),
     time2: new Date(),
     openingHours: {
-      times: []
+      times: [],
     },
     openingHoursWeek: [],
     openingHoursWeekDay: {
-      times: []
+      times: [],
     },
     openingHoursSpecial: [],
     website: '',
@@ -149,10 +149,10 @@ export class Test extends React.PureComponent<TestProps, TestState> {
       { value: 'Second option' },
       { value: 'Third option' },
       { value: 'one more option' },
-      { value: 'rly long last option' }
+      { value: 'rly long last option' },
     ],
     multipleReadonly: false,
-    textAreaText: ''
+    textAreaText: '',
   };
 
   constructor(props: TestProps) {
@@ -233,21 +233,21 @@ export class Test extends React.PureComponent<TestProps, TestState> {
                           errors: this.state.checkbox2
                             ? []
                             : ['Please check custom context'],
-                          name: 'Extra context'
+                          name: 'Extra context',
                         },
-                        componentApi: undefined
-                      }
+                        componentApi: undefined,
+                      },
                     }}
                   >
                     <InputHeader
                       icon={<i className="material-icons md-48">edit</i>}
                       title={'Example form'}
                       subTitle={
-                        'And this is subtitle. There\'s also icon on the left'
+                        "And this is subtitle. There's also icon on the left"
                       }
                       showExpandAll={true}
                       type="hero"
-                      collapsable={true}
+                      collapsible={true}
                       collapsedDefault={false}
                       mainButton={
                         <Submit
@@ -268,13 +268,13 @@ export class Test extends React.PureComponent<TestProps, TestState> {
                           onClick={this.unTouchAll}
                         >
                           Un-touch all
-                        </Button>
+                        </Button>,
                       ]}
                     >
                       <InputHeader
                         className={''}
                         title={'Multiple'}
-                        collapsable={true}
+                        collapsible={true}
                         collapsedDefault={false}
                       >
                         {true && (
@@ -291,7 +291,7 @@ export class Test extends React.PureComponent<TestProps, TestState> {
                             suggestionsEmptyComponent={null}
                             validators={tagsValidators}
                             existingTags={[
-                              { id: 1, name: 'petokottas@gmail.com' }
+                              { id: 1, name: 'petokottas@gmail.com' },
                             ]}
                             valueNotAddedError={'Email not added'}
                           />
@@ -337,39 +337,39 @@ export class Test extends React.PureComponent<TestProps, TestState> {
   }
 
   private checkbox1Checked = () =>
-    this.setState({ checkbox1: !this.state.checkbox1 })
+    this.setState({ checkbox1: !this.state.checkbox1 });
 
   private checkbox2Checked = () =>
-    this.setState({ checkbox2: !this.state.checkbox2 })
+    this.setState({ checkbox2: !this.state.checkbox2 });
 
   private formRef = (el: Form) => (this.form = el);
 
   private selectedValuesChanged = (selectedValues: SelectValue[]) =>
-    this.setState({ selectedValues })
+    this.setState({ selectedValues });
 
   private tagsChanged = (tags: Tag[]) => this.setState({ tags });
 
   private unTouchAll = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     this.form.unTouchAll();
-  }
+  };
 
   private simulateUnmountChecked = () =>
-    this.setState({ simulateUnmount: !this.state.simulateUnmount })
+    this.setState({ simulateUnmount: !this.state.simulateUnmount });
 
   private disablesInputsChecked = () =>
-    this.setState({ submitDisablesInputs: !this.state.submitDisablesInputs })
+    this.setState({ submitDisablesInputs: !this.state.submitDisablesInputs });
 
   private touchOnChecked = (value: 'blur' | 'focus') =>
-    this.setState({ touchOn: value })
+    this.setState({ touchOn: value });
 
   private formValidationToggle = () =>
-    this.setState({ validateFormSubmit: !this.state.validateFormSubmit })
+    this.setState({ validateFormSubmit: !this.state.validateFormSubmit });
 
   private touchAll = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     this.form.touchAll();
-  }
+  };
 
   private handleGenderChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const val = e.target.value;

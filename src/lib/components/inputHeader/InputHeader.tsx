@@ -25,7 +25,7 @@ export type InputHeaderRawProps = {
   subTitle?: string | JSX.Element;
   mainButton?: JSX.Element;
   extraButtons?: JSX.Element[];
-  collapsable?: boolean;
+  collapsible?: boolean;
   collapsed?: boolean;
   collapsedDefault?: boolean;
   ignoreContext?: boolean;
@@ -117,7 +117,7 @@ export class InputHeaderRaw
   }
 
   public expand() {
-    this.props.collapsable &&
+    this.props.collapsible &&
       this.setState(
         { collapsed: false, smoothCollapseDone: false },
         () =>
@@ -127,7 +127,7 @@ export class InputHeaderRaw
   }
 
   public collapse() {
-    this.props.collapsable &&
+    this.props.collapsible &&
       this.setState(
         { collapsed: true, smoothCollapseDone: false },
         () =>
@@ -137,7 +137,7 @@ export class InputHeaderRaw
   }
 
   public toggle() {
-    this.props.collapsable &&
+    this.props.collapsible &&
       this.setState(
         { collapsed: !this.state.collapsed, smoothCollapseDone: false },
         () =>
@@ -163,19 +163,19 @@ export class InputHeaderRaw
             { 'input__header__top--no-bg': this.props.noBg },
             {
               'input__header__top--clickable':
-                this.props.collapsable &&
+                this.props.collapsible &&
                 this.props.shouldToggleCollapseOnHeaderClick,
             },
             this.props.headerClassName
           )}
           role={
-            this.props.collapsable &&
+            this.props.collapsible &&
             this.props.shouldToggleCollapseOnHeaderClick
               ? 'button'
               : undefined
           }
           onClick={
-            this.props.collapsable &&
+            this.props.collapsible &&
             this.props.shouldToggleCollapseOnHeaderClick
               ? this.toggleClick
               : undefined
@@ -221,7 +221,7 @@ export class InputHeaderRaw
                 {this.renderExtraButtons()}
               </Dropdown>
             ) : null}
-            {this.props.collapsable && (
+            {this.props.collapsible && (
               <Button
                 circular={true}
                 blank={true}
@@ -245,7 +245,7 @@ export class InputHeaderRaw
             (this.props.contentClassName ? this.props.contentClassName : '')
           }
         >
-          {this.props.collapsable ? (
+          {this.props.collapsible ? (
             <div
               className={
                 !this.state.collapsed && this.state.smoothCollapseDone
@@ -337,7 +337,7 @@ export class InputHeaderRaw
     let allExpanded = true;
     Object.keys(this.state.inputHeaderContext.components).forEach(key => {
       const component = this.state.inputHeaderContext.components[key];
-      if (component && component.props.collapsable) {
+      if (component && component.props.collapsible) {
         if (component.state.collapsed) {
           allExpanded = false;
         } else {

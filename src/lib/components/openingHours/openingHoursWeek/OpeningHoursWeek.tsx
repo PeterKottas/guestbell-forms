@@ -5,12 +5,12 @@ import * as React from 'react';
 import OpeningHoursUtil from '../utils/OpeningHoursUtil';
 import {
   OpeningHoursDayObj,
-  OpeningHoursDay
+  OpeningHoursDay,
 } from '../openingHoursDay/OpeningHoursDay';
 import {
   BaseInputProps,
   BaseInputState,
-  BaseInput
+  BaseInput,
 } from '../../base/input/BaseInput';
 import { Checkbox } from '../../checkbox/Checkbox';
 import { OmitFormContext } from '../../form/FormContext';
@@ -43,12 +43,13 @@ export class OpeningHoursWeekRaw extends BaseInput<
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     type: 'openingHoursWeek',
     placeholder: '',
-    collapsable: false
+    collapsible: false,
   });
 
   constructor(props: OpeningHoursWeekRawProps) {
     super(props);
     this.state = { ...this.state };
+    this.toggleStandardForAll = this.toggleStandardForAll.bind(this);
   }
 
   public componentWillMount() {
@@ -60,7 +61,7 @@ export class OpeningHoursWeekRaw extends BaseInput<
         { dayLabel: 'Thursday', times: [] },
         { dayLabel: 'Friday', times: [] },
         { dayLabel: 'Saturday', times: [] },
-        { dayLabel: 'Sunday', times: [] }
+        { dayLabel: 'Sunday', times: [] },
       ]);
     }
   }
@@ -74,7 +75,7 @@ export class OpeningHoursWeekRaw extends BaseInput<
         { dayLabel: 'Thursday', times: [] },
         { dayLabel: 'Friday', times: [] },
         { dayLabel: 'Saturday', times: [] },
-        { dayLabel: 'Sunday', times: [] }
+        { dayLabel: 'Sunday', times: [] },
       ]);
     }
   }
@@ -95,22 +96,40 @@ export class OpeningHoursWeekRaw extends BaseInput<
     );
   }
 
+  private toggleStandardForAll() {
+    const allDaysStandard = this.props.days.every(d => d.isStandardDay);
+    let days = this.props.days.map(d => ({
+      ...d,
+      isStandardDay: !allDaysStandard,
+    }));
+    this.props.onDaysChange(days);
+  }
+
   private renderContent() {
+    const allDaysStandard = this.props.days.every(d => d.isStandardDay);
     return (
       <div className={``}>
         {this.props.standardDay && (
           <OpeningHoursDay
-            {...this.props.id && {
-              id: this.props.id + '-standard-day'
-            }}
+            {...(this.props.id && {
+              id: this.props.id + '-standard-day',
+            })}
             className="openingHoursWeek__standard-day"
             label={
               <span>
                 {OpeningHoursUtil.getLabelSuffix(this.props.standardDay)}
+                <span className="float-right openingHoursWeek__is-standard-day">
+                  Apply to all days?
+                  <Checkbox
+                    className="label__checkbox"
+                    checked={allDaysStandard}
+                    onChecked={this.toggleStandardForAll}
+                  />
+                </span>
               </span>
             }
             openingHours={{
-              times: this.props.standardDay.times
+              times: this.props.standardDay.times,
             }}
             onOpeningHoursChange={this.standardDayChanged}
             title={'Standard day'}
@@ -125,9 +144,9 @@ export class OpeningHoursWeekRaw extends BaseInput<
         )}
         {this.props.days.map((day, index) => (
           <OpeningHoursDay
-            {...this.props.id && {
-              id: this.props.id + '-opening-hours-day-' + index.toString()
-            }}
+            {...(this.props.id && {
+              id: this.props.id + '-opening-hours-day-' + index.toString(),
+            })}
             className={''}
             key={index}
             label={
@@ -155,7 +174,7 @@ export class OpeningHoursWeekRaw extends BaseInput<
               times:
                 this.props.standardDay && day.isStandardDay
                   ? this.props.standardDay.times
-                  : day.times
+                  : day.times,
             }}
             onOpeningHoursChange={this.onOpeningHoursChange(index, day)}
             title={day.dayLabel}
@@ -173,7 +192,7 @@ export class OpeningHoursWeekRaw extends BaseInput<
     let days = this.props.days.slice(0);
     days[index] = { ...day, ...openingHours, isStandardDay: false };
     this.props.onDaysChange(days);
-  }
+  };
 
   private isStandardDayChecked = (
     index: number,
@@ -182,11 +201,11 @@ export class OpeningHoursWeekRaw extends BaseInput<
     let days = this.props.days.slice(0);
     days[index] = { ...day, isStandardDay: checked.target.checked };
     this.props.onDaysChange(days);
-  }
+  };
 
   private standardDayChanged = (openingHours: OpeningHoursDayObj) => {
     this.props.onStandardDayChange(openingHours);
-  }
+  };
 }
 
 export const OpeningHoursWeek = withFormContext<

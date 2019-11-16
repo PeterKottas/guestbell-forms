@@ -315,7 +315,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                       }
                       showExpandAll={true}
                       type="hero"
-                      collapsable={true}
+                      collapsible={true}
                       collapsedDefault={false}
                       mainButton={
                         <Submit
@@ -460,7 +460,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                       />
                       <InputHeader
                         title={'Some collapsed stuff'}
-                        collapsable={true}
+                        collapsible={true}
                         shouldToggleCollapseOnHeaderClick={true}
                         subTitle={
                           "Helpful text that describes what's collapsed here"
@@ -548,7 +548,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                       />
                       <InputHeader
                         title={'Opening hours'}
-                        collapsable={true}
+                        collapsible={true}
                         mainButton={
                           <Button type={'primary'}>Hero button</Button>
                         }
@@ -575,7 +575,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                       <InputHeader
                         className={''}
                         title={'Special days opening hours'}
-                        collapsable={true}
+                        collapsible={true}
                         innerRef={this.specialDaysInputHeaderRef}
                         mainButton={
                           <Button
@@ -637,7 +637,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                       <InputHeader
                         className={''}
                         title={'Multiple'}
-                        collapsable={true}
+                        collapsible={true}
                         collapsedDefault={false}
                       >
                         <Checkbox
@@ -662,6 +662,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                           existingTags={existingTags}
                           tags={this.state.tags}
                           onTagsChanged={this.tagsChanged}
+                          showChips={true}
                         />
                         <Tags
                           title="Tags max 3"
@@ -670,6 +671,8 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                           allowNew={true}
                           tags={this.state.tags}
                           onTagsChanged={this.tagsChanged}
+                          showChips={true}
+                          onTagClick={t => console.warn(t)}
                         />
                         <Tags
                           title="Tags only email"
@@ -706,7 +709,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                       <InputHeader
                         className={''}
                         title={'Dropdown'}
-                        collapsable={true}
+                        collapsible={true}
                         collapsedDefault={false}
                       >
                         <div className="p-3 buttons-row d-flex">
