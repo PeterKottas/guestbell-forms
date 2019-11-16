@@ -52,6 +52,7 @@ export interface BasicState {
   simulateUnmount: boolean;
   prices1: MoneyWithCurrency[];
   prices2: MoneyWithCurrency[];
+  prices3: MoneyWithCurrency[];
   time1: Date;
   time2: Date;
   openingHours: OpeningHoursDayObj;
@@ -125,6 +126,12 @@ const currencies1 = [
 
 const currencies2 = [
   { label: 'GBP', value: 'GBP' },
+  { label: 'EUR', value: 'EUR' },
+  { label: 'USD', value: 'USD' },
+];
+
+const currencies3 = [
+  { label: 'GBP', value: 'GBP', forceSelected: true },
   { label: 'EUR', value: 'EUR' },
   { label: 'USD', value: 'USD' },
 ];
@@ -209,6 +216,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
     simulateUnmount: false,
     prices1: [],
     prices2: [],
+    prices3: [],
     time1: new Date(),
     time2: new Date(),
     openingHours: {
@@ -523,6 +531,15 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         required={false}
                         onPricesChange={this.prices2Changed}
                         title="Price multiple"
+                      />
+                      <Money
+                        currencies={currencies3}
+                        prices={this.state.prices3}
+                        allowMultiple={true}
+                        touchOn={this.state.touchOn}
+                        required={false}
+                        onPricesChange={this.prices3Changed}
+                        title="Price multiple forced"
                       />
                       <Time
                         touchOn={this.state.touchOn}
@@ -840,6 +857,9 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
 
   private prices2Changed = (prices: MoneyWithCurrency[]) =>
     this.setState({ prices2: prices });
+
+  private prices3Changed = (prices: MoneyWithCurrency[]) =>
+    this.setState({ prices3: prices });
 
   private prices1Changed = (prices: MoneyWithCurrency[]) =>
     this.setState({ prices1: prices });

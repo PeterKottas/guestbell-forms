@@ -51,6 +51,17 @@ export class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never> {
       errors: props.required && props.prices.length === 0 ? ['Required'] : [],
       handleValueChangeEnabled: false,
     });
+    const forcedCurrencies = props.currencies.filter(c => c.forceSelected);
+    const missingForced = forcedCurrencies.filter(
+      c => !props.prices.find(p => p.currency.value === c.value)
+    );
+    if (missingForced.length > 0) {
+      props.onPricesChange(
+        props.prices.concat(
+          missingForced.map(c => ({ currency: c, value: undefined }))
+        )
+      );
+    }
     this.subscribeSelf(props);
   }
 
@@ -70,12 +81,15 @@ export class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never> {
           {this.props.prices &&
             this.props.prices.map((item, index) => {
               let currentCurrencies = this.props.currencies.filter(
-                currency =>
+                c =>
                   this.props.prices.filter(
                     (priceCurrency, priceIndex) =>
                       priceIndex !== index &&
-                      priceCurrency.currency.value === currency.value
+                      priceCurrency.currency.value === c.value
                   ).length === 0
+              );
+              const currency = this.props.currencies.find(
+                c => c.value === item.currency.value
               );
               let retComponents = currentCurrencies.length ? (
                 <div key={index}>
@@ -115,8 +129,13 @@ export class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never> {
                       type="error"
                       onClick={this.removePriceClick(index)}
                       className="transform-rotate--45 line-height--0"
-                      buttonProps={{ title: 'Remove price' }}
+                      buttonProps={{
+                        title: currency.forceSelected
+                          ? 'Cannot remove default currency'
+                          : 'Remove price',
+                      }}
                       circular={true}
+                      disabled={currency.forceSelected}
                     >
                       <PlusIcon />
                     </Button>
@@ -124,7 +143,7 @@ export class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never> {
                 </div>
               ) : null;
               unusedCurrencies = unusedCurrencies.filter(
-                currency => currency.value !== item.currency.value
+                c => c.value !== item.currency.value
               );
               return retComponents;
             })}
