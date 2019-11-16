@@ -22,9 +22,9 @@
     margin-right: 10px;
     top: 0;
     &:before {
-      transition: transform .4s cubic-bezier(.45, 1.8, .5, .75);
+      transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
       transform: scale(0, 0);
-      content: "";
+      content: '';
       position: absolute;
       top: 1px;
       left: 1px;
@@ -40,7 +40,7 @@
       }
     }
     &:after {
-      content: "";
+      content: '';
       position: absolute;
       top: -2px;
       left: -2px;

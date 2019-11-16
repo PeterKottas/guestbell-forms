@@ -8,7 +8,7 @@ import InputGroup from '../inputGroup/InputGroup';
 import {
   BaseInputProps,
   BaseInputState,
-  BaseInput
+  BaseInput,
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
 import { OmitFormContext } from '../form/FormContext';
@@ -39,7 +39,7 @@ export class TimeRaw extends BaseInput<
 > {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     type: 'time',
-    placeholder: ''
+    placeholder: '',
   });
 
   constructor(props: TimeRawProps) {
@@ -70,9 +70,9 @@ export class TimeRaw extends BaseInput<
     return (
       <InputGroup title={this.props.title}>
         <div
-          {...this.props.id && {
-            id: this.props.id
-          }}
+          {...(this.props.id && {
+            id: this.props.id,
+          })}
           className={
             'input__base time-input ' +
             this.getValidationClass() +
@@ -87,17 +87,17 @@ export class TimeRaw extends BaseInput<
               <button
                 className="plus"
                 onClick={this.addHourClick}
-                {...this.props.id && {
-                  id: this.props.id + '-add-hours-button'
-                }}
+                {...(this.props.id && {
+                  id: this.props.id + '-add-hours-button',
+                })}
               >
                 <ArrowIcon />
               </button>
               <div className="input-padding">
                 <input
-                  {...this.props.id && {
-                    id: this.props.id + '-hours-input'
-                  }}
+                  {...(this.props.id && {
+                    id: this.props.id + '-hours-input',
+                  })}
                   disabled={this.getDisabled()}
                   required={this.props.required}
                   className={
@@ -118,9 +118,9 @@ export class TimeRaw extends BaseInput<
               <button
                 className="minus"
                 onClick={this.removeHourClick}
-                {...this.props.id && {
-                  id: this.props.id + '-subtract-hours-button'
-                }}
+                {...(this.props.id && {
+                  id: this.props.id + '-subtract-hours-button',
+                })}
               >
                 <ArrowIcon />
               </button>
@@ -132,17 +132,17 @@ export class TimeRaw extends BaseInput<
               <button
                 className="plus"
                 onClick={this.addMinuteClick}
-                {...this.props.id && {
-                  id: this.props.id + '-add-minutes-button'
-                }}
+                {...(this.props.id && {
+                  id: this.props.id + '-add-minutes-button',
+                })}
               >
                 <ArrowIcon />
               </button>
               <div className="input-padding">
                 <input
-                  {...this.props.id && {
-                    id: this.props.id + '-minutes-input'
-                  }}
+                  {...(this.props.id && {
+                    id: this.props.id + '-minutes-input',
+                  })}
                   disabled={this.getDisabled()}
                   required={this.props.required}
                   className={
@@ -165,9 +165,9 @@ export class TimeRaw extends BaseInput<
               <button
                 className="minus"
                 onClick={this.removeMinuteClick}
-                {...this.props.id && {
-                  id: this.props.id + '-subtract-minutes-button'
-                }}
+                {...(this.props.id && {
+                  id: this.props.id + '-subtract-minutes-button',
+                })}
               >
                 <ArrowIcon />
               </button>
@@ -190,37 +190,37 @@ export class TimeRaw extends BaseInput<
     this.setState({ minutesText: undefined, hoursText: undefined }, () =>
       this.handleBlur(e)
     );
-  }
+  };
 
   private onMinutesChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     // this.handleMinutesChange(e.target.value);
     this.setState({ minutesText: e.target.value });
-  }
+  };
 
   private removeMinuteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     this.handleMinutesChange((this.props.time.getMinutes() - 1).toString());
-  }
+  };
 
   private addMinuteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     this.handleMinutesChange((this.props.time.getMinutes() + 1).toString());
-  }
+  };
 
   private removeHourClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     this.handleHoursChange((this.props.time.getHours() - 1).toString());
-  }
+  };
 
   private onHoursChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     // this.handleHoursChange(e.target.value);
     this.setState({ hoursText: e.target.value });
-  }
+  };
 
   private addHourClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     this.handleHoursChange((this.props.time.getHours() + 1).toString());
-  }
+  };
 
   private handleLimits(time: Date) {
     if (this.props.min) {

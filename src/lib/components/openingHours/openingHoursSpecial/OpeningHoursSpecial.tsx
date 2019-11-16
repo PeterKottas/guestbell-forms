@@ -13,12 +13,12 @@ try {
 import OpeningHoursUtil from '../utils/OpeningHoursUtil';
 import {
   OpeningHoursDayObj,
-  OpeningHoursDay
+  OpeningHoursDay,
 } from '../openingHoursDay/OpeningHoursDay';
 import {
   BaseInputProps,
   BaseInputState,
-  BaseInput
+  BaseInput,
 } from '../../base/input/BaseInput';
 import { Button } from '../../button/Button';
 import { OmitFormContext } from '../../form/FormContext';
@@ -67,7 +67,7 @@ export class OpeningHoursSpecialRaw extends BaseInput<
 > {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     type: 'openingHoursSpecial',
-    placeholder: DAY_FORMAT
+    placeholder: DAY_FORMAT,
   });
 
   constructor(props: OpeningHoursSpecialRawProps) {
@@ -110,9 +110,9 @@ export class OpeningHoursSpecialRaw extends BaseInput<
     }
     return (
       <div
-        {...this.props.id && {
-          id: this.props.id
-        }}
+        {...(this.props.id && {
+          id: this.props.id,
+        })}
         className={
           'input__base openingHoursSpecial-input ' +
           this.getValidationClass() +
@@ -123,18 +123,18 @@ export class OpeningHoursSpecialRaw extends BaseInput<
       >
         {this.props.days.map((day, index) => (
           <OpeningHoursDay
-            {...this.props.id && {
-              id: this.props.id + '-opening-hours-day-' + index.toString()
-            }}
+            {...(this.props.id && {
+              id: this.props.id + '-opening-hours-day-' + index.toString(),
+            })}
             key={index}
             label={
               <span>
                 {OpeningHoursUtil.getLabelSuffix(day)}
                 <span className="float-right">
                   <Button
-                    {...this.props.id && {
-                      id: this.props.id + '-remove-button-' + index.toString()
-                    }}
+                    {...(this.props.id && {
+                      id: this.props.id + '-remove-button-' + index.toString(),
+                    })}
                     blank={true}
                     className="openingHoursSpecial-input__button openingHoursSpecial-input__button--remove"
                     onClick={this.removeDayClick(index)}
@@ -145,16 +145,17 @@ export class OpeningHoursSpecialRaw extends BaseInput<
               </span>
             }
             openingHours={{
-              times: day.times
+              times: day.times,
             }}
             onOpeningHoursChange={this.openingHoursChanged(index, day)}
             title={
               <DatePicker
-                {...this.props.id && {
-                  id: this.props.id + '-date-picker-' + index.toString()
-                }}
+                {...(this.props.id && {
+                  id: this.props.id + '-date-picker-' + index.toString(),
+                })}
                 customInput={
-                  <DateInput>{!day.date && 'Choose date'}</DateInput>}
+                  <DateInput>{!day.date && 'Choose date'}</DateInput>
+                }
                 placeholder={this.props.placeholder}
                 selected={day.date}
                 dateFormat={DAY_FORMAT}
@@ -175,7 +176,7 @@ export class OpeningHoursSpecialRaw extends BaseInput<
   private removeDayClick = (index: number) => () =>
     this.props.onDaysChange(
       this.props.days.filter((d, indexInner) => indexInner !== index)
-    )
+    );
 
   private dateChanged = (index: number, day: OpeningHoursDayObj) => (
     date: Date
@@ -183,7 +184,7 @@ export class OpeningHoursSpecialRaw extends BaseInput<
     let days = this.props.days.slice(0);
     days[index] = { ...day, date };
     this.props.onDaysChange(days);
-  }
+  };
 
   private openingHoursChanged = (
     index: number,
@@ -192,7 +193,7 @@ export class OpeningHoursSpecialRaw extends BaseInput<
     let days = this.props.days.slice(0);
     days[index] = { ...day, ...openingHours };
     this.props.onDaysChange(days);
-  }
+  };
 }
 
 export const OpeningHoursSpecial = withFormContext<

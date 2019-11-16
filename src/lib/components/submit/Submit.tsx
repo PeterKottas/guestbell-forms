@@ -1,6 +1,10 @@
 ﻿// Libs
 import * as React from 'react';
-import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
+import {
+  BaseInputProps,
+  BaseInputState,
+  BaseInput,
+} from '../base/input/BaseInput';
 import { Button, ButtonProps } from '../button/Button';
 import { withFormContext } from '../form/withFormContext';
 import { OmitFormContext } from '../form/FormContext';
@@ -9,28 +13,25 @@ import SubmitValidationSummary from './subComponents/SubmitValidationSummary';
 
 // Misc
 
-type SubmitRawProps = BaseInputProps<never> & ButtonProps & {
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  validateForm?: boolean;
-  disabledTitle?: string;
-  showValidationSummaryTooltip?: boolean;
-};
+type SubmitRawProps = BaseInputProps<never> &
+  ButtonProps & {
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    validateForm?: boolean;
+    disabledTitle?: string;
+    showValidationSummaryTooltip?: boolean;
+  };
 
 export type SubmitProps = OmitFormContext<SubmitRawProps>;
 
-export interface SubmitState extends BaseInputState {
-}
+export interface SubmitState extends BaseInputState {}
 
-export class SubmitRaw extends BaseInput<SubmitRawProps, SubmitState, never>  {
-  public static defaultProps = Object.assign(
-    {},
-    BaseInput.defaultProps,
-    {
-      validateForm: true,
-      ignoreContext: true,
-      reRendersWhenContextChanges: true,
-      showValidationSummaryTooltip: true
-    });
+export class SubmitRaw extends BaseInput<SubmitRawProps, SubmitState, never> {
+  public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
+    validateForm: true,
+    ignoreContext: true,
+    reRendersWhenContextChanges: true,
+    showValidationSummaryTooltip: true,
+  });
 
   constructor(props: SubmitRawProps) {
     super(props);
@@ -42,33 +43,39 @@ export class SubmitRaw extends BaseInput<SubmitRawProps, SubmitState, never>  {
     return (
       <Button
         {...this.props}
-        className={`${(this.props.className ? this.props.className : '')}`}
+        className={`${this.props.className ? this.props.className : ''}`}
         onClick={this.handleClick}
         disabled={disabled}
         buttonProps={{
           ...this.props.buttonProps,
           type: 'submit',
-          title: disabled ? this.props.disabledTitle : this.props.buttonProps && this.props.buttonProps.title
+          title: disabled
+            ? this.props.disabledTitle
+            : this.props.buttonProps && this.props.buttonProps.title,
         }}
-        tooltip={this.props.tooltip ?
+        tooltip={
           this.props.tooltip
-          :
-          this.props.showValidationSummaryTooltip && !this.props.formContext.isFormValid && <FormValidationSummaryRaw
-            title="Hang on"
-            footer="... needs fixing"
-            containerClassName=""
-            headerClassName="submitValidationSummary__header"
-            footerClassName="submitValidationSummary__footer"
-            Component={SubmitValidationSummary}
-            formContext={this.props.formContext}
-          />}
+            ? this.props.tooltip
+            : this.props.showValidationSummaryTooltip &&
+              !this.props.formContext.isFormValid && (
+                <FormValidationSummaryRaw
+                  title="Hang on"
+                  footer="... needs fixing"
+                  containerClassName=""
+                  headerClassName="submitValidationSummary__header"
+                  footerClassName="submitValidationSummary__footer"
+                  Component={SubmitValidationSummary}
+                  formContext={this.props.formContext}
+                />
+              )
+        }
         tooltipProps={{
           theme: 'validation',
-          ...this.props.tooltipProps
+          ...this.props.tooltipProps,
         }}
       >
         {this.props.children}
-      </Button >
+      </Button>
     );
   }
 
@@ -79,10 +86,11 @@ export class SubmitRaw extends BaseInput<SubmitRawProps, SubmitState, never>  {
 
   private isDisabled() {
     const disabled = this.getDisabled();
-    return disabled ?
-      disabled
-      :
-      (this.props.validateForm && this.props.formContext ? !this.props.formContext.isFormValid : false);
+    return disabled
+      ? disabled
+      : this.props.validateForm && this.props.formContext
+      ? !this.props.formContext.isFormValid
+      : false;
   }
 }
 

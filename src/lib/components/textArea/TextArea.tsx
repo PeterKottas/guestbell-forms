@@ -4,7 +4,11 @@ import Textarea from 'react-autosize-textarea';
 
 // Misc
 import InputGroup from '../inputGroup/InputGroup';
-import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
+import {
+  BaseInputProps,
+  BaseInputState,
+  BaseInput,
+} from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
 import { OmitFormContext } from '../form/FormContext';
 import InnerRefProps from '../../types/InnerRefProps';
@@ -21,12 +25,16 @@ export interface TextAreaRawProps extends BaseInputProps<HTMLTextAreaElement> {
   maxRows?: number;
 }
 
-export type TextAreaProps = OmitFormContext<TextAreaRawProps> & InnerRefProps<TextAreaRawProps>;
+export type TextAreaProps = OmitFormContext<TextAreaRawProps> &
+  InnerRefProps<TextAreaRawProps>;
 
-export interface TextAreaState extends BaseInputState {
-}
+export interface TextAreaState extends BaseInputState {}
 
-export class TextAreaRaw extends BaseInput<TextAreaRawProps, TextAreaState, HTMLTextAreaElement>  {
+export class TextAreaRaw extends BaseInput<
+  TextAreaRawProps,
+  TextAreaState,
+  HTMLTextAreaElement
+> {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     type: 'text',
     placeholder: '',
@@ -45,15 +53,15 @@ export class TextAreaRaw extends BaseInput<TextAreaRawProps, TextAreaState, HTML
       <InputGroup title={this.props.title}>
         <div
           className={`input__base textArea-input ${this.getValidationClass()} 
-                    ${(this.props.readOnly ? 'textArea-input--readOnly' : '')} 
+                    ${this.props.readOnly ? 'textArea-input--readOnly' : ''} 
                     ${this.props.className ? this.props.className : ''}`}
           onClick={this.onContainerClick}
           ref={this.containerRef}
         >
           <Textarea
-            {...this.props.id && {
-              id: this.props.id
-            }}
+            {...(this.props.id && {
+              id: this.props.id,
+            })}
             ref={this.elemRef}
             placeholder={this.props.placeholder}
             disabled={this.getDisabled()}
@@ -67,7 +75,7 @@ export class TextAreaRaw extends BaseInput<TextAreaRawProps, TextAreaState, HTML
             onKeyDown={this.onKeyDown}
             rows={this.props.minRows}
             maxRows={this.props.maxRows}
-            innerRef={el => this.textArea = el}
+            innerRef={el => (this.textArea = el)}
           />
           <span className="highlight" />
           <span className="bar" />
@@ -86,9 +94,12 @@ export class TextAreaRaw extends BaseInput<TextAreaRawProps, TextAreaState, HTML
 
   private elemRef = elem => this.props.inputRef && this.props.inputRef(elem);
 
-  private onContainerClick = e => this.props.stopClickPropagation && e.stopPropagation();
+  private onContainerClick = e =>
+    this.props.stopClickPropagation && e.stopPropagation();
 }
 
-export const TextArea = withFormContext<TextAreaRawProps, TextAreaProps>(TextAreaRaw);
+export const TextArea = withFormContext<TextAreaRawProps, TextAreaProps>(
+  TextAreaRaw
+);
 
 export default TextArea;

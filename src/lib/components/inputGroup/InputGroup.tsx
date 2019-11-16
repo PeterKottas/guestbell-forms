@@ -3,7 +3,7 @@ import * as React from 'react';
 import {
   BaseInputProps,
   BaseInputState,
-  BaseInput
+  BaseInput,
 } from '../base/input/BaseInput';
 
 // Misc
@@ -22,7 +22,7 @@ export class InputGroup extends BaseInput<
 > {
   // tslint:disable-next-line:no-any
   public static defaultProps: any = {
-    ignoreContext: true
+    ignoreContext: true,
   };
 
   constructor(props: InputGroupProps) {

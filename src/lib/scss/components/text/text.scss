@@ -3,18 +3,18 @@
   max-width: 37.5rem;
   &.text-input--readOnly {
     border-bottom-color: transparent !important;
-    input:focus~.bar:before,
-    input:focus~.bar:after,
-    select:focus~.bar:before,
-    select:focus~.bar:after,
-    label:focus~.bar:before,
-    label:focus~.bar:after,
+    input:focus ~ .bar:before,
+    input:focus ~ .bar:after,
+    select:focus ~ .bar:before,
+    select:focus ~ .bar:after,
+    label:focus ~ .bar:before,
+    label:focus ~ .bar:after,
     .bar.focused:before,
     .bar.focused:after {
       width: initial;
     }
-    input:focus~.highlight,
-    select:focus~.highlight {
+    input:focus ~ .highlight,
+    select:focus ~ .highlight {
       animation: none;
     }
   }

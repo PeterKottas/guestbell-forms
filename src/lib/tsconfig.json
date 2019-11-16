@@ -11,17 +11,8 @@
     "skipDefaultLibCheck": true,
     "noUnusedLocals": true,
     "declaration": true,
-    "lib": [
-      "es7",
-      "dom"
-    ],
-    "types": [
-      "webpack-env",
-      "node"
-    ]
+    "lib": ["es7", "dom"],
+    "types": ["webpack-env", "node"]
   },
-  "exclude": [
-    "bin",
-    "node_modules"
-  ]
+  "exclude": ["bin", "node_modules"]
 }

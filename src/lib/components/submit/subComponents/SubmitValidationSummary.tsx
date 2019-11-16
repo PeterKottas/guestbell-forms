@@ -3,21 +3,20 @@ import { FormValidationSummaryComponentProps } from './../../form/FormValidation
 import Button from '../../button';
 import * as ArrowIcon from 'material-design-icons/maps/svg/production/ic_my_location_24px.svg';
 
-export type SubmitValidationSummaryProps = {
-} & FormValidationSummaryComponentProps;
+export type SubmitValidationSummaryProps = {} & FormValidationSummaryComponentProps;
 
-const SubmitValidationSummary: React.SFC<SubmitValidationSummaryProps> = props => {
+const SubmitValidationSummary: React.SFC<
+  SubmitValidationSummaryProps
+> = props => {
   return (
     <React.Fragment>
       {props.componentsWithErrors.map((component, index) => {
         return (
           <div key={index} className="submitValidationSummary__item">
             <div className="submitValidationSummary__item__header">
-              {component.validation.name ?
-                component.validation.name
-                :
-                'unknown'
-              }
+              {component.validation.name
+                ? component.validation.name
+                : 'unknown'}
             </div>
             {/*<div className="submitValidationSummary__item__errors">
                             {component.validation.errors && component.validation.errors.map((err, errIndex) => (
@@ -30,20 +29,24 @@ const SubmitValidationSummary: React.SFC<SubmitValidationSummaryProps> = props =
                             ))}
                             </div>*/}
             <div style={{ flex: 'auto' }} />
-            {component.componentApi && component.componentApi.focus && component.componentApi.scrollTo && <Button
-              icon={true}
-              className="submitValidationSummary__item__locate-button"
-              circular={true}
-              type="white"
-              small={true}
-              blank={true}
-              onClick={() => {
-                component.componentApi.scrollTo();
-                component.componentApi.focus();
-              }}
-            >
-              <ArrowIcon />
-            </Button>}
+            {component.componentApi &&
+              component.componentApi.focus &&
+              component.componentApi.scrollTo && (
+                <Button
+                  icon={true}
+                  className="submitValidationSummary__item__locate-button"
+                  circular={true}
+                  type="white"
+                  small={true}
+                  blank={true}
+                  onClick={() => {
+                    component.componentApi.scrollTo();
+                    component.componentApi.focus();
+                  }}
+                >
+                  <ArrowIcon />
+                </Button>
+              )}
           </div>
         );
       })}

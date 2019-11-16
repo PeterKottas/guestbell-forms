@@ -16,20 +16,20 @@
       background-color: transparent;
     }
     span.select-input__select {
-      min-height: calc( 1rem + 13px);
+      min-height: calc(1rem + 13px);
     }
   }
   &.input__base.multiple {
-    select:focus~label,
-    .filled~label {
+    select:focus ~ label,
+    .filled ~ label {
       bottom: 4px;
       top: initial;
       font-size: 18px;
     }
-    select.filled:focus~label {
+    select.filled:focus ~ label {
       color: $primary-color !important;
     }
-    .filled~label {
+    .filled ~ label {
       color: $input-label-color !important;
     }
   }

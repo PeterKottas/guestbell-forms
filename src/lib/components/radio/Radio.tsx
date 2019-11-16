@@ -3,7 +3,7 @@ import * as React from 'react';
 import {
   BaseInputProps,
   BaseInputState,
-  BaseInput
+  BaseInput,
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
 import { OmitFormContext } from '../form/FormContext';
@@ -58,9 +58,9 @@ export class RadioRaw extends BaseInput<
   private renderInput() {
     return (
       <input
-        {...this.props.id && {
-          id: this.props.id
-        }}
+        {...(this.props.id && {
+          id: this.props.id,
+        })}
         disabled={this.getDisabled()}
         name={this.props.name}
         value={this.props.value}

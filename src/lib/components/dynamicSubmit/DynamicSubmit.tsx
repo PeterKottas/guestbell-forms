@@ -14,11 +14,17 @@ export enum DynamicSubmitMode {
   Normal,
   Submitting,
   Error,
-  Success
+  Success,
 }
 
 export type DynamicSubmitRawProps = Omit<SubmitProps, 'onClick'> & {
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>, submitting?: () => void, error?: () => void, success?: () => void, reset?: () => void) => void;
+  onClick?: (
+    e: React.MouseEvent<HTMLButtonElement>,
+    submitting?: () => void,
+    error?: () => void,
+    success?: () => void,
+    reset?: () => void
+  ) => void;
   submittingChildren?: JSX.Element | string;
   errorChildren?: JSX.Element | string;
   successChildren?: JSX.Element | string;
@@ -32,19 +38,26 @@ export type DynamicSubmitRawProps = Omit<SubmitProps, 'onClick'> & {
   resetEnablesInputs?: boolean;
 } & FormContextProps;
 
-export type DynamicSubmitProps = OmitFormContext<DynamicSubmitRawProps> & InnerRefProps<DynamicSubmitRawProps>;
+export type DynamicSubmitProps = OmitFormContext<DynamicSubmitRawProps> &
+  InnerRefProps<DynamicSubmitRawProps>;
 
 export interface DynamicSubmitState {
   buttonState: DynamicSubmitMode;
 }
 
-export class DynamicSubmitRaw extends React.PureComponent<DynamicSubmitRawProps, DynamicSubmitState>  {
-  public static defaultProps = Object.assign({}, { validateForm: true, submitDisablesInputs: true, resetEnablesInputs: true });
+export class DynamicSubmitRaw extends React.PureComponent<
+  DynamicSubmitRawProps,
+  DynamicSubmitState
+> {
+  public static defaultProps = Object.assign(
+    {},
+    { validateForm: true, submitDisablesInputs: true, resetEnablesInputs: true }
+  );
 
   constructor(props: DynamicSubmitRawProps) {
     super(props);
     this.state = {
-      buttonState: DynamicSubmitMode.Normal
+      buttonState: DynamicSubmitMode.Normal,
     };
     this.handleClick = this.handleClick.bind(this);
     this.submitting = this.submitting.bind(this);
@@ -54,7 +67,10 @@ export class DynamicSubmitRaw extends React.PureComponent<DynamicSubmitRawProps,
   }
 
   public render() {
-    const buttonClassName = classNames(this.props.className, this.renderClassName());
+    const buttonClassName = classNames(
+      this.props.className,
+      this.renderClassName()
+    );
     return (
       <SubmitRaw
         {...this.props}
@@ -68,8 +84,16 @@ export class DynamicSubmitRaw extends React.PureComponent<DynamicSubmitRawProps,
 
   private handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    this.props.submitDisablesInputs && this.props.formContext.disableComponents();
-    this.props.onClick && this.props.onClick(e, this.submitting, this.error, this.success, this.reset);
+    this.props.submitDisablesInputs &&
+      this.props.formContext.disableComponents();
+    this.props.onClick &&
+      this.props.onClick(
+        e,
+        this.submitting,
+        this.error,
+        this.success,
+        this.reset
+      );
   }
 
   private submitting() {
@@ -92,11 +116,17 @@ export class DynamicSubmitRaw extends React.PureComponent<DynamicSubmitRawProps,
   private renderChildren() {
     switch (this.state.buttonState) {
       case DynamicSubmitMode.Error:
-        return this.props.errorChildren ? this.props.errorChildren : this.props.children;
+        return this.props.errorChildren
+          ? this.props.errorChildren
+          : this.props.children;
       case DynamicSubmitMode.Submitting:
-        return this.props.submittingChildren ? this.props.submittingChildren : this.props.children;
+        return this.props.submittingChildren
+          ? this.props.submittingChildren
+          : this.props.children;
       case DynamicSubmitMode.Success:
-        return this.props.successChildren ? this.props.successChildren : this.props.children;
+        return this.props.successChildren
+          ? this.props.successChildren
+          : this.props.children;
       default:
         return this.props.children;
     }
@@ -107,7 +137,9 @@ export class DynamicSubmitRaw extends React.PureComponent<DynamicSubmitRawProps,
       case DynamicSubmitMode.Error:
         return this.props.errorClassName ? this.props.errorClassName : '';
       case DynamicSubmitMode.Submitting:
-        return this.props.submittingClassName ? this.props.submittingClassName : '';
+        return this.props.submittingClassName
+          ? this.props.submittingClassName
+          : '';
       case DynamicSubmitMode.Success:
         return this.props.successClassName ? this.props.successClassName : '';
       default:
@@ -116,6 +148,9 @@ export class DynamicSubmitRaw extends React.PureComponent<DynamicSubmitRawProps,
   }
 }
 
-export const DynamicSubmit = withFormContext<DynamicSubmitRawProps, DynamicSubmitProps>(DynamicSubmitRaw);
+export const DynamicSubmit = withFormContext<
+  DynamicSubmitRawProps,
+  DynamicSubmitProps
+>(DynamicSubmitRaw);
 
 export default DynamicSubmit;

@@ -1,4 +1,4 @@
-// Styles 
+// Styles
 require('./main.scss');
 require('../../lib/scss/index.scss');
 
@@ -15,7 +15,4 @@ if (process.env.NODE_ENV !== 'production') {
 // Misc
 require('babel-polyfill');
 
-render(
-  <App />,
-  document.getElementById('react-root')
-);
+render(<App />, document.getElementById('react-root'));

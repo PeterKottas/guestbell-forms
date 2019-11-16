@@ -25,9 +25,9 @@ class Suggestions extends React.PureComponent<
   public render() {
     return this.props.isVisible ? (
       <div
-        {...this.props.id && {
-          id: this.props.id
-        }}
+        {...(this.props.id && {
+          id: this.props.id,
+        })}
         className="tags-input__suggestions"
       >
         <ul>
@@ -41,9 +41,9 @@ class Suggestions extends React.PureComponent<
             this.props.tags.map((tag, index) => (
               <li key={index}>
                 <Button
-                  {...this.props.id && {
-                    id: this.props.id + '-suggestion-' + index.toString()
-                  }}
+                  {...(this.props.id && {
+                    id: this.props.id + '-suggestion-' + index.toString(),
+                  })}
                   className={
                     'w-100 tags-input__suggestion ' +
                     (this.props.preselectedSuggestion !== undefined &&
@@ -78,7 +78,9 @@ class Suggestions extends React.PureComponent<
   private onSelected = (tag: Tag) => () => this.props.onSelected(tag);
 }
 
-// tslint:disable-next-line: no-any
-const SuggestionsWrapped: React.ComponentClass<SuggestionsProps> = onClickOutside(Suggestions as any) as any;
+const SuggestionsWrapped: React.ComponentClass<
+  SuggestionsProps
+  // tslint:disable-next-line: no-any
+> = onClickOutside(Suggestions as any) as any;
 
 export default SuggestionsWrapped;

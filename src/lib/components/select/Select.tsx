@@ -7,7 +7,7 @@ import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_c
 import {
   BaseInputProps,
   BaseInputState,
-  BaseInput
+  BaseInput,
 } from '../base/input/BaseInput';
 import { Button } from '../button/Button';
 import { OmitFormContext } from '../form/FormContext';
@@ -45,7 +45,7 @@ class SelectRaw extends BaseInput<
     defaultEmpty: true,
     multiple: false,
     readOnly: false,
-    readonlyEmptyPlaceholder: 'N/A'
+    readonlyEmptyPlaceholder: 'N/A',
   });
 
   constructor(props: SelectRawProps) {
@@ -81,34 +81,6 @@ class SelectRaw extends BaseInput<
     }
   }
 
-  protected handleBlur(e: React.FocusEvent<HTMLSelectElement>) {
-    this.props.onBlur && this.props.onBlur();
-    let state = { focused: false };
-    if (!this.state.touched && this.props.touchOn === 'blur') {
-      state = Object.assign(state, { touched: true });
-      if (!this.props.multiple) {
-        this.handleValueChange(this.state.value);
-      } else {
-        this.handleValid(this.props.selectedValues);
-      }
-    }
-    this.setState(state);
-  }
-
-  protected handleFocus(e: React.FocusEvent<HTMLSelectElement>) {
-    this.props.onFocus && this.props.onFocus(e);
-    let state = { focused: true };
-    if (!this.state.touched && this.props.touchOn === 'focus') {
-      state = Object.assign(state, { touched: true });
-      if (!this.props.multiple) {
-        this.handleValueChange(this.state.value);
-      } else {
-        this.handleValid(this.props.selectedValues);
-      }
-    }
-    this.setState(state);
-  }
-
   public render() {
     const finalValues = this.props.multiple
       ? this.props.values.filter(
@@ -139,9 +111,9 @@ class SelectRaw extends BaseInput<
                 {(!this.props.multiple && !this.props.readOnly) ||
                 this.props.multiple ? (
                   <select
-                    {...this.props.id && {
-                      id: this.props.id
-                    }}
+                    {...(this.props.id && {
+                      id: this.props.id,
+                    })}
                     ref={this.inputRef}
                     disabled={this.getDisabled()}
                     required={this.props.required}
@@ -197,6 +169,34 @@ class SelectRaw extends BaseInput<
         </div>
       </InputGroup>
     );
+  }
+
+  protected handleBlur(e: React.FocusEvent<HTMLSelectElement>) {
+    this.props.onBlur && this.props.onBlur();
+    let state = { focused: false };
+    if (!this.state.touched && this.props.touchOn === 'blur') {
+      state = Object.assign(state, { touched: true });
+      if (!this.props.multiple) {
+        this.handleValueChange(this.state.value);
+      } else {
+        this.handleValid(this.props.selectedValues);
+      }
+    }
+    this.setState(state);
+  }
+
+  protected handleFocus(e: React.FocusEvent<HTMLSelectElement>) {
+    this.props.onFocus && this.props.onFocus(e);
+    let state = { focused: true };
+    if (!this.state.touched && this.props.touchOn === 'focus') {
+      state = Object.assign(state, { touched: true });
+      if (!this.props.multiple) {
+        this.handleValueChange(this.state.value);
+      } else {
+        this.handleValid(this.props.selectedValues);
+      }
+    }
+    this.setState(state);
   }
 
   private handleChangeCustom(event: React.ChangeEvent<HTMLSelectElement>) {
@@ -278,7 +278,7 @@ class SelectRaw extends BaseInput<
     this.handleValid(newValues);
     this.props.onSelectedValuesChange &&
       this.props.onSelectedValuesChange(newValues);
-  }
+  };
 }
 
 export const Select = withFormContext<SelectRawProps, SelectProps>(SelectRaw);

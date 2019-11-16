@@ -10,7 +10,7 @@ import InputGroup from '../inputGroup/InputGroup';
 import {
   BaseInputProps,
   BaseInputState,
-  BaseInput
+  BaseInput,
 } from '../base/input/BaseInput';
 import { Button } from '../button/Button';
 import { withFormContext } from '../form/withFormContext';
@@ -38,7 +38,7 @@ export interface MoneyState extends BaseInputState {}
 export class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never> {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     type: 'money',
-    allowMultiple: false
+    allowMultiple: false,
   });
 
   constructor(props: MoneyRawProps) {
@@ -49,7 +49,7 @@ export class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never> {
     this.state = Object.assign(this.state, {
       isValid: props.required ? props.prices.length > 0 : true,
       errors: props.required && props.prices.length === 0 ? ['Required'] : [],
-      handleValueChangeEnabled: false
+      handleValueChangeEnabled: false,
     });
     this.subscribeSelf(props);
   }
@@ -59,7 +59,7 @@ export class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never> {
     return (
       <InputGroup title={this.props.title}>
         <div
-          {...this.props.id && { id: this.props.id }}
+          {...(this.props.id && { id: this.props.id })}
           className={
             'input__base money-input ' +
             this.getValidationClass() +
@@ -80,9 +80,10 @@ export class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never> {
               let retComponents = currentCurrencies.length ? (
                 <div key={index}>
                   <Select
-                    {...this.props.id && {
-                      id: this.props.id + '-currency-select-' + index.toString()
-                    }}
+                    {...(this.props.id && {
+                      id:
+                        this.props.id + '-currency-select-' + index.toString(),
+                    })}
                     onFocus={this.onFocus}
                     onBlur={this.onBlur}
                     className={'money-input__select m-0'}
@@ -91,9 +92,9 @@ export class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never> {
                     value={item.currency.value.toString()}
                   />
                   <Text
-                    {...this.props.id && {
-                      id: this.props.id + '-amount-input-' + index.toString()
-                    }}
+                    {...(this.props.id && {
+                      id: this.props.id + '-amount-input-' + index.toString(),
+                    })}
                     onFocus={this.onFocus}
                     onBlur={this.onBlur}
                     onTheFlightValidate={this.onTheFlightValidate}
@@ -106,9 +107,10 @@ export class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never> {
                   />
                   {this.props.prices.length > 0 && (
                     <Button
-                      {...this.props.id && {
-                        id: this.props.id + '-remove-button-' + index.toString()
-                      }}
+                      {...(this.props.id && {
+                        id:
+                          this.props.id + '-remove-button-' + index.toString(),
+                      })}
                       blank={true}
                       type="error"
                       onClick={this.removePriceClick(index)}
@@ -131,9 +133,9 @@ export class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never> {
           unusedCurrencies.length ? (
             <Button
               blank={true}
-              {...this.props.id && {
-                id: this.props.id + '-add-button'
-              }}
+              {...(this.props.id && {
+                id: this.props.id + '-add-button',
+              })}
               type="primary"
               className="line-height--0"
               onClick={this.addPriceClick(unusedCurrencies)}
@@ -142,7 +144,7 @@ export class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never> {
                 title:
                   this.props.prices && this.props.prices.length === 0
                     ? 'Add price'
-                    : 'Add new currency'
+                    : 'Add new currency',
               }}
             >
               <PlusIcon />
@@ -174,7 +176,7 @@ export class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never> {
       cc => cc.value.toString() === e.target.value
     )[0];
     this.props.onPricesChange(newPrices);
-  }
+  };
 
   private onTheFlightValidate = value => {
     let num = Number(value);
@@ -188,7 +190,7 @@ export class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never> {
     if (num) {
       return false;
     }
-  }
+  };
 
   private onPriceChanged = (index: number) => (
     e: React.ChangeEvent<HTMLInputElement>
@@ -203,7 +205,7 @@ export class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never> {
     if (!this.state.touched) {
       this.touch();
     }
-  }
+  };
 
   private removePriceClick = (index: number) => () => {
     const newPrices = this.props.prices.filter(
@@ -216,7 +218,7 @@ export class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never> {
     if (!this.state.touched) {
       this.touch();
     }
-  }
+  };
 
   private addPriceClick = (unusedCurrencies: SelectValue[]) => () => {
     this.props.onPricesChange(
@@ -226,7 +228,7 @@ export class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never> {
     if (!this.state.touched) {
       this.touch();
     }
-  }
+  };
 
   private onFocus = () => this.setState({ focused: true });
 

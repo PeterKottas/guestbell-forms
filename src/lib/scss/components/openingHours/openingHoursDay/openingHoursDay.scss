@@ -24,7 +24,7 @@
       display: none;
     }
     display: inline-block;
-    position:relative;
+    position: relative;
     border: none;
     border-width: 0px;
   }
@@ -33,10 +33,10 @@
     align-items: center;
     justify-content: center;
   }
-  input:focus~label,
-  input.filled~label,
-  select:focus~label,
-  span.filled~label,
+  input:focus ~ label,
+  input.filled ~ label,
+  select:focus ~ label,
+  span.filled ~ label,
   span.label-classname.label--focused {
     top: 0;
   }
@@ -51,20 +51,20 @@
   .openingHoursDay-input__label {
     color: $input-label-color;
   }
-  &.input__base input:focus~label,
-  &.input__base .filled~label,
-  &.input__base select:focus~label,
-  &.input__base textarea:focus~label,
+  &.input__base input:focus ~ label,
+  &.input__base .filled ~ label,
+  &.input__base select:focus ~ label,
+  &.input__base textarea:focus ~ label,
   &.input__base label.label--focused,
   &.input__base span.label-classname.label--focused {
     font-size: 18px;
     left: 0;
   }
   &.openingHoursDay-input--closed {
-    &.input__base input:focus~label,
-    &.input__base .filled~label,
-    &.input__base select:focus~label,
-    &.input__base textarea:focus~label,
+    &.input__base input:focus ~ label,
+    &.input__base .filled ~ label,
+    &.input__base select:focus ~ label,
+    &.input__base textarea:focus ~ label,
     &.input__base label.label--focused,
     &.input__base span.label-classname.label--focused {
       color: $error-color;

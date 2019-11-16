@@ -3,7 +3,11 @@ import * as React from 'react';
 
 // Misc
 import InputGroup from '../inputGroup/InputGroup';
-import { BaseInputProps, BaseInputState, BaseInput } from '../base/input/BaseInput';
+import {
+  BaseInputProps,
+  BaseInputState,
+  BaseInput,
+} from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
 import { OmitFormContext } from '../form/FormContext';
 import { InnerRefProps } from './../../types/InnerRefProps';
@@ -18,13 +22,22 @@ export interface TextRawProps extends BaseInputProps<HTMLInputElement> {
   type?: 'number' | 'text';
 }
 
-export type TextProps = OmitFormContext<TextRawProps> & InnerRefProps<TextRawProps>;
+export type TextProps = OmitFormContext<TextRawProps> &
+  InnerRefProps<TextRawProps>;
 
-export interface TextState extends BaseInputState {
-}
+export interface TextState extends BaseInputState {}
 
-export class TextRaw extends BaseInput<TextRawProps, TextState, HTMLInputElement>  {
-  public static defaultProps = Object.assign({}, BaseInput.defaultProps, { type: 'text', placeholder: '', stopClickPropagation: true, readOnly: false });
+export class TextRaw extends BaseInput<
+  TextRawProps,
+  TextState,
+  HTMLInputElement
+> {
+  public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
+    type: 'text',
+    placeholder: '',
+    stopClickPropagation: true,
+    readOnly: false,
+  });
 
   constructor(props: TextRawProps) {
     super(props);
@@ -35,14 +48,16 @@ export class TextRaw extends BaseInput<TextRawProps, TextState, HTMLInputElement
       <InputGroup title={this.props.title} tooltip={this.props.tooltip}>
         <div
           className={`input__base text-input ${this.getValidationClass()} 
-                    ${(this.props.readOnly ? 'text-input--readOnly' : '')} ${(this.props.className ? this.props.className : '')}`}
+                    ${this.props.readOnly ? 'text-input--readOnly' : ''} ${
+            this.props.className ? this.props.className : ''
+          }`}
           onClick={this.containerClick}
           ref={this.containerRef}
         >
           <input
-            {...this.props.id && {
-              id: this.props.id
-            }}
+            {...(this.props.id && {
+              id: this.props.id,
+            })}
             ref={this.inputRef}
             placeholder={this.props.placeholder}
             disabled={this.getDisabled()}
@@ -59,15 +74,21 @@ export class TextRaw extends BaseInput<TextRawProps, TextState, HTMLInputElement
           <span className="highlight" />
           <span className="bar" />
           {this.renderDefaultValidation()}
-          {this.props.label && <label className={(this.props.readOnly ? 'label--focused' : '')}>{this.renderLabel()}</label>}
+          {this.props.label && (
+            <label className={this.props.readOnly ? 'label--focused' : ''}>
+              {this.renderLabel()}
+            </label>
+          )}
         </div>
       </InputGroup>
     );
   }
 
-  private containerClick = (e: React.MouseEvent<HTMLDivElement>) => this.props.stopClickPropagation && e.stopPropagation();
+  private containerClick = (e: React.MouseEvent<HTMLDivElement>) =>
+    this.props.stopClickPropagation && e.stopPropagation();
 
-  private onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => this.props.onKeyDown && this.props.onKeyDown(e);
+  private onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) =>
+    this.props.onKeyDown && this.props.onKeyDown(e);
 }
 
 export const Text = withFormContext<TextRawProps, TextProps>(TextRaw);

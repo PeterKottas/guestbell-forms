@@ -1,6 +1,6 @@
 .inputGroup {
   .inputGroup__header {
-    .DayPickerInput>input {
+    .DayPickerInput > input {
       text-align: right;
     }
   }
@@ -28,7 +28,7 @@
       transform: translateY(0);
     }
   }
-  >.input__group__border:first-child {
+  > .input__group__border:first-child {
     border-top: none;
   }
   border: none !important;
@@ -64,7 +64,7 @@
   }
   .react-datepicker__input-container {
     width: 100%;
-    >input {
+    > input {
       width: 100%;
       padding: 0;
       border: none;
@@ -72,21 +72,21 @@
       text-align: right;
     }
   }
-  input:focus~label,
-  input.filled~label,
-  select:focus~label,
-  select.filled~label,
+  input:focus ~ label,
+  input.filled ~ label,
+  select:focus ~ label,
+  select.filled ~ label,
   .label-classname.label--focused {
     top: 0;
     font-size: 14px;
-    .DayPickerInput>input {
+    .DayPickerInput > input {
       width: 70px;
       color: $primary-color;
       background-color: transparent;
     }
   }
   .label-classname.label--focused.label--closed {
-    .DayPickerInput>input {
+    .DayPickerInput > input {
       color: $input-label-color;
     }
   }

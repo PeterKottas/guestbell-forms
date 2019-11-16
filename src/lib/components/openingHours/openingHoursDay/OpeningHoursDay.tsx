@@ -11,7 +11,7 @@ import InputGroup from '../../inputGroup/InputGroup';
 import {
   BaseInputProps,
   BaseInputState,
-  BaseInput
+  BaseInput,
 } from '../../base/input/BaseInput';
 import { Button } from '../../button/Button';
 import { withFormContext } from '../../form/withFormContext';
@@ -44,7 +44,7 @@ export class OpeningHoursDayRaw extends BaseInput<
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     type: 'openingHours',
     allowMultiple: false,
-    maxOpenCloseTimes: 10
+    maxOpenCloseTimes: 10,
   });
   private fullDayMilliseconds: number = 24 * 60 * 60 * 1000;
 
@@ -63,22 +63,22 @@ export class OpeningHoursDayRaw extends BaseInput<
             'input__group__openingHoursDay--closed':
               this.props.openingHours &&
               this.props.openingHours.times &&
-              this.props.openingHours.times.length === 0
+              this.props.openingHours.times.length === 0,
           }
         )}
         tooltip={this.props.tooltip}
       >
         <div
-          {...this.props.id && {
-            id: this.props.id
-          }}
+          {...(this.props.id && {
+            id: this.props.id,
+          })}
           className={classNames(
             'input__base openingHoursDay-input',
             {
               'openingHoursDay-input--closed':
                 this.props.openingHours &&
                 this.props.openingHours.times &&
-                this.props.openingHours.times.length === 0
+                this.props.openingHours.times.length === 0,
             },
             this.getValidationClass()
           )}
@@ -100,7 +100,7 @@ export class OpeningHoursDayRaw extends BaseInput<
                   nextTime = new Date(
                     Math.min.apply(null, [
                       this.getTime(23, 59, false),
-                      nextTime
+                      nextTime,
                     ])
                   );
                 }
@@ -110,9 +110,9 @@ export class OpeningHoursDayRaw extends BaseInput<
                     key={index}
                   >
                     <Time
-                      {...this.props.id && {
-                        id: this.props.id + '-time-' + index.toString()
-                      }}
+                      {...(this.props.id && {
+                        id: this.props.id + '-time-' + index.toString(),
+                      })}
                       className={'openingHoursDay-input__time'}
                       timeChange={this.timeChanged(index)}
                       time={item}
@@ -123,12 +123,12 @@ export class OpeningHoursDayRaw extends BaseInput<
                     />
                     {index % 2 === 1 && (
                       <Button
-                        {...this.props.id && {
+                        {...(this.props.id && {
                           id:
                             this.props.id +
                             '-remove-button-' +
-                            ((index - 1) / 2).toString()
-                        }}
+                            ((index - 1) / 2).toString(),
+                        })}
                         onClick={this.removeTimeClick(index - 1)}
                         className="openingHoursDay-input__button--remove mr-5 line-height--0"
                         circular={true}
@@ -144,9 +144,9 @@ export class OpeningHoursDayRaw extends BaseInput<
             {this.props.maxOpenCloseTimes >
               this.props.openingHours.times.length && (
               <Button
-                {...this.props.id && {
-                  id: this.props.id + '-add-button'
-                }}
+                {...(this.props.id && {
+                  id: this.props.id + '-add-button',
+                })}
                 className="openingHoursDay-input__button-open-close"
                 onClick={this.addTimeClick}
                 disabled={this.isAddTimeClickDisabled()}
@@ -212,26 +212,26 @@ export class OpeningHoursDayRaw extends BaseInput<
     closeTime.setHours(closeTime.getHours() + 1);
     this.props.onOpeningHoursChange({
       ...this.props.openingHours,
-      times: this.props.openingHours.times.concat([newTime, closeTime])
+      times: this.props.openingHours.times.concat([newTime, closeTime]),
     });
-  }
+  };
 
   private removeTimeClick = (index: number) => () =>
     this.props.onOpeningHoursChange({
       ...this.props.openingHours,
       times: this.props.openingHours.times.filter(
         (time, itemIndex) => itemIndex < index || itemIndex > index + 1
-      )
-    })
+      ),
+    });
 
   private timeChanged = (index: number) => (time: Date) => {
     let newOpeningHours: OpeningHoursDayObj = {
       ...this.props.openingHours,
-      times: this.props.openingHours.times.slice(0)
+      times: this.props.openingHours.times.slice(0),
     };
     newOpeningHours.times[index] = time;
     this.props.onOpeningHoursChange(newOpeningHours);
-  }
+  };
 
   private getBottomBorder() {
     let parts = [];
@@ -254,7 +254,7 @@ export class OpeningHoursDayRaw extends BaseInput<
       );
       parts = parts.concat([
         OpeningHoursUtil.getTimeFromMidnight(this.props.openingHours.times[0]) /
-          totalTime
+          totalTime,
       ]);
       for (
         var index = 0;
@@ -280,7 +280,7 @@ export class OpeningHoursDayRaw extends BaseInput<
             ],
             this.props.openingHours.times[0]
           )) /
-          totalTime
+          totalTime,
       ]);
     }
     return (
@@ -302,7 +302,7 @@ export class OpeningHoursDayRaw extends BaseInput<
             className="openingHoursDay-input__bottom-border--midnight"
             style={{
               left:
-                ((this.fullDayMilliseconds * 100) / totalTime).toString() + '%'
+                ((this.fullDayMilliseconds * 100) / totalTime).toString() + '%',
             }}
             title="Midnight"
           />

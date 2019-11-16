@@ -20,7 +20,8 @@ const hasOwnProperty = Object.prototype.hasOwnProperty;
 // tslint:disable-next-line:no-any
 function is(x: any, y: any): boolean {
   // SameValue algorithm
-  if (x === y) { // Steps 1-5, 7-10
+  if (x === y) {
+    // Steps 1-5, 7-10
     // Steps 6.b-6.e: +0 != -0
     // Added the nonzero y check to make Flow happy, but it is redundant
     return x !== 0 || y !== 0 || 1 / x === 1 / y;
@@ -35,13 +36,21 @@ function is(x: any, y: any): boolean {
  * when any key has values which are not strictly equal between the arguments.
  * Returns true when the values of all keys are strictly equal.
  */
-export function shallowEqual<T extends object>(objA: T, objB: T, ignoreKey?: keyof T): boolean {
+export function shallowEqual<T extends object>(
+  objA: T,
+  objB: T,
+  ignoreKey?: keyof T
+): boolean {
   if (is(objA, objB)) {
     return true;
   }
 
-  if (typeof objA !== 'object' || objA === null ||
-    typeof objB !== 'object' || objB === null) {
+  if (
+    typeof objA !== 'object' ||
+    objA === null ||
+    typeof objB !== 'object' ||
+    objB === null
+  ) {
     return false;
   }
 

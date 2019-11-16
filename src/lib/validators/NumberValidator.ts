@@ -6,10 +6,16 @@ export interface NumberValidatorConfig {
 
 export class NumberValidator implements IBaseValidator {
   private config: NumberValidatorConfig;
-  constructor(config: NumberValidatorConfig = { min: undefined, max: undefined }) {
+  constructor(
+    config: NumberValidatorConfig = { min: undefined, max: undefined }
+  ) {
     this.config = config;
   }
-  public Validate(value: string, isRequired: boolean, addError: (error: string) => void): boolean {
+  public Validate(
+    value: string,
+    isRequired: boolean,
+    addError: (error: string) => void
+  ): boolean {
     let num = Number(value);
     if (!isNaN(num)) {
       if (this.config.min !== undefined && num <= this.config.min) {
