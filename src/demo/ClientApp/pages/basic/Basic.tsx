@@ -673,6 +673,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         <Tags
                           title="Tags suggestions"
                           label="Choose or create tags"
+                          openSuggestionsOnTagRemove={true}
                           readOnly={this.state.multipleReadonly}
                           allowNew={true}
                           maxTags={1}

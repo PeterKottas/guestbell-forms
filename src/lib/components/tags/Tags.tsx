@@ -46,6 +46,7 @@ export type TagsRawProps = {
   loadingDelayMs?: number;
   filterExistingTags?: (text: string, existingTags: Tag[]) => Tag[];
   maxSuggestions?: number;
+  openSuggestionsOnTagRemove?: boolean;
 } & BaseInputProps<HTMLInputElement>;
 
 export type TagsProps = OmitFormContext<TagsRawProps> &
@@ -476,7 +477,9 @@ export class TagsRaw extends BaseInput<
 
   private tagRemoveClick = (tag: Tag) => (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    this.setState({ suggestionsVisible: false });
+    this.setState({
+      suggestionsVisible: this.props.openSuggestionsOnTagRemove,
+    });
     const newTags = this.props.tags.filter(sv => sv.id !== tag.id);
     this.props.onTagsChanged && this.props.onTagsChanged(newTags);
     this.handleErrors(newTags);
