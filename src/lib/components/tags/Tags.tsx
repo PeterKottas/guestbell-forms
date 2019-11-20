@@ -46,7 +46,6 @@ export type TagsRawProps = {
   loadingDelayMs?: number;
   filterExistingTags?: (text: string, existingTags: Tag[]) => Tag[];
   maxSuggestions?: number;
-  openSuggestionsOnTagRemove?: boolean;
 } & BaseInputProps<HTMLInputElement>;
 
 export type TagsProps = OmitFormContext<TagsRawProps> &
@@ -88,7 +87,7 @@ export class TagsRaw extends BaseInput<
     maxSuggestions: 5,
   };
 
-  private textRef: React.RefObject<TextRaw>;
+  private textRef: TextRaw;
 
   constructor(props: TagsRawProps) {
     super(props);
@@ -101,13 +100,12 @@ export class TagsRaw extends BaseInput<
       textIsValid: false,
       fetchedExistingTags: [],
     };
-    this.textRef = React.createRef();
   }
 
   public focus() {
-    if (this.textRef.current && this.textRef.current.inputRef) {
+    if (this.textRef && this.textRef.inputRef) {
       const domNode: HTMLElement = ReactDOM.findDOMNode(
-        (this.textRef.current.inputRef as React.RefObject<HTMLElement>).current
+        (this.textRef.inputRef as React.RefObject<HTMLElement>).current
       ) as HTMLElement;
       domNode && domNode.focus();
     }
@@ -157,7 +155,8 @@ export class TagsRaw extends BaseInput<
                   {...(this.props.id && {
                     id: this.props.id + '-text-input',
                   })}
-                  innerRef={this.textRef}
+                  // tslint:disable-next-line: no-any
+                  innerRef={val => (this.textRef = val as any)}
                   required={
                     this.props.tags.length > 0 ? false : this.props.required
                   }
@@ -477,10 +476,13 @@ export class TagsRaw extends BaseInput<
 
   private tagRemoveClick = (tag: Tag) => (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    this.setState({
-      suggestionsVisible: this.props.openSuggestionsOnTagRemove,
-    });
     const newTags = this.props.tags.filter(sv => sv.id !== tag.id);
+    if (newTags.length === 0) {
+      setTimeout(() => this.focus(), 50);
+    }
+    this.setState({
+      suggestionsVisible: false,
+    });
     this.props.onTagsChanged && this.props.onTagsChanged(newTags);
     this.handleErrors(newTags);
     // this.fetchExistingTags();

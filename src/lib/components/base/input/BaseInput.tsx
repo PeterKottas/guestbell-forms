@@ -82,7 +82,7 @@ export class BaseInput<
 
   public componentId = guid();
 
-  public inputRef: React.Ref<HTMLType> | React.RefObject<HTMLType>;
+  public inputRef: React.RefObject<HTMLType>;
 
   protected containerRef:
     | React.Ref<HTMLDivElement>
