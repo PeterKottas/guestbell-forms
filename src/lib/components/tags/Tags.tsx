@@ -247,7 +247,7 @@ export class TagsRaw extends BaseInput<
       { textIsFocused: true, suggestionsVisible: true, touched: true },
       () => this.handleErrors()
     );
-    this.fetchExistingTags();
+    this.fetchExistingTags(this.state.value);
   };
 
   private onKeyDown = (suggestions: Tag[]) => async e => {
