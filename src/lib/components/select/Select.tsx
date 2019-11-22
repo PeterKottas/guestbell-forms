@@ -65,18 +65,18 @@ class SelectRaw extends BaseInput<
     this.props.multiple && this.handleValid(this.props.selectedValues);
   }
 
-  public componentWillReceiveProps(nextProps: SelectRawProps) {
+  public componentDidUpdate(oldProps: SelectRawProps) {
     if (
-      nextProps.value !== this.props.value ||
-      nextProps.validators !== this.props.validators ||
-      nextProps.customValidators !== this.props.customValidators ||
-      nextProps.required !== this.props.required ||
-      nextProps.selectedValues !== this.props.selectedValues
+      oldProps.value !== this.props.value ||
+      oldProps.validators !== this.props.validators ||
+      oldProps.customValidators !== this.props.customValidators ||
+      oldProps.required !== this.props.required ||
+      oldProps.selectedValues !== this.props.selectedValues
     ) {
       if (this.props.multiple) {
-        this.handleValid(nextProps.selectedValues);
+        this.handleValid(this.props.selectedValues);
       } else {
-        this.handleValueChange(nextProps.value, true, [], nextProps);
+        this.handleValueChange(this.props.value, true, [], this.props);
       }
     }
   }

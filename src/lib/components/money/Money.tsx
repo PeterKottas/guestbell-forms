@@ -92,7 +92,7 @@ export class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never> {
                 c => c.value === item.currency.value
               );
               let retComponents = currentCurrencies.length ? (
-                <div key={index}>
+                <React.Fragment key={index}>
                   <Select
                     {...(this.props.id && {
                       id:
@@ -140,7 +140,7 @@ export class MoneyRaw extends BaseInput<MoneyRawProps, MoneyState, never> {
                       <PlusIcon />
                     </Button>
                   )}
-                </div>
+                </React.Fragment>
               ) : null;
               unusedCurrencies = unusedCurrencies.filter(
                 c => c.value !== item.currency.value

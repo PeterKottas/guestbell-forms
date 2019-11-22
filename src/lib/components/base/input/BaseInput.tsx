@@ -127,14 +127,14 @@ export class BaseInput<
     }
   }
 
-  public componentWillReceiveProps(nextProps: P) {
+  public componentDidUpdate(oldProps: P) {
     if (
-      nextProps.value !== this.props.value ||
-      nextProps.validators !== this.props.validators ||
-      nextProps.customValidators !== this.props.customValidators ||
-      nextProps.required !== this.props.required
+      oldProps.value !== this.props.value ||
+      oldProps.validators !== this.props.validators ||
+      oldProps.customValidators !== this.props.customValidators ||
+      oldProps.required !== this.props.required
     ) {
-      this.handleValueChange(nextProps.value, true, [], nextProps);
+      this.handleValueChange(this.props.value, true, [], this.props);
     }
   }
 

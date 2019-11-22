@@ -111,14 +111,14 @@ export class TagsRaw extends BaseInput<
     }
   }
 
-  public componentWillReceiveProps(nextProps: TagsRawProps) {
+  public componentDidUpdate(oldProps: TagsRawProps) {
     if (
-      nextProps.tags !== this.props.tags ||
-      nextProps.validators !== this.props.validators ||
-      nextProps.customValidators !== this.props.customValidators ||
-      nextProps.required !== this.props.required
+      oldProps.tags !== this.props.tags ||
+      oldProps.validators !== this.props.validators ||
+      oldProps.customValidators !== this.props.customValidators ||
+      oldProps.required !== this.props.required
     ) {
-      this.handleErrors(nextProps.tags);
+      this.handleErrors(this.props.tags);
     }
   }
 

@@ -86,10 +86,10 @@ export class OpeningHoursSpecialRaw extends BaseInput<
     }
   }
 
-  public componentWillReceiveProps(nextProps: OpeningHoursSpecialRawProps) {
-    if (this.props.days !== nextProps.days) {
+  public componentDidUpdate(oldProps: OpeningHoursSpecialRawProps) {
+    if (this.props.days !== oldProps.days) {
       const allDaysHaveDates =
-        !nextProps.days || nextProps.days.every(d => Boolean(d.date));
+        !this.props.days || this.props.days.every(d => Boolean(d.date));
       if (allDaysHaveDates) {
         this.setValid();
       } else {

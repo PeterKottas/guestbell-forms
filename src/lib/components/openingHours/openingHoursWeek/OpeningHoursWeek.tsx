@@ -66,9 +66,9 @@ export class OpeningHoursWeekRaw extends BaseInput<
     }
   }
 
-  public componentWillReceiveProps(newProps: OpeningHoursWeekProps) {
-    if (!newProps.days || !newProps.days.length) {
-      newProps.onDaysChange([
+  public componentDidUpdate() {
+    if (!this.props.days || !this.props.days.length) {
+      this.props.onDaysChange([
         { dayLabel: 'Monday', times: [] },
         { dayLabel: 'Tuesday', times: [] },
         { dayLabel: 'Wednesday', times: [] },

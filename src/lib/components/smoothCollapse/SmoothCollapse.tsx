@@ -63,8 +63,8 @@ export class SmoothCollapse extends React.PureComponent<
     this._resetter.emit(null);
   }
 
-  componentWillReceiveProps(nextProps: SmoothCollapseProps) {
-    if (!this.props.expanded && nextProps.expanded) {
+  componentDidUpdate(oldProps: SmoothCollapseProps) {
+    if (!oldProps.expanded && this.props.expanded) {
       this._resetter.emit(null);
 
       // In order to expand, we need to know the height of the children, so we
@@ -99,7 +99,7 @@ export class SmoothCollapse extends React.PureComponent<
           Kefir.fromEvents(mainEl, 'transitionend')
             .merge(
               Kefir.later(
-                getTransitionTimeMs(nextProps.heightTransition) * 1.1 + 500
+                getTransitionTimeMs(this.props.heightTransition) * 1.1 + 500
               )
             )
             .takeUntilBy(this._resetter)
@@ -118,7 +118,7 @@ export class SmoothCollapse extends React.PureComponent<
             });
         }
       );
-    } else if (this.props.expanded && !nextProps.expanded) {
+    } else if (oldProps.expanded && !this.props.expanded) {
       this._resetter.emit(null);
 
       if (!this._innerEl) {
@@ -137,14 +137,14 @@ export class SmoothCollapse extends React.PureComponent<
           // tslint:disable-next-line:no-unused-expression
           mainEl.clientHeight; // force the page layout
           this.setState({
-            height: nextProps.collapsedHeight,
+            height: this.props.collapsedHeight,
           });
 
           // See comment above about previous use of transitionend event.
           Kefir.fromEvents(mainEl, 'transitionend')
             .merge(
               Kefir.later(
-                getTransitionTimeMs(nextProps.heightTransition) * 1.1 + 500
+                getTransitionTimeMs(this.props.heightTransition) * 1.1 + 500
               )
             )
             .takeUntilBy(this._resetter)
@@ -160,13 +160,13 @@ export class SmoothCollapse extends React.PureComponent<
         }
       );
     } else if (
-      !nextProps.expanded &&
-      this.props.collapsedHeight !== nextProps.collapsedHeight
+      !this.props.expanded &&
+      this.props.collapsedHeight !== oldProps.collapsedHeight
     ) {
       this.setState({
         hasBeenVisibleBefore:
-          this.state.hasBeenVisibleBefore || this._visibleWhenClosed(nextProps),
-        height: nextProps.collapsedHeight,
+          this.state.hasBeenVisibleBefore || this._visibleWhenClosed(oldProps),
+        height: this.props.collapsedHeight,
       });
     }
   }
