@@ -50,6 +50,7 @@ export type BaseInputProps<HTMLType extends AllowedHtmlElements> = {
   onErrorsChanged?: (errors: ValidationError[]) => void;
   showValidation?: boolean;
   reRendersWhenContextChanges?: boolean;
+  defaultTouched?: boolean;
 } & FormContextProps;
 
 export interface BaseInputState {
@@ -97,7 +98,7 @@ export class BaseInput<
       isValid: res.isValid,
       errors: res.errors,
       value: props.value ? props.value : '',
-      touched: false,
+      touched: props.defaultTouched,
       disabled: false,
       focused: false,
       handleValueChangeEnabled: true,
