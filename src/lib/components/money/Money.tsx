@@ -15,7 +15,6 @@ import {
 import { Button } from '../button/Button';
 import { withFormContext } from '../form/withFormContext';
 import { OmitFormContext } from '../form/FormContext';
-import { InnerRefProps } from './../../types/InnerRefProps';
 
 export interface MoneyWithCurrency {
   value: number;
@@ -30,8 +29,7 @@ export interface MoneyRawProps extends BaseInputProps<never> {
   prices: MoneyWithCurrency[];
 }
 
-export type MoneyProps = OmitFormContext<MoneyRawProps> &
-  InnerRefProps<MoneyRawProps>;
+export type MoneyProps = OmitFormContext<MoneyRawProps>;
 
 export interface MoneyState extends BaseInputState {}
 

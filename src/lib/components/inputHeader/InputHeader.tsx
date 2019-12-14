@@ -8,7 +8,7 @@ import * as PlusIcon from 'material-design-icons/hardware/svg/production/ic_keyb
 import { ButtonProps, Button, ButtonComponentProps } from '../button/Button';
 import guid from '../utils/Guid';
 import { Dropdown } from '../dropdown/Dropdown';
-import { SmoothCollapse } from '../smoothCollapse/SmoothCollapse';
+import Collapse from '@material-ui/core/Collapse';
 import {
   OmitInputHeaderContext,
   InputHeaderContextProps,
@@ -16,7 +16,6 @@ import {
   InputHeaderComponentContextState,
 } from '../InputHeader/InputHeaderContext';
 import { withInputHeaderContext } from './withInputHeaderContext';
-import { InnerRefProps } from './../../types/InnerRefProps';
 
 export type InputHeaderRawProps = {
   className?: string;
@@ -39,8 +38,7 @@ export type InputHeaderRawProps = {
   shouldToggleCollapseOnHeaderClick?: boolean;
 } & InputHeaderContextProps;
 
-export type InputHeaderProps = OmitInputHeaderContext<InputHeaderRawProps> &
-  InnerRefProps<InputHeaderRawProps>;
+export type InputHeaderProps = OmitInputHeaderContext<InputHeaderRawProps>;
 
 export interface InputHeaderApi {
   expand: () => void;
@@ -51,12 +49,9 @@ export interface InputHeaderApi {
 export interface InputHeaderState {
   collapsed: boolean;
   inputHeaderContext: InputHeaderContextState;
-  smoothCollapseDone: boolean;
 }
 
-const CollapseExpandButtonComponent: React.SFC<
-  ButtonComponentProps
-> = props => (
+const CollapseExpandButtonComponent: React.SFC<ButtonComponentProps> = props => (
   <a className={props.className} onClick={props.onClick} href="#">
     {props.children}
   </a>
@@ -86,7 +81,6 @@ export class InputHeaderRaw
         stateChanged: () => this.forceUpdate(),
         components: {},
       },
-      smoothCollapseDone: true,
     };
     this.registerInputHeader = this.registerInputHeader.bind(this);
     this.unregisterInputHeader = this.unregisterInputHeader.bind(this);
@@ -119,7 +113,7 @@ export class InputHeaderRaw
   public expand() {
     this.props.collapsible &&
       this.setState(
-        { collapsed: false, smoothCollapseDone: false },
+        { collapsed: false },
         () =>
           this.props.inputHeaderContext &&
           this.props.inputHeaderContext.stateChanged()
@@ -129,7 +123,7 @@ export class InputHeaderRaw
   public collapse() {
     this.props.collapsible &&
       this.setState(
-        { collapsed: true, smoothCollapseDone: false },
+        { collapsed: true },
         () =>
           this.props.inputHeaderContext &&
           this.props.inputHeaderContext.stateChanged()
@@ -139,7 +133,7 @@ export class InputHeaderRaw
   public toggle() {
     this.props.collapsible &&
       this.setState(
-        { collapsed: !this.state.collapsed, smoothCollapseDone: false },
+        { collapsed: !this.state.collapsed },
         () =>
           this.props.inputHeaderContext &&
           this.props.inputHeaderContext.stateChanged()
@@ -246,25 +240,16 @@ export class InputHeaderRaw
           }
         >
           {this.props.collapsible ? (
-            <div
-              className={
-                !this.state.collapsed && this.state.smoothCollapseDone
-                  ? 'smooth-collapse__container'
-                  : ''
+            <Collapse
+              collapsedHeight={'0.0001px'}
+              in={
+                this.props.collapsed !== undefined
+                  ? !this.props.collapsed
+                  : !this.state.collapsed
               }
             >
-              <SmoothCollapse
-                collapsedHeight={'0.0001px'}
-                expanded={
-                  this.props.collapsed !== undefined
-                    ? !this.props.collapsed
-                    : !this.state.collapsed
-                }
-                onChangeEnd={this.smoothCollapseDone}
-              >
-                {this.props.children}
-              </SmoothCollapse>
-            </div>
+              {this.props.children}
+            </Collapse>
           ) : (
             this.props.children
           )}
@@ -272,9 +257,6 @@ export class InputHeaderRaw
       </div>
     );
   }
-
-  private smoothCollapseDone = () =>
-    this.setState(previousState => ({ smoothCollapseDone: true }));
 
   private toggleClick = () => this.toggle();
 

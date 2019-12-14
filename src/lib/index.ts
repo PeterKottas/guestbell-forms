@@ -13,7 +13,6 @@ export * from './components/openingHours/openingHoursWeek';
 export * from './components/radio';
 export * from './components/radioContainer';
 export * from './components/select/Select';
-export * from './components/smoothCollapse';
 export * from './components/submit';
 export * from './components/tags';
 export * from './components/text';

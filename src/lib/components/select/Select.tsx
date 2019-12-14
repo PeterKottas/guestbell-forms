@@ -12,7 +12,6 @@ import {
 import { Button } from '../button/Button';
 import { OmitFormContext } from '../form/FormContext';
 import { withFormContext } from '../form/withFormContext';
-import InnerRefProps from '../../types/InnerRefProps';
 
 export interface SelectValue {
   value: number | string;
@@ -31,8 +30,7 @@ export interface SelectRawProps extends BaseInputProps<HTMLSelectElement> {
   readonlyEmptyPlaceholder?: string;
 }
 
-export type SelectProps = OmitFormContext<SelectRawProps> &
-  InnerRefProps<SelectRawProps>;
+export type SelectProps = OmitFormContext<SelectRawProps>;
 
 export interface SelectState extends BaseInputState {}
 

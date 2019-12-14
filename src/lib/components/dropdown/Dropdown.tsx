@@ -1,8 +1,6 @@
 ﻿// Libs
 import * as React from 'react';
-import SmoothCollapse, {
-  SmoothCollapseProps,
-} from '../smoothCollapse/SmoothCollapse';
+import Collapse, { CollapseProps } from '@material-ui/core/Collapse';
 var classNames = require('classnames');
 
 export interface DropdownProps {
@@ -19,7 +17,7 @@ export interface DropdownProps {
   onClick?: () => void;
   disabled?: boolean;
   inline?: boolean;
-  smoothCollapseProps?: Partial<SmoothCollapseProps>;
+  collapseProps?: Partial<CollapseProps>;
 }
 
 export interface DropdownState {
@@ -103,12 +101,12 @@ export class Dropdown extends React.PureComponent<
           )}
         </div>
         <div className={'guestbell__dropdown-menu__container'}>
-          <SmoothCollapse
-            {...this.props.smoothCollapseProps}
-            expanded={this.state.isDropdownVisible}
+          <Collapse
+            {...this.props.collapseProps}
+            in={this.state.isDropdownVisible}
           >
             {this.renderChildren()}
-          </SmoothCollapse>
+          </Collapse>
         </div>
       </this.props.wrapperTag>
     );

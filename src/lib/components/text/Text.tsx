@@ -10,7 +10,6 @@ import {
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
 import { OmitFormContext } from '../form/FormContext';
-import { InnerRefProps } from './../../types/InnerRefProps';
 
 export interface TextRawProps extends BaseInputProps<HTMLInputElement> {
   mask?: string;
@@ -22,8 +21,7 @@ export interface TextRawProps extends BaseInputProps<HTMLInputElement> {
   type?: 'number' | 'text';
 }
 
-export type TextProps = OmitFormContext<TextRawProps> &
-  InnerRefProps<TextRawProps>;
+export type TextProps = OmitFormContext<TextRawProps>;
 
 export interface TextState extends BaseInputState {}
 

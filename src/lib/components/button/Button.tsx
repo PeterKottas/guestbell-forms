@@ -124,7 +124,6 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
           placement="bottom"
           trigger="mouseenter"
           interactive={true}
-          animateFill={false}
           {...this.props.tooltipProps}
         >
           {button}

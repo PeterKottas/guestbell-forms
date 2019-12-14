@@ -1,7 +1,7 @@
 // Libs
 import * as React from 'react';
 import { InputGroup } from '../inputGroup/InputGroup';
-import { Text, TextProps, TextRaw } from '../text/Text';
+import { Text, TextProps } from '../text/Text';
 import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_circle_outline_24px.svg';
 import {
   BaseInputProps,
@@ -13,8 +13,6 @@ import { Button } from '../button/Button';
 import TagsSuggestions from './subComponents/TagsSuggestions';
 import { OmitFormContext } from '../form/FormContext';
 import { withFormContext } from '../form/withFormContext';
-import { InnerRefProps } from './../../types/InnerRefProps';
-import * as ReactDOM from 'react-dom';
 import classNames from 'classnames';
 
 // Misc
@@ -48,8 +46,7 @@ export type TagsRawProps = {
   maxSuggestions?: number;
 } & BaseInputProps<HTMLInputElement>;
 
-export type TagsProps = OmitFormContext<TagsRawProps> &
-  InnerRefProps<TagsRawProps>;
+export type TagsProps = OmitFormContext<TagsRawProps>;
 
 export interface TagsState extends BaseInputState {
   textIsFocused: boolean;
@@ -87,7 +84,7 @@ export class TagsRaw extends BaseInput<
     maxSuggestions: 5,
   };
 
-  private textRef: TextRaw;
+  private textRef: React.RefObject<HTMLInputElement>;
 
   constructor(props: TagsRawProps) {
     super(props);
@@ -103,11 +100,8 @@ export class TagsRaw extends BaseInput<
   }
 
   public focus() {
-    if (this.textRef && this.textRef.inputRef) {
-      const domNode: HTMLElement = ReactDOM.findDOMNode(
-        (this.textRef.inputRef as React.RefObject<HTMLElement>).current
-      ) as HTMLElement;
-      domNode && domNode.focus();
+    if (this.textRef && this.textRef.current) {
+      this.textRef.current.focus();
     }
   }
 
@@ -155,8 +149,7 @@ export class TagsRaw extends BaseInput<
                   {...(this.props.id && {
                     id: this.props.id + '-text-input',
                   })}
-                  // tslint:disable-next-line: no-any
-                  innerRef={val => (this.textRef = val as any)}
+                  inputRef={this.textRef}
                   required={
                     this.props.tags.length > 0 ? false : this.props.required
                   }
@@ -240,7 +233,10 @@ export class TagsRaw extends BaseInput<
   }
 
   private onTextErrorsChanged = (textErrors: ValidationError[]) =>
-    this.setState(() => ({ textErrors }), () => this.handleErrors());
+    this.setState(
+      () => ({ textErrors }),
+      () => this.handleErrors()
+    );
 
   private onFocus = () => {
     this.setState(

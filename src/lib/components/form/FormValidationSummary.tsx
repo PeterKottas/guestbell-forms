@@ -10,7 +10,6 @@ import { Button } from './../button/Button';
 var classNames = require('classnames');
 
 import * as ArrowIcon from 'material-design-icons/maps/svg/production/ic_my_location_24px.svg';
-import { FormValidationSummaryComponentProps } from './FormValidationSummary';
 
 export interface FormValidationSummaryComponentProps {
   componentsWithErrors: FormComponentContextState[];
@@ -33,9 +32,7 @@ export type FormValidationSummaryProps = OmitFormContext<
 
 export interface FormValidationSummaryState {}
 
-export const DefaultComponent: React.SFC<
-  FormValidationSummaryComponentProps
-> = props => (
+export const DefaultComponent: React.SFC<FormValidationSummaryComponentProps> = props => (
   <React.Fragment>
     {props.componentsWithErrors.map((component, index) => {
       return (

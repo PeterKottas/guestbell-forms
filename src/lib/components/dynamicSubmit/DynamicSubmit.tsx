@@ -3,7 +3,6 @@ import * as React from 'react';
 var classNames = require('classnames');
 import { withFormContext } from '../form/withFormContext';
 import { OmitFormContext, FormContextProps } from '../form/FormContext';
-import { InnerRefProps } from './../../types/InnerRefProps';
 import { SubmitProps } from '../submit';
 import { Omit } from '../utils/Typescript';
 import { SubmitRaw } from './../submit/Submit';
@@ -38,8 +37,7 @@ export type DynamicSubmitRawProps = Omit<SubmitProps, 'onClick'> & {
   resetEnablesInputs?: boolean;
 } & FormContextProps;
 
-export type DynamicSubmitProps = OmitFormContext<DynamicSubmitRawProps> &
-  InnerRefProps<DynamicSubmitRawProps>;
+export type DynamicSubmitProps = OmitFormContext<DynamicSubmitRawProps>;
 
 export interface DynamicSubmitState {
   buttonState: DynamicSubmitMode;

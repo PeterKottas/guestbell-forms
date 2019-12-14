@@ -465,7 +465,6 @@ export class BaseInput<
         placement="bottom"
         trigger="mouseenter"
         interactive={true}
-        animateFill={false}
         {...this.props.tooltipProps}
       >
         {content}

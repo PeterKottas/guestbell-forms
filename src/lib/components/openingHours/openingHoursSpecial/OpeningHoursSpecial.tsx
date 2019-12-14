@@ -23,7 +23,6 @@ import {
 import { Button } from '../../button/Button';
 import { OmitFormContext } from '../../form/FormContext';
 import { withFormContext } from '../../form/withFormContext';
-import { InnerRefProps } from './../../../types/InnerRefProps';
 
 export interface OpeningHoursSpecialDayObj extends OpeningHoursDayObj {
   date?: Date;
@@ -37,8 +36,7 @@ export interface OpeningHoursSpecialRawProps extends BaseInputProps<never> {
 
 export type OpeningHoursSpecialProps = OmitFormContext<
   OpeningHoursSpecialRawProps
-> &
-  InnerRefProps<OpeningHoursSpecialRawProps>;
+>;
 
 export interface OpeningHoursSpecialState extends BaseInputState {}
 

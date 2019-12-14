@@ -1,6 +1,5 @@
 ﻿// Libs
 import * as React from 'react';
-import Textarea from 'react-autosize-textarea';
 
 // Misc
 import InputGroup from '../inputGroup/InputGroup';
@@ -11,7 +10,7 @@ import {
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
 import { OmitFormContext } from '../form/FormContext';
-import InnerRefProps from '../../types/InnerRefProps';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 export interface TextAreaRawProps extends BaseInputProps<HTMLTextAreaElement> {
   mask?: string;
@@ -25,8 +24,7 @@ export interface TextAreaRawProps extends BaseInputProps<HTMLTextAreaElement> {
   maxRows?: number;
 }
 
-export type TextAreaProps = OmitFormContext<TextAreaRawProps> &
-  InnerRefProps<TextAreaRawProps>;
+export type TextAreaProps = OmitFormContext<TextAreaRawProps>;
 
 export interface TextAreaState extends BaseInputState {}
 
@@ -41,8 +39,7 @@ export class TextAreaRaw extends BaseInput<
     stopClickPropagation: true,
     readOnly: false,
   });
-
-  private textArea: HTMLTextAreaElement;
+  private elem: HTMLTextAreaElement;
 
   constructor(props: TextAreaRawProps) {
     super(props);
@@ -58,7 +55,7 @@ export class TextAreaRaw extends BaseInput<
           onClick={this.onContainerClick}
           ref={this.containerRef}
         >
-          <Textarea
+          <TextareaAutosize
             {...(this.props.id && {
               id: this.props.id,
             })}
@@ -74,8 +71,7 @@ export class TextAreaRaw extends BaseInput<
             readOnly={this.props.readOnly}
             onKeyDown={this.onKeyDown}
             rows={this.props.minRows}
-            maxRows={this.props.maxRows}
-            innerRef={el => (this.textArea = el)}
+            rowsMax={this.props.maxRows}
           />
           <span className="highlight" />
           <span className="bar" />
@@ -87,12 +83,15 @@ export class TextAreaRaw extends BaseInput<
   }
 
   public focus() {
-    this.textArea && this.textArea.focus();
+    this.elem && this.elem.focus();
   }
 
   private onKeyDown = e => this.props.onKeyDown && this.props.onKeyDown(e);
 
-  private elemRef = elem => this.props.inputRef && this.props.inputRef(elem);
+  private elemRef = (elem: HTMLTextAreaElement) => {
+    this.elem = elem;
+    this.props.inputRef && this.props.inputRef(elem);
+  };
 
   private onContainerClick = e =>
     this.props.stopClickPropagation && e.stopPropagation();

@@ -131,13 +131,6 @@
   cursor: pointer;
 }
 
-.smooth-collapse__container {
-  > div,
-  > div > div {
-    overflow: visible !important;
-  }
-}
-
 @media (max-width: 768px) {
   .input__header__top__header-container {
     flex-direction: column;

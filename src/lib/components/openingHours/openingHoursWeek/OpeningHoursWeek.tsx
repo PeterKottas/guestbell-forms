@@ -15,7 +15,6 @@ import {
 import { Checkbox } from '../../checkbox/Checkbox';
 import { OmitFormContext } from '../../form/FormContext';
 import { withFormContext } from '../../form/withFormContext';
-import { InnerRefProps } from './../../../types/InnerRefProps';
 
 export interface OpeningHoursWeekDayObj extends OpeningHoursDayObj {
   isStandardDay?: boolean;
@@ -30,8 +29,7 @@ export interface OpeningHoursWeekRawProps extends BaseInputProps<never> {
   onStandardDayChange?: (day: OpeningHoursWeekDayObj) => void;
 }
 
-export type OpeningHoursWeekProps = OmitFormContext<OpeningHoursWeekRawProps> &
-  InnerRefProps<OpeningHoursWeekRawProps>;
+export type OpeningHoursWeekProps = OmitFormContext<OpeningHoursWeekRawProps>;
 
 export interface OpeningHoursWeekState extends BaseInputState {}
 
@@ -52,7 +50,7 @@ export class OpeningHoursWeekRaw extends BaseInput<
     this.toggleStandardForAll = this.toggleStandardForAll.bind(this);
   }
 
-  public componentWillMount() {
+  public componentDidMount() {
     if (!this.props.days || !this.props.days.length) {
       this.props.onDaysChange([
         { dayLabel: 'Monday', times: [] },

@@ -7,7 +7,6 @@ import {
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
 import { OmitFormContext } from '../form/FormContext';
-import { InnerRefProps } from './../../types/InnerRefProps';
 
 // Misc
 
@@ -19,8 +18,7 @@ export interface RadioRawProps extends BaseInputProps<HTMLInputElement> {
   name: string;
 }
 
-export type RadioProps = OmitFormContext<RadioRawProps> &
-  InnerRefProps<RadioRawProps>;
+export type RadioProps = OmitFormContext<RadioRawProps>;
 
 export interface RadioState extends BaseInputState {}
 

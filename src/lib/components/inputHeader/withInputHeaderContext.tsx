@@ -4,26 +4,20 @@ import {
   InputHeaderContextProps,
   OmitInputHeaderContext,
 } from './InputHeaderContext';
-import { InnerRefProps } from '../../types/InnerRefProps';
 
 export function withInputHeaderContext<
   P extends InputHeaderContextProps &
     React.ClassAttributes<React.ComponentType<P>>,
-  R extends OmitInputHeaderContext<P> & InnerRefProps<P>
->(Component: React.ComponentType<P>) {
-  const WithInputHeaderContext: React.SFC<R> = props => {
-    const { innerRef, ...rest } = props as InnerRefProps<typeof Component>;
+  R extends OmitInputHeaderContext<P>
+>(Component: React.ComponentType<P>): React.ForwardRefExoticComponent<R> {
+  const WithInputHeaderContext = React.forwardRef<R, P>((props, ref) => {
     return (
       <InputHeaderContextConsumer>
-        {value => (
-          <Component
-            ref={innerRef}
-            {...((rest as unknown) as P)}
-            inputHeaderContext={value}
-          />
-        )}
+        {value => <Component ref={ref} {...props} inputHeaderContext={value} />}
       </InputHeaderContextConsumer>
     );
-  };
-  return WithInputHeaderContext;
+  });
+  return (WithInputHeaderContext as unknown) as React.ForwardRefExoticComponent<
+    R
+  >;
 }

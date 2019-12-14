@@ -1,6 +1,6 @@
 require('./header.scss');
 import * as React from 'react';
-import * as logo from '../../assets/images/logo.svg';
+import logo from '../../assets/images/logo.svg';
 
 export interface HeaderCustomProps {}
 

@@ -12,7 +12,6 @@ import {
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
 import { OmitFormContext } from '../form/FormContext';
-import { InnerRefProps } from './../../types/InnerRefProps';
 import TimeUtil from '../utils/TimeUtil';
 
 export interface TimeRawProps extends BaseInputProps<HTMLInputElement> {
@@ -24,8 +23,7 @@ export interface TimeRawProps extends BaseInputProps<HTMLInputElement> {
   showDateDiff?: boolean;
 }
 
-export type TimeProps = OmitFormContext<TimeRawProps> &
-  InnerRefProps<TimeRawProps>;
+export type TimeProps = OmitFormContext<TimeRawProps>;
 
 export interface TimeState extends BaseInputState {
   hoursText?: string;
