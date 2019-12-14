@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { ValidationError, ComponentApi } from '../base/input';
-import { Omit, DeepPartial } from '../utils/Typescript';
+import { DeepPartial, PartialBy } from '../utils/Typescript';
 
-export type OmitFormContext<P extends FormContextProps> = Omit<
+export type OmitFormContext<P extends FormContextProps> = PartialBy<
   P,
   'formContext'
 >;
@@ -19,7 +19,7 @@ export interface FormComponentContextState {
 }
 
 export interface FormContextProps {
-  formContext: FormContextState;
+  formContext?: FormContextState;
 }
 
 export type ComponentsDict = {

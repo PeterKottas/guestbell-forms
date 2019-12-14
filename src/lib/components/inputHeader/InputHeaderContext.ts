@@ -1,15 +1,14 @@
 import * as React from 'react';
-import { Omit } from '../utils/Typescript';
 import {
   InputHeaderApi,
   InputHeaderProps,
   InputHeaderState,
 } from './InputHeader';
+import { PartialBy } from '../utils/Typescript';
 
-export type OmitInputHeaderContext<P extends InputHeaderContextProps> = Omit<
-  P,
-  'inputHeaderContext'
->;
+export type OmitInputHeaderContext<
+  P extends InputHeaderContextProps
+> = PartialBy<P, 'inputHeaderContext'>;
 
 export interface InputHeaderComponentContextState {
   props: InputHeaderProps;
@@ -33,7 +32,7 @@ export interface InputHeaderContextState {
 }
 
 export interface InputHeaderContextProps {
-  inputHeaderContext: InputHeaderContextState;
+  inputHeaderContext?: InputHeaderContextState;
 }
 
 const InputHeaderContext = React.createContext<

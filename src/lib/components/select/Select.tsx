@@ -10,7 +10,6 @@ import {
   BaseInput,
 } from '../base/input/BaseInput';
 import { Button } from '../button/Button';
-import { OmitFormContext } from '../form/FormContext';
 import { withFormContext } from '../form/withFormContext';
 
 export interface SelectValue {
@@ -19,7 +18,7 @@ export interface SelectValue {
   forceSelected?: boolean;
 }
 
-export interface SelectRawProps extends BaseInputProps<HTMLSelectElement> {
+export interface SelectProps extends BaseInputProps<HTMLSelectElement> {
   values?: SelectValue[];
   defaultEmpty?: boolean;
   multiple?: boolean;
@@ -30,15 +29,9 @@ export interface SelectRawProps extends BaseInputProps<HTMLSelectElement> {
   readonlyEmptyPlaceholder?: string;
 }
 
-export type SelectProps = OmitFormContext<SelectRawProps>;
-
 export interface SelectState extends BaseInputState {}
 
-class SelectRaw extends BaseInput<
-  SelectRawProps,
-  SelectState,
-  HTMLSelectElement
-> {
+class SelectRaw extends BaseInput<SelectProps, SelectState, HTMLSelectElement> {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     defaultEmpty: true,
     multiple: false,
@@ -46,7 +39,7 @@ class SelectRaw extends BaseInput<
     readonlyEmptyPlaceholder: 'N/A',
   });
 
-  constructor(props: SelectRawProps) {
+  constructor(props: SelectProps) {
     super(props);
     const val = !props.value
       ? props.defaultEmpty
@@ -63,7 +56,7 @@ class SelectRaw extends BaseInput<
     this.props.multiple && this.handleValid(this.props.selectedValues);
   }
 
-  public componentDidUpdate(oldProps: SelectRawProps) {
+  public componentDidUpdate(oldProps: SelectProps) {
     if (
       oldProps.value !== this.props.value ||
       oldProps.validators !== this.props.validators ||
@@ -279,6 +272,6 @@ class SelectRaw extends BaseInput<
   };
 }
 
-export const Select = withFormContext<SelectRawProps, SelectProps>(SelectRaw);
+export const Select = withFormContext<SelectProps>(SelectRaw);
 
 export default Select;

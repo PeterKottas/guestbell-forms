@@ -9,10 +9,9 @@ import {
   BaseInput,
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
-import { OmitFormContext } from '../form/FormContext';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
-export interface TextAreaRawProps extends BaseInputProps<HTMLTextAreaElement> {
+export interface TextAreaProps extends BaseInputProps<HTMLTextAreaElement> {
   mask?: string;
   reverse?: boolean;
   placeholder?: string;
@@ -24,12 +23,10 @@ export interface TextAreaRawProps extends BaseInputProps<HTMLTextAreaElement> {
   maxRows?: number;
 }
 
-export type TextAreaProps = OmitFormContext<TextAreaRawProps>;
-
 export interface TextAreaState extends BaseInputState {}
 
 export class TextAreaRaw extends BaseInput<
-  TextAreaRawProps,
+  TextAreaProps,
   TextAreaState,
   HTMLTextAreaElement
 > {
@@ -41,7 +38,7 @@ export class TextAreaRaw extends BaseInput<
   });
   private elem: HTMLTextAreaElement;
 
-  constructor(props: TextAreaRawProps) {
+  constructor(props: TextAreaProps) {
     super(props);
   }
 
@@ -97,8 +94,6 @@ export class TextAreaRaw extends BaseInput<
     this.props.stopClickPropagation && e.stopPropagation();
 }
 
-export const TextArea = withFormContext<TextAreaRawProps, TextAreaProps>(
-  TextAreaRaw
-);
+export const TextArea = withFormContext<TextAreaProps>(TextAreaRaw);
 
 export default TextArea;

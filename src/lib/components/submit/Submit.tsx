@@ -7,13 +7,12 @@ import {
 } from '../base/input/BaseInput';
 import { Button, ButtonProps } from '../button/Button';
 import { withFormContext } from '../form/withFormContext';
-import { OmitFormContext } from '../form/FormContext';
 import { FormValidationSummaryRaw } from './../form/FormValidationSummary';
 import SubmitValidationSummary from './subComponents/SubmitValidationSummary';
 
 // Misc
 
-type SubmitRawProps = BaseInputProps<never> &
+export type SubmitProps = BaseInputProps<never> &
   ButtonProps & {
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     validateForm?: boolean;
@@ -21,11 +20,9 @@ type SubmitRawProps = BaseInputProps<never> &
     showValidationSummaryTooltip?: boolean;
   };
 
-export type SubmitProps = OmitFormContext<SubmitRawProps>;
-
 export interface SubmitState extends BaseInputState {}
 
-export class SubmitRaw extends BaseInput<SubmitRawProps, SubmitState, never> {
+export class SubmitRaw extends BaseInput<SubmitProps, SubmitState, never> {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     validateForm: true,
     ignoreContext: true,
@@ -33,7 +30,7 @@ export class SubmitRaw extends BaseInput<SubmitRawProps, SubmitState, never> {
     showValidationSummaryTooltip: true,
   });
 
-  constructor(props: SubmitRawProps) {
+  constructor(props: SubmitProps) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
   }
@@ -94,6 +91,6 @@ export class SubmitRaw extends BaseInput<SubmitRawProps, SubmitState, never> {
   }
 }
 
-export const Submit = withFormContext<SubmitRawProps, SubmitProps>(SubmitRaw);
+export const Submit = withFormContext<SubmitProps>(SubmitRaw);
 
 export default Submit;

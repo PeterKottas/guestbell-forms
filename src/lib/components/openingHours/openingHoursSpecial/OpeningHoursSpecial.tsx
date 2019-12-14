@@ -21,22 +21,17 @@ import {
   BaseInput,
 } from '../../base/input/BaseInput';
 import { Button } from '../../button/Button';
-import { OmitFormContext } from '../../form/FormContext';
 import { withFormContext } from '../../form/withFormContext';
 
 export interface OpeningHoursSpecialDayObj extends OpeningHoursDayObj {
   date?: Date;
 }
 
-export interface OpeningHoursSpecialRawProps extends BaseInputProps<never> {
+export interface OpeningHoursSpecialProps extends BaseInputProps<never> {
   days: OpeningHoursSpecialDayObj[];
   onDaysChange: (days: OpeningHoursSpecialDayObj[]) => void;
   placeholder?: string;
 }
-
-export type OpeningHoursSpecialProps = OmitFormContext<
-  OpeningHoursSpecialRawProps
->;
 
 export interface OpeningHoursSpecialState extends BaseInputState {}
 
@@ -59,7 +54,7 @@ export class DateInput extends React.PureComponent<{
 }
 
 export class OpeningHoursSpecialRaw extends BaseInput<
-  OpeningHoursSpecialRawProps,
+  OpeningHoursSpecialProps,
   OpeningHoursSpecialState,
   never
 > {
@@ -68,7 +63,7 @@ export class OpeningHoursSpecialRaw extends BaseInput<
     placeholder: DAY_FORMAT,
   });
 
-  constructor(props: OpeningHoursSpecialRawProps) {
+  constructor(props: OpeningHoursSpecialProps) {
     super(props);
     this.state = { ...this.state, ...{ touched: true } };
   }
@@ -84,7 +79,7 @@ export class OpeningHoursSpecialRaw extends BaseInput<
     }
   }
 
-  public componentDidUpdate(oldProps: OpeningHoursSpecialRawProps) {
+  public componentDidUpdate(oldProps: OpeningHoursSpecialProps) {
     if (this.props.days !== oldProps.days) {
       const allDaysHaveDates =
         !this.props.days || this.props.days.every(d => Boolean(d.date));
@@ -194,9 +189,8 @@ export class OpeningHoursSpecialRaw extends BaseInput<
   };
 }
 
-export const OpeningHoursSpecial = withFormContext<
-  OpeningHoursSpecialRawProps,
-  OpeningHoursSpecialProps
->(OpeningHoursSpecialRaw);
+export const OpeningHoursSpecial = withFormContext<OpeningHoursSpecialProps>(
+  OpeningHoursSpecialRaw
+);
 
 export default OpeningHoursSpecial;

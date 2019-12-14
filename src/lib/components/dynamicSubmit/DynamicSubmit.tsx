@@ -2,7 +2,7 @@
 import * as React from 'react';
 var classNames = require('classnames');
 import { withFormContext } from '../form/withFormContext';
-import { OmitFormContext, FormContextProps } from '../form/FormContext';
+import { FormContextProps } from '../form/FormContext';
 import { SubmitProps } from '../submit';
 import { Omit } from '../utils/Typescript';
 import { SubmitRaw } from './../submit/Submit';
@@ -16,7 +16,7 @@ export enum DynamicSubmitMode {
   Success,
 }
 
-export type DynamicSubmitRawProps = Omit<SubmitProps, 'onClick'> & {
+export type DynamicSubmitProps = Omit<SubmitProps, 'onClick'> & {
   onClick?: (
     e: React.MouseEvent<HTMLButtonElement>,
     submitting?: () => void,
@@ -37,14 +37,12 @@ export type DynamicSubmitRawProps = Omit<SubmitProps, 'onClick'> & {
   resetEnablesInputs?: boolean;
 } & FormContextProps;
 
-export type DynamicSubmitProps = OmitFormContext<DynamicSubmitRawProps>;
-
 export interface DynamicSubmitState {
   buttonState: DynamicSubmitMode;
 }
 
 export class DynamicSubmitRaw extends React.PureComponent<
-  DynamicSubmitRawProps,
+  DynamicSubmitProps,
   DynamicSubmitState
 > {
   public static defaultProps = Object.assign(
@@ -52,7 +50,7 @@ export class DynamicSubmitRaw extends React.PureComponent<
     { validateForm: true, submitDisablesInputs: true, resetEnablesInputs: true }
   );
 
-  constructor(props: DynamicSubmitRawProps) {
+  constructor(props: DynamicSubmitProps) {
     super(props);
     this.state = {
       buttonState: DynamicSubmitMode.Normal,
@@ -146,9 +144,8 @@ export class DynamicSubmitRaw extends React.PureComponent<
   }
 }
 
-export const DynamicSubmit = withFormContext<
-  DynamicSubmitRawProps,
-  DynamicSubmitProps
->(DynamicSubmitRaw);
+export const DynamicSubmit = withFormContext<DynamicSubmitProps>(
+  DynamicSubmitRaw
+);
 
 export default DynamicSubmit;

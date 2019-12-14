@@ -15,14 +15,13 @@ import {
 } from '../../base/input/BaseInput';
 import { Button } from '../../button/Button';
 import { withFormContext } from '../../form/withFormContext';
-import { OmitFormContext } from '../../form/FormContext';
 import classNames from 'classnames';
 
 export interface OpeningHoursDayObj {
   times: Date[];
 }
 
-export interface OpeningHoursDayRawProps extends BaseInputProps<never> {
+export interface OpeningHoursDayProps extends BaseInputProps<never> {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onOpeningHoursChange: (openingHours: OpeningHoursDayObj) => void;
   openingHours: OpeningHoursDayObj;
@@ -30,12 +29,10 @@ export interface OpeningHoursDayRawProps extends BaseInputProps<never> {
   maxOpenCloseTimes?: number;
 }
 
-export type OpeningHoursDayProps = OmitFormContext<OpeningHoursDayRawProps>;
-
 export interface OpeningHoursState extends BaseInputState {}
 
 export class OpeningHoursDayRaw extends BaseInput<
-  OpeningHoursDayRawProps,
+  OpeningHoursDayProps,
   OpeningHoursState,
   never
 > {
@@ -46,7 +43,7 @@ export class OpeningHoursDayRaw extends BaseInput<
   });
   private fullDayMilliseconds: number = 24 * 60 * 60 * 1000;
 
-  constructor(props: OpeningHoursDayRawProps) {
+  constructor(props: OpeningHoursDayProps) {
     super(props);
   }
 
@@ -321,9 +318,8 @@ export class OpeningHoursDayRaw extends BaseInput<
   }
 }
 
-export const OpeningHoursDay = withFormContext<
-  OpeningHoursDayRawProps,
-  OpeningHoursDayProps
->(OpeningHoursDayRaw);
+export const OpeningHoursDay = withFormContext<OpeningHoursDayProps>(
+  OpeningHoursDayRaw
+);
 
 export default OpeningHoursDay;

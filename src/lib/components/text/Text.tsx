@@ -9,9 +9,8 @@ import {
   BaseInput,
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
-import { OmitFormContext } from '../form/FormContext';
 
-export interface TextRawProps extends BaseInputProps<HTMLInputElement> {
+export interface TextProps extends BaseInputProps<HTMLInputElement> {
   mask?: string;
   reverse?: boolean;
   placeholder?: string;
@@ -21,15 +20,9 @@ export interface TextRawProps extends BaseInputProps<HTMLInputElement> {
   type?: 'number' | 'text';
 }
 
-export type TextProps = OmitFormContext<TextRawProps>;
-
 export interface TextState extends BaseInputState {}
 
-export class TextRaw extends BaseInput<
-  TextRawProps,
-  TextState,
-  HTMLInputElement
-> {
+export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     type: 'text',
     placeholder: '',
@@ -37,7 +30,7 @@ export class TextRaw extends BaseInput<
     readOnly: false,
   });
 
-  constructor(props: TextRawProps) {
+  constructor(props: TextProps) {
     super(props);
   }
 
@@ -89,6 +82,6 @@ export class TextRaw extends BaseInput<
     this.props.onKeyDown && this.props.onKeyDown(e);
 }
 
-export const Text = withFormContext<TextRawProps, TextProps>(TextRaw);
+export const Text = withFormContext<TextProps>(TextRaw);
 
 export default Text;

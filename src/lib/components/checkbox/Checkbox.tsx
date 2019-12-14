@@ -10,9 +10,8 @@ import {
 } from '../base/input/BaseInput';
 var classNames = require('classnames');
 import { withFormContext } from '../form/withFormContext';
-import { OmitFormContext } from '../form/FormContext';
 
-export interface CheckboxRawProps extends BaseInputProps<HTMLInputElement> {
+export interface CheckboxProps extends BaseInputProps<HTMLInputElement> {
   onChecked?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChange?: never;
   value?: never;
@@ -20,14 +19,12 @@ export interface CheckboxRawProps extends BaseInputProps<HTMLInputElement> {
   checked?: boolean;
 }
 
-export type CheckboxProps = OmitFormContext<CheckboxRawProps>;
-
 export interface CheckboxState extends BaseInputState {
   checked: boolean;
 }
 
 export class CheckboxRaw extends BaseInput<
-  CheckboxRawProps,
+  CheckboxProps,
   CheckboxState,
   HTMLInputElement
 > {
@@ -35,7 +32,7 @@ export class CheckboxRaw extends BaseInput<
     checked: false,
   });
 
-  constructor(props: CheckboxRawProps) {
+  constructor(props: CheckboxProps) {
     super(props, false);
     this.state = Object.assign(this.state, {
       checked: props.checked,
@@ -105,8 +102,6 @@ export class CheckboxRaw extends BaseInput<
   }
 }
 
-export const Checkbox = withFormContext<CheckboxRawProps, CheckboxProps>(
-  CheckboxRaw
-);
+export const Checkbox = withFormContext<CheckboxProps>(CheckboxRaw);
 
 export default Checkbox;

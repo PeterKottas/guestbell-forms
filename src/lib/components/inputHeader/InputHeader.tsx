@@ -377,9 +377,8 @@ export class InputHeaderRaw
   };
 }
 
-export const InputHeader = withInputHeaderContext<
-  InputHeaderRawProps,
-  InputHeaderProps
->(InputHeaderRaw);
+export const InputHeader = withInputHeaderContext<InputHeaderRawProps>(
+  InputHeaderRaw
+);
 
 export default InputHeader;

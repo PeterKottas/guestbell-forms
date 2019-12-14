@@ -11,7 +11,6 @@ import {
 } from '../base/input/BaseInput';
 import { Button } from '../button/Button';
 import TagsSuggestions from './subComponents/TagsSuggestions';
-import { OmitFormContext } from '../form/FormContext';
 import { withFormContext } from '../form/withFormContext';
 import classNames from 'classnames';
 
@@ -21,7 +20,7 @@ export type Tag = {
   name: string;
 };
 
-export type TagsRawProps = {
+export type TagsProps = {
   className?: string;
   disabled?: boolean;
   tags: Tag[];
@@ -46,8 +45,6 @@ export type TagsRawProps = {
   maxSuggestions?: number;
 } & BaseInputProps<HTMLInputElement>;
 
-export type TagsProps = OmitFormContext<TagsRawProps>;
-
 export interface TagsState extends BaseInputState {
   textIsFocused: boolean;
   textErrors: ValidationError[];
@@ -58,12 +55,8 @@ export interface TagsState extends BaseInputState {
   preselectedSuggestion?: number;
 }
 
-export class TagsRaw extends BaseInput<
-  TagsRawProps,
-  TagsState,
-  HTMLInputElement
-> {
-  public static defaultProps: TagsRawProps = {
+export class TagsRaw extends BaseInput<TagsProps, TagsState, HTMLInputElement> {
+  public static defaultProps: TagsProps = {
     ...BaseInput.defaultProps,
     disabled: false,
     className: '',
@@ -86,7 +79,7 @@ export class TagsRaw extends BaseInput<
 
   private textRef: React.RefObject<HTMLInputElement>;
 
-  constructor(props: TagsRawProps) {
+  constructor(props: TagsProps) {
     super(props);
     this.state = {
       ...this.state,
@@ -105,7 +98,7 @@ export class TagsRaw extends BaseInput<
     }
   }
 
-  public componentDidUpdate(oldProps: TagsRawProps) {
+  public componentDidUpdate(oldProps: TagsProps) {
     if (
       oldProps.tags !== this.props.tags ||
       oldProps.validators !== this.props.validators ||
@@ -501,6 +494,6 @@ export class TagsRaw extends BaseInput<
   }
 }
 
-export const Tags = withFormContext<TagsRawProps, TagsProps>(TagsRaw);
+export const Tags = withFormContext<TagsProps>(TagsRaw);
 
 export default Tags;

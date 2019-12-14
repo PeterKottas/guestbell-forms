@@ -13,7 +13,6 @@ import {
   BaseInput,
 } from '../../base/input/BaseInput';
 import { Checkbox } from '../../checkbox/Checkbox';
-import { OmitFormContext } from '../../form/FormContext';
 import { withFormContext } from '../../form/withFormContext';
 
 export interface OpeningHoursWeekDayObj extends OpeningHoursDayObj {
@@ -21,7 +20,7 @@ export interface OpeningHoursWeekDayObj extends OpeningHoursDayObj {
   dayLabel?: string;
 }
 
-export interface OpeningHoursWeekRawProps extends BaseInputProps<never> {
+export interface OpeningHoursWeekProps extends BaseInputProps<never> {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   days: OpeningHoursWeekDayObj[];
   onDaysChange: (days: OpeningHoursWeekDayObj[]) => void;
@@ -29,12 +28,10 @@ export interface OpeningHoursWeekRawProps extends BaseInputProps<never> {
   onStandardDayChange?: (day: OpeningHoursWeekDayObj) => void;
 }
 
-export type OpeningHoursWeekProps = OmitFormContext<OpeningHoursWeekRawProps>;
-
 export interface OpeningHoursWeekState extends BaseInputState {}
 
 export class OpeningHoursWeekRaw extends BaseInput<
-  OpeningHoursWeekRawProps,
+  OpeningHoursWeekProps,
   OpeningHoursWeekState,
   never
 > {
@@ -44,7 +41,7 @@ export class OpeningHoursWeekRaw extends BaseInput<
     collapsible: false,
   });
 
-  constructor(props: OpeningHoursWeekRawProps) {
+  constructor(props: OpeningHoursWeekProps) {
     super(props);
     this.state = { ...this.state };
     this.toggleStandardForAll = this.toggleStandardForAll.bind(this);
@@ -206,9 +203,8 @@ export class OpeningHoursWeekRaw extends BaseInput<
   };
 }
 
-export const OpeningHoursWeek = withFormContext<
-  OpeningHoursWeekRawProps,
-  OpeningHoursWeekProps
->(OpeningHoursWeekRaw);
+export const OpeningHoursWeek = withFormContext<OpeningHoursWeekProps>(
+  OpeningHoursWeekRaw
+);
 
 export default OpeningHoursWeek;

@@ -1,11 +1,7 @@
 import * as React from 'react';
 import guid from '../utils/Guid';
 import { withFormContext } from './withFormContext';
-import {
-  FormContextProps,
-  OmitFormContext,
-  FormComponentContextState,
-} from './FormContext';
+import { FormContextProps, FormComponentContextState } from './FormContext';
 import { Button } from './../button/Button';
 var classNames = require('classnames');
 
@@ -15,7 +11,7 @@ export interface FormValidationSummaryComponentProps {
   componentsWithErrors: FormComponentContextState[];
 }
 
-export type FormValidationSummaryRawProps = {
+export type FormValidationSummaryProps = {
   containerClassName?: string;
   headerClassName?: string;
   footerClassName?: string;
@@ -25,10 +21,6 @@ export type FormValidationSummaryRawProps = {
     | React.ComponentType<FormValidationSummaryComponentProps>
     | React.StatelessComponent<FormValidationSummaryComponentProps>;
 } & FormContextProps;
-
-export type FormValidationSummaryProps = OmitFormContext<
-  FormValidationSummaryRawProps
->;
 
 export interface FormValidationSummaryState {}
 
@@ -77,7 +69,7 @@ export const DefaultComponent: React.SFC<FormValidationSummaryComponentProps> = 
 );
 
 export class FormValidationSummaryRaw extends React.PureComponent<
-  FormValidationSummaryRawProps,
+  FormValidationSummaryProps,
   FormValidationSummaryState
 > {
   public static defaultProps = {
@@ -125,6 +117,5 @@ export class FormValidationSummaryRaw extends React.PureComponent<
 }
 
 export const FormValidationSummary = withFormContext<
-  FormValidationSummaryRawProps,
   FormValidationSummaryProps
 >(FormValidationSummaryRaw);

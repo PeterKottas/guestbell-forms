@@ -196,7 +196,7 @@ ButtonsShowcase.defaultProps = {
 export class Basic extends React.PureComponent<BasicProps, BasicState> {
   private form: Form;
 
-  private specialDaysInputHeader: InputHeaderRaw;
+  private specialDaysInputHeader: React.RefObject<InputHeaderRaw>;
 
   private dropdownFunctionHeader: Dropdown;
 
@@ -248,6 +248,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
     this.submitForm = this.submitForm.bind(this);
     this.dynamicSubmitSuccessForm = this.dynamicSubmitSuccessForm.bind(this);
     this.dynamicSubmitErrorForm = this.dynamicSubmitErrorForm.bind(this);
+    this.specialDaysInputHeader = React.createRef();
   }
 
   public render() {
@@ -593,7 +594,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         className={''}
                         title={'Special days opening hours'}
                         collapsible={true}
-                        innerRef={this.specialDaysInputHeaderRef}
+                        ref={this.specialDaysInputHeader}
                         mainButton={
                           <Button
                             type={'primary'}
@@ -809,9 +810,6 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
     );
   }
 
-  private specialDaysInputHeaderRef = (el: InputHeaderRaw) =>
-    (this.specialDaysInputHeader = el);
-
   private formRef = (el: Form) => (this.form = el);
 
   private dropdownFunctionHeaderRef = (el: Dropdown) =>
@@ -838,7 +836,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
           { date: undefined, times: [] },
         ]),
       },
-      () => this.specialDaysInputHeader.expand()
+      () => this.specialDaysInputHeader.current.expand()
     );
   };
 
