@@ -464,11 +464,15 @@ export class BaseInput<
       <Tippy
         content={this.props.tooltip}
         placement="bottom"
-        trigger="mouseenter"
+        animation="scale-subtle"
+        arrow={false}
+        duration={200}
+        delay={[75, 0]}
+        distance={8}
         interactive={true}
         {...this.props.tooltipProps}
       >
-        {content}
+        <span tabIndex={0}>{content}</span>
       </Tippy>
     ) : (
       content

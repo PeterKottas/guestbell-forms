@@ -122,11 +122,15 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
         <Tippy
           content={this.props.tooltip}
           placement="bottom"
-          trigger="mouseenter"
+          animation="scale-subtle"
+          arrow={false}
+          duration={200}
+          delay={[75, 0]}
+          distance={8}
           interactive={true}
           {...this.props.tooltipProps}
         >
-          {button}
+          <span tabIndex={0}>{button}</span>
         </Tippy>
       );
     }
