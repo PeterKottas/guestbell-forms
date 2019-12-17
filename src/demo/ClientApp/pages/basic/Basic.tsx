@@ -416,6 +416,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         touchOn={this.state.touchOn}
                         required={true}
                         label="Your name"
+                        placeholder="e.g. Placeholder"
                         onChange={this.nameChanged}
                         value={this.state.name}
                         title="Name"

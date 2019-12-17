@@ -90,6 +90,7 @@
     transition: 0.2s ease all;
   }
   /* active state */
+  input:placeholder-shown ~ label,
   input:focus ~ label,
   .filled ~ label,
   select:focus ~ label,
@@ -98,7 +99,6 @@
   span.label-classname.label--focused {
     top: -1rem;
     font-size: 14px;
-    color: $primary-color;
     $dim-dif: -0.2rem;
     .label--help-icon {
       bottom: 0.25rem;
@@ -107,6 +107,14 @@
       line-height: $dim + $dim-dif;
       font-size: $dim - 0.2 + $dim-dif;
     }
+  }
+  input:focus ~ label,
+  .filled ~ label,
+  select:focus ~ label,
+  textarea:focus ~ label,
+  label.label--focused,
+  span.label-classname.label--focused {
+    color: $primary-color;
   }
   /* BOTTOM BARS ================================= */
   .bar {
