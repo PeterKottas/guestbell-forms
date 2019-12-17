@@ -52,8 +52,12 @@
   &.input__base span.label-classname {
     top: calc(100% - 32px);
   }
-  &.input__base label.label--focused {
-    top: -1rem;
+  &.input__base {
+    label.label--focused,
+    &.tags-input--hasPlaceholder label {
+      top: -1rem;
+      font-size: 14px;
+    }
   }
   .tags-input__suggestions {
     position: absolute;

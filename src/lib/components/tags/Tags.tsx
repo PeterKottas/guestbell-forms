@@ -118,13 +118,16 @@ export class TagsRaw extends BaseInput<TagsProps, TagsState, HTMLInputElement> {
           {...(this.props.id && {
             id: this.props.id,
           })}
-          className={
-            'input__base tags-input ' +
-            this.getValidationClass() +
-            (this.props.className ? ' ' + this.props.className : '') +
-            ' ' +
-            (this.props.readOnly ? 'tags-input--readOnly ' : '')
-          }
+          className={classNames(
+            'input__base tags-input',
+            this.getValidationClass(),
+            this.props.className,
+            {
+              'tags-input--readOnly': this.props.readOnly,
+              'tags-input--hasPlaceholder':
+                this.props.textProps && this.props.textProps.placeholder,
+            }
+          )}
           ref={this.containerRef}
         >
           {this.renderTags()}

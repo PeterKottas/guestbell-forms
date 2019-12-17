@@ -667,6 +667,8 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         />
                         <Tags
                           title="Tags example"
+                          label="And label"
+                          textProps={{ placeholder: 'With placeholder' }}
                           readOnly={this.state.multipleReadonly}
                           allowNew={true}
                           tags={this.state.tags}
