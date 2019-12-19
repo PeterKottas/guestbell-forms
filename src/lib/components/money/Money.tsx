@@ -125,12 +125,12 @@ export class MoneyRaw extends BaseInput<MoneyProps, MoneyState, never> {
                       onClick={this.removePriceClick(index)}
                       className="transform-rotate--45 line-height--0"
                       buttonProps={{
-                        title: currency.forceSelected
+                        title: currency && currency.forceSelected
                           ? 'Cannot remove default currency'
                           : 'Remove price',
                       }}
                       circular={true}
-                      disabled={currency.forceSelected}
+                      disabled={currency && currency.forceSelected}
                     >
                       <PlusIcon />
                     </Button>
