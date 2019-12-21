@@ -130,7 +130,7 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
           interactive={true}
           {...this.props.tooltipProps}
         >
-          <span tabIndex={0}>{button}</span>
+          {button}
         </Tippy>
       );
     }
