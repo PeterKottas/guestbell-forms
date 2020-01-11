@@ -202,7 +202,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
 
   private initialState: BasicState = {
     gender: '',
-    name: '',
+    name: 'Test',
     email: '',
     age: '',
     min1: '',
@@ -416,11 +416,13 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         touchOn={this.state.touchOn}
                         required={true}
                         label="Your name"
-                        placeholder="e.g. Placeholder"
                         onChange={this.nameChanged}
                         value={this.state.name}
                         title="Name"
                       />
+                      <Button onClick={() => this.setState({ name: null })}>
+                        Test
+                      </Button>
                       <div className="px-3">
                         <Text
                           touchOn={this.state.touchOn}

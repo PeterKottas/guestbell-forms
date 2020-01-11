@@ -35,7 +35,7 @@ export interface OpeningHoursSpecialProps extends BaseInputProps<never> {
 
 export interface OpeningHoursSpecialState extends BaseInputState {}
 
-const DAY_FORMAT = 'dd/M/YYYY';
+const DAY_FORMAT = 'dd/M/yyyy';
 
 export class DateInput extends React.PureComponent<{
   value?: string;
