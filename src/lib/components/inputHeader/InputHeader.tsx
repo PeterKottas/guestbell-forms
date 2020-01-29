@@ -18,6 +18,9 @@ import {
 import { withInputHeaderContext } from './withInputHeaderContext';
 
 export type InputHeaderRawProps = {
+  onExpanded?: () => void;
+  onCollapsed?: () => void;
+  onChange?: (collapsed: boolean) => void;
   className?: string;
   title?: string | JSX.Element;
   icon?: string | JSX.Element;
@@ -112,32 +115,34 @@ export class InputHeaderRaw
 
   public expand() {
     this.props.collapsible &&
-      this.setState(
-        { collapsed: false },
-        () =>
-          this.props.inputHeaderContext &&
-          this.props.inputHeaderContext.stateChanged()
-      );
+      this.setState({ collapsed: false }, () => {
+        this.props.inputHeaderContext?.stateChanged?.();
+        this.props.onChange?.(true);
+        this.props.onExpanded?.();
+      });
   }
 
   public collapse() {
     this.props.collapsible &&
-      this.setState(
-        { collapsed: true },
-        () =>
-          this.props.inputHeaderContext &&
-          this.props.inputHeaderContext.stateChanged()
-      );
+      this.setState({ collapsed: true }, () => {
+        this.props.inputHeaderContext?.stateChanged?.();
+        this.props.onChange?.(false);
+        this.props.onCollapsed?.();
+      });
   }
 
   public toggle() {
     this.props.collapsible &&
-      this.setState(
-        { collapsed: !this.state.collapsed },
-        () =>
-          this.props.inputHeaderContext &&
-          this.props.inputHeaderContext.stateChanged()
-      );
+      this.setState({ collapsed: !this.state.collapsed }, () => {
+        this.props.inputHeaderContext?.stateChanged?.();
+        this.props.onChange?.(this.state.collapsed);
+        if (this.state.collapsed) {
+          this.props.onCollapsed?.();
+        }
+        if (!this.state.collapsed) {
+          this.props.onExpanded?.();
+        }
+      });
   }
 
   public render() {
