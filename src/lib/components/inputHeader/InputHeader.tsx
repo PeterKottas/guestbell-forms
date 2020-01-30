@@ -39,6 +39,7 @@ export type InputHeaderRawProps = {
   extraButtonsButtonProps?: ButtonProps;
   collapseButtonsButtonProps?: ButtonProps;
   shouldToggleCollapseOnHeaderClick?: boolean;
+  mountOnEnter?: boolean;
 } & InputHeaderContextProps;
 
 export type InputHeaderProps = OmitInputHeaderContext<InputHeaderRawProps>;
@@ -252,6 +253,7 @@ export class InputHeaderRaw
                   ? !this.props.collapsed
                   : !this.state.collapsed
               }
+              mountOnEnter={this.props.mountOnEnter}
             >
               {this.props.children}
             </Collapse>
