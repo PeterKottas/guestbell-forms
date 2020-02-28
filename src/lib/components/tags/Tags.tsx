@@ -113,7 +113,7 @@ export class TagsRaw extends BaseInput<TagsProps, TagsState, HTMLInputElement> {
     const textProps = this.props.textProps ? this.props.textProps : {};
     const suggestions = this.getSuggestions();
     return (
-      <InputGroup title={this.props.title}>
+      <InputGroup title={this.props.title} tooltip={this.props.tooltip}>
         <div
           {...(this.props.id && {
             id: this.props.id,
