@@ -18,3 +18,4 @@ export * from './components/tags';
 export * from './components/text';
 export * from './components/textArea';
 export * from './components/time';
+export * from './components/timeSpan';

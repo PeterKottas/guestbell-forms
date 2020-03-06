@@ -32,6 +32,8 @@ import {
   ButtonProps,
   FormValidationSummary,
   InputHeaderRaw,
+  TimeSpan,
+  allTimeSpanUnits,
 } from '../../../../lib/index';
 
 export interface BasicProps {}
@@ -55,6 +57,7 @@ export interface BasicState {
   prices3: MoneyWithCurrency[];
   time1: Date;
   time2: Date;
+  timeSpan: Date;
   openingHours: OpeningHoursDayObj;
   openingHoursWeek: OpeningHoursDayObj[];
   openingHoursWeekDay: OpeningHoursDayObj;
@@ -217,6 +220,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
     prices1: [],
     prices2: [],
     prices3: [],
+    timeSpan: new Date(0),
     time1: new Date(),
     time2: new Date(),
     openingHours: {
@@ -559,6 +563,13 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         timeChange={this.time2Changed}
                         title="With Min/Max"
                       />
+                      <TimeSpan
+                        touchOn={this.state.touchOn}
+                        timeSpan={this.state.timeSpan}
+                        timeSpanChange={this.timeSpanChanged}
+                        title="Time span"
+                        validUnits={allTimeSpanUnits}
+                      />
                       <OpeningHoursDay
                         label={'Opening hours sample day'}
                         touchOn={this.state.touchOn}
@@ -857,6 +868,8 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
   private time2Changed = (time: Date) => this.setState({ time2: time });
 
   private time1Changed = (time: Date) => this.setState({ time1: time });
+
+  private timeSpanChanged = (timeSpan: Date) => this.setState({ timeSpan });
 
   private prices2Changed = (prices: MoneyWithCurrency[]) =>
     this.setState({ prices2: prices });
