@@ -11,7 +11,7 @@ import {
   BaseInput,
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
-import * as classNames from 'classnames';
+var classNames = require('classnames');
 
 export enum TimeSpanUnit {
   Dynamic = 0,
