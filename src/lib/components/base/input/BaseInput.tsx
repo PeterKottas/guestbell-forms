@@ -471,6 +471,7 @@ export class BaseInput<
         delay={[75, 0]}
         distance={8}
         interactive={true}
+        trigger="mouseenter focus"
         {...this.props.tooltipProps}
       >
         <span tabIndex={0}>{content}</span>

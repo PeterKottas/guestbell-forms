@@ -513,6 +513,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                           value={this.state.age}
                           onChange={this.ageChanged}
                           title="Age"
+                          type="number"
                         />
                         <Text
                           touchOn={this.state.touchOn}
