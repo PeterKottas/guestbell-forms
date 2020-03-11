@@ -18,6 +18,7 @@ export interface TextProps extends BaseInputProps<HTMLInputElement> {
   inputRef?: React.Ref<HTMLInputElement>;
   readOnly?: boolean;
   type?: 'number' | 'text';
+  maxLength?: number;
 }
 
 export interface TextState extends BaseInputState {}
@@ -62,6 +63,7 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
             onKeyDown={this.onKeyDown}
             type={this.props.type}
             onClick={this.props.onClick}
+            maxLength={this.props.maxLength}
           />
           <span className="highlight" />
           <span className="bar" />
