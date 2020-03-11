@@ -44,6 +44,7 @@ export type BaseInputProps<HTMLType extends AllowedHtmlElements> = {
   onTheFlightValidate?: (value: string) => boolean;
   onFocus?: (e: React.SyntheticEvent<{}>) => void;
   onBlur?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
   title?: string | JSX.Element;
   onKeyDown?: (e: React.KeyboardEvent<HTMLElement>) => void;
   errors?: ValidationError[];

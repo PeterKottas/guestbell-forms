@@ -61,6 +61,7 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
             readOnly={this.props.readOnly}
             onKeyDown={this.onKeyDown}
             type={this.props.type}
+            onClick={this.props.onClick}
           />
           <span className="highlight" />
           <span className="bar" />
