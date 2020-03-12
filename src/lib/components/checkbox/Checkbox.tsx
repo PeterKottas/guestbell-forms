@@ -37,7 +37,10 @@ export class CheckboxRaw extends BaseInput<
     this.state = Object.assign(this.state, {
       checked: props.checked,
       isValid: props.required ? props.checked : true,
-      errors: props.required && !props.checked ? ['Required'] : [],
+      errors:
+        props.required && !props.checked
+          ? [this.props.errorsTranslations.required]
+          : [],
     });
     this.handleChecked = this.handleChecked.bind(this);
     this.subscribeSelf(props);
@@ -81,7 +84,7 @@ export class CheckboxRaw extends BaseInput<
         this.setValid();
       } else {
         if (this.props.required) {
-          this.setInvalid(['Required']);
+          this.setInvalid([this.props.errorsTranslations.required]);
         }
       }
     }

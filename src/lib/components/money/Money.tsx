@@ -43,7 +43,10 @@ export class MoneyRaw extends BaseInput<MoneyProps, MoneyState, never> {
     }
     this.state = Object.assign(this.state, {
       isValid: props.required ? props.prices.length > 0 : true,
-      errors: props.required && props.prices.length === 0 ? ['Required'] : [],
+      errors:
+        props.required && props.prices.length === 0
+          ? [this.props.errorsTranslations.required]
+          : [],
       handleValueChangeEnabled: false,
     });
     const forcedCurrencies = props.currencies.filter(c => c.forceSelected);
@@ -125,9 +128,10 @@ export class MoneyRaw extends BaseInput<MoneyProps, MoneyState, never> {
                       onClick={this.removePriceClick(index)}
                       className="transform-rotate--45 line-height--0"
                       buttonProps={{
-                        title: currency && currency.forceSelected
-                          ? 'Cannot remove default currency'
-                          : 'Remove price',
+                        title:
+                          currency && currency.forceSelected
+                            ? 'Cannot remove default currency'
+                            : 'Remove price',
                       }}
                       circular={true}
                       disabled={currency && currency.forceSelected}
@@ -227,7 +231,7 @@ export class MoneyRaw extends BaseInput<MoneyProps, MoneyState, never> {
     );
     this.props.onPricesChange(newPrices);
     if (newPrices.length === 0 && this.props.required) {
-      this.setInvalid(['Required']);
+      this.setInvalid([this.props.errorsTranslations.required]);
     }
     if (!this.state.touched) {
       this.touch();

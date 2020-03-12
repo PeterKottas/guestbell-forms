@@ -25,6 +25,10 @@ export type AllowedHtmlElements =
   | HTMLSelectElement
   | HTMLTextAreaElement;
 
+export interface ErrorsTranslations {
+  required: string;
+}
+
 export type BaseInputProps<HTMLType extends AllowedHtmlElements> = {
   id?: string;
   disabled?: boolean;
@@ -52,6 +56,7 @@ export type BaseInputProps<HTMLType extends AllowedHtmlElements> = {
   showValidation?: boolean;
   reRendersWhenContextChanges?: boolean;
   defaultTouched?: boolean;
+  errorsTranslations?: ErrorsTranslations;
 } & FormContextProps;
 
 export interface BaseInputState {
@@ -80,6 +85,9 @@ export class BaseInput<
     showValidation: true,
     formContext: undefined,
     reRendersWhenContextChanges: false,
+    errorsTranslations: {
+      required: 'Required',
+    },
   };
 
   public componentId = guid();
@@ -373,7 +381,7 @@ export class BaseInput<
       return { isValid, errors: [] };
     }
     if (props.required && !value) {
-      errors.push('Required');
+      errors.push(this.props.errorsTranslations.required);
       isValid = false;
     } else {
       if (!props.required && !value) {
