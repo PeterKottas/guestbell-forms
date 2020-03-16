@@ -307,7 +307,7 @@ export class OpeningHoursDayRaw extends BaseInput<
   }
 
   private getTime(hours: number, minutes: number, nextDay: boolean = false) {
-    let time = new Date();
+    let time = new Date(0);
     time.setHours(hours);
     time.setMinutes(minutes);
     time.setSeconds(0, 0);
