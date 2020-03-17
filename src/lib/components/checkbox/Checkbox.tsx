@@ -46,9 +46,16 @@ export class CheckboxRaw extends BaseInput<
     this.subscribeSelf(props);
   }
 
-  public componentDidUpdate() {
+  public componentDidUpdate(oldProps: CheckboxProps) {
     if (this.props.checked !== this.state.checked) {
       this.setState({ checked: this.props.checked });
+    }
+    if (oldProps.required !== this.props.required) {
+      if (this.props.required && !this.props.checked) {
+        this.setInvalid([this.props.errorsTranslations.required]);
+      } else {
+        this.setValid();
+      }
     }
   }
 
