@@ -214,12 +214,11 @@ class SelectRaw extends BaseInput<SelectProps, SelectState, HTMLSelectElement> {
 
   private handleValid(newValues: SelectValue[]) {
     if (this.props.required) {
-      if (newValues.length > 0) {
-        this.setValid();
-      } else {
+      if (newValues.length === 0) {
         this.setInvalid([this.props.errorsTranslations.required]);
       }
     }
+    this.setValid();
   }
 
   private renderReadonly() {
