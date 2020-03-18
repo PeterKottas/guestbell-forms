@@ -8,6 +8,7 @@ import {
   BaseInputProps,
   BaseInputState,
   BaseInput,
+  ValidationError,
 } from '../base/input/BaseInput';
 import { Button } from '../button/Button';
 import { withFormContext } from '../form/withFormContext';
@@ -213,13 +214,32 @@ class SelectRaw extends BaseInput<SelectProps, SelectState, HTMLSelectElement> {
   }
 
   private handleValid(newValues: SelectValue[]) {
+    let isValid = true;
+    let errors: ValidationError[] = [];
     if (this.props.required) {
       if (newValues.length === 0) {
-        this.setInvalid([this.props.errorsTranslations.required]);
-        return;
+        isValid = false;
+        errors.push(this.props.errorsTranslations.required);
       }
     }
-    this.setValid();
+    if (this.props.customValidators) {
+      this.props.customValidators.forEach(customValidator => {
+        let validInner = false;
+        validInner = customValidator.Validate(
+          this.state.value,
+          this.props.required,
+          error => errors.push(error)
+        );
+        if (isValid && !validInner) {
+          isValid = validInner;
+        }
+      });
+    }
+    if (isValid) {
+      this.setValid();
+    } else {
+      this.setInvalid(errors);
+    }
   }
 
   private renderReadonly() {
