@@ -481,6 +481,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         subTitle={
                           "Helpful text that describes what's collapsed here"
                         }
+                        tooltip="With tooltip"
                       >
                         <Text
                           touchOn={this.state.touchOn}

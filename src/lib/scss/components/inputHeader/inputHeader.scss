@@ -73,6 +73,18 @@
     display: flex;
     align-items: center;
   }
+  $dim: 1.2rem;
+  .label--help-icon {
+    margin-left: 0.5rem;
+    background-color: $input-label-color;
+    border-radius: 50%;
+    color: $input-text-color--white;
+    text-align: center;
+    height: $dim;
+    line-height: $dim;
+    width: $dim;
+    display: inline-block;
+  }
 }
 
 .input__header__sub-title {

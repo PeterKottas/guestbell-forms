@@ -16,6 +16,7 @@ import {
   InputHeaderComponentContextState,
 } from '../InputHeader/InputHeaderContext';
 import { withInputHeaderContext } from './withInputHeaderContext';
+import Tippy, { TippyProps } from '@tippy.js/react';
 
 export type InputHeaderRawProps = {
   onExpanded?: () => void;
@@ -41,6 +42,8 @@ export type InputHeaderRawProps = {
   shouldToggleCollapseOnHeaderClick?: boolean;
   mountOnEnter?: boolean;
   unmountOnExit?: boolean;
+  tooltip?: string | JSX.Element;
+  tooltipProps?: TippyProps;
 } & InputHeaderContextProps;
 
 export type InputHeaderProps = OmitInputHeaderContext<InputHeaderRawProps>;
@@ -190,7 +193,7 @@ export class InputHeaderRaw
             )}
             <div className="input__header__title__container">
               {this.props.title && (
-                <div className="input__header__title">{this.props.title}</div>
+                <div className="input__header__title">{this.renderTitle()}</div>
               )}
               {this.props.subTitle && (
                 <div className="input__header__sub-title">
@@ -384,6 +387,41 @@ export class InputHeaderRaw
       component.componentApi.collapse();
     });
   };
+
+  private renderTitle() {
+    if (!this.props.tooltip) {
+      return this.props.title;
+    }
+    return (
+      <React.Fragment>
+        {this.props.title}
+        {this.renderTooltip()}
+      </React.Fragment>
+    );
+  }
+
+  private renderTooltip(
+    content: JSX.Element = <span className="label--help-icon">?</span>
+  ) {
+    return this.props.tooltip ? (
+      <Tippy
+        content={this.props.tooltip}
+        placement="bottom"
+        animation="scale-subtle"
+        arrow={false}
+        duration={200}
+        delay={[75, 0]}
+        distance={8}
+        interactive={true}
+        trigger="mouseenter focus"
+        {...this.props.tooltipProps}
+      >
+        <span tabIndex={0}>{content}</span>
+      </Tippy>
+    ) : (
+      content
+    );
+  }
 }
 
 export const InputHeader = withInputHeaderContext<InputHeaderRawProps>(
