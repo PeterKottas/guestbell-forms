@@ -2,7 +2,7 @@
   background-color: $bg;
   fill: $fg;
   color: $fg;
-  &:not(.guestbell-btn--disabled):hover {
+  &:not(.guestbell-btn--disabled):not(.guestbell-btn--blank):hover {
     background-color: darken($bg, 7%);
   }
   &:not(.guestbell-btn--disabled).guestbell-btn--outlined {
