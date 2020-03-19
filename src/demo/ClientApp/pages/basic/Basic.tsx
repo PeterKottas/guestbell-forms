@@ -33,7 +33,7 @@ import {
   FormValidationSummary,
   InputHeaderRaw,
   TimeSpan,
-  allTimeSpanUnits,
+  TimeSpanUnit,
 } from '../../../../lib/index';
 
 export interface BasicProps {}
@@ -570,7 +570,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         timeSpan={this.state.timeSpan}
                         timeSpanChange={this.timeSpanChanged}
                         title="Time span"
-                        validUnits={allTimeSpanUnits}
+                        validUnits={TimeSpanUnit.Hour | TimeSpanUnit.Minute}
                       />
                       <OpeningHoursDay
                         label={'Opening hours sample day'}

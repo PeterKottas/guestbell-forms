@@ -189,7 +189,7 @@ export class TimeSpanRaw extends BaseInput<
     validUnits: TimeSpanUnit,
     initialUnits: TimeSpanUnit
   ) {
-    if (!time) {
+    if (time === null || time === undefined) {
       return initialUnits;
     }
     const ms = time.getTime();
