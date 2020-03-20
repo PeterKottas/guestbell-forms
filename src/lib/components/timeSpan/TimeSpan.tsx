@@ -11,6 +11,7 @@ import {
   BaseInput,
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
+import { Duration, duration } from 'moment';
 var classNames = require('classnames');
 
 export enum TimeSpanUnit {
@@ -45,10 +46,10 @@ const allUnits = getValues(TimeSpanUnit);
 
 export interface TimeSpanProps extends BaseInputProps<HTMLInputElement> {
   onChange?: never;
-  timeSpanChange: (time: Date) => void;
-  timeSpan: Date;
-  min?: Date;
-  max?: Date;
+  timeSpanChange: (time: Duration) => void;
+  timeSpan: Duration;
+  min?: Duration;
+  max?: Duration;
   initialUnits?: TimeSpanUnit;
   units?: TimeSpanUnit;
   validUnits?: TimeSpanUnit;
@@ -89,7 +90,7 @@ export class TimeSpanRaw extends BaseInput<
           return '';
       }
     },
-    min: new Date(0),
+    min: duration(0),
   });
 
   constructor(props: TimeSpanProps) {
@@ -185,14 +186,14 @@ export class TimeSpanRaw extends BaseInput<
   }
 
   private getUnits(
-    time: Date,
+    time: Duration,
     validUnits: TimeSpanUnit,
     initialUnits: TimeSpanUnit
   ) {
     if (time === null || time === undefined) {
       return initialUnits;
     }
-    const ms = time.getTime();
+    const ms = time.asMilliseconds();
     let units: TimeSpanUnit = TimeSpanUnit.Millisecond | TimeSpanUnit.Second;
     if (ms >= 1000) {
       units += TimeSpanUnit.Minute;
@@ -211,23 +212,23 @@ export class TimeSpanRaw extends BaseInput<
     return units || initialUnits;
   }
 
-  private getValue(time: Date, unit: TimeSpanUnit) {
+  private getValue(time: Duration, unit: TimeSpanUnit) {
     if (!time || !unit) {
       return 0;
     }
     switch (unit) {
       case TimeSpanUnit.Millisecond:
-        return Math.floor(time.getTime() % 1000);
+        return Math.floor(time.get('millisecond'));
       case TimeSpanUnit.Second:
-        return Math.floor((time.getTime() / 1000) % 60);
+        return Math.floor(time.get('second'));
       case TimeSpanUnit.Minute:
-        return Math.floor((time.getTime() / (60 * 1000)) % 60);
+        return Math.floor(time.get('minute'));
       case TimeSpanUnit.Hour:
-        return Math.floor((time.getTime() / (3600 * 1000)) % 24);
+        return Math.floor(time.get('hour'));
       case TimeSpanUnit.Day:
-        return Math.floor((time.getTime() / (24 * 3600 * 1000)) % 365);
+        return Math.floor(time.get('day'));
       case TimeSpanUnit.Year:
-        return Math.floor(time.getTime() / (365 * 24 * 3600 * 1000));
+        return Math.floor(time.get('year'));
       default:
         return 0;
     }
@@ -291,10 +292,13 @@ export class TimeSpanRaw extends BaseInput<
         const moreThanMax = maxOfUnitMs < newOfUnitMs;
         const diff = newOfUnitMs - oldOfUnitMs;
         if (moreThanMax) {
-          this.handleLimits(new Date(newOfUnitMs));
+          this.handleLimits(duration(newOfUnitMs, 'millisecond'));
         } else {
           this.handleLimits(
-            new Date((this.props.timeSpan?.getTime() || 0) + diff)
+            duration(
+              (this.props.timeSpan?.asMilliseconds() || 0) + diff,
+              'millisecond'
+            )
           );
         }
       }
@@ -311,7 +315,10 @@ export class TimeSpanRaw extends BaseInput<
     e.preventDefault();
     const unit: TimeSpanUnit = Number(e.currentTarget.dataset.unit);
     const diff = -1 * this.oneUnitInMs(unit);
-    const newDate = new Date((this.props.timeSpan?.getTime() || 0) + diff);
+    const newDate = duration(
+      (this.props.timeSpan?.asMilliseconds() || 0) + diff,
+      'millisecond'
+    );
     this.handleLimits(newDate);
   };
 
@@ -331,20 +338,23 @@ export class TimeSpanRaw extends BaseInput<
     e.preventDefault();
     const unit: TimeSpanUnit = Number(e.currentTarget.dataset.unit);
     const diff = this.oneUnitInMs(unit);
-    const newDate = new Date((this.props.timeSpan?.getTime() || 0) + diff);
+    const newDate = duration(
+      (this.props.timeSpan?.asMilliseconds() || 0) + diff,
+      'milliseconds'
+    );
     this.handleLimits(newDate);
   };
 
-  private handleLimits(time: Date) {
+  private handleLimits(time: Duration) {
     if (this.props.min) {
-      if (time.getTime() - this.props.min.getTime() <= 0) {
-        this.props.timeSpanChange(new Date(this.props.min.getTime()));
+      if (time.asMilliseconds() - this.props.min.asMilliseconds() <= 0) {
+        this.props.timeSpanChange(this.props.min.clone());
         return;
       }
     }
     if (this.props.max) {
-      if (this.props.max.getTime() - time.getTime() <= 0) {
-        this.props.timeSpanChange(new Date(this.props.max.getTime()));
+      if (this.props.max.asMilliseconds() - time.asMilliseconds() <= 0) {
+        this.props.timeSpanChange(this.props.max.clone());
         return;
       }
     }

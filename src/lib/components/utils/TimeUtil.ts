@@ -1,12 +1,18 @@
 // Libs
 
+import { Duration } from 'moment';
+
 class TimeUtil {
-  public dayDiff(start: Date, end: Date) {
-    const startOfDay = new Date(start);
-    startOfDay.setHours(0);
-    startOfDay.setMinutes(0);
-    startOfDay.setSeconds(0);
-    const timeDiff = Math.abs(end.getTime() - startOfDay.getTime());
+  public dayDiff(start: Duration, end: Duration) {
+    const startOfDay = start
+      .clone()
+      .subtract(start.hours(), 'hours')
+      .subtract(start.minutes(), 'minutes')
+      .subtract(start.seconds(), 'seconds')
+      .subtract(start.milliseconds(), 'milliseconds');
+    const timeDiff = Math.abs(
+      end.asMilliseconds() - startOfDay.asMilliseconds()
+    );
     const diffDays = Math.floor(timeDiff / (1000 * 3600 * 24));
     return diffDays;
   }

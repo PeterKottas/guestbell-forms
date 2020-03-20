@@ -35,6 +35,7 @@ import {
   TimeSpan,
   TimeSpanUnit,
 } from '../../../../lib/index';
+import { Duration, duration } from 'moment';
 
 export interface BasicProps {}
 
@@ -55,9 +56,9 @@ export interface BasicState {
   prices1: MoneyWithCurrency[];
   prices2: MoneyWithCurrency[];
   prices3: MoneyWithCurrency[];
-  time1: Date;
-  time2: Date;
-  timeSpan: Date;
+  time1: Duration;
+  time2: Duration;
+  timeSpan: Duration;
   openingHours: OpeningHoursDayObj;
   openingHoursWeek: OpeningHoursDayObj[];
   openingHoursWeekDay: OpeningHoursDayObj;
@@ -220,9 +221,9 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
     prices1: [],
     prices2: [],
     prices3: [],
-    timeSpan: new Date(0),
-    time1: new Date(),
-    time2: new Date(),
+    timeSpan: duration(0),
+    time1: duration(0),
+    time2: duration(0),
     openingHours: {
       times: [],
     },
@@ -256,13 +257,12 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
   }
 
   public render() {
-    let time2Max = new Date();
-    time2Max.setHours(time2Max.getHours() + 1);
-    time2Max.setMinutes(time2Max.getMinutes() + 5);
-
-    let time2Min = new Date();
-    time2Min.setHours(time2Min.getHours() - 1);
-    time2Min.setMinutes(time2Min.getMinutes() - 5);
+    let time2Max = duration()
+      .add(1, 'hour')
+      .add(5, 'minutes');
+    let time2Min = duration()
+      .subtract(1, 'hour')
+      .subtract(5, 'minutes');
 
     return (
       <div className="container">
@@ -867,11 +867,11 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
   private openingHoursChanged = (openingHours: OpeningHoursDayObj) =>
     this.setState({ openingHours: openingHours });
 
-  private time2Changed = (time: Date) => this.setState({ time2: time });
+  private time2Changed = (time: Duration) => this.setState({ time2: time });
 
-  private time1Changed = (time: Date) => this.setState({ time1: time });
+  private time1Changed = (time: Duration) => this.setState({ time1: time });
 
-  private timeSpanChanged = (timeSpan: Date) => this.setState({ timeSpan });
+  private timeSpanChanged = (timeSpan: Duration) => this.setState({ timeSpan });
 
   private prices2Changed = (prices: MoneyWithCurrency[]) =>
     this.setState({ prices2: prices });

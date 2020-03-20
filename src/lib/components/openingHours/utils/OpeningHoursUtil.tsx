@@ -1,18 +1,21 @@
 // Libs
 import * as React from 'react';
 import { OpeningHoursWeekDayObj } from '../openingHoursWeek/OpeningHoursWeek';
+import { Duration } from 'moment';
 
 export class OpeningHoursUtil {
-  public getTimeFromMidnight(time: Date, midnight: Date = time) {
-    midnight = new Date(midnight);
-    midnight.setHours(0);
-    midnight.setMinutes(0);
-    midnight.setSeconds(0, 0);
-    const diff = time.getTime() - midnight.getTime();
+  public getTimeFromMidnight(time: Duration, midnight: Duration = time) {
+    midnight = midnight
+      .clone()
+      .subtract(midnight.hours(), 'hours')
+      .subtract(midnight.minutes(), 'minutes')
+      .subtract(midnight.seconds(), 'seconds')
+      .subtract(midnight.milliseconds(), 'milliseconds');
+    const diff = time.asMilliseconds() - midnight.asMilliseconds();
     return diff;
   }
 
-  public getTotalTimeString(times: Date[]) {
+  public getTotalTimeString(times: Duration[]) {
     let totalTime = 0;
     let newTimes = times
       .slice(0)

@@ -16,9 +16,10 @@ import {
 import { Button } from '../../button/Button';
 import { withFormContext } from '../../form/withFormContext';
 import classNames from 'classnames';
+import { Duration, duration } from 'moment';
 
 export interface OpeningHoursDayObj {
-  times: Date[];
+  times: Duration[];
 }
 
 export interface OpeningHoursDayProps extends BaseInputProps<never> {
@@ -85,18 +86,19 @@ export class OpeningHoursDayRaw extends BaseInput<
               this.props.openingHours.times.map((item, index) => {
                 const previousTime =
                   index > 0
-                    ? new Date(this.props.openingHours.times[index - 1])
+                    ? this.props.openingHours.times[index - 1].clone()
                     : this.getTime(0, 0);
                 let nextTime =
                   this.props.openingHours.times.length - 1 > index
-                    ? new Date(this.props.openingHours.times[index + 1])
+                    ? this.props.openingHours.times[index + 1].clone()
                     : this.getTime(23, 59, true);
                 if (index % 2 === 0) {
-                  nextTime = new Date(
+                  nextTime = duration(
                     Math.min.apply(null, [
-                      this.getTime(23, 59, false),
-                      nextTime,
-                    ])
+                      this.getTime(23, 59, false).asMilliseconds(),
+                      nextTime.asMilliseconds(),
+                    ]),
+                    'millisecond'
                   );
                 }
                 return (
@@ -191,20 +193,18 @@ export class OpeningHoursDayRaw extends BaseInput<
   }
 
   private addTimeClick = () => {
-    let newTime = new Date(
+    let newTime =
       this.props.openingHours &&
       this.props.openingHours.times &&
       this.props.openingHours.times.length
         ? this.props.openingHours.times[
             this.props.openingHours.times.length - 1
-          ]
-        : this.getTime(8, 0)
-    );
-    if (newTime.getHours() < 23) {
-      newTime.setHours(newTime.getHours() + 1);
+          ].clone()
+        : this.getTime(8, 0);
+    if (newTime.hours() < 23) {
+      newTime = newTime.add(1, 'hour');
     }
-    let closeTime = new Date(newTime);
-    closeTime.setHours(closeTime.getHours() + 1);
+    let closeTime = newTime.clone().add(1, 'hour');
     this.props.onOpeningHoursChange({
       ...this.props.openingHours,
       times: this.props.openingHours.times.concat([newTime, closeTime]),
@@ -219,7 +219,7 @@ export class OpeningHoursDayRaw extends BaseInput<
       ),
     });
 
-  private timeChanged = (index: number) => (time: Date) => {
+  private timeChanged = (index: number) => (time: Duration) => {
     let newOpeningHours: OpeningHoursDayObj = {
       ...this.props.openingHours,
       times: this.props.openingHours.times.slice(0),
@@ -306,13 +306,16 @@ export class OpeningHoursDayRaw extends BaseInput<
     );
   }
 
-  private getTime(hours: number, minutes: number, nextDay: boolean = false) {
-    let time = new Date(0);
-    time.setHours(hours);
-    time.setMinutes(minutes);
-    time.setSeconds(0, 0);
+  private getTime(
+    hours: number,
+    minutes: number,
+    nextDay: boolean = false
+  ): Duration {
+    let time = duration(0, 'millisecond')
+      .add(hours, 'hours')
+      .add(minutes, 'minutes');
     if (nextDay) {
-      time.setDate(time.getDate() + 1);
+      time = time.add(1, 'day');
     }
     return time;
   }

@@ -17,6 +17,7 @@
     "npm-check-updates": "^4.0.1"
   },
   "devDependencies": {
+    "moment": "2.24.0",
     "@babel/cli": "7.8.3",
     "@babel/core": "7.8.3",
     "@babel/plugin-proposal-class-properties": "7.8.3",
@@ -113,7 +114,8 @@
     "react-datepicker": "*",
     "react-dom": "*",
     "react-ink": "*",
-    "react-onclickoutside": "*"
+    "react-onclickoutside": "*",
+    "moment": "*"
   },
   "browserslist": [
     "last 1 version",

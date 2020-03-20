@@ -12,13 +12,14 @@ import {
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
 import TimeUtil from '../utils/TimeUtil';
+import { Duration, duration } from 'moment';
 
 export interface TimeProps extends BaseInputProps<HTMLInputElement> {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  timeChange: (time: Date) => void;
-  time: Date;
-  min?: Date;
-  max?: Date;
+  timeChange: (time: Duration) => void;
+  time: Duration;
+  min?: Duration;
+  max?: Duration;
   showDateDiff?: boolean;
 }
 
@@ -41,7 +42,12 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
 
   public render() {
     const { label } = this.props;
-    var hours = this.props.time.getHours();
+    let hours = this.props.time.hours();
+    let minutes = this.props.time.minutes();
+    if (minutes < 0) {
+      hours--;
+    }
+    minutes = (minutes + 60) % 60;
     hours = (hours + 24) % 24;
     var mid = 'AM';
     if (hours % 24 >= 12) {
@@ -143,9 +149,9 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
                   value={
                     this.state.minutesText !== undefined
                       ? this.state.minutesText
-                      : this.props.time.getMinutes() < 10
-                      ? '0' + this.props.time.getMinutes().toString()
-                      : this.props.time.getMinutes().toString()
+                      : minutes < 10
+                      ? '0' + minutes.toString()
+                      : minutes.toString()
                   }
                   onBlur={this.onBlur}
                   onFocus={this.handleFocus}
@@ -190,17 +196,17 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
 
   private removeMinuteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    this.handleMinutesChange((this.props.time.getMinutes() - 1).toString());
+    this.handleMinutesChange((this.props.time.minutes() - 1).toString());
   };
 
   private addMinuteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    this.handleMinutesChange((this.props.time.getMinutes() + 1).toString());
+    this.handleMinutesChange((this.props.time.minutes() + 1).toString());
   };
 
   private removeHourClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    this.handleHoursChange((this.props.time.getHours() - 1).toString());
+    this.handleHoursChange((this.props.time.hours() - 1).toString());
   };
 
   private onHoursChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -210,19 +216,19 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
 
   private addHourClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    this.handleHoursChange((this.props.time.getHours() + 1).toString());
+    this.handleHoursChange((this.props.time.hours() + 1).toString());
   };
 
-  private handleLimits(time: Date) {
+  private handleLimits(time: Duration) {
     if (this.props.min) {
-      if (time.getTime() - this.props.min.getTime() <= 0) {
-        this.props.timeChange(new Date(this.props.min.getTime()));
+      if (time.asMilliseconds() - this.props.min.asMilliseconds() <= 0) {
+        this.props.timeChange(this.props.min.clone());
         return;
       }
     }
     if (this.props.max) {
-      if (this.props.max.getTime() - time.getTime() <= 0) {
-        this.props.timeChange(new Date(this.props.max.getTime()));
+      if (this.props.max.asMilliseconds() - time.asMilliseconds() <= 0) {
+        this.props.timeChange(this.props.max.clone());
         return;
       }
     }
@@ -235,8 +241,12 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
       num = 0;
     }
     if (!isNaN(num)) {
-      let newTime: Date = new Date(this.props.time.getTime());
-      newTime.setHours(num);
+      let newTime: Duration = duration(
+        this.props.time.asMilliseconds(),
+        'milliseconds'
+      )
+        .subtract(this.props.time.hours(), 'hours')
+        .add(num, 'hours');
       this.handleLimits(newTime);
     }
   }
@@ -247,8 +257,12 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
       num = 0;
     }
     if (!isNaN(num)) {
-      let newTime: Date = new Date(this.props.time.getTime());
-      newTime.setMinutes(num);
+      let newTime: Duration = duration(
+        this.props.time.asMilliseconds(),
+        'milliseconds'
+      )
+        .subtract(this.props.time.minutes(), 'minutes')
+        .add(num, 'minutes');
       this.handleLimits(newTime);
     }
   }
