@@ -579,6 +579,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         onOpeningHoursChange={this.openingHoursChanged}
                         openingHours={this.state.openingHours}
                         title="Opening hours"
+                        useCapacity={true}
                       />
                       <InputHeader
                         title={'Opening hours'}
@@ -604,6 +605,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                           onStandardDayChange={
                             this.openingHoursWeekStandardDayChanged
                           }
+                          useCapacity={true}
                         />
                       </InputHeader>
                       <InputHeader

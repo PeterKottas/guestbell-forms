@@ -26,6 +26,7 @@ export interface OpeningHoursWeekProps extends BaseInputProps<never> {
   onDaysChange: (days: OpeningHoursWeekDayObj[]) => void;
   standardDay?: OpeningHoursWeekDayObj;
   onStandardDayChange?: (day: OpeningHoursWeekDayObj) => void;
+  useCapacity?: boolean;
 }
 
 export interface OpeningHoursWeekState extends BaseInputState {}
@@ -106,6 +107,7 @@ export class OpeningHoursWeekRaw extends BaseInput<
       <div className={``}>
         {this.props.standardDay && (
           <OpeningHoursDay
+            useCapacity={this.props.useCapacity}
             {...(this.props.id && {
               id: this.props.id + '-standard-day',
             })}
@@ -139,6 +141,7 @@ export class OpeningHoursWeekRaw extends BaseInput<
         )}
         {this.props.days.map((day, index) => (
           <OpeningHoursDay
+            useCapacity={this.props.useCapacity}
             {...(this.props.id && {
               id: this.props.id + '-opening-hours-day-' + index.toString(),
             })}

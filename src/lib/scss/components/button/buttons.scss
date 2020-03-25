@@ -22,7 +22,7 @@
     background-color: transparent;
     &:hover {
       color: $fg;
-      background-color: rgba($bg, 0.1);
+      background-color: $bg;
     }
   }
 }

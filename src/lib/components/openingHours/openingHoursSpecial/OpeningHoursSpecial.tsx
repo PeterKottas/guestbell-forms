@@ -31,6 +31,7 @@ export interface OpeningHoursSpecialProps extends BaseInputProps<never> {
   days: OpeningHoursSpecialDayObj[];
   onDaysChange: (days: OpeningHoursSpecialDayObj[]) => void;
   placeholder?: string;
+  useCapacity?: boolean;
 }
 
 export interface OpeningHoursSpecialState extends BaseInputState {}
@@ -116,6 +117,7 @@ export class OpeningHoursSpecialRaw extends BaseInput<
       >
         {this.props.days.map((day, index) => (
           <OpeningHoursDay
+            useCapacity={this.props.useCapacity}
             {...(this.props.id && {
               id: this.props.id + '-opening-hours-day-' + index.toString(),
             })}

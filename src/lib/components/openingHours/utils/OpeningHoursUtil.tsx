@@ -57,7 +57,12 @@ export class OpeningHoursUtil {
   public getLabelSuffix(day: OpeningHoursWeekDayObj) {
     return day && day.times && day.times.length === 0
       ? 'Closed'
-      : this.getTotalTimeString(day.times);
+      : this.getTotalTimeString(
+          (day.times || []).reduce<Duration[]>(
+            (a, b) => a.concat([b.opens, b.closes]),
+            []
+          )
+        );
   }
 }
 

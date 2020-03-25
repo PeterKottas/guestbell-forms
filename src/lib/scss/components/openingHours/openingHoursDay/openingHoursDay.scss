@@ -13,10 +13,9 @@
   border-bottom: none !important;
   width: 100%;
   .openingHoursDay-input__container {
-    flex-direction: row;
+    flex-direction: column;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
     height: 100%;
   }
   .time-input {
@@ -29,9 +28,9 @@
     border-width: 0px;
   }
   .openingHoursDay-input__time__container {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    justify-content: center;
+    margin-bottom: 0.5rem;
   }
   input:focus ~ label,
   input.filled ~ label,
@@ -107,4 +106,8 @@
   background-color: $primary-color;
   transform: translateX(-50%);
   transition: 0.5s all;
+}
+
+.openingHoursDay-input__button-open-close {
+  align-self: flex-start;
 }
