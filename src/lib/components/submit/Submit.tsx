@@ -28,6 +28,7 @@ export class SubmitRaw extends BaseInput<SubmitProps, SubmitState, never> {
     ignoreContext: true,
     reRendersWhenContextChanges: true,
     showValidationSummaryTooltip: true,
+    preventsDefault: true,
   });
 
   constructor(props: SubmitProps) {
@@ -77,7 +78,9 @@ export class SubmitRaw extends BaseInput<SubmitProps, SubmitState, never> {
   }
 
   private handleClick(e: React.MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
+    if (this.props.preventsDefault) {
+      e.preventDefault();
+    }
     this.props.onClick && this.props.onClick(e);
   }
 

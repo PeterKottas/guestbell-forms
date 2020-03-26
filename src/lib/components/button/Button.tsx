@@ -46,6 +46,7 @@ export type ButtonProps = {
   Component?: (props: ButtonComponentProps) => JSX.Element;
   tooltip?: JSX.Element | string;
   tooltipProps?: TippyProps;
+  preventsDefault?: boolean;
 };
 
 export interface ButtonState {}
@@ -81,6 +82,7 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
       type: 'button',
     },
     type: 'none',
+    preventsDefault: true,
   };
 
   private preventMultipleClick = false;
@@ -138,7 +140,9 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
   }
 
   private handleClick(e: React.MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
+    if (this.props.preventsDefault) {
+      e.preventDefault();
+    }
     if (!this.preventMultipleClick) {
       !this.props.disabled && this.props.onClick && this.props.onClick(e);
       if (this.props.disableAfterClickMs !== 0) {
