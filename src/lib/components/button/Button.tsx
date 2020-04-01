@@ -42,6 +42,7 @@ export type ButtonProps = {
   hero?: boolean;
   noShadow?: boolean;
   blank?: boolean;
+  unobtrusive?: boolean;
   dropdown?: boolean;
   Component?: (props: ButtonComponentProps) => JSX.Element;
   tooltip?: JSX.Element | string;
@@ -102,6 +103,7 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
       { ['guestbell-btn--small']: this.props.small },
       { ['guestbell-btn--no-shadow']: this.props.noShadow },
       { ['guestbell-btn--blank']: this.props.blank },
+      { ['guestbell-btn--unobtrusive']: this.props.unobtrusive },
       { ['guestbell-btn--outlined']: this.props.outlined },
       { ['guestbell-btn--dropdown']: this.props.dropdown },
       { ['guestbell-btn--icon']: this.props.icon },

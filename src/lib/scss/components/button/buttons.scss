@@ -26,6 +26,16 @@
       background-color: rgba($bg, 0.5);
     }
   }
+  &:not(.guestbell-btn--disabled).guestbell-btn--unobtrusive {
+    background-color: transparent;
+    color: inherit;
+    fill: inherit;
+    &:hover {
+      color: $bg;
+      fill: $bg;
+      background-color: transparent;
+    }
+  }
 }
 
 .guestbell-btn {
