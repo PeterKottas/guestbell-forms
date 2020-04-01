@@ -27,6 +27,7 @@
     }
   }
   &:not(.guestbell-btn--disabled).guestbell-btn--unobtrusive {
+    box-shadow: none;
     background-color: transparent;
     color: inherit;
     fill: inherit;
