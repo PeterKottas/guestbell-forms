@@ -65,7 +65,7 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
       }
     }
     return (
-      <InputGroup title={this.props.title}>
+      <InputGroup title={this.props.title} tooltip={this.props.tooltip}>
         <div
           {...(this.props.id && {
             id: this.props.id,
