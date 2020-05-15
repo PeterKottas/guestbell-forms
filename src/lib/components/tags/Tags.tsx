@@ -1,7 +1,7 @@
 // Libs
 import * as React from 'react';
 import { InputGroup } from '../inputGroup/InputGroup';
-import { Text, TextProps } from '../text/Text';
+import { Text, TextProps, TextRaw } from '../text/Text';
 import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_circle_outline_24px.svg';
 import {
   BaseInputProps,
@@ -31,6 +31,7 @@ export type TagsProps = {
   onTagClick?: (tag: Tag) => void;
   showChips?: boolean;
   allowNew?: boolean;
+  addNewOnBlur?: boolean;
   textProps?: TextProps;
   readOnly?: boolean;
   readonlyEmptyPlaceholder?: string;
@@ -77,7 +78,7 @@ export class TagsRaw extends BaseInput<TagsProps, TagsState, HTMLInputElement> {
     maxSuggestions: 5,
   };
 
-  private textRef: React.RefObject<HTMLInputElement>;
+  private textRef: React.RefObject<TextRaw>;
 
   constructor(props: TagsProps) {
     super(props);
@@ -90,10 +91,12 @@ export class TagsRaw extends BaseInput<TagsProps, TagsState, HTMLInputElement> {
       textIsValid: false,
       fetchedExistingTags: [],
     };
+    this.textRef = React.createRef();
   }
 
   public focus() {
-    if (this.textRef && this.textRef.current) {
+    debugger;
+    if (this.textRef.current) {
       this.textRef.current.focus();
     }
   }
@@ -145,7 +148,7 @@ export class TagsRaw extends BaseInput<TagsProps, TagsState, HTMLInputElement> {
                   {...(this.props.id && {
                     id: this.props.id + '-text-input',
                   })}
-                  inputRef={this.textRef}
+                  ref={this.textRef}
                   required={
                     this.props.tags.length > 0 ? false : this.props.required
                   }
@@ -325,7 +328,10 @@ export class TagsRaw extends BaseInput<TagsProps, TagsState, HTMLInputElement> {
     );
   };
 
-  private onBlur = () => {
+  private onBlur = async () => {
+    if (this.props.addNewOnBlur && this.props.allowNew && this.state.value) {
+      await this.addNewTag();
+    }
     this.setState(
       {
         textIsFocused: false,
