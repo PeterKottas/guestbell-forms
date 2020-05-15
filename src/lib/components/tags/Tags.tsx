@@ -95,7 +95,6 @@ export class TagsRaw extends BaseInput<TagsProps, TagsState, HTMLInputElement> {
   }
 
   public focus() {
-    debugger;
     if (this.textRef.current) {
       this.textRef.current.focus();
     }
