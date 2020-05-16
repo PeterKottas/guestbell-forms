@@ -14,7 +14,6 @@ import { withFormContext } from '../form/withFormContext';
 export interface CheckboxProps extends BaseInputProps<HTMLInputElement> {
   onChecked?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChange?: never;
-  value?: never;
   type?: string;
   checked?: boolean;
 }
@@ -101,6 +100,7 @@ export class CheckboxRaw extends BaseInput<
     return (
       <input
         {...(this.props.id && { id: this.props.id })}
+        value={this.props.value || ''}
         type="checkbox"
         required={this.props.required}
         checked={this.state.checked}
