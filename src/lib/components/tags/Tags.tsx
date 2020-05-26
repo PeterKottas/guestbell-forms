@@ -13,6 +13,7 @@ import { Button } from '../button/Button';
 import TagsSuggestions from './subComponents/TagsSuggestions';
 import { withFormContext } from '../form/withFormContext';
 import classNames from 'classnames';
+import onClickOutside, { InjectedOnClickOutProps } from 'react-onclickoutside';
 
 // Misc
 export type Tag = {
@@ -56,7 +57,13 @@ export interface TagsState extends BaseInputState {
   preselectedSuggestion?: number;
 }
 
-export class TagsRaw extends BaseInput<TagsProps, TagsState, HTMLInputElement> {
+type InjectedProps = InjectedOnClickOutProps;
+
+export class TagsRaw extends BaseInput<
+  TagsProps & InjectedProps,
+  TagsState,
+  HTMLInputElement
+> {
   public static defaultProps: TagsProps = {
     ...BaseInput.defaultProps,
     disabled: false,
@@ -81,7 +88,7 @@ export class TagsRaw extends BaseInput<TagsProps, TagsState, HTMLInputElement> {
 
   private textRef: React.RefObject<TextRaw>;
 
-  constructor(props: TagsProps) {
+  constructor(props: TagsProps & InjectedProps) {
     super(props);
     this.state = {
       ...this.state,
@@ -101,7 +108,7 @@ export class TagsRaw extends BaseInput<TagsProps, TagsState, HTMLInputElement> {
     }
   }
 
-  public componentDidUpdate(oldProps: TagsProps) {
+  public componentDidUpdate(oldProps: TagsProps & InjectedProps) {
     if (
       oldProps.tags !== this.props.tags ||
       oldProps.validators !== this.props.validators ||
@@ -109,6 +116,12 @@ export class TagsRaw extends BaseInput<TagsProps, TagsState, HTMLInputElement> {
       oldProps.required !== this.props.required
     ) {
       this.handleErrors(this.props.tags);
+    }
+  }
+
+  public handleClickOutside() {
+    if (this.props.addNewOnBlur && this.props.allowNew && this.state.value) {
+      this.addNewTag();
     }
   }
 
@@ -329,9 +342,6 @@ export class TagsRaw extends BaseInput<TagsProps, TagsState, HTMLInputElement> {
   };
 
   private onBlur = async () => {
-    if (this.props.addNewOnBlur && this.props.allowNew && this.state.value) {
-      await this.addNewTag();
-    }
     this.setState(
       {
         textIsFocused: false,
@@ -503,6 +513,8 @@ export class TagsRaw extends BaseInput<TagsProps, TagsState, HTMLInputElement> {
   }
 }
 
-export const Tags = withFormContext<TagsProps>(TagsRaw);
+export const Tags = withFormContext<TagsProps>(
+  (onClickOutside(TagsRaw) as unknown) as React.ComponentClass<TagsProps>
+);
 
 export default Tags;
