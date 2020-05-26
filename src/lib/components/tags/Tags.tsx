@@ -120,12 +120,12 @@ export class TagsRaw extends BaseInput<
   }
 
   public handleClickOutside() {
-    if (this.props.addNewOnBlur && this.props.allowNew && this.state.value) {
+    if (this.props.addNewOnBlur && this.state.value) {
       const suggestions = this.getSuggestions();
       const existing = suggestions.find(s => s.name === this.state.value);
       if (existing) {
         this.onSuggestionSelected(existing);
-      } else {
+      } else if (this.props.allowNew) {
         this.addNewTag();
       }
     }
