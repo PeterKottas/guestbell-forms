@@ -29,6 +29,16 @@ export interface OpeningHoursDayObj {
   times: OpeningHoursPeriodObj[];
 }
 
+const defaultOpeningHoursDayTranslations = {
+  opens: 'Opens',
+  closes: 'Closes',
+  capacity: 'Capacity',
+  add: 'Add new time range',
+  midnight: 'Midnight',
+};
+
+export type OpeningHoursDayTranslations = typeof defaultOpeningHoursDayTranslations;
+
 export interface OpeningHoursDayProps extends BaseInputProps<never> {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onOpeningHoursChange: (openingHours: OpeningHoursDayObj) => void;
@@ -36,6 +46,7 @@ export interface OpeningHoursDayProps extends BaseInputProps<never> {
   label?: JSX.Element | string;
   maxOpenCloseTimes?: number;
   useCapacity?: boolean;
+  translations?: OpeningHoursDayTranslations;
 }
 
 export interface OpeningHoursState extends BaseInputState {}
@@ -57,6 +68,8 @@ export class OpeningHoursDayRaw extends BaseInput<
   }
 
   public render() {
+    let { translations = defaultOpeningHoursDayTranslations } = this.props;
+    translations = { ...defaultOpeningHoursDayTranslations, ...translations };
     return (
       <InputGroup
         title={this.props.title}
@@ -139,13 +152,17 @@ export class OpeningHoursDayRaw extends BaseInput<
                           min={previousTime}
                           max={nextTime}
                           showDateDiff={true}
-                          label={indexJ % 2 === 0 ? 'Opens' : 'Closes'}
+                          label={
+                            indexJ % 2 === 0
+                              ? translations.opens
+                              : translations.closes
+                          }
                         />
                       );
                     })}
                     {this.props.useCapacity && (
                       <NumberInput
-                        label="Capacity"
+                        label={translations.capacity}
                         min={0}
                         number={item.capacity}
                         onNumberChange={num =>
@@ -188,7 +205,7 @@ export class OpeningHoursDayRaw extends BaseInput<
                 type={'primary'}
                 hero={true}
               >
-                Add
+                {translations.add}
               </Button>
             )}
           </div>
@@ -208,7 +225,7 @@ export class OpeningHoursDayRaw extends BaseInput<
             </span>
           )}
         </div>
-        {this.getBottomBorder()}
+        {this.getBottomBorder(translations)}
       </InputGroup>
     );
   }
@@ -281,7 +298,7 @@ export class OpeningHoursDayRaw extends BaseInput<
     this.props.onOpeningHoursChange(newOpeningHours);
   };
 
-  private getBottomBorder() {
+  private getBottomBorder(translations: OpeningHoursDayTranslations) {
     const times = (
       (this.props.openingHours && this.props.openingHours.times) ||
       []
@@ -340,7 +357,7 @@ export class OpeningHoursDayRaw extends BaseInput<
               left:
                 ((this.fullDayMilliseconds * 100) / totalTime).toString() + '%',
             }}
-            title="Midnight"
+            title={translations.midnight}
           />
         )}
       </div>
