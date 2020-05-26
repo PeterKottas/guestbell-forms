@@ -76,6 +76,7 @@ export class TagsRaw extends BaseInput<TagsProps, TagsState, HTMLInputElement> {
     filterExistingTags: (text, tags) =>
       tags.filter(tag => tag.name && tag.name.toLowerCase().startsWith(text)),
     maxSuggestions: 5,
+    addNewOnBlur: true,
   };
 
   private textRef: React.RefObject<TextRaw>;
