@@ -13,7 +13,6 @@ import { Button } from '../button/Button';
 import TagsSuggestions from './subComponents/TagsSuggestions';
 import { withFormContext } from '../form/withFormContext';
 import classNames from 'classnames';
-import onClickOutside, { InjectedOnClickOutProps } from 'react-onclickoutside';
 
 // Misc
 export type Tag = {
@@ -57,7 +56,7 @@ export interface TagsState extends BaseInputState {
   preselectedSuggestion?: number;
 }
 
-type InjectedProps = InjectedOnClickOutProps;
+type InjectedProps = {};
 
 export class TagsRaw extends BaseInput<
   TagsProps & InjectedProps,
@@ -100,6 +99,7 @@ export class TagsRaw extends BaseInput<
       fetchedExistingTags: [],
     };
     this.textRef = React.createRef();
+    this.handleClickOutside = this.handleClickOutside.bind(this);
   }
 
   public focus() {
@@ -119,7 +119,13 @@ export class TagsRaw extends BaseInput<
     }
   }
 
-  public handleClickOutside() {
+  public handleClickOutside(e: MouseEvent) {
+    if (
+      !this.containerRef.current ||
+      this.containerRef.current.contains(e.target as HTMLDivElement)
+    ) {
+      return;
+    }
     if (this.props.addNewOnBlur && this.state.value) {
       const suggestions = this.getSuggestions();
       const existing = suggestions.find(s => s.name === this.state.value);
@@ -129,6 +135,16 @@ export class TagsRaw extends BaseInput<
         this.addNewTag();
       }
     }
+  }
+
+  public componentDidMount() {
+    document.addEventListener('mousedown', this.handleClickOutside);
+    document.addEventListener('touchstart', this.handleClickOutside);
+  }
+
+  public componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
+    document.removeEventListener('touchstart', this.handleClickOutside);
   }
 
   public render() {
@@ -519,8 +535,6 @@ export class TagsRaw extends BaseInput<
   }
 }
 
-export const Tags = withFormContext<TagsProps>(
-  (onClickOutside(TagsRaw) as unknown) as React.ComponentClass<TagsProps>
-);
+export const Tags = withFormContext<TagsProps>(TagsRaw);
 
 export default Tags;

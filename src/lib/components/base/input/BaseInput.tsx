@@ -94,9 +94,7 @@ export class BaseInput<
 
   public inputRef: React.RefObject<HTMLType>;
 
-  protected containerRef:
-    | React.Ref<HTMLDivElement>
-    | React.RefObject<HTMLDivElement>;
+  protected containerRef: React.RefObject<HTMLDivElement>;
 
   private lastValidation: JSX.Element[];
 
