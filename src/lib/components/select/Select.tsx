@@ -32,7 +32,11 @@ export interface SelectProps extends BaseInputProps<HTMLSelectElement> {
 
 export interface SelectState extends BaseInputState {}
 
-class SelectRaw extends BaseInput<SelectProps, SelectState, HTMLSelectElement> {
+export class SelectRaw extends BaseInput<
+  SelectProps,
+  SelectState,
+  HTMLSelectElement
+> {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     defaultEmpty: true,
     multiple: false,
