@@ -20,6 +20,12 @@ export type Tag = {
   name: string;
 };
 
+export const defaultTranslations = {
+  addNew: 'Add new',
+};
+
+export type TagsTranslations = typeof defaultTranslations;
+
 export type TagsProps = {
   className?: string;
   disabled?: boolean;
@@ -44,6 +50,7 @@ export type TagsProps = {
   loadingDelayMs?: number;
   filterExistingTags?: (text: string, existingTags: Tag[]) => Tag[];
   maxSuggestions?: number;
+  translations?: TagsTranslations;
 } & BaseInputProps<HTMLInputElement>;
 
 export interface TagsState extends BaseInputState {
@@ -148,6 +155,7 @@ export class TagsRaw extends BaseInput<
   }
 
   public render() {
+    const translations = this.getTranslations();
     const textProps = this.props.textProps ? this.props.textProps : {};
     const suggestions = this.getSuggestions();
     return (
@@ -238,7 +246,7 @@ export class TagsRaw extends BaseInput<
                           dropdown={true}
                           onClick={this.addNewTag}
                         >
-                          Add new "{this.state.value}"
+                          {translations.addNew} "{this.state.value}"
                         </Button>
                       )
                     }
@@ -264,6 +272,14 @@ export class TagsRaw extends BaseInput<
         </div>
       </InputGroup>
     );
+  }
+
+  private getTranslations() {
+    let { translations = defaultTranslations } = this.props;
+    return {
+      ...defaultTranslations,
+      ...translations,
+    };
   }
 
   private onTextErrorsChanged = (textErrors: ValidationError[]) =>

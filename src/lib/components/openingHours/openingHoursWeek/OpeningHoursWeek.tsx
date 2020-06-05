@@ -2,10 +2,13 @@
 import * as React from 'react';
 
 // Misc
-import OpeningHoursUtil from '../utils/OpeningHoursUtil';
+import OpeningHoursUtil, {
+  OpeningHoursLabelTranslations,
+} from '../utils/OpeningHoursUtil';
 import {
   OpeningHoursDayObj,
   OpeningHoursDay,
+  OpeningHoursDayTranslations,
 } from '../openingHoursDay/OpeningHoursDay';
 import {
   BaseInputProps,
@@ -27,9 +30,34 @@ export interface OpeningHoursWeekProps extends BaseInputProps<never> {
   standardDay?: OpeningHoursWeekDayObj;
   onStandardDayChange?: (day: OpeningHoursWeekDayObj) => void;
   useCapacity?: boolean;
+  weekTranslations?: OpeningHoursWeekTranslations;
+  dayTranslations?: OpeningHoursDayTranslations;
+  labelTranslations?: OpeningHoursLabelTranslations;
 }
 
 export interface OpeningHoursWeekState extends BaseInputState {}
+
+const defaultOpeningHoursWeekTranslations = {
+  standardDay: 'Standard day',
+  standardDayTooltip: (
+    <>
+      We recommend to use <b>Standard day</b> if multiple days share the same
+      opening hours. Check "Standard day?" checkbox for each of these days to
+      make them share standard opening hours.
+    </>
+  ),
+  standardDayAll: 'Apply to all days?',
+  standardDayCheckBox: 'Standard day?',
+  monday: 'Monday',
+  tuesday: 'Tuesday',
+  wednesday: 'Wednesday',
+  thursday: 'Thursday',
+  friday: 'Friday',
+  saturday: 'Saturday',
+  sunday: 'Sunday',
+};
+
+export type OpeningHoursWeekTranslations = typeof defaultOpeningHoursWeekTranslations;
 
 export class OpeningHoursWeekRaw extends BaseInput<
   OpeningHoursWeekProps,
@@ -50,29 +78,13 @@ export class OpeningHoursWeekRaw extends BaseInput<
 
   public componentDidMount() {
     if (!this.props.days || !this.props.days.length) {
-      this.props.onDaysChange([
-        { dayLabel: 'Monday', times: [] },
-        { dayLabel: 'Tuesday', times: [] },
-        { dayLabel: 'Wednesday', times: [] },
-        { dayLabel: 'Thursday', times: [] },
-        { dayLabel: 'Friday', times: [] },
-        { dayLabel: 'Saturday', times: [] },
-        { dayLabel: 'Sunday', times: [] },
-      ]);
+      this.props.onDaysChange(this.getInitialState());
     }
   }
 
   public componentDidUpdate() {
     if (!this.props.days || !this.props.days.length) {
-      this.props.onDaysChange([
-        { dayLabel: 'Monday', times: [] },
-        { dayLabel: 'Tuesday', times: [] },
-        { dayLabel: 'Wednesday', times: [] },
-        { dayLabel: 'Thursday', times: [] },
-        { dayLabel: 'Friday', times: [] },
-        { dayLabel: 'Saturday', times: [] },
-        { dayLabel: 'Sunday', times: [] },
-      ]);
+      this.props.onDaysChange(this.getInitialState());
     }
   }
 
@@ -101,8 +113,30 @@ export class OpeningHoursWeekRaw extends BaseInput<
     this.props.onDaysChange(days);
   }
 
+  private getTranslations() {
+    let { weekTranslations = defaultOpeningHoursWeekTranslations } = this.props;
+    return {
+      ...defaultOpeningHoursWeekTranslations,
+      ...weekTranslations,
+    };
+  }
+
+  private getInitialState() {
+    const weekTranslations = this.getTranslations();
+    return [
+      { dayLabel: weekTranslations.monday, times: [] },
+      { dayLabel: weekTranslations.tuesday, times: [] },
+      { dayLabel: weekTranslations.wednesday, times: [] },
+      { dayLabel: weekTranslations.thursday, times: [] },
+      { dayLabel: weekTranslations.friday, times: [] },
+      { dayLabel: weekTranslations.saturday, times: [] },
+      { dayLabel: weekTranslations.sunday, times: [] },
+    ];
+  }
+
   private renderContent() {
     const allDaysStandard = this.props.days.every(d => d.isStandardDay);
+    const weekTranslations = this.getTranslations();
     return (
       <div className={``}>
         {this.props.standardDay && (
@@ -114,9 +148,12 @@ export class OpeningHoursWeekRaw extends BaseInput<
             className="openingHoursWeek__standard-day"
             label={
               <span>
-                {OpeningHoursUtil.getLabelSuffix(this.props.standardDay)}
+                {OpeningHoursUtil.getLabelSuffix(
+                  this.props.standardDay,
+                  this.props.labelTranslations
+                )}
                 <span className="float-right openingHoursWeek__is-standard-day">
-                  Apply to all days?
+                  {weekTranslations.standardDayAll}
                   <Checkbox
                     className="label__checkbox"
                     checked={allDaysStandard}
@@ -129,14 +166,9 @@ export class OpeningHoursWeekRaw extends BaseInput<
               times: this.props.standardDay.times,
             }}
             onOpeningHoursChange={this.standardDayChanged}
-            title={'Standard day'}
-            tooltip={
-              <p>
-                We recommend to use <b>Standard day</b> if multiple days share
-                the same opening hours. Check "Standard day?" checkbox for each
-                of these days to make them share standard opening hours.
-              </p>
-            }
+            title={weekTranslations.standardDay}
+            tooltip={weekTranslations.standardDayTooltip}
+            translations={this.props.dayTranslations}
           />
         )}
         {this.props.days.map((day, index) => (
@@ -153,10 +185,11 @@ export class OpeningHoursWeekRaw extends BaseInput<
                   {OpeningHoursUtil.getLabelSuffix(
                     this.props.standardDay && day.isStandardDay
                       ? this.props.standardDay
-                      : day
+                      : day,
+                    this.props.labelTranslations
                   )}
                   <span className="float-right openingHoursWeek__is-standard-day">
-                    Standard day?
+                    {weekTranslations.standardDayCheckBox}
                     <Checkbox
                       className="label__checkbox"
                       checked={day.isStandardDay}
@@ -176,6 +209,7 @@ export class OpeningHoursWeekRaw extends BaseInput<
             }}
             onOpeningHoursChange={this.onOpeningHoursChange(index, day)}
             title={day.dayLabel}
+            translations={this.props.dayTranslations}
           />
         ))}
         <span className="bar" />

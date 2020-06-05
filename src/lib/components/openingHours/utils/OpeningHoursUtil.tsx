@@ -1,7 +1,19 @@
 // Libs
 import * as React from 'react';
-import { OpeningHoursWeekDayObj } from '../openingHoursWeek/OpeningHoursWeek';
 import { Duration } from 'moment';
+import { OpeningHoursDayObj } from '../openingHoursDay';
+
+export const defaultOpeningHoursLabelTranslations = {
+  open: 'Open',
+  closed: 'Closed',
+  and: 'and',
+  hour: 'hour',
+  hours: 'hours',
+  minute: 'minute',
+  minutes: 'minutes',
+};
+
+export type OpeningHoursLabelTranslations = typeof defaultOpeningHoursLabelTranslations;
 
 export class OpeningHoursUtil {
   public getTimeFromMidnight(time: Duration, midnight: Duration = time) {
@@ -15,7 +27,11 @@ export class OpeningHoursUtil {
     return diff;
   }
 
-  public getTotalTimeString(times: Duration[]) {
+  public getTotalTimeString(
+    times: Duration[],
+    translations?: OpeningHoursLabelTranslations
+  ) {
+    translations = this.getTranslations(translations);
     let totalTime = 0;
     let newTimes = times
       .slice(0)
@@ -32,37 +48,62 @@ export class OpeningHoursUtil {
     }
     const hours = Math.floor(totalTime / 3600000);
     const minutes = Math.floor(totalTime / (60 * 1000)) % 60;
-    const hoursFormated = hours
-      ? hours.toFixed(0) + ' hour' + (hours > 1 ? 's' : '')
+    const hoursFormatted = hours
+      ? hours.toFixed(0) +
+        ' ' +
+        (hours > 1 ? translations.hours : translations.hour)
       : '';
-    const minutesFormated = minutes
-      ? minutes.toFixed(0) + ' minute' + (minutes > 1 ? 's' : '')
+    const minutesFormatted = minutes
+      ? minutes.toFixed(0) +
+        ' ' +
+        (minutes > 1 ? translations.minutes : translations.minute)
       : '';
-    if (hoursFormated && minutesFormated) {
+    if (hoursFormatted && minutesFormatted) {
       return (
         <span>
-          Open {hoursFormated} and {minutesFormated}
+          {translations.open} {hoursFormatted} {translations.and}{' '}
+          {minutesFormatted}
         </span>
       );
     }
-    if (hoursFormated) {
-      return <span>Open {hoursFormated}</span>;
+    if (hoursFormatted) {
+      return (
+        <span>
+          {translations.open} {hoursFormatted}
+        </span>
+      );
     }
-    if (minutesFormated) {
-      return <span>Open {minutesFormated}</span>;
+    if (minutesFormatted) {
+      return (
+        <span>
+          {translations.open} {minutesFormatted}
+        </span>
+      );
     }
-    return <span>Closed</span>;
+    return <span>{translations.closed}</span>;
   }
 
-  public getLabelSuffix(day: OpeningHoursWeekDayObj) {
+  public getLabelSuffix(
+    day: OpeningHoursDayObj,
+    translations?: OpeningHoursLabelTranslations
+  ) {
+    translations = this.getTranslations(translations);
     return day && day.times && day.times.length === 0
-      ? 'Closed'
+      ? translations.closed
       : this.getTotalTimeString(
           (day.times || []).reduce<Duration[]>(
             (a, b) => a.concat([b.opens, b.closes]),
             []
-          )
+          ),
+          translations
         );
+  }
+
+  private getTranslations(translations?: OpeningHoursLabelTranslations) {
+    return {
+      ...defaultOpeningHoursLabelTranslations,
+      ...translations,
+    };
   }
 }
 

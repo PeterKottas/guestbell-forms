@@ -10,10 +10,13 @@ try {
 }
 
 // Misc
-import OpeningHoursUtil from '../utils/OpeningHoursUtil';
+import OpeningHoursUtil, {
+  OpeningHoursLabelTranslations,
+} from '../utils/OpeningHoursUtil';
 import {
   OpeningHoursDayObj,
   OpeningHoursDay,
+  OpeningHoursDayTranslations,
 } from '../openingHoursDay/OpeningHoursDay';
 import {
   BaseInputProps,
@@ -32,6 +35,9 @@ export interface OpeningHoursSpecialProps extends BaseInputProps<never> {
   onDaysChange: (days: OpeningHoursSpecialDayObj[]) => void;
   placeholder?: string;
   useCapacity?: boolean;
+  specialTranslations?: OpeningHoursSpecialTranslations;
+  dayTranslations?: OpeningHoursDayTranslations;
+  labelTranslations?: OpeningHoursLabelTranslations;
 }
 
 export interface OpeningHoursSpecialState extends BaseInputState {}
@@ -54,6 +60,13 @@ export class DateInput extends React.PureComponent<{
   }
 }
 
+const defaultOpeningHoursSpecialTranslations = {
+  chooseDateError: 'Date not selected',
+  chooseDate: 'Choose date',
+};
+
+export type OpeningHoursSpecialTranslations = typeof defaultOpeningHoursSpecialTranslations;
+
 export class OpeningHoursSpecialRaw extends BaseInput<
   OpeningHoursSpecialProps,
   OpeningHoursSpecialState,
@@ -71,24 +84,13 @@ export class OpeningHoursSpecialRaw extends BaseInput<
 
   public componentDidMount() {
     if (this.props.days) {
-      const allDaysHaveDates = this.props.days.every(d => Boolean(d.date));
-      if (allDaysHaveDates) {
-        this.setValid();
-      } else {
-        this.setInvalid(['Please choose date']);
-      }
+      this.handleDates();
     }
   }
 
   public componentDidUpdate(oldProps: OpeningHoursSpecialProps) {
     if (this.props.days !== oldProps.days) {
-      const allDaysHaveDates =
-        !this.props.days || this.props.days.every(d => Boolean(d.date));
-      if (allDaysHaveDates) {
-        this.setValid();
-      } else {
-        this.setInvalid(['Please choose date']);
-      }
+      this.handleDates();
     }
   }
 
@@ -102,6 +104,7 @@ export class OpeningHoursSpecialRaw extends BaseInput<
         'You need to install react-datepicker in order to use special day picker'
       );
     }
+    const translations = this.getTranslations();
     return (
       <div
         {...(this.props.id && {
@@ -124,7 +127,10 @@ export class OpeningHoursSpecialRaw extends BaseInput<
             key={index}
             label={
               <span>
-                {OpeningHoursUtil.getLabelSuffix(day)}
+                {OpeningHoursUtil.getLabelSuffix(
+                  day,
+                  this.props.labelTranslations
+                )}
                 <span className="float-right">
                   <Button
                     {...(this.props.id && {
@@ -149,7 +155,7 @@ export class OpeningHoursSpecialRaw extends BaseInput<
                   id: this.props.id + '-date-picker-' + index.toString(),
                 })}
                 customInput={
-                  <DateInput>{!day.date && 'Choose date'}</DateInput>
+                  <DateInput>{!day.date && translations.chooseDate}</DateInput>
                 }
                 placeholder={this.props.placeholder}
                 selected={day.date}
@@ -160,12 +166,34 @@ export class OpeningHoursSpecialRaw extends BaseInput<
                 minDate={new Date()}
               />
             }
+            translations={this.props.dayTranslations}
           />
         ))}
         <span className="bar" />
         {this.renderDefaultValidation()}
       </div>
     );
+  }
+
+  private handleDates() {
+    const translations = this.getTranslations();
+    const allDaysHaveDates =
+      !this.props.days || this.props.days.every(d => Boolean(d.date));
+    if (allDaysHaveDates) {
+      this.setValid();
+    } else {
+      this.setInvalid([translations.chooseDateError]);
+    }
+  }
+
+  private getTranslations() {
+    let {
+      specialTranslations = defaultOpeningHoursSpecialTranslations,
+    } = this.props;
+    return {
+      ...defaultOpeningHoursSpecialTranslations,
+      ...specialTranslations,
+    };
   }
 
   private removeDayClick = (index: number) => () =>

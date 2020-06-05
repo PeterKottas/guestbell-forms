@@ -29,7 +29,7 @@ export interface OpeningHoursDayObj {
   times: OpeningHoursPeriodObj[];
 }
 
-const defaultOpeningHoursDayTranslations = {
+export const defaultOpeningHoursDayTranslations = {
   opens: 'Opens',
   closes: 'Closes',
   capacity: 'Capacity',
