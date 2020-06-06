@@ -20,7 +20,7 @@ export const defaultSubmitTranslations = {
 
 export type SubmitTranslations = Partial<typeof defaultSubmitTranslations>;
 
-export type SubmitProps = BaseInputProps<never> &
+export type SubmitProps = BaseInputProps<never, SubmitTranslations> &
   ButtonProps & {
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     validateForm?: boolean;
