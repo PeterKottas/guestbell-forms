@@ -7,6 +7,7 @@ import {
   BaseInputProps,
   BaseInput,
   BaseInputState,
+  defaultBaseTranslations,
 } from '../base/input/BaseInput';
 var classNames = require('classnames');
 import { withFormContext } from '../form/withFormContext';
@@ -38,7 +39,7 @@ export class CheckboxRaw extends BaseInput<
       isValid: props.required ? props.checked : true,
       errors:
         props.required && !props.checked
-          ? [this.props.errorsTranslations.required]
+          ? [this.getTranslations(defaultBaseTranslations).required]
           : [],
     });
     this.handleChecked = this.handleChecked.bind(this);
@@ -51,7 +52,9 @@ export class CheckboxRaw extends BaseInput<
     }
     if (oldProps.required !== this.props.required) {
       if (this.props.required && !this.props.checked) {
-        this.setInvalid([this.props.errorsTranslations.required]);
+        this.setInvalid([
+          this.getTranslations(defaultBaseTranslations).required,
+        ]);
       } else {
         this.setValid();
       }
@@ -90,7 +93,9 @@ export class CheckboxRaw extends BaseInput<
         this.setValid();
       } else {
         if (this.props.required) {
-          this.setInvalid([this.props.errorsTranslations.required]);
+          this.setInvalid([
+            this.getTranslations(defaultBaseTranslations).required,
+          ]);
         }
       }
     }

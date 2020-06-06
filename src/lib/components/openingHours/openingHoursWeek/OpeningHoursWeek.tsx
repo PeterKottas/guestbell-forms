@@ -3,17 +3,18 @@ import * as React from 'react';
 
 // Misc
 import OpeningHoursUtil, {
-  OpeningHoursLabelTranslations,
+  defaultTranslations as defaultLabelTranslations,
 } from '../utils/OpeningHoursUtil';
 import {
   OpeningHoursDayObj,
   OpeningHoursDay,
-  OpeningHoursDayTranslations,
+  defaultDayTranslations,
 } from '../openingHoursDay/OpeningHoursDay';
 import {
   BaseInputProps,
   BaseInputState,
   BaseInput,
+  defaultBaseTranslations,
 } from '../../base/input/BaseInput';
 import { Checkbox } from '../../checkbox/Checkbox';
 import { withFormContext } from '../../form/withFormContext';
@@ -23,21 +24,19 @@ export interface OpeningHoursWeekDayObj extends OpeningHoursDayObj {
   dayLabel?: string;
 }
 
-export interface OpeningHoursWeekProps extends BaseInputProps<never> {
+export interface OpeningHoursWeekProps
+  extends BaseInputProps<never, OpeningHoursWeekTranslations> {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   days: OpeningHoursWeekDayObj[];
   onDaysChange: (days: OpeningHoursWeekDayObj[]) => void;
   standardDay?: OpeningHoursWeekDayObj;
   onStandardDayChange?: (day: OpeningHoursWeekDayObj) => void;
   useCapacity?: boolean;
-  weekTranslations?: OpeningHoursWeekTranslations;
-  dayTranslations?: OpeningHoursDayTranslations;
-  labelTranslations?: OpeningHoursLabelTranslations;
 }
 
 export interface OpeningHoursWeekState extends BaseInputState {}
 
-const defaultOpeningHoursWeekTranslations = {
+export const defaultWeekTranslations = {
   standardDay: 'Standard day',
   standardDayTooltip: (
     <>
@@ -55,14 +54,20 @@ const defaultOpeningHoursWeekTranslations = {
   friday: 'Friday',
   saturday: 'Saturday',
   sunday: 'Sunday',
+  ...defaultBaseTranslations,
+  ...defaultDayTranslations,
+  ...defaultLabelTranslations,
 };
 
-export type OpeningHoursWeekTranslations = typeof defaultOpeningHoursWeekTranslations;
+export type OpeningHoursWeekTranslations = Partial<
+  typeof defaultWeekTranslations
+>;
 
 export class OpeningHoursWeekRaw extends BaseInput<
   OpeningHoursWeekProps,
   OpeningHoursWeekState,
-  never
+  never,
+  OpeningHoursWeekTranslations
 > {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     type: 'openingHoursWeek',
@@ -113,16 +118,8 @@ export class OpeningHoursWeekRaw extends BaseInput<
     this.props.onDaysChange(days);
   }
 
-  private getTranslations() {
-    let { weekTranslations = defaultOpeningHoursWeekTranslations } = this.props;
-    return {
-      ...defaultOpeningHoursWeekTranslations,
-      ...weekTranslations,
-    };
-  }
-
   private getInitialState() {
-    const weekTranslations = this.getTranslations();
+    const weekTranslations = this.getTranslations(defaultWeekTranslations);
     return [
       { dayLabel: weekTranslations.monday, times: [] },
       { dayLabel: weekTranslations.tuesday, times: [] },
@@ -136,7 +133,7 @@ export class OpeningHoursWeekRaw extends BaseInput<
 
   private renderContent() {
     const allDaysStandard = this.props.days.every(d => d.isStandardDay);
-    const weekTranslations = this.getTranslations();
+    const weekTranslations = this.getTranslations(defaultWeekTranslations);
     return (
       <div className={``}>
         {this.props.standardDay && (
@@ -150,7 +147,7 @@ export class OpeningHoursWeekRaw extends BaseInput<
               <span>
                 {OpeningHoursUtil.getLabelSuffix(
                   this.props.standardDay,
-                  this.props.labelTranslations
+                  this.props.translations
                 )}
                 <span className="float-right openingHoursWeek__is-standard-day">
                   {weekTranslations.standardDayAll}
@@ -168,7 +165,7 @@ export class OpeningHoursWeekRaw extends BaseInput<
             onOpeningHoursChange={this.standardDayChanged}
             title={weekTranslations.standardDay}
             tooltip={weekTranslations.standardDayTooltip}
-            translations={this.props.dayTranslations}
+            translations={this.props.translations}
           />
         )}
         {this.props.days.map((day, index) => (
@@ -186,7 +183,7 @@ export class OpeningHoursWeekRaw extends BaseInput<
                     this.props.standardDay && day.isStandardDay
                       ? this.props.standardDay
                       : day,
-                    this.props.labelTranslations
+                    this.props.translations
                   )}
                   <span className="float-right openingHoursWeek__is-standard-day">
                     {weekTranslations.standardDayCheckBox}
@@ -209,7 +206,7 @@ export class OpeningHoursWeekRaw extends BaseInput<
             }}
             onOpeningHoursChange={this.onOpeningHoursChange(index, day)}
             title={day.dayLabel}
-            translations={this.props.dayTranslations}
+            translations={this.props.translations}
           />
         ))}
         <span className="bar" />

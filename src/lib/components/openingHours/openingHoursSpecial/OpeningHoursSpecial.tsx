@@ -11,17 +11,18 @@ try {
 
 // Misc
 import OpeningHoursUtil, {
-  OpeningHoursLabelTranslations,
+  defaultTranslations as defaultLabelTranslations,
 } from '../utils/OpeningHoursUtil';
 import {
   OpeningHoursDayObj,
   OpeningHoursDay,
-  OpeningHoursDayTranslations,
+  defaultDayTranslations,
 } from '../openingHoursDay/OpeningHoursDay';
 import {
   BaseInputProps,
   BaseInputState,
   BaseInput,
+  defaultBaseTranslations,
 } from '../../base/input/BaseInput';
 import { Button } from '../../button/Button';
 import { withFormContext } from '../../form/withFormContext';
@@ -30,14 +31,12 @@ export interface OpeningHoursSpecialDayObj extends OpeningHoursDayObj {
   date?: Date;
 }
 
-export interface OpeningHoursSpecialProps extends BaseInputProps<never> {
+export interface OpeningHoursSpecialProps
+  extends BaseInputProps<never, OpeningHoursSpecialTranslations> {
   days: OpeningHoursSpecialDayObj[];
   onDaysChange: (days: OpeningHoursSpecialDayObj[]) => void;
   placeholder?: string;
   useCapacity?: boolean;
-  specialTranslations?: OpeningHoursSpecialTranslations;
-  dayTranslations?: OpeningHoursDayTranslations;
-  labelTranslations?: OpeningHoursLabelTranslations;
 }
 
 export interface OpeningHoursSpecialState extends BaseInputState {}
@@ -60,17 +59,23 @@ export class DateInput extends React.PureComponent<{
   }
 }
 
-const defaultOpeningHoursSpecialTranslations = {
+const defaultSpecialTranslations = {
   chooseDateError: 'Date not selected',
   chooseDate: 'Choose date',
+  ...defaultBaseTranslations,
+  ...defaultDayTranslations,
+  ...defaultLabelTranslations,
 };
 
-export type OpeningHoursSpecialTranslations = typeof defaultOpeningHoursSpecialTranslations;
+export type OpeningHoursSpecialTranslations = Partial<
+  typeof defaultSpecialTranslations
+>;
 
 export class OpeningHoursSpecialRaw extends BaseInput<
   OpeningHoursSpecialProps,
   OpeningHoursSpecialState,
-  never
+  never,
+  OpeningHoursSpecialTranslations
 > {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     type: 'openingHoursSpecial',
@@ -104,7 +109,7 @@ export class OpeningHoursSpecialRaw extends BaseInput<
         'You need to install react-datepicker in order to use special day picker'
       );
     }
-    const translations = this.getTranslations();
+    const translations = this.getTranslations(defaultSpecialTranslations);
     return (
       <div
         {...(this.props.id && {
@@ -127,10 +132,7 @@ export class OpeningHoursSpecialRaw extends BaseInput<
             key={index}
             label={
               <span>
-                {OpeningHoursUtil.getLabelSuffix(
-                  day,
-                  this.props.labelTranslations
-                )}
+                {OpeningHoursUtil.getLabelSuffix(day, this.props.translations)}
                 <span className="float-right">
                   <Button
                     {...(this.props.id && {
@@ -166,7 +168,7 @@ export class OpeningHoursSpecialRaw extends BaseInput<
                 minDate={new Date()}
               />
             }
-            translations={this.props.dayTranslations}
+            translations={this.props.translations}
           />
         ))}
         <span className="bar" />
@@ -176,7 +178,7 @@ export class OpeningHoursSpecialRaw extends BaseInput<
   }
 
   private handleDates() {
-    const translations = this.getTranslations();
+    const translations = this.getTranslations(defaultSpecialTranslations);
     const allDaysHaveDates =
       !this.props.days || this.props.days.every(d => Boolean(d.date));
     if (allDaysHaveDates) {
@@ -184,16 +186,6 @@ export class OpeningHoursSpecialRaw extends BaseInput<
     } else {
       this.setInvalid([translations.chooseDateError]);
     }
-  }
-
-  private getTranslations() {
-    let {
-      specialTranslations = defaultOpeningHoursSpecialTranslations,
-    } = this.props;
-    return {
-      ...defaultOpeningHoursSpecialTranslations,
-      ...specialTranslations,
-    };
   }
 
   private removeDayClick = (index: number) => () =>

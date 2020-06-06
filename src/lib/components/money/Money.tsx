@@ -11,6 +11,7 @@ import {
   BaseInputProps,
   BaseInputState,
   BaseInput,
+  defaultBaseTranslations,
 } from '../base/input/BaseInput';
 import { Button } from '../button/Button';
 import { withFormContext } from '../form/withFormContext';
@@ -20,7 +21,17 @@ export interface MoneyWithCurrency {
   currency: SelectValue;
 }
 
-export interface MoneyProps extends BaseInputProps<never> {
+export const defaultMoneyTranslations = {
+  ...defaultBaseTranslations,
+  cannotRemoveDefaultCurrency: 'Cannot remove default currency',
+  removePrice: 'Remove price',
+  addPrice: 'Add price',
+  addNewCurrency: 'Add new currency',
+};
+
+export type MoneyTranslations = Partial<typeof defaultMoneyTranslations>;
+
+export interface MoneyProps extends BaseInputProps<never, MoneyTranslations> {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onPricesChange: (prices: MoneyWithCurrency[]) => void;
   allowMultiple?: boolean;
@@ -30,7 +41,12 @@ export interface MoneyProps extends BaseInputProps<never> {
 
 export interface MoneyState extends BaseInputState {}
 
-export class MoneyRaw extends BaseInput<MoneyProps, MoneyState, never> {
+export class MoneyRaw extends BaseInput<
+  MoneyProps,
+  MoneyState,
+  never,
+  MoneyTranslations
+> {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     type: 'money',
     allowMultiple: false,
@@ -45,7 +61,7 @@ export class MoneyRaw extends BaseInput<MoneyProps, MoneyState, never> {
       isValid: props.required ? props.prices.length > 0 : true,
       errors:
         props.required && props.prices.length === 0
-          ? [this.props.errorsTranslations.required]
+          ? [this.getTranslations(defaultMoneyTranslations).required]
           : [],
       handleValueChangeEnabled: false,
     });
@@ -65,6 +81,7 @@ export class MoneyRaw extends BaseInput<MoneyProps, MoneyState, never> {
 
   public render() {
     let unusedCurrencies = this.props.currencies;
+    const translations = this.getTranslations(defaultMoneyTranslations);
     return (
       <InputGroup title={this.props.title}>
         <div
@@ -130,8 +147,8 @@ export class MoneyRaw extends BaseInput<MoneyProps, MoneyState, never> {
                       buttonProps={{
                         title:
                           currency && currency.forceSelected
-                            ? 'Cannot remove default currency'
-                            : 'Remove price',
+                            ? translations.cannotRemoveDefaultCurrency
+                            : translations.removePrice,
                       }}
                       circular={true}
                       disabled={currency && currency.forceSelected}
@@ -161,8 +178,8 @@ export class MoneyRaw extends BaseInput<MoneyProps, MoneyState, never> {
               buttonProps={{
                 title:
                   this.props.prices && this.props.prices.length === 0
-                    ? 'Add price'
-                    : 'Add new currency',
+                    ? translations.addPrice
+                    : translations.addNewCurrency,
               }}
             >
               <PlusIcon />
@@ -231,7 +248,9 @@ export class MoneyRaw extends BaseInput<MoneyProps, MoneyState, never> {
     );
     this.props.onPricesChange(newPrices);
     if (newPrices.length === 0 && this.props.required) {
-      this.setInvalid([this.props.errorsTranslations.required]);
+      this.setInvalid([
+        this.getTranslations(defaultMoneyTranslations).required,
+      ]);
     }
     if (!this.state.touched) {
       this.touch();

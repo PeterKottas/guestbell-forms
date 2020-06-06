@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Duration } from 'moment';
 import { OpeningHoursDayObj } from '../openingHoursDay';
 
-export const defaultOpeningHoursLabelTranslations = {
+export const defaultTranslations = {
   open: 'Open',
   closed: 'Closed',
   and: 'and',
@@ -13,7 +13,7 @@ export const defaultOpeningHoursLabelTranslations = {
   minutes: 'minutes',
 };
 
-export type OpeningHoursLabelTranslations = typeof defaultOpeningHoursLabelTranslations;
+export type OpeningHoursLabelTranslations = Partial<typeof defaultTranslations>;
 
 export class OpeningHoursUtil {
   public getTimeFromMidnight(time: Duration, midnight: Duration = time) {
@@ -101,7 +101,7 @@ export class OpeningHoursUtil {
 
   private getTranslations(translations?: OpeningHoursLabelTranslations) {
     return {
-      ...defaultOpeningHoursLabelTranslations,
+      ...defaultTranslations,
       ...translations,
     };
   }

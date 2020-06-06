@@ -8,6 +8,7 @@ import {
   BaseInputState,
   BaseInput,
   ValidationError,
+  defaultBaseTranslations,
 } from '../base/input/BaseInput';
 import { Button } from '../button/Button';
 import TagsSuggestions from './subComponents/TagsSuggestions';
@@ -20,11 +21,12 @@ export type Tag = {
   name: string;
 };
 
-export const defaultTranslations = {
+export const defaultTagsTranslations = {
+  ...defaultBaseTranslations,
   addNew: 'Add new',
 };
 
-export type TagsTranslations = typeof defaultTranslations;
+export type TagsTranslations = Partial<typeof defaultTagsTranslations>;
 
 export type TagsProps = {
   className?: string;
@@ -50,8 +52,7 @@ export type TagsProps = {
   loadingDelayMs?: number;
   filterExistingTags?: (text: string, existingTags: Tag[]) => Tag[];
   maxSuggestions?: number;
-  translations?: TagsTranslations;
-} & BaseInputProps<HTMLInputElement>;
+} & BaseInputProps<HTMLInputElement, TagsTranslations>;
 
 export interface TagsState extends BaseInputState {
   textIsFocused: boolean;
@@ -68,7 +69,8 @@ type InjectedProps = {};
 export class TagsRaw extends BaseInput<
   TagsProps & InjectedProps,
   TagsState,
-  HTMLInputElement
+  HTMLInputElement,
+  TagsTranslations
 > {
   public static defaultProps: TagsProps = {
     ...BaseInput.defaultProps,
@@ -90,6 +92,7 @@ export class TagsRaw extends BaseInput<
       tags.filter(tag => tag.name && tag.name.toLowerCase().startsWith(text)),
     maxSuggestions: 5,
     addNewOnBlur: true,
+    translations: defaultTagsTranslations,
   };
 
   private textRef: React.RefObject<TextRaw>;
@@ -155,7 +158,7 @@ export class TagsRaw extends BaseInput<
   }
 
   public render() {
-    const translations = this.getTranslations();
+    const translations = this.getTranslations(defaultTagsTranslations);
     const textProps = this.props.textProps ? this.props.textProps : {};
     const suggestions = this.getSuggestions();
     return (
@@ -272,14 +275,6 @@ export class TagsRaw extends BaseInput<
         </div>
       </InputGroup>
     );
-  }
-
-  private getTranslations() {
-    let { translations = defaultTranslations } = this.props;
-    return {
-      ...defaultTranslations,
-      ...translations,
-    };
   }
 
   private onTextErrorsChanged = (textErrors: ValidationError[]) =>
@@ -427,7 +422,9 @@ export class TagsRaw extends BaseInput<
       errors = errors.concat(this.state.textErrors);
     }
     if (this.state.value !== '' && tags.length === 0 && this.props.required) {
-      errors = errors.concat(this.props.errorsTranslations.required);
+      errors = errors.concat(
+        this.getTranslations(this.props.translations).required
+      );
     }
     if (this.state.value && this.props.allowNew && !this.state.textIsFocused) {
       errors = errors.concat(this.props.valueNotAddedError);

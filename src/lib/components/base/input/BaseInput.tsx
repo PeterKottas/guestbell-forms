@@ -25,11 +25,16 @@ export type AllowedHtmlElements =
   | HTMLSelectElement
   | HTMLTextAreaElement;
 
-export interface ErrorsTranslations {
-  required: string;
-}
+export const defaultBaseTranslations = {
+  required: 'Required',
+};
 
-export type BaseInputProps<HTMLType extends AllowedHtmlElements> = {
+export type BaseTranslations = Partial<typeof defaultBaseTranslations>;
+
+export type BaseInputProps<
+  HTMLType extends AllowedHtmlElements,
+  TranslationsT extends BaseTranslations = BaseTranslations
+> = {
   id?: string;
   disabled?: boolean;
   className?: string;
@@ -56,7 +61,7 @@ export type BaseInputProps<HTMLType extends AllowedHtmlElements> = {
   showValidation?: boolean;
   reRendersWhenContextChanges?: boolean;
   defaultTouched?: boolean;
-  errorsTranslations?: ErrorsTranslations;
+  translations?: TranslationsT;
 } & FormContextProps;
 
 export interface BaseInputState {
@@ -71,9 +76,10 @@ export interface BaseInputState {
 }
 
 export class BaseInput<
-  P extends BaseInputProps<HTMLType>,
+  P extends BaseInputProps<HTMLType, TranslationsT>,
   S extends BaseInputState,
-  HTMLType extends AllowedHtmlElements
+  HTMLType extends AllowedHtmlElements,
+  TranslationsT extends BaseTranslations = BaseTranslations
 > extends React.Component<P, S> implements ComponentApi {
   public static defaultProps: BaseInputProps<never> = {
     className: undefined,
@@ -85,9 +91,6 @@ export class BaseInput<
     showValidation: true,
     formContext: undefined,
     reRendersWhenContextChanges: false,
-    errorsTranslations: {
-      required: 'Required',
-    },
   };
 
   public componentId = guid();
@@ -379,7 +382,8 @@ export class BaseInput<
       return { isValid, errors: [] };
     }
     if (props.required && !value) {
-      errors.push(this.props.errorsTranslations.required);
+      const translations = this.getTranslations(defaultBaseTranslations);
+      errors.push(translations.required);
       isValid = false;
     } else {
       if (!props.required && !value) {
@@ -485,6 +489,15 @@ export class BaseInput<
     ) : (
       content
     );
+  }
+
+  protected getTranslations(
+    _defaultTranslations: BaseTranslations
+  ): TranslationsT {
+    return {
+      ..._defaultTranslations,
+      ...this.props.translations,
+    };
   }
 }
 export default BaseInput;

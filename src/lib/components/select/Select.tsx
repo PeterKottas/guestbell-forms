@@ -9,6 +9,7 @@ import {
   BaseInputState,
   BaseInput,
   ValidationError,
+  defaultBaseTranslations,
 } from '../base/input/BaseInput';
 import { Button } from '../button/Button';
 import { withFormContext } from '../form/withFormContext';
@@ -223,7 +224,7 @@ export class SelectRaw extends BaseInput<
     if (this.props.required) {
       if (newValues.length === 0) {
         isValid = false;
-        errors.push(this.props.errorsTranslations.required);
+        errors.push(this.getTranslations(defaultBaseTranslations).required);
       }
     }
     if (this.props.customValidators) {

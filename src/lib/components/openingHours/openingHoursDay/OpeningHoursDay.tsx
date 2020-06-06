@@ -12,6 +12,7 @@ import {
   BaseInputProps,
   BaseInputState,
   BaseInput,
+  defaultBaseTranslations,
 } from '../../base/input/BaseInput';
 import { Button } from '../../button/Button';
 import { withFormContext } from '../../form/withFormContext';
@@ -29,24 +30,27 @@ export interface OpeningHoursDayObj {
   times: OpeningHoursPeriodObj[];
 }
 
-export const defaultOpeningHoursDayTranslations = {
+export const defaultDayTranslations = {
   opens: 'Opens',
   closes: 'Closes',
   capacity: 'Capacity',
   add: 'Add new time range',
   midnight: 'Midnight',
+  ...defaultBaseTranslations,
 };
 
-export type OpeningHoursDayTranslations = typeof defaultOpeningHoursDayTranslations;
+export type OpeningHoursDayTranslations = Partial<
+  typeof defaultDayTranslations
+>;
 
-export interface OpeningHoursDayProps extends BaseInputProps<never> {
+export interface OpeningHoursDayProps
+  extends BaseInputProps<never, OpeningHoursDayTranslations> {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onOpeningHoursChange: (openingHours: OpeningHoursDayObj) => void;
   openingHours: OpeningHoursDayObj;
   label?: JSX.Element | string;
   maxOpenCloseTimes?: number;
   useCapacity?: boolean;
-  translations?: OpeningHoursDayTranslations;
 }
 
 export interface OpeningHoursState extends BaseInputState {}
@@ -54,7 +58,8 @@ export interface OpeningHoursState extends BaseInputState {}
 export class OpeningHoursDayRaw extends BaseInput<
   OpeningHoursDayProps,
   OpeningHoursState,
-  never
+  never,
+  OpeningHoursDayTranslations
 > {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     type: 'openingHours',
@@ -68,8 +73,7 @@ export class OpeningHoursDayRaw extends BaseInput<
   }
 
   public render() {
-    let { translations = defaultOpeningHoursDayTranslations } = this.props;
-    translations = { ...defaultOpeningHoursDayTranslations, ...translations };
+    const translations = this.getTranslations(defaultDayTranslations);
     return (
       <InputGroup
         title={this.props.title}

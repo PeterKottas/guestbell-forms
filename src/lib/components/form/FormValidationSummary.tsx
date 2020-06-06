@@ -24,7 +24,7 @@ export type FormValidationSummaryProps = {
 
 export interface FormValidationSummaryState {}
 
-export const DefaultComponent: React.SFC<FormValidationSummaryComponentProps> = props => (
+export const DefaultComponent: React.FC<FormValidationSummaryComponentProps> = props => (
   <React.Fragment>
     {props.componentsWithErrors.map((component, index) => {
       return (
