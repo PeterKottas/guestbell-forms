@@ -4,6 +4,7 @@ import {
   BaseInputProps,
   BaseInputState,
   BaseInput,
+  defaultBaseTranslations,
 } from '../base/input/BaseInput';
 import { Button, ButtonProps } from '../button/Button';
 import { withFormContext } from '../form/withFormContext';
@@ -11,6 +12,13 @@ import { FormValidationSummaryRaw } from './../form/FormValidationSummary';
 import SubmitValidationSummary from './subComponents/SubmitValidationSummary';
 
 // Misc
+export const defaultSubmitTranslations = {
+  ...defaultBaseTranslations,
+  hangOn: 'Hang on',
+  needsFixing: '... needs fixing',
+};
+
+export type SubmitTranslations = Partial<typeof defaultSubmitTranslations>;
 
 export type SubmitProps = BaseInputProps<never> &
   ButtonProps & {
@@ -22,7 +30,12 @@ export type SubmitProps = BaseInputProps<never> &
 
 export interface SubmitState extends BaseInputState {}
 
-export class SubmitRaw extends BaseInput<SubmitProps, SubmitState, never> {
+export class SubmitRaw extends BaseInput<
+  SubmitProps,
+  SubmitState,
+  never,
+  SubmitTranslations
+> {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     validateForm: true,
     ignoreContext: true,
@@ -38,6 +51,7 @@ export class SubmitRaw extends BaseInput<SubmitProps, SubmitState, never> {
 
   public render() {
     const disabled = this.isDisabled();
+    const translations = this.getTranslations(defaultSubmitTranslations);
     return (
       <Button
         {...this.props}
@@ -57,8 +71,8 @@ export class SubmitRaw extends BaseInput<SubmitProps, SubmitState, never> {
             : this.props.showValidationSummaryTooltip &&
               !this.props.formContext.isFormValid && (
                 <FormValidationSummaryRaw
-                  title="Hang on"
-                  footer="... needs fixing"
+                  title={translations.hangOn}
+                  footer={translations.needsFixing}
                   containerClassName=""
                   headerClassName="submitValidationSummary__header"
                   footerClassName="submitValidationSummary__footer"

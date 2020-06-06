@@ -5,9 +5,7 @@ import * as ArrowIcon from 'material-design-icons/maps/svg/production/ic_my_loca
 
 export type SubmitValidationSummaryProps = {} & FormValidationSummaryComponentProps;
 
-const SubmitValidationSummary: React.SFC<
-  SubmitValidationSummaryProps
-> = props => {
+const SubmitValidationSummary: React.FC<SubmitValidationSummaryProps> = props => {
   return (
     <React.Fragment>
       {props.componentsWithErrors.map((component, index) => {
