@@ -481,6 +481,7 @@ export class BaseInput<
         delay={[75, 0]}
         distance={8}
         interactive={true}
+        appendTo={document?.body}
         trigger="mouseenter focus"
         {...this.props.tooltipProps}
       >
