@@ -106,6 +106,7 @@
       bottom: 0.25rem;
       height: $dim + $dim-dif;
       width: $dim + $dim-dif;
+      min-width: $dim + $dim-dif;
       line-height: $dim + $dim-dif;
       font-size: $dim - 0.2 + $dim-dif;
     }
