@@ -485,7 +485,7 @@ export class BaseInput<
         trigger="mouseenter focus"
         {...this.props.tooltipProps}
       >
-        <span tabIndex={0}>{content}</span>
+        {content}
       </Tippy>
     ) : (
       content

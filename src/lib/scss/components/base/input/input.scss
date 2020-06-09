@@ -71,11 +71,12 @@
     transition: 0.2s ease all;
     margin-bottom: 0;
     pointer-events: none;
+    display: flex;
+    align-items: center;
   }
   $dim: 1.1rem;
   .label--help-icon {
     pointer-events: auto;
-    position: absolute;
     bottom: 0.35rem;
     margin-left: 0.5rem;
     background-color: $input-label-color;

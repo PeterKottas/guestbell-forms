@@ -319,6 +319,17 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                     noValidate={true}
                     ref={this.formRef}
                     onSubmit={this.submitForm}
+                    /*extraComponents={{
+                      test: {
+                        // tslint:disable-next-line: no-any
+                        componentApi: {} as any,
+                        validation: {
+                          isValid: false,
+                          errors: ['Test'],
+                          name: 'Test',
+                        },
+                      },
+                    }}*/
                   >
                     <InputHeader
                       icon={<i className="material-icons md-48">edit</i>}
