@@ -132,6 +132,7 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
           delay={[75, 0]}
           distance={8}
           interactive={true}
+          appendTo={document?.body}
           {...this.props.tooltipProps}
         >
           {button}
