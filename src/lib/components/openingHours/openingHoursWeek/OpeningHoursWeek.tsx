@@ -20,9 +20,19 @@ import { Checkbox } from '../../checkbox/Checkbox';
 import { withFormContext } from '../../form/withFormContext';
 import { withThemeContext } from '../../themeProvider/withThemeContext';
 
+export enum Weekday {
+  Monday = 1,
+  Tuesday = 2,
+  Wednesday = 3,
+  Thursday = 4,
+  Friday = 5,
+  Saturday = 6,
+  Sunday = 0,
+}
+
 export interface OpeningHoursWeekDayObj extends OpeningHoursDayObj {
   isStandardDay?: boolean;
-  dayLabel?: string;
+  day: Weekday;
 }
 
 export interface OpeningHoursWeekProps
@@ -31,7 +41,7 @@ export interface OpeningHoursWeekProps
   days: OpeningHoursWeekDayObj[];
   onDaysChange: (days: OpeningHoursWeekDayObj[]) => void;
   standardDay?: OpeningHoursWeekDayObj;
-  onStandardDayChange?: (day: OpeningHoursWeekDayObj) => void;
+  onStandardDayChange?: (day: OpeningHoursDayObj) => void;
   useCapacity?: boolean;
 }
 
@@ -121,15 +131,14 @@ export class OpeningHoursWeekRaw extends BaseInput<
   }
 
   private getInitialState() {
-    const weekTranslations = this.getTranslations(defaultWeekTranslations);
     return [
-      { dayLabel: weekTranslations.monday, times: [] },
-      { dayLabel: weekTranslations.tuesday, times: [] },
-      { dayLabel: weekTranslations.wednesday, times: [] },
-      { dayLabel: weekTranslations.thursday, times: [] },
-      { dayLabel: weekTranslations.friday, times: [] },
-      { dayLabel: weekTranslations.saturday, times: [] },
-      { dayLabel: weekTranslations.sunday, times: [] },
+      { day: Weekday.Monday, times: [] },
+      { day: Weekday.Tuesday, times: [] },
+      { day: Weekday.Wednesday, times: [] },
+      { day: Weekday.Thursday, times: [] },
+      { day: Weekday.Friday, times: [] },
+      { day: Weekday.Saturday, times: [] },
+      { day: Weekday.Sunday, times: [] },
     ];
   }
 
@@ -197,7 +206,7 @@ export class OpeningHoursWeekRaw extends BaseInput<
                   </span>
                 </span>
               ) : (
-                day.dayLabel
+                this.getDayLabel(day.day, weekTranslations)
               )
             }
             openingHours={{
@@ -207,7 +216,7 @@ export class OpeningHoursWeekRaw extends BaseInput<
                   : day.times,
             }}
             onOpeningHoursChange={this.onOpeningHoursChange(index, day)}
-            title={day.dayLabel}
+            title={this.getDayLabel(day.day, weekTranslations)}
             translations={this.props.translations}
           />
         ))}
@@ -215,6 +224,30 @@ export class OpeningHoursWeekRaw extends BaseInput<
         {this.renderDefaultValidation()}
       </div>
     );
+  }
+
+  private getDayLabel(
+    day: Weekday,
+    translations: OpeningHoursWeekTranslations
+  ) {
+    switch (day) {
+      case Weekday.Monday:
+        return translations.monday;
+      case Weekday.Tuesday:
+        return translations.tuesday;
+      case Weekday.Wednesday:
+        return translations.wednesday;
+      case Weekday.Thursday:
+        return translations.thursday;
+      case Weekday.Friday:
+        return translations.friday;
+      case Weekday.Saturday:
+        return translations.saturday;
+      case Weekday.Sunday:
+        return translations.sunday;
+      default:
+        return '';
+    }
   }
 
   private onOpeningHoursChange = (index: number, day: OpeningHoursDayObj) => (
