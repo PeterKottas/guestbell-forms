@@ -8,6 +8,7 @@ import * as Validators from '../../../validators';
 import guid from '../../utils/Guid';
 import { FormContextProps } from '../../form/FormContext';
 import { shallowEqual } from '../../utils/ShallowEqual';
+import { Theme } from '../../../types/Theme';
 
 export interface ComponentApi {
   focus: () => void;
@@ -35,6 +36,7 @@ export type BaseInputProps<
   HTMLType extends AllowedHtmlElements,
   TranslationsT extends BaseTranslations = BaseTranslations
 > = {
+  theme?: Theme;
   id?: string;
   disabled?: boolean;
   className?: string;

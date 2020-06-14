@@ -18,6 +18,7 @@ import {
 } from '../../base/input/BaseInput';
 import { Checkbox } from '../../checkbox/Checkbox';
 import { withFormContext } from '../../form/withFormContext';
+import { withThemeContext } from '../../themeProvider/withThemeContext';
 
 export interface OpeningHoursWeekDayObj extends OpeningHoursDayObj {
   isStandardDay?: boolean;
@@ -70,6 +71,7 @@ export class OpeningHoursWeekRaw extends BaseInput<
   OpeningHoursWeekTranslations
 > {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
+    onChange: undefined,
     type: 'openingHoursWeek',
     placeholder: '',
     collapsible: false,
@@ -237,8 +239,12 @@ export class OpeningHoursWeekRaw extends BaseInput<
   };
 }
 
-export const OpeningHoursWeek = withFormContext<OpeningHoursWeekProps>(
-  OpeningHoursWeekRaw
+export const OpeningHoursWeek = withThemeContext<
+  OpeningHoursWeekProps,
+  typeof OpeningHoursWeekRaw
+>(
+  withFormContext<OpeningHoursWeekProps>(OpeningHoursWeekRaw),
+  'openingHoursWeek'
 );
 
 export default OpeningHoursWeek;

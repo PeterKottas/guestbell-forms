@@ -17,34 +17,39 @@ import {
 } from '../InputHeader/InputHeaderContext';
 import { withInputHeaderContext } from './withInputHeaderContext';
 import Tippy, { TippyProps } from '@tippy.js/react';
+import { withThemeContext } from '../themeProvider/withThemeContext';
+import { ThemeContextProps } from '../themeProvider/ThemeContext';
 
-export type InputHeaderRawProps = {
-  onExpanded?: () => void;
-  onCollapsed?: () => void;
-  onChange?: (collapsed: boolean) => void;
-  className?: string;
-  title?: string | JSX.Element;
-  icon?: string | JSX.Element;
-  subTitle?: string | JSX.Element;
-  mainButton?: JSX.Element;
-  extraButtons?: JSX.Element[];
-  collapsible?: boolean;
-  collapsed?: boolean;
-  collapsedDefault?: boolean;
-  ignoreContext?: boolean;
-  showExpandAll?: boolean;
-  type?: 'hero' | 'standard' | 'small';
-  noBg?: boolean;
-  headerClassName?: string;
-  contentClassName?: string;
-  extraButtonsButtonProps?: ButtonProps;
-  collapseButtonsButtonProps?: ButtonProps;
-  shouldToggleCollapseOnHeaderClick?: boolean;
-  mountOnEnter?: boolean;
-  unmountOnExit?: boolean;
-  tooltip?: string | JSX.Element;
-  tooltipProps?: TippyProps;
-} & InputHeaderContextProps;
+export type InputHeaderRawProps = React.PropsWithChildren<
+  {
+    onExpanded?: () => void;
+    onCollapsed?: () => void;
+    onChange?: (collapsed: boolean) => void;
+    className?: string;
+    title?: string | JSX.Element;
+    icon?: string | JSX.Element;
+    subTitle?: string | JSX.Element;
+    mainButton?: JSX.Element;
+    extraButtons?: JSX.Element[];
+    collapsible?: boolean;
+    collapsed?: boolean;
+    collapsedDefault?: boolean;
+    ignoreContext?: boolean;
+    showExpandAll?: boolean;
+    type?: 'hero' | 'standard' | 'small';
+    noBg?: boolean;
+    headerClassName?: string;
+    contentClassName?: string;
+    extraButtonsButtonProps?: ButtonProps;
+    collapseButtonsButtonProps?: ButtonProps;
+    shouldToggleCollapseOnHeaderClick?: boolean;
+    mountOnEnter?: boolean;
+    unmountOnExit?: boolean;
+    tooltip?: string | JSX.Element;
+    tooltipProps?: TippyProps;
+  } & InputHeaderContextProps &
+    ThemeContextProps
+>;
 
 export type InputHeaderProps = OmitInputHeaderContext<InputHeaderRawProps>;
 
@@ -425,8 +430,9 @@ export class InputHeaderRaw
   }
 }
 
-export const InputHeader = withInputHeaderContext<InputHeaderRawProps>(
-  InputHeaderRaw
-);
+export const InputHeader = withThemeContext<
+  InputHeaderRawProps,
+  InstanceType<typeof InputHeaderRaw>
+>(withInputHeaderContext<InputHeaderRawProps>(InputHeaderRaw), 'inputHeader');
 
 export default InputHeader;

@@ -26,6 +26,7 @@ import {
 } from '../../base/input/BaseInput';
 import { Button } from '../../button/Button';
 import { withFormContext } from '../../form/withFormContext';
+import { withThemeContext } from '../../themeProvider/withThemeContext';
 
 export interface OpeningHoursSpecialDayObj extends OpeningHoursDayObj {
   date?: Date;
@@ -211,8 +212,12 @@ export class OpeningHoursSpecialRaw extends BaseInput<
   };
 }
 
-export const OpeningHoursSpecial = withFormContext<OpeningHoursSpecialProps>(
-  OpeningHoursSpecialRaw
+export const OpeningHoursSpecial = withThemeContext<
+  OpeningHoursSpecialProps,
+  InstanceType<typeof OpeningHoursSpecialRaw>
+>(
+  withFormContext<OpeningHoursSpecialProps>(OpeningHoursSpecialRaw),
+  'openingHoursSpecial'
 );
 
 export default OpeningHoursSpecial;

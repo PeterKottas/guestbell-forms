@@ -11,6 +11,7 @@ import {
   BaseInput,
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
+import { withThemeContext } from '../themeProvider/withThemeContext';
 var classNames = require('classnames');
 
 export interface NumberInputProps extends BaseInputProps<HTMLInputElement> {
@@ -32,10 +33,10 @@ export class NumberInputRaw extends BaseInput<
   NumberInputState,
   HTMLInputElement
 > {
-  public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
+  public static defaultProps = (Object.assign({}, BaseInput.defaultProps, {
     type: 'time',
     placeholder: '',
-  });
+  }) as unknown) as Partial<NumberInputProps>;
 
   constructor(props: NumberInputProps) {
     super(props);
@@ -165,6 +166,9 @@ export class NumberInputRaw extends BaseInput<
   }
 }
 
-export const NumberInput = withFormContext<NumberInputProps>(NumberInputRaw);
+export const NumberInput = withThemeContext<
+  NumberInputProps,
+  InstanceType<typeof NumberInputRaw>
+>(withFormContext<NumberInputProps>(NumberInputRaw), 'numberInput');
 
 export default NumberInput;

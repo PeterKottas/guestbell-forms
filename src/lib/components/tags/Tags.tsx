@@ -14,6 +14,7 @@ import { Button } from '../button/Button';
 import TagsSuggestions from './subComponents/TagsSuggestions';
 import { withFormContext } from '../form/withFormContext';
 import classNames from 'classnames';
+import { withThemeContext } from '../themeProvider/withThemeContext';
 
 // Misc
 export type Tag = {
@@ -548,6 +549,9 @@ export class TagsRaw extends BaseInput<
   }
 }
 
-export const Tags = withFormContext<TagsProps>(TagsRaw);
+export const Tags = withThemeContext<TagsProps, InstanceType<typeof TagsRaw>>(
+  withFormContext<TagsProps>(TagsRaw),
+  'tags'
+);
 
 export default Tags;

@@ -19,6 +19,7 @@ import { withFormContext } from '../../form/withFormContext';
 import classNames from 'classnames';
 import { Duration, duration } from 'moment';
 import NumberInput from '../../numberInput/NumberInput';
+import { withThemeContext } from '../../themeProvider/withThemeContext';
 
 export interface OpeningHoursPeriodObj {
   opens: Duration;
@@ -62,6 +63,7 @@ export class OpeningHoursDayRaw extends BaseInput<
   OpeningHoursDayTranslations
 > {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
+    onChange: undefined,
     type: 'openingHours',
     allowMultiple: false,
     maxOpenCloseTimes: 10,
@@ -383,8 +385,9 @@ export class OpeningHoursDayRaw extends BaseInput<
   }
 }
 
-export const OpeningHoursDay = withFormContext<OpeningHoursDayProps>(
-  OpeningHoursDayRaw
-);
+export const OpeningHoursDay = withThemeContext<
+  OpeningHoursDayProps,
+  InstanceType<typeof OpeningHoursDayRaw>
+>(withFormContext<OpeningHoursDayProps>(OpeningHoursDayRaw), 'openingHoursDay');
 
 export default OpeningHoursDay;

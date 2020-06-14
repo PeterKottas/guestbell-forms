@@ -13,6 +13,7 @@ import {
 } from '../base/input/BaseInput';
 import { Button } from '../button/Button';
 import { withFormContext } from '../form/withFormContext';
+import { withThemeContext } from '../themeProvider/withThemeContext';
 
 export interface SelectValue {
   value: number | string;
@@ -297,6 +298,9 @@ export class SelectRaw extends BaseInput<
   };
 }
 
-export const Select = withFormContext<SelectProps>(SelectRaw);
+export const Select = withThemeContext<
+  SelectProps,
+  InstanceType<typeof SelectRaw>
+>(withFormContext<SelectProps>(SelectRaw), 'select');
 
 export default Select;

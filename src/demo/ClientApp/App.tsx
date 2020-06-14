@@ -3,12 +3,27 @@ import Basic from './pages/basic/Basic';
 import ValidationPage from './pages/validationPage/ValidationPage';
 import Header from './components/header/Header';
 import { hot } from 'react-hot-loader';
+import { ThemeProvider } from '../../lib/index';
 
 const App = () => (
   <div>
     <Header />
-    {true && <Basic />}
-    {false && <ValidationPage />}
+    <ThemeProvider
+      theme={{
+        overrides: {
+          openingHoursWeek: {
+            props: {
+              translations: {
+                monday: 'Bla bla',
+              },
+            },
+          },
+        },
+      }}
+    >
+      {true && <Basic />}
+      {false && <ValidationPage />}
+    </ThemeProvider>
   </div>
 );
 

@@ -6,6 +6,7 @@ import {
   BaseInput,
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
+import { withThemeContext } from '../themeProvider/withThemeContext';
 
 // Misc
 
@@ -24,7 +25,9 @@ export class RadioRaw extends BaseInput<
   RadioState,
   HTMLInputElement
 > {
-  public static defaultProps = Object.assign({}, BaseInput.defaultProps, {});
+  public static defaultProps = (Object.assign({}, BaseInput.defaultProps, {
+    onChange: undefined,
+  }) as unknown) as RadioProps;
 
   constructor(props: RadioProps) {
     super(props);
@@ -75,6 +78,9 @@ export class RadioRaw extends BaseInput<
   }
 }
 
-export const Radio = withFormContext<RadioProps>(RadioRaw);
+export const Radio = withThemeContext<
+  RadioProps,
+  InstanceType<typeof RadioRaw>
+>(withFormContext<RadioProps>(RadioRaw), 'radio');
 
 export default Radio;

@@ -9,6 +9,7 @@ import {
   BaseInput,
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
+import { withThemeContext } from '../themeProvider/withThemeContext';
 
 export interface TextProps extends BaseInputProps<HTMLInputElement> {
   mask?: string;
@@ -29,7 +30,7 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
     placeholder: '',
     stopClickPropagation: true,
     readOnly: false,
-  });
+  }) as TextProps;
 
   constructor(props: TextProps) {
     super(props);
@@ -85,6 +86,9 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
     this.props.onKeyDown && this.props.onKeyDown(e);
 }
 
-export const Text = withFormContext<TextProps>(TextRaw);
+export const Text = withThemeContext<TextProps, InstanceType<typeof TextRaw>>(
+  withFormContext<TextProps>(TextRaw),
+  'text'
+);
 
 export default Text;

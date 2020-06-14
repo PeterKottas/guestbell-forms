@@ -13,6 +13,7 @@ import {
 import { withFormContext } from '../form/withFormContext';
 import TimeUtil from '../utils/TimeUtil';
 import { Duration, duration } from 'moment';
+import { withThemeContext } from '../themeProvider/withThemeContext';
 
 export interface TimeProps extends BaseInputProps<HTMLInputElement> {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -29,10 +30,10 @@ export interface TimeState extends BaseInputState {
 }
 
 export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
-  public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
+  public static defaultProps = (Object.assign({}, BaseInput.defaultProps, {
     type: 'time',
     placeholder: '',
-  });
+  }) as unknown) as TimeProps;
 
   constructor(props: TimeProps) {
     super(props);
@@ -268,6 +269,9 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
   }
 }
 
-export const Time = withFormContext<TimeProps>(TimeRaw);
+export const Time = withThemeContext<TimeProps, InstanceType<typeof TimeRaw>>(
+  withFormContext<TimeProps>(TimeRaw),
+  'time'
+);
 
 export default Time;

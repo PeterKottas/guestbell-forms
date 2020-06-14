@@ -3,7 +3,6 @@
   position: relative;
   .label__checkbox {
     display: inline-block !important;
-    top: 3px !important;
     border-bottom: none !important;
     margin: 0 0 0 0.5rem !important;
     width: initial !important;
@@ -14,6 +13,8 @@
   }
   .openingHoursWeek__is-standard-day {
     color: $primary-color;
+    position: absolute;
+    right: 0;
   }
 }
 

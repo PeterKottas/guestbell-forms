@@ -12,6 +12,7 @@ import {
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
 import { Duration, duration } from 'moment';
+import { withThemeContext } from '../themeProvider/withThemeContext';
 var classNames = require('classnames');
 
 export enum TimeSpanUnit {
@@ -66,7 +67,7 @@ export class TimeSpanRaw extends BaseInput<
   TimeSpanState,
   HTMLInputElement
 > {
-  public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
+  public static defaultProps = (Object.assign({}, BaseInput.defaultProps, {
     type: 'time',
     placeholder: '',
     validUnits: allTimeSpanUnits,
@@ -91,7 +92,7 @@ export class TimeSpanRaw extends BaseInput<
       }
     },
     min: duration(0),
-  });
+  }) as unknown) as TimeSpanProps;
 
   constructor(props: TimeSpanProps) {
     super(props);
@@ -362,6 +363,9 @@ export class TimeSpanRaw extends BaseInput<
   }
 }
 
-export const TimeSpan = withFormContext<TimeSpanProps>(TimeSpanRaw);
+export const TimeSpan = withThemeContext<
+  TimeSpanProps,
+  InstanceType<typeof TimeSpanRaw>
+>(withFormContext<TimeSpanProps>(TimeSpanRaw), 'timeSpan');
 
 export default TimeSpan;

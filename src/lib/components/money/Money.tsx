@@ -15,6 +15,7 @@ import {
 } from '../base/input/BaseInput';
 import { Button } from '../button/Button';
 import { withFormContext } from '../form/withFormContext';
+import { withThemeContext } from '../themeProvider/withThemeContext';
 
 export interface MoneyWithCurrency {
   value: number;
@@ -50,6 +51,7 @@ export class MoneyRaw extends BaseInput<
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     type: 'money',
     allowMultiple: false,
+    onChange: undefined,
   });
 
   constructor(props: MoneyProps) {
@@ -272,6 +274,9 @@ export class MoneyRaw extends BaseInput<
   private onBlur = () => this.setState({ focused: false });
 }
 
-export const Money = withFormContext<MoneyProps>(MoneyRaw);
+export const Money = withThemeContext<
+  MoneyProps,
+  InstanceType<typeof MoneyRaw>
+>(withFormContext<MoneyProps>(MoneyRaw), 'money');
 
 export default Money;

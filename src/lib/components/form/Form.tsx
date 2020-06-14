@@ -8,8 +8,10 @@ import {
   FormContextProvider,
   ComponentsDict,
 } from './FormContext';
+import { withThemeContext } from '../themeProvider/withThemeContext';
+import { ThemeContextProps } from '../themeProvider/ThemeContext';
 
-export interface FormProps {
+export interface FormProps extends ThemeContextProps {
   id?: string;
   className?: string;
   noValidate?: boolean;
@@ -231,4 +233,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
   }
 }
 
-export default Form;
+export default withThemeContext<FormProps, InstanceType<typeof Form>>(
+  Form,
+  'form'
+);

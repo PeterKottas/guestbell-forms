@@ -1,6 +1,8 @@
 // Libs
 import * as React from 'react';
 import Tippy, { TippyProps } from '@tippy.js/react';
+import { withThemeContext } from '../themeProvider/withThemeContext';
+import { ThemeContextProps } from '../themeProvider/ThemeContext';
 var Ink = require('react-ink');
 var classNames = require('classnames');
 
@@ -25,30 +27,32 @@ export type ButtonComponentProps = {
   style: React.CSSProperties;
 };
 
-export type ButtonProps = {
-  id?: string;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  style?: React.CSSProperties;
-  className?: string;
-  disabled?: boolean;
-  type?: ButtonTypes;
-  circular?: boolean;
-  noRipples?: boolean;
-  small?: boolean;
-  icon?: boolean;
-  outlined?: boolean;
-  disableAfterClickMs?: number;
-  buttonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
-  hero?: boolean;
-  noShadow?: boolean;
-  blank?: boolean;
-  unobtrusive?: boolean;
-  dropdown?: boolean;
-  Component?: (props: ButtonComponentProps) => JSX.Element;
-  tooltip?: JSX.Element | string;
-  tooltipProps?: TippyProps;
-  preventsDefault?: boolean;
-};
+export type ButtonProps = React.PropsWithChildren<
+  {
+    id?: string;
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    style?: React.CSSProperties;
+    className?: string;
+    disabled?: boolean;
+    type?: ButtonTypes;
+    circular?: boolean;
+    noRipples?: boolean;
+    small?: boolean;
+    icon?: boolean;
+    outlined?: boolean;
+    disableAfterClickMs?: number;
+    buttonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
+    hero?: boolean;
+    noShadow?: boolean;
+    blank?: boolean;
+    unobtrusive?: boolean;
+    dropdown?: boolean;
+    Component?: (props: ButtonComponentProps) => JSX.Element;
+    tooltip?: JSX.Element | string;
+    tooltipProps?: TippyProps;
+    preventsDefault?: boolean;
+  } & ThemeContextProps
+>;
 
 export interface ButtonState {}
 
@@ -161,4 +165,7 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
     return this.props.type && 'guestbell-btn-' + this.props.type;
   }
 }
-export default Button;
+export default withThemeContext<ButtonProps, InstanceType<typeof Button>>(
+  Button,
+  'button'
+);

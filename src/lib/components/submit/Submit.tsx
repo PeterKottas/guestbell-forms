@@ -10,6 +10,7 @@ import { Button, ButtonProps } from '../button/Button';
 import { withFormContext } from '../form/withFormContext';
 import { FormValidationSummaryRaw } from './../form/FormValidationSummary';
 import SubmitValidationSummary from './subComponents/SubmitValidationSummary';
+import { withThemeContext } from '../themeProvider/withThemeContext';
 
 // Misc
 export const defaultSubmitTranslations = {
@@ -108,6 +109,9 @@ export class SubmitRaw extends BaseInput<
   }
 }
 
-export const Submit = withFormContext<SubmitProps>(SubmitRaw);
+export const Submit = withThemeContext<
+  SubmitProps,
+  InstanceType<typeof SubmitRaw>
+>(withFormContext<SubmitProps>(SubmitRaw), 'submit');
 
 export default Submit;

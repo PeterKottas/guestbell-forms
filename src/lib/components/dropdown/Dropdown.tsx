@@ -1,9 +1,11 @@
 ﻿// Libs
 import * as React from 'react';
 import Collapse, { CollapseProps } from '@material-ui/core/Collapse';
+import { ThemeContextProps } from '../themeProvider/ThemeContext';
+import { withThemeContext } from '../themeProvider/withThemeContext';
 var classNames = require('classnames');
 
-export interface DropdownProps {
+export interface DropdownProps extends ThemeContextProps {
   id?: string;
   header?: JSX.Element | string;
   className?: string;
@@ -141,4 +143,6 @@ export class Dropdown extends React.PureComponent<
   }
 }
 
-export default Dropdown;
+export default withThemeContext<DropdownProps, InstanceType<typeof Dropdown>>(
+  Dropdown
+);

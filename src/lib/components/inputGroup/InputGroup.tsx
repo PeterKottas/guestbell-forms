@@ -5,12 +5,17 @@ import {
   BaseInputState,
   BaseInput,
 } from '../base/input/BaseInput';
+import { withThemeContext } from '../themeProvider/withThemeContext';
+import { ThemeContextProps } from '../themeProvider/ThemeContext';
 
 // Misc
 
-export type InputGroupProps = Pick<
-  BaseInputProps<never>,
-  'title' | 'className' | 'tooltip' | 'formContext'
+export type InputGroupProps = React.PropsWithChildren<
+  Pick<
+    BaseInputProps<never>,
+    'title' | 'className' | 'tooltip' | 'formContext'
+  > &
+    ThemeContextProps
 >;
 
 export interface InputGroupState extends BaseInputState {}
@@ -49,4 +54,7 @@ export class InputGroup extends BaseInput<
     );
   }
 }
-export default InputGroup;
+export default withThemeContext<
+  InputGroupProps,
+  InstanceType<typeof InputGroup>
+>(InputGroup, 'inputGroup');

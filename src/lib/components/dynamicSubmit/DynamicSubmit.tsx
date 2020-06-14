@@ -6,6 +6,7 @@ import { FormContextProps } from '../form/FormContext';
 import { SubmitProps } from '../submit';
 import { Omit } from '../utils/Typescript';
 import { SubmitRaw } from './../submit/Submit';
+import { withThemeContext } from '../themeProvider/withThemeContext';
 
 // Misc
 
@@ -144,8 +145,9 @@ export class DynamicSubmitRaw extends React.PureComponent<
   }
 }
 
-export const DynamicSubmit = withFormContext<DynamicSubmitProps>(
-  DynamicSubmitRaw
-);
+export const DynamicSubmit = withThemeContext<
+  DynamicSubmitProps,
+  InstanceType<typeof DynamicSubmitRaw>
+>(withFormContext<DynamicSubmitProps>(DynamicSubmitRaw), 'dynamicSubmit');
 
 export default DynamicSubmit;

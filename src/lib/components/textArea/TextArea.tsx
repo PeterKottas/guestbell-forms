@@ -10,6 +10,7 @@ import {
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import { withThemeContext } from '../themeProvider/withThemeContext';
 
 export interface TextAreaProps extends BaseInputProps<HTMLTextAreaElement> {
   mask?: string;
@@ -30,12 +31,12 @@ export class TextAreaRaw extends BaseInput<
   TextAreaState,
   HTMLTextAreaElement
 > {
-  public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
+  public static defaultProps = (Object.assign({}, BaseInput.defaultProps, {
     type: 'text',
     placeholder: '',
     stopClickPropagation: true,
     readOnly: false,
-  });
+  }) as unknown) as TextAreaProps;
   private elem: HTMLTextAreaElement;
 
   constructor(props: TextAreaProps) {
@@ -94,6 +95,9 @@ export class TextAreaRaw extends BaseInput<
     this.props.stopClickPropagation && e.stopPropagation();
 }
 
-export const TextArea = withFormContext<TextAreaProps>(TextAreaRaw);
+export const TextArea = withThemeContext<
+  TextAreaProps,
+  InstanceType<typeof TextAreaRaw>
+>(withFormContext<TextAreaProps>(TextAreaRaw), 'textArea');
 
 export default TextArea;

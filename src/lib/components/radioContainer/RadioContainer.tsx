@@ -1,10 +1,12 @@
 // Libs
 import * as React from 'react';
 import InputGroup from '../inputGroup/InputGroup';
+import { withThemeContext } from '../themeProvider/withThemeContext';
+import { ThemeContextProps } from '../themeProvider/ThemeContext';
 
 // Misc
 
-export interface RadioContainerProps {
+export interface RadioContainerProps extends ThemeContextProps {
   id?: string;
   className?: string;
   title?: string;
@@ -41,4 +43,7 @@ export class RadioContainer extends React.PureComponent<
     );
   }
 }
-export default RadioContainer;
+export default withThemeContext<
+  RadioContainerProps,
+  InstanceType<typeof RadioContainer>
+>(RadioContainer, 'radioContainer');
