@@ -9,7 +9,6 @@ import { InputGroupProps } from '../components/inputGroup';
 import { InputHeaderProps } from '../components/inputHeader';
 import { MoneyProps } from '../components/money';
 import { NumberInputProps } from '../components/numberInput';
-import { RadioProps, SelectProps } from '@material-ui/core';
 import { RadioContainerProps } from '../components/radioContainer';
 import { OpeningHoursDayProps } from '../components/openingHours/openingHoursDay';
 import { OpeningHoursWeekProps } from '../components/openingHours/openingHoursWeek';
@@ -19,6 +18,8 @@ import { TagsProps } from '../components/tags';
 import { TextAreaProps } from '../components/textArea';
 import { TimeProps } from '../components/time';
 import { TimeSpanProps } from '../components/timeSpan';
+import { RadioProps } from '../components/radio';
+import { SelectProps } from '../components/select';
 
 export type ThemeOverrides = {
   button?: ElementOverrideProp<ButtonProps>;
