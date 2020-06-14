@@ -11,13 +11,15 @@ import {
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import { ThemeContextProps } from '../themeProvider/ThemeContext';
 
-export interface FormProps extends ThemeContextProps {
-  id?: string;
-  className?: string;
-  noValidate?: boolean;
-  onSubmit?: () => void;
-  extraComponents?: ComponentsDict;
-}
+export type FormProps = React.PropsWithChildren<
+  ThemeContextProps & {
+    id?: string;
+    className?: string;
+    noValidate?: boolean;
+    onSubmit?: () => void;
+    extraComponents?: ComponentsDict;
+  }
+>;
 
 export interface FormState {
   contextState: FormContextState;
