@@ -40,7 +40,7 @@ export interface OpeningHoursWeekProps
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   days: OpeningHoursWeekDayObj[];
   onDaysChange: (days: OpeningHoursWeekDayObj[]) => void;
-  standardDay?: OpeningHoursWeekDayObj;
+  standardDay?: OpeningHoursDayObj;
   onStandardDayChange?: (day: OpeningHoursDayObj) => void;
   useCapacity?: boolean;
 }
