@@ -5,22 +5,24 @@ import { ThemeContextProps } from '../themeProvider/ThemeContext';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 var classNames = require('classnames');
 
-export interface DropdownProps extends ThemeContextProps {
-  id?: string;
-  header?: JSX.Element | string;
-  className?: string;
-  submenuClassName?: string;
-  headerClassName?: string;
-  notificationCount?: number;
-  // tslint:disable-next-line:no-any
-  wrapperTag?: any;
-  shouldHandleClick?: boolean;
-  showArrow?: boolean;
-  onClick?: () => void;
-  disabled?: boolean;
-  inline?: boolean;
-  collapseProps?: Partial<CollapseProps>;
-}
+export type DropdownProps = React.PropsWithChildren<
+  ThemeContextProps & {
+    id?: string;
+    header?: JSX.Element | string;
+    className?: string;
+    submenuClassName?: string;
+    headerClassName?: string;
+    notificationCount?: number;
+    // tslint:disable-next-line:no-any
+    wrapperTag?: any;
+    shouldHandleClick?: boolean;
+    showArrow?: boolean;
+    onClick?: () => void;
+    disabled?: boolean;
+    inline?: boolean;
+    collapseProps?: Partial<CollapseProps>;
+  }
+>;
 
 export interface DropdownState {
   isDropdownVisible: boolean;
