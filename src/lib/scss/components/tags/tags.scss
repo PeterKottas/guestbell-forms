@@ -59,27 +59,26 @@
       font-size: 14px;
     }
   }
-  .tags-input__suggestions {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: white;
-    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.06),
-      0 2px 5px 0 rgba(0, 0, 0, 0.16);
-    z-index: 999;
-    .tags-input__suggestion {
-      text-transform: initial;
-      &.tags-input__suggestion--preselected {
-        background-color: $input-border-color;
-      }
+}
+.tags-input__suggestions {
+  /*position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;*/
+  background-color: white;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.16);
+  z-index: 999;
+  .tags-input__suggestion {
+    text-transform: initial;
+    &.tags-input__suggestion--preselected {
+      background-color: $input-border-color;
     }
-    > ul {
-      padding: 0;
-      margin: 0;
-      > li {
-        list-style: none;
-      }
+  }
+  > ul {
+    padding: 0;
+    margin: 0;
+    > li {
+      list-style: none;
     }
   }
 }

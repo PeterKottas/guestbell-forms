@@ -221,6 +221,7 @@ export class TagsRaw extends BaseInput<
                     {...(this.props.id && {
                       id: this.props.id + '-text-input',
                     })}
+                    anchorEl={this.containerRef.current}
                     allowNew={this.props.allowNew}
                     preselectedSuggestion={this.state.preselectedSuggestion}
                     loading={this.state.fetchingExistingTags}
