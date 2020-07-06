@@ -52,6 +52,7 @@ export type TagsProps = {
   suggestionsEmptyComponent?: string | JSX.Element;
   loadingDelayMs?: number;
   filterExistingTags?: (text: string, existingTags: Tag[]) => Tag[];
+  allowSameTagMultipleTimes?: boolean;
   maxSuggestions?: number;
 } & BaseInputProps<HTMLInputElement, TagsTranslations>;
 
@@ -463,7 +464,11 @@ export class TagsRaw extends BaseInput<
       existingTags
     );
     let suggestions = filteredTags
-      .filter(tag => !this.props.tags.some(t => t.id === tag.id))
+      .filter(
+        tag =>
+          this.props.allowSameTagMultipleTimes ||
+          !this.props.tags.some(t => t.id === tag.id)
+      )
       .slice(0, this.props.maxSuggestions);
     return suggestions;
   }

@@ -60,7 +60,7 @@ export interface BasicState {
   time2: Duration;
   timeSpan: Duration;
   openingHours: OpeningHoursDayObj;
-  openingHoursWeek: OpeningHoursDayObj[];
+  openingHoursWeek: OpeningHoursWeekDayObj[];
   openingHoursWeekDay: OpeningHoursDayObj;
   openingHoursSpecial: OpeningHoursSpecialDayObj[];
   website: string;
@@ -711,7 +711,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                           label="Choose or create tags"
                           readOnly={this.state.multipleReadonly}
                           allowNew={true}
-                          maxTags={1}
+                          maxTags={2}
                           existingTags={existingTags}
                           tags={this.state.tags}
                           onTagsChanged={this.tagsChanged}
