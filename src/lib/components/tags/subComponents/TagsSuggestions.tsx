@@ -2,7 +2,7 @@ import * as React from 'react';
 import onClickOutside, { InjectedOnClickOutProps } from 'react-onclickoutside';
 import { Tag } from '..';
 import { Button } from '../../..';
-import Popper from '@material-ui/core/Popper';
+import Popper, { PopperProps } from '@material-ui/core/Popper';
 
 export type SuggestionsProps = {
   anchorEl: HTMLElement;
@@ -18,6 +18,7 @@ export type SuggestionsProps = {
   EmptyComponent?: string | JSX.Element;
   AddNewTagComponent?: JSX.Element;
   allowNew: boolean;
+  popperProps?: PopperProps;
 };
 
 interface SuggestionsState {
@@ -40,7 +41,8 @@ class Suggestions extends React.Component<
         key={this.state.key}
         open={true}
         anchorEl={this.props.anchorEl}
-        style={{ width: this.props.anchorEl?.scrollWidth }}
+        style={{ width: this.props.anchorEl?.scrollWidth, zIndex: 10000 }}
+        {...this.props.popperProps}
       >
         <div
           {...(this.props.id && {

@@ -15,6 +15,7 @@ import TagsSuggestions from './subComponents/TagsSuggestions';
 import { withFormContext } from '../form/withFormContext';
 import classNames from 'classnames';
 import { withThemeContext } from '../themeProvider/withThemeContext';
+import { PopperProps } from '@material-ui/core/Popper/Popper';
 
 // Misc
 export type Tag = {
@@ -54,6 +55,7 @@ export type TagsProps = {
   filterExistingTags?: (text: string, existingTags: Tag[]) => Tag[];
   allowSameTagMultipleTimes?: boolean;
   maxSuggestions?: number;
+  popperProps?: PopperProps;
 } & BaseInputProps<HTMLInputElement, TagsTranslations>;
 
 export interface TagsState extends BaseInputState {
@@ -256,6 +258,7 @@ export class TagsRaw extends BaseInput<
                         </Button>
                       )
                     }
+                    popperProps={this.props.popperProps}
                   />
                 )}
               </div>
