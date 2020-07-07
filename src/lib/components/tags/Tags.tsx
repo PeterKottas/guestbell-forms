@@ -55,7 +55,7 @@ export type TagsProps = {
   filterExistingTags?: (text: string, existingTags: Tag[]) => Tag[];
   allowSameTagMultipleTimes?: boolean;
   maxSuggestions?: number;
-  popperProps?: PopperProps;
+  popperProps?: Partial<PopperProps>;
 } & BaseInputProps<HTMLInputElement, TagsTranslations>;
 
 export interface TagsState extends BaseInputState {

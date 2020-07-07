@@ -18,7 +18,7 @@ export type SuggestionsProps = {
   EmptyComponent?: string | JSX.Element;
   AddNewTagComponent?: JSX.Element;
   allowNew: boolean;
-  popperProps?: PopperProps;
+  popperProps?: Partial<PopperProps>;
 };
 
 interface SuggestionsState {
@@ -42,6 +42,7 @@ class Suggestions extends React.Component<
         open={true}
         anchorEl={this.props.anchorEl}
         style={{ width: this.props.anchorEl?.scrollWidth, zIndex: 10000 }}
+        placement="bottom-start"
         {...this.props.popperProps}
       >
         <div
