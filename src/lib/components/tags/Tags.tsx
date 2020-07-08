@@ -370,7 +370,7 @@ export class TagsRaw extends BaseInput<
       { value: '', preselectedSuggestion: undefined, textErrors: [] },
       () => {
         if (
-          !this.props.maxTags &&
+          !this.props.maxTags ||
           this.props.tags.length + 1 < this.props.maxTags
         ) {
           this.fetchExistingTags();
