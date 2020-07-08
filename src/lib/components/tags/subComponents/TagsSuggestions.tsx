@@ -36,10 +36,10 @@ class Suggestions extends React.Component<
     this.onSelected = this.onSelected.bind(this);
   }
   public render() {
-    return this.props.isVisible ? (
+    return (
       <Popper
         key={this.state.key}
-        open={true}
+        open={this.props.isVisible}
         anchorEl={this.props.anchorEl}
         style={{ width: this.props.anchorEl?.scrollWidth, zIndex: 10000 }}
         placement="bottom-start"
@@ -90,7 +90,7 @@ class Suggestions extends React.Component<
           </ul>
         </div>
       </Popper>
-    ) : null;
+    );
   }
 
   public handleClickOutside() {
