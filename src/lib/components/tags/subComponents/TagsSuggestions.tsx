@@ -43,6 +43,7 @@ class Suggestions extends React.Component<
         anchorEl={this.props.anchorEl}
         style={{ width: this.props.anchorEl?.scrollWidth, zIndex: 10000 }}
         placement="bottom-start"
+        modifiers={{ flip: { enabled: false } }}
         {...this.props.popperProps}
       >
         <div
