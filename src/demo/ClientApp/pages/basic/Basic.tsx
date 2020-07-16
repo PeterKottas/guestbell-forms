@@ -718,6 +718,17 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                           showChips={true}
                         />
                         <Tags
+                          title="Tags suggestions"
+                          label="Choose tags"
+                          readOnly={this.state.multipleReadonly}
+                          allowNew={false}
+                          maxTags={2}
+                          existingTags={existingTags}
+                          tags={this.state.tags}
+                          onTagsChanged={this.tagsChanged}
+                          showChips={true}
+                        />
+                        <Tags
                           title="Tags max 3"
                           maxTags={2}
                           readOnly={this.state.multipleReadonly}

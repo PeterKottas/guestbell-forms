@@ -5,6 +5,7 @@ import { Button } from '../../..';
 import Popper, { PopperProps } from '@material-ui/core/Popper';
 
 export type SuggestionsProps = {
+  innerRef: React.RefObject<HTMLDivElement>;
   anchorEl: HTMLElement;
   id?: string;
   preselectedSuggestion?: number;
@@ -51,6 +52,7 @@ class Suggestions extends React.Component<
             id: this.props.id,
           })}
           className="tags-input__suggestions"
+          ref={this.props.innerRef}
         >
           <ul>
             {this.props.AddNewTagComponent}

@@ -100,6 +100,7 @@ export class TagsRaw extends BaseInput<
   };
 
   private textRef: React.RefObject<TextRaw>;
+  private suggestionsRef: React.RefObject<HTMLDivElement>;
 
   constructor(props: TagsProps & InjectedProps) {
     super(props);
@@ -113,6 +114,7 @@ export class TagsRaw extends BaseInput<
       fetchedExistingTags: [],
     };
     this.textRef = React.createRef();
+    this.suggestionsRef = React.createRef();
     this.handleClickOutside = this.handleClickOutside.bind(this);
   }
 
@@ -136,7 +138,9 @@ export class TagsRaw extends BaseInput<
   public handleClickOutside(e: MouseEvent) {
     if (
       !this.containerRef.current ||
-      this.containerRef.current.contains(e.target as HTMLDivElement)
+      this.containerRef.current.contains(e.target as HTMLDivElement) ||
+      !this.suggestionsRef.current ||
+      this.suggestionsRef.current.contains(e.target as HTMLDivElement)
     ) {
       return;
     }
@@ -148,6 +152,8 @@ export class TagsRaw extends BaseInput<
       } else if (this.props.allowNew) {
         this.addNewTag();
       }
+    } else if (this.state.value) {
+      this.setState({ value: '' });
     }
   }
 
@@ -223,6 +229,7 @@ export class TagsRaw extends BaseInput<
                     {...(this.props.id && {
                       id: this.props.id + '-text-input',
                     })}
+                    innerRef={this.suggestionsRef}
                     anchorEl={this.containerRef.current}
                     allowNew={this.props.allowNew}
                     preselectedSuggestion={this.state.preselectedSuggestion}
@@ -365,9 +372,16 @@ export class TagsRaw extends BaseInput<
   };
 
   private onSuggestionSelected = (tag: Tag) => {
-    this.props.onTagsChanged(this.props.tags.concat(tag));
+    const newTags = this.props.tags.concat(tag);
+    this.props.onTagsChanged(newTags);
+    const isMax = newTags.length === this.props.maxTags;
     this.setState(
-      { value: '', preselectedSuggestion: undefined, textErrors: [] },
+      {
+        value: !this.props.allowNew && !isMax ? this.state.value : '',
+        suggestionsVisible: isMax ? false : this.state.suggestionsVisible,
+        preselectedSuggestion: undefined,
+        textErrors: [],
+      },
       () => {
         if (
           !this.props.maxTags ||
@@ -530,12 +544,12 @@ export class TagsRaw extends BaseInput<
   private tagRemoveClick = (tag: Tag) => (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     const newTags = this.props.tags.filter(sv => sv.id !== tag.id);
-    if (newTags.length === 0) {
+    /*if (newTags.length === 0) {
       setTimeout(() => this.focus(), 50);
     }
     this.setState({
       suggestionsVisible: false,
-    });
+    });*/
     this.props.onTagsChanged && this.props.onTagsChanged(newTags);
     this.handleErrors(newTags);
     // this.fetchExistingTags();
