@@ -343,7 +343,7 @@ export class BaseInput<
   protected renderLabel(touchable: boolean = false) {
     if (!this.props.tooltip || (this.props.tooltip && this.props.title)) {
       return (
-        <span className={touchable ? '' : 'label--no-touch'}>
+        <span className={'w-100' + (touchable ? '' : 'label--no-touch')}>
           {this.props.label}
         </span>
       );
