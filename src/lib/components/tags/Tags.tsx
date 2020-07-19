@@ -468,7 +468,7 @@ export class TagsRaw extends BaseInput<
   private fetchExistingTags(startsWith: string = '') {
     if (
       this.props.fetchExistingTags &&
-      startsWith.length > this.props.minLettersToFetch
+      startsWith.length >= this.props.minLettersToFetch
     ) {
       const timer = setTimeout(
         () => this.setState({ fetchingExistingTags: true }),
