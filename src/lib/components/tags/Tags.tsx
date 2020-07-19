@@ -51,11 +51,13 @@ export type TagsProps = {
   showSuggestions?: boolean;
   suggestionsLoadingComponent?: string | JSX.Element;
   suggestionsEmptyComponent?: string | JSX.Element;
+  waitingForMoreInputComponent?: string | JSX.Element;
   loadingDelayMs?: number;
   filterExistingTags?: (text: string, existingTags: Tag[]) => Tag[];
   allowSameTagMultipleTimes?: boolean;
   maxSuggestions?: number;
   popperProps?: Partial<PopperProps>;
+  minLettersToFetch?: number;
 } & BaseInputProps<HTMLInputElement, TagsTranslations>;
 
 export interface TagsState extends BaseInputState {
@@ -88,6 +90,7 @@ export class TagsRaw extends BaseInput<
       Promise.resolve({ name: newTagName, id: new Date().getTime() }),
     valueNotAddedError: <span>You forgot to add tag</span>,
     maxTagsSurpassedError: <span>Maximum number of tags surpassed</span>,
+    waitingForMoreInputComponent: <span>Waiting for more input...</span>,
     showSuggestions: true,
     suggestionsLoadingComponent: 'Loading...',
     suggestionsEmptyComponent: 'No existing tags...',
@@ -97,6 +100,7 @@ export class TagsRaw extends BaseInput<
     maxSuggestions: 5,
     addNewOnBlur: true,
     translations: defaultTagsTranslations,
+    minLettersToFetch: 0,
   };
 
   private textRef: React.RefObject<TextRaw>;
@@ -237,6 +241,12 @@ export class TagsRaw extends BaseInput<
                     LoadingComponent={this.props.suggestionsLoadingComponent}
                     isVisible={this.state.suggestionsVisible}
                     EmptyComponent={this.props.suggestionsEmptyComponent}
+                    WaitingForMoreInputComponent={
+                      this.props.waitingForMoreInputComponent
+                    }
+                    isWaitingForMoreInput={
+                      this.state.value.length < this.props.minLettersToFetch
+                    }
                     tags={suggestions}
                     onSelected={this.onSuggestionSelected}
                     onClickOutside={this.onClickOutside}
@@ -456,7 +466,10 @@ export class TagsRaw extends BaseInput<
   }
 
   private fetchExistingTags(startsWith: string = '') {
-    if (this.props.fetchExistingTags) {
+    if (
+      this.props.fetchExistingTags &&
+      startsWith.length > this.props.minLettersToFetch
+    ) {
       const timer = setTimeout(
         () => this.setState({ fetchingExistingTags: true }),
         this.props.loadingDelayMs

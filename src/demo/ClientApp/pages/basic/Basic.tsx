@@ -709,6 +709,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         <Tags
                           title="Tags suggestions"
                           label="Choose or create tags"
+                          minLettersToFetch={3}
                           readOnly={this.state.multipleReadonly}
                           allowNew={true}
                           maxTags={2}

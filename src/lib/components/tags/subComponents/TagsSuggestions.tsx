@@ -10,6 +10,7 @@ export type SuggestionsProps = {
   id?: string;
   preselectedSuggestion?: number;
   isVisible: boolean;
+  isWaitingForMoreInput: boolean;
   tags: Tag[];
   onSelected: (tag: Tag) => void;
   onClickOutside: () => void;
@@ -18,6 +19,7 @@ export type SuggestionsProps = {
   LoadingComponent?: string | JSX.Element;
   EmptyComponent?: string | JSX.Element;
   AddNewTagComponent?: JSX.Element;
+  WaitingForMoreInputComponent?: string | JSX.Element;
   allowNew: boolean;
   popperProps?: Partial<PopperProps>;
 };
@@ -62,6 +64,14 @@ class Suggestions extends React.Component<
               </li>
             )}
             {!this.props.loading &&
+              this.props.isWaitingForMoreInput &&
+              this.props.WaitingForMoreInputComponent && (
+                <li className="w-100 text-center p-2">
+                  {this.props.WaitingForMoreInputComponent}
+                </li>
+              )}
+            {!this.props.loading &&
+              !this.props.isWaitingForMoreInput &&
               this.props.tags.map((tag, index) => (
                 <li key={index}>
                   <Button
@@ -85,7 +95,8 @@ class Suggestions extends React.Component<
             {!this.props.loading &&
               this.props.EmptyComponent &&
               this.props.tags.length === 0 &&
-              !this.props.allowNew && (
+              !this.props.allowNew &&
+              !this.props.isWaitingForMoreInput && (
                 <li className="w-100 text-center p-2">
                   {this.props.EmptyComponent}
                 </li>
