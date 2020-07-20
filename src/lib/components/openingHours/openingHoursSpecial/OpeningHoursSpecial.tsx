@@ -139,8 +139,10 @@ export class OpeningHoursSpecialRaw extends BaseInput<
                     {...(this.props.id && {
                       id: this.props.id + '-remove-button-' + index.toString(),
                     })}
+                    className="openingHoursDay-input__button--remove line-height--0"
+                    circular={true}
                     blank={true}
-                    className="openingHoursSpecial-input__button openingHoursSpecial-input__button--remove"
+                    type="error"
                     onClick={this.removeDayClick(index)}
                   >
                     <PlusIcon />
