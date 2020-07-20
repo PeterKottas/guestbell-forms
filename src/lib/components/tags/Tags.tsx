@@ -385,9 +385,10 @@ export class TagsRaw extends BaseInput<
     const newTags = this.props.tags.concat(tag);
     this.props.onTagsChanged(newTags);
     const isMax = newTags.length === this.props.maxTags;
+    const finalValue = !this.props.allowNew && !isMax ? this.state.value : '';
     this.setState(
       {
-        value: !this.props.allowNew && !isMax ? this.state.value : '',
+        value: finalValue,
         suggestionsVisible: isMax ? false : this.state.suggestionsVisible,
         preselectedSuggestion: undefined,
         textErrors: [],
@@ -397,7 +398,7 @@ export class TagsRaw extends BaseInput<
           !this.props.maxTags ||
           this.props.tags.length + 1 < this.props.maxTags
         ) {
-          this.fetchExistingTags();
+          this.fetchExistingTags(finalValue);
         }
         this.handleErrors();
       }
