@@ -27,7 +27,6 @@ export interface TextState extends BaseInputState {}
 export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     type: 'text',
-    placeholder: '',
     stopClickPropagation: true,
     readOnly: false,
   }) as TextProps;
