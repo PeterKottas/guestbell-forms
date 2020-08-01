@@ -98,7 +98,7 @@ export class TagsRaw extends BaseInput<
     filterExistingTags: (text, tags) =>
       tags.filter(tag => tag.name && tag.name.toLowerCase().startsWith(text)),
     maxSuggestions: 5,
-    addNewOnBlur: true,
+    addNewOnBlur: false,
     translations: defaultTagsTranslations,
     minLettersToFetch: 0,
   };
@@ -156,9 +156,9 @@ export class TagsRaw extends BaseInput<
       } else if (this.props.allowNew) {
         this.addNewTag();
       }
-    } else if (this.state.value) {
+    } /* else if (this.state.value) {
       this.setState({ value: '' });
-    }
+    }*/
   }
 
   public componentDidMount() {
