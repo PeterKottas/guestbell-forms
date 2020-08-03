@@ -204,6 +204,7 @@ export class TagsRaw extends BaseInput<
                 }
               >
                 <Text
+                  showClearButton={true}
                   {...textProps}
                   {...(this.props.id && {
                     id: this.props.id + '-text-input',

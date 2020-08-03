@@ -434,6 +434,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         onChange={this.nameChanged}
                         value={this.state.name}
                         title="Name"
+                        showClearButton={true}
                       />
                       <Button onClick={() => this.setState({ name: null })}>
                         Test

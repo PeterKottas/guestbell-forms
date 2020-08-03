@@ -27,4 +27,10 @@
     background-color: transparent;
     text-overflow: ellipsis;
   }
+  .text-input__clearButton {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 5px !important;
+  }
 }

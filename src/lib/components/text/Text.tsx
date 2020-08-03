@@ -10,6 +10,8 @@ import {
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
 import { withThemeContext } from '../themeProvider/withThemeContext';
+import Button from '../button';
+import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_24px.svg';
 
 export interface TextProps extends BaseInputProps<HTMLInputElement> {
   mask?: string;
@@ -20,6 +22,7 @@ export interface TextProps extends BaseInputProps<HTMLInputElement> {
   readOnly?: boolean;
   type?: 'number' | 'text';
   maxLength?: number;
+  showClearButton?: boolean;
 }
 
 export interface TextState extends BaseInputState {}
@@ -73,10 +76,42 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
               {this.renderLabel()}
             </label>
           )}
+          {this.state.value?.length > 0 &&
+            !this.props.disabled &&
+            !this.props.readOnly &&
+            this.props.showClearButton && (
+              <Button
+                {...(this.props.id && {
+                  id: this.props.id + '-clear-button',
+                })}
+                unobtrusive={true}
+                noShadow={true}
+                onClick={this.clearClick}
+                className="text-input__clearButton"
+                circular={true}
+              >
+                <PlusIcon className="transform-rotate--45 line-height--0" />
+              </Button>
+            )}
         </div>
       </InputGroup>
     );
   }
+
+  private clearClick = () => {
+    if (this.inputRef.current) {
+      var nativeTextAreaValueSetter = Object.getOwnPropertyDescriptor(
+        window.HTMLInputElement.prototype,
+        'value'
+      ).set;
+      if (nativeTextAreaValueSetter) {
+        nativeTextAreaValueSetter.call(this.inputRef.current, '');
+
+        const event = new Event('input', { bubbles: true });
+        this.inputRef.current.dispatchEvent(event);
+      }
+    }
+  };
 
   private containerClick = (e: React.MouseEvent<HTMLDivElement>) =>
     this.props.stopClickPropagation && e.stopPropagation();
