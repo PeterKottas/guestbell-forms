@@ -14,10 +14,10 @@
   "style": "build/dist/guestbell-forms.min.css",
   "dependencies": {
     "classnames": "^2.2.6",
+    "lodash.debounce": "4.0.8",
     "npm-check-updates": "^4.0.1"
   },
   "devDependencies": {
-    "moment": "2.24.0",
     "@babel/cli": "7.8.3",
     "@babel/core": "7.8.3",
     "@babel/plugin-proposal-class-properties": "7.8.3",
@@ -28,6 +28,7 @@
     "@material-ui/core": "^4.7.2",
     "@tippy.js/react": "3.1.1",
     "@types/classnames": "^2.2.9",
+    "@types/lodash.debounce": "^4.0.6",
     "@types/react": "16.9.16",
     "@types/react-dom": "16.9.4",
     "@types/react-onclickoutside": "6.7.3",
@@ -48,6 +49,7 @@
     "lodash": "4.17.15",
     "material-design-icons": "3.0.1",
     "mini-css-extract-plugin": "0.8.0",
+    "moment": "2.24.0",
     "node-sass": "4.13.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-loader": "3.0.0",
@@ -110,12 +112,12 @@
   "peerDependencies": {
     "@material-ui/core": "4.x",
     "@tippy.js/react": "3.x",
+    "moment": "*",
     "react": "16.x",
     "react-datepicker": "*",
     "react-dom": "*",
     "react-ink": "*",
-    "react-onclickoutside": "*",
-    "moment": "*"
+    "react-onclickoutside": "*"
   },
   "browserslist": [
     "last 1 version",

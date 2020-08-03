@@ -58,6 +58,7 @@ export type TagsProps = {
   maxSuggestions?: number;
   popperProps?: Partial<PopperProps>;
   minLettersToFetch?: number;
+  debounceFetchExisting?: boolean;
 } & BaseInputProps<HTMLInputElement, TagsTranslations>;
 
 export interface TagsState extends BaseInputState {
@@ -120,6 +121,13 @@ export class TagsRaw extends BaseInput<
     this.textRef = React.createRef();
     this.suggestionsRef = React.createRef();
     this.handleClickOutside = this.handleClickOutside.bind(this);
+    if (props.debounceFetchExisting) {
+      const debounce = require('lodash.debounce');
+      this.fetchExistingTags = debounce(this.fetchExistingTags, 500, {
+        leading: true,
+        trailing: true,
+      });
+    }
   }
 
   public focus() {

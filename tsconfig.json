@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
-    "rootDirs": [
-      "src/lib",
-      "src/demo"
-    ],
+    "rootDirs": ["src/lib", "src/demo"],
     "outDir": "build",
     "baseUrl": ".",
     "moduleResolution": "node",
@@ -11,59 +8,31 @@
     "module": "esnext",
     "jsx": "react",
     "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "noUnusedLocals": true,
     "declaration": true,
-    "lib": [
-      "es7",
-      "dom"
-    ],
-    "types": [
-      "webpack-env",
-      "node"
-    ],
+    "lib": ["es7", "dom"],
+    "types": ["webpack-env", "node"],
     "paths": {
-      "reusables/*": [
-        "./ClientApp/components/reusables/*"
-      ],
-      "structure/*": [
-        "./ClientApp/components/structure/*"
-      ],
-      "pages/*": [
-        "./ClientApp/components/pages/*"
-      ],
-      "reduxStores/*": [
-        "./ClientApp/redux/*"
-      ],
-      "styleVars/*": [
-        "./ClientApp/scss/variables/*"
-      ],
-      "types/*": [
-        "./ClientApp/types/*"
-      ],
-      "assets/*": [
-        "./ClientApp/assets/*"
-      ],
+      "reusables/*": ["./ClientApp/components/reusables/*"],
+      "structure/*": ["./ClientApp/components/structure/*"],
+      "pages/*": ["./ClientApp/components/pages/*"],
+      "reduxStores/*": ["./ClientApp/redux/*"],
+      "styleVars/*": ["./ClientApp/scss/variables/*"],
+      "types/*": ["./ClientApp/types/*"],
+      "assets/*": ["./ClientApp/assets/*"],
       // Fix "Duplicate identifier" errors caused by multiple dependencies fetching their own copies of type definitions.
       // We tell TypeScript which type definitions module to treat as the canonical one (instead of combining all of them).
-      "history": [
-        "./node_modules/@types/history/index"
-      ],
-      "redux": [
-        "./node_modules/@types/redux/index"
-      ],
-      "react": [
-        "./node_modules/@types/react/index"
-      ],
+      "history": ["./node_modules/@types/history/index"],
+      "redux": ["./node_modules/@types/redux/index"],
+      "react": ["./node_modules/@types/react/index"],
       "react-day-picker": [
         "./src/demo/ClientApp/declartions/react-day-picker.d.ts"
       ]
     }
   },
-  "exclude": [
-    "bin",
-    "node_modules"
-  ]
+  "exclude": ["bin", "node_modules"]
 }
