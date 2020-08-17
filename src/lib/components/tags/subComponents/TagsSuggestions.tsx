@@ -1,5 +1,4 @@
 import * as React from 'react';
-import onClickOutside, { InjectedOnClickOutProps } from 'react-onclickoutside';
 import { Tag } from '..';
 import { Button } from '../../..';
 import Popper, { PopperProps } from '@material-ui/core/Popper';
@@ -13,7 +12,6 @@ export type SuggestionsProps = {
   isWaitingForMoreInput: boolean;
   tags: Tag[];
   onSelected: (tag: Tag) => void;
-  onClickOutside: () => void;
   value: string;
   loading: boolean;
   LoadingComponent?: string | JSX.Element;
@@ -28,7 +26,7 @@ interface SuggestionsState {
   key: number;
 }
 
-type InjectedProps = InjectedOnClickOutProps;
+type InjectedProps = {};
 class Suggestions extends React.Component<
   SuggestionsProps & InjectedProps,
   SuggestionsState
@@ -107,16 +105,12 @@ class Suggestions extends React.Component<
     );
   }
 
-  public handleClickOutside() {
-    this.props.onClickOutside();
-  }
-
   private onSelected = (tag: Tag) => () => {
     this.setState({ key: this.state.key + 1 });
     this.props.onSelected(tag);
   };
 }
 
-const SuggestionsWrapped = onClickOutside(Suggestions);
+const SuggestionsWrapped = Suggestions;
 
 export default SuggestionsWrapped;

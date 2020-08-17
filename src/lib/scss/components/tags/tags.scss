@@ -11,6 +11,7 @@
     border-bottom: none;
   }
   .tags-input__tag {
+    position: relative;
     display: inline-flex;
     align-items: center;
     padding-left: 0.25rem;
@@ -21,6 +22,10 @@
       border: 1px solid;
       border-radius: 1.5rem;
     }
+  }
+  .tags-input__tags__wrapper {
+    display: flex;
+    align-items: center;
   }
   .tags-input__tag__wrapper {
     display: inline-flex;
@@ -59,7 +64,25 @@
       font-size: 14px;
     }
   }
+  &.tags-input--mobile {
+    z-index: 9999;
+    position: fixed;
+    top: 1.5rem;
+    left: 0.5rem;
+    right: 0.5rem;
+    width: calc(100vw - 1rem);
+  }
 }
+
+.tags-input__mobileBackdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: $input-bg-color;
+}
+
 .tags-input__suggestions {
   /*position: absolute;
   top: 100%;

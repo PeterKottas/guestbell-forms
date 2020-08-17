@@ -23,6 +23,8 @@ export interface TextProps extends BaseInputProps<HTMLInputElement> {
   type?: 'number' | 'text';
   maxLength?: number;
   showClearButton?: boolean;
+  after?: React.ReactNode;
+  before?: React.ReactNode;
 }
 
 export interface TextState extends BaseInputState {}
@@ -49,33 +51,38 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
           onClick={this.containerClick}
           ref={this.containerRef}
         >
-          <input
-            {...(this.props.id && {
-              id: this.props.id,
-            })}
-            ref={this.inputRef}
-            placeholder={this.props.placeholder}
-            disabled={this.getDisabled()}
-            required={this.props.required}
-            className={this.state.value ? 'filled' : ''}
-            onChange={this.handleChange}
-            value={this.state.value}
-            onBlur={this.handleBlur}
-            onFocus={this.handleFocus}
-            readOnly={this.props.readOnly}
-            onKeyDown={this.onKeyDown}
-            type={this.props.type}
-            onClick={this.props.onClick}
-            maxLength={this.props.maxLength}
-          />
-          <span className="highlight" />
-          <span className="bar" />
-          {this.renderDefaultValidation()}
-          {this.props.label && (
-            <label className={this.props.readOnly ? 'label--focused' : ''}>
-              {this.renderLabel()}
-            </label>
-          )}
+          <div className="text-input__textWrapper">
+            {this.props.before}
+            <input
+              {...(this.props.id && {
+                id: this.props.id,
+              })}
+              ref={this.inputRef}
+              placeholder={this.props.placeholder}
+              disabled={this.getDisabled()}
+              required={this.props.required}
+              className={this.state.value ? 'filled' : ''}
+              onChange={this.handleChange}
+              value={this.state.value}
+              onBlur={this.handleBlur}
+              onFocus={this.handleFocus}
+              readOnly={this.props.readOnly}
+              onKeyDown={this.onKeyDown}
+              type={this.props.type}
+              onClick={this.props.onClick}
+              maxLength={this.props.maxLength}
+            />
+            {this.props.after}
+            <span className="highlight" />
+            <span className="bar" />
+            {this.renderDefaultValidation()}
+            {this.props.label && (
+              <label className={this.props.readOnly ? 'label--focused' : ''}>
+                {this.renderLabel()}
+              </label>
+            )}
+          </div>
+
           {this.state.value?.length > 0 &&
             !this.props.disabled &&
             !this.props.readOnly &&

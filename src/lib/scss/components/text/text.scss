@@ -18,12 +18,17 @@
       animation: none;
     }
   }
+  .text-input__textWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+  }
   input {
     padding: 6px 10px 5px 5px;
     color: inherit;
     outline: 0;
     border: none;
-    width: 100%;
+    flex: 1;
     background-color: transparent;
     text-overflow: ellipsis;
   }

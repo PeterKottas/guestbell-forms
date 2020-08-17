@@ -3,6 +3,7 @@ import * as React from 'react';
 import { InputGroup } from '../inputGroup/InputGroup';
 import { Text, TextProps, TextRaw } from '../text/Text';
 import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_circle_outline_24px.svg';
+import * as LeftArrowIcon from 'material-design-icons/navigation/svg/production/ic_arrow_back_24px.svg';
 import {
   BaseInputProps,
   BaseInputState,
@@ -16,6 +17,7 @@ import { withFormContext } from '../form/withFormContext';
 import classNames from 'classnames';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import { PopperProps } from '@material-ui/core/Popper/Popper';
+import { Portal } from '@material-ui/core';
 
 // Misc
 export type Tag = {
@@ -58,6 +60,7 @@ export type TagsProps = {
   maxSuggestions?: number;
   popperProps?: Partial<PopperProps>;
   minLettersToFetch?: number;
+  mobileVersionEnabled?: boolean;
 } & BaseInputProps<HTMLInputElement, TagsTranslations>;
 
 export interface TagsState extends BaseInputState {
@@ -101,10 +104,12 @@ export class TagsRaw extends BaseInput<
     addNewOnBlur: false,
     translations: defaultTagsTranslations,
     minLettersToFetch: 0,
+    mobileVersionEnabled: true,
   };
 
   private textRef: React.RefObject<TextRaw>;
   private suggestionsRef: React.RefObject<HTMLDivElement>;
+  private isMobile: boolean = false;
 
   constructor(props: TagsProps & InjectedProps) {
     super(props);
@@ -120,6 +125,10 @@ export class TagsRaw extends BaseInput<
     this.textRef = React.createRef();
     this.suggestionsRef = React.createRef();
     this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.handleLeaveMobileClick = this.handleLeaveMobileClick.bind(this);
+    if (props.mobileVersionEnabled) {
+      this.isMobile = require('react-device-detect')?.isMobile;
+    }
   }
 
   public focus() {
@@ -139,6 +148,13 @@ export class TagsRaw extends BaseInput<
     }
   }
 
+  public handleLeaveMobileClick() {
+    this.setState({
+      suggestionsVisible: false,
+      preselectedSuggestion: undefined,
+    });
+  }
+
   public handleClickOutside(e: MouseEvent) {
     if (
       !this.containerRef.current ||
@@ -148,6 +164,10 @@ export class TagsRaw extends BaseInput<
     ) {
       return;
     }
+    this.setState({
+      suggestionsVisible: false,
+      preselectedSuggestion: undefined,
+    });
     if (this.props.addNewOnBlur && this.state.value) {
       const suggestions = this.getSuggestions();
       const existing = suggestions.find(s => s.name === this.state.value);
@@ -175,28 +195,68 @@ export class TagsRaw extends BaseInput<
     const translations = this.getTranslations(defaultTagsTranslations);
     const textProps = this.props.textProps ? this.props.textProps : {};
     const suggestions = this.getSuggestions();
+    const showMobileVersion =
+      this.props.mobileVersionEnabled &&
+      this.isMobile &&
+      (this.state.textIsFocused || this.state.suggestionsVisible);
+    const LeaveMobileButton = showMobileVersion ? (
+      <Button
+        onClick={this.handleLeaveMobileClick}
+        noShadow={true}
+        unobtrusive={true}
+      >
+        <LeftArrowIcon />
+      </Button>
+    ) : (
+      undefined
+    );
+    const showInput = Boolean(
+      (!this.props.maxTags ||
+        this.props.maxTags > (this.props.tags && this.props.tags.length)) &&
+        !this.props.readOnly
+    );
     return (
-      <InputGroup title={this.props.title} tooltip={this.props.tooltip}>
-        <div
-          {...(this.props.id && {
-            id: this.props.id,
-          })}
-          className={classNames(
-            'input__base tags-input',
-            this.getValidationClass(),
-            this.props.className,
-            {
-              'tags-input--readOnly': this.props.readOnly,
-              'tags-input--hasPlaceholder':
-                this.props.textProps && this.props.textProps.placeholder,
-            }
-          )}
-          ref={this.containerRef}
-        >
-          {this.renderTags()}
-          {(!this.props.maxTags ||
-            this.props.maxTags > (this.props.tags && this.props.tags.length)) &&
-            !this.props.readOnly && (
+      <Portal container={document.body} disablePortal={!showMobileVersion}>
+        <InputGroup title={this.props.title} tooltip={this.props.tooltip}>
+          <div
+            {...(this.props.id && {
+              id: this.props.id,
+            })}
+            className={classNames(
+              'input__base tags-input',
+              this.getValidationClass(),
+              this.props.className,
+              {
+                'tags-input--readOnly': this.props.readOnly,
+                'tags-input--hasPlaceholder':
+                  this.props.textProps && this.props.textProps.placeholder,
+                'tags-input--mobile': showMobileVersion,
+              }
+            )}
+            ref={this.containerRef}
+          >
+            {showMobileVersion && (
+              <div className="tags-input__mobileBackdrop" />
+            )}
+            <div className="tags-input__tags__wrapper">
+              {!showInput && showMobileVersion && LeaveMobileButton}
+              {this.props.tags && this.props.tags.length > 0 ? (
+                <div className="tags-input__tag__wrapper">
+                  {this.props.tags.map((item, index) =>
+                    this.renderTag(item, index)
+                  )}
+                </div>
+              ) : (
+                this.props.readOnly && (
+                  <div className="tags-input__tag__wrapper">
+                    <div className="tags-input__tag">
+                      {this.props.readonlyEmptyPlaceholder}
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+            {showInput && (
               <div
                 className={
                   'tags-input__tags__wrapper ' +
@@ -228,6 +288,7 @@ export class TagsRaw extends BaseInput<
                   ignoreContext={true}
                   validators={this.props.validators}
                   customValidators={this.props.customValidators}
+                  before={LeaveMobileButton}
                 />
                 {this.state.suggestionsVisible && this.props.showSuggestions && (
                   <TagsSuggestions
@@ -250,7 +311,6 @@ export class TagsRaw extends BaseInput<
                     }
                     tags={suggestions}
                     onSelected={this.onSuggestionSelected}
-                    onClickOutside={this.onClickOutside}
                     value={this.state.value}
                     AddNewTagComponent={
                       this.props.allowNew &&
@@ -281,23 +341,25 @@ export class TagsRaw extends BaseInput<
                 )}
               </div>
             )}
-          {this.renderDefaultValidation()}
-          {this.props.label && (
-            <label
-              className={
-                this.state.value !== '' ||
-                this.state.textIsFocused ||
-                this.props.readOnly ||
-                this.props.tags.length >= this.props.maxTags
-                  ? 'label--focused'
-                  : ''
-              }
-            >
-              {this.renderLabel()}
-            </label>
-          )}
-        </div>
-      </InputGroup>
+            {this.renderDefaultValidation()}
+            {this.props.label && (
+              <label
+                className={
+                  this.state.value !== '' ||
+                  this.state.textIsFocused ||
+                  this.props.readOnly ||
+                  this.props.tags.length >= this.props.maxTags ||
+                  showMobileVersion
+                    ? 'label--focused'
+                    : ''
+                }
+              >
+                {this.renderLabel()}
+              </label>
+            )}
+          </div>
+        </InputGroup>
+      </Portal>
     );
   }
 
@@ -313,6 +375,9 @@ export class TagsRaw extends BaseInput<
       () => this.handleErrors()
     );
     this.fetchExistingTags(this.state.value);
+    setTimeout(() => {
+      this.textRef.current?.focus();
+    }, 10);
   };
 
   private onKeyDown = (suggestions: Tag[]) => async e => {
@@ -415,12 +480,6 @@ export class TagsRaw extends BaseInput<
       () => this.handleErrors()
     );
   };
-
-  private onClickOutside = () =>
-    this.setState({
-      suggestionsVisible: false,
-      preselectedSuggestion: undefined,
-    });
 
   private onTextChanged = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -569,25 +628,10 @@ export class TagsRaw extends BaseInput<
     this.handleErrors(newTags);
     // this.fetchExistingTags();
   };
-
-  private renderTags() {
-    return this.props.tags && this.props.tags.length > 0 ? (
-      <div className="tags-input__tag__wrapper">
-        {this.props.tags.map((item, index) => this.renderTag(item, index))}
-      </div>
-    ) : (
-      this.props.readOnly && (
-        <div className="tags-input__tag__wrapper">
-          <div className="tags-input__tag">
-            {this.props.readonlyEmptyPlaceholder}
-          </div>
-        </div>
-      )
-    );
-  }
 }
 
 export const Tags = withThemeContext<TagsProps, InstanceType<typeof TagsRaw>>(
+  // tslint:disable-next-line: no-any
   withFormContext<TagsProps>(TagsRaw),
   'tags'
 );
