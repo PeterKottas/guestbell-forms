@@ -373,7 +373,7 @@ export class TagsRaw extends BaseInput<
 
   private onFocus = () => {
     this.setState(
-      { textIsFocused: true, suggestionsVisible: true, touched: true },
+      () => ({ textIsFocused: true, suggestionsVisible: true, touched: true }),
       () => this.handleErrors()
     );
     this.fetchExistingTags(this.state.value);
@@ -542,15 +542,15 @@ export class TagsRaw extends BaseInput<
       startsWith.length >= this.props.minLettersToFetch
     ) {
       const timer = setTimeout(
-        () => this.setState({ fetchingExistingTags: true }),
+        () => this.setState(() => ({ fetchingExistingTags: true })),
         this.props.loadingDelayMs
       );
       this.props.fetchExistingTags(startsWith).then(fetchedExistingTags => {
         clearTimeout(timer);
-        this.setState({
+        this.setState(() => ({
           fetchedExistingTags,
           fetchingExistingTags: false,
-        });
+        }));
       });
     }
   }
