@@ -73,6 +73,22 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
               maxLength={this.props.maxLength}
             />
             {this.props.after}
+            {this.state.value?.length > 0 &&
+              !this.props.disabled &&
+              !this.props.readOnly &&
+              this.props.showClearButton && (
+                <Button
+                  {...(this.props.id && {
+                    id: this.props.id + '-clear-button',
+                  })}
+                  unobtrusive={true}
+                  noShadow={true}
+                  onClick={this.clearClick}
+                  className="text-input__clearButton line-height--0"
+                >
+                  <PlusIcon className="transform-rotate--45 line-height--0" />
+                </Button>
+              )}
             <span className="highlight" />
             <span className="bar" />
             {this.renderDefaultValidation()}
@@ -82,24 +98,6 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
               </label>
             )}
           </div>
-
-          {this.state.value?.length > 0 &&
-            !this.props.disabled &&
-            !this.props.readOnly &&
-            this.props.showClearButton && (
-              <Button
-                {...(this.props.id && {
-                  id: this.props.id + '-clear-button',
-                })}
-                unobtrusive={true}
-                noShadow={true}
-                onClick={this.clearClick}
-                className="text-input__clearButton"
-                circular={true}
-              >
-                <PlusIcon className="transform-rotate--45 line-height--0" />
-              </Button>
-            )}
         </div>
       </InputGroup>
     );

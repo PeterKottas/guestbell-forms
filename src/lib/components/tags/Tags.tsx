@@ -201,6 +201,7 @@ export class TagsRaw extends BaseInput<
       (this.state.textIsFocused || this.state.suggestionsVisible);
     const LeaveMobileButton = showMobileVersion ? (
       <Button
+        className="tags-input__leaveMobileTagsButton line-height--0"
         onClick={this.handleLeaveMobileClick}
         noShadow={true}
         unobtrusive={true}

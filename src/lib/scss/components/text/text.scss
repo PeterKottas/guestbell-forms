@@ -24,7 +24,7 @@
     flex-direction: row;
   }
   input {
-    padding: 6px 10px 5px 5px;
+    padding: 5px;
     color: inherit;
     outline: 0;
     border: none;
@@ -33,9 +33,6 @@
     text-overflow: ellipsis;
   }
   .text-input__clearButton {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    padding: 5px !important;
+    padding-left: 0;
   }
 }
