@@ -150,6 +150,7 @@ export class TagsRaw extends BaseInput<
 
   public handleLeaveMobileClick() {
     this.setState({
+      textIsFocused: false,
       suggestionsVisible: false,
       preselectedSuggestion: undefined,
     });
