@@ -279,6 +279,7 @@ export class TagsRaw extends BaseInput<
                     'tags-input__text-input ' +
                     (textProps.className ? textProps.className : '')
                   }
+                  onClick={this.onTextClick}
                   onKeyDown={this.onKeyDown(suggestions)}
                   onErrorsChanged={this.onTextErrorsChanged}
                   onChange={this.onTextChanged}
@@ -365,6 +366,12 @@ export class TagsRaw extends BaseInput<
     );
   }
 
+  private onTextClick = () => {
+    setTimeout(() => {
+      this.textRef.current?.focus();
+    }, 10);
+  };
+
   private onTextErrorsChanged = (textErrors: ValidationError[]) =>
     this.setState(
       () => ({ textErrors }),
@@ -377,9 +384,6 @@ export class TagsRaw extends BaseInput<
       () => this.handleErrors()
     );
     this.fetchExistingTags(this.state.value);
-    setTimeout(() => {
-      this.textRef.current?.focus();
-    }, 10);
   };
 
   private onKeyDown = (suggestions: Tag[]) => async e => {
