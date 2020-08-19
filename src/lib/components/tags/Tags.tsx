@@ -61,6 +61,7 @@ export type TagsProps = {
   popperProps?: Partial<PopperProps>;
   minLettersToFetch?: number;
   mobileVersionEnabled?: boolean;
+  isLoading?: boolean;
 } & BaseInputProps<HTMLInputElement, TagsTranslations>;
 
 export interface TagsState extends BaseInputState {
@@ -301,7 +302,9 @@ export class TagsRaw extends BaseInput<
                     anchorEl={this.containerRef.current}
                     allowNew={this.props.allowNew}
                     preselectedSuggestion={this.state.preselectedSuggestion}
-                    loading={this.state.fetchingExistingTags}
+                    loading={
+                      this.state.fetchingExistingTags || this.props.isLoading
+                    }
                     LoadingComponent={this.props.suggestionsLoadingComponent}
                     isVisible={this.state.suggestionsVisible}
                     EmptyComponent={this.props.suggestionsEmptyComponent}
