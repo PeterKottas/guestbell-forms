@@ -14,7 +14,7 @@ import {
 import { Button } from '../button/Button';
 import TagsSuggestions from './subComponents/TagsSuggestions';
 import { withFormContext } from '../form/withFormContext';
-import classNames from 'classnames';
+var classNames = require('classnames');
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import { PopperProps } from '@material-ui/core/Popper/Popper';
 import { Portal } from '@material-ui/core';
