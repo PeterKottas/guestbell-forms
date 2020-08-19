@@ -16,7 +16,7 @@ import {
 } from '../../base/input/BaseInput';
 import { Button } from '../../button/Button';
 import { withFormContext } from '../../form/withFormContext';
-import classNames from 'classnames';
+var classNames = require('classnames');
 import { Duration, duration } from 'moment';
 import NumberInput from '../../numberInput/NumberInput';
 import { withThemeContext } from '../../themeProvider/withThemeContext';

@@ -12,7 +12,7 @@ import { withFormContext } from '../form/withFormContext';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import Button from '../button';
 import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_24px.svg';
-import * as classNames from 'classnames';
+var classNames = require('classnames');
 
 export interface TextProps extends BaseInputProps<HTMLInputElement> {
   mask?: string;
