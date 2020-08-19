@@ -12,6 +12,7 @@ import { withFormContext } from '../form/withFormContext';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import Button from '../button';
 import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_24px.svg';
+import * as classNames from 'classnames';
 
 export interface TextProps extends BaseInputProps<HTMLInputElement> {
   mask?: string;
@@ -41,6 +42,7 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
   }
 
   public render() {
+    const clearButtonHidden = !this.state.value?.length || this.props.disabled;
     return (
       <InputGroup title={this.props.title} tooltip={this.props.tooltip}>
         <div
@@ -73,22 +75,25 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
               maxLength={this.props.maxLength}
             />
             {this.props.after}
-            {this.state.value?.length > 0 &&
-              !this.props.disabled &&
-              !this.props.readOnly &&
-              this.props.showClearButton && (
-                <Button
-                  {...(this.props.id && {
-                    id: this.props.id + '-clear-button',
-                  })}
-                  unobtrusive={true}
-                  noShadow={true}
-                  onClick={this.clearClick}
-                  className="text-input__clearButton line-height--0"
-                >
-                  <PlusIcon className="transform-rotate--45 line-height--0" />
-                </Button>
-              )}
+            {!this.props.readOnly && this.props.showClearButton && (
+              <Button
+                {...(this.props.id && {
+                  id: this.props.id + '-clear-button',
+                })}
+                disabled={clearButtonHidden}
+                unobtrusive={true}
+                noShadow={true}
+                onClick={this.clearClick}
+                className={classNames(
+                  'text-input__clearButton line-height--0',
+                  {
+                    'text-input__clearButton--hidden': clearButtonHidden,
+                  }
+                )}
+              >
+                <PlusIcon className="transform-rotate--45 line-height--0" />
+              </Button>
+            )}
             <span className="highlight" />
             <span className="bar" />
             {this.renderDefaultValidation()}

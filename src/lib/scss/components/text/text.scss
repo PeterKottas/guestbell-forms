@@ -35,4 +35,8 @@
   .text-input__clearButton {
     padding-left: 0;
   }
+  .text-input__clearButton--hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
