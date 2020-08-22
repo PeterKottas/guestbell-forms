@@ -37,6 +37,17 @@
       background-color: transparent;
     }
   }
+  &:not(.guestbell-btn--disabled).guestbell-btn--text {
+    box-shadow: none;
+    background-color: transparent;
+    color: $bg;
+    fill: $bg;
+    &:hover {
+      color: lighten($bg, 10);
+      fill: lighten($bg, 10);
+      background-color: transparent;
+    }
+  }
 }
 
 .guestbell-btn {

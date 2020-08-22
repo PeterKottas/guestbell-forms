@@ -42,6 +42,7 @@ export type ButtonProps = React.PropsWithChildren<
     outlined?: boolean;
     disableAfterClickMs?: number;
     buttonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
+    text?: boolean;
     hero?: boolean;
     noShadow?: boolean;
     blank?: boolean;
@@ -112,6 +113,7 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
       { ['guestbell-btn--dropdown']: this.props.dropdown },
       { ['guestbell-btn--icon']: this.props.icon },
       { ['guestbell-btn--hero']: this.props.hero },
+      { ['guestbell-btn--text']: this.props.text },
     ]);
     const button = (
       <this.props.Component

@@ -685,6 +685,10 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                           <h3 className="text-center">Unobtrusive</h3>
                           <ButtonsShowcase unobtrusive={true} className="" />
                         </div>
+                        <div className="p-3 buttons-row">
+                          <h3 className="text-center">Text</h3>
+                          <ButtonsShowcase text={true} className="" />
+                        </div>
                       </InputHeader>
                       <InputHeader
                         className={''}
