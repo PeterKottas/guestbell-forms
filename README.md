@@ -4,25 +4,26 @@ Beautiful, lightweight react forms and form elements. Includes zero setup valida
 
 ## Demo
 
-Check out [online demo](https://peterkottas.github.io/guestbell-forms)
+Check out [demo](https://peterkottas.github.io/guestbell-forms)
 
 or
 
-Clone this repo and 
+Clone this repo and
 
 ```
 npm install
 npm start
 ```
 
-## Important note 
+## Important note
 
 This library is actively used in our startup called GuestBell. This is therefore production code which will be maintained an improved on regular basis. All help is much appreciated!
-The reason why we created is most simmilar libraries out there utilize either jQuery or some other huge libraries. This is a litweight solution which will guarantee your website speed and small size. 
+The reason why we created is most simmilar libraries out there utilize either jQuery or some other huge libraries. This is a litweight solution which will guarantee your website speed and small size.
 
 ## Installation
 
 Using npm:
+
 ```
 npm install guestbell-forms --save
 ```
@@ -30,62 +31,67 @@ npm install guestbell-forms --save
 ## Quick start
 
 Just import your components like this
+
 ```
 import { Form, Text, Select, Submit, DynamicSubmit, IBaseValidator, Checkbox, Radio, RadioContainer } from 'guestbell-forms';
 ```
+
 And use them in your react elements.
 
 ## Usage
 
 Check out this simple example:
+
 ```
 <Form className="container">
 	<div className="row">
 		<div className="col-lg-6">
 			<Text
-				required={true} 
-				label="Username" 
-				value={this.state.name} 
+				required={true}
+				label="Username"
+				value={this.state.name}
 				onChange={this.handleNameChange} />
 		</div>
 		<div className="col-lg-6">
 			<Select
-				required={true} 
-				label={'Gender'} 
-				values={[{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }]} 
-				onChange={this.handleGenderChange} 
+				required={true}
+				label={'Gender'}
+				values={[{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }]}
+				onChange={this.handleGenderChange}
 				value={this.state.gender} />
 		</div>
 	</div>
 	<div className="row">
 		<div className="col-lg-6">
-			<TextInput 
-				validators={["email"]} 
-				required={true} 
-				label="Email" 
-				value={this.state.email} 
+			<TextInput
+				validators={["email"]}
+				required={true}
+				label="Email"
+				value={this.state.email}
 				onChange={this.handleEmailChange} />
 		</div>
 		<div className="col-lg-6">
 			<Text
-				customValidators={[AgeValidator.instance]} 
-				label="Age (optional)" 
-				value={this.state.age} 
+				customValidators={[AgeValidator.instance]}
+				label="Age (optional)"
+				value={this.state.age}
 				onChange={this.handleAgeChange} />
 		</div>
 	</div>
 	<div className="row justify-content-center align-items-center">
 		<Submit
-			className="btn btn-primary btn-lg" 
+			className="btn btn-primary btn-lg"
 			onClick={this.submitForm}>
 				Submit
 		</Submit>
 	</div>
 </Form>
 ```
+
 1. Notice there's no passing props around, yet the form validates perfectly and the submit button is enabled/disabled through magic or react :)
 2. See how we support built-in validators (validators={["email"]}) and even custom validators (customValidators={[AgeValidator.instance]})
 3. Custom validators are easy to work with, take a look at this AgeValidator
+
 ```
 class AgeValidator implements IBaseValidator {
 	public static instance = new AgeValidator();
@@ -109,8 +115,10 @@ class AgeValidator implements IBaseValidator {
 	}
 }
 ```
+
 Just a class with one method. We provide the static instance for simplicity.
-4. All inputs work like typical react inputs. It's recommended to bind them with the value and the change handler. 
+
+4. All inputs work like typical react inputs. It's recommended to bind them with the value and the change handler.
 
 ## Created and sponsored by
 
@@ -126,4 +134,4 @@ Just a class with one method. We provide the static instance for simplicity.
 
 ## License
 
-MIT 
+MIT
