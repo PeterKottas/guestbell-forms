@@ -48,7 +48,7 @@ export type ButtonProps = React.PropsWithChildren<
     blank?: boolean;
     unobtrusive?: boolean;
     dropdown?: boolean;
-    Component?: (props: ButtonComponentProps) => JSX.Element;
+    Component?: React.FC<ButtonComponentProps>;
     tooltip?: JSX.Element | string;
     tooltipProps?: TippyProps;
     preventsDefault?: boolean;
