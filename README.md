@@ -112,6 +112,10 @@ class AgeValidator implements IBaseValidator {
 Just a class with one method. We provide the static instance for simplicity.
 4. All inputs work like typical react inputs. It's recommended to bind them with the value and the change handler. 
 
+## Created and sponsored by
+
+- [GuestBell](https://guestbell.com/) - Customer centric online POS for Hotels and short terms stays.
+
 ## Contributing
 
 1. Fork it!
