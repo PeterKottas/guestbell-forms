@@ -1,6 +1,6 @@
 // Libs
 import * as React from 'react';
-import Tippy, { TippyProps } from '@tippy.js/react';
+import { TippyProps } from '@tippy.js/react';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import { ThemeContextProps } from '../themeProvider/ThemeContext';
 var Ink = require('react-ink');
@@ -128,6 +128,7 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
       </this.props.Component>
     );
     if (this.props.tooltip) {
+      const Tippy = require('@tippy.js/react').default;
       return (
         <Tippy
           content={this.props.tooltip}

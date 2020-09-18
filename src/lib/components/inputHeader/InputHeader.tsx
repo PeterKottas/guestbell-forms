@@ -16,7 +16,7 @@ import {
   InputHeaderComponentContextState,
 } from '../InputHeader/InputHeaderContext';
 import { withInputHeaderContext } from './withInputHeaderContext';
-import Tippy, { TippyProps } from '@tippy.js/react';
+import { TippyProps } from '@tippy.js/react';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import { ThemeContextProps } from '../themeProvider/ThemeContext';
 
@@ -408,25 +408,28 @@ export class InputHeaderRaw
   private renderTooltip(
     content: JSX.Element = <span className="label--help-icon">?</span>
   ) {
-    return this.props.tooltip ? (
-      <Tippy
-        content={this.props.tooltip}
-        placement="bottom"
-        animation="scale-subtle"
-        arrow={false}
-        duration={200}
-        delay={[75, 0]}
-        distance={8}
-        interactive={true}
-        appendTo={document?.body}
-        trigger="mouseenter focus"
-        {...this.props.tooltipProps}
-      >
-        <span tabIndex={0}>{content}</span>
-      </Tippy>
-    ) : (
-      content
-    );
+    if (this.props.tooltip) {
+      const Tippy = require('@tippy.js/react').default;
+
+      return (
+        <Tippy
+          content={this.props.tooltip}
+          placement="bottom"
+          animation="scale-subtle"
+          arrow={false}
+          duration={200}
+          delay={[75, 0]}
+          distance={8}
+          interactive={true}
+          appendTo={document?.body}
+          trigger="mouseenter focus"
+          {...this.props.tooltipProps}
+        >
+          <span tabIndex={0}>{content}</span>
+        </Tippy>
+      );
+    }
+    return content;
   }
 }
 

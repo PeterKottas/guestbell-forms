@@ -1,7 +1,7 @@
 ﻿// Libs
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Tippy, { TippyProps } from '@tippy.js/react';
+import { TippyProps } from '@tippy.js/react';
 
 // Misc
 import * as Validators from '../../../validators';
@@ -473,25 +473,27 @@ export class BaseInput<
   protected renderTooltip(
     content: JSX.Element = <span className="label--help-icon">?</span>
   ) {
-    return this.props.tooltip ? (
-      <Tippy
-        content={this.props.tooltip}
-        placement="bottom"
-        animation="scale-subtle"
-        arrow={false}
-        duration={200}
-        delay={[75, 0]}
-        distance={8}
-        interactive={true}
-        appendTo={document?.body}
-        trigger="mouseenter focus"
-        {...this.props.tooltipProps}
-      >
-        {content}
-      </Tippy>
-    ) : (
-      content
-    );
+    if (this.props.tooltip) {
+      const Tippy = require('@tippy.js/react').default;
+      return (
+        <Tippy
+          content={this.props.tooltip}
+          placement="bottom"
+          animation="scale-subtle"
+          arrow={false}
+          duration={200}
+          delay={[75, 0]}
+          distance={8}
+          interactive={true}
+          appendTo={document?.body}
+          trigger="mouseenter focus"
+          {...this.props.tooltipProps}
+        >
+          {content}
+        </Tippy>
+      );
+    }
+    return content;
   }
 
   protected getTranslations(
