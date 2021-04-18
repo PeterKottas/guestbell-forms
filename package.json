@@ -126,5 +126,8 @@
     "> 1%",
     "maintained node versions",
     "not dead"
-  ]
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  }
 }
