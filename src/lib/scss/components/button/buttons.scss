@@ -26,6 +26,9 @@
       background-color: rgba($bg, 0.5);
     }
   }
+  &.guestbell-btn--disabled.guestbell-btn--unobtrusive {
+    background-color: transparent;
+  }
   &:not(.guestbell-btn--disabled).guestbell-btn--unobtrusive {
     box-shadow: none;
     background-color: transparent;
