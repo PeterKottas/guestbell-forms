@@ -70,6 +70,7 @@ export class NumberInputRaw extends BaseInput<
                 {...(this.props.id && {
                   id: this.props.id + '-add-hours-button',
                 })}
+                tabIndex={0}
               >
                 <ArrowIcon />
               </button>
@@ -102,6 +103,7 @@ export class NumberInputRaw extends BaseInput<
                 {...(this.props.id && {
                   id: this.props.id + '-subtract-hours-button',
                 })}
+                tabIndex={0}
               >
                 <ArrowIcon />
               </button>

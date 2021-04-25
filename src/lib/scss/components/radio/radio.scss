@@ -16,7 +16,13 @@
     position: relative;
     padding: 10px 10px 10px 5px;
     color: $input-text-color;
-    outline: 0;
+    &:focus {
+      outline: 0;
+    }
+    &:focus-visible {
+      outline: 1px dotted;
+      outline: 5px auto -webkit-focus-ring-color;
+    }
     border: none;
     width: auto;
     margin-right: 10px;

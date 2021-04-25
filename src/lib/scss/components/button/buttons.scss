@@ -54,13 +54,19 @@
 }
 
 .guestbell-btn {
+  &:focus {
+    outline: 0;
+  }
+  &:focus-visible {
+    outline: 1px dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+  }
   text-transform: uppercase;
   background: transparent;
   color: inherit;
   border: none;
   font: inherit;
   cursor: pointer;
-  outline: inherit !important;
   position: relative;
   padding: 0.5rem;
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,

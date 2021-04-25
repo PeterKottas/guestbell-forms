@@ -88,6 +88,7 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
                 {...(this.props.id && {
                   id: this.props.id + '-add-hours-button',
                 })}
+                tabIndex={0}
               >
                 <ArrowIcon />
               </button>
@@ -119,6 +120,7 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
                 {...(this.props.id && {
                   id: this.props.id + '-subtract-hours-button',
                 })}
+                tabIndex={0}
               >
                 <ArrowIcon />
               </button>
@@ -133,6 +135,7 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
                 {...(this.props.id && {
                   id: this.props.id + '-add-minutes-button',
                 })}
+                tabIndex={0}
               >
                 <ArrowIcon />
               </button>
@@ -166,6 +169,7 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
                 {...(this.props.id && {
                   id: this.props.id + '-subtract-minutes-button',
                 })}
+                tabIndex={0}
               >
                 <ArrowIcon />
               </button>

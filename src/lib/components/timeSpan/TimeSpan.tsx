@@ -136,6 +136,7 @@ export class TimeSpanRaw extends BaseInput<
                     id: this.props.id + '-add-hours-button',
                   })}
                   data-unit={unit}
+                  tabIndex={0}
                 >
                   <ArrowIcon />
                 </button>
@@ -172,6 +173,7 @@ export class TimeSpanRaw extends BaseInput<
                     id: this.props.id + '-subtract-hours-button',
                   })}
                   data-unit={unit}
+                  tabIndex={0}
                 >
                   <ArrowIcon />
                 </button>

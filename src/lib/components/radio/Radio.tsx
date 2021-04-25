@@ -68,6 +68,7 @@ export class RadioRaw extends BaseInput<
         onChange={this.onChecked}
         onBlur={this.handleBlur}
         onFocus={this.handleFocus}
+        tabIndex={0}
       />
     );
   }

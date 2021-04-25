@@ -64,7 +64,6 @@ const DefaultButtonComponent: React.FC<ButtonComponentProps> = React.forwardRef(
       // tslint:disable-next-line:no-any
       {...((props.buttonProps ? props.buttonProps : {}) as any)}
       {...(props.id && { id: props.id })}
-      role="button"
       className={props.className}
       onClick={props.onClick}
       style={props.style}
@@ -86,6 +85,8 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
     Component: DefaultButtonComponent,
     buttonProps: {
       type: 'button',
+      role: 'button',
+      tabIndex: 0,
     },
     type: 'none',
     preventsDefault: true,
@@ -119,7 +120,12 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
       <this.props.Component
         {...(this.props.id && { id: this.props.id })}
         onClick={this.handleClick}
-        buttonProps={this.props.buttonProps}
+        buttonProps={{
+          ...this.props.buttonProps,
+          tabIndex: !this.props.disabled
+            ? this.props.buttonProps?.tabIndex
+            : -1,
+        }}
         className={btnClassName}
         style={this.props.style}
       >

@@ -107,7 +107,7 @@ class Suggestions extends React.Component<
     );
   }
 
-  private onSelected = (tag: Tag) => () => {
+  private onSelected = (tag: Tag) => (e: React.MouseEvent) => {
     this.setState({ key: this.state.key + 1 });
     this.props.onSelected(tag);
   };

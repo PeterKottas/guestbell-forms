@@ -393,7 +393,15 @@ export class TagsRaw extends BaseInput<
     }
   };
 
-  private onKeyDown = (suggestions: Tag[]) => async e => {
+  private onKeyDown = (suggestions: Tag[]) => async (
+    e: React.KeyboardEvent
+  ) => {
+    if (e.key === 'Tab') {
+      this.setState({
+        suggestionsVisible: false,
+        preselectedSuggestion: undefined,
+      });
+    }
     if (
       e.key === 'Enter' &&
       (this.state.value !== '' ||

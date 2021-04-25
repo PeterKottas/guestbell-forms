@@ -127,6 +127,7 @@ export class SelectRaw extends BaseInput<
                     }
                     onBlur={this.handleBlur}
                     onFocus={this.handleFocus}
+                    tabIndex={0}
                   >
                     {this.props.defaultEmpty && (
                       <option

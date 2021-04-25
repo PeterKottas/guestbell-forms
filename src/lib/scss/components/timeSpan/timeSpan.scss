@@ -84,8 +84,11 @@
     border: none;
     cursor: pointer;
     &:focus {
-      border: none;
       outline: 0;
+    }
+    &:focus-visible {
+      outline: 1px dotted;
+      outline: 5px auto -webkit-focus-ring-color;
     }
     svg {
       transition: 0.2s all;

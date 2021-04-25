@@ -65,7 +65,7 @@ module.exports = merge({
       },
     ]),
     new Serve({
-      port: 8080,
+      port: 8081,
       static: clientOutputDir,
       open: true,
       host: 'localhost',

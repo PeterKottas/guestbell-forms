@@ -147,6 +147,7 @@ export class MoneyRaw extends BaseInput<
                       onClick={this.removePriceClick(index)}
                       className="transform-rotate--45 line-height--0"
                       buttonProps={{
+                        ...Button.defaultProps?.buttonProps,
                         title:
                           currency && currency.forceSelected
                             ? translations.cannotRemoveDefaultCurrency
@@ -178,6 +179,7 @@ export class MoneyRaw extends BaseInput<
               onClick={this.addPriceClick(unusedCurrencies)}
               circular={true}
               buttonProps={{
+                ...Button.defaultProps?.buttonProps,
                 title:
                   this.props.prices && this.props.prices.length === 0
                     ? translations.addPrice

@@ -156,6 +156,10 @@ export class InputHeaderRaw
   }
 
   public render() {
+    const collapsed =
+      this.props.collapsed !== undefined
+        ? !this.props.collapsed
+        : !this.state.collapsed;
     return (
       <div
         className={
@@ -256,14 +260,12 @@ export class InputHeaderRaw
         >
           {this.props.collapsible ? (
             <Collapse
-              collapsedHeight={'0.0001px'}
-              in={
-                this.props.collapsed !== undefined
-                  ? !this.props.collapsed
-                  : !this.state.collapsed
-              }
+              //this was here for some reason but it's messing with aria
+              //collapsedHeight={'0.0001px'}
+              in={collapsed}
               mountOnEnter={this.props.mountOnEnter}
               unmountOnExit={this.props.unmountOnExit}
+              aria-expanded={collapsed ? 'false' : true}
             >
               {this.props.children}
             </Collapse>

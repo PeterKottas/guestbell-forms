@@ -122,6 +122,7 @@ export class CheckboxRaw extends BaseInput<
         onChange={this.handleChecked}
         onBlur={this.handleBlur}
         onFocus={this.handleFocus}
+        tabIndex={0}
       />
     );
   }

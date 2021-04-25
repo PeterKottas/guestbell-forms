@@ -36,7 +36,13 @@
     position: relative;
     padding: 10px 10px 5px 5px;
     color: $input-text-color;
-    outline: 0;
+    &:focus {
+      outline: 0;
+    }
+    &:focus-visible {
+      outline: 1px dotted;
+      outline: 5px auto -webkit-focus-ring-color;
+    }
     border: none;
     width: auto;
     top: 0;
@@ -70,6 +76,17 @@
       border-radius: 2px;
       border: 2px solid $input-border-color;
       cursor: pointer;
+    }
+    &:focus {
+      &:after {
+        outline: 0;
+      }
+    }
+    &:focus-visible {
+      &:after {
+        outline: 1px dotted;
+        outline: 5px auto -webkit-focus-ring-color;
+      }
     }
   }
   label {
