@@ -44,6 +44,7 @@ export class CheckboxRaw extends BaseInput<
           : [],
     });
     this.handleChecked = this.handleChecked.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.subscribeSelf(props);
   }
 
@@ -111,10 +112,19 @@ export class CheckboxRaw extends BaseInput<
     }
   }
 
+  protected handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (!this.props.disabled) {
+      if (e.key === 'Enter') {
+        this.inputRef.current?.click();
+      }
+    }
+  }
+
   private renderInput() {
     return (
       <input
         {...(this.props.id && { id: this.props.id })}
+        ref={this.inputRef}
         value={this.props.value || ''}
         type="checkbox"
         required={this.props.required}
@@ -122,7 +132,8 @@ export class CheckboxRaw extends BaseInput<
         onChange={this.handleChecked}
         onBlur={this.handleBlur}
         onFocus={this.handleFocus}
-        tabIndex={0}
+        onKeyDown={this.handleKeyDown}
+        tabIndex={this.props.disabled ? -1 : 0}
       />
     );
   }
