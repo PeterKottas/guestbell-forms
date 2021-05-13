@@ -322,7 +322,7 @@ export class InputHeaderRaw
   }
 
   private mainButtonClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!this.props.stopsPropagation) {
+    if (this.props.stopsPropagation) {
       e.stopPropagation();
     }
   };
