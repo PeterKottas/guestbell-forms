@@ -47,6 +47,7 @@ export type InputHeaderRawProps = React.PropsWithChildren<
     unmountOnExit?: boolean;
     tooltip?: string | JSX.Element;
     tooltipProps?: TippyProps;
+    stopsPropagation?: boolean;
   } & InputHeaderContextProps &
     ThemeContextProps
 >;
@@ -80,6 +81,7 @@ export class InputHeaderRaw
     type: 'standard',
     noBg: false,
     shouldToggleCollapseOnHeaderClick: false,
+    stopsPropagation: true,
   };
 
   public componentId = guid();
@@ -319,8 +321,11 @@ export class InputHeaderRaw
     }
   }
 
-  private mainButtonClick = (e: React.MouseEvent<HTMLDivElement>) =>
-    e.stopPropagation();
+  private mainButtonClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!this.props.stopsPropagation) {
+      e.stopPropagation();
+    }
+  };
 
   private renderExtraButtons() {
     let arr = [];
