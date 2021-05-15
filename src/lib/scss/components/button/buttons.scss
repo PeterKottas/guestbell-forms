@@ -40,6 +40,9 @@
       background-color: transparent;
     }
   }
+  &.guestbell-btn--disabled.guestbell-btn--text {
+    background-color: transparent;
+  }
   &:not(.guestbell-btn--disabled).guestbell-btn--text {
     box-shadow: none;
     background-color: transparent;
