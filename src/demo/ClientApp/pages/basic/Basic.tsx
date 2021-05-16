@@ -714,22 +714,23 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         <Tags
                           title="Tags suggestions"
                           label="Choose or create tags"
-                          minLettersToFetch={3}
                           fetchExistingTags={startsWith =>
                             new Promise(resolve =>
                               setTimeout(
-                                () => resolve([{ id: -1, name: 'Text' }]),
+                                () =>
+                                  resolve(
+                                    existingTags.filter(e =>
+                                      e.name.includes(startsWith)
+                                    )
+                                  ),
                                 1000
                               )
                             )
                           }
                           readOnly={this.state.multipleReadonly}
-                          allowNew={true}
-                          maxTags={2}
-                          existingTags={existingTags}
                           tags={this.state.tags}
                           onTagsChanged={this.tagsChanged}
-                          showChips={true}
+                          filterExistingTags={(t, tags) => tags}
                         />
                         <Tags
                           title="Tags suggestions"

@@ -26,6 +26,7 @@ export interface TextProps extends BaseInputProps<HTMLInputElement> {
   showClearButton?: boolean;
   after?: React.ReactNode;
   before?: React.ReactNode;
+  sizeFromValue?: boolean;
 }
 
 export interface TextState extends BaseInputState {}
@@ -73,6 +74,7 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
               type={this.props.type}
               onClick={this.props.onClick}
               maxLength={this.props.maxLength}
+              size={this.props.sizeFromValue ? this.props.value?.length || 1 : undefined}
             />
             {this.props.after}
             {!this.props.readOnly && this.props.showClearButton && (

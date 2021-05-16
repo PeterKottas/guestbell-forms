@@ -174,7 +174,7 @@ export class TagsRaw extends BaseInput<
       const suggestions = this.getSuggestions();
       const existing = suggestions.find(s => s.name === this.state.value);
       if (existing) {
-        this.onSuggestionSelected(existing);
+        this.onSuggestionSelected(existing, suggestions.length === 1);
       } else if (this.props.allowNew) {
         this.addNewTag();
       }
@@ -468,11 +468,12 @@ export class TagsRaw extends BaseInput<
     });
   };
 
-  private onSuggestionSelected = (tag: Tag) => {
+  private onSuggestionSelected = (tag: Tag, lastSelected: boolean) => {
     const newTags = this.props.tags.concat(tag);
     this.props.onTagsChanged(newTags);
     const isMax = newTags.length === this.props.maxTags;
-    const finalValue = !this.props.allowNew && !isMax ? this.state.value : '';
+    const finalValue =
+      !this.props.allowNew && !isMax && !lastSelected ? this.state.value : '';
     this.setState(
       {
         value: finalValue,

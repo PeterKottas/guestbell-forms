@@ -11,7 +11,7 @@ export type SuggestionsProps = {
   isVisible: boolean;
   isWaitingForMoreInput: boolean;
   tags: Tag[];
-  onSelected: (tag: Tag) => void;
+  onSelected: (tag: Tag, lastSelected: boolean) => void;
   value: string;
   loading: boolean;
   LoadingComponent?: string | JSX.Element;
@@ -84,7 +84,7 @@ class Suggestions extends React.Component<
                           ? 'tags-input__suggestion--preselected'
                           : '')
                       }
-                      onClick={this.onSelected(tag)}
+                      onClick={this.onSelected(tag, this.props.tags.length === 1)}
                       dropdown={true}
                     >
                       {tag.name}
@@ -107,9 +107,9 @@ class Suggestions extends React.Component<
     );
   }
 
-  private onSelected = (tag: Tag) => (e: React.MouseEvent) => {
+  private onSelected = (tag: Tag, lastSelected: boolean) => (e: React.MouseEvent) => {
     this.setState({ key: this.state.key + 1 });
-    this.props.onSelected(tag);
+    this.props.onSelected(tag, lastSelected);
   };
 }
 
