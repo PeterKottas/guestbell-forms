@@ -11,7 +11,7 @@ import {
   ValidationError,
   defaultBaseTranslations,
 } from '../base/input/BaseInput';
-import { Button } from '../button/Button';
+import { Button, ButtonComponentProps } from '../button/Button';
 import TagsSuggestions from './subComponents/TagsSuggestions';
 import { withFormContext } from '../form/withFormContext';
 var classNames = require('classnames');
@@ -75,6 +75,12 @@ export interface TagsState extends BaseInputState {
 }
 
 type InjectedProps = {};
+
+const TagButtonComponent: React.FC<ButtonComponentProps> = p => (
+  <a className={p.className} id={p.id} onClick={p.onClick}>
+    {p.children}
+  </a>
+);
 
 export class TagsRaw extends BaseInput<
   TagsProps & InjectedProps,
@@ -493,7 +499,7 @@ export class TagsRaw extends BaseInput<
     );
   };
 
-  private onBlur = async () => {
+  private onBlur = () => {
     this.setState(
       {
         textIsFocused: false,
@@ -600,11 +606,8 @@ export class TagsRaw extends BaseInput<
             blank={true}
             onClick={this.tagRemoveClick(tag)}
             className="ml-1 transform-rotate--45 line-height--0 p-0"
-            Component={p => (
-              <a className={p.className} id={p.id} onClick={p.onClick}>
-                {p.children}
-              </a>
-            )}
+            Component={TagButtonComponent}
+            preventsDefault={false}
           >
             <PlusIcon />
           </Button>
