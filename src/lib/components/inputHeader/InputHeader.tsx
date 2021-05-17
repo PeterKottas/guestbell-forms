@@ -7,7 +7,7 @@ import * as MoreIcon from 'material-design-icons/navigation/svg/production/ic_mo
 import * as PlusIcon from 'material-design-icons/hardware/svg/production/ic_keyboard_arrow_down_24px.svg';
 import { ButtonProps, Button, ButtonComponentProps } from '../button/Button';
 import guid from '../utils/Guid';
-import { Dropdown } from '../dropdown/Dropdown';
+import { Dropdown } from '../dropdown';
 import Collapse from '@material-ui/core/Collapse';
 import {
   OmitInputHeaderContext,

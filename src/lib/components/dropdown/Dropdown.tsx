@@ -14,7 +14,7 @@ export type DropdownProps = React.PropsWithChildren<
     headerClassName?: string;
     notificationCount?: number;
     // tslint:disable-next-line:no-any
-    wrapperTag?: any;
+    WrapperTag?: keyof JSX.IntrinsicElements;
     shouldHandleClick?: boolean;
     showArrow?: boolean;
     onClick?: () => void;
@@ -28,123 +28,82 @@ export interface DropdownState {
   isDropdownVisible: boolean;
 }
 
-export class Dropdown extends React.PureComponent<
-  DropdownProps,
-  DropdownState
-> {
-  public static defaultProps: DropdownProps = {
-    shouldHandleClick: true,
-    wrapperTag: 'div',
-    notificationCount: 0,
-    showArrow: true,
-    inline: true,
-  };
+const Dropdown: React.FC<DropdownProps> = props => {
+  const {
+    shouldHandleClick = true,
+    WrapperTag = 'div',
+    notificationCount = 0,
+    showArrow = true,
+    inline = true,
+    onClick,
+    disabled,
+    className,
+    headerClassName,
+    header,
+    id,
+    collapseProps,
+    children,
+    submenuClassName,
+  } = props;
 
-  constructor(props: DropdownProps) {
-    super(props);
-    this.state = {
-      isDropdownVisible: false,
-    };
-    this.showNavigation = this.showNavigation.bind(this);
-    this.hideNavigation = this.hideNavigation.bind(this);
-  }
+  const [isDropdownVisible, setIsDropdownVisible] = React.useState(false);
 
-  handleClickOutside() {
-    this.setState({ isDropdownVisible: false });
-  }
+  const hideNavigation = React.useCallback(() => {
+    setIsDropdownVisible(false);
+    document.removeEventListener('click', hideNavigation);
+  }, []);
 
-  public hideNavigation() {
-    this.setState({ isDropdownVisible: false });
-    document.removeEventListener('click', this.hideNavigation);
-  }
+  const showNavigation = React.useCallback(() => {
+    setIsDropdownVisible(true);
+    document.addEventListener('click', hideNavigation);
+  }, []);
 
-  public showNavigation() {
-    this.setState({ isDropdownVisible: true });
-    document.addEventListener('click', this.hideNavigation);
-  }
-
-  public componentDidMount() {
-    this.hideNavigation = this.hideNavigation.bind(this);
-  }
-
-  public componentWillUnmount() {
-    document.removeEventListener('click', this.hideNavigation);
-  }
-
-  public render() {
-    const containerClassName = classNames([
-      'guestbell__dropdown',
-      !this.state.isDropdownVisible
-        ? 'guestbell__dropdown--closed'
-        : 'guestbell__dropdown--opened',
-      { ['guestbell__dropdown--disabled']: this.props.disabled },
-      { ['guestbell__dropdown--inline']: this.props.inline },
-      this.props.className,
-    ]);
-    const headerClassName = classNames([
-      'guestbell__dropdown-toggle',
-      { ['guestbell__dropdown-toggle__arrow--hidden']: !this.props.showArrow },
-      { ['guestbell__dropdown-toggle--disabled']: this.props.disabled },
-      this.props.headerClassName,
-    ]);
-    return (
-      <this.props.wrapperTag
-        {...(this.props.id && { id: this.props.id })}
-        className={containerClassName}
-      >
-        <div
-          role="button"
-          className={headerClassName}
-          onClick={this.containerClick}
-        >
-          {this.props.header}
-          {this.props.notificationCount > 0 && (
-            <span className="guestbell__label-count">
-              {this.props.notificationCount}
-            </span>
-          )}
-        </div>
-        <div className={'guestbell__dropdown-menu__container'}>
-          <Collapse
-            {...this.props.collapseProps}
-            in={this.state.isDropdownVisible}
-          >
-            {this.renderChildren()}
-          </Collapse>
-        </div>
-      </this.props.wrapperTag>
-    );
-  }
-
-  private containerClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    this.handleClick(e);
-  };
-
-  private handleClick = (e: React.SyntheticEvent<{}>) => {
-    if (this.props.shouldHandleClick && !this.props.disabled) {
-      this.props.onClick && this.props.onClick();
+  const handleClick = React.useCallback((e: React.SyntheticEvent<{}>) => {
+    if (shouldHandleClick && !disabled) {
+      onClick && onClick();
       e.preventDefault();
       e.stopPropagation();
-      if (!this.state.isDropdownVisible) {
-        this.showNavigation();
+      if (!isDropdownVisible) {
+        showNavigation();
       }
     }
-  };
+  }, []);
+  const containerClassName = classNames(
+    'guestbell__dropdown',
+    !isDropdownVisible
+      ? 'guestbell__dropdown--closed'
+      : 'guestbell__dropdown--opened',
+    { ['guestbell__dropdown--disabled']: disabled },
+    { ['guestbell__dropdown--inline']: inline },
+    className
+  );
+  const headerClassNameAll = classNames([
+    'guestbell__dropdown-toggle',
+    { ['guestbell__dropdown-toggle__arrow--hidden']: !showArrow },
+    { ['guestbell__dropdown-toggle--disabled']: disabled },
+    headerClassName,
+  ]);
+  return (
+    <WrapperTag id={id ?? null} className={containerClassName}>
+      <div role="button" className={headerClassNameAll} onClick={handleClick}>
+        {header}
+        {notificationCount > 0 && (
+          <span className="guestbell__label-count">{notificationCount}</span>
+        )}
+      </div>
+      <div className={'guestbell__dropdown-menu__container'}>
+        <Collapse {...collapseProps} in={isDropdownVisible}>
+          <ul
+            className={classNames('guestbell__dropdown-menu', submenuClassName)}
+          >
+            {children}
+          </ul>
+        </Collapse>
+      </div>
+    </WrapperTag>
+  );
+};
 
-  private renderChildren() {
-    return (
-      <ul
-        className={
-          'guestbell__dropdown-menu ' +
-          (this.props.submenuClassName ? this.props.submenuClassName : '')
-        }
-      >
-        {this.props.children}
-      </ul>
-    );
-  }
-}
-
-export default withThemeContext<DropdownProps, InstanceType<typeof Dropdown>>(
+export default withThemeContext<DropdownProps, React.FC<DropdownProps>>(
   Dropdown
 );

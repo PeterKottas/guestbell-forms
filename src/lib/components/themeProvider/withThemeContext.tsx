@@ -7,7 +7,7 @@ const getOverrideProps = (theme: Theme, key: keyof ThemeOverrides) =>
   key && theme?.overrides?.[key]?.props;
 
 export function withThemeContext<P extends ThemeContextProps, ComponentType>(
-  Component: React.ForwardRefExoticComponent<P> | React.ComponentClass<P>,
+  Component: React.ForwardRefExoticComponent<P> | React.ComponentType<P>,
   componentName?: keyof ThemeOverrides
 ): React.ForwardRefExoticComponent<
   React.PropsWithoutRef<P> & React.RefAttributes<ComponentType>

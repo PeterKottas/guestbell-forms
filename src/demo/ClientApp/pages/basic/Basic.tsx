@@ -202,8 +202,6 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
 
   private specialDaysInputHeader: React.RefObject<InputHeaderRaw>;
 
-  private dropdownFunctionHeader: Dropdown;
-
   private initialState: BasicState = {
     gender: '',
     name: 'Test',
@@ -801,7 +799,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                             submenuClassName="p-2"
                             showArrow={false}
                           >
-                            <li>Item</li>
+                            <ButtonsShowcase dropdown={true} className="" />
                           </Dropdown>
                           <Dropdown
                             className="position-relative mr-3"
@@ -813,14 +811,8 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                           </Dropdown>
                           <Dropdown
                             className="position-relative"
-                            ref={this.dropdownFunctionHeaderRef}
                             header={
-                              <Button
-                                onClick={this.functionHeaderClick}
-                                type="primary"
-                              >
-                                Function header
-                              </Button>
+                              <Button type="primary">Function header</Button>
                             }
                             showArrow={false}
                             submenuClassName="p-2"
@@ -872,12 +864,6 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
   }
 
   private formRef = (el: Form) => (this.form = el);
-
-  private dropdownFunctionHeaderRef = (el: Dropdown) =>
-    (this.dropdownFunctionHeader = el);
-
-  private functionHeaderClick = () =>
-    this.dropdownFunctionHeader.showNavigation();
 
   private selectedValuesChanged = (selectedValues: SelectValue[]) =>
     this.setState({ selectedValues });
