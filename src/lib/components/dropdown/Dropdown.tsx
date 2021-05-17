@@ -1,10 +1,9 @@
 ﻿// Libs
 import * as React from 'react';
-import Collapse, { CollapseProps } from '@material-ui/core/Collapse';
 import { ThemeContextProps } from '../themeProvider/ThemeContext';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import classNames from 'classnames';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Menu, { MenuProps } from '@material-ui/core/Menu';
 
 export type DropdownProps = React.PropsWithChildren<
   ThemeContextProps & {
@@ -21,7 +20,7 @@ export type DropdownProps = React.PropsWithChildren<
     onClick?: (e: React.MouseEvent, isVisible: boolean) => void;
     disabled?: boolean;
     inline?: boolean;
-    collapseProps?: Partial<CollapseProps>;
+    menuProps?: Partial<MenuProps>;
   }
 >;
 
@@ -42,7 +41,7 @@ const Dropdown: React.FC<DropdownProps> = props => {
     headerClassName,
     header,
     id,
-    collapseProps,
+    menuProps,
     children,
     submenuClassName,
   } = props;
@@ -57,15 +56,25 @@ const Dropdown: React.FC<DropdownProps> = props => {
     setIsDropdownVisible(true);
   }, []);
 
+  const defaultMenuProps: Partial<MenuProps> = {
+    getContentAnchorEl: null,
+    anchorOrigin: {
+      vertical: 'bottom',
+      horizontal: 'left',
+    },
+    transformOrigin: {
+      vertical: 'top',
+      horizontal: 'left',
+    },
+  };
+
   const handleClick = React.useCallback(
     (e: React.MouseEvent) => {
       if (shouldHandleClick && !disabled) {
         if (!isDropdownVisible) {
           showNavigation();
         }
-        e.preventDefault();
-        e.stopPropagation();
-        onClick && onClick(e, isDropdownVisible);
+        onClick?.(e, isDropdownVisible);
       }
     },
     [isDropdownVisible, onClick]
@@ -85,32 +94,34 @@ const Dropdown: React.FC<DropdownProps> = props => {
     { ['guestbell__dropdown-toggle--disabled']: disabled },
     headerClassName,
   ]);
+  const elemRef = React.useRef<HTMLDivElement>();
   return (
     <WrapperTag id={id ?? null} className={containerClassName}>
-      <div role="button" className={headerClassNameAll} onClick={handleClick}>
+      <div
+        ref={elemRef}
+        role="button"
+        className={headerClassNameAll}
+        onClick={handleClick}
+      >
         {header}
         {notificationCount > 0 && (
           <span className="guestbell__label-count">{notificationCount}</span>
         )}
       </div>
-      <div className={'guestbell__dropdown-menu__container'}>
-        <Collapse {...collapseProps} in={isDropdownVisible}>
-          <ClickAwayListener
-            onClickAway={hideNavigation}
-            mouseEvent={isDropdownVisible ? 'onClick' : false}
-            touchEvent={isDropdownVisible ? 'onTouchEnd' : false}
-          >
-            <ul
-              className={classNames(
-                'guestbell__dropdown-menu',
-                submenuClassName
-              )}
-            >
-              {children}
-            </ul>
-          </ClickAwayListener>
-        </Collapse>
-      </div>
+
+      <Menu
+        {...defaultMenuProps}
+        {...menuProps}
+        onClose={hideNavigation}
+        open={isDropdownVisible}
+        anchorEl={elemRef.current}
+      >
+        <ul
+          className={classNames('guestbell__dropdown-menu', submenuClassName)}
+        >
+          {children}
+        </ul>
+      </Menu>
     </WrapperTag>
   );
 };
