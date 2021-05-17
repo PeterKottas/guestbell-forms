@@ -3,7 +3,8 @@ import * as React from 'react';
 import Collapse, { CollapseProps } from '@material-ui/core/Collapse';
 import { ThemeContextProps } from '../themeProvider/ThemeContext';
 import { withThemeContext } from '../themeProvider/withThemeContext';
-var classNames = require('classnames');
+import * as classNames from 'classnames';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 export type DropdownProps = React.PropsWithChildren<
   ThemeContextProps & {
@@ -50,12 +51,10 @@ const Dropdown: React.FC<DropdownProps> = props => {
 
   const hideNavigation = React.useCallback(() => {
     setIsDropdownVisible(false);
-    document.removeEventListener('click', hideNavigation);
   }, []);
 
   const showNavigation = React.useCallback(() => {
     setIsDropdownVisible(true);
-    document.addEventListener('click', hideNavigation);
   }, []);
 
   const handleClick = React.useCallback(
@@ -96,11 +95,20 @@ const Dropdown: React.FC<DropdownProps> = props => {
       </div>
       <div className={'guestbell__dropdown-menu__container'}>
         <Collapse {...collapseProps} in={isDropdownVisible}>
-          <ul
-            className={classNames('guestbell__dropdown-menu', submenuClassName)}
+          <ClickAwayListener
+            onClickAway={hideNavigation}
+            mouseEvent={isDropdownVisible ? 'onClick' : false}
+            touchEvent={isDropdownVisible ? 'onTouchEnd' : false}
           >
-            {children}
-          </ul>
+            <ul
+              className={classNames(
+                'guestbell__dropdown-menu',
+                submenuClassName
+              )}
+            >
+              {children}
+            </ul>
+          </ClickAwayListener>
         </Collapse>
       </div>
     </WrapperTag>
