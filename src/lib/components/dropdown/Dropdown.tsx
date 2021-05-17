@@ -95,8 +95,8 @@ const Dropdown: React.FC<DropdownProps> = props => {
         <Collapse {...collapseProps} in={isDropdownVisible}>
           <ClickAwayListener
             onClickAway={hideNavigation}
-            mouseEvent={isDropdownVisible ? 'onClick' : false}
-            touchEvent={isDropdownVisible ? 'onTouchEnd' : false}
+            mouseEvent={isDropdownVisible ? 'onMouseDown' : false}
+            touchEvent={isDropdownVisible ? 'onTouchStart' : false}
           >
             <ul
               className={classNames(
