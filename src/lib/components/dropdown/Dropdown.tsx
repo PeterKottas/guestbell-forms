@@ -17,7 +17,7 @@ export type DropdownProps = React.PropsWithChildren<
     WrapperTag?: keyof JSX.IntrinsicElements;
     shouldHandleClick?: boolean;
     showArrow?: boolean;
-    onClick?: () => void;
+    onClick?: (e: React.MouseEvent, isVisible: boolean) => void;
     disabled?: boolean;
     inline?: boolean;
     collapseProps?: Partial<CollapseProps>;
@@ -58,16 +58,19 @@ const Dropdown: React.FC<DropdownProps> = props => {
     document.addEventListener('click', hideNavigation);
   }, []);
 
-  const handleClick = React.useCallback((e: React.SyntheticEvent<{}>) => {
-    if (shouldHandleClick && !disabled) {
-      onClick && onClick();
-      e.preventDefault();
-      e.stopPropagation();
-      if (!isDropdownVisible) {
-        showNavigation();
+  const handleClick = React.useCallback(
+    (e: React.MouseEvent) => {
+      if (shouldHandleClick && !disabled) {
+        onClick && onClick(e, isDropdownVisible);
+        if (!isDropdownVisible) {
+          showNavigation();
+        } else {
+          hideNavigation();
+        }
       }
-    }
-  }, []);
+    },
+    [isDropdownVisible, onClick]
+  );
   const containerClassName = classNames(
     'guestbell__dropdown',
     !isDropdownVisible
