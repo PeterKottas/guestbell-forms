@@ -60,12 +60,10 @@ const Dropdown: React.FC<DropdownProps> = props => {
   const handleClick = React.useCallback(
     (e: React.MouseEvent) => {
       if (shouldHandleClick && !disabled) {
-        onClick && onClick(e, isDropdownVisible);
         if (!isDropdownVisible) {
           showNavigation();
-        } else {
-          hideNavigation();
         }
+        onClick && onClick(e, isDropdownVisible);
       }
     },
     [isDropdownVisible, onClick]
