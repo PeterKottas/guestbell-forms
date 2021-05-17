@@ -166,7 +166,12 @@ export class TagsRaw extends BaseInput<
   public handleClickOutside(e: MouseEvent) {
     if (
       !this.containerRef.current ||
-      this.containerRef.current.contains(e.target as HTMLDivElement) ||
+      this.containerRef.current
+        .querySelector('.tags-input__tag__wrapper')
+        ?.contains(e.target as HTMLDivElement) ||
+      this.containerRef.current
+        .querySelector('.tags-input__text-input')
+        ?.contains(e.target as HTMLDivElement) ||
       !this.suggestionsRef.current ||
       this.suggestionsRef.current.contains(e.target as HTMLDivElement)
     ) {
