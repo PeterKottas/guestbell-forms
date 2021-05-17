@@ -3,7 +3,7 @@ import * as React from 'react';
 import Collapse, { CollapseProps } from '@material-ui/core/Collapse';
 import { ThemeContextProps } from '../themeProvider/ThemeContext';
 import { withThemeContext } from '../themeProvider/withThemeContext';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 export type DropdownProps = React.PropsWithChildren<
