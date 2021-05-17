@@ -63,6 +63,8 @@ const Dropdown: React.FC<DropdownProps> = props => {
         if (!isDropdownVisible) {
           showNavigation();
         }
+        e.preventDefault();
+        e.stopPropagation();
         onClick && onClick(e, isDropdownVisible);
       }
     },
