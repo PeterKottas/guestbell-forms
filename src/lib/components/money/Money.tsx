@@ -175,7 +175,7 @@ export class MoneyRaw extends BaseInput<
                 id: this.props.id + '-add-button',
               })}
               type="primary"
-              className="line-height--0"
+              className="line-height--0 align-self-start"
               onClick={this.addPriceClick(unusedCurrencies)}
               circular={true}
               buttonProps={{
