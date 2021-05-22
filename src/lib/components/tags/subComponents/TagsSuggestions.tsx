@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Tag } from '..';
 import { Button } from '../../..';
 import Popper, { PopperProps } from '@material-ui/core/Popper';
+import classNames from 'classnames';
 
 export type SuggestionsProps = {
   innerRef: React.RefObject<HTMLDivElement>;
@@ -52,16 +53,15 @@ class Suggestions extends React.Component<
             {...(this.props.id && {
               id: this.props.id,
             })}
-            className="tags-input__suggestions"
+            className={classNames(
+              'tags-input__suggestions',
+              'tags-input__suggestions--loading'
+            )}
             ref={this.props.innerRef}
           >
             <ul>
               {this.props.AddNewTagComponent}
-              {this.props.loading && this.props.LoadingComponent && (
-                <li className="w-100 text-center p-2">
-                  {this.props.LoadingComponent}
-                </li>
-              )}
+              {this.props.loading && this.props.LoadingComponent}
               {!this.props.loading &&
                 this.props.isWaitingForMoreInput &&
                 this.props.WaitingForMoreInputComponent && (
@@ -69,8 +69,7 @@ class Suggestions extends React.Component<
                     {this.props.WaitingForMoreInputComponent}
                   </li>
                 )}
-              {!this.props.loading &&
-                !this.props.isWaitingForMoreInput &&
+              {!this.props.isWaitingForMoreInput &&
                 this.props.tags.map((tag, index) => (
                   <li key={index}>
                     <Button
@@ -84,7 +83,10 @@ class Suggestions extends React.Component<
                           ? 'tags-input__suggestion--preselected'
                           : '')
                       }
-                      onClick={this.onSelected(tag, this.props.tags.length === 1)}
+                      onClick={this.onSelected(
+                        tag,
+                        this.props.tags.length === 1
+                      )}
                       dropdown={true}
                     >
                       {tag.name}
@@ -107,7 +109,9 @@ class Suggestions extends React.Component<
     );
   }
 
-  private onSelected = (tag: Tag, lastSelected: boolean) => (e: React.MouseEvent) => {
+  private onSelected = (tag: Tag, lastSelected: boolean) => (
+    e: React.MouseEvent
+  ) => {
     this.setState({ key: this.state.key + 1 });
     this.props.onSelected(tag, lastSelected);
   };

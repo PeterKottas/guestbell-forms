@@ -17,7 +17,8 @@ import { withFormContext } from '../form/withFormContext';
 var classNames = require('classnames');
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import { PopperProps } from '@material-ui/core/Popper/Popper';
-import { Portal } from '@material-ui/core';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Portal from '@material-ui/core/Portal';
 
 // Misc
 export type Tag = {
@@ -102,7 +103,9 @@ export class TagsRaw extends BaseInput<
     maxTagsSurpassedError: <span>Maximum number of tags surpassed</span>,
     waitingForMoreInputComponent: <span>Waiting for more input...</span>,
     showSuggestions: true,
-    suggestionsLoadingComponent: 'Loading...',
+    suggestionsLoadingComponent: (
+      <LinearProgress className="tags-input__suggestions__defaultLoading" />
+    ),
     suggestionsEmptyComponent: 'No existing tags...',
     loadingDelayMs: 500,
     filterExistingTags: (text, tags) =>
