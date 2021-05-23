@@ -19,6 +19,8 @@ export type DropdownProps = React.PropsWithChildren<
     shouldHandleClick?: boolean;
     showArrow?: boolean;
     onClick?: (e: React.MouseEvent, isVisible: boolean) => void;
+    onShow?: () => void;
+    onHide?: () => void;
     disabled?: boolean;
     inline?: boolean;
     collapseProps?: Partial<CollapseProps>;
@@ -37,6 +39,8 @@ const Dropdown: React.FC<DropdownProps> = props => {
     showArrow = true,
     inline = true,
     onClick,
+    onShow,
+    onHide,
     disabled,
     className,
     headerClassName,
@@ -51,17 +55,30 @@ const Dropdown: React.FC<DropdownProps> = props => {
 
   const hideNavigation = React.useCallback(() => {
     setIsDropdownVisible(false);
-  }, []);
+    onHide?.();
+  }, [onHide]);
 
   const showNavigation = React.useCallback(() => {
     setIsDropdownVisible(true);
-  }, []);
+    onShow?.();
+  }, [onShow]);
+
+  const onClickAway = React.useCallback(
+    (e: React.MouseEvent<Document>) => {
+      hideNavigation();
+      e.stopPropagation();
+      e.preventDefault();
+    },
+    [hideNavigation]
+  );
 
   const handleClick = React.useCallback(
     (e: React.MouseEvent) => {
       if (shouldHandleClick && !disabled) {
         if (!isDropdownVisible) {
           showNavigation();
+        } else {
+          hideNavigation();
         }
         onClick?.(e, isDropdownVisible);
       }
@@ -84,20 +101,20 @@ const Dropdown: React.FC<DropdownProps> = props => {
     headerClassName,
   ]);
   return (
-    <WrapperTag id={id ?? null} className={containerClassName}>
-      <div role="button" className={headerClassNameAll} onClick={handleClick}>
-        {header}
-        {notificationCount > 0 && (
-          <span className="guestbell__label-count">{notificationCount}</span>
-        )}
-      </div>
-      <div className={'guestbell__dropdown-menu__container'}>
-        <Collapse {...collapseProps} in={isDropdownVisible}>
-          <ClickAwayListener
-            onClickAway={hideNavigation}
-            mouseEvent={isDropdownVisible ? 'onMouseDown' : false}
-            touchEvent={isDropdownVisible ? 'onTouchStart' : false}
-          >
+    <ClickAwayListener
+      onClickAway={onClickAway}
+      mouseEvent={isDropdownVisible ? 'onMouseDown' : false}
+      touchEvent={isDropdownVisible ? 'onTouchStart' : false}
+    >
+      <WrapperTag id={id ?? null} className={containerClassName}>
+        <div role="button" className={headerClassNameAll} onClick={handleClick}>
+          {header}
+          {notificationCount > 0 && (
+            <span className="guestbell__label-count">{notificationCount}</span>
+          )}
+        </div>
+        <div className={'guestbell__dropdown-menu__container'}>
+          <Collapse {...collapseProps} in={isDropdownVisible}>
             <ul
               className={classNames(
                 'guestbell__dropdown-menu',
@@ -106,10 +123,10 @@ const Dropdown: React.FC<DropdownProps> = props => {
             >
               {children}
             </ul>
-          </ClickAwayListener>
-        </Collapse>
-      </div>
-    </WrapperTag>
+          </Collapse>
+        </div>
+      </WrapperTag>
+    </ClickAwayListener>
   );
 };
 
