@@ -62,8 +62,7 @@ class Suggestions extends React.Component<
             <ul>
               {this.props.AddNewTagComponent}
               {this.props.loading && this.props.LoadingComponent}
-              {!this.props.loading &&
-                this.props.isWaitingForMoreInput &&
+              {this.props.isWaitingForMoreInput &&
                 this.props.WaitingForMoreInputComponent && (
                   <li className="w-100 text-center p-2">
                     {this.props.WaitingForMoreInputComponent}
@@ -93,8 +92,7 @@ class Suggestions extends React.Component<
                     </Button>
                   </li>
                 ))}
-              {!this.props.loading &&
-                this.props.EmptyComponent &&
+              {this.props.EmptyComponent &&
                 this.props.tags.length === 0 &&
                 !this.props.allowNew &&
                 !this.props.isWaitingForMoreInput && (

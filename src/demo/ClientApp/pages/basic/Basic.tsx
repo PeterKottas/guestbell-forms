@@ -725,6 +725,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                               )
                             )
                           }
+                          suggestionsEmptyComponent={'Not found'}
                           readOnly={this.state.multipleReadonly}
                           tags={this.state.tags}
                           onTagsChanged={this.tagsChanged}
