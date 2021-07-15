@@ -687,6 +687,13 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                           <h3 className="text-center">Text</h3>
                           <ButtonsShowcase text={true} className="" />
                         </div>
+                        <div className="p-3 buttons-row">
+                          <h3 className="text-center">Disable after click</h3>
+                          <ButtonsShowcase
+                            disableAfterClickMs={2000}
+                            disableAfterClick={true}
+                          />
+                        </div>
                       </InputHeader>
                       <InputHeader
                         className={''}

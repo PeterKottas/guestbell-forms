@@ -41,6 +41,7 @@ export type ButtonProps = React.PropsWithChildren<
     icon?: boolean;
     outlined?: boolean;
     disableAfterClickMs?: number;
+    disableAfterClick?: boolean;
     buttonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
     text?: boolean;
     hero?: boolean;
@@ -55,7 +56,9 @@ export type ButtonProps = React.PropsWithChildren<
   } & ThemeContextProps
 >;
 
-export interface ButtonState {}
+export interface ButtonState {
+  disabledAfterClick: boolean;
+}
 
 const DefaultButtonComponent: React.FC<ButtonComponentProps> = React.forwardRef(
   (props, ref) => (
@@ -82,6 +85,7 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
     noRipples: false,
     small: false,
     disableAfterClickMs: 500,
+    disableAfterClick: false,
     Component: DefaultButtonComponent,
     buttonProps: {
       type: 'button',
@@ -92,19 +96,25 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
     preventsDefault: true,
   };
 
-  private preventMultipleClick = false;
+  private preventMultipleClickTimer: number;
 
   constructor(props: ButtonProps) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+    this.state = {
+      disabledAfterClick: false,
+    };
   }
 
   public render() {
+    const disabled =
+      this.props.disabled ||
+      (this.props.disableAfterClick && this.state.disabledAfterClick);
     let btnClassName = classNames([
       'guestbell-btn',
       this.getButtonClassName(),
       this.props.className,
-      { ['guestbell-btn--disabled']: this.props.disabled },
+      { ['guestbell-btn--disabled']: disabled },
       { ['guestbell-btn--circular']: this.props.circular },
       { ['guestbell-btn--small']: this.props.small },
       { ['guestbell-btn--no-shadow']: this.props.noShadow },
@@ -122,14 +132,12 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
         onClick={this.handleClick}
         buttonProps={{
           ...this.props.buttonProps,
-          tabIndex: !this.props.disabled
-            ? this.props.buttonProps?.tabIndex
-            : -1,
+          tabIndex: !disabled ? this.props.buttonProps?.tabIndex : -1,
         }}
         className={btnClassName}
         style={this.props.style}
       >
-        {!this.props.noRipples && !this.props.disabled && Ink && <Ink />}
+        {!this.props.noRipples && !disabled && Ink && <Ink />}
         {this.props.children}
       </this.props.Component>
     );
@@ -155,17 +163,21 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
     return button;
   }
 
+  public componentWillUnmount() {
+    clearTimeout(this.preventMultipleClickTimer);
+  }
+
   private handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     if (this.props.preventsDefault) {
       e.preventDefault();
     }
-    if (!this.preventMultipleClick) {
-      !this.props.disabled && this.props.onClick && this.props.onClick(e);
+    if (!this.state.disabledAfterClick && !this.props.disabled) {
+      this.props.onClick && this.props.onClick(e);
       if (this.props.disableAfterClickMs !== 0) {
-        this.preventMultipleClick = true;
-        setTimeout(() => {
-          this.preventMultipleClick = false;
-        }, this.props.disableAfterClickMs);
+        this.setState({ disabledAfterClick: true });
+        this.preventMultipleClickTimer = (setTimeout(() => {
+          this.setState({ disabledAfterClick: false });
+        }, this.props.disableAfterClickMs) as unknown) as number;
       }
     }
   }
