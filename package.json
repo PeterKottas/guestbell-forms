@@ -18,13 +18,14 @@
     "npm-check-updates": "^4.0.1"
   },
   "devDependencies": {
-    "@babel/cli": "7.8.3",
-    "@babel/core": "7.8.3",
-    "@babel/plugin-proposal-class-properties": "7.8.3",
-    "@babel/plugin-proposal-optional-chaining": "7.8.3",
-    "@babel/preset-env": "7.8.3",
-    "@babel/preset-react": "7.8.3",
-    "@babel/preset-typescript": "7.8.3",
+    "@babel/cli": "7.14.8",
+    "@babel/core": "7.15.0",
+    "@babel/plugin-proposal-class-properties": "7.14.5",
+    "@babel/plugin-proposal-class-static-block": "^7.14.5",
+    "@babel/plugin-proposal-optional-chaining": "7.14.5",
+    "@babel/preset-env": "7.15.0",
+    "@babel/preset-react": "7.14.5",
+    "@babel/preset-typescript": "7.15.0",
     "@material-ui/core": "^4.11.3",
     "@tippy.js/react": "3.1.1",
     "@types/classnames": "^2.2.9",
@@ -35,7 +36,7 @@
     "@types/webpack": "4.41.0",
     "@types/webpack-env": "1.14.1",
     "autoprefixer": "9.7.3",
-    "babel-loader": "^8.0.6",
+    "babel-loader": "^8.2.2",
     "babel-plugin-inline-react-svg": "^1.1.0",
     "babel-polyfill": "^6.26.0",
     "clean-webpack-plugin": "^3.0.0",
@@ -116,10 +117,10 @@
     "moment": "*",
     "react": "16.x",
     "react-datepicker": "*",
+    "react-device-detect": "*",
     "react-dom": "*",
     "react-ink": "*",
-    "react-onclickoutside": "*",
-    "react-device-detect": "*"
+    "react-onclickoutside": "*"
   },
   "browserslist": [
     "last 1 version",
