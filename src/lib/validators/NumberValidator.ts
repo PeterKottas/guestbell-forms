@@ -2,6 +2,8 @@ import { IBaseValidator } from './base';
 export interface NumberValidatorConfig {
   min?: number;
   max?: number;
+  minInclusive?: number;
+  maxInclusive?: number;
 }
 
 export class NumberValidator implements IBaseValidator {
@@ -24,6 +26,20 @@ export class NumberValidator implements IBaseValidator {
       }
       if (this.config.max !== undefined && num >= this.config.max) {
         addError('Max: ' + (this.config.max - 1));
+        return false;
+      }
+      if (
+        this.config.minInclusive !== undefined &&
+        num < this.config.minInclusive
+      ) {
+        addError('Min: ' + this.config.minInclusive);
+        return false;
+      }
+      if (
+        this.config.maxInclusive !== undefined &&
+        num >= this.config.maxInclusive
+      ) {
+        addError('Max: ' + (this.config.maxInclusive - 1));
         return false;
       }
       return true;
