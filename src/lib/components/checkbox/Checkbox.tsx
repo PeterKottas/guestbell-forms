@@ -85,7 +85,6 @@ export class CheckboxRaw extends BaseInput<
         <div className={containerClassName} ref={this.containerRef}>
           {this.props.title && !this.props.label && this.renderInput()}
           {!this.props.title &&
-            this.props.tooltip &&
             !this.props.label &&
             this.renderTooltip(this.renderInput())}
           {this.renderDefaultValidation()}
