@@ -42,6 +42,16 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
 
   constructor(props: TextProps) {
     super(props);
+    if (props.number !== undefined) {
+      const value = props.number?.toString() ?? '';
+      const res = this.handleValueChange(value, true, [], props, true);
+      this.state = {
+        ...this.state,
+        isValid: res.isValid,
+        errors: res.errors,
+        value,
+      };
+    }
   }
 
   public componentDidUpdate(prevProps: TextProps, prevState: TextState) {
