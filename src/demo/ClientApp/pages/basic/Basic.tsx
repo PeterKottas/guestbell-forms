@@ -45,6 +45,7 @@ export interface BasicState {
   email: string;
   age: string;
   min1: string;
+  justNumber: number;
   checkbox1: boolean;
   checkbox2: boolean;
   validateFormSubmit: boolean;
@@ -159,6 +160,8 @@ const customNumberValidator: IBaseValidator[] = [
   new NumberValidator({ min: 0 }),
 ];
 
+const numberValidator: TextProps['validators'] = ['number'];
+
 const types: ButtonTypes[] = [
   'primary',
   'warning',
@@ -242,6 +245,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
     ],
     multipleReadonly: false,
     textAreaText: '',
+    justNumber: undefined,
   };
 
   constructor(props: BasicProps) {
@@ -535,6 +539,26 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                           title="Number"
                         />
                       </InputHeader>
+                      <Button onClick={() => this.setState({ justNumber: 5 })}>
+                        Reset just number to 5
+                      </Button>
+                      <Text
+                        touchOn={this.state.touchOn}
+                        validators={numberValidator}
+                        label={`Just number (required) - ${this.state.justNumber}`}
+                        number={this.state.justNumber}
+                        onNumberChange={this.justNumberChanged}
+                        title="Number"
+                        required={true}
+                      />
+                      <Text
+                        touchOn={this.state.touchOn}
+                        validators={numberValidator}
+                        label={`Just number - ${this.state.justNumber}`}
+                        number={this.state.justNumber}
+                        onNumberChange={this.justNumberChanged}
+                        title="Number"
+                      />
                       <Money
                         currencies={currencies1}
                         prices={this.state.prices1}
@@ -921,6 +945,9 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
 
   private min1Changed = (e: React.ChangeEvent<HTMLInputElement>) =>
     this.setState({ min1: e.target.value });
+
+  private justNumberChanged = (number: number) =>
+    this.setState({ justNumber: number });
 
   private ageChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
     this.setState({ age: e.target.value });

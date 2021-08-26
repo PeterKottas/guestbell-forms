@@ -140,7 +140,7 @@ export class BaseInput<
     }
   }
 
-  public componentDidUpdate(oldProps: P) {
+  public componentDidUpdate(oldProps: P, oldState: S) {
     if (
       oldProps.value !== this.props.value ||
       oldProps.validators !== this.props.validators ||

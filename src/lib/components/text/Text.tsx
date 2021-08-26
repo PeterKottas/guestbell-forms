@@ -27,6 +27,8 @@ export interface TextProps extends BaseInputProps<HTMLInputElement> {
   after?: React.ReactNode;
   before?: React.ReactNode;
   sizeFromValue?: boolean;
+  onNumberChange?: (number: number, isValid: boolean) => void;
+  number?: number;
 }
 
 export interface TextState extends BaseInputState {}
@@ -40,6 +42,29 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
 
   constructor(props: TextProps) {
     super(props);
+  }
+
+  public componentDidUpdate(prevProps: TextProps, prevState: TextState) {
+    if (
+      this.props.onNumberChange &&
+      (this.state.isValid !== prevState.isValid ||
+        this.state.value !== prevState.value)
+    ) {
+      const num = Number(this.state.value);
+      if (!isNaN(num)) {
+        this.props.onNumberChange(num, this.state.isValid);
+      }
+      if (this.state.value === '') {
+        this.props.onNumberChange(undefined, this.state.isValid);
+      }
+    }
+    if (
+      (prevProps.number !== undefined || this.props.number !== undefined) &&
+      this.props.number !== prevProps.number
+    ) {
+      this.handleValueChange(this.props.number?.toString() ?? '');
+    }
+    super.componentDidUpdate(prevProps, prevState);
   }
 
   public render() {
@@ -74,7 +99,11 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
               type={this.props.type}
               onClick={this.props.onClick}
               maxLength={this.props.maxLength}
-              size={this.props.sizeFromValue ? this.props.value?.length || 1 : undefined}
+              size={
+                this.props.sizeFromValue
+                  ? this.props.value?.length || 1
+                  : undefined
+              }
             />
             {this.props.after}
             {!this.props.readOnly && this.props.showClearButton && (
