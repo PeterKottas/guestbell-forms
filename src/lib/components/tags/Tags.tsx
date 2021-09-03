@@ -388,7 +388,8 @@ export class TagsRaw extends BaseInput<
       () => this.handleErrors()
     );
 
-  private onFocus = () => {
+  private onFocus = (e: React.SyntheticEvent<{}>) => {
+    this.props.onFocus?.(e);
     this.setState(
       () => ({ textIsFocused: true, suggestionsVisible: true, touched: true }),
       () => this.handleErrors()
@@ -508,6 +509,7 @@ export class TagsRaw extends BaseInput<
   };
 
   private onBlur = () => {
+    this.props.onBlur?.();
     this.setState(
       {
         textIsFocused: false,
