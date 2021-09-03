@@ -55,6 +55,8 @@ export type BaseInputProps<
   onTheFlightValidate?: (value: string) => boolean;
   onFocus?: (e: React.SyntheticEvent<{}>) => void;
   onBlur?: () => void;
+  onSuggestionsClosed?: () => void;
+  onSuggestionsOpened?: () => void;
   onClick?: (e: React.MouseEvent) => void;
   title?: string | JSX.Element;
   onKeyDown?: (e: React.KeyboardEvent<HTMLElement>) => void;

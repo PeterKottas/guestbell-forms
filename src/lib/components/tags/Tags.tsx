@@ -180,6 +180,9 @@ export class TagsRaw extends BaseInput<
     ) {
       return;
     }
+    if (this.state.suggestionsVisible) {
+      this.props.onSuggestionsClosed?.();
+    }
     this.setState({
       suggestionsVisible: false,
       preselectedSuggestion: undefined,
@@ -390,6 +393,9 @@ export class TagsRaw extends BaseInput<
 
   private onFocus = (e: React.SyntheticEvent<{}>) => {
     this.props.onFocus?.(e);
+    if (!this.state.suggestionsVisible) {
+      this.props.onSuggestionsOpened?.();
+    }
     this.setState(
       () => ({ textIsFocused: true, suggestionsVisible: true, touched: true }),
       () => this.handleErrors()
