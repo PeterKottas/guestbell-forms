@@ -1,7 +1,6 @@
 ﻿.time-input {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  margin-right: 0.5rem;
   > div,
   > span {
     display: inline-block;
@@ -10,8 +9,8 @@
   }
   display: flex !important;
   align-items: center;
-  justify-content: center;
-  border-bottom: none !important;
+  // justify-content: center;
+  // border-bottom: none !important;
   width: initial !important;
   .input-padding {
     margin: 10px 5px 10px 5px;

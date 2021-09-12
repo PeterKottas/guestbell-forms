@@ -596,7 +596,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         touchOn={this.state.touchOn}
                         required={false}
                         onPricesChange={this.prices3Changed}
-                        title="Price multiple forced"
+                        label="Price multiple forced"
                       />
                       <Time
                         touchOn={this.state.touchOn}
@@ -610,13 +610,20 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         touchOn={this.state.touchOn}
                         time={this.state.time2}
                         timeChange={this.time2Changed}
-                        title="With Min/Max"
+                        label="With Min/Max"
                       />
                       <TimeSpan
                         touchOn={this.state.touchOn}
                         timeSpan={this.state.timeSpan}
                         timeSpanChange={this.timeSpanChanged}
                         title="Time span"
+                        validUnits={TimeSpanUnit.Hour | TimeSpanUnit.Minute}
+                      />
+                      <TimeSpan
+                        touchOn={this.state.touchOn}
+                        timeSpan={this.state.timeSpan}
+                        timeSpanChange={this.timeSpanChanged}
+                        label="Time span"
                         validUnits={TimeSpanUnit.Hour | TimeSpanUnit.Minute}
                       />
                       <OpeningHoursDay

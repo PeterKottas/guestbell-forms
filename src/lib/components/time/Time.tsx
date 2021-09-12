@@ -14,6 +14,7 @@ import { withFormContext } from '../form/withFormContext';
 import TimeUtil from '../utils/TimeUtil';
 import { Duration, duration } from 'moment';
 import { withThemeContext } from '../themeProvider/withThemeContext';
+import classNames from 'classnames';
 
 export interface TimeProps extends BaseInputProps<HTMLInputElement> {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -42,7 +43,6 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
   }
 
   public render() {
-    const { label } = this.props;
     let hours = this.props.time.hours();
     let minutes = this.props.time.minutes();
     if (minutes < 0) {
@@ -71,15 +71,13 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
           {...(this.props.id && {
             id: this.props.id,
           })}
-          className={
-            'input__base time-input ' +
-            this.getValidationClass() +
-            ' ' +
-            (this.props.className ? this.props.className : '')
-          }
+          className={classNames(
+            'input__base time-input',
+            this.getValidationClass(),
+            this.props.className
+          )}
           ref={this.containerRef}
         >
-          {label && <div className="time-input__label">{label}</div>}
           <div className="">
             <div className="time-input__arrows__container">
               <button
@@ -177,6 +175,13 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
           </div>
           {this.renderDefaultValidation()}
           <span className="time-input__am-pm">{mid}</span>
+          <span className="highlight" />
+          <span className={'bar ' + (this.state.focused ? 'focused' : '')} />
+          {this.props.label && (
+            <label className={classNames('time-input__label label--focused')}>
+              {this.renderLabel()}
+            </label>
+          )}
         </div>
       </InputGroup>
     );

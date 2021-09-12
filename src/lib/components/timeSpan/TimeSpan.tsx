@@ -102,13 +102,7 @@ export class TimeSpanRaw extends BaseInput<
   }
 
   public render() {
-    const {
-      label,
-      timeSpan,
-      validUnits,
-      initialUnits,
-      units: _units,
-    } = this.props;
+    const { timeSpan, validUnits, initialUnits, units: _units } = this.props;
     const units = _units || this.getUnits(timeSpan, validUnits, initialUnits);
     const unitsArr = allUnits.filter(u => (units & u) !== 0).reverse();
     return (
@@ -125,7 +119,6 @@ export class TimeSpanRaw extends BaseInput<
           }
           ref={this.containerRef}
         >
-          {label && <div className="timeSpan-input__label">{label}</div>}
           {unitsArr.map(unit => (
             <div className="" key={unit}>
               <div className="timeSpan-input__arrows__container">
@@ -181,8 +174,16 @@ export class TimeSpanRaw extends BaseInput<
               {this.props.unitToString(unit)}
             </div>
           ))}
-
           {this.renderDefaultValidation()}
+          <span className="highlight" />
+          <span className={'bar ' + (this.state.focused ? 'focused' : '')} />
+          {this.props.label && (
+            <label
+              className={classNames('timeSpan-input__label label--focused')}
+            >
+              {this.renderLabel()}
+            </label>
+          )}
         </div>
       </InputGroup>
     );
