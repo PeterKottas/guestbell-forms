@@ -612,6 +612,14 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         timeChange={this.time2Changed}
                         label="With Min/Max"
                       />
+                      <Time
+                        max={time2Max}
+                        min={time2Min}
+                        touchOn={this.state.touchOn}
+                        time={this.state.time2}
+                        timeChange={this.time2Changed}
+                        label="With Min/Max"
+                      />
                       <TimeSpan
                         touchOn={this.state.touchOn}
                         timeSpan={this.state.timeSpan}
