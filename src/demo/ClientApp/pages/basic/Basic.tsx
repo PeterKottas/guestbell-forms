@@ -45,6 +45,7 @@ export interface BasicState {
   email: string;
   age: string;
   min1: string;
+  hideNumber: boolean;
   justNumber: number;
   checkbox1: boolean;
   checkbox2: boolean;
@@ -246,6 +247,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
     multipleReadonly: false,
     textAreaText: '',
     justNumber: 5,
+    hideNumber: false,
   };
 
   constructor(props: BasicProps) {
@@ -542,23 +544,34 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                       <Button onClick={() => this.setState({ justNumber: 5 })}>
                         Reset just number to 5
                       </Button>
-                      <Text
-                        touchOn={this.state.touchOn}
-                        validators={numberValidator}
-                        label={`Just number (required) - ${this.state.justNumber}`}
-                        number={this.state.justNumber}
-                        onNumberChange={this.justNumberChanged}
-                        title="Number"
-                        required={true}
+                      <Checkbox
+                        checked={this.state.hideNumber}
+                        onChecked={e =>
+                          this.setState({ hideNumber: e.target.checked })
+                        }
+                        label="Hide/show number inputs"
                       />
-                      <Text
-                        touchOn={this.state.touchOn}
-                        validators={numberValidator}
-                        label={`Just number - ${this.state.justNumber}`}
-                        number={this.state.justNumber}
-                        onNumberChange={this.justNumberChanged}
-                        title="Number"
-                      />
+                      {!this.state.hideNumber && (
+                        <>
+                          <Text
+                            touchOn={this.state.touchOn}
+                            validators={numberValidator}
+                            label={`Just number (required) - ${this.state.justNumber}`}
+                            number={this.state.justNumber}
+                            onNumberChange={this.justNumberChanged}
+                            title="Number"
+                            required={true}
+                          />
+                          <Text
+                            touchOn={this.state.touchOn}
+                            validators={numberValidator}
+                            label={`Just number - ${this.state.justNumber}`}
+                            number={this.state.justNumber}
+                            onNumberChange={this.justNumberChanged}
+                            title="Number"
+                          />
+                        </>
+                      )}
                       <Money
                         currencies={currencies1}
                         prices={this.state.prices1}
