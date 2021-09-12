@@ -1,13 +1,14 @@
 ﻿.timeSpan-input {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  max-width: 37.5rem;
   > div,
   > span {
     display: inline-block;
     position: relative;
     align-self: baseline;
   }
-  display: flex !important;
+  display: inline-flex !important;
   align-items: center;
   // border-bottom: none !important;
   width: initial !important;
