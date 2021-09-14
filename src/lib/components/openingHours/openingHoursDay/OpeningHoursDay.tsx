@@ -189,7 +189,7 @@ export class OpeningHoursDayRaw extends BaseInput<
                           ((index - 1) / 2).toString(),
                       })}
                       onClick={this.removeTimeClick(index)}
-                      className="openingHoursDay-input__button--remove mr-5 line-height--0"
+                      className="openingHoursDay-input__button--remove mr-3 line-height--0"
                       circular={true}
                       blank={true}
                       type="error"

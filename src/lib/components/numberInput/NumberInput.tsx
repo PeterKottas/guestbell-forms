@@ -46,7 +46,7 @@ export class NumberInputRaw extends BaseInput<
   }
 
   public render() {
-    const { label, unit } = this.props;
+    const { unit } = this.props;
     return (
       <InputGroup title={this.props.title}>
         <div
@@ -61,7 +61,6 @@ export class NumberInputRaw extends BaseInput<
           }
           ref={this.containerRef}
         >
-          {label && <div className="number-input__label">{label}</div>}
           <div className="">
             <div className="number-input__arrows__container">
               <button
@@ -111,6 +110,13 @@ export class NumberInputRaw extends BaseInput<
             {unit}
           </div>
           {this.renderDefaultValidation()}
+          <span className="highlight" />
+          <span className={'bar ' + (this.state.focused ? 'focused' : '')} />
+          {this.props.label && (
+            <label className={classNames('number-input__label label--focused')}>
+              {this.renderLabel()}
+            </label>
+          )}
         </div>
       </InputGroup>
     );
