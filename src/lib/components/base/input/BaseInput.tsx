@@ -9,6 +9,7 @@ import guid from '../../utils/Guid';
 import { FormContextProps } from '../../form/FormContext';
 import { shallowEqual } from '../../utils/ShallowEqual';
 import { Theme } from '../../../types/Theme';
+import classNames from 'classnames';
 
 export interface ComponentApi {
   focus: () => void;
@@ -345,7 +346,9 @@ export class BaseInput<
   protected renderLabel(touchable: boolean = false) {
     if (!this.props.tooltip || (this.props.tooltip && this.props.title)) {
       return (
-        <span className={'w-100' + (touchable ? '' : 'label--no-touch')}>
+        <span
+          className={classNames('w-100', { 'label--no-touch': !touchable })}
+        >
           {this.props.label}
         </span>
       );
