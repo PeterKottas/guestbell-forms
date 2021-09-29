@@ -974,8 +974,8 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
   private min1Changed = (e: React.ChangeEvent<HTMLInputElement>) =>
     this.setState({ min1: e.target.value });
 
-  private justNumberChanged = (number: number) =>
-    this.setState({ justNumber: number });
+  private justNumberChanged = (num: number) =>
+    this.setState({ justNumber: num });
 
   private ageChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
     this.setState({ age: e.target.value });

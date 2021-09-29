@@ -1,0 +1,37 @@
+.bookingCalendar {
+  display: flex;
+  flex-direction: column;
+}
+.bookingCalendar__laneContainer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.bookingCalendar__lane {
+  display: flex;
+  flex-direction: row;
+}
+.bookingCalendar__item {
+  background-color: wheat;
+}
+
+.bookingCalendar__renderItem {
+  padding: 0.5rem;
+}
+
+.bookingCalendar__grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.bookingCalendar__grid__item {
+  height: 100%;
+  width: 0.5px;
+  // transform: translateX(-50%);
+  background-color: black;
+  position: absolute;
+}

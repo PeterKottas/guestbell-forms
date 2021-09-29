@@ -20,3 +20,4 @@ export * from './components/textArea';
 export * from './components/time';
 export * from './components/timeSpan';
 export * from './components/themeProvider';
+export * from './components/bookingCalendar';

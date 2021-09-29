@@ -4,6 +4,7 @@ import ValidationPage from './pages/validationPage/ValidationPage';
 import Header from './components/header/Header';
 import { hot } from 'react-hot-loader';
 import { ThemeProvider } from '../../lib/index';
+import { Schedule } from './pages/schedule/Schedule';
 
 const App = () => (
   <div>
@@ -21,6 +22,7 @@ const App = () => (
         },
       }}
     >
+      {true && <Schedule />}
       {true && <Basic />}
       {false && <ValidationPage />}
     </ThemeProvider>
