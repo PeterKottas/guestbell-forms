@@ -183,7 +183,8 @@ export function calculateItemsDimensions<T extends BookingCalendarItemT>(
 export const generateControlItems = (
   from: Moment,
   till: Moment,
-  step: Duration
+  step: Duration,
+  startOfStep: Moment
 ) => {
   if (!from || !till || !step) {
     return [];
@@ -191,9 +192,18 @@ export const generateControlItems = (
   const steps = Math.ceil(
     (till.valueOf() - from.valueOf()) / step.asMilliseconds()
   );
+  let subtract =
+    (startOfStep.valueOf() - from.valueOf()) % step.asMilliseconds();
+  if (subtract > 0) {
+    subtract -= step.asMilliseconds();
+  }
   return new Array(steps).fill(0).map((_, index) => ({
-    from: moment(from).add(step.asMilliseconds() * index),
-    till: moment(from).add(step.asMilliseconds() * (index + 1)),
+    from: moment(from)
+      .add(subtract)
+      .add(step.asMilliseconds() * index),
+    till: moment(from)
+      .add(subtract)
+      .add(step.asMilliseconds() * (index + 1)),
   }));
 };
 

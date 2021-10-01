@@ -33,6 +33,7 @@ import {
   BookingCalendarDatePicker as DefaultBookingCalendarDatePicker,
   BookingCalendarDatePickerProps,
 } from './bookingCalendarDatePicker';
+import moment from 'moment';
 
 export interface BookingCalendarProps<
   T extends BookingCalendarItemT,
@@ -43,6 +44,7 @@ export interface BookingCalendarProps<
   till: Moment;
   onRangeChange?: (range: BookingCalendarDateRange) => void;
   onExtraBookingsChange?: (extraBookings: T[]) => void;
+  startOfStep?: Moment;
   step?: Duration;
   showGrid?: boolean;
   gridSubdivisions?: number;
@@ -70,6 +72,7 @@ export interface BookingCalendarProps<
 }
 
 const defaultStep = duration(1, 'day');
+const defaultStartOfStep = moment().startOf('day');
 
 export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
   props: BookingCalendarProps<T, TLaneData>
@@ -85,6 +88,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     onRangeChange,
     onExtraBookingsChange,
     step = defaultStep,
+    startOfStep = defaultStartOfStep,
     showGrid = true,
     gridSubdivisions = 1,
     lanesCount,
@@ -145,6 +149,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
                 till={till}
                 onRangeChange={onRangeChange}
                 step={step}
+                startOfStep={startOfStep}
               />
             </td>
           </tr>

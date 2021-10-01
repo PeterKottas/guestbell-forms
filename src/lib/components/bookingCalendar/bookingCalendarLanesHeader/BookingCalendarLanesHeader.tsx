@@ -12,6 +12,7 @@ export interface BookingCalendarLanesHeaderProps<
   T extends BookingCalendarItemT
 > extends BookingCalendarLanesHeaderClasses {
   step: Duration;
+  startOfStep: Moment;
   from: Moment;
   till: Moment;
   onRangeChange?: (range: BookingCalendarDateRange) => void;
@@ -20,15 +21,22 @@ export interface BookingCalendarLanesHeaderProps<
 export function BookingCalendarLanesHeader<T extends BookingCalendarItemT>(
   props: BookingCalendarLanesHeaderProps<T>
 ) {
-  const { className, laneClassName, step, from, till, onRangeChange } = props;
+  const {
+    className,
+    laneClassName,
+    step,
+    startOfStep,
+    from,
+    till,
+    onRangeChange,
+  } = props;
   if (!step || !from || !till) {
     return null;
   }
-  const items = React.useMemo(() => generateControlItems(from, till, step), [
-    from,
-    till,
-    step,
-  ]);
+  const items = React.useMemo(
+    () => generateControlItems(from, till, step, startOfStep),
+    [from, till, step, startOfStep]
+  );
   const BookingCalendarLanesHeaderRenderItem = React.useMemo(
     () => BookingCalendarLanesHeaderRenderItemFactory(onRangeChange),
     [onRangeChange]
