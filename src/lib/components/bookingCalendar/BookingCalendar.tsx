@@ -4,34 +4,50 @@ import {
   bookingCalendarDefaultClasses,
 } from './classes';
 import classNames from 'classnames';
-import { BookingCalendarItemT } from './common';
+import { BookingCalendarDateRange, BookingCalendarItemT } from './common';
 import {
   BookingCalendarControls as DefaultBookingCalendarControls,
   BookingCalendarControlsProps,
-  BookingCalendarDateRange,
 } from './bookingCalendarControls/BookingCalendarControls';
-import { splitBookingsToLanes } from './utils';
+import { LaneSourceData, splitBookingsToLanes } from './utils';
 import {
   BookingCalendarLane as DefaultBookingCalendarLane,
   BookingCalendarLaneProps,
 } from './bookingCalendarLane/BookingCalendarLane';
-import { Moment, Duration } from 'moment';
+import { Moment, Duration, duration } from 'moment';
 import { BookingCalendarItemProps } from './bookingCalendarItem';
 import { BookingCalendarRenderItemProps } from './bookingCalendarRenderItem';
 import {
   BookingCalendarGrid as DefaultBookingCalendarGrid,
   BookingCalendarGridProps,
 } from './bookingCalendarGrid/BookingCalendarGrid';
+import {
+  BookingCalendarLaneHeader as DefaultBookingCalendarLaneHeader,
+  BookingCalendarLaneHeaderProps,
+} from './bookingCalendarLaneHeader';
+import {
+  BookingCalendarLanesHeader as DefaultBookingCalendarLanesHeader,
+  BookingCalendarLanesHeaderProps,
+} from './bookingCalendarLanesHeader';
+import {
+  BookingCalendarDatePicker as DefaultBookingCalendarDatePicker,
+  BookingCalendarDatePickerProps,
+} from './bookingCalendarDatePicker';
 
-export interface BookingCalendarProps<T extends BookingCalendarItemT>
-  extends BookingCalendarClasses {
+export interface BookingCalendarProps<
+  T extends BookingCalendarItemT,
+  TLaneData
+> extends BookingCalendarClasses {
   bookings: T[];
   from: Moment;
   till: Moment;
   onRangeChange?: (range: BookingCalendarDateRange) => void;
+  onExtraBookingsChange?: (extraBookings: T[]) => void;
   step?: Duration;
   showGrid?: boolean;
   gridSubdivisions?: number;
+  lanesCount?: number;
+  lanesSource?: LaneSourceData<TLaneData>[];
 
   BookingCalendarItem?: React.ComponentType<BookingCalendarItemProps<T>>;
   BookingCalendarRenderItem?: React.ComponentType<
@@ -42,31 +58,59 @@ export interface BookingCalendarProps<T extends BookingCalendarItemT>
     BookingCalendarControlsProps<T>
   >;
   BookingCalendarGrid?: React.ComponentType<BookingCalendarGridProps>;
+  BookingCalendarLaneHeader?: React.ComponentType<
+    BookingCalendarLaneHeaderProps<TLaneData>
+  >;
+  BookingCalendarLanesHeader?: React.ComponentType<
+    BookingCalendarLanesHeaderProps<T>
+  >;
+  BookingCalendarDatePicker?: React.ComponentType<
+    BookingCalendarDatePickerProps<T>
+  >;
 }
 
-export function BookingCalendar<T extends BookingCalendarItemT>(
-  props: BookingCalendarProps<T>
+const defaultStep = duration(1, 'day');
+
+export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
+  props: BookingCalendarProps<T, TLaneData>
 ) {
   const {
     bookings,
     className,
-    laneContainerClassName,
+    laneTdClassName,
     controlsClasses,
+    tableClassName,
     from,
     till,
     onRangeChange,
-    step,
+    onExtraBookingsChange,
+    step = defaultStep,
     showGrid = true,
     gridSubdivisions = 1,
+    lanesCount,
+    lanesSource,
     BookingCalendarControls = DefaultBookingCalendarControls,
     BookingCalendarItem,
     BookingCalendarLane = DefaultBookingCalendarLane,
     BookingCalendarRenderItem,
     BookingCalendarGrid = DefaultBookingCalendarGrid,
+    BookingCalendarLaneHeader = DefaultBookingCalendarLaneHeader,
+    BookingCalendarLanesHeader = DefaultBookingCalendarLanesHeader,
+    BookingCalendarDatePicker = DefaultBookingCalendarDatePicker,
   } = props;
-  const splitBookings = React.useMemo(() => splitBookingsToLanes(bookings), [
-    bookings,
-  ]);
+  const { lanes, extraBookings } = React.useMemo(
+    () =>
+      splitBookingsToLanes<T, TLaneData>(
+        bookings,
+        from,
+        lanesCount,
+        lanesSource
+      ),
+    [bookings, from, lanesCount, lanesSource]
+  );
+  React.useEffect(() => {
+    onExtraBookingsChange?.(extraBookings);
+  }, [extraBookings]);
   return (
     <div
       className={classNames(bookingCalendarDefaultClasses.className, className)}
@@ -78,32 +122,69 @@ export function BookingCalendar<T extends BookingCalendarItemT>(
         onRangeChange={onRangeChange}
         step={step}
       />
-      <div
+      <table
         className={classNames(
-          bookingCalendarDefaultClasses.laneContainerClassName,
-          laneContainerClassName
+          bookingCalendarDefaultClasses.tableClassName,
+          tableClassName
         )}
       >
-        {showGrid && (
-          <BookingCalendarGrid
-            from={from}
-            till={till}
-            step={step}
-            subdivisions={gridSubdivisions}
-          />
-        )}
-        {splitBookings.map((lane, laneIndex) => (
-          <BookingCalendarLane
-            key={laneIndex}
-            laneIndex={laneIndex}
-            items={lane}
-            from={from}
-            till={till}
-            BookingCalendarItem={BookingCalendarItem}
-            BookingCalendarRenderItem={BookingCalendarRenderItem}
-          />
-        ))}
-      </div>
+        <thead>
+          <tr>
+            <td>
+              <BookingCalendarDatePicker
+                from={from}
+                till={till}
+                onRangeChange={onRangeChange}
+              />
+            </td>
+            <td>
+              <BookingCalendarLanesHeader<T>
+                {...controlsClasses}
+                from={from}
+                till={till}
+                onRangeChange={onRangeChange}
+                step={step}
+              />
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          {lanes.map((lane, laneIndex) => (
+            <tr key={laneIndex}>
+              <td>
+                <BookingCalendarLaneHeader<TLaneData>
+                  laneKey={lane.laneKey ?? laneIndex}
+                  data={lane.data}
+                />
+              </td>
+              <td
+                className={classNames(
+                  bookingCalendarDefaultClasses.laneTdClassName,
+                  laneTdClassName
+                )}
+              >
+                {showGrid && (
+                  <BookingCalendarGrid
+                    from={from}
+                    till={till}
+                    step={step}
+                    subdivisions={gridSubdivisions}
+                  />
+                )}
+                <BookingCalendarLane
+                  laneIndex={laneIndex}
+                  items={lane.items}
+                  from={from}
+                  till={till}
+                  BookingCalendarItem={BookingCalendarItem}
+                  BookingCalendarRenderItem={BookingCalendarRenderItem}
+                  step={step}
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

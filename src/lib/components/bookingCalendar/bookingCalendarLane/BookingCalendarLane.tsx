@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { Moment } from 'moment';
+import { Duration, Moment } from 'moment';
 import * as React from 'react';
 import {
   BookingCalendarItem as DefaultBookingCalendarItem,
@@ -19,6 +19,7 @@ export interface BookingCalendarLaneProps<T extends BookingCalendarItemT>
   laneIndex: number;
   from: Moment;
   till: Moment;
+  step: Duration;
   BookingCalendarItem?: React.ComponentType<BookingCalendarItemProps<T>>;
   BookingCalendarRenderItem?: React.ComponentType<
     BookingCalendarRenderItemProps<T>
@@ -34,6 +35,7 @@ export function BookingCalendarLane<T extends BookingCalendarItemT>(
     laneIndex,
     from,
     till,
+    step,
     BookingCalendarItem = DefaultBookingCalendarItem,
     BookingCalendarRenderItem,
   } = props;
@@ -54,6 +56,9 @@ export function BookingCalendarLane<T extends BookingCalendarItemT>(
           key={itemIndex}
           itemIndex={itemIndex}
           laneIndex={laneIndex}
+          from={from}
+          till={till}
+          step={step}
           {...item}
         />
       ))}

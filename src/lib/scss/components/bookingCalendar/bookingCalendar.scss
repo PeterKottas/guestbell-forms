@@ -2,21 +2,96 @@
   display: flex;
   flex-direction: column;
 }
-.bookingCalendar__laneContainer {
-  display: flex;
-  flex-direction: column;
+.bookingCalendar__table {
+  // To make sure height 100% works in td-s
+  height: 100%;
+  table-layout: auto;
+  > tbody,
+  > thead {
+    & > tr > td {
+      padding: 0;
+    }
+  }
+  > tbody,
+  > thead {
+    & > tr > td:first-child {
+      width: 1%;
+    }
+  }
+  > tbody {
+    & > tr > td {
+      padding-top: 1rem;
+    }
+  }
+  > tbody {
+    & > tr:last-of-type > td {
+      padding-bottom: 1rem;
+    }
+  }
+}
+.bookingCalendar__laneTd {
   position: relative;
 }
 .bookingCalendar__lane {
   display: flex;
   flex-direction: row;
+  z-index: 1;
+  min-height: 3rem;
+}
+.bookingCalendar__laneHeader {
+  height: 100%;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
 }
 .bookingCalendar__item {
-  background-color: wheat;
+  position: relative;
+  background-color: rgba($primary-color, 0.9);
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.15),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.12), 0px 3px 1px -2px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
 }
 
 .bookingCalendar__renderItem {
   padding: 0.5rem;
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 0.25rem;
+    display: none;
+  }
+}
+
+.bookingCalendar__renderItem--cutStart {
+  padding-left: 1rem;
+  &::before {
+    display: block;
+    left: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      $primary-color,
+      $primary-color 5px,
+      $input-divider-color 5px,
+      $input-divider-color 10px
+    );
+  }
+}
+.bookingCalendar__renderItem--cutEnd {
+  padding-right: 1rem;
+  &::after {
+    display: block;
+    right: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      $primary-color,
+      $primary-color 5px,
+      $input-divider-color 5px,
+      $input-divider-color 10px
+    );
+  }
 }
 
 .bookingCalendar__grid {
@@ -34,4 +109,55 @@
   // transform: translateX(-50%);
   background-color: black;
   position: absolute;
+}
+
+.bookingCalendar__lanesHeader {
+  /*box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.15),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.12), 0px 3px 1px -2px rgba(0, 0, 0, 0.08);*/
+  .bookingCalendar__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 1px 0 black;
+    &:last-of-type {
+      box-shadow: none;
+    }
+  }
+  .bookingCalendar__renderItem {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+  }
+  .bookingCalendar__lanesHeader__renderItem__button {
+    white-space: normal;
+    height: 100%;
+    width: 100%;
+    text-align: end;
+    text-transform: none;
+  }
+  .bookingCalendar__lanesHeader__renderItem__button__mutedText {
+    opacity: 0.8;
+  }
+}
+
+.bookingCalendar__controls {
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  .bookingCalendar__controls__monthLabel {
+    font-size: 130%;
+    font-weight: bold;
+  }
+  .bookingCalendar__controls__buttonsContainer {
+    margin-left: auto;
+  }
+}
+
+.bookingCalendar__datePicker {
+  display: flex;
+  height: 100%;
+  .bookingCalendar__datePicker__button {
+    height: 100%;
+    width: 100%;
+  }
 }

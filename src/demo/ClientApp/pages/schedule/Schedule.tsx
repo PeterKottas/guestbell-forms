@@ -1,6 +1,7 @@
 import moment, { duration, Moment } from 'moment';
 import * as React from 'react';
-import { BookingCalendar } from '../../../../lib/index';
+import { itemsOverlap } from '../../../../lib/components/bookingCalendar/utils';
+import { BookingCalendar, BookingCalendarItemT } from '../../../../lib/index';
 
 function randomIntFromInterval(min: number, max: number) {
   // min and max included
@@ -20,30 +21,47 @@ const generateBookingItemsBetweenDates = (
     return {
       from: moment(_from),
       till: moment(_from).add(_width, 'ms'),
-    };
+      // laneKey: randomIntFromInterval(1, 30),
+    } as BookingCalendarItemT;
   });
 };
 
 export const Schedule = () => {
-  const [from] = React.useState(moment().startOf('day'));
-  const [till] = React.useState(
-    moment()
+  const [{ from, till }, setRange] = React.useState({
+    from: moment()
       .startOf('day')
-      .add(7, 'days')
+      .subtract(0, 'day'),
+    till: moment()
+      .startOf('day')
+      .add(7, 'days'),
+  });
+
+  const bookings = React.useMemo(
+    () =>
+      generateBookingItemsBetweenDates(
+        from.clone().subtract(10, 'day'),
+        till.clone().add(10, 'day')
+      ),
+    []
   );
   const items = React.useMemo(
-    () => generateBookingItemsBetweenDates(from, till),
-    [from, till]
+    () => bookings.filter(b => itemsOverlap(b, { from, till })),
+    [from, till, bookings]
   );
   return (
-    <>
+    <div className="">
       <BookingCalendar
         bookings={items}
         from={from}
         till={till}
         step={duration(1, 'day')}
         gridSubdivisions={4}
+        onRangeChange={setRange}
+        // lanesCount={3}
+        /*lanesSource={new Array(30)
+          .fill(0)
+          .map((_, index) => ({ laneKey: index, data: { data: 'test' } }))}*/
       />
-    </>
+    </div>
   );
 };

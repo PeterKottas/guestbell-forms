@@ -84,7 +84,7 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
     circular: false,
     noRipples: false,
     small: false,
-    disableAfterClickMs: 500,
+    disableAfterClickMs: 100,
     disableAfterClick: false,
     Component: DefaultButtonComponent,
     buttonProps: {

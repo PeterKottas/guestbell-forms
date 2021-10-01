@@ -2,11 +2,13 @@ import { BookingCalendarControlsClasses } from './bookingCalendarControls/classe
 
 export interface BookingCalendarClasses {
   className?: string;
-  laneContainerClassName?: string;
+  laneTdClassName?: string;
+  tableClassName?: string;
   controlsClasses?: BookingCalendarControlsClasses;
 }
 
 export const bookingCalendarDefaultClasses: BookingCalendarClasses = {
   className: 'bookingCalendar',
-  laneContainerClassName: 'bookingCalendar__laneContainer',
+  laneTdClassName: 'bookingCalendar__laneTd',
+  tableClassName: 'bookingCalendar__table',
 };

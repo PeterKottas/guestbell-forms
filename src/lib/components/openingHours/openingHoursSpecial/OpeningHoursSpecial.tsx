@@ -3,11 +3,12 @@ import * as DateIcon from 'material-design-icons/action/svg/production/ic_event_
 
 // Libs
 import * as React from 'react';
-try {
+/*try {
   var DatePicker = require('react-datepicker').default;
 } catch {
   DatePicker = undefined;
-}
+}*/
+import DatePicker from 'react-datepicker';
 
 // Misc
 import OpeningHoursUtil, {
@@ -162,11 +163,13 @@ export class OpeningHoursSpecialRaw extends BaseInput<
                 customInput={
                   <DateInput>{!day.date && translations.chooseDate}</DateInput>
                 }
-                placeholder={this.props.placeholder}
+                // placeholder={this.props.placeholder}
                 selected={day.date}
                 dateFormat={DAY_FORMAT}
                 onChange={this.dateChanged(index, day)}
-                excludeDates={this.props.days.filter(d => d.date)}
+                excludeDates={this.props.days
+                  .filter(d => d.date)
+                  .map(a => a.date)}
                 withPortal={true}
                 minDate={new Date()}
               />
