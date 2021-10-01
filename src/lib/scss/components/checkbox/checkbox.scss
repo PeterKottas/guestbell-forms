@@ -59,6 +59,7 @@
       border: 2px solid $primary-color;
       border-top-style: none;
       border-right-style: none;
+      pointer-events: none;
     }
     &:checked {
       &:before {
