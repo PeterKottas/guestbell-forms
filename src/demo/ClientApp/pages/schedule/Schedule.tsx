@@ -11,7 +11,7 @@ function randomIntFromInterval(min: number, max: number) {
 const generateBookingItemsBetweenDates = (
   from: Moment,
   till: Moment,
-  count = 50
+  count = 1
 ) => {
   const width = till.valueOf() - from.valueOf();
   const startMs = from.valueOf();

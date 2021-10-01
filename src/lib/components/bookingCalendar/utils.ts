@@ -80,7 +80,7 @@ export function splitBookingsToLanes<T extends BookingCalendarItemT, B>(
           }
           return dist;
         });
-        const _min = Math.min(...distances.filter(a => a > 0));
+        const _min = Math.min(...distances.filter(a => a >= 0));
         if (_min < min) {
           bookingIndex = distances.indexOf(_min);
           laneIndex = index;
