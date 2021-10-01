@@ -188,7 +188,7 @@ export const generateControlItems = (
   if (!from || !till || !step) {
     return [];
   }
-  const steps = Math.floor(
+  const steps = Math.ceil(
     (till.valueOf() - from.valueOf()) / step.asMilliseconds()
   );
   return new Array(steps).fill(0).map((_, index) => ({
@@ -207,14 +207,13 @@ export const generateGridItems = (
     return [];
   }
   const steps =
-    Math.floor((till.valueOf() - from.valueOf()) / step.asMilliseconds()) *
-      subdivisions -
-    1;
+    Math.floor(
+      ((till.valueOf() - from.valueOf()) / step.asMilliseconds()) * subdivisions
+    ) + 1;
   const width = till.valueOf() - from.valueOf();
   return new Array(steps)
     .fill(0)
     .map(
-      (_, index) =>
-        ((step.asMilliseconds() / subdivisions) * (index + 1)) / width
+      (_, index) => ((step.asMilliseconds() / subdivisions) * index) / width
     );
 };

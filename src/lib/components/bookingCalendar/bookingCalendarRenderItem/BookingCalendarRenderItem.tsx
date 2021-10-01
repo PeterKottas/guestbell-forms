@@ -19,17 +19,14 @@ export function BookingCalendarRenderItem<T extends BookingCalendarItemT>(
     className,
     laneIndex,
     itemIndex,
-    from,
-    till,
-    step,
     width,
     endIsCut,
     startIsCut,
   } = props;
-  const stepWidth = React.useMemo(
+  /*const stepWidth = React.useMemo(
     () => step.asMilliseconds() / till.diff(from),
     [step, from, till]
-  );
+  );*/
   return item ? (
     <div
       className={classNames(
@@ -41,7 +38,7 @@ export function BookingCalendarRenderItem<T extends BookingCalendarItemT>(
         }
       )}
     >
-      {stepWidth <= width && (
+      {width > 0.1 && (
         <>
           {laneIndex}-{itemIndex}
           <br />

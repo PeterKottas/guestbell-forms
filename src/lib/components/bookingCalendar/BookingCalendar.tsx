@@ -117,6 +117,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     >
       <BookingCalendarControls<T>
         {...controlsClasses}
+        items={bookings}
         from={from}
         till={till}
         onRangeChange={onRangeChange}

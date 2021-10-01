@@ -9,9 +9,12 @@ import * as LeftArrowLongIcon from 'material-design-icons/navigation/svg/product
 import * as LeftArrowIcon from 'material-design-icons/hardware/svg/production/ic_keyboard_arrow_left_24px.svg';
 import * as RightArrowLongIcon from 'material-design-icons/navigation/svg/production/ic_arrow_forward_24px.svg';
 import * as RightArrowIcon from 'material-design-icons/hardware/svg/production/ic_keyboard_arrow_right_24px.svg';
+import * as UnfoldLessIcon from 'material-design-icons/navigation/svg/production/ic_unfold_less_24px.svg';
+import moment from 'moment';
 
 export interface BookingCalendarControlsProps<T extends BookingCalendarItemT>
   extends BookingCalendarControlsClasses {
+  items: T[];
   step: Duration;
   from: Moment;
   till: Moment;
@@ -25,10 +28,12 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
     className,
     monthLabelClassName,
     buttonsContainerClassName,
+    zoomBookingsButtonClassName,
     step,
     from,
     till,
     onRangeChange,
+    items,
   } = props;
   if (!step || !from || !till) {
     return null;
@@ -57,6 +62,18 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
     onStepFactory,
     step,
   ]);
+  const onZoomBookingsClick = React.useCallback(() => {
+    const minFrom = moment(
+      Math.min(...items?.map(a => a.from.valueOf())) ?? from?.valueOf()
+    );
+    const maxTill = moment(
+      Math.max(...items?.map(a => a.till.valueOf())) ?? till?.valueOf()
+    );
+    onRangeChange({
+      from: minFrom,
+      till: maxTill,
+    });
+  }, [from, till, items]);
   return (
     <div
       className={classNames(
@@ -90,6 +107,17 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
         </Button>
         <Button noShadow={true} onClick={onBigStepRightClick}>
           <RightArrowLongIcon />
+        </Button>
+        <Button
+          className={classNames(
+            bookingCalendarControlsDefaultClasses.zoomBookingsButtonClassName,
+            zoomBookingsButtonClassName
+          )}
+          noShadow={true}
+          disabled={!items?.length}
+          onClick={onZoomBookingsClick}
+        >
+          <UnfoldLessIcon />
         </Button>
       </div>
     </div>
