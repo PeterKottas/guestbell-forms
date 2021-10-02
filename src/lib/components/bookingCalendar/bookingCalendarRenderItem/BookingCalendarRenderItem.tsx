@@ -11,7 +11,7 @@ export interface BookingCalendarRenderItemProps<T extends BookingCalendarItemT>
   extends BookingCalendarItemProps<T>,
     BookingCalendarRenderItemClasses {
   alwaysShowContent?: boolean;
-  children?: JSX.Element;
+  children?: React.ReactNode;
 }
 
 export function BookingCalendarRenderItem<T extends BookingCalendarItemT>(
