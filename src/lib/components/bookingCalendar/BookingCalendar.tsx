@@ -43,7 +43,6 @@ export interface BookingCalendarProps<
   from: Moment;
   till: Moment;
   onRangeChange?: (range: BookingCalendarDateRange) => void;
-  onExtraBookingsChange?: (extraBookings: T[]) => void;
   startOfStep?: Moment;
   step?: Duration;
   showGrid?: boolean;
@@ -86,7 +85,6 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     from,
     till,
     onRangeChange,
-    onExtraBookingsChange,
     step = defaultStep,
     startOfStep = defaultStartOfStep,
     showGrid = true,
@@ -102,7 +100,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     BookingCalendarLanesHeader = DefaultBookingCalendarLanesHeader,
     BookingCalendarDatePicker = DefaultBookingCalendarDatePicker,
   } = props;
-  const { lanes, extraBookings } = React.useMemo(
+  const lanes = React.useMemo(
     () =>
       splitBookingsToLanes<T, TLaneData>(
         bookings,
@@ -112,9 +110,6 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
       ),
     [bookings, from, minLanesCount, lanesSource]
   );
-  React.useEffect(() => {
-    onExtraBookingsChange?.(extraBookings);
-  }, [extraBookings]);
   return (
     <div
       className={classNames(bookingCalendarDefaultClasses.className, className)}

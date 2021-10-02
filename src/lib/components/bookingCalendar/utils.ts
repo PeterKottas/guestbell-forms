@@ -45,10 +45,9 @@ export function splitBookingsToLanes<T extends BookingCalendarItemT, TLaneData>(
   lanesSource: LaneSourceData<T, TLaneData>[] = []
 ) {
   if (!bookings) {
-    return { lanes: [], extraBookings: [] };
+    return [];
   }
   let lanes: LaneData<T, TLaneData>[] = [];
-  let extraBookings: (T & BookingCalendarItemWithOriginalIndexT)[] = [];
   if (lanesSource?.length) {
     lanes = lanesSource.map(source => ({
       ...source,
@@ -106,16 +105,13 @@ export function splitBookingsToLanes<T extends BookingCalendarItemT, TLaneData>(
           ...remainingBookings[bookingIndex],
         });
         remainingBookings.splice(bookingIndex, 1);
-      } else if (!minLanesCount) {
+      } else {
         lanes = lanes.concat({
           items: [{ ...remainingBookings[0] }],
           laneKey: lanes.length,
           data: undefined,
         });
         remainingBookings.shift();
-      } else {
-        // lanes = lanes.concat([[{ ...remainingBookings[0] }]]);
-        extraBookings = extraBookings.concat(remainingBookings.shift());
       }
     }
     // Naive solution that is much less computationally intensive but yields more lanes than necessary
@@ -138,7 +134,6 @@ export function splitBookingsToLanes<T extends BookingCalendarItemT, TLaneData>(
       (a, b) => a.from.valueOf() - b.from.valueOf()
     );
   }
-  lanes = lanes.sort((a, b) => a.laneKey - b.laneKey);
   if (lanes.length < minLanesCount) {
     lanes = lanes.concat(
       new Array<LaneData<T, TLaneData>>(minLanesCount - lanes.length)
@@ -150,7 +145,8 @@ export function splitBookingsToLanes<T extends BookingCalendarItemT, TLaneData>(
         }))
     );
   }
-  return { lanes, extraBookings };
+  lanes = lanes.sort((a, b) => a.laneKey - b.laneKey);
+  return lanes;
 }
 
 export function itemsOverlap<T extends BookingCalendarItemT>(a: T, b: T) {
