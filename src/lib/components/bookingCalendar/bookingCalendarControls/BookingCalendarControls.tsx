@@ -71,22 +71,30 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
     onStepFactory,
     step,
   ]);
+  const filteredItems = React.useMemo(
+    () => items?.filter(filterBookingsToZoom),
+    [filterBookingsToZoom, items]
+  );
   const onZoomBookingsClick = React.useCallback(() => {
     const minFrom = moment(
       Math.min(
-        ...items?.filter(filterBookingsToZoom).map(a => a.from.valueOf())
+        ...filteredItems
+          ?.filter(filterBookingsToZoom)
+          .map(a => a.from.valueOf())
       ) ?? from?.valueOf()
     );
     const maxTill = moment(
       Math.max(
-        ...items?.filter(filterBookingsToZoom).map(a => a.till.valueOf())
+        ...filteredItems
+          ?.filter(filterBookingsToZoom)
+          .map(a => a.till.valueOf())
       ) ?? till?.valueOf()
     );
     onRangeChange({
       from: minFrom,
       till: maxTill,
     });
-  }, [from, till, items, filterBookingsToZoom]);
+  }, [from, till, filteredItems]);
   return (
     <div
       className={classNames(
@@ -155,7 +163,7 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
             zoomBookingsButtonClassName
           )}
           noShadow={true}
-          disabled={!items?.length}
+          disabled={!filteredItems?.length}
           onClick={onZoomBookingsClick}
         >
           <UnfoldLessIcon />
