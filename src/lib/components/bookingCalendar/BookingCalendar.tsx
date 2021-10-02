@@ -49,6 +49,7 @@ export interface BookingCalendarProps<
   gridSubdivisions?: number;
   minLanesCount?: number;
   lanesSource?: LaneSourceData<T, TLaneData>[];
+  filterBookingsToZoom?: (booking: T) => boolean;
 
   BookingCalendarItem?: React.ComponentType<BookingCalendarItemProps<T>>;
   BookingCalendarRenderItem?: React.ComponentType<
@@ -91,6 +92,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     gridSubdivisions = 1,
     minLanesCount,
     lanesSource,
+    filterBookingsToZoom,
     BookingCalendarControls = DefaultBookingCalendarControls,
     BookingCalendarItem,
     BookingCalendarLane = DefaultBookingCalendarLane,
@@ -121,6 +123,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
         till={till}
         onRangeChange={onRangeChange}
         step={step}
+        filterBookingsToZoom={filterBookingsToZoom}
       />
       <table
         className={classNames(

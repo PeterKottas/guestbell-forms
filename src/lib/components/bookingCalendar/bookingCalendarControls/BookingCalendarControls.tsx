@@ -19,6 +19,7 @@ export interface BookingCalendarControlsProps<T extends BookingCalendarItemT>
   from: Moment;
   till: Moment;
   onRangeChange?: (range: BookingCalendarDateRange) => void;
+  filterBookingsToZoom?: (booking: T) => boolean;
 }
 
 export function BookingCalendarControls<T extends BookingCalendarItemT>(
@@ -34,6 +35,7 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
     till,
     onRangeChange,
     items,
+    filterBookingsToZoom = () => true,
   } = props;
   if (!step || !from || !till) {
     return null;
@@ -64,10 +66,10 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
   ]);
   const onZoomBookingsClick = React.useCallback(() => {
     const minFrom = moment(
-      Math.min(...items?.map(a => a.from.valueOf())) ?? from?.valueOf()
+      Math.min(...items?.filter(filterBookingsToZoom).map(a => a.from.valueOf())) ?? from?.valueOf()
     );
     const maxTill = moment(
-      Math.max(...items?.map(a => a.till.valueOf())) ?? till?.valueOf()
+      Math.max(...items?.filter(filterBookingsToZoom).map(a => a.till.valueOf())) ?? till?.valueOf()
     );
     onRangeChange({
       from: minFrom,
