@@ -19,13 +19,16 @@
     }
   }
   > tbody {
-    & > tr > td {
+    & > tr.bookingCalendar__dataLaneTr > td {
       padding-top: 1rem;
     }
   }
-  > tbody {
-    & > tr:last-of-type > td {
+  .bookingCalendar__dataLaneTr--last {
+    > td {
       padding-bottom: 1rem;
+    }
+    .bookingCalendar__laneTd {
+      border-bottom: 1px solid $input-border-color;
     }
   }
 }
@@ -175,3 +178,21 @@
     width: 100%;
   }
 }
+
+.bookingCalendar__timeAxis {
+  padding-top: 0.5rem;
+  width: 100%;
+  overflow: visible;
+  svg {
+    overflow: visible;
+  }
+  text {
+    // text-anchor: middle;
+  }
+}
+
+/*.bookingCalendar__timeAxis__item {
+  position: absolute;
+  display: inline-block;
+  transform: rotate(75deg);
+}*/

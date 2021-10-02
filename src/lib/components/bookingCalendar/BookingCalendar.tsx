@@ -35,6 +35,7 @@ import {
 } from './bookingCalendarDatePicker';
 import moment from 'moment';
 import { ZoomLevel } from '.';
+import { BookingCalendarTimeAxis } from './bookingCalendarTimeAxis/BookingCalendarTimeAxis';
 
 export interface BookingCalendarProps<
   T extends BookingCalendarItemT,
@@ -84,6 +85,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     bookings,
     className,
     laneTdClassName,
+    dataLaneTrClassName,
     controlsClasses,
     tableClassName,
     from,
@@ -164,7 +166,18 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
             const LaneBookingCalendarLane =
               lane.BookingCalendarLane ?? BookingCalendarLane;
             return (
-              <tr key={laneIndex} className={classNames(lane.rowClassName)}>
+              <tr
+                key={laneIndex}
+                className={classNames(
+                  bookingCalendarDefaultClasses.dataLaneTrClassName,
+                  dataLaneTrClassName,
+                  lane.rowClassName,
+                  {
+                    [`${bookingCalendarDefaultClasses.dataLaneTrClassName}--last`]:
+                      laneIndex === lanes.length - 1,
+                  }
+                )}
+              >
                 <td>
                   <LaneBookingCalendarLaneHeader<TLaneData>
                     laneKey={lane.laneKey ?? laneIndex}
@@ -203,6 +216,17 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
               </tr>
             );
           })}
+          <tr>
+            <td />
+            <td>
+              <BookingCalendarTimeAxis
+                from={from}
+                till={till}
+                step={step}
+                subdivisions={gridSubdivisions}
+              />
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>

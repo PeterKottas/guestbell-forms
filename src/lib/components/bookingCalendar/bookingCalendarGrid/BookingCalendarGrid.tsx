@@ -43,7 +43,7 @@ export function BookingCalendarGrid(props: BookingCalendarGridProps) {
           key={key}
           style={{
             left: `${item * 100}%`,
-            opacity: (key + 1) % subdivisions === 0 ? 0.4 : 0.2,
+            opacity: key % subdivisions === 0 ? 0.4 : 0.2,
           }}
         />
       ))}
