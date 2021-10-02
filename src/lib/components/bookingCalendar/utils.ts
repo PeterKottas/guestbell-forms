@@ -67,9 +67,7 @@ export function splitBookingsToLanes<T extends BookingCalendarItemT, TLaneData>(
     lanes = Object.keys(grouped).map(key => ({
       laneKey: Number(key),
       items: grouped[key],
-      data: lanesSource?.find(a => a.laneKey === Number(key))?.data,
-      rowClassName: lanesSource?.find(a => a.laneKey === Number(key))
-        ?.rowClassName,
+      ...lanesSource?.find(a => a.laneKey === Number(key)),
     }));
     const missingLanes = lanesSource?.filter(
       a => !lanes.some(l => l.laneKey === a.laneKey)
