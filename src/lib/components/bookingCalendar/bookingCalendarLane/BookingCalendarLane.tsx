@@ -50,18 +50,20 @@ export function BookingCalendarLane<T extends BookingCalendarItemT>(
         className
       )}
     >
-      {calculatedItems?.map((item, itemIndex) => (
-        <BookingCalendarItem
-          BookingCalendarRenderItem={BookingCalendarRenderItem}
-          key={itemIndex}
-          itemIndex={itemIndex}
-          laneIndex={laneIndex}
-          from={from}
-          till={till}
-          step={step}
-          {...item}
-        />
-      ))}
+      {calculatedItems?.map((item, itemIndex) =>
+        item.width > 0 ? (
+          <BookingCalendarItem
+            BookingCalendarRenderItem={BookingCalendarRenderItem}
+            key={itemIndex}
+            itemIndex={itemIndex}
+            laneIndex={laneIndex}
+            from={from}
+            till={till}
+            step={step}
+            {...item}
+          />
+        ) : null
+      )}
     </div>
   );
 }
