@@ -61,13 +61,15 @@ export const Schedule = () => {
         gridSubdivisions={4}
         onRangeChange={setRange}
         // lanesCount={3}
-        lanesSource={new Array(3)
-          .fill(0)
-          .map((_, index) => ({
-            laneKey: index,
-            data: { data: 'test' },
-            rowClassName: 'test',
-          }))}
+        lanesSource={new Array(3).fill(0).map((_, index) => ({
+          laneKey: index,
+          data: { data: 'test' },
+          rowClassName: 'test',
+        }))}
+        zoomLevels={[
+          { step: duration(1, 'day'), label: 'Day' },
+          { step: duration(1, 'week'), label: 'Week' },
+        ]}
       />
     </div>
   );

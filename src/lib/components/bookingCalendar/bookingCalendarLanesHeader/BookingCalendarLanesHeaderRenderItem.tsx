@@ -34,8 +34,8 @@ export const BookingCalendarLanesHeaderRenderItemFactory = (
               {item.from.format('ddd, Do')}
               <br />
               <span className="bookingCalendar__lanesHeader__renderItem__button__mutedText bookingCalendar__lanesHeader__renderItem__button__mutedText--split">
-                <span>{realFrom.format('M/D H:mm')}</span>
-                <span>{realTill.format('M/D H:mm')}</span>
+                <span>{startIsCut && realFrom.format('M/D H:mm')}</span>
+                <span>{endIsCut && realTill.format('M/D H:mm')}</span>
               </span>
             </>
           ) : (

@@ -1,6 +1,10 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import { BookingCalendarDateRange, BookingCalendarItemT } from '../common';
+import {
+  BookingCalendarDateRange,
+  BookingCalendarItemT,
+  ZoomLevel,
+} from '../common';
 import { duration, Duration, Moment } from 'moment';
 import { BookingCalendarControlsClasses } from './classes';
 import { bookingCalendarControlsDefaultClasses } from '.';
@@ -18,6 +22,7 @@ export interface BookingCalendarControlsProps<T extends BookingCalendarItemT>
   step: Duration;
   from: Moment;
   till: Moment;
+  zoomLevels?: ZoomLevel[];
   onRangeChange?: (range: BookingCalendarDateRange) => void;
   filterBookingsToZoom?: (booking: T) => boolean;
 }
@@ -30,6 +35,8 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
     monthLabelClassName,
     buttonsContainerClassName,
     zoomBookingsButtonClassName,
+    zoomLevelsContainerClassName,
+    zoomLevels,
     step,
     from,
     till,
@@ -95,7 +102,35 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
       >
         {from.format('MMMM')}, {from.format('YYYY')}
       </div>
-      <div></div>
+      {zoomLevels?.length > 0 && (
+        <div
+          className={classNames(
+            bookingCalendarControlsDefaultClasses.zoomLevelsContainerClassName,
+            zoomLevelsContainerClassName
+          )}
+        >
+          {zoomLevels.map((level, index) => (
+            <Button
+              type={
+                till.valueOf() - from.valueOf() === level.step.asMilliseconds()
+                  ? 'primary'
+                  : undefined
+              }
+              // blank={true}
+              noShadow={true}
+              key={index}
+              onClick={() =>
+                onRangeChange({
+                  from: from,
+                  till: moment(from).add(level.step),
+                })
+              }
+            >
+              {level.label}
+            </Button>
+          ))}
+        </div>
+      )}
       <div
         className={classNames(
           bookingCalendarControlsDefaultClasses.buttonsContainerClassName,

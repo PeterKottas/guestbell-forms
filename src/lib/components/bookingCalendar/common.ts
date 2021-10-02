@@ -1,4 +1,4 @@
-import { Moment } from 'moment';
+import { Moment, Duration } from 'moment';
 
 export interface BookingCalendarItemT {
   from: Moment;
@@ -16,4 +16,9 @@ export interface BookingCalendarItemWithOriginalIndexT {
 export interface BookingCalendarDateRange {
   from: Moment;
   till: Moment;
+}
+
+export interface ZoomLevel {
+  step: Duration;
+  label: React.ReactNode;
 }

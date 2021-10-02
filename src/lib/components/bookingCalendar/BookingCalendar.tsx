@@ -34,6 +34,7 @@ import {
   BookingCalendarDatePickerProps,
 } from './bookingCalendarDatePicker';
 import moment from 'moment';
+import { ZoomLevel } from '.';
 
 export interface BookingCalendarProps<
   T extends BookingCalendarItemT,
@@ -49,6 +50,8 @@ export interface BookingCalendarProps<
   gridSubdivisions?: number;
   minLanesCount?: number;
   lanesSource?: LaneSourceData<T, TLaneData>[];
+
+  zoomLevels?: ZoomLevel[];
   filterBookingsToZoom?: (booking: T) => boolean;
 
   BookingCalendarItem?: React.ComponentType<BookingCalendarItemProps<T>>;
@@ -93,6 +96,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     minLanesCount,
     lanesSource,
     filterBookingsToZoom,
+    zoomLevels,
     BookingCalendarControls = DefaultBookingCalendarControls,
     BookingCalendarItem,
     BookingCalendarLane = DefaultBookingCalendarLane,
@@ -124,6 +128,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
         onRangeChange={onRangeChange}
         step={step}
         filterBookingsToZoom={filterBookingsToZoom}
+        zoomLevels={zoomLevels}
       />
       <table
         className={classNames(
