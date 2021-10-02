@@ -84,6 +84,9 @@ export function splitBookingsToLanes<T extends BookingCalendarItemT, TLaneData>(
       let bookingIndex = -1;
       let laneIndex = -1;
       lanes.forEach((lane, index) => {
+        if (lanesSource?.some(l => l.laneKey === lane.laneKey)) {
+          return;
+        }
         const lastTill = lane.items[lane.items.length - 1]?.till ?? from;
         const distances = remainingBookings.map(booking => {
           const dist = booking.from.diff(lastTill);
