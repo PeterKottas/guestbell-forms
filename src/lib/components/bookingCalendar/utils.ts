@@ -159,20 +159,24 @@ export function calculateItemsDimensions<T extends BookingCalendarItemT>(
     ? items?.map(item => {
         const startIsCut = item.from.valueOf() < startMs;
         const realStart = (item.from.valueOf() - startMs) / widthMs;
+        const realFrom = startIsCut ? moment(startMs) : moment(item.from);
         const start = startIsCut ? 0 : realStart;
         const endIsCut = item.till.valueOf() > endMs;
         const realEnd = (item.till.valueOf() - startMs) / widthMs;
         const end = endIsCut ? (endMs - startMs) / widthMs : realEnd;
+        const realTill = endIsCut ? moment(endMs) : moment(item.till);
         const marginStart = start - lastEnd;
         lastEnd = (item.till.valueOf() - startMs) / widthMs;
         return {
           item,
           start,
           realStart,
+          realFrom,
           startIsCut,
           width: end - start,
           end,
           realEnd,
+          realTill,
           endIsCut,
           marginStart,
         };
@@ -189,13 +193,16 @@ export const generateControlItems = (
   if (!from || !till || !step) {
     return [];
   }
-  const steps = Math.ceil(
+  let steps = Math.ceil(
     (till.valueOf() - from.valueOf()) / step.asMilliseconds()
   );
   let subtract =
     (startOfStep.valueOf() - from.valueOf()) % step.asMilliseconds();
   if (subtract > 0) {
     subtract -= step.asMilliseconds();
+  }
+  if (till.valueOf() - from.valueOf() > step.asMilliseconds()) {
+    steps += 1;
   }
   return new Array(steps).fill(0).map((_, index) => ({
     from: moment(from)

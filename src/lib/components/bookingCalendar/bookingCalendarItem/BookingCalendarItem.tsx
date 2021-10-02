@@ -33,6 +33,10 @@ export interface BookingCalendarItemBaseProps<T extends BookingCalendarItemT> {
    */
   realStart: number;
   /**
+   * Actual start date shown on grid
+   */
+  realFrom: Moment;
+  /**
    * Some part of the item was cut from the beginning
    */
   startIsCut: boolean;
@@ -48,6 +52,10 @@ export interface BookingCalendarItemBaseProps<T extends BookingCalendarItemT> {
    * Like end but can be more than 1 (go offscreen)
    */
   realEnd: number;
+  /**
+   * Actual end date shown on grid
+   */
+  realTill: Moment;
   /**
    * Some part of the item was cut from the end
    */

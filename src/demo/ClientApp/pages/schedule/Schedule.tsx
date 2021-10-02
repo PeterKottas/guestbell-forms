@@ -17,7 +17,7 @@ const generateBookingItemsBetweenDates = (
   const startMs = from.valueOf();
   return new Array(count).fill(0).map(() => {
     const _from = randomIntFromInterval(0, till.valueOf() - startMs) + startMs;
-    const _width = randomIntFromInterval(width / 10, width / 5);
+    const _width = randomIntFromInterval(width / 100, width / 50);
     return {
       from: moment(_from),
       till: moment(_from).add(_width, 'ms'),

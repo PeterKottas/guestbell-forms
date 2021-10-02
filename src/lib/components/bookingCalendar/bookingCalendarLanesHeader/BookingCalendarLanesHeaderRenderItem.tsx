@@ -12,7 +12,7 @@ export const BookingCalendarLanesHeaderRenderItemFactory = (
   function BookingCalendarLanesHeaderRenderItem<T extends BookingCalendarItemT>(
     props: BookingCalendarRenderItemProps<T>
   ) {
-    const { item, className } = props;
+    const { item, className, startIsCut, endIsCut, realFrom, realTill } = props;
     const onClick = React.useCallback(
       () => onRangeChange({ from: item.from, till: item.till }),
       [item]
@@ -29,11 +29,24 @@ export const BookingCalendarLanesHeaderRenderItemFactory = (
           noShadow={true}
           onClick={onClick}
         >
-          {item.from.format('ddd')}
-          <br />
-          <span className="bookingCalendar__lanesHeader__renderItem__button__mutedText">
-            {item.from.format('Do')}
-          </span>
+          {startIsCut || endIsCut ? (
+            <>
+              {item.from.format('ddd, Do')}
+              <br />
+              <span className="bookingCalendar__lanesHeader__renderItem__button__mutedText bookingCalendar__lanesHeader__renderItem__button__mutedText--split">
+                <span>{realFrom.format('M/D H:mm')}</span>
+                <span>{realTill.format('M/D H:mm')}</span>
+              </span>
+            </>
+          ) : (
+            <>
+              {item.from.format('ddd')}
+              <br />
+              <span className="bookingCalendar__lanesHeader__renderItem__button__mutedText">
+                {item.from.format('Do')}
+              </span>
+            </>
+          )}
         </Button>
       </div>
     ) : null;

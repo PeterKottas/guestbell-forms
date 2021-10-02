@@ -138,6 +138,12 @@
   .bookingCalendar__lanesHeader__renderItem__button__mutedText {
     opacity: 0.8;
   }
+  .bookingCalendar__lanesHeader__renderItem__button__mutedText--split {
+    display: flex;
+    > span:first-child {
+      margin-right: auto;
+    }
+  }
 }
 
 .bookingCalendar__controls {
