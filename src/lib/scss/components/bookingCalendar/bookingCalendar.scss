@@ -71,11 +71,11 @@
     display: block;
     left: 0;
     background: repeating-linear-gradient(
-      -45deg,
-      $primary-color,
-      $primary-color 5px,
-      $input-divider-color 5px,
-      $input-divider-color 10px
+      45deg,
+      white,
+      white 5px,
+      transparent 5px,
+      transparent 10px
     );
   }
 }
@@ -85,11 +85,11 @@
     display: block;
     right: 0;
     background: repeating-linear-gradient(
-      45deg,
-      $primary-color,
-      $primary-color 5px,
-      $input-divider-color 5px,
-      $input-divider-color 10px
+      -45deg,
+      white,
+      white 5px,
+      transparent 5px,
+      transparent 10px
     );
   }
 }
