@@ -66,16 +66,20 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
   ]);
   const onZoomBookingsClick = React.useCallback(() => {
     const minFrom = moment(
-      Math.min(...items?.filter(filterBookingsToZoom).map(a => a.from.valueOf())) ?? from?.valueOf()
+      Math.min(
+        ...items?.filter(filterBookingsToZoom).map(a => a.from.valueOf())
+      ) ?? from?.valueOf()
     );
     const maxTill = moment(
-      Math.max(...items?.filter(filterBookingsToZoom).map(a => a.till.valueOf())) ?? till?.valueOf()
+      Math.max(
+        ...items?.filter(filterBookingsToZoom).map(a => a.till.valueOf())
+      ) ?? till?.valueOf()
     );
     onRangeChange({
       from: minFrom,
       till: maxTill,
     });
-  }, [from, till, items]);
+  }, [from, till, items, filterBookingsToZoom]);
   return (
     <div
       className={classNames(

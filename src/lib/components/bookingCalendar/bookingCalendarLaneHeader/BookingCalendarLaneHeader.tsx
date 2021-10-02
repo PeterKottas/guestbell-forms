@@ -14,7 +14,7 @@ export interface BookingCalendarLaneHeaderProps<TLaneData>
 export function BookingCalendarLaneHeader<TLaneData>(
   props: BookingCalendarLaneHeaderProps<TLaneData>
 ) {
-  const { className, laneKey, data } = props;
+  const { className, laneKey } = props;
   return (
     <div
       className={classNames(
@@ -22,7 +22,7 @@ export function BookingCalendarLaneHeader<TLaneData>(
         className
       )}
     >
-      {laneKey}:{JSON.stringify(data)}
+      {laneKey}.
     </div>
   );
 }

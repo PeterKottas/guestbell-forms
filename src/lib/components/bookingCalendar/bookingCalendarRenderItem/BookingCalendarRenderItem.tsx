@@ -9,7 +9,10 @@ import {
 
 export interface BookingCalendarRenderItemProps<T extends BookingCalendarItemT>
   extends BookingCalendarItemProps<T>,
-    BookingCalendarRenderItemClasses {}
+    BookingCalendarRenderItemClasses {
+  alwaysShowContent?: boolean;
+  children?: JSX.Element;
+}
 
 export function BookingCalendarRenderItem<T extends BookingCalendarItemT>(
   props: BookingCalendarRenderItemProps<T>
@@ -22,6 +25,16 @@ export function BookingCalendarRenderItem<T extends BookingCalendarItemT>(
     width,
     endIsCut,
     startIsCut,
+    alwaysShowContent,
+    children = (
+      <>
+        {laneIndex}-{itemIndex}
+        <br />
+        {item.from?.format?.('M/D H:mm')}
+        <br />
+        {item.till?.format?.('M/D H:mm')}
+      </>
+    ),
   } = props;
   /*const stepWidth = React.useMemo(
     () => step.asMilliseconds() / till.diff(from),
@@ -38,15 +51,7 @@ export function BookingCalendarRenderItem<T extends BookingCalendarItemT>(
         }
       )}
     >
-      {width > 0.1 && (
-        <>
-          {laneIndex}-{itemIndex}
-          <br />
-          {item.from?.format?.('M/D H:mm')}
-          <br />
-          {item.till?.format?.('M/D H:mm')}
-        </>
-      )}
+      {(alwaysShowContent || width > 0.1) && children}
     </div>
   ) : null;
 }
