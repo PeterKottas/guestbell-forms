@@ -1,4 +1,8 @@
 import moment, { Moment, Duration } from 'moment';
+import { BookingCalendarItemProps } from './bookingCalendarItem';
+import { BookingCalendarLaneProps } from './bookingCalendarLane';
+import { BookingCalendarLaneHeaderProps } from './bookingCalendarLaneHeader';
+import { BookingCalendarRenderItemProps } from './bookingCalendarRenderItem';
 import {
   BookingCalendarItemT,
   BookingCalendarItemWithOriginalIndexT,
@@ -15,56 +19,67 @@ export function groupBy<T>(items: T[], iterator: (item: T) => number | string) {
   }, {});
 }
 
-export interface LaneSourceData<T> {
+export interface LaneSourceData<T extends BookingCalendarItemT, TLaneData> {
   laneKey: number;
-  data?: T;
+  data?: TLaneData;
+  rowClassName?: string;
+  BookingCalendarItem?: React.ComponentType<BookingCalendarItemProps<T>>;
+  BookingCalendarRenderItem?: React.ComponentType<
+    BookingCalendarRenderItemProps<T>
+  >;
+  BookingCalendarLaneHeader?: React.ComponentType<
+    BookingCalendarLaneHeaderProps<TLaneData>
+  >;
+  BookingCalendarLane?: React.ComponentType<BookingCalendarLaneProps<T>>;
 }
 
-export interface LaneData<T extends BookingCalendarItemT, B>
-  extends LaneSourceData<B> {
+export interface LaneData<T extends BookingCalendarItemT, TLaneData>
+  extends LaneSourceData<T, TLaneData> {
   items: T[];
 }
 
-export function splitBookingsToLanes<T extends BookingCalendarItemT, B>(
+export function splitBookingsToLanes<T extends BookingCalendarItemT, TLaneData>(
   bookings: T[],
   from: Moment,
-  lanesCount: number,
-  lanesSource: LaneSourceData<B>[] = []
+  minLanesCount: number,
+  lanesSource: LaneSourceData<T, TLaneData>[] = []
 ) {
   if (!bookings) {
     return { lanes: [], extraBookings: [] };
   }
-  let lanes: LaneData<T, B>[] = [];
+  let lanes: LaneData<T, TLaneData>[] = [];
   let extraBookings: (T & BookingCalendarItemWithOriginalIndexT)[] = [];
-  if (lanesCount) {
-    lanes = new Array<LaneData<T, B>>(lanesCount)
-      .fill(null)
-      .map((_, index) => ({ items: [], laneKey: index, data: null }));
-  }
   if (lanesSource?.length) {
     lanes = lanesSource.map(source => ({
+      ...source,
       items: [],
-      laneKey: source.laneKey,
-      data: source.data,
     }));
   }
-  if (bookings.every(b => b.laneKey !== undefined)) {
+  const bookingsWithoutLaneKey = bookings.filter(a => a.laneKey === undefined);
+  const bookingsWithLaneKey = bookings.filter(a => a.laneKey !== undefined);
+  if (bookingsWithLaneKey.length) {
     const grouped = groupBy(
-      bookings.map((booking, originalIndex) => ({ ...booking, originalIndex })),
+      bookingsWithLaneKey.map((booking, originalIndex) => ({
+        ...booking,
+        originalIndex,
+      })),
       a => a.laneKey
     );
     lanes = Object.keys(grouped).map(key => ({
       laneKey: Number(key),
       items: grouped[key],
       data: lanesSource?.find(a => a.laneKey === Number(key))?.data,
+      rowClassName: lanesSource?.find(a => a.laneKey === Number(key))
+        ?.rowClassName,
     }));
     const missingLanes = lanesSource?.filter(
       a => !lanes.some(l => l.laneKey === a.laneKey)
     );
     lanes = lanes.concat(missingLanes.map(a => ({ ...a, items: [] })));
-  } else {
+  }
+  if (bookingsWithoutLaneKey.length) {
     let remainingBookings: (T &
-      BookingCalendarItemWithOriginalIndexT)[] = bookings
+      BookingCalendarItemWithOriginalIndexT)[] = bookingsWithoutLaneKey
       .map((booking, originalIndex) => ({ ...booking, originalIndex }))
       .sort((a, b) => a.from.valueOf() - b.from.valueOf());
     while (remainingBookings.length > 0) {
@@ -91,11 +106,11 @@ export function splitBookingsToLanes<T extends BookingCalendarItemT, B>(
           ...remainingBookings[bookingIndex],
         });
         remainingBookings.splice(bookingIndex, 1);
-      } else if (!lanesCount) {
+      } else if (!minLanesCount) {
         lanes = lanes.concat({
           items: [{ ...remainingBookings[0] }],
           laneKey: lanes.length,
-          data: null,
+          data: undefined,
         });
         remainingBookings.shift();
       } else {
@@ -124,6 +139,17 @@ export function splitBookingsToLanes<T extends BookingCalendarItemT, B>(
     );
   }
   lanes = lanes.sort((a, b) => a.laneKey - b.laneKey);
+  if (lanes.length < minLanesCount) {
+    lanes = lanes.concat(
+      new Array<LaneData<T, TLaneData>>(minLanesCount - lanes.length)
+        .fill(null)
+        .map((_, index) => ({
+          items: [],
+          laneKey: index + lanes.length,
+          data: null,
+        }))
+    );
+  }
   return { lanes, extraBookings };
 }
 

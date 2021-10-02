@@ -48,8 +48,8 @@ export interface BookingCalendarProps<
   step?: Duration;
   showGrid?: boolean;
   gridSubdivisions?: number;
-  lanesCount?: number;
-  lanesSource?: LaneSourceData<TLaneData>[];
+  minLanesCount?: number;
+  lanesSource?: LaneSourceData<T, TLaneData>[];
 
   BookingCalendarItem?: React.ComponentType<BookingCalendarItemProps<T>>;
   BookingCalendarRenderItem?: React.ComponentType<
@@ -91,7 +91,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     startOfStep = defaultStartOfStep,
     showGrid = true,
     gridSubdivisions = 1,
-    lanesCount,
+    minLanesCount,
     lanesSource,
     BookingCalendarControls = DefaultBookingCalendarControls,
     BookingCalendarItem,
@@ -107,10 +107,10 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
       splitBookingsToLanes<T, TLaneData>(
         bookings,
         from,
-        lanesCount,
+        minLanesCount,
         lanesSource
       ),
-    [bookings, from, lanesCount, lanesSource]
+    [bookings, from, minLanesCount, lanesSource]
   );
   React.useEffect(() => {
     onExtraBookingsChange?.(extraBookings);
@@ -155,40 +155,51 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
           </tr>
         </thead>
         <tbody>
-          {lanes.map((lane, laneIndex) => (
-            <tr key={laneIndex}>
-              <td>
-                <BookingCalendarLaneHeader<TLaneData>
-                  laneKey={lane.laneKey ?? laneIndex}
-                  data={lane.data}
-                />
-              </td>
-              <td
-                className={classNames(
-                  bookingCalendarDefaultClasses.laneTdClassName,
-                  laneTdClassName
-                )}
-              >
-                {showGrid && (
-                  <BookingCalendarGrid
+          {lanes.map((lane, laneIndex) => {
+            const LaneBookingCalendarLaneHeader =
+              lane.BookingCalendarLaneHeader ?? BookingCalendarLaneHeader;
+            const LaneBookingCalendarLane =
+              lane.BookingCalendarLane ?? BookingCalendarLane;
+            return (
+              <tr key={laneIndex} className={classNames(lane.rowClassName)}>
+                <td>
+                  <LaneBookingCalendarLaneHeader<TLaneData>
+                    laneKey={lane.laneKey ?? laneIndex}
+                    data={lane.data}
+                  />
+                </td>
+                <td
+                  className={classNames(
+                    bookingCalendarDefaultClasses.laneTdClassName,
+                    laneTdClassName
+                  )}
+                >
+                  {showGrid && (
+                    <BookingCalendarGrid
+                      from={from}
+                      till={till}
+                      step={step}
+                      subdivisions={gridSubdivisions}
+                    />
+                  )}
+                  <LaneBookingCalendarLane
+                    laneIndex={laneIndex}
+                    items={lane.items}
                     from={from}
                     till={till}
+                    BookingCalendarItem={
+                      lane.BookingCalendarItem ?? BookingCalendarItem
+                    }
+                    BookingCalendarRenderItem={
+                      lane.BookingCalendarRenderItem ??
+                      BookingCalendarRenderItem
+                    }
                     step={step}
-                    subdivisions={gridSubdivisions}
                   />
-                )}
-                <BookingCalendarLane
-                  laneIndex={laneIndex}
-                  items={lane.items}
-                  from={from}
-                  till={till}
-                  BookingCalendarItem={BookingCalendarItem}
-                  BookingCalendarRenderItem={BookingCalendarRenderItem}
-                  step={step}
-                />
-              </td>
-            </tr>
-          ))}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

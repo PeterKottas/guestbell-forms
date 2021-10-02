@@ -11,7 +11,7 @@ function randomIntFromInterval(min: number, max: number) {
 const generateBookingItemsBetweenDates = (
   from: Moment,
   till: Moment,
-  count = 1
+  count = 50
 ) => {
   const width = till.valueOf() - from.valueOf();
   const startMs = from.valueOf();
@@ -21,7 +21,10 @@ const generateBookingItemsBetweenDates = (
     return {
       from: moment(_from),
       till: moment(_from).add(_width, 'ms'),
-      // laneKey: randomIntFromInterval(1, 30),
+      laneKey:
+        randomIntFromInterval(1, 3) === 1
+          ? undefined
+          : randomIntFromInterval(1, 3),
     } as BookingCalendarItemT;
   });
 };
@@ -58,9 +61,13 @@ export const Schedule = () => {
         gridSubdivisions={4}
         onRangeChange={setRange}
         // lanesCount={3}
-        /*lanesSource={new Array(30)
+        lanesSource={new Array(3)
           .fill(0)
-          .map((_, index) => ({ laneKey: index, data: { data: 'test' } }))}*/
+          .map((_, index) => ({
+            laneKey: index,
+            data: { data: 'test' },
+            rowClassName: 'test',
+          }))}
       />
     </div>
   );
