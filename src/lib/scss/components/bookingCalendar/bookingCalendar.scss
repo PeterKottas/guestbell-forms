@@ -24,6 +24,10 @@
       border-left: 1px solid $input-border-color;
       border-right: 1px solid $input-border-color;
     }
+    & > tr:first-of-type > td:last-of-type {
+      border-left: 1px solid $input-border-color;
+      border-right: 1px solid $input-border-color;
+    }
   }
   > tbody {
     & > tr.bookingCalendar__dataLaneTr > td {
