@@ -247,10 +247,12 @@ export const generateGridItems = (
   if (!from || !till || !step || subdivisions < 1) {
     return [];
   }
-  const steps =
+  const steps = Math.min(
+    0,
     Math.floor(
       ((till.valueOf() - from.valueOf()) / step.asMilliseconds()) * subdivisions
-    ) + (doEdges ? 1 : -1);
+    ) + (doEdges ? 1 : -1)
+  );
   const width = till.valueOf() - from.valueOf();
   return new Array(steps)
     .fill(0)
