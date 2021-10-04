@@ -70,9 +70,9 @@ export interface BookingCalendarProps<
   BookingCalendarLanesHeader?: React.ComponentType<
     BookingCalendarLanesHeaderProps<T>
   >;
-  BookingCalendarDatePicker?: React.ComponentType<
-    BookingCalendarDatePickerProps<T>
-  >;
+  BookingCalendarDatePicker?:
+    | React.ComponentType<BookingCalendarDatePickerProps<T>>
+    | React.ReactNode;
 }
 
 const defaultStep = duration(1, 'day');
@@ -141,11 +141,15 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
         <thead>
           <tr>
             <td>
-              <BookingCalendarDatePicker
-                from={from}
-                till={till}
-                onRangeChange={onRangeChange}
-              />
+              {typeof BookingCalendarDatePicker === 'function' ? (
+                <BookingCalendarDatePicker
+                  from={from}
+                  till={till}
+                  onRangeChange={onRangeChange}
+                />
+              ) : (
+                BookingCalendarDatePicker
+              )}
             </td>
             <td>
               <BookingCalendarLanesHeader<T>
