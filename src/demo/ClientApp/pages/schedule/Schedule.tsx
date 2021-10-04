@@ -52,7 +52,7 @@ export const Schedule = () => {
     [from, till, bookings]
   );
   return (
-    <div className="">
+    <div className="container">
       <BookingCalendar
         bookings={items}
         from={from}

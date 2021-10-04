@@ -34,6 +34,8 @@
 }
 .bookingCalendar__laneTd {
   position: relative;
+  border-left: 1px solid $input-border-color;
+  border-right: 1px solid $input-border-color;
 }
 .bookingCalendar__lane {
   display: flex;

@@ -241,7 +241,8 @@ export const generateGridItems = (
   from: Moment,
   till: Moment,
   step: Duration,
-  subdivisions: number = 1
+  subdivisions: number = 1,
+  doEdges = false
 ) => {
   if (!from || !till || !step || subdivisions < 1) {
     return [];
@@ -249,11 +250,13 @@ export const generateGridItems = (
   const steps =
     Math.floor(
       ((till.valueOf() - from.valueOf()) / step.asMilliseconds()) * subdivisions
-    ) + 1;
+    ) + (doEdges ? 1 : -1);
   const width = till.valueOf() - from.valueOf();
   return new Array(steps)
     .fill(0)
     .map(
-      (_, index) => ((step.asMilliseconds() / subdivisions) * index) / width
+      (_, index) =>
+        ((step.asMilliseconds() / subdivisions) * (index + (doEdges ? 0 : 1))) /
+        width
     );
 };

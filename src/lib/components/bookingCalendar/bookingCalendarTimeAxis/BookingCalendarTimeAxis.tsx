@@ -48,12 +48,16 @@ export function BookingCalendarTimeAxis(props: BookingCalendarTimeAxisProps) {
                 timeAxisItemClassName
               )}
               style={{
-                opacity: key % subdivisions === 0 ? 0.4 : 0.2,
+                opacity: key % subdivisions === subdivisions - 1 ? 0.4 : 0.2,
               }}
             >
               {moment(from)
                 .add(diff * item)
-                .format(key % subdivisions === 0 ? 'MMM Do hh:mm a' : 'h:mm a')}
+                .format(
+                  key % subdivisions === subdivisions - 1
+                    ? 'MMM Do hh:mm a'
+                    : 'h:mm a'
+                )}
             </text>
           </svg>
         ))}
