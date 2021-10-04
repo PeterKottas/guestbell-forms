@@ -247,7 +247,7 @@ export const generateGridItems = (
   if (!from || !till || !step || subdivisions < 1) {
     return [];
   }
-  const steps = Math.min(
+  const steps = Math.max(
     0,
     Math.floor(
       ((till.valueOf() - from.valueOf()) / step.asMilliseconds()) * subdivisions
