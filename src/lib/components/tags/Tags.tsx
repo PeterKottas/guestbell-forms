@@ -14,7 +14,7 @@ import {
 import { Button, ButtonComponentProps } from '../button/Button';
 import TagsSuggestions from './subComponents/TagsSuggestions';
 import { withFormContext } from '../form/withFormContext';
-var classNames = require('classnames');
+import classNames from 'classnames';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import { PopperProps } from '@material-ui/core/Popper/Popper';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -35,6 +35,7 @@ export type TagsTranslations = Partial<typeof defaultTagsTranslations>;
 
 export type TagsProps = {
   className?: string;
+  tagsSuggestionsClassName?: string;
   disabled?: boolean;
   tags: Tag[];
   existingTags?: Tag[];
@@ -315,6 +316,7 @@ export class TagsRaw extends BaseInput<
                     {...(this.props.id && {
                       id: this.props.id + '-text-input',
                     })}
+                    className={classNames(this.props.tagsSuggestionsClassName)}
                     innerRef={this.suggestionsRef}
                     anchorEl={this.containerRef.current}
                     allowNew={this.props.allowNew}

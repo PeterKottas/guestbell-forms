@@ -5,6 +5,7 @@ import Popper, { PopperProps } from '@material-ui/core/Popper';
 import classNames from 'classnames';
 
 export type SuggestionsProps = {
+  className?: string;
   innerRef: React.RefObject<HTMLDivElement>;
   anchorEl: HTMLElement;
   id?: string;
@@ -53,10 +54,9 @@ const Suggestions: React.FC<SuggestionsProps & InjectedProps> = props => {
           {...(props.id && {
             id: props.id,
           })}
-          className={classNames(
-            'tags-input__suggestions',
-            'tags-input__suggestions--loading'
-          )}
+          className={classNames('tags-input__suggestions', props.className, {
+            'tags-input__suggestions--loading': props.loading,
+          })}
           ref={props.innerRef}
         >
           <ul>
