@@ -85,7 +85,6 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     bookings,
     className,
     laneTdClassName,
-    dataLaneTrClassName,
     controlsClasses,
     tableClassName,
     from,
@@ -132,107 +131,94 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
         filterBookingsToZoom={filterBookingsToZoom}
         zoomLevels={zoomLevels}
       />
-      <table
+      <div
         className={classNames(
           bookingCalendarDefaultClasses.tableClassName,
           tableClassName
         )}
       >
-        <thead>
-          <tr>
-            <td>
-              {typeof BookingCalendarDatePicker === 'function' ? (
-                <BookingCalendarDatePicker
-                  from={from}
-                  till={till}
-                  onRangeChange={onRangeChange}
+        {showGrid && (
+          <BookingCalendarGrid
+            from={from}
+            till={till}
+            step={step}
+            subdivisions={gridSubdivisions}
+            dataRowsCount={lanes.length}
+          />
+        )}
+        <div>
+          {typeof BookingCalendarDatePicker === 'function' ? (
+            <BookingCalendarDatePicker
+              from={from}
+              till={till}
+              onRangeChange={onRangeChange}
+            />
+          ) : (
+            BookingCalendarDatePicker
+          )}
+        </div>
+        <div>
+          <BookingCalendarLanesHeader<T>
+            {...controlsClasses}
+            from={from}
+            till={till}
+            onRangeChange={onRangeChange}
+            step={step}
+            startOfStep={startOfStep}
+          />
+        </div>
+
+        {lanes.map((lane, laneIndex) => {
+          const LaneBookingCalendarLaneHeader =
+            lane.BookingCalendarLaneHeader ?? BookingCalendarLaneHeader;
+          const LaneBookingCalendarLane =
+            lane.BookingCalendarLane ?? BookingCalendarLane;
+          return (
+            <>
+              <div>
+                <LaneBookingCalendarLaneHeader<TLaneData>
+                  laneKey={lane.laneKey ?? laneIndex}
+                  data={lane.data}
                 />
-              ) : (
-                BookingCalendarDatePicker
-              )}
-            </td>
-            <td>
-              <BookingCalendarLanesHeader<T>
-                {...controlsClasses}
-                from={from}
-                till={till}
-                onRangeChange={onRangeChange}
-                step={step}
-                startOfStep={startOfStep}
-              />
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          {lanes.map((lane, laneIndex) => {
-            const LaneBookingCalendarLaneHeader =
-              lane.BookingCalendarLaneHeader ?? BookingCalendarLaneHeader;
-            const LaneBookingCalendarLane =
-              lane.BookingCalendarLane ?? BookingCalendarLane;
-            return (
-              <tr
-                key={laneIndex}
+              </div>
+              <div
                 className={classNames(
-                  bookingCalendarDefaultClasses.dataLaneTrClassName,
-                  dataLaneTrClassName,
+                  bookingCalendarDefaultClasses.laneTdClassName,
+                  laneTdClassName,
                   lane.rowClassName,
                   {
-                    [`${bookingCalendarDefaultClasses.dataLaneTrClassName}--last`]:
+                    [`${bookingCalendarDefaultClasses.laneTdClassName}--last`]:
                       laneIndex === lanes.length - 1,
                   }
                 )}
               >
-                <td>
-                  <LaneBookingCalendarLaneHeader<TLaneData>
-                    laneKey={lane.laneKey ?? laneIndex}
-                    data={lane.data}
-                  />
-                </td>
-                <td
-                  className={classNames(
-                    bookingCalendarDefaultClasses.laneTdClassName,
-                    laneTdClassName
-                  )}
-                >
-                  {showGrid && (
-                    <BookingCalendarGrid
-                      from={from}
-                      till={till}
-                      step={step}
-                      subdivisions={gridSubdivisions}
-                    />
-                  )}
-                  <LaneBookingCalendarLane
-                    laneIndex={laneIndex}
-                    items={lane.items}
-                    from={from}
-                    till={till}
-                    BookingCalendarItem={
-                      lane.BookingCalendarItem ?? BookingCalendarItem
-                    }
-                    BookingCalendarRenderItem={
-                      lane.BookingCalendarRenderItem ??
-                      BookingCalendarRenderItem
-                    }
-                    step={step}
-                  />
-                </td>
-              </tr>
-            );
-          })}
-          <tr>
-            <td />
-            <td>
-              <BookingCalendarTimeAxis
-                from={from}
-                till={till}
-                step={step}
-                subdivisions={gridSubdivisions}
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                <LaneBookingCalendarLane
+                  laneIndex={laneIndex}
+                  items={lane.items}
+                  from={from}
+                  till={till}
+                  BookingCalendarItem={
+                    lane.BookingCalendarItem ?? BookingCalendarItem
+                  }
+                  BookingCalendarRenderItem={
+                    lane.BookingCalendarRenderItem ?? BookingCalendarRenderItem
+                  }
+                  step={step}
+                />
+              </div>
+            </>
+          );
+        })}
+        <div />
+        <div>
+          <BookingCalendarTimeAxis
+            from={from}
+            till={till}
+            step={step}
+            subdivisions={gridSubdivisions}
+          />
+        </div>
+      </div>
     </div>
   );
 }

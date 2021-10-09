@@ -12,6 +12,7 @@ export interface BookingCalendarGridProps extends BookingCalendarGridClasses {
   till: Moment;
   step: Duration;
   subdivisions: number;
+  dataRowsCount: number;
 }
 
 export function BookingCalendarGrid(props: BookingCalendarGridProps) {
@@ -22,17 +23,22 @@ export function BookingCalendarGrid(props: BookingCalendarGridProps) {
     till,
     step,
     subdivisions,
+    dataRowsCount,
   } = props;
   const items = React.useMemo(
     () => generateGridItems(from, till, step, subdivisions),
     [from, till, step, subdivisions]
   );
+  const style = React.useMemo(() => ({ gridRowEnd: `span ${dataRowsCount}` }), [
+    dataRowsCount,
+  ]);
   return (
     <div
       className={classNames(
         bookingCalendarGridDefaultClasses.className,
         className
       )}
+      style={style}
     >
       {items.map((item, key) => (
         <div

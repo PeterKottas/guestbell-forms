@@ -216,8 +216,9 @@ export const generateControlItems = (
   if (!from || !till || !step) {
     return [];
   }
-  let steps = Math.ceil(
-    (till.valueOf() - from.valueOf()) / step.asMilliseconds()
+  let steps = Math.max(
+    Math.ceil((till.valueOf() - from.valueOf()) / step.asMilliseconds()),
+    2
   );
   let subtract =
     (startOfStep.valueOf() - from.valueOf()) % step.asMilliseconds();

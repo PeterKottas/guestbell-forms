@@ -3,48 +3,18 @@
   flex-direction: column;
 }
 .bookingCalendar__table {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  position: relative;
   // To make sure height 100% works in td-s
   height: 100%;
-  table-layout: auto;
-  > tbody,
-  > thead {
-    & > tr > td {
-      padding: 0;
-    }
+  .bookingCalendar__laneTd {
+    border-left: 1px solid $input-border-color;
+    border-right: 1px solid $input-border-color;
   }
-  > tbody,
-  > thead {
-    & > tr > td:first-child {
-      width: 1%;
-    }
+  .bookingCalendar__laneTd.bookingCalendar__laneTd--last {
+    border-bottom: 1px solid $input-border-color;
   }
-  > tbody,
-  > thead {
-    & > tr:not(:last-of-type) > td:last-of-type {
-      border-left: 1px solid $input-border-color;
-      border-right: 1px solid $input-border-color;
-    }
-    & > tr:first-of-type > td:last-of-type {
-      border-left: 1px solid $input-border-color;
-      border-right: 1px solid $input-border-color;
-    }
-  }
-  > tbody {
-    & > tr.bookingCalendar__dataLaneTr > td {
-      padding-top: 1rem;
-    }
-  }
-  .bookingCalendar__dataLaneTr--last {
-    > td {
-      padding-bottom: 1rem;
-    }
-    .bookingCalendar__laneTd {
-      border-bottom: 1px solid $input-border-color;
-    }
-  }
-}
-.bookingCalendar__laneTd {
-  position: relative;
 }
 .bookingCalendar__lane {
   display: flex;
@@ -110,11 +80,13 @@
 
 .bookingCalendar__grid {
   position: absolute;
-  top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  height: 100%;
+  grid-area: main;
   pointer-events: none;
+  grid-column: 2;
+  grid-row-start: 2;
 }
 
 .bookingCalendar__grid__item {
@@ -148,6 +120,7 @@
     width: 100%;
     text-align: end;
     text-transform: none;
+    border-left: 1px solid rgba(black, 0.2);
   }
   .bookingCalendar__lanesHeader__renderItem__button__mutedText {
     opacity: 0.8;

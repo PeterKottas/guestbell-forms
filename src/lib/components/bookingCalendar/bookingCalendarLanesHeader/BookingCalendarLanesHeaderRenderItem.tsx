@@ -28,6 +28,7 @@ export const BookingCalendarLanesHeaderRenderItemFactory = (
           className="bookingCalendar__lanesHeader__renderItem__button"
           noShadow={true}
           onClick={onClick}
+          type="primary"
         >
           {startIsCut || endIsCut ? (
             <>
