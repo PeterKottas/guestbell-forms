@@ -84,7 +84,8 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
   const {
     bookings,
     className,
-    laneTdClassName,
+    laneContainerClassName,
+    laneHeaderContainerClassName,
     controlsClasses,
     tableClassName,
     from,
@@ -175,7 +176,19 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
             lane.BookingCalendarLane ?? BookingCalendarLane;
           return (
             <>
-              <div>
+              <div
+                className={classNames(
+                  bookingCalendarDefaultClasses.laneHeaderContainerClassName,
+                  laneHeaderContainerClassName,
+                  lane.rowClassName,
+                  {
+                    [`${bookingCalendarDefaultClasses.laneHeaderContainerClassName}--last`]:
+                      laneIndex === lanes.length - 1,
+                    [`${bookingCalendarDefaultClasses.laneHeaderContainerClassName}--first`]:
+                      laneIndex === 0,
+                  }
+                )}
+              >
                 <LaneBookingCalendarLaneHeader<TLaneData>
                   laneKey={lane.laneKey ?? laneIndex}
                   data={lane.data}
@@ -183,12 +196,14 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
               </div>
               <div
                 className={classNames(
-                  bookingCalendarDefaultClasses.laneTdClassName,
-                  laneTdClassName,
+                  bookingCalendarDefaultClasses.laneContainerClassName,
+                  laneContainerClassName,
                   lane.rowClassName,
                   {
-                    [`${bookingCalendarDefaultClasses.laneTdClassName}--last`]:
+                    [`${bookingCalendarDefaultClasses.laneContainerClassName}--last`]:
                       laneIndex === lanes.length - 1,
+                    [`${bookingCalendarDefaultClasses.laneContainerClassName}--first`]:
+                      laneIndex === 0,
                   }
                 )}
               >

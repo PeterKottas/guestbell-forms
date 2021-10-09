@@ -2,15 +2,15 @@ import { BookingCalendarControlsClasses } from './bookingCalendarControls/classe
 
 export interface BookingCalendarClasses {
   className?: string;
-  dataLaneTrClassName?: string;
-  laneTdClassName?: string;
+  laneContainerClassName?: string;
+  laneHeaderContainerClassName?: string;
   tableClassName?: string;
   controlsClasses?: BookingCalendarControlsClasses;
 }
 
 export const bookingCalendarDefaultClasses: BookingCalendarClasses = {
   className: 'bookingCalendar',
-  dataLaneTrClassName: 'bookingCalendar__dataLaneTr',
-  laneTdClassName: 'bookingCalendar__laneTd',
+  laneContainerClassName: 'bookingCalendar__laneContainer',
+  laneHeaderContainerClassName: 'bookingCalendar__laneHeaderContainer',
   tableClassName: 'bookingCalendar__table',
 };

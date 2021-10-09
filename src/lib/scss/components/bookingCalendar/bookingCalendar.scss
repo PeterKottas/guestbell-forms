@@ -8,13 +8,24 @@
   position: relative;
   // To make sure height 100% works in td-s
   height: 100%;
-  .bookingCalendar__laneTd {
-    border-left: 1px solid $input-border-color;
-    border-right: 1px solid $input-border-color;
+  .bookingCalendar__laneContainer,
+  .bookingCalendar__laneHeaderContainer {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
   }
-  .bookingCalendar__laneTd.bookingCalendar__laneTd--last {
+  .bookingCalendar__laneContainer--first,
+  .bookingCalendar__laneHeaderContainer--first {
+    padding-top: 1rem;
+  }
+  .bookingCalendar__laneContainer--last,
+  .bookingCalendar__laneHeaderContainer--last {
+    padding-bottom: 1rem;
+  }
+  .bookingCalendar__laneContainer {
+    border-left: 1px solid $input-border-color;
+    border-right: 1px solid $input-border-color;
+  }
+  .bookingCalendar__laneContainer--last {
     border-bottom: 1px solid $input-border-color;
   }
 }
