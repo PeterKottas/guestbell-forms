@@ -11,6 +11,8 @@
   .bookingCalendar__laneTd {
     border-left: 1px solid $input-border-color;
     border-right: 1px solid $input-border-color;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
   }
   .bookingCalendar__laneTd.bookingCalendar__laneTd--last {
     border-bottom: 1px solid $input-border-color;
