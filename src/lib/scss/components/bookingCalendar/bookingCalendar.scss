@@ -21,9 +21,11 @@
   .bookingCalendar__laneHeaderContainer--last {
     padding-bottom: 1rem;
   }
-  .bookingCalendar__laneContainer {
-    border-left: 1px solid $input-border-color;
-    border-right: 1px solid $input-border-color;
+  .bookingCalendar__laneContainer,
+  .bookingCalendar__lanesHeaderContainer,
+  .bookingCalendar__lanesHeaderHeaderContainer,
+  .bookingCalendar__laneHeaderContainer {
+    box-shadow: 1px 0 0 0 rgba(black, 0.1);
   }
   .bookingCalendar__laneContainer--last {
     border-bottom: 1px solid $input-border-color;
