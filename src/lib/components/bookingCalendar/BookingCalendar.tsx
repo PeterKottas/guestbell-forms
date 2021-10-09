@@ -86,6 +86,8 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     className,
     laneContainerClassName,
     laneHeaderContainerClassName,
+    lanesHeaderContainerClassName,
+    lanesHeaderHeaderContainerClassName,
     controlsClasses,
     tableClassName,
     from,
@@ -147,7 +149,12 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
             dataRowsCount={lanes.length}
           />
         )}
-        <div>
+        <div
+          className={classNames(
+            bookingCalendarDefaultClasses.lanesHeaderHeaderContainerClassName,
+            lanesHeaderHeaderContainerClassName
+          )}
+        >
           {typeof BookingCalendarDatePicker === 'function' ? (
             <BookingCalendarDatePicker
               from={from}
@@ -158,7 +165,12 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
             BookingCalendarDatePicker
           )}
         </div>
-        <div>
+        <div
+          className={classNames(
+            bookingCalendarDefaultClasses.lanesHeaderContainerClassName,
+            lanesHeaderContainerClassName
+          )}
+        >
           <BookingCalendarLanesHeader<T>
             {...controlsClasses}
             from={from}
