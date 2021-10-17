@@ -251,7 +251,8 @@ export const generateGridItems = (
   step: Duration,
   containerWidthPx: number,
   availableSteps: Duration[],
-  goalGridWidthPx: number
+  goalGridWidthPx: number,
+  startOfStep: Moment
 ): { items: GridItem[]; bestStep: Duration } => {
   if (
     !from ||
@@ -259,12 +260,15 @@ export const generateGridItems = (
     !containerWidthPx ||
     !availableSteps?.length ||
     !goalGridWidthPx ||
-    !step
+    !step ||
+    !startOfStep
   ) {
     return { bestStep: availableSteps?.[0], items: [] };
   }
   const stepMs = step.asMilliseconds();
-  const timeLengthMs = till.valueOf() - from.valueOf();
+  const fromMs = from.valueOf();
+  const tillMs = till.valueOf();
+  const timeLengthMs = tillMs - fromMs;
   const approximateStepsCount = containerWidthPx / goalGridWidthPx;
   const approximateStepMs = timeLengthMs / approximateStepsCount;
   const availableStepsDistancesMs = availableSteps.map(a =>
@@ -275,18 +279,17 @@ export const generateGridItems = (
     a => a === smallestDistance
   );
   const bestStep = availableSteps[bestStepIndex];
-  let startMs =
-    from.valueOf() -
-    ((from.valueOf() + from.utcOffset() * 60 * 1000) %
-      bestStep.asMilliseconds());
+  const subtract =
+    (fromMs + from.utcOffset() * 60 * 1000) % bestStep.asMilliseconds();
+  let startMs = fromMs - subtract;
   let steps: Moment[] = [];
-  while (startMs <= till.valueOf()) {
+  while (startMs <= tillMs) {
     steps = steps.concat(moment(startMs));
     startMs += bestStep.asMilliseconds();
   }
   return {
     items: steps
-      .filter(a => a.valueOf() > from.valueOf() && a.valueOf() < till.valueOf())
+      .filter(a => a.valueOf() > fromMs && a.valueOf() < tillMs)
       .map(date => {
         const stepProportion =
           ((date.valueOf() + from.utcOffset() * 60 * 1000) % stepMs) / stepMs;
@@ -302,7 +305,7 @@ export const generateGridItems = (
           }
         }
         return {
-          left: (date.valueOf() - from.valueOf()) / timeLengthMs,
+          left: (date.valueOf() - fromMs) / timeLengthMs,
           date,
           stepProportion,
           opacity: 1 / (numberOfRoots || 1),

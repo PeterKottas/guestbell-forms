@@ -194,3 +194,46 @@
   display: inline-block;
   transform: rotate(75deg);
 }*/
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.bookingCalendar__selection__container{
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 100%;
+  grid-column: 2;
+  grid-row-start: 2;
+}
+
+.bookingCalendar__selection {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px dashed white;
+  position: absolute;
+  animation-duration: 0.2s;
+  animation-name: fadeIn;
+  user-select: none;
+}
+
+.bookingCalendar__selection--fadeout {
+  animation-duration: 0.3s;
+  animation-name: fadeOut;
+  animation-fill-mode: forwards;
+}

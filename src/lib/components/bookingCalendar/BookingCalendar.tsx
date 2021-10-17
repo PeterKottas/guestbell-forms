@@ -49,6 +49,9 @@ import {
 } from '.';
 import { BookingCalendarTimeAxis } from './bookingCalendarTimeAxis/BookingCalendarTimeAxis';
 import useDimensions from 'react-cool-dimensions';
+import BookingCalendarSelection, {
+  BookingCalendarSelectionData,
+} from './bookingCalendarSelection/BookingCalendarSelection';
 
 export interface BookingCalendarProps<
   T extends BookingCalendarItemT,
@@ -59,9 +62,9 @@ export interface BookingCalendarProps<
   till: Moment;
   getMomentFormatFunction?: GetMomentFormatFunctionType;
   onRangeChange?: (range: BookingCalendarDateRange) => void;
-  startOfStep?: Moment;
   step?: Duration;
   showGrid?: boolean;
+  showSelection?: boolean;
   gridAvailableSteps?: Duration[];
   goalGridWidthPx?: number;
   minLanesCount?: number;
@@ -91,7 +94,6 @@ export interface BookingCalendarProps<
 }
 
 const defaultStep = duration(1, 'day');
-const defaultStartOfStep = moment().startOf('day');
 
 export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
   props: BookingCalendarProps<T, TLaneData>
@@ -109,8 +111,8 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     till,
     onRangeChange,
     step = defaultStep,
-    startOfStep = defaultStartOfStep,
     showGrid = true,
+    showSelection = true,
     gridAvailableSteps = defaultGridAvailableSteps,
     getMomentFormatFunction = defaultGetMomentFormatFunction,
     goalGridWidthPx = 60,
@@ -146,9 +148,29 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
         step,
         width,
         gridAvailableSteps,
-        goalGridWidthPx
+        goalGridWidthPx,
+        from?.clone()?.startOf('day')
       ),
     [from, till, step, width, gridAvailableSteps, goalGridWidthPx]
+  );
+  const onSelected = React.useCallback(
+    (data: BookingCalendarSelectionData) => {
+      if (!from || !till || !width || !onRangeChange) {
+        return;
+      }
+      const screenSpaceStartX = data.origin[0];
+      const screenSpaceEndX = data.target[0];
+      const durationMs = till.valueOf() - from.valueOf();
+      const toTimeSpace = (num: number) => (num / (width || 1)) * durationMs;
+      const timeSpaceStart = moment(
+        from.valueOf() + toTimeSpace(screenSpaceStartX)
+      );
+      const timeSpaceEnd = moment(
+        from.valueOf() + toTimeSpace(screenSpaceEndX)
+      );
+      onRangeChange({ from: timeSpaceStart, till: timeSpaceEnd });
+    },
+    [from, till, width, onRangeChange]
   );
   return (
     <div
@@ -175,6 +197,12 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
             containerRef={observe}
             items={gridItems}
             dataRowsCount={lanes.length}
+          />
+        )}
+        {showSelection && (
+          <BookingCalendarSelection
+            dataRowsCount={lanes.length}
+            onSelected={onSelected}
           />
         )}
         <div
@@ -205,7 +233,6 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
             till={till}
             onRangeChange={onRangeChange}
             step={step}
-            startOfStep={startOfStep}
           />
         </div>
 

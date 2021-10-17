@@ -56,21 +56,21 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
     [from, till, onRangeChange]
   );
   const onBigStepLeftClick = React.useCallback(
-    onStepFactory(duration(-1 * till.diff(from))),
+    onStepFactory(duration(-7, 'days')),
     [onStepFactory, till, from]
   );
   const onSmallStepLeftClick = React.useCallback(
-    onStepFactory(duration(step.asMilliseconds() * -1)),
+    onStepFactory(duration(-1, 'day')),
     [onStepFactory, step]
   );
   const onBigStepRightClick = React.useCallback(
-    onStepFactory(duration(till.diff(from))),
+    onStepFactory(duration(7, 'days')),
     [onStepFactory, till, from]
   );
-  const onSmallStepRightClick = React.useCallback(onStepFactory(step), [
-    onStepFactory,
-    step,
-  ]);
+  const onSmallStepRightClick = React.useCallback(
+    onStepFactory(duration(1, 'day')),
+    [onStepFactory, step]
+  );
   const filteredItems = React.useMemo(
     () => items?.filter(filterBookingsToZoom),
     [filterBookingsToZoom, items]
@@ -129,8 +129,10 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
               key={index}
               onClick={() =>
                 onRangeChange({
-                  from: from,
-                  till: moment(from).add(level.step),
+                  from: moment(from).startOf('day'),
+                  till: moment(from)
+                    .startOf('day')
+                    .add(level.step),
                 })
               }
             >
