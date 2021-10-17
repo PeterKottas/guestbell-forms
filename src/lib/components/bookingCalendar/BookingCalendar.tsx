@@ -4,12 +4,20 @@ import {
   bookingCalendarDefaultClasses,
 } from './classes';
 import classNames from 'classnames';
-import { BookingCalendarDateRange, BookingCalendarItemT } from './common';
+import {
+  BookingCalendarDateRange,
+  BookingCalendarItemT,
+  defaultGetMomentFormatFunction,
+} from './common';
 import {
   BookingCalendarControls as DefaultBookingCalendarControls,
   BookingCalendarControlsProps,
 } from './bookingCalendarControls/BookingCalendarControls';
-import { LaneSourceData, splitBookingsToLanes } from './utils';
+import {
+  generateGridItems,
+  LaneSourceData,
+  splitBookingsToLanes,
+} from './utils';
 import {
   BookingCalendarLane as DefaultBookingCalendarLane,
   BookingCalendarLaneProps,
@@ -34,8 +42,13 @@ import {
   BookingCalendarDatePickerProps,
 } from './bookingCalendarDatePicker';
 import moment from 'moment';
-import { ZoomLevel } from '.';
+import {
+  defaultGridAvailableSteps,
+  GetMomentFormatFunctionType,
+  ZoomLevel,
+} from '.';
 import { BookingCalendarTimeAxis } from './bookingCalendarTimeAxis/BookingCalendarTimeAxis';
+import useDimensions from 'react-cool-dimensions';
 
 export interface BookingCalendarProps<
   T extends BookingCalendarItemT,
@@ -44,11 +57,13 @@ export interface BookingCalendarProps<
   bookings: T[];
   from: Moment;
   till: Moment;
+  getMomentFormatFunction?: GetMomentFormatFunctionType;
   onRangeChange?: (range: BookingCalendarDateRange) => void;
   startOfStep?: Moment;
   step?: Duration;
   showGrid?: boolean;
-  gridSubdivisions?: number;
+  gridAvailableSteps?: Duration[];
+  goalGridWidthPx?: number;
   minLanesCount?: number;
   lanesSource?: LaneSourceData<T, TLaneData>[];
 
@@ -96,7 +111,9 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     step = defaultStep,
     startOfStep = defaultStartOfStep,
     showGrid = true,
-    gridSubdivisions = 1,
+    gridAvailableSteps = defaultGridAvailableSteps,
+    getMomentFormatFunction = defaultGetMomentFormatFunction,
+    goalGridWidthPx = 60,
     minLanesCount,
     lanesSource,
     filterBookingsToZoom,
@@ -120,6 +137,19 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
       ),
     [bookings, from, minLanesCount, lanesSource]
   );
+  const { observe, width } = useDimensions();
+  const { items: gridItems, bestStep } = React.useMemo(
+    () =>
+      generateGridItems(
+        from,
+        till,
+        step,
+        width,
+        gridAvailableSteps,
+        goalGridWidthPx
+      ),
+    [from, till, step, width, gridAvailableSteps, goalGridWidthPx]
+  );
   return (
     <div
       className={classNames(bookingCalendarDefaultClasses.className, className)}
@@ -142,10 +172,8 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
       >
         {showGrid && (
           <BookingCalendarGrid
-            from={from}
-            till={till}
-            step={step}
-            subdivisions={gridSubdivisions}
+            containerRef={observe}
+            items={gridItems}
             dataRowsCount={lanes.length}
           />
         )}
@@ -187,7 +215,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
           const LaneBookingCalendarLane =
             lane.BookingCalendarLane ?? BookingCalendarLane;
           return (
-            <>
+            <React.Fragment key={laneIndex}>
               <div
                 className={classNames(
                   bookingCalendarDefaultClasses.laneHeaderContainerClassName,
@@ -233,16 +261,15 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
                   step={step}
                 />
               </div>
-            </>
+            </React.Fragment>
           );
         })}
         <div />
         <div>
           <BookingCalendarTimeAxis
-            from={from}
-            till={till}
-            step={step}
-            subdivisions={gridSubdivisions}
+            items={gridItems}
+            bestStep={bestStep}
+            getMomentFormatFunction={getMomentFormatFunction}
           />
         </div>
       </div>

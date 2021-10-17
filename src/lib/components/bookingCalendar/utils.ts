@@ -238,28 +238,76 @@ export const generateControlItems = (
   }));
 };
 
+export interface GridItem {
+  left: number;
+  date: Moment;
+  stepProportion: number;
+  opacity: number;
+}
+
 export const generateGridItems = (
   from: Moment,
   till: Moment,
   step: Duration,
-  subdivisions: number = 1,
-  doEdges = false
-) => {
-  if (!from || !till || !step || subdivisions < 1) {
-    return [];
+  containerWidthPx: number,
+  availableSteps: Duration[],
+  goalGridWidthPx: number
+): { items: GridItem[]; bestStep: Duration } => {
+  if (
+    !from ||
+    !till ||
+    !containerWidthPx ||
+    !availableSteps?.length ||
+    !goalGridWidthPx ||
+    !step
+  ) {
+    return { bestStep: availableSteps?.[0], items: [] };
   }
-  const steps = Math.max(
-    0,
-    Math.floor(
-      ((till.valueOf() - from.valueOf()) / step.asMilliseconds()) * subdivisions
-    ) + (doEdges ? 1 : -1)
+  const stepMs = step.asMilliseconds();
+  const timeLengthMs = till.valueOf() - from.valueOf();
+  const approximateStepsCount = containerWidthPx / goalGridWidthPx;
+  const approximateStepMs = timeLengthMs / approximateStepsCount;
+  const availableStepsDistancesMs = availableSteps.map(a =>
+    Math.abs(a.asMilliseconds() - approximateStepMs)
   );
-  const width = till.valueOf() - from.valueOf();
-  return new Array(steps)
-    .fill(0)
-    .map(
-      (_, index) =>
-        ((step.asMilliseconds() / subdivisions) * (index + (doEdges ? 0 : 1))) /
-        width
-    );
+  const smallestDistance = Math.min(...availableStepsDistancesMs);
+  const bestStepIndex = availableStepsDistancesMs.findIndex(
+    a => a === smallestDistance
+  );
+  const bestStep = availableSteps[bestStepIndex];
+  let startMs =
+    from.valueOf() -
+    ((from.valueOf() + from.utcOffset() * 60 * 1000) %
+      bestStep.asMilliseconds());
+  let steps: Moment[] = [];
+  while (startMs <= till.valueOf()) {
+    steps = steps.concat(moment(startMs));
+    startMs += bestStep.asMilliseconds();
+  }
+  return {
+    items: steps
+      .filter(a => a.valueOf() > from.valueOf() && a.valueOf() < till.valueOf())
+      .map(date => {
+        const stepProportion =
+          ((date.valueOf() + from.utcOffset() * 60 * 1000) % stepMs) / stepMs;
+        let numberOfRoots = 0;
+        let current = stepProportion;
+        let currentTop = 1;
+        let tolerance = 0.001;
+        while (current > tolerance && current < currentTop - tolerance) {
+          numberOfRoots += 1;
+          currentTop = 1 / Math.pow(2, numberOfRoots);
+          if (current > currentTop) {
+            current -= currentTop;
+          }
+        }
+        return {
+          left: (date.valueOf() - from.valueOf()) / timeLengthMs,
+          date,
+          stepProportion,
+          opacity: 1 / (numberOfRoots || 1),
+        };
+      }),
+    bestStep,
+  };
 };

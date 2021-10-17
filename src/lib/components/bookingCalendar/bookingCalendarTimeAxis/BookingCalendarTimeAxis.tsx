@@ -1,34 +1,28 @@
 import * as React from 'react';
-import moment, { Moment, Duration } from 'moment';
 import {
   BookingCalendarTimeAxisClasses,
   bookingCalendarTimeAxisDefaultClasses,
 } from './classes';
 import classNames from 'classnames';
-import { generateGridItems } from '../utils';
+import { GridItem } from '../utils';
+import { Duration } from 'moment';
+import { GetMomentFormatFunctionType } from '..';
 
 export interface BookingCalendarTimeAxisProps
   extends BookingCalendarTimeAxisClasses {
-  from: Moment;
-  till: Moment;
-  step: Duration;
-  subdivisions: number;
+  items: GridItem[];
+  bestStep: Duration;
+  getMomentFormatFunction: GetMomentFormatFunctionType;
 }
 
 export function BookingCalendarTimeAxis(props: BookingCalendarTimeAxisProps) {
   const {
     className,
     timeAxisItemClassName,
-    from,
-    till,
-    step,
-    subdivisions,
+    items,
+    getMomentFormatFunction,
+    bestStep,
   } = props;
-  const items = React.useMemo(
-    () => generateGridItems(from, till, step, subdivisions),
-    [from, till, step, subdivisions]
-  );
-  const diff = till.diff(from);
   const svgRef = React.useRef<SVGSVGElement>();
   return (
     <svg
@@ -40,24 +34,15 @@ export function BookingCalendarTimeAxis(props: BookingCalendarTimeAxisProps) {
     >
       <g>
         {items.map((item, key) => (
-          <svg key={key} x={`${item * 100}%`}>
+          <svg key={key} x={`${item.left * 100}%`}>
             <text
               transform="translate(-7) rotate(90)"
               className={classNames(
                 bookingCalendarTimeAxisDefaultClasses.timeAxisItemClassName,
                 timeAxisItemClassName
               )}
-              style={{
-                opacity: key % subdivisions === subdivisions - 1 ? 0.4 : 0.2,
-              }}
             >
-              {moment(from)
-                .add(diff * item)
-                .format(
-                  key % subdivisions === subdivisions - 1
-                    ? 'MMM Do hh:mm a'
-                    : 'h:mm a'
-                )}
+              {item.date.format(getMomentFormatFunction?.(item.date, bestStep))}
             </text>
           </svg>
         ))}

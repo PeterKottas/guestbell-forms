@@ -1,17 +1,14 @@
 import * as React from 'react';
-import { Moment, Duration } from 'moment';
 import {
   BookingCalendarGridClasses,
   bookingCalendarGridDefaultClasses,
 } from './classes';
 import classNames from 'classnames';
-import { generateGridItems } from '../utils';
+import { GridItem } from '../utils';
 
 export interface BookingCalendarGridProps extends BookingCalendarGridClasses {
-  from: Moment;
-  till: Moment;
-  step: Duration;
-  subdivisions: number;
+  items: GridItem[];
+  containerRef: (elem: HTMLElement) => void;
   dataRowsCount: number;
 }
 
@@ -19,16 +16,10 @@ export function BookingCalendarGrid(props: BookingCalendarGridProps) {
   const {
     className,
     gridItemClassName,
-    from,
-    till,
-    step,
-    subdivisions,
+    containerRef,
     dataRowsCount,
+    items,
   } = props;
-  const items = React.useMemo(
-    () => generateGridItems(from, till, step, subdivisions),
-    [from, till, step, subdivisions]
-  );
   const style = React.useMemo(() => ({ gridRowEnd: `span ${dataRowsCount}` }), [
     dataRowsCount,
   ]);
@@ -39,6 +30,7 @@ export function BookingCalendarGrid(props: BookingCalendarGridProps) {
         className
       )}
       style={style}
+      ref={containerRef}
     >
       {items.map((item, key) => (
         <div
@@ -48,8 +40,8 @@ export function BookingCalendarGrid(props: BookingCalendarGridProps) {
           )}
           key={key}
           style={{
-            left: `${item * 100}%`,
-            opacity: key % subdivisions === subdivisions - 1 ? 0.4 : 0.2,
+            left: `${item.left * 100}%`,
+            opacity: 0.7 * item.opacity + 0.1,
           }}
         />
       ))}
