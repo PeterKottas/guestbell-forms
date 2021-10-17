@@ -48,6 +48,7 @@ export default class BookingCalendarSelection extends React.Component<
     this.handleMouseUp = this.handleMouseUp.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
   }
 
   handleTransformBox() {
@@ -68,37 +69,57 @@ export default class BookingCalendarSelection extends React.Component<
     return null;
   }
 
-  handleMouseUp(evt: React.MouseEvent<HTMLElement>) {
-    const distance = Math.sqrt(
-      Math.pow(
-        this.state.selectionBoxTarget[1] - this.state.selectionBoxOrigin[1],
-        2
-      ) +
-        Math.pow(
-          this.state.selectionBoxTarget[0] - this.state.selectionBoxOrigin[0],
-          2
-        )
-    );
-    if (distance < this.props.minSelectionSize) {
-      return;
-    }
-    this.props.onSelected?.({
-      origin: this.state.selectionBoxOrigin,
-      target: this.state.selectionBoxTarget,
-    });
-    this.setState({
-      hold: false,
-      animation: 'bookingCalendar__selection--fadeout',
-    });
-    this.animationInProgress = (setTimeout(() => {
+  handleMouseLeave(evt: React.MouseEvent<HTMLElement>) {
+    /*if (this.state.hold) {
       this.setState({
-        selectionBox: false,
-        animation: '',
-        selectionBoxOrigin: [0, 0],
-        selectionBoxTarget: [0, 0],
+        hold: false,
+        animation: 'bookingCalendar__selection--fadeout',
       });
-      this.animationInProgress = null;
-    }, 300) as unknown) as number;
+      this.animationInProgress = (setTimeout(() => {
+        this.setState({
+          selectionBox: false,
+          animation: '',
+          selectionBoxOrigin: [0, 0],
+          selectionBoxTarget: [0, 0],
+        });
+        this.animationInProgress = null;
+      }, 300) as unknown) as number;
+    }*/
+  }
+
+  handleMouseUp(evt: React.MouseEvent<HTMLElement>) {
+    if (this.state.hold) {
+      const distance = Math.sqrt(
+        Math.pow(
+          this.state.selectionBoxTarget[1] - this.state.selectionBoxOrigin[1],
+          2
+        ) +
+          Math.pow(
+            this.state.selectionBoxTarget[0] - this.state.selectionBoxOrigin[0],
+            2
+          )
+      );
+      this.setState({
+        hold: false,
+        animation: 'bookingCalendar__selection--fadeout',
+      });
+      this.animationInProgress = (setTimeout(() => {
+        this.setState({
+          selectionBox: false,
+          animation: '',
+          selectionBoxOrigin: [0, 0],
+          selectionBoxTarget: [0, 0],
+        });
+        this.animationInProgress = null;
+      }, 300) as unknown) as number;
+      if (distance < this.props.minSelectionSize) {
+        return;
+      }
+      this.props.onSelected?.({
+        origin: this.state.selectionBoxOrigin,
+        target: this.state.selectionBoxTarget,
+      });
+    }
   }
 
   handleMouseDown(e: React.MouseEvent<HTMLDivElement>) {
@@ -174,13 +195,13 @@ export default class BookingCalendarSelection extends React.Component<
         ref={this.containerRef}
         className="bookingCalendar__selection__container"
         style={{
-          pointerEvents: 'auto',
-          zIndex: boxVisible ? 99999 : undefined,
+          zIndex: this.state.selectionBox ? 99999 : undefined,
           gridRowEnd: `span ${this.props.dataRowsCount}`,
         }}
         onMouseDown={this.handleMouseDown}
         onMouseUp={this.handleMouseUp}
         onMouseMove={this.handleMouseMove}
+        onMouseLeave={this.handleMouseLeave}
       >
         {boxVisible && this.state.selectionBox && (
           <div

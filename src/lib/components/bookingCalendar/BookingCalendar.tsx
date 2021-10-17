@@ -160,8 +160,8 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
       if (!from || !till || !width || !onRangeChange) {
         return;
       }
-      const screenSpaceStartX = data.origin[0];
-      const screenSpaceEndX = data.target[0];
+      const screenSpaceStartX = Math.min(data.origin[0], data.target[0]);
+      const screenSpaceEndX = Math.max(data.origin[0], data.target[0]);
       const durationMs = till.valueOf() - from.valueOf();
       const toTimeSpace = (num: number) => (num / (width || 1)) * durationMs;
       const timeSpaceStart = moment(
