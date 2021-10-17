@@ -65,6 +65,7 @@ export interface BookingCalendarProps<
   step?: Duration;
   showGrid?: boolean;
   showSelection?: boolean;
+  minSelectionSize?: number;
   gridAvailableSteps?: Duration[];
   goalGridWidthPx?: number;
   minLanesCount?: number;
@@ -116,6 +117,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     gridAvailableSteps = defaultGridAvailableSteps,
     getMomentFormatFunction = defaultGetMomentFormatFunction,
     goalGridWidthPx = 60,
+    minSelectionSize = 10,
     minLanesCount,
     lanesSource,
     filterBookingsToZoom,
@@ -203,6 +205,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
           <BookingCalendarSelection
             dataRowsCount={lanes.length}
             onSelected={onSelected}
+            minSelectionSize={minSelectionSize}
           />
         )}
         <div

@@ -16,6 +16,7 @@ export interface BookingCalendarSelectionProps {
     target: BookingCalendarSelectionCoordinates;
   }) => void;
   dataRowsCount: number;
+  minSelectionSize: number;
 }
 
 export interface BookingCalendarSelectionState {
@@ -78,7 +79,7 @@ export default class BookingCalendarSelection extends React.Component<
           2
         )
     );
-    if (distance < 10) {
+    if (distance < this.props.minSelectionSize) {
       return;
     }
     this.props.onSelected?.({
@@ -167,7 +168,7 @@ export default class BookingCalendarSelection extends React.Component<
             this.state.selectionBoxTarget[0] - this.state.selectionBoxOrigin[0],
             2
           )
-      ) > 20;
+      ) > this.props.minSelectionSize;
     return (
       <div
         ref={this.containerRef}
