@@ -38,6 +38,7 @@ export interface MoneyProps extends BaseInputProps<never, MoneyTranslations> {
   allowMultiple?: boolean;
   currencies: SelectValue[];
   prices: MoneyWithCurrency[];
+  disableDelete?: boolean;
 }
 
 export interface MoneyState extends BaseInputState {}
@@ -110,18 +111,27 @@ export class MoneyRaw extends BaseInput<
               );
               let retComponents = currentCurrencies.length ? (
                 <div key={index}>
-                  <Select
-                    {...(this.props.id && {
-                      id:
-                        this.props.id + '-currency-select-' + index.toString(),
-                    })}
-                    onFocus={this.onFocus}
-                    onBlur={this.onBlur}
-                    className={'money-input__select m-0'}
-                    values={currentCurrencies}
-                    onChange={this.onCurrencyChanged(index, currentCurrencies)}
-                    value={item.currency.value.toString()}
-                  />
+                  {currentCurrencies.length > 1 ? (
+                    <Select
+                      {...(this.props.id && {
+                        id:
+                          this.props.id +
+                          '-currency-select-' +
+                          index.toString(),
+                      })}
+                      onFocus={this.onFocus}
+                      onBlur={this.onBlur}
+                      className={'money-input__select m-0'}
+                      values={currentCurrencies}
+                      onChange={this.onCurrencyChanged(
+                        index,
+                        currentCurrencies
+                      )}
+                      value={item.currency.value.toString()}
+                    />
+                  ) : (
+                    currentCurrencies?.[0]?.label
+                  )}
                   <Text
                     {...(this.props.id && {
                       id: this.props.id + '-amount-input-' + index.toString(),
@@ -136,7 +146,7 @@ export class MoneyRaw extends BaseInput<
                     onChange={this.onPriceChanged(index)}
                     type="number"
                   />
-                  {this.props.prices.length > 0 && (
+                  {!this.props.disableDelete && this.props.prices.length > 0 && (
                     <Button
                       {...(this.props.id && {
                         id:

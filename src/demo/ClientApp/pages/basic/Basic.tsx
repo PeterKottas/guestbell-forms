@@ -579,6 +579,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         required={true}
                         onPricesChange={this.prices1Changed}
                         title="Price"
+                        disableDelete={true}
                       />
                       <Money
                         currencies={currencies2}
