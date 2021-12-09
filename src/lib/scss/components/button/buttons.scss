@@ -2,7 +2,7 @@
   background-color: $bg;
   fill: $fg;
   color: $fg;
-  &:not(.guestbell-btn--disabled):not(.guestbell-btn--blank):hover {
+  &:not(.guestbell-btn--disabled):not(.guestbell-btn--blank):not(.guestbell-btn--outlined):hover {
     background-color: darken($bg, 7%);
   }
   &:not(.guestbell-btn--disabled).guestbell-btn--outlined {
@@ -10,10 +10,12 @@
     color: $bg;
     fill: $bg;
     background-color: transparent;
-    &:hover {
-      color: $fg;
-      fill: $fg;
-      background-color: $bg;
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        color: $fg;
+        fill: $fg;
+        background-color: $bg;
+      }
     }
   }
   &:not(.guestbell-btn--disabled).guestbell-btn--blank {
