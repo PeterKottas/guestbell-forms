@@ -284,7 +284,7 @@ export const generateGridItems = (
   let startMs = fromMs - subtract;
   let steps: Moment[] = [];
   while (startMs <= tillMs) {
-    steps = steps.concat(moment(startMs));
+    steps = steps.concat(from.clone().add(startMs - fromMs, 'ms'));
     startMs += bestStep.asMilliseconds();
   }
   return {
