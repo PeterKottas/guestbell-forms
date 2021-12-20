@@ -1,4 +1,4 @@
-import { Moment, Duration, duration } from 'moment';
+import moment, { Moment, Duration, duration } from 'moment';
 
 export interface BookingCalendarItemT {
   from: Moment;
@@ -43,6 +43,12 @@ export const defaultGetMomentFormatFunction = (
 };
 
 export type GetMomentFormatFunctionType = typeof defaultGetMomentFormatFunction;
+
+export const defaultGetNewMomentFunction = (date: Date) => {
+  return moment(date);
+};
+
+export type GetNewMomentFunctionType = typeof defaultGetNewMomentFunction;
 
 export const defaultGridAvailableSteps: Duration[] = [
   duration(1, 'minute'),

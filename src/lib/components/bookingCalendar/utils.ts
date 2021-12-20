@@ -229,10 +229,10 @@ export const generateControlItems = (
     steps += 1;
   }
   return new Array(steps).fill(0).map((_, index) => ({
-    from: moment(from)
+    from: from.clone()
       .add(subtract)
       .add(step.asMilliseconds() * index),
-    till: moment(from)
+    till: from.clone()
       .add(subtract)
       .add(step.asMilliseconds() * (index + 1)),
   }));

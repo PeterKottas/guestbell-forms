@@ -5,7 +5,11 @@ import {
   bookingCalendarDatePickerDefaultClasses,
 } from './classes';
 import { Moment } from 'moment';
-import { BookingCalendarDateRange, BookingCalendarItemT } from '../common';
+import {
+  BookingCalendarDateRange,
+  BookingCalendarItemT,
+  GetNewMomentFunctionType,
+} from '../common';
 import { Button } from '../../button/Button';
 import * as EventIcon from 'material-design-icons/action/svg/production/ic_event_24px.svg';
 try {
@@ -14,7 +18,7 @@ try {
   DatePicker = undefined;
 }
 // import DatePicker from 'react-datepicker';
-import moment from 'moment';
+import { defaultGetNewMomentFunction } from '..';
 
 export interface BookingCalendarDatePickerBaseProps<
   T extends BookingCalendarItemT
@@ -22,6 +26,7 @@ export interface BookingCalendarDatePickerBaseProps<
   from: Moment;
   till: Moment;
   onRangeChange?: (range: BookingCalendarDateRange) => void;
+  getNewMomentFunction?: GetNewMomentFunctionType;
 }
 
 export interface BookingCalendarDatePickerProps<T extends BookingCalendarItemT>
@@ -31,7 +36,14 @@ export interface BookingCalendarDatePickerProps<T extends BookingCalendarItemT>
 export function BookingCalendarDatePicker<T extends BookingCalendarItemT>(
   props: BookingCalendarDatePickerProps<T>
 ) {
-  const { className, buttonClassName, from, till, onRangeChange } = props;
+  const {
+    className,
+    buttonClassName,
+    from,
+    till,
+    onRangeChange,
+    getNewMomentFunction = defaultGetNewMomentFunction,
+  } = props;
   const [shownModal, setShownModal] = React.useState<null | 'start' | 'end'>();
   const calendarRef = React.useRef<typeof DatePicker>();
   const onButtonClick = React.useCallback(() => {
@@ -68,20 +80,20 @@ export function BookingCalendarDatePicker<T extends BookingCalendarItemT>(
         //dateFormat={DAY_FORMAT}
         onChange={(dt: Date) => {
           if (shownModal !== 'end') {
-            const dtm = moment(dt);
-            let validTill = moment(till);
+            const dtm = getNewMomentFunction(dt);
+            let validTill = till.clone();
             if (dtm.isAfter(till)) {
-              validTill = moment(dtm).add(1, 'day');
+              validTill = dtm.clone().add(1, 'day');
             }
             onRangeChange({ from: dtm, till: validTill });
             setShownModal('end');
           } else {
-            let dtm = moment(dt)
+            let dtm = getNewMomentFunction(dt)
               .startOf('day')
               .add(1, 'day');
-            let validFrom = moment(from);
+            let validFrom = from.clone();
             if (dtm.isBefore(from)) {
-              validFrom = moment(dtm).add(-1, 'day');
+              validFrom = dtm.clone().add(-1, 'day');
             }
             onRangeChange({ from: validFrom, till: dtm });
             setShownModal(null);

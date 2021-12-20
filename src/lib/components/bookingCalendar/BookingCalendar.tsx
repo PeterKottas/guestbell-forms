@@ -8,6 +8,7 @@ import {
   BookingCalendarDateRange,
   BookingCalendarItemT,
   defaultGetMomentFormatFunction,
+  GetNewMomentFunctionType,
 } from './common';
 import {
   BookingCalendarControls as DefaultBookingCalendarControls,
@@ -41,8 +42,8 @@ import {
   BookingCalendarDatePicker as DefaultBookingCalendarDatePicker,
   BookingCalendarDatePickerProps,
 } from './bookingCalendarDatePicker';
-import moment from 'moment';
 import {
+  defaultGetNewMomentFunction,
   defaultGridAvailableSteps,
   GetMomentFormatFunctionType,
   ZoomLevel,
@@ -61,6 +62,7 @@ export interface BookingCalendarProps<
   from: Moment;
   till: Moment;
   getMomentFormatFunction?: GetMomentFormatFunctionType;
+  getNewMomentFunction?: GetNewMomentFunctionType;
   onRangeChange?: (range: BookingCalendarDateRange) => void;
   step?: Duration;
   showGrid?: boolean;
@@ -116,6 +118,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     showSelection = true,
     gridAvailableSteps = defaultGridAvailableSteps,
     getMomentFormatFunction = defaultGetMomentFormatFunction,
+    getNewMomentFunction = defaultGetNewMomentFunction,
     goalGridWidthPx = 60,
     minSelectionSize = 10,
     minLanesCount,
@@ -164,12 +167,10 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
       const screenSpaceEndX = Math.max(data.origin[0], data.target[0]);
       const durationMs = till.valueOf() - from.valueOf();
       const toTimeSpace = (num: number) => (num / (width || 1)) * durationMs;
-      const timeSpaceStart = moment(
-        from.valueOf() + toTimeSpace(screenSpaceStartX)
-      );
-      const timeSpaceEnd = moment(
-        from.valueOf() + toTimeSpace(screenSpaceEndX)
-      );
+      const timeSpaceStart = from
+        .clone()
+        .add(toTimeSpace(screenSpaceStartX), 'ms');
+      const timeSpaceEnd = from.clone().add(toTimeSpace(screenSpaceEndX), 'ms');
       onRangeChange({ from: timeSpaceStart, till: timeSpaceEnd });
     },
     [from, till, width, onRangeChange]
@@ -219,6 +220,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
               from={from}
               till={till}
               onRangeChange={onRangeChange}
+              getNewMomentFunction={getNewMomentFunction}
             />
           ) : (
             BookingCalendarDatePicker

@@ -14,7 +14,6 @@ import * as LeftArrowIcon from 'material-design-icons/hardware/svg/production/ic
 import * as RightArrowLongIcon from 'material-design-icons/navigation/svg/production/ic_arrow_forward_24px.svg';
 import * as RightArrowIcon from 'material-design-icons/hardware/svg/production/ic_keyboard_arrow_right_24px.svg';
 import * as UnfoldLessIcon from 'material-design-icons/navigation/svg/production/ic_unfold_less_24px.svg';
-import moment from 'moment';
 
 export interface BookingCalendarControlsProps<T extends BookingCalendarItemT>
   extends BookingCalendarControlsClasses {
@@ -76,20 +75,20 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
     [filterBookingsToZoom, items]
   );
   const onZoomBookingsClick = React.useCallback(() => {
-    const minFrom = moment(
+    const minFromMs =
       Math.min(
         ...filteredItems
           ?.filter(filterBookingsToZoom)
           .map(a => a.from.valueOf())
-      ) ?? from?.valueOf()
-    );
-    const maxTill = moment(
+      ) ?? from?.valueOf();
+    const minFrom = from.clone().add(from.valueOf() - minFromMs, 'ms');
+    const maxTillMs =
       Math.max(
         ...filteredItems
           ?.filter(filterBookingsToZoom)
           .map(a => a.till.valueOf())
-      ) ?? till?.valueOf()
-    );
+      ) ?? till?.valueOf();
+    const maxTill = till.clone().add(till.valueOf() - maxTillMs, 'ms');
     onRangeChange({
       from: minFrom,
       till: maxTill,
@@ -129,8 +128,8 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
               key={index}
               onClick={() =>
                 onRangeChange({
-                  from: moment(from).startOf('day'),
-                  till: moment(from)
+                  from: from.clone().startOf('day'),
+                  till: from.clone()
                     .startOf('day')
                     .add(level.step),
                 })
