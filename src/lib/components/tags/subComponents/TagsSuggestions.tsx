@@ -9,6 +9,7 @@ export type RenderSuggestionTagProps<T extends Tag = Tag> = {
   index: number;
   id?: string;
   onClick: (e: React.MouseEvent<HTMLElement>) => void;
+  isPreselected: boolean;
 };
 
 export type SuggestionsProps<T extends Tag = Tag> = {
@@ -36,6 +37,32 @@ type InjectedProps = {};
 
 const popperModifiers = { flip: { enabled: false } };
 
+function DefaultSuggestionTag<T extends Tag = Tag>({
+  index,
+  tag,
+  id,
+  onClick,
+  isPreselected,
+}: RenderSuggestionTagProps<T>) {
+  return (
+    <li key={index}>
+      <Button
+        {...(id && {
+          id: id + '-suggestion-' + index.toString(),
+        })}
+        className={
+          'w-100 tags-input__suggestion ' +
+          (isPreselected ? 'tags-input__suggestion--preselected' : '')
+        }
+        onClick={onClick}
+        dropdown={true}
+      >
+        {tag.name}
+      </Button>
+    </li>
+  );
+}
+
 function Suggestions<T extends Tag = Tag>(
   props: SuggestionsProps<T> & InjectedProps
 ) {
@@ -50,29 +77,7 @@ function Suggestions<T extends Tag = Tag>(
     () => ({ width: props.anchorEl?.scrollWidth, zIndex: 10000 }),
     [props.anchorEl?.scrollWidth]
   );
-  const DefaultSuggestionTag = React.useCallback(
-    ({ index, tag, id, onClick }: RenderSuggestionTagProps<T>) => (
-      <li key={index}>
-        <Button
-          {...(id && {
-            id: id + '-suggestion-' + index.toString(),
-          })}
-          className={
-            'w-100 tags-input__suggestion ' +
-            (props.preselectedSuggestion !== undefined &&
-            props.preselectedSuggestion === index
-              ? 'tags-input__suggestion--preselected'
-              : '')
-          }
-          onClick={onClick}
-          dropdown={true}
-        >
-          {tag.name}
-        </Button>
-      </li>
-    ),
-    []
-  );
+
   const { SuggestionTag = DefaultSuggestionTag } = props;
   return (
     props.anchorEl && (
@@ -110,6 +115,10 @@ function Suggestions<T extends Tag = Tag>(
                   tag={tag}
                   onClick={onSelectedFactory(tag, props.tags.length === 1)}
                   id={props.id}
+                  isPreselected={
+                    props.preselectedSuggestion !== undefined &&
+                    props.preselectedSuggestion === index
+                  }
                 />
               ))}
             {props.EmptyComponent &&
