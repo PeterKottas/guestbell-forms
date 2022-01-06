@@ -679,6 +679,6 @@ export const Tags = withThemeContext<TagsProps, InstanceType<typeof TagsRaw>>(
   // tslint:disable-next-line: no-any
   withFormContext<TagsProps>(TagsRaw),
   'tags'
-);
+) as unknown as <T extends Tag = Tag>(props: TagsProps<T>)=> React.ReactElement;
 
 export default Tags;
