@@ -676,8 +676,8 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
 }
 
 interface TagsFinal<T extends Tag = Tag> {
-  (item: TagsProps<T>): React.ReactElement,
-  defaultProps: TagsProps<T>
+  (item: TagsProps<T>): React.ReactElement;
+  defaultProps?: Partial<TagsProps<T>>;
 }
 
 export const Tags = (withThemeContext<TagsProps, InstanceType<typeof TagsRaw>>(
