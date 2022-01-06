@@ -675,12 +675,15 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
   };
 }
 
+interface TagsFinal<T extends Tag = Tag> {
+  (item: TagsProps<T>): React.ReactElement,
+  defaultProps: TagsProps<T>
+}
+
 export const Tags = (withThemeContext<TagsProps, InstanceType<typeof TagsRaw>>(
   // tslint:disable-next-line: no-any
   withFormContext<TagsProps>(TagsRaw),
   'tags'
-) as unknown) as <T extends Tag = Tag>(
-  props: TagsProps<T>
-) => React.ReactElement & { defaultProps?: Partial<TagsProps<T>> };
+) as unknown) as TagsFinal;
 
 export default Tags;
