@@ -22,6 +22,7 @@ export interface TextAreaProps extends BaseInputProps<HTMLTextAreaElement> {
   type?: 'number' | 'text';
   minRows?: number;
   maxRows?: number;
+  maxLength?: number;
 }
 
 export interface TextAreaState extends BaseInputState {}
@@ -70,6 +71,7 @@ export class TextAreaRaw extends BaseInput<
             onKeyDown={this.onKeyDown}
             rows={this.props.minRows}
             rowsMax={this.props.maxRows}
+            maxLength={this.props.maxLength}
           />
           <span className="highlight" />
           <span className="bar" />
