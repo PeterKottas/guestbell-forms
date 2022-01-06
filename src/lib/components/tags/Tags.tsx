@@ -12,7 +12,9 @@ import {
   defaultBaseTranslations,
 } from '../base/input/BaseInput';
 import { Button, ButtonComponentProps } from '../button/Button';
-import TagsSuggestions from './subComponents/TagsSuggestions';
+import TagsSuggestions, {
+  RenderSuggestionTagProps,
+} from './subComponents/TagsSuggestions';
 import { withFormContext } from '../form/withFormContext';
 import classNames from 'classnames';
 import { withThemeContext } from '../themeProvider/withThemeContext';
@@ -33,16 +35,16 @@ export const defaultTagsTranslations = {
 
 export type TagsTranslations = Partial<typeof defaultTagsTranslations>;
 
-export type TagsProps = {
+export type TagsProps<T extends Tag = Tag> = {
   className?: string;
   tagsSuggestionsClassName?: string;
   disabled?: boolean;
-  tags: Tag[];
-  existingTags?: Tag[];
-  fetchExistingTags?: (text: string) => Promise<Tag[]>;
-  onTagsChanged: (newTags: Tag[]) => void;
-  onNewTagAdded?: (newTagName: string) => Promise<Tag>;
-  onTagClick?: (tag: Tag) => void;
+  tags: T[];
+  existingTags?: T[];
+  fetchExistingTags?: (text: string) => Promise<T[]>;
+  onTagsChanged: (newTags: T[]) => void;
+  onNewTagAdded?: (newTagName: string) => Promise<T>;
+  onTagClick?: (tag: T) => void;
   showChips?: boolean;
   allowNew?: boolean;
   addNewOnBlur?: boolean;
@@ -57,21 +59,22 @@ export type TagsProps = {
   suggestionsEmptyComponent?: string | JSX.Element;
   waitingForMoreInputComponent?: string | JSX.Element;
   loadingDelayMs?: number;
-  filterExistingTags?: (text: string, existingTags: Tag[]) => Tag[];
+  filterExistingTags?: (text: string, existingTags: T[]) => T[];
   allowSameTagMultipleTimes?: boolean;
   maxSuggestions?: number;
   popperProps?: Partial<PopperProps>;
   minLettersToFetch?: number;
   mobileVersionEnabled?: boolean;
   isLoading?: boolean;
+  SuggestionTag?: React.ComponentType<RenderSuggestionTagProps<T>>;
 } & BaseInputProps<HTMLInputElement, TagsTranslations>;
 
-export interface TagsState extends BaseInputState {
+export interface TagsState<T extends Tag = Tag> extends BaseInputState {
   textIsFocused: boolean;
   textErrors: ValidationError[];
   textIsValid: boolean;
   suggestionsVisible: boolean;
-  fetchedExistingTags: Tag[];
+  fetchedExistingTags: T[];
   fetchingExistingTags: boolean;
   preselectedSuggestion?: number;
 }
@@ -84,9 +87,9 @@ const TagButtonComponent: React.FC<ButtonComponentProps> = p => (
   </a>
 );
 
-export class TagsRaw extends BaseInput<
-  TagsProps & InjectedProps,
-  TagsState,
+export class TagsRaw<T extends Tag = Tag> extends BaseInput<
+  TagsProps<T> & InjectedProps,
+  TagsState<T>,
   HTMLInputElement,
   TagsTranslations
 > {
@@ -122,7 +125,7 @@ export class TagsRaw extends BaseInput<
   private suggestionsRef: React.RefObject<HTMLDivElement>;
   private isMobile: boolean = false;
 
-  constructor(props: TagsProps & InjectedProps) {
+  constructor(props: TagsProps<T> & InjectedProps) {
     super(props);
     this.state = {
       ...this.state,
@@ -312,7 +315,7 @@ export class TagsRaw extends BaseInput<
                   before={LeaveMobileButton}
                 />
                 {this.state.suggestionsVisible && this.props.showSuggestions && (
-                  <TagsSuggestions
+                  <TagsSuggestions<T>
                     {...(this.props.id && {
                       id: this.props.id + '-text-input',
                     })}
@@ -360,6 +363,7 @@ export class TagsRaw extends BaseInput<
                         </Button>
                       )
                     }
+                    SuggestionTag={this.props.SuggestionTag}
                     popperProps={this.props.popperProps}
                   />
                 )}
@@ -416,9 +420,7 @@ export class TagsRaw extends BaseInput<
     }
   };
 
-  private onKeyDown = (suggestions: Tag[]) => async (
-    e: React.KeyboardEvent
-  ) => {
+  private onKeyDown = (suggestions: T[]) => async (e: React.KeyboardEvent) => {
     if (e.key === 'Tab') {
       this.setState({
         suggestionsVisible: false,
@@ -491,7 +493,7 @@ export class TagsRaw extends BaseInput<
     });
   };
 
-  private onSuggestionSelected = (tag: Tag, lastSelected: boolean) => {
+  private onSuggestionSelected = (tag: T, lastSelected: boolean) => {
     const newTags = this.props.tags.concat(tag);
     this.props.onTagsChanged(newTags);
     const isMax = newTags.length === this.props.maxTags;
@@ -544,7 +546,7 @@ export class TagsRaw extends BaseInput<
     this.fetchExistingTags(e.target.value);
   };
 
-  private handleErrors = (tags: Tag[] = this.props.tags) => {
+  private handleErrors = (tags: T[] = this.props.tags) => {
     let errors = this.getErrors(tags);
     if (errors.length > 0) {
       this.setInvalid(errors);
@@ -553,7 +555,7 @@ export class TagsRaw extends BaseInput<
     }
   };
 
-  private getErrors(tags: Tag[]) {
+  private getErrors(tags: T[]) {
     let errors = [];
     if (tags.length < this.props.maxTags) {
       errors = errors.concat(this.state.textErrors);
@@ -592,7 +594,7 @@ export class TagsRaw extends BaseInput<
   }
 
   private getSuggestions() {
-    const existingTags: Tag[] = []
+    const existingTags: T[] = []
       .concat(this.props.existingTags ? this.props.existingTags : [])
       .concat(
         this.state.fetchedExistingTags ? this.state.fetchedExistingTags : []
@@ -611,7 +613,7 @@ export class TagsRaw extends BaseInput<
     return suggestions;
   }
 
-  private renderTag(tag: Tag, index: number) {
+  private renderTag(tag: T, index: number) {
     const body = (
       <>
         {tag.name}
@@ -654,11 +656,11 @@ export class TagsRaw extends BaseInput<
     );
   }
 
-  private tagClick = (tag: Tag) => () => {
+  private tagClick = (tag: T) => () => {
     this.props.onTagClick && this.props.onTagClick(tag);
   };
 
-  private tagRemoveClick = (tag: Tag) => (e: React.MouseEvent<HTMLElement>) => {
+  private tagRemoveClick = (tag: T) => (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     const newTags = this.props.tags.filter(sv => sv.id !== tag.id);
     /*if (newTags.length === 0) {

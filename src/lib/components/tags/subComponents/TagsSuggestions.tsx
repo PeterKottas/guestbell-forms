@@ -4,7 +4,14 @@ import { Button } from '../../..';
 import Popper, { PopperProps } from '@material-ui/core/Popper';
 import classNames from 'classnames';
 
-export type SuggestionsProps = {
+export type RenderSuggestionTagProps<T extends Tag = Tag> = {
+  tag: T;
+  index: number;
+  id?: string;
+  onClick: (e: React.MouseEvent<HTMLElement>) => void;
+};
+
+export type SuggestionsProps<T extends Tag = Tag> = {
   className?: string;
   innerRef: React.RefObject<HTMLDivElement>;
   anchorEl: HTMLElement;
@@ -12,8 +19,8 @@ export type SuggestionsProps = {
   preselectedSuggestion?: number;
   isVisible: boolean;
   isWaitingForMoreInput: boolean;
-  tags: Tag[];
-  onSelected: (tag: Tag, lastSelected: boolean) => void;
+  tags: T[];
+  onSelected: (tag: T, lastSelected: boolean) => void;
   value: string;
   loading: boolean;
   LoadingComponent?: string | JSX.Element;
@@ -22,16 +29,19 @@ export type SuggestionsProps = {
   WaitingForMoreInputComponent?: string | JSX.Element;
   allowNew: boolean;
   popperProps?: Partial<PopperProps>;
+  SuggestionTag?: React.ComponentType<RenderSuggestionTagProps<T>>;
 };
 
 type InjectedProps = {};
 
 const popperModifiers = { flip: { enabled: false } };
 
-const Suggestions: React.FC<SuggestionsProps & InjectedProps> = props => {
+function Suggestions<T extends Tag = Tag>(
+  props: SuggestionsProps<T> & InjectedProps
+) {
   const { onSelected } = props;
   const onSelectedFactory = React.useCallback(
-    (tag: Tag, lastSelected: boolean) => (e: React.MouseEvent) => {
+    (tag: T, lastSelected: boolean) => (e: React.MouseEvent) => {
       onSelected(tag, lastSelected);
     },
     [onSelected]
@@ -40,6 +50,30 @@ const Suggestions: React.FC<SuggestionsProps & InjectedProps> = props => {
     () => ({ width: props.anchorEl?.scrollWidth, zIndex: 10000 }),
     [props.anchorEl?.scrollWidth]
   );
+  const DefaultSuggestionTag = React.useCallback(
+    ({ index, tag, id, onClick }: RenderSuggestionTagProps<T>) => (
+      <li key={index}>
+        <Button
+          {...(id && {
+            id: id + '-suggestion-' + index.toString(),
+          })}
+          className={
+            'w-100 tags-input__suggestion ' +
+            (props.preselectedSuggestion !== undefined &&
+            props.preselectedSuggestion === index
+              ? 'tags-input__suggestion--preselected'
+              : '')
+          }
+          onClick={onClick}
+          dropdown={true}
+        >
+          {tag.name}
+        </Button>
+      </li>
+    ),
+    []
+  );
+  const { SuggestionTag = DefaultSuggestionTag } = props;
   return (
     props.anchorEl && (
       <Popper
@@ -70,24 +104,13 @@ const Suggestions: React.FC<SuggestionsProps & InjectedProps> = props => {
               )}
             {!props.isWaitingForMoreInput &&
               props.tags.map((tag, index) => (
-                <li key={index}>
-                  <Button
-                    {...(props.id && {
-                      id: props.id + '-suggestion-' + index.toString(),
-                    })}
-                    className={
-                      'w-100 tags-input__suggestion ' +
-                      (props.preselectedSuggestion !== undefined &&
-                      props.preselectedSuggestion === index
-                        ? 'tags-input__suggestion--preselected'
-                        : '')
-                    }
-                    onClick={onSelectedFactory(tag, props.tags.length === 1)}
-                    dropdown={true}
-                  >
-                    {tag.name}
-                  </Button>
-                </li>
+                <SuggestionTag
+                  key={tag.id}
+                  index={index}
+                  tag={tag}
+                  onClick={onSelectedFactory(tag, props.tags.length === 1)}
+                  id={props.id}
+                />
               ))}
             {props.EmptyComponent &&
               props.tags.length === 0 &&
@@ -102,7 +125,7 @@ const Suggestions: React.FC<SuggestionsProps & InjectedProps> = props => {
       </Popper>
     )
   );
-};
+}
 
 const SuggestionsWrapped = Suggestions;
 
