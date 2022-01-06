@@ -675,10 +675,12 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
   };
 }
 
-export const Tags = withThemeContext<TagsProps, InstanceType<typeof TagsRaw>>(
+export const Tags = (withThemeContext<TagsProps, InstanceType<typeof TagsRaw>>(
   // tslint:disable-next-line: no-any
   withFormContext<TagsProps>(TagsRaw),
   'tags'
-) as unknown as <T extends Tag = Tag>(props: TagsProps<T>)=> React.ReactElement;
+) as unknown) as <T extends Tag = Tag>(
+  props: TagsProps<T>
+) => React.ReactElement & { defaultProps?: Partial<TagsProps<T>> };
 
 export default Tags;
