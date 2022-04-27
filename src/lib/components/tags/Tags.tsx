@@ -66,6 +66,7 @@ export type TagsProps<T extends Tag = Tag> = {
   minLettersToFetch?: number;
   mobileVersionEnabled?: boolean;
   isLoading?: boolean;
+  closeSuggestionsAfterCreate?: boolean;
   SuggestionTag?: React.ComponentType<RenderSuggestionTagProps<T>>;
 } & BaseInputProps<HTMLInputElement, TagsTranslations>;
 
@@ -119,6 +120,7 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
     translations: defaultTagsTranslations,
     minLettersToFetch: 0,
     mobileVersionEnabled: true,
+    closeSuggestionsAfterCreate: false,
   };
 
   private textRef: React.RefObject<TextRaw>;
@@ -482,6 +484,11 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
 
   private addNewTag = async () => {
     const newTag = await this.props.onNewTagAdded(this.state.value);
+    this.setState({
+      suggestionsVisible: this.props.closeSuggestionsAfterCreate
+        ? false
+        : this.state.suggestionsVisible,
+    });
     if (newTag) {
       this.props.onTagsChanged(
         this.props.tags ? this.props.tags.concat(newTag) : [newTag]
@@ -502,7 +509,10 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
     this.setState(
       {
         value: finalValue,
-        suggestionsVisible: isMax ? false : this.state.suggestionsVisible,
+        suggestionsVisible:
+          isMax || this.props.closeSuggestionsAfterCreate
+            ? false
+            : this.state.suggestionsVisible,
         preselectedSuggestion: undefined,
         textErrors: [],
       },
