@@ -209,6 +209,7 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
   public componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutside);
     document.addEventListener('touchstart', this.handleClickOutside);
+    this.handleErrors(this.props.tags);
   }
 
   public componentWillUnmount() {
