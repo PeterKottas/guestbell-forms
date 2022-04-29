@@ -18,6 +18,7 @@ export interface CheckboxProps extends BaseInputProps<HTMLInputElement> {
   onChange?: never;
   type?: string;
   checked?: boolean;
+  supportsIndeterminate?: boolean;
 }
 
 export interface CheckboxState extends BaseInputState {
@@ -30,7 +31,7 @@ export class CheckboxRaw extends BaseInput<
   HTMLInputElement
 > {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
-    checked: false,
+    // checked: false,
   }) as CheckboxProps;
 
   constructor(props: CheckboxProps) {
@@ -46,6 +47,21 @@ export class CheckboxRaw extends BaseInput<
     this.handleChecked = this.handleChecked.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.subscribeSelf(props);
+  }
+
+  public componentDidMount() {
+    const finalIndeterminate = Boolean(
+      this.props.supportsIndeterminate &&
+        typeof this.props.checked !== 'boolean'
+    );
+    if (
+      typeof this.props.checked !== 'boolean' &&
+      this.inputRef.current &&
+      this.inputRef.current?.indeterminate !== finalIndeterminate
+    ) {
+      this.inputRef.current.indeterminate = finalIndeterminate;
+    }
+    super.componentDidMount?.();
   }
 
   public componentDidUpdate(oldProps: CheckboxProps) {
@@ -70,6 +86,16 @@ export class CheckboxRaw extends BaseInput<
         this.setValid();
       }
     }
+    const finalIndeterminate = Boolean(
+      this.props.supportsIndeterminate &&
+        typeof this.props.checked !== 'boolean'
+    );
+    if (
+      this.props.supportsIndeterminate &&
+      this.inputRef.current?.indeterminate !== finalIndeterminate
+    ) {
+      this.inputRef.current.indeterminate = finalIndeterminate;
+    }
   }
 
   public render() {
@@ -80,17 +106,30 @@ export class CheckboxRaw extends BaseInput<
       { ['checkbox-input--with-label']: Boolean(this.props.label) },
       { ['checkbox-input--disabled']: this.props.disabled },
     ]);
+    const input = (
+      <input
+        {...(this.props.id && { id: this.props.id })}
+        ref={this.inputRef}
+        value={this.props.value || ''}
+        type="checkbox"
+        required={this.props.required}
+        checked={this.state.checked ?? false}
+        onChange={this.handleChecked}
+        onBlur={this.handleBlur}
+        onFocus={this.handleFocus}
+        onKeyDown={this.handleKeyDown}
+        tabIndex={this.props.disabled ? -1 : 0}
+      />
+    );
     return (
       <InputGroup title={this.props.title} tooltip={this.props.tooltip}>
         <div className={containerClassName} ref={this.containerRef}>
-          {this.props.title && !this.props.label && this.renderInput()}
-          {!this.props.title &&
-            !this.props.label &&
-            this.renderTooltip(this.renderInput())}
+          {this.props.title && !this.props.label && input}
+          {!this.props.title && !this.props.label && this.renderTooltip(input)}
           {this.renderDefaultValidation()}
           {this.props.label && (
             <label className="checkbox-input__label">
-              {this.renderInput()}
+              {input}
               {this.renderLabel()}
             </label>
           )}
@@ -121,24 +160,6 @@ export class CheckboxRaw extends BaseInput<
         this.inputRef.current?.click();
       }
     }
-  }
-
-  private renderInput() {
-    return (
-      <input
-        {...(this.props.id && { id: this.props.id })}
-        ref={this.inputRef}
-        value={this.props.value || ''}
-        type="checkbox"
-        required={this.props.required}
-        checked={this.state.checked}
-        onChange={this.handleChecked}
-        onBlur={this.handleBlur}
-        onFocus={this.handleFocus}
-        onKeyDown={this.handleKeyDown}
-        tabIndex={this.props.disabled ? -1 : 0}
-      />
-    );
   }
 }
 

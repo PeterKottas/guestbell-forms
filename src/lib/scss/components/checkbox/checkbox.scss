@@ -61,9 +61,16 @@
       border-right-style: none;
       pointer-events: none;
     }
+
     &:checked {
       &:before {
         transform: rotate(-45deg) scale(1, 1);
+      }
+    }
+    &:indeterminate {
+      &:before {
+        border-left-style: none;
+        transform: rotate(0deg) scale(0.8, 1.2) translateX(0);
       }
     }
     &:after {
@@ -78,6 +85,7 @@
       border: 2px solid $input-border-color;
       cursor: pointer;
     }
+
     &:focus {
       &:after {
         outline: 0;

@@ -247,7 +247,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
     multipleReadonly: false,
     textAreaText: '',
     justNumber: 5,
-    hideNumber: false,
+    hideNumber: undefined,
   };
 
   constructor(props: BasicProps) {
@@ -550,6 +550,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                           this.setState({ hideNumber: e.target.checked })
                         }
                         label="Hide/show number inputs"
+                        supportsIndeterminate={true}
                       />
                       {!this.state.hideNumber && (
                         <>
