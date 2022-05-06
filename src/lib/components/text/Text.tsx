@@ -42,7 +42,7 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
 
   constructor(props: TextProps) {
     super(props);
-    if (props.number !== undefined) {
+    if (props.number !== undefined || props.onNumberChange) {
       const value = props.number?.toString() ?? '';
       const res = this.handleValueChange(value, true, [], props, true);
       this.state = {
@@ -111,7 +111,7 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
               required={this.props.required}
               className={this.state.value ? 'filled' : ''}
               onChange={this.handleChange}
-              value={this.state.value}
+              value={this.state.value ?? ''}
               onBlur={this.handleBlur}
               onFocus={this.handleFocus}
               readOnly={this.props.readOnly}
