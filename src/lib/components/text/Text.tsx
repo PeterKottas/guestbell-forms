@@ -84,7 +84,15 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
     ) {
       this.handleValueChange(this.props.number?.toString() ?? '');
     }
-    super.componentDidUpdate(prevProps, prevState);
+    if (
+      !this.props.onNumberChange &&
+      (prevProps.value !== this.props.value ||
+        prevProps.validators !== this.props.validators ||
+        prevProps.customValidators !== this.props.customValidators ||
+        prevProps.required !== this.props.required)
+    ) {
+      this.handleValueChange(this.props.value, true, [], this.props);
+    }
   }
 
   public render() {
