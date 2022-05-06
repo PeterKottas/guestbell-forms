@@ -71,11 +71,10 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
         this.props.number !== Number(this.state.value))
     ) {
       const num = Number(this.state.value);
-      if (!isNaN(num)) {
-        this.props.onNumberChange(num, this.state.isValid);
-      }
       if (this.state.value === '') {
         this.props.onNumberChange(undefined, this.state.isValid);
+      } else if (!isNaN(num)) {
+        this.props.onNumberChange(num, this.state.isValid);
       }
     }
     if (
