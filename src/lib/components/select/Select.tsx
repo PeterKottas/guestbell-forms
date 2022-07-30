@@ -257,7 +257,7 @@ export class SelectRaw extends BaseInput<
       this.props.customValidators.forEach(customValidator => {
         let validInner = false;
         validInner = customValidator.Validate(
-          this.state.value,
+          this.state?.value,
           this.props.required,
           error => errors.push(error)
         );
