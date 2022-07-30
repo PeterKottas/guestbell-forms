@@ -170,6 +170,30 @@ export class SelectRaw extends BaseInput<
     );
   }
 
+  protected handleValueChange(
+    value: string,
+    isValid: boolean = true,
+    errors: ValidationError[] = [],
+    props: SelectProps = this.props,
+    initializing: boolean = false
+  ) {
+    if (!this.props.multiple) {
+      return super.handleValueChange(
+        value,
+        isValid,
+        errors,
+        props,
+        initializing
+      );
+    } else {
+      this.handleValid(this.props.selectedValues);
+    }
+    return {
+      isValid: true,
+      errors: [],
+    };
+  }
+
   protected handleBlur(e: React.FocusEvent<HTMLSelectElement>) {
     this.props.onBlur && this.props.onBlur();
     let state = { focused: false };
