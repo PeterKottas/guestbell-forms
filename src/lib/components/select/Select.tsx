@@ -185,7 +185,7 @@ export class SelectRaw extends BaseInput<
         props,
         initializing
       );
-    } else {
+    } else if (!initializing) {
       this.handleValid(this.props.selectedValues);
     }
     return {
