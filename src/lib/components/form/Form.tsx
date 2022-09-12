@@ -18,6 +18,7 @@ export type FormProps = React.PropsWithChildren<
     noValidate?: boolean;
     onSubmit?: () => void;
     extraComponents?: ComponentsDict;
+    component?: keyof JSX.IntrinsicElements;
   }
 >;
 
@@ -29,6 +30,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
   public static defaultProps = {
     noValidate: false,
     showExpandAll: true,
+    component: 'form' as keyof JSX.IntrinsicElements,
   };
 
   constructor(props: FormProps) {
@@ -109,7 +111,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
 
   public render() {
     return (
-      <form
+      <this.props.component
         {...(this.props.id && { id: this.props.id })}
         noValidate={true}
         role="form"
@@ -121,7 +123,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
         <FormContextProvider value={this.mergeContext()}>
           {this.props.children}
         </FormContextProvider>
-      </form>
+      </this.props.component>
     );
   }
 
