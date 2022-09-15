@@ -43,8 +43,8 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
   }
 
   public render() {
-    let hours = this.props.time.hours();
-    let minutes = this.props.time.minutes();
+    let hours = this.props.time?.hours?.() ?? 0;
+    let minutes = this.props.time?.minutes?.() ?? 0;
     if (minutes < 0) {
       hours--;
     }
@@ -206,17 +206,21 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
 
   private removeMinuteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    this.handleMinutesChange((this.props.time.minutes() - 1).toString());
+    this.handleMinutesChange(
+      ((this.props.time?.minutes?.() ?? 0) - 1).toString()
+    );
   };
 
   private addMinuteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    this.handleMinutesChange((this.props.time.minutes() + 1).toString());
+    this.handleMinutesChange(
+      ((this.props.time?.minutes?.() ?? 0) + 1).toString()
+    );
   };
 
   private removeHourClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    this.handleHoursChange((this.props.time.hours() - 1).toString());
+    this.handleHoursChange(((this.props.time?.hours?.() ?? 0) - 1).toString());
   };
 
   private onHoursChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -226,18 +230,24 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
 
   private addHourClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    this.handleHoursChange((this.props.time.hours() + 1).toString());
+    this.handleHoursChange(((this.props.time?.hours?.() ?? 0) + 1).toString());
   };
 
   private handleLimits(time: Duration) {
     if (this.props.min) {
-      if (time.asMilliseconds() - this.props.min.asMilliseconds() <= 0) {
+      if (
+        (time?.asMilliseconds?.() ?? 0) - this.props.min.asMilliseconds() <=
+        0
+      ) {
         this.props.timeChange(this.props.min.clone());
         return;
       }
     }
     if (this.props.max) {
-      if (this.props.max.asMilliseconds() - time.asMilliseconds() <= 0) {
+      if (
+        this.props.max.asMilliseconds() - (time?.asMilliseconds?.() ?? 0) <=
+        0
+      ) {
         this.props.timeChange(this.props.max.clone());
         return;
       }
@@ -252,10 +262,10 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
     }
     if (!isNaN(num)) {
       let newTime: Duration = duration(
-        this.props.time.asMilliseconds(),
+        this.props.time?.asMilliseconds?.() ?? 0,
         'milliseconds'
       )
-        .subtract(this.props.time.hours(), 'hours')
+        .subtract(this.props.time?.hours?.() ?? 0, 'hours')
         .add(num, 'hours');
       this.handleLimits(newTime);
     }
@@ -268,10 +278,10 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
     }
     if (!isNaN(num)) {
       let newTime: Duration = duration(
-        this.props.time.asMilliseconds(),
+        this.props.time?.asMilliseconds?.() ?? 0,
         'milliseconds'
       )
-        .subtract(this.props.time.minutes(), 'minutes')
+        .subtract(this.props.time?.minutes?.() ?? 0, 'minutes')
         .add(num, 'minutes');
       this.handleLimits(newTime);
     }
