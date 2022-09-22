@@ -278,6 +278,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                   <Checkbox
                     label="Turn form validation on or off"
                     title="Validate form submit"
+                    required={true}
                   />
                   <Checkbox
                     label="Turn form validation on or off"

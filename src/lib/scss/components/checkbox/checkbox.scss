@@ -7,7 +7,7 @@
   display: block;
   border: none;
   &.validation__error {
-    border: none;
+    border: none !important;
   }
   &.checkbox-input--with-label {
     input {
@@ -84,6 +84,7 @@
       border-radius: 2px;
       border: 2px solid $input-border-color;
       cursor: pointer;
+      transition: 0.5s ease border-color;
     }
 
     &:focus {
@@ -96,6 +97,11 @@
         outline: 1px dotted;
         outline: 5px auto -webkit-focus-ring-color;
       }
+    }
+  }
+  &.validation__error {
+    input:after {
+      border: 2px solid $input-validation-error-border-color;
     }
   }
   label {
