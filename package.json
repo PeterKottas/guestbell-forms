@@ -28,9 +28,9 @@
     "@tippy.js/react": "3.1.1",
     "@types/classnames": "^2.2.9",
     "@types/lodash.debounce": "^4.0.6",
-    "@types/react": "16.9.16",
+    "@types/react": "17.0.5",
     "@types/react-datepicker": "^4.1.7",
-    "@types/react-dom": "16.9.4",
+    "@types/react-dom": "17.0.5",
     "@types/react-onclickoutside": "6.7.3",
     "@types/webpack": "4.41.0",
     "@types/webpack-env": "1.14.1",
@@ -54,11 +54,11 @@
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-loader": "3.0.0",
     "prettier": "^1.19.1",
-    "react": "16.9.0",
+    "react": "17.0.2",
     "react-cool-dimensions": "^2.0.7",
     "react-datepicker": "4.2.1",
     "react-device-detect": "^1.13.1",
-    "react-dom": "16.12.0",
+    "react-dom": "17.0.2",
     "react-hot-loader": "4.12.18",
     "react-ink": "6.4.0",
     "react-onclickoutside": "6.7.1",
@@ -100,6 +100,9 @@
     "commit:build": "git add . && git commit -m \"Deploy commit\" --quiet && npm run push:git || true",
     "create:patch": "npm run version:patch && npm run push:git",
     "deploy": ".env.bat && npm run build:gh-pages && npm run build:prod && npm run commit:build && npm publish && npm run conventional-github-releaser && npm run create:patch"
+  },
+  "resolutions": {
+    "@types/react": "17.0.5"
   },
   "typings": "build/index.d.ts",
   "repository": {

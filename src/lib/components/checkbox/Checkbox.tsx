@@ -37,7 +37,7 @@ export class CheckboxRaw extends BaseInput<
   constructor(props: CheckboxProps) {
     super(props, false);
     this.state = Object.assign(this.state, {
-      checked: props.checked,
+      checked: Boolean(props.checked),
       isValid: props.required ? props.checked : true,
       errors:
         props.required && !props.checked

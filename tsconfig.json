@@ -28,7 +28,6 @@
       // We tell TypeScript which type definitions module to treat as the canonical one (instead of combining all of them).
       "history": ["./node_modules/@types/history/index"],
       "redux": ["./node_modules/@types/redux/index"],
-      "react": ["./node_modules/@types/react/index"],
       "react-day-picker": [
         "./src/demo/ClientApp/declartions/react-day-picker.d.ts"
       ]
