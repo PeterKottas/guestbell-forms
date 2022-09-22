@@ -277,6 +277,10 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                 <Form noValidate={true} className="input__form">
                   <Checkbox
                     label="Turn form validation on or off"
+                    title="Validate form submit"
+                  />
+                  <Checkbox
+                    label="Turn form validation on or off"
                     onChecked={this.formValidationToggle}
                     checked={this.state.validateFormSubmit}
                     title="Validate form submit"
