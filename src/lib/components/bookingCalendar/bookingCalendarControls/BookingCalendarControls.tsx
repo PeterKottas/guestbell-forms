@@ -81,14 +81,14 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
           ?.filter(filterBookingsToZoom)
           .map(a => a.from.valueOf())
       ) ?? from?.valueOf();
-    const minFrom = from.clone().add(from.valueOf() - minFromMs, 'ms');
+    const minFrom = from.clone().subtract(from.valueOf() - minFromMs, 'ms');
     const maxTillMs =
       Math.max(
         ...filteredItems
           ?.filter(filterBookingsToZoom)
           .map(a => a.till.valueOf())
       ) ?? till?.valueOf();
-    const maxTill = till.clone().add(till.valueOf() - maxTillMs, 'ms');
+    const maxTill = till.clone().subtract(till.valueOf() - maxTillMs, 'ms');
     onRangeChange({
       from: minFrom,
       till: maxTill,
@@ -129,7 +129,8 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
               onClick={() =>
                 onRangeChange({
                   from: from.clone().startOf('day'),
-                  till: from.clone()
+                  till: from
+                    .clone()
                     .startOf('day')
                     .add(level.step),
                 })
