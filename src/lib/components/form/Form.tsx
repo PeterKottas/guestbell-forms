@@ -19,6 +19,7 @@ export type FormProps = React.PropsWithChildren<
     onSubmit?: () => void;
     extraComponents?: ComponentsDict;
     component?: keyof JSX.IntrinsicElements;
+    onValidChanged?: (isValid: boolean) => void;
   }
 >;
 
@@ -51,6 +52,19 @@ export class Form extends React.PureComponent<FormProps, FormState> {
         components: {},
       },
     };
+  }
+
+  public componentDidUpdate(
+    prevProps: Readonly<FormProps>,
+    prevState: Readonly<FormState>,
+    snapshot?: any
+  ): void {
+    if (
+      this.state.contextState?.isFormValid !==
+      prevState?.contextState?.isFormValid
+    ) {
+      this.props.onValidChanged?.(this.state.contextState?.isFormValid);
+    }
   }
 
   public disableComponents() {
