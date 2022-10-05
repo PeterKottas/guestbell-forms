@@ -67,6 +67,7 @@ export type BaseInputProps<
   reRendersWhenContextChanges?: boolean;
   defaultTouched?: boolean;
   translations?: TranslationsT;
+  inputGroupClassName?: string;
 } & FormContextProps;
 
 export interface BaseInputState {

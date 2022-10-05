@@ -46,7 +46,11 @@ export class TextAreaRaw extends BaseInput<
 
   public render() {
     return (
-      <InputGroup title={this.props.title}>
+      <InputGroup
+        title={this.props.title}
+        className={this.props.inputGroupClassName}
+        tooltip={this.props.tooltip}
+      >
         <div
           className={`input__base textArea-input ${this.getValidationClass()} 
                     ${this.props.readOnly ? 'textArea-input--readOnly' : ''} 

@@ -125,7 +125,11 @@ export class CheckboxRaw extends BaseInput<
       />
     );
     return (
-      <InputGroup title={this.props.title} tooltip={this.props.tooltip}>
+      <InputGroup
+        title={this.props.title}
+        tooltip={this.props.tooltip}
+        className={this.props.inputGroupClassName}
+      >
         <div className={containerClassName} ref={this.containerRef}>
           {this.props.title && !this.props.label && input}
           {!this.props.title && !this.props.label && this.renderTooltip(input)}

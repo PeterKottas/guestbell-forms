@@ -48,7 +48,11 @@ export class NumberInputRaw extends BaseInput<
   public render() {
     const { unit } = this.props;
     return (
-      <InputGroup title={this.props.title}>
+      <InputGroup
+        title={this.props.title}
+        className={this.props.inputGroupClassName}
+        tooltip={this.props.tooltip}
+      >
         <div
           {...(this.props.id && {
             id: this.props.id,

@@ -97,7 +97,7 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
   public render() {
     const clearButtonHidden = !this.state.value?.length || this.props.disabled;
     return (
-      <InputGroup title={this.props.title} tooltip={this.props.tooltip}>
+      <InputGroup title={this.props.title} tooltip={this.props.tooltip} className={this.props.inputGroupClassName}>
         <div
           className={`input__base text-input ${this.getValidationClass()} 
                     ${this.props.readOnly ? 'text-input--readOnly' : ''} ${

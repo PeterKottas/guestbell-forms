@@ -86,7 +86,11 @@ export class MoneyRaw extends BaseInput<
     let unusedCurrencies = this.props.currencies;
     const translations = this.getTranslations(defaultMoneyTranslations);
     return (
-      <InputGroup title={this.props.title}>
+      <InputGroup
+        title={this.props.title}
+        tooltip={this.props.tooltip}
+        className={this.props.inputGroupClassName}
+      >
         <div
           {...(this.props.id && { id: this.props.id })}
           className={
