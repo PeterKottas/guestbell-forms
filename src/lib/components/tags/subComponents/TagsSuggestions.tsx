@@ -124,7 +124,8 @@ function Suggestions<T extends Tag = Tag>(
             {props.EmptyComponent &&
               props.tags.length === 0 &&
               !props.allowNew &&
-              !props.isWaitingForMoreInput && (
+              !props.isWaitingForMoreInput &&
+              !props.loading && (
                 <li className="w-100 text-center p-2">
                   {props.EmptyComponent}
                 </li>
