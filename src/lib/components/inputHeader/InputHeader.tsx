@@ -14,7 +14,7 @@ import {
   InputHeaderContextProps,
   InputHeaderContextState,
   InputHeaderComponentContextState,
-} from '../InputHeader/InputHeaderContext';
+} from '../inputHeader/InputHeaderContext';
 import { withInputHeaderContext } from './withInputHeaderContext';
 import { TippyProps } from '@tippy.js/react';
 import { withThemeContext } from '../themeProvider/withThemeContext';
