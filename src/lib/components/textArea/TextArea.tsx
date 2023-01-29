@@ -9,7 +9,7 @@ import {
   BaseInput,
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 
 export interface TextAreaProps extends BaseInputProps<HTMLTextAreaElement> {
@@ -73,8 +73,8 @@ export class TextAreaRaw extends BaseInput<
             onFocus={this.handleFocus}
             readOnly={this.props.readOnly}
             onKeyDown={this.onKeyDown}
-            rows={this.props.minRows}
-            rowsMax={this.props.maxRows}
+            minRows={this.props.minRows}
+            maxRows={this.props.maxRows}
             maxLength={this.props.maxLength}
           />
           <span className="highlight" />

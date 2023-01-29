@@ -1,10 +1,10 @@
 ﻿// Libs
 import * as React from 'react';
-import Collapse, { CollapseProps } from '@material-ui/core/Collapse';
+import Collapse, { CollapseProps } from '@mui/material/Collapse';
 import { ThemeContextProps } from '../themeProvider/ThemeContext';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import classNames from 'classnames';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 export type DropdownProps = React.PropsWithChildren<
   ThemeContextProps & {
@@ -64,7 +64,7 @@ const Dropdown: React.FC<DropdownProps> = props => {
   }, [onShow]);
 
   const onClickAway = React.useCallback(
-    (e: React.MouseEvent<Document>) => {
+    (e: MouseEvent) => {
       hideNavigation();
       e.stopPropagation();
       e.preventDefault();

@@ -8,7 +8,7 @@ import * as PlusIcon from 'material-design-icons/hardware/svg/production/ic_keyb
 import { ButtonProps, Button, ButtonComponentProps } from '../button/Button';
 import guid from '../utils/Guid';
 import { Dropdown } from '../dropdown';
-import Collapse from '@material-ui/core/Collapse';
+import Collapse from '@mui/material/Collapse';
 import {
   OmitInputHeaderContext,
   InputHeaderContextProps,

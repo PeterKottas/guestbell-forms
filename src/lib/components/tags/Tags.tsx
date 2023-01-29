@@ -18,9 +18,9 @@ import TagsSuggestions, {
 import { withFormContext } from '../form/withFormContext';
 import classNames from 'classnames';
 import { withThemeContext } from '../themeProvider/withThemeContext';
-import { PopperProps } from '@material-ui/core/Popper/Popper';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Portal from '@material-ui/core/Portal';
+import { PopperProps } from '@mui/material/Popper/Popper';
+import LinearProgress from '@mui/material/LinearProgress';
+import Portal from '@mui/material/Portal';
 
 // Misc
 export type Tag = {

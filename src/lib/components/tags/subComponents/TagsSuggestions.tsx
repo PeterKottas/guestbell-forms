@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Tag } from '..';
 import { Button } from '../../..';
-import Popper, { PopperProps } from '@material-ui/core/Popper';
+import Popper, { PopperProps } from '@mui/material/Popper';
 import classNames from 'classnames';
 
 export type RenderSuggestionTagProps<T extends Tag = Tag> = {
@@ -35,7 +35,13 @@ export type SuggestionsProps<T extends Tag = Tag> = {
 
 type InjectedProps = {};
 
-const popperModifiers = { flip: { enabled: false } };
+const popperModifiers: PopperProps['modifiers'] = [
+  {
+    name: 'flip',
+    enabled: true,
+  },
+  ,
+];
 
 function DefaultSuggestionTag<T extends Tag = Tag>({
   index,
@@ -82,6 +88,10 @@ function Suggestions<T extends Tag = Tag>(
   return (
     props.anchorEl && (
       <Popper
+        // https://github.com/mui/material-ui/issues/35287
+        onResize={undefined}
+        onResizeCapture={undefined}
+        nonce={undefined}
         open={props.isVisible}
         anchorEl={props.anchorEl}
         style={popperStyle}
