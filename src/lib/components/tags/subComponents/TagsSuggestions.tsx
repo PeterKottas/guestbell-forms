@@ -88,10 +88,6 @@ function Suggestions<T extends Tag = Tag>(
   return (
     props.anchorEl && (
       <Popper
-        // https://github.com/mui/material-ui/issues/35287
-        onResize={undefined}
-        onResizeCapture={undefined}
-        nonce={undefined}
         open={props.isVisible}
         anchorEl={props.anchorEl}
         style={popperStyle}
