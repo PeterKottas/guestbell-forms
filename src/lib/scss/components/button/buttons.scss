@@ -53,7 +53,7 @@
     &:hover {
       color: lighten($bg, 10);
       fill: lighten($bg, 10);
-      background-color: transparent;
+      background-color: transparent !important;
     }
   }
 }
