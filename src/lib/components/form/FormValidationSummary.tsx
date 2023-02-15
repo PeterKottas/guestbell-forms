@@ -3,7 +3,7 @@ import guid from '../utils/Guid';
 import { withFormContext } from './withFormContext';
 import { FormContextProps, FormComponentContextState } from './FormContext';
 import { Button } from './../button/Button';
-var classNames = require('classnames');
+import classNames from 'classnames';
 
 import * as ArrowIcon from 'material-design-icons/maps/svg/production/ic_my_location_24px.svg';
 

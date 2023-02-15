@@ -1,6 +1,6 @@
 // Libs
 import * as React from 'react';
-var classNames = require('classnames');
+import classNames from 'classnames';
 
 // Misc
 import * as MoreIcon from 'material-design-icons/navigation/svg/production/ic_more_vert_24px.svg';
@@ -16,7 +16,7 @@ import {
   InputHeaderComponentContextState,
 } from '../inputHeader/InputHeaderContext';
 import { withInputHeaderContext } from './withInputHeaderContext';
-import { TippyProps } from '@tippy.js/react';
+import type { TippyProps } from '@tippy.js/react';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import { ThemeContextProps } from '../themeProvider/ThemeContext';
 

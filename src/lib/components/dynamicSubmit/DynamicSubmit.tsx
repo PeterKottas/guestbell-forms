@@ -1,6 +1,6 @@
 ﻿// Libs
 import * as React from 'react';
-var classNames = require('classnames');
+import classNames from 'classnames';
 import { withFormContext } from '../form/withFormContext';
 import { FormContextProps } from '../form/FormContext';
 import { SubmitProps } from '../submit';

@@ -12,7 +12,7 @@ import {
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
 import { withThemeContext } from '../themeProvider/withThemeContext';
-var classNames = require('classnames');
+import classNames from 'classnames';
 
 export interface NumberInputProps extends BaseInputProps<HTMLInputElement> {
   value?: never;

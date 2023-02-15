@@ -1,7 +1,7 @@
 ﻿// Libs
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { TippyProps } from '@tippy.js/react';
+import type { TippyProps } from '@tippy.js/react';
 
 // Misc
 import * as Validators from '../../../validators';

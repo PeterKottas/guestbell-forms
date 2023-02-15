@@ -12,7 +12,7 @@ import { withFormContext } from '../form/withFormContext';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import Button from '../button';
 import * as PlusIcon from 'material-design-icons/content/svg/production/ic_add_24px.svg';
-var classNames = require('classnames');
+import classNames from 'classnames';
 
 export interface TextProps extends BaseInputProps<HTMLInputElement> {
   mask?: string;
@@ -97,7 +97,11 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
   public render() {
     const clearButtonHidden = !this.state.value?.length || this.props.disabled;
     return (
-      <InputGroup title={this.props.title} tooltip={this.props.tooltip} className={this.props.inputGroupClassName}>
+      <InputGroup
+        title={this.props.title}
+        tooltip={this.props.tooltip}
+        className={this.props.inputGroupClassName}
+      >
         <div
           className={`input__base text-input ${this.getValidationClass()} 
                     ${this.props.readOnly ? 'text-input--readOnly' : ''} ${

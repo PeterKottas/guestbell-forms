@@ -13,7 +13,7 @@ import {
 import { withFormContext } from '../form/withFormContext';
 import { Duration, duration } from 'moment';
 import { withThemeContext } from '../themeProvider/withThemeContext';
-var classNames = require('classnames');
+import classNames from 'classnames';
 
 export enum TimeSpanUnit {
   Dynamic = 0,

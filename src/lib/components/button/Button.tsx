@@ -1,10 +1,10 @@
 // Libs
 import * as React from 'react';
-import { TippyProps } from '@tippy.js/react';
+import type { TippyProps } from '@tippy.js/react';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import { ThemeContextProps } from '../themeProvider/ThemeContext';
-var Ink = require('react-ink');
-var classNames = require('classnames');
+import Ink from 'react-ink';
+import classNames from 'classnames';
 
 // Misc
 

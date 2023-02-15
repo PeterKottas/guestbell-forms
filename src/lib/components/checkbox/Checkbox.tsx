@@ -9,7 +9,7 @@ import {
   BaseInputState,
   defaultBaseTranslations,
 } from '../base/input/BaseInput';
-var classNames = require('classnames');
+import classNames from 'classnames';
 import { withFormContext } from '../form/withFormContext';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 
