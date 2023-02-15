@@ -51,6 +51,7 @@ export type ButtonProps = React.PropsWithChildren<
     dropdown?: boolean;
     Component?: React.FC<ButtonComponentProps>;
     tooltip?: JSX.Element | string;
+    disableTooltip?: boolean;
     tooltipProps?: TippyProps;
     preventsDefault?: boolean;
   } & ThemeContextProps
@@ -141,7 +142,7 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
         {this.props.children}
       </this.props.Component>
     );
-    if (this.props.tooltip) {
+    if (this.props.tooltip && !this.props.disableTooltip) {
       const Tippy = require('@tippy.js/react').default;
       return (
         <Tippy
