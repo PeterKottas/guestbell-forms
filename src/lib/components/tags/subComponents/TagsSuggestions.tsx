@@ -40,7 +40,6 @@ const popperModifiers: PopperProps['modifiers'] = [
     name: 'flip',
     enabled: true,
   },
-  ,
 ];
 
 function DefaultSuggestionTag<T extends Tag = Tag>({
