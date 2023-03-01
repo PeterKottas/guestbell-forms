@@ -79,7 +79,10 @@ function Suggestions<T extends Tag = Tag>(
     [onSelected]
   );
   const popperStyle = React.useMemo(
-    () => ({ width: props.anchorEl?.scrollWidth, zIndex: 10000 }),
+    () => ({
+      width: props.anchorEl?.scrollWidth,
+      zIndex: 10000,
+    }),
     [props.anchorEl?.scrollWidth]
   );
 

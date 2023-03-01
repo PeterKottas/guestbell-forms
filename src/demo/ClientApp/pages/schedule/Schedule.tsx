@@ -58,7 +58,6 @@ export const Schedule = () => {
         from={from}
         till={till}
         step={duration(1, 'day')}
-        gridSubdivisions={4}
         onRangeChange={setRange}
         // lanesCount={3}
         lanesSource={new Array(3).fill(0).map((_, index) => ({

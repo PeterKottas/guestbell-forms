@@ -58,7 +58,7 @@
     "postcss-loader": "3.0.0",
     "prettier": "^1.19.1",
     "react": "17.0.2",
-    "react-cool-dimensions": "^2.0.7",
+    "react-cool-dimensions": "^3.0.0",
     "react-datepicker": "4.2.1",
     "react-device-detect": "^1.13.1",
     "react-dom": "17.0.2",
@@ -126,7 +126,8 @@
     "react-device-detect": "*",
     "react-dom": "*",
     "react-ink": "*",
-    "react-onclickoutside": "*"
+    "react-onclickoutside": "*",
+    "react-cool-dimensions": "*"
   },
   "browserslist": [
     "last 1 version",
