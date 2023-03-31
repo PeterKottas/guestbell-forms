@@ -10,7 +10,6 @@ import {
 } from './FormContext';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import { ThemeContextProps } from '../themeProvider/ThemeContext';
-import { ValidationError } from '../base/input';
 
 export type FormProps = React.PropsWithChildren<
   ThemeContextProps & {
@@ -20,7 +19,10 @@ export type FormProps = React.PropsWithChildren<
     onSubmit?: () => void;
     extraComponents?: ComponentsDict;
     component?: keyof JSX.IntrinsicElements;
-    onValidChanged?: (isValid: boolean, errors?: ValidationError[]) => void;
+    onValidChanged?: (
+      isValid: boolean,
+      errors?: FormComponentContextState[]
+    ) => void;
   }
 >;
 
@@ -79,10 +81,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
         : [];
       this.props.onValidChanged?.(
         this.state.contextState?.isFormValid,
-        componentsWithErrors.reduce(
-          (prev, current) => [...prev, ...current.validation.errors],
-          []
-        )
+        componentsWithErrors
       );
     }
   }
