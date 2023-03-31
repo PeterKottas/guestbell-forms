@@ -198,7 +198,7 @@ export class SelectRaw extends BaseInput<
     };
   }
 
-  protected handleBlur(e: React.FocusEvent<HTMLSelectElement>) {
+  protected handleBlur() {
     this.props.onBlur && this.props.onBlur();
     let state = { focused: false };
     if (!this.state.touched && this.props.touchOn === 'blur') {
@@ -212,8 +212,8 @@ export class SelectRaw extends BaseInput<
     this.setState(state);
   }
 
-  protected handleFocus(e: React.FocusEvent<HTMLSelectElement>) {
-    this.props.onFocus && this.props.onFocus(e);
+  protected handleFocus() {
+    this.props.onFocus?.();
     let state = { focused: true };
     if (!this.state.touched && this.props.touchOn === 'focus') {
       state = Object.assign(state, { touched: true });

@@ -54,7 +54,7 @@ export type BaseInputProps<
   touchOn?: 'focus' | 'blur';
   ignoreContext?: boolean;
   onTheFlightValidate?: (value: string) => boolean;
-  onFocus?: (e: React.SyntheticEvent<{}>) => void;
+  onFocus?: () => void;
   onBlur?: () => void;
   onSuggestionsClosed?: () => void;
   onSuggestionsOpened?: () => void;
@@ -186,6 +186,7 @@ export class BaseInput<
       ) as HTMLElement;
       domNode && domNode.focus();
     }
+    this.props.onFocus?.();
     this.touch();
   }
 
@@ -284,8 +285,8 @@ export class BaseInput<
     }
   }
 
-  protected handleBlur(e: React.FocusEvent<HTMLType>) {
-    this.props.onBlur && this.props.onBlur();
+  protected handleBlur() {
+    this.props.onBlur?.();
     let state = { focused: false };
     if (!this.state.touched && this.props.touchOn === 'blur') {
       state = Object.assign(state, { touched: true });
@@ -294,9 +295,9 @@ export class BaseInput<
     this.setState(state);
   }
 
-  protected handleFocus(e: React.FocusEvent<HTMLType>) {
+  protected handleFocus() {
     if (!this.props.disabled) {
-      this.props.onFocus && this.props.onFocus(e);
+      this.props.onFocus?.();
       let state = { focused: true };
       if (!this.state.touched && this.props.touchOn === 'focus') {
         state = Object.assign(state, { touched: true });

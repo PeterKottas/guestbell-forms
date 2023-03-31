@@ -191,7 +191,7 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
     );
   }
 
-  private onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  private onBlur = () => {
     if (this.state.hoursText) {
       this.handleHoursChange(this.state.hoursText);
     }
@@ -199,7 +199,7 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
       this.handleMinutesChange(this.state.minutesText);
     }
     this.setState({ minutesText: undefined, hoursText: undefined }, () =>
-      this.handleBlur(e)
+      this.handleBlur()
     );
   };
 

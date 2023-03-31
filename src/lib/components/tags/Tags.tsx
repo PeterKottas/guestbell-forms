@@ -401,8 +401,8 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
       () => this.handleErrors()
     );
 
-  private onFocus = (e: React.SyntheticEvent<{}>) => {
-    this.props.onFocus?.(e);
+  private onFocus = () => {
+    this.props.onFocus?.();
     if (!this.state.suggestionsVisible) {
       this.props.onSuggestionsOpened?.();
     }

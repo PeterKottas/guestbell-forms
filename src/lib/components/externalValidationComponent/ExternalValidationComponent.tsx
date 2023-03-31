@@ -23,7 +23,6 @@ export class ExternalValidationComponentRaw extends BaseInput<
 > {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     isValid: true,
-    handleValueChangeEnabled: false,
   }) as ExternalValidationComponentProps;
 
   constructor(props: ExternalValidationComponentProps) {

@@ -136,9 +136,9 @@ export class NumberInputRaw extends BaseInput<
     }
   }
 
-  private onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  private onBlur = () => {
     this.commitState();
-    this.handleBlur(e);
+    this.handleBlur();
   };
 
   private removeUnitClick = (e: React.MouseEvent<HTMLButtonElement>) => {
