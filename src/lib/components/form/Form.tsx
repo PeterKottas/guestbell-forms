@@ -10,6 +10,7 @@ import {
 } from './FormContext';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import { ThemeContextProps } from '../themeProvider/ThemeContext';
+import { ValidationError } from '../base/input';
 
 export type FormProps = React.PropsWithChildren<
   ThemeContextProps & {
@@ -19,7 +20,7 @@ export type FormProps = React.PropsWithChildren<
     onSubmit?: () => void;
     extraComponents?: ComponentsDict;
     component?: keyof JSX.IntrinsicElements;
-    onValidChanged?: (isValid: boolean) => void;
+    onValidChanged?: (isValid: boolean, errors?: ValidationError[]) => void;
   }
 >;
 
@@ -63,7 +64,26 @@ export class Form extends React.PureComponent<FormProps, FormState> {
       this.state.contextState?.isFormValid !==
       prevState?.contextState?.isFormValid
     ) {
-      this.props.onValidChanged?.(this.state.contextState?.isFormValid);
+      const componentsWithErrors = this.state.contextState
+        ? Object.keys(this.state.contextState.components)
+            .map(key => this.state.contextState.components[key])
+            .filter(component => {
+              if (!component.validation.isValid && !component.validation.name) {
+                console.warn(
+                  component,
+                  'Has validation error. FormValidationSummary is present but the component has no validation name'
+                );
+              }
+              return !component.validation.isValid;
+            })
+        : [];
+      this.props.onValidChanged?.(
+        this.state.contextState?.isFormValid,
+        componentsWithErrors.reduce(
+          (prev, current) => [...prev, ...current.validation.errors],
+          []
+        )
+      );
     }
   }
 
