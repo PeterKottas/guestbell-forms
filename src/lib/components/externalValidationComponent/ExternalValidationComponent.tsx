@@ -23,10 +23,15 @@ export class ExternalValidationComponentRaw extends BaseInput<
 > {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     isValid: true,
+    handleValueChangeEnabled: false,
   }) as ExternalValidationComponentProps;
 
   constructor(props: ExternalValidationComponentProps) {
     super(props);
+    this.state = {
+      ...this.state,
+      handleValueChangeEnabled: false,
+    };
     if (!this.props.ignoreContext && this.props.formContext) {
       this.props.formContext.updateCallback(this.componentId, {
         validation: {
