@@ -21,3 +21,4 @@ export * from './components/time';
 export * from './components/timeSpan';
 export * from './components/themeProvider';
 export * from './components/bookingCalendar';
+export * from './components/externalValidationComponent';
