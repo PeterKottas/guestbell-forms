@@ -31,7 +31,7 @@ export interface DropdownState {
   isDropdownVisible: boolean;
 }
 
-const Dropdown: React.FC<DropdownProps> = props => {
+export const Dropdown: React.FC<DropdownProps> = props => {
   const {
     shouldHandleClick = true,
     WrapperTag = 'div',
