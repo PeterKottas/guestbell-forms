@@ -68,6 +68,7 @@ export type BaseInputProps<
   defaultTouched?: boolean;
   translations?: TranslationsT;
   inputGroupClassName?: string;
+  infoText?: string | JSX.Element;
 } & FormContextProps;
 
 export interface BaseInputState {
@@ -82,11 +83,14 @@ export interface BaseInputState {
 }
 
 export class BaseInput<
-  P extends BaseInputProps<HTMLType, TranslationsT>,
-  S extends BaseInputState,
-  HTMLType extends AllowedHtmlElements,
-  TranslationsT extends BaseTranslations = BaseTranslations
-> extends React.Component<P, S> implements ComponentApi {
+    P extends BaseInputProps<HTMLType, TranslationsT>,
+    S extends BaseInputState,
+    HTMLType extends AllowedHtmlElements,
+    TranslationsT extends BaseTranslations = BaseTranslations
+  >
+  extends React.Component<P, S>
+  implements ComponentApi
+{
   public static defaultProps: BaseInputProps<never> = {
     className: undefined,
     required: false,
@@ -106,6 +110,8 @@ export class BaseInput<
   protected containerRef: React.RefObject<HTMLDivElement>;
 
   private lastValidation: JSX.Element[];
+
+  private lastInfoText: JSX.Element[];
 
   constructor(props: P, subscribe: boolean = true) {
     super(props);
@@ -219,17 +225,10 @@ export class BaseInput<
     if (!this.props.showValidation) {
       return null;
     }
-    let finalErrors: ValidationError[] = this.state.errors;
-    if (!finalErrors) {
-      finalErrors = [];
-    }
-    if (extraErrors) {
-      finalErrors = finalErrors.concat(extraErrors);
-    }
-    if (this.props.errors) {
-      finalErrors = finalErrors.concat(this.props.errors);
-    }
-    finalErrors = finalErrors.filter(i => i);
+    let finalErrors: ValidationError[] = (this.state.errors ?? [])
+      .concat(extraErrors ?? [])
+      .concat(this.props.errors ?? [])
+      .filter((i) => i);
     if (finalErrors.length > 0) {
       this.lastValidation = finalErrors.map((item, index) => (
         <li key={index} className="validation__item">
@@ -237,10 +236,23 @@ export class BaseInput<
         </li>
       ));
     }
+    if (this.props.infoText && this.state.isValid) {
+      this.lastInfoText = [
+        <li key={1} className="info-text__item">
+          <span className="info-icon">i</span>
+          {this.props.infoText}
+        </li>,
+      ];
+    }
     return (
-      <div className="validation__container">
-        <ul className="validation__ul">{this.lastValidation}</ul>
-      </div>
+      <>
+        <div className="validation__container">
+          <ul className="validation__ul">{this.lastValidation}</ul>
+        </div>
+        <div className="info-text__container">
+          <ul className="info-text__ul">{this.lastInfoText}</ul>
+        </div>
+      </>
     );
   }
 
@@ -400,42 +412,42 @@ export class BaseInput<
       } else {
         if (props.validators) {
           isValid = true;
-          props.validators.forEach(validator => {
+          props.validators.forEach((validator) => {
             let validInner = false;
             switch (validator) {
               case 'email':
                 validInner = new Validators.EmailValidator().Validate(
                   value,
                   props.required,
-                  error => errors.push(error)
+                  (error) => errors.push(error)
                 );
                 break;
               case 'number':
                 validInner = new Validators.NumberValidator().Validate(
                   value,
                   props.required,
-                  error => errors.push(error)
+                  (error) => errors.push(error)
                 );
                 break;
               case 'latitude':
                 validInner = new Validators.LatitudeValidator().Validate(
                   value,
                   props.required,
-                  error => errors.push(error)
+                  (error) => errors.push(error)
                 );
                 break;
               case 'longitude':
                 validInner = new Validators.LongitudeValidator().Validate(
                   value,
                   props.required,
-                  error => errors.push(error)
+                  (error) => errors.push(error)
                 );
                 break;
               case 'url':
                 validInner = new Validators.UrlValidator().Validate(
                   value,
                   props.required,
-                  error => errors.push(error)
+                  (error) => errors.push(error)
                 );
                 break;
               default:
@@ -447,12 +459,12 @@ export class BaseInput<
           });
         }
         if (props.customValidators) {
-          props.customValidators.forEach(customValidator => {
+          props.customValidators.forEach((customValidator) => {
             let validInner = false;
             validInner = customValidator.Validate(
               value,
               props.required,
-              error => errors.push(error)
+              (error) => errors.push(error)
             );
             if (isValid && !validInner) {
               isValid = validInner;

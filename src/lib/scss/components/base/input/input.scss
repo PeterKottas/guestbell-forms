@@ -41,8 +41,8 @@
     padding: 0;
     margin: 0;
     position: relative;
-    margin-top: -20px;
-    transition: 0.5s;
+    transform: translateY(-20px);
+    transition: 0.5s transform ease-in-out;
     .validation__item {
       white-space: nowrap;
       margin-left: 10px;
@@ -51,13 +51,58 @@
   }
   &.validation__error {
     .validation__ul {
-      margin-top: 0;
+      transform: translateY(0);
     }
     .bar:before,
     .bar:after {
       background-color: $input-validation-error-bar-color;
     }
     border-bottom: 1px solid $input-validation-error-border-color !important;
+  }
+  /* INFO TEXT ======================================= */
+  .info-text__container {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    overflow: hidden;
+    font-size: $input-validation-fontsize;
+  }
+  .info-text__ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    transform: translateY(0);
+    transition: 0.5s transform ease-in-out;
+    .info-text__item {
+      white-space: nowrap;
+      list-style: none;
+      line-height: 2;
+    }
+  }
+  &.validation__error {
+    .info-text__ul {
+      transform: translateY(-20px);
+    }
+  }
+  $dim: 1rem;
+  .info-icon {
+    pointer-events: auto;
+    bottom: 0.35rem;
+    margin-left: 0.25rem;
+    background-color: $input-label-color;
+    border-radius: 50%;
+    color: $input-text-color--white;
+    text-align: center;
+    height: $dim;
+    width: $dim;
+    min-width: $dim;
+    line-height: $dim;
+    font-size: $dim - 0.25rem;
+    display: inline-block;
+    transition: 0.2s ease all;
+    margin-right: 0.25rem;
   }
   /* LABEL ======================================= */
   label,

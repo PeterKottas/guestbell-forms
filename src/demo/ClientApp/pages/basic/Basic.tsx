@@ -439,6 +439,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         value={this.state.name}
                         title="Name"
                         showClearButton={true}
+                        infoText="This is some info text"
                       />
                       <Button onClick={() => this.setState({ name: null })}>
                         Test
