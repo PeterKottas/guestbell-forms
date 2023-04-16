@@ -20,7 +20,7 @@
   border-bottom: 1px solid $input-border-color;
   width: 100%; // Chrome yellow tint fix
   transition: 0.5s ease border-color;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   margin-top: 1.25rem;
   input:-webkit-autofill {
     box-shadow: 0 0 0 1000px white inset !important;
@@ -63,7 +63,7 @@
   .info-text__container {
     position: absolute;
     top: 100%;
-    right: 0;
+    left: 0;
     overflow: hidden;
     font-size: $input-validation-fontsize;
   }
@@ -85,24 +85,6 @@
     .info-text__ul {
       transform: translateY(-20px);
     }
-  }
-  $dim: 1rem;
-  .info-icon {
-    pointer-events: auto;
-    bottom: 0.35rem;
-    margin-left: 0.25rem;
-    background-color: $input-label-color;
-    border-radius: 50%;
-    color: $input-text-color--white;
-    text-align: center;
-    height: $dim;
-    width: $dim;
-    min-width: $dim;
-    line-height: $dim;
-    font-size: $dim - 0.25rem;
-    display: inline-block;
-    transition: 0.2s ease all;
-    margin-right: 0.25rem;
   }
   /* LABEL ======================================= */
   label,

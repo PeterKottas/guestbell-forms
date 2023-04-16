@@ -239,7 +239,6 @@ export class BaseInput<
     if (this.props.infoText && this.state.isValid) {
       this.lastInfoText = [
         <li key={1} className="info-text__item">
-          <span className="info-icon">i</span>
           {this.props.infoText}
         </li>,
       ];
