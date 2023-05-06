@@ -82,7 +82,7 @@ export interface TagsState<T extends Tag = Tag> extends BaseInputState {
 
 type InjectedProps = {};
 
-const TagButtonComponent: React.FC<ButtonComponentProps> = p => (
+const TagButtonComponent: React.FC<ButtonComponentProps> = (p) => (
   <a className={p.className} id={p.id} onClick={p.onClick}>
     {p.children}
   </a>
@@ -102,7 +102,7 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
     existingTags: [],
     maxTags: 1000,
     onTagsChanged: () => undefined,
-    onNewTagAdded: newTagName =>
+    onNewTagAdded: (newTagName) =>
       Promise.resolve({ name: newTagName, id: new Date().getTime() }),
     valueNotAddedError: <span>You forgot to add tag</span>,
     maxTagsSurpassedError: <span>Maximum number of tags surpassed</span>,
@@ -112,9 +112,9 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
       <LinearProgress className="tags-input__suggestions__defaultLoading" />
     ),
     suggestionsEmptyComponent: 'No existing tags...',
-    loadingDelayMs: 500,
+    loadingDelayMs: 0,
     filterExistingTags: (text, tags) =>
-      tags.filter(tag => tag.name && tag.name.toLowerCase().startsWith(text)),
+      tags.filter((tag) => tag.name && tag.name.toLowerCase().startsWith(text)),
     maxSuggestions: 5,
     addNewOnBlur: false,
     translations: defaultTagsTranslations,
@@ -195,7 +195,7 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
     });
     if (this.props.addNewOnBlur && this.state.value) {
       const suggestions = this.getSuggestions();
-      const existing = suggestions.find(s => s.name === this.state.value);
+      const existing = suggestions.find((s) => s.name === this.state.value);
       if (existing) {
         this.onSuggestionSelected(existing, suggestions.length === 1);
       } else if (this.props.allowNew) {
@@ -235,9 +235,7 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
       >
         <LeftArrowIcon />
       </Button>
-    ) : (
-      undefined
-    );
+    ) : undefined;
     const showInput = Boolean(
       (!this.props.maxTags ||
         this.props.maxTags > (this.props.tags && this.props.tags.length)) &&
@@ -318,59 +316,62 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
                   customValidators={this.props.customValidators}
                   before={LeaveMobileButton}
                 />
-                {this.state.suggestionsVisible && this.props.showSuggestions && (
-                  <TagsSuggestions<T>
-                    {...(this.props.id && {
-                      id: this.props.id + '-text-input',
-                    })}
-                    className={classNames(this.props.tagsSuggestionsClassName)}
-                    innerRef={this.suggestionsRef}
-                    anchorEl={this.containerRef.current}
-                    allowNew={this.props.allowNew}
-                    preselectedSuggestion={this.state.preselectedSuggestion}
-                    loading={
-                      this.state.fetchingExistingTags || this.props.isLoading
-                    }
-                    LoadingComponent={this.props.suggestionsLoadingComponent}
-                    isVisible={this.state.suggestionsVisible}
-                    EmptyComponent={this.props.suggestionsEmptyComponent}
-                    WaitingForMoreInputComponent={
-                      this.props.waitingForMoreInputComponent
-                    }
-                    isWaitingForMoreInput={
-                      this.state.value.length < this.props.minLettersToFetch
-                    }
-                    tags={suggestions}
-                    onSelected={this.onSuggestionSelected}
-                    value={this.state.value}
-                    AddNewTagComponent={
-                      this.props.allowNew &&
-                      this.state.value !== '' &&
-                      (!this.props.existingTags ||
-                        !this.props.existingTags.find(
-                          e => e.name === this.state.value
-                        )) &&
-                      (!this.state.fetchedExistingTags ||
-                        !this.state.fetchedExistingTags.find(
-                          e => e.name === this.state.value
-                        )) &&
-                      this.state.textIsValid && (
-                        <Button
-                          {...(this.props.id && {
-                            id: this.props.id + '-add-new-button',
-                          })}
-                          className="tags-input__suggestion tags-input__add-new"
-                          dropdown={true}
-                          onClick={this.addNewTag}
-                        >
-                          {translations.addNew} "{this.state.value}"
-                        </Button>
-                      )
-                    }
-                    SuggestionTag={this.props.SuggestionTag}
-                    popperProps={this.props.popperProps}
-                  />
-                )}
+                {this.state.suggestionsVisible &&
+                  this.props.showSuggestions && (
+                    <TagsSuggestions<T>
+                      {...(this.props.id && {
+                        id: this.props.id + '-text-input',
+                      })}
+                      className={classNames(
+                        this.props.tagsSuggestionsClassName
+                      )}
+                      innerRef={this.suggestionsRef}
+                      anchorEl={this.containerRef.current}
+                      allowNew={this.props.allowNew}
+                      preselectedSuggestion={this.state.preselectedSuggestion}
+                      loading={
+                        this.state.fetchingExistingTags || this.props.isLoading
+                      }
+                      LoadingComponent={this.props.suggestionsLoadingComponent}
+                      isVisible={this.state.suggestionsVisible}
+                      EmptyComponent={this.props.suggestionsEmptyComponent}
+                      WaitingForMoreInputComponent={
+                        this.props.waitingForMoreInputComponent
+                      }
+                      isWaitingForMoreInput={
+                        this.state.value.length < this.props.minLettersToFetch
+                      }
+                      tags={suggestions}
+                      onSelected={this.onSuggestionSelected}
+                      value={this.state.value}
+                      AddNewTagComponent={
+                        this.props.allowNew &&
+                        this.state.value !== '' &&
+                        (!this.props.existingTags ||
+                          !this.props.existingTags.find(
+                            (e) => e.name === this.state.value
+                          )) &&
+                        (!this.state.fetchedExistingTags ||
+                          !this.state.fetchedExistingTags.find(
+                            (e) => e.name === this.state.value
+                          )) &&
+                        this.state.textIsValid && (
+                          <Button
+                            {...(this.props.id && {
+                              id: this.props.id + '-add-new-button',
+                            })}
+                            className="tags-input__suggestion tags-input__add-new"
+                            dropdown={true}
+                            onClick={this.addNewTag}
+                          >
+                            {translations.addNew} "{this.state.value}"
+                          </Button>
+                        )
+                      }
+                      SuggestionTag={this.props.SuggestionTag}
+                      popperProps={this.props.popperProps}
+                    />
+                  )}
               </div>
             )}
             {this.renderDefaultValidation()}
@@ -406,11 +407,11 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
     if (!this.state.suggestionsVisible) {
       this.props.onSuggestionsOpened?.();
     }
+    this.fetchExistingTags(this.state.value);
     this.setState(
       () => ({ textIsFocused: true, suggestionsVisible: true, touched: true }),
       () => this.handleErrors()
     );
-    this.fetchExistingTags(this.state.value);
     const showMobileVersion =
       this.props.mobileVersionEnabled &&
       this.isMobile &&
@@ -441,7 +442,7 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
       e.stopPropagation();
       const existingTag =
         this.props.existingTags &&
-        this.props.existingTags.find(et => et.name === this.state.value);
+        this.props.existingTags.find((et) => et.name === this.state.value);
       if (this.state.preselectedSuggestion !== undefined) {
         this.props.onTagsChanged(
           this.props.tags.concat(suggestions[this.state.preselectedSuggestion])
@@ -583,7 +584,7 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
     if (this.props.maxTags < (this.props.tags && this.props.tags.length)) {
       errors = errors.concat(this.props.maxTagsSurpassedError);
     }
-    return errors.filter(i => i);
+    return errors.filter((i) => i);
   }
 
   private fetchExistingTags(startsWith: string = '') {
@@ -595,7 +596,7 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
         () => this.setState(() => ({ fetchingExistingTags: true })),
         this.props.loadingDelayMs
       );
-      this.props.fetchExistingTags(startsWith).then(fetchedExistingTags => {
+      this.props.fetchExistingTags(startsWith).then((fetchedExistingTags) => {
         clearTimeout(timer);
         this.setState(() => ({
           fetchedExistingTags,
@@ -617,9 +618,9 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
     );
     let suggestions = filteredTags
       .filter(
-        tag =>
+        (tag) =>
           this.props.allowSameTagMultipleTimes ||
-          !this.props.tags.some(t => t.id === tag.id)
+          !this.props.tags.some((t) => t.id === tag.id)
       )
       .slice(0, this.props.maxSuggestions);
     return suggestions;
@@ -674,7 +675,7 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
 
   private tagRemoveClick = (tag: T) => (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    const newTags = this.props.tags.filter(sv => sv.id !== tag.id);
+    const newTags = this.props.tags.filter((sv) => sv.id !== tag.id);
     /*if (newTags.length === 0) {
       setTimeout(() => this.focus(), 50);
     }
@@ -692,10 +693,10 @@ interface TagsFinal {
   defaultProps?: Partial<TagsProps>;
 }
 
-export const Tags = (withThemeContext<TagsProps, InstanceType<typeof TagsRaw>>(
+export const Tags = withThemeContext<TagsProps, InstanceType<typeof TagsRaw>>(
   // tslint:disable-next-line: no-any
   withFormContext<TagsProps>(TagsRaw),
   'tags'
-) as unknown) as TagsFinal;
+) as unknown as TagsFinal;
 
 export default Tags;
