@@ -70,6 +70,7 @@ export interface BookingCalendarProps<T extends BookingCalendarItemT, TLaneData>
   goalGridWidthPx?: number;
   minLanesCount?: number;
   lanesSource?: LaneSourceData<T, TLaneData>[];
+  children?: React.ReactNode;
 
   zoomLevels?: ZoomLevel[];
   filterBookingsToZoom?: (booking: T) => boolean;
@@ -131,6 +132,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     BookingCalendarLaneHeader = DefaultBookingCalendarLaneHeader,
     BookingCalendarLanesHeader = DefaultBookingCalendarLanesHeader,
     BookingCalendarDatePicker = DefaultBookingCalendarDatePicker,
+    children,
   } = props;
   const lanes = React.useMemo(
     () =>
@@ -305,6 +307,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
           />
         </div>
       </div>
+      {children}
     </div>
   );
 }
