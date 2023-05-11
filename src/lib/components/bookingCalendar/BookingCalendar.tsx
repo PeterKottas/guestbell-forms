@@ -54,10 +54,8 @@ import BookingCalendarSelection, {
   BookingCalendarSelectionData,
 } from './bookingCalendarSelection/BookingCalendarSelection';
 
-export interface BookingCalendarProps<
-  T extends BookingCalendarItemT,
-  TLaneData
-> extends BookingCalendarClasses {
+export interface BookingCalendarProps<T extends BookingCalendarItemT, TLaneData>
+  extends BookingCalendarClasses {
   bookings: T[];
   from: Moment;
   till: Moment;
@@ -144,7 +142,8 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
       ),
     [bookings, from, minLanesCount, lanesSource]
   );
-  const { observe, width } = useDimensions();
+  const { observe, entry } = useDimensions<HTMLDivElement>();
+  const width = entry?.target?.scrollWidth ?? 0;
   const { items: gridItems, bestStep } = React.useMemo(
     () =>
       generateGridItems(
@@ -197,9 +196,9 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
       >
         {showGrid && (
           <BookingCalendarGrid
-            containerRef={observe}
             items={gridItems}
             dataRowsCount={lanes.length}
+            width={width}
           />
         )}
         {showSelection && (
@@ -231,6 +230,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
             bookingCalendarDefaultClasses.lanesHeaderContainerClassName,
             lanesHeaderContainerClassName
           )}
+          ref={observe}
         >
           <BookingCalendarLanesHeader<T>
             {...controlsClasses}

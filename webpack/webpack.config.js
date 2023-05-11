@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 var isLocalBuild = process.env.NODE_ENV === 'local';
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 
 module.exports = merge(require('./webpack.config.base'), {
   plugins: [

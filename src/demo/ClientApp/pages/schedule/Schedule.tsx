@@ -31,12 +31,8 @@ const generateBookingItemsBetweenDates = (
 
 export const Schedule = () => {
   const [{ from, till }, setRange] = React.useState({
-    from: moment()
-      .startOf('day')
-      .subtract(0, 'day'),
-    till: moment()
-      .startOf('day')
-      .add(7, 'days'),
+    from: moment().startOf('day').subtract(0, 'day'),
+    till: moment().startOf('day').add(107, 'days'),
   });
 
   const bookings = React.useMemo(
@@ -48,7 +44,7 @@ export const Schedule = () => {
     []
   );
   const items = React.useMemo(
-    () => bookings.filter(b => itemsOverlap(b, { from, till })),
+    () => bookings.filter((b) => itemsOverlap(b, { from, till })),
     [from, till, bookings]
   );
   return (

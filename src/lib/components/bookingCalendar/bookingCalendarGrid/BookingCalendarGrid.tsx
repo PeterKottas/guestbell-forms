@@ -8,8 +8,9 @@ import { GridItem } from '../utils';
 
 export interface BookingCalendarGridProps extends BookingCalendarGridClasses {
   items: GridItem[];
-  containerRef: (elem: HTMLElement) => void;
+  containerRef?: (elem: HTMLElement) => void;
   dataRowsCount: number;
+  width: number;
 }
 
 export function BookingCalendarGrid(props: BookingCalendarGridProps) {
@@ -19,10 +20,15 @@ export function BookingCalendarGrid(props: BookingCalendarGridProps) {
     containerRef,
     dataRowsCount,
     items,
+    width,
   } = props;
-  const style = React.useMemo(() => ({ gridRowEnd: `span ${dataRowsCount}` }), [
-    dataRowsCount,
-  ]);
+  const style = React.useMemo(
+    () => ({
+      gridRowEnd: `span ${dataRowsCount}`,
+      ...(width ? { width: `${width}px` } : {}),
+    }),
+    [dataRowsCount, width]
+  );
   return (
     <div
       className={classNames(

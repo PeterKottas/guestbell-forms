@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 var isLocalBuild = process.env.NODE_ENV === 'local';
-const merge = require('webpack-merge');
+const { mergeWithCustomize } = require('webpack-merge');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -17,10 +17,10 @@ let htmlPluginOptions = {
 
 const clientOutputDir = path.join(__dirname, '..', 'src', 'demo', 'wwwroot');
 
-module.exports = merge({
+module.exports = mergeWithCustomize({
   customizeArray(a, b, key) {
     if (key === 'plugins') {
-      a = _.remove(a, function(plugin) {
+      a = _.remove(a, function (plugin) {
         return !(plugin.filename && plugin.filename === '[name].css');
       });
       return a.concat(b);
