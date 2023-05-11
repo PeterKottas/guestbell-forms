@@ -68,9 +68,9 @@
     "sass-loader": "10.2.0",
     "style-loader": "1.0.1",
     "svg-react-loader": "0.4.6",
+    "terser-webpack-plugin": "^5.3.8",
     "ts-loader": "^6.2.1",
     "typescript": "4.4.3",
-    "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "3.0.0",
     "webpack": "5.82.1",
     "webpack-bundle-analyzer": "4.8.0",
@@ -117,12 +117,12 @@
     "@tippy.js/react": "3.x",
     "moment": "*",
     "react": "16.x",
+    "react-cool-dimensions": "*",
     "react-datepicker": "*",
     "react-device-detect": "*",
     "react-dom": "*",
     "react-ink": "*",
-    "react-onclickoutside": "*",
-    "react-cool-dimensions": "*"
+    "react-onclickoutside": "*"
   },
   "browserslist": [
     "last 1 version",
