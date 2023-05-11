@@ -31,6 +31,7 @@ export function BookingCalendarTimeAxis(props: BookingCalendarTimeAxisProps) {
         className
       )}
       ref={svgRef}
+      height="100"
     >
       <g>
         {items.map((item, key) => (
