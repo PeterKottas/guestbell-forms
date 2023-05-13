@@ -76,6 +76,7 @@
       transparent 5px,
       transparent 10px
     );
+    z-index: 1;
   }
 }
 .bookingCalendar__renderItem--cutEnd {
@@ -90,6 +91,7 @@
       transparent 5px,
       transparent 10px
     );
+    z-index: 1;
   }
 }
 
@@ -195,7 +197,6 @@
   transform: rotate(75deg);
 }*/
 
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -214,7 +215,7 @@
   }
 }
 
-.bookingCalendar__selection__container{
+.bookingCalendar__selection__container {
   position: absolute;
   left: 0;
   right: 0;
