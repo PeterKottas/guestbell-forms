@@ -24,6 +24,7 @@ export interface BookingCalendarControlsProps<T extends BookingCalendarItemT>
   zoomLevels?: ZoomLevel[];
   onRangeChange?: (range: BookingCalendarDateRange) => void;
   filterBookingsToZoom?: (booking: T) => boolean;
+  bookingCalendarDatePicker?: React.ReactNode;
 }
 
 export function BookingCalendarControls<T extends BookingCalendarItemT>(
@@ -42,6 +43,7 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
     onRangeChange,
     items,
     filterBookingsToZoom = () => true,
+    bookingCalendarDatePicker,
   } = props;
   if (!step || !from || !till) {
     return null;
@@ -79,14 +81,14 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
       Math.min(
         ...filteredItems
           ?.filter(filterBookingsToZoom)
-          .map(a => a.from.valueOf())
+          .map((a) => a.from.valueOf())
       ) ?? from?.valueOf();
     const minFrom = from.clone().subtract(from.valueOf() - minFromMs, 'ms');
     const maxTillMs =
       Math.max(
         ...filteredItems
           ?.filter(filterBookingsToZoom)
-          .map(a => a.till.valueOf())
+          .map((a) => a.till.valueOf())
       ) ?? till?.valueOf();
     const maxTill = till.clone().subtract(till.valueOf() - maxTillMs, 'ms');
     onRangeChange({
@@ -101,14 +103,16 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
         className
       )}
     >
-      <div
-        className={classNames(
-          bookingCalendarControlsDefaultClasses.monthLabelClassName,
-          monthLabelClassName
-        )}
-      >
-        {from.format('MMMM')}, {from.format('YYYY')}
-      </div>
+      {bookingCalendarDatePicker && (
+        <div
+          className={classNames(
+            bookingCalendarControlsDefaultClasses.monthLabelClassName,
+            monthLabelClassName
+          )}
+        >
+          {bookingCalendarDatePicker}
+        </div>
+      )}
       {zoomLevels?.length > 0 && (
         <div
           className={classNames(
@@ -129,10 +133,7 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
               onClick={() =>
                 onRangeChange({
                   from: from.clone().startOf('day'),
-                  till: from
-                    .clone()
-                    .startOf('day')
-                    .add(level.step),
+                  till: from.clone().startOf('day').add(level.step),
                 })
               }
             >

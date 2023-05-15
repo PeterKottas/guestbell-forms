@@ -71,6 +71,7 @@ export interface BookingCalendarProps<T extends BookingCalendarItemT, TLaneData>
   minLanesCount?: number;
   lanesSource?: LaneSourceData<T, TLaneData>[];
   children?: React.ReactNode;
+  bookingCalendarTopLeftHeader?: React.ReactNode;
 
   zoomLevels?: ZoomLevel[];
   filterBookingsToZoom?: (booking: T) => boolean;
@@ -132,6 +133,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     BookingCalendarLaneHeader = DefaultBookingCalendarLaneHeader,
     BookingCalendarLanesHeader = DefaultBookingCalendarLanesHeader,
     BookingCalendarDatePicker = DefaultBookingCalendarDatePicker,
+    bookingCalendarTopLeftHeader,
     children,
   } = props;
   const lanes = React.useMemo(
@@ -189,6 +191,21 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
         step={step}
         filterBookingsToZoom={filterBookingsToZoom}
         zoomLevels={zoomLevels}
+        bookingCalendarDatePicker={
+          <>
+            {typeof BookingCalendarDatePicker === 'function' ? (
+              <BookingCalendarDatePicker
+                from={from}
+                till={till}
+                onRangeChange={onRangeChange}
+                getNewMomentFunction={getNewMomentFunction}
+              />
+            ) : (
+              BookingCalendarDatePicker
+            )}
+            {from.format('MMMM')}, {from.format('YYYY')}
+          </>
+        }
       />
       <div
         className={classNames(
@@ -216,16 +233,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
             lanesHeaderHeaderContainerClassName
           )}
         >
-          {typeof BookingCalendarDatePicker === 'function' ? (
-            <BookingCalendarDatePicker
-              from={from}
-              till={till}
-              onRangeChange={onRangeChange}
-              getNewMomentFunction={getNewMomentFunction}
-            />
-          ) : (
-            BookingCalendarDatePicker
-          )}
+          {bookingCalendarTopLeftHeader}
         </div>
         <div
           className={classNames(

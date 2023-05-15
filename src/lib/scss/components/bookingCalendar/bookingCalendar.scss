@@ -152,10 +152,13 @@
 .bookingCalendar__controls {
   display: flex;
   padding: 1rem;
+  padding-bottom: 0.5rem;
   align-items: center;
   .bookingCalendar__controls__monthLabel {
     font-size: 130%;
     font-weight: bold;
+    display: flex;
+    align-items: center;
   }
   .bookingCalendar__controls__buttonsContainer {
     margin-left: auto;
