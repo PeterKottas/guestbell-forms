@@ -25,6 +25,7 @@ export interface BookingCalendarControlsProps<T extends BookingCalendarItemT>
   onRangeChange?: (range: BookingCalendarDateRange) => void;
   filterBookingsToZoom?: (booking: T) => boolean;
   bookingCalendarDatePicker?: React.ReactNode;
+  filteringButton?: React.ReactNode;
 }
 
 export function BookingCalendarControls<T extends BookingCalendarItemT>(
@@ -44,6 +45,7 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
     items,
     filterBookingsToZoom = () => true,
     bookingCalendarDatePicker,
+    filteringButton,
   } = props;
   if (!step || !from || !till) {
     return null;
@@ -171,6 +173,7 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
         >
           <UnfoldLessIcon />
         </Button>
+        {filteringButton}
       </div>
     </div>
   );

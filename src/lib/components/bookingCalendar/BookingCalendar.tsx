@@ -72,6 +72,7 @@ export interface BookingCalendarProps<T extends BookingCalendarItemT, TLaneData>
   lanesSource?: LaneSourceData<T, TLaneData>[];
   children?: React.ReactNode;
   bookingCalendarTopLeftHeader?: React.ReactNode;
+  filteringButton?: React.ReactNode;
 
   zoomLevels?: ZoomLevel[];
   filterBookingsToZoom?: (booking: T) => boolean;
@@ -134,6 +135,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     BookingCalendarLanesHeader = DefaultBookingCalendarLanesHeader,
     BookingCalendarDatePicker = DefaultBookingCalendarDatePicker,
     bookingCalendarTopLeftHeader,
+    filteringButton,
     children,
   } = props;
   const lanes = React.useMemo(
@@ -191,6 +193,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
         step={step}
         filterBookingsToZoom={filterBookingsToZoom}
         zoomLevels={zoomLevels}
+        filteringButton={filteringButton}
         bookingCalendarDatePicker={
           <>
             {typeof BookingCalendarDatePicker === 'function' ? (
