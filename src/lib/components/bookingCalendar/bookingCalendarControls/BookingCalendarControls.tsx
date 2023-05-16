@@ -26,6 +26,7 @@ export interface BookingCalendarControlsProps<T extends BookingCalendarItemT>
   filterBookingsToZoom?: (booking: T) => boolean;
   bookingCalendarDatePicker?: React.ReactNode;
   filteringButton?: React.ReactNode;
+  showZoomAllButton?: boolean;
 }
 
 export function BookingCalendarControls<T extends BookingCalendarItemT>(
@@ -46,6 +47,7 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
     filterBookingsToZoom = () => true,
     bookingCalendarDatePicker,
     filteringButton,
+    showZoomAllButton,
   } = props;
   if (!step || !from || !till) {
     return null;
@@ -162,17 +164,19 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
         <Button noShadow={true} onClick={onBigStepRightClick}>
           <RightArrowLongIcon />
         </Button>
-        <Button
-          className={classNames(
-            bookingCalendarControlsDefaultClasses.zoomBookingsButtonClassName,
-            zoomBookingsButtonClassName
-          )}
-          noShadow={true}
-          disabled={!filteredItems?.length}
-          onClick={onZoomBookingsClick}
-        >
-          <UnfoldLessIcon />
-        </Button>
+        {showZoomAllButton && (
+          <Button
+            className={classNames(
+              bookingCalendarControlsDefaultClasses.zoomBookingsButtonClassName,
+              zoomBookingsButtonClassName
+            )}
+            noShadow={true}
+            disabled={!filteredItems?.length}
+            onClick={onZoomBookingsClick}
+          >
+            <UnfoldLessIcon />
+          </Button>
+        )}
         {filteringButton}
       </div>
     </div>

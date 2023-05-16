@@ -63,6 +63,7 @@ export interface BookingCalendarProps<T extends BookingCalendarItemT, TLaneData>
   getNewMomentFunction?: GetNewMomentFunctionType;
   onRangeChange?: (range: BookingCalendarDateRange) => void;
   step?: Duration;
+  showZoomAllButton?: boolean;
   showGrid?: boolean;
   showSelection?: boolean;
   minSelectionSize?: number;
@@ -117,6 +118,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     step = defaultStep,
     showGrid = true,
     showSelection = true,
+    showZoomAllButton = true,
     gridAvailableSteps = defaultGridAvailableSteps,
     getMomentFormatFunction = defaultGetMomentFormatFunction,
     getNewMomentFunction = defaultGetNewMomentFunction,
@@ -194,6 +196,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
         filterBookingsToZoom={filterBookingsToZoom}
         zoomLevels={zoomLevels}
         filteringButton={filteringButton}
+        showZoomAllButton={showZoomAllButton}
         bookingCalendarDatePicker={
           <>
             {typeof BookingCalendarDatePicker === 'function' ? (
