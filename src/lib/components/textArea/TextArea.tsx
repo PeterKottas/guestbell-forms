@@ -32,12 +32,12 @@ export class TextAreaRaw extends BaseInput<
   TextAreaState,
   HTMLTextAreaElement
 > {
-  public static defaultProps = (Object.assign({}, BaseInput.defaultProps, {
+  public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     type: 'text',
     placeholder: '',
     stopClickPropagation: true,
     readOnly: false,
-  }) as unknown) as TextAreaProps;
+  }) as unknown as TextAreaProps;
   private elem: HTMLTextAreaElement;
 
   constructor(props: TextAreaProps) {
@@ -90,14 +90,14 @@ export class TextAreaRaw extends BaseInput<
     this.elem && this.elem.focus();
   }
 
-  private onKeyDown = e => this.props.onKeyDown && this.props.onKeyDown(e);
+  private onKeyDown = (e) => this.props.onKeyDown && this.props.onKeyDown(e);
 
   private elemRef = (elem: HTMLTextAreaElement) => {
     this.elem = elem;
     this.props.inputRef && this.props.inputRef(elem);
   };
 
-  private onContainerClick = e =>
+  private onContainerClick = (e) =>
     this.props.stopClickPropagation && e.stopPropagation();
 }
 

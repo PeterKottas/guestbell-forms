@@ -49,53 +49,55 @@ export function splitBookingsToLanes<T extends BookingCalendarItemT, TLaneData>(
   }
   let lanes: LaneData<T, TLaneData>[] = [];
   if (lanesSource?.length) {
-    lanes = lanesSource.map(source => ({
+    lanes = lanesSource.map((source) => ({
       ...source,
       items: [],
     }));
   }
-  const bookingsWithoutLaneKey = bookings.filter(a => a.laneKey === undefined);
-  const bookingsWithLaneKey = bookings.filter(a => a.laneKey !== undefined);
+  const bookingsWithoutLaneKey = bookings.filter(
+    (a) => a.laneKey === undefined
+  );
+  const bookingsWithLaneKey = bookings.filter((a) => a.laneKey !== undefined);
   if (bookingsWithLaneKey.length) {
     const grouped = groupBy(
       bookingsWithLaneKey.map((booking, originalIndex) => ({
         ...booking,
         originalIndex,
       })),
-      a => a.laneKey
+      (a) => a.laneKey
     );
-    lanes = Object.keys(grouped).map(key => ({
+    lanes = Object.keys(grouped).map((key) => ({
       laneKey: Number(key),
       items: grouped[key],
-      ...lanesSource?.find(a => a.laneKey === Number(key)),
+      ...lanesSource?.find((a) => a.laneKey === Number(key)),
     }));
     const missingLanes = lanesSource?.filter(
-      a => !lanes.some(l => l.laneKey === a.laneKey)
+      (a) => !lanes.some((l) => l.laneKey === a.laneKey)
     );
-    lanes = lanes.concat(missingLanes.map(a => ({ ...a, items: [] })));
+    lanes = lanes.concat(missingLanes.map((a) => ({ ...a, items: [] })));
   }
   if (bookingsWithoutLaneKey.length) {
-    let remainingBookings: (T &
-      BookingCalendarItemWithOriginalIndexT)[] = bookingsWithoutLaneKey
-      .map((booking, originalIndex) => ({ ...booking, originalIndex }))
-      .sort((a, b) => a.from.valueOf() - b.from.valueOf());
+    let remainingBookings: (T & BookingCalendarItemWithOriginalIndexT)[] =
+      bookingsWithoutLaneKey
+        .map((booking, originalIndex) => ({ ...booking, originalIndex }))
+        .sort((a, b) => a.from.valueOf() - b.from.valueOf());
     while (remainingBookings.length > 0) {
       let min = 99999999999999;
       let bookingIndex = -1;
       let laneIndex = -1;
       lanes.forEach((lane, index) => {
-        if (lanesSource?.some(l => l.laneKey === lane.laneKey)) {
+        if (lanesSource?.some((l) => l.laneKey === lane.laneKey)) {
           return;
         }
         const lastTill = lane.items[lane.items.length - 1]?.till ?? from;
-        const distances = remainingBookings.map(booking => {
+        const distances = remainingBookings.map((booking) => {
           const dist = booking.from.diff(lastTill);
           if (lane.items.length === 0) {
             return Math.abs(dist);
           }
           return dist;
         });
-        const _min = Math.min(...distances.filter(a => a >= 0));
+        const _min = Math.min(...distances.filter((a) => a >= 0));
         if (_min < min) {
           bookingIndex = distances.indexOf(_min);
           laneIndex = index;
@@ -146,7 +148,26 @@ export function splitBookingsToLanes<T extends BookingCalendarItemT, TLaneData>(
         }))
     );
   }
-  lanes = lanes.sort((a, b) => a.laneKey - b.laneKey);
+  const findIndex = (
+    arr: (LaneData<T, TLaneData> | LaneSourceData<T, TLaneData>)[],
+    laneKey: string | undefined | number
+  ): number => {
+    if (!laneKey) return -1;
+    const index = arr.findIndex((item) => item.laneKey === laneKey);
+    return index === -1 ? Number.MAX_SAFE_INTEGER : index;
+  };
+
+  const sortArrayByLaneKeys = (
+    referenceArray: LaneSourceData<T, TLaneData>[],
+    arrayToSort: LaneData<T, TLaneData>[]
+  ): LaneData<T, TLaneData>[] => {
+    return [...arrayToSort].sort((a, b) => {
+      const indexA = findIndex(referenceArray, a.laneKey);
+      const indexB = findIndex(referenceArray, b.laneKey);
+      return indexA - indexB;
+    });
+  };
+  lanes = sortArrayByLaneKeys(lanesSource, lanes);
   return lanes;
 }
 
@@ -179,7 +200,7 @@ export function calculateItemsDimensions<T extends BookingCalendarItemT>(
   const startMs = from.valueOf();
   const endMs = till.valueOf();
   return widthMs > 0
-    ? items?.map(item => {
+    ? items?.map((item) => {
         const startIsCut = item.from.valueOf() < startMs;
         const realStart = (item.from.valueOf() - startMs) / widthMs;
         const realFrom = startIsCut ? moment(startMs) : moment(item.from);
@@ -229,10 +250,12 @@ export const generateControlItems = (
     steps += 1;
   }
   return new Array(steps).fill(0).map((_, index) => ({
-    from: from.clone()
+    from: from
+      .clone()
       .add(subtract)
       .add(step.asMilliseconds() * index),
-    till: from.clone()
+    till: from
+      .clone()
       .add(subtract)
       .add(step.asMilliseconds() * (index + 1)),
   }));
@@ -271,12 +294,12 @@ export const generateGridItems = (
   const timeLengthMs = tillMs - fromMs;
   const approximateStepsCount = containerWidthPx / goalGridWidthPx;
   const approximateStepMs = timeLengthMs / approximateStepsCount;
-  const availableStepsDistancesMs = availableSteps.map(a =>
+  const availableStepsDistancesMs = availableSteps.map((a) =>
     Math.abs(a.asMilliseconds() - approximateStepMs)
   );
   const smallestDistance = Math.min(...availableStepsDistancesMs);
   const bestStepIndex = availableStepsDistancesMs.findIndex(
-    a => a === smallestDistance
+    (a) => a === smallestDistance
   );
   const bestStep = availableSteps[bestStepIndex];
   const subtract =
@@ -289,8 +312,8 @@ export const generateGridItems = (
   }
   return {
     items: steps
-      .filter(a => a.valueOf() > fromMs && a.valueOf() < tillMs)
-      .map(date => {
+      .filter((a) => a.valueOf() > fromMs && a.valueOf() < tillMs)
+      .map((date) => {
         const stepProportion =
           ((date.valueOf() + from.utcOffset() * 60 * 1000) % stepMs) / stepMs;
         let numberOfRoots = 0;
