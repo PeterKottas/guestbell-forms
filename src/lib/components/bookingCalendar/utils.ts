@@ -156,7 +156,7 @@ export function splitBookingsToLanes<T extends BookingCalendarItemT, TLaneData>(
     const unmatchedVal = unmatchedToFront
       ? Number.MIN_SAFE_INTEGER
       : Number.MAX_SAFE_INTEGER;
-    if (!laneKey) {
+    if (laneKey === undefined || laneKey === null) {
       return unmatchedVal;
     }
     const index = arr.findIndex((item) => item.laneKey === laneKey);
