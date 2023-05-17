@@ -22,8 +22,8 @@ const App = () => (
         },
       }}
     >
-      {true && <Schedule />}
-      {false && <Basic />}
+      {false && <Schedule />}
+      {true && <Basic />}
       {false && <ValidationPage />}
     </ThemeProvider>
   </div>
