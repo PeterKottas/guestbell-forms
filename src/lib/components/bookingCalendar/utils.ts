@@ -42,7 +42,8 @@ export function splitBookingsToLanes<T extends BookingCalendarItemT, TLaneData>(
   bookings: T[],
   from: Moment,
   minLanesCount: number,
-  lanesSource: LaneSourceData<T, TLaneData>[] = []
+  lanesSource: LaneSourceData<T, TLaneData>[] = [],
+  unmatchedToFront = true
 ) {
   if (!bookings) {
     return [];
@@ -152,9 +153,14 @@ export function splitBookingsToLanes<T extends BookingCalendarItemT, TLaneData>(
     arr: (LaneData<T, TLaneData> | LaneSourceData<T, TLaneData>)[],
     laneKey: string | undefined | number
   ): number => {
-    if (!laneKey) return -1;
+    const unmatchedVal = unmatchedToFront
+      ? Number.MIN_SAFE_INTEGER
+      : Number.MAX_SAFE_INTEGER;
+    if (!laneKey) {
+      return unmatchedVal;
+    }
     const index = arr.findIndex((item) => item.laneKey === laneKey);
-    return index === -1 ? Number.MAX_SAFE_INTEGER : index;
+    return index === -1 ? unmatchedVal : index;
   };
 
   const sortArrayByLaneKeys = (

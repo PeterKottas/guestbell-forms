@@ -71,6 +71,7 @@ export interface BookingCalendarProps<T extends BookingCalendarItemT, TLaneData>
   goalGridWidthPx?: number;
   minLanesCount?: number;
   lanesSource?: LaneSourceData<T, TLaneData>[];
+  unmatchedLanesToFront?: boolean;
   children?: React.ReactNode;
   bookingCalendarTopLeftHeader?: React.ReactNode;
   filteringButton?: React.ReactNode;
@@ -126,6 +127,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     minSelectionSize = 10,
     minLanesCount,
     lanesSource,
+    unmatchedLanesToFront = true,
     filterBookingsToZoom,
     zoomLevels,
     BookingCalendarControls = DefaultBookingCalendarControls,
@@ -146,9 +148,10 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
         bookings,
         from,
         minLanesCount,
-        lanesSource
+        lanesSource,
+        unmatchedLanesToFront
       ),
-    [bookings, from, minLanesCount, lanesSource]
+    [bookings, from, minLanesCount, lanesSource, unmatchedLanesToFront]
   );
   const { observe, entry } = useDimensions<HTMLDivElement>();
   const width = entry?.target?.scrollWidth ?? 0;
