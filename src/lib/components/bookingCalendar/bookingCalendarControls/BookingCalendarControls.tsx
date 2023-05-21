@@ -14,6 +14,10 @@ import * as LeftArrowIcon from 'material-design-icons/hardware/svg/production/ic
 import * as RightArrowLongIcon from 'material-design-icons/navigation/svg/production/ic_arrow_forward_24px.svg';
 import * as RightArrowIcon from 'material-design-icons/hardware/svg/production/ic_keyboard_arrow_right_24px.svg';
 import * as UnfoldLessIcon from 'material-design-icons/navigation/svg/production/ic_unfold_less_24px.svg';
+import * as DateRangeIcon from 'material-design-icons/action/svg/production/ic_date_range_24px.svg';
+
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 export interface BookingCalendarControlsProps<T extends BookingCalendarItemT>
   extends BookingCalendarControlsClasses {
@@ -38,6 +42,7 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
     buttonsContainerClassName,
     zoomBookingsButtonClassName,
     zoomLevelsContainerClassName,
+    zoomLevelsButtonClassName,
     zoomLevels,
     step,
     from,
@@ -100,6 +105,22 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
       till: maxTill,
     });
   }, [from, till, filteredItems]);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const selectedLevel = React.useMemo(
+    () =>
+      zoomLevels?.find(
+        (level) =>
+          till.valueOf() - from.valueOf() === level.step.asMilliseconds()
+      ),
+    [zoomLevels, till, from]
+  );
   return (
     <div
       className={classNames(
@@ -124,7 +145,51 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
             zoomLevelsContainerClassName
           )}
         >
-          {zoomLevels.map((level, index) => (
+          <Button
+            id="zoom-level-button"
+            className={classNames(
+              bookingCalendarControlsDefaultClasses.zoomLevelsButtonClassName,
+              zoomLevelsButtonClassName
+            )}
+            aria-controls={open ? 'zoom-level-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}
+            noShadow={true}
+          >
+            <DateRangeIcon />
+            {selectedLevel ? ` ${selectedLevel.label}` : ''}
+          </Button>
+          <Menu
+            id="zoom-level-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'zoom-level-button',
+            }}
+          >
+            {zoomLevels.map((level, index) => (
+              <MenuItem
+                data-level={index}
+                key={index}
+                onClick={() => {
+                  onRangeChange({
+                    from: from.clone().startOf('day'),
+                    till: from.clone().startOf('day').add(level.step),
+                  });
+                  setAnchorEl(null);
+                }}
+                selected={
+                  till.valueOf() - from.valueOf() ===
+                  level.step.asMilliseconds()
+                }
+              >
+                {level.label}
+              </MenuItem>
+            ))}
+          </Menu>
+          {/*zoomLevels.map((level, index) => (
             <Button
               type={
                 till.valueOf() - from.valueOf() === level.step.asMilliseconds()
@@ -143,7 +208,7 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
             >
               {level.label}
             </Button>
-          ))}
+            ))*/}
         </div>
       )}
       <div

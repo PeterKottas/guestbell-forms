@@ -155,7 +155,6 @@
   padding-bottom: 0.5rem;
   align-items: center;
   .bookingCalendar__controls__monthLabel {
-    font-size: 130%;
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -170,6 +169,13 @@
   }
   .bookingCalendar__controls__zoomLevelsContainer {
     margin-left: auto;
+  }
+  .bookingCalendar__controls__zoomLevelsButton {
+    display: flex;
+    align-items: center;
+    svg {
+      margin-right: 0.5rem;
+    }
   }
 }
 
