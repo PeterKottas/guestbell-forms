@@ -212,7 +212,6 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
             ) : (
               BookingCalendarDatePicker
             )}
-            {from.format('MMMM')}, {from.format('YYYY')}
           </>
         }
       />
