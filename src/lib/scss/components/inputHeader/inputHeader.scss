@@ -4,10 +4,6 @@
   position: relative;
 }
 
-.input__header__icon {
-  margin-right: 0.5rem;
-}
-
 .input__header--hero {
   > .input__header__top {
     // min-height: 5.063rem;
@@ -16,7 +12,6 @@
       font-size: 130%;
       width: initial;
       min-width: initial;
-      margin-right: 1rem;
     }
   }
 }
@@ -59,7 +54,6 @@
 
 .input__header__title {
   font-size: 115%;
-  text-align: right;
   display: inline-block;
   color: $input-text-color;
   > div {
@@ -90,6 +84,7 @@
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
+  gap: 0.5rem;
 }
 
 .input__header__top__button-container {
@@ -128,27 +123,4 @@
 
 .input__header__top--clickable {
   cursor: pointer;
-}
-
-@media (max-width: 768px) {
-  .input__header__top__header-container {
-    div:last-child {
-      margin-bottom: 0;
-    }
-  }
-  .input__header__title {
-    margin-bottom: 0.5rem;
-    width: 100% !important;
-    margin-right: 0;
-    text-align: justify;
-  }
-  .input__header__sub-title {
-    width: 100% !important;
-    margin-right: 0;
-    text-align: justify;
-  }
-  .input__header__icon {
-    text-align: center;
-    display: inline-block;
-  }
 }
