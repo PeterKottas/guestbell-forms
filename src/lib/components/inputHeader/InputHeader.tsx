@@ -65,7 +65,9 @@ export interface InputHeaderState {
   inputHeaderContext: InputHeaderContextState;
 }
 
-const CollapseExpandButtonComponent: React.SFC<ButtonComponentProps> = props => (
+const CollapseExpandButtonComponent: React.SFC<ButtonComponentProps> = (
+  props
+) => (
   <a className={props.className} onClick={props.onClick} href="#">
     {props.children}
   </a>
@@ -73,7 +75,8 @@ const CollapseExpandButtonComponent: React.SFC<ButtonComponentProps> = props => 
 
 export class InputHeaderRaw
   extends React.PureComponent<InputHeaderRawProps, InputHeaderState>
-  implements InputHeaderApi {
+  implements InputHeaderApi
+{
   public static defaultProps: InputHeaderProps = {
     ignoreContext: false,
     showExpandAll: false,
@@ -202,17 +205,15 @@ export class InputHeaderRaw
                 {this.props.icon}
               </div>
             )}
-            <div className="input__header__title__container">
-              {this.props.title && (
-                <div className="input__header__title">{this.renderTitle()}</div>
-              )}
-              {this.props.subTitle && (
-                <div className="input__header__sub-title">
-                  {this.props.subTitle}
-                </div>
-              )}
-            </div>
+            {this.props.title && (
+              <div className="input__header__title">{this.renderTitle()}</div>
+            )}
           </div>
+          {this.props.subTitle && (
+            <div className="input__header__sub-title">
+              {this.props.subTitle}
+            </div>
+          )}
           <div
             className="input__header__top__button-container"
             onClick={this.mainButtonClick}
@@ -285,7 +286,7 @@ export class InputHeaderRaw
     componentId: string,
     component: InputHeaderComponentContextState
   ) {
-    this.setState(previousState => {
+    this.setState((previousState) => {
       let components = Object.assign(
         {},
         previousState.inputHeaderContext.components
@@ -298,7 +299,7 @@ export class InputHeaderRaw
   }
 
   private unregisterInputHeader(componentId: string) {
-    this.setState(previousState => {
+    this.setState((previousState) => {
       let components = Object.assign(
         {},
         previousState.inputHeaderContext.components
@@ -341,7 +342,7 @@ export class InputHeaderRaw
   private renderCollapseExpandAll() {
     let allCollapsed = true;
     let allExpanded = true;
-    Object.keys(this.state.inputHeaderContext.components).forEach(key => {
+    Object.keys(this.state.inputHeaderContext.components).forEach((key) => {
       const component = this.state.inputHeaderContext.components[key];
       if (component && component.props.collapsible) {
         if (component.state.collapsed) {
@@ -387,14 +388,14 @@ export class InputHeaderRaw
     e.stopPropagation();
 
   private expandAllClick = () => {
-    Object.keys(this.state.inputHeaderContext.components).forEach(key => {
+    Object.keys(this.state.inputHeaderContext.components).forEach((key) => {
       const component = this.state.inputHeaderContext.components[key];
       component.componentApi.expand();
     });
   };
 
   private collapseAllClick = () => {
-    Object.keys(this.state.inputHeaderContext.components).forEach(key => {
+    Object.keys(this.state.inputHeaderContext.components).forEach((key) => {
       const component = this.state.inputHeaderContext.components[key];
       component.componentApi.collapse();
     });

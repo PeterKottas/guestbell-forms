@@ -173,7 +173,7 @@ const types: ButtonTypes[] = [
   'white',
   'none',
 ];
-const ButtonsShowcase: React.SFC<ButtonProps> = props => {
+const ButtonsShowcase: React.SFC<ButtonProps> = (props) => {
   return (
     <div
       className="px-2"
@@ -261,12 +261,8 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
   }
 
   public render() {
-    let time2Max = duration()
-      .add(1, 'hour')
-      .add(5, 'minutes');
-    let time2Min = duration()
-      .subtract(1, 'hour')
-      .subtract(5, 'minutes');
+    let time2Max = duration().add(1, 'hour').add(5, 'minutes');
+    let time2Min = duration().subtract(1, 'hour').subtract(5, 'minutes');
 
     return (
       <div className="container">
@@ -342,7 +338,6 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         "And this is subtitle. There's also icon on the left"
                       }
                       showExpandAll={true}
-                      type="hero"
                       collapsible={true}
                       collapsedDefault={false}
                       mainButton={
@@ -368,6 +363,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                       ]}
                       shouldToggleCollapseOnHeaderClick={true}
                     >
+                      <InputHeader collapsible={true}>Test</InputHeader>
                       <RadioContainer title="Drinks">
                         <Radio
                           name="drink"
@@ -547,7 +543,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                       </Button>
                       <Checkbox
                         checked={this.state.hideNumber}
-                        onChecked={e =>
+                        onChecked={(e) =>
                           this.setState({ hideNumber: e.target.checked })
                         }
                         label="Hide/show number inputs"
@@ -774,12 +770,12 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                         <Tags
                           title="Tags suggestions"
                           label="Choose or create tags"
-                          fetchExistingTags={startsWith =>
-                            new Promise(resolve =>
+                          fetchExistingTags={(startsWith) =>
+                            new Promise((resolve) =>
                               setTimeout(
                                 () =>
                                   resolve(
-                                    existingTags.filter(e =>
+                                    existingTags.filter((e) =>
                                       e.name.includes(startsWith)
                                     )
                                   ),
@@ -812,7 +808,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                           tags={this.state.tags}
                           onTagsChanged={this.tagsChanged}
                           showChips={true}
-                          onTagClick={t => console.warn(t)}
+                          onTagClick={(t) => console.warn(t)}
                         />
                         <Tags
                           title="Tags only email"
@@ -837,7 +833,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                           onSelectedValuesChange={this.selectedValuesChanged}
                         />
                         <Button
-                          onClick={e =>
+                          onClick={(e) =>
                             this.setState({
                               selectedValues: [{ value: 'One option' }],
                             })
