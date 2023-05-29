@@ -48,7 +48,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.5rem;
   &.input__header__top--no-bg {
     background-color: transparent;
   }
@@ -101,10 +101,6 @@
   > div {
     margin-left: auto;
   }
-  > div:not(.input__header__sub-title) ~ div:not(.input__header__sub-title),
-  div.input__header__sub-title {
-    margin-left: initial;
-  }
 }
 
 .input__header__collapse-button {
@@ -147,7 +143,6 @@
     text-align: justify;
   }
   .input__header__sub-title {
-    margin-bottom: 0.5rem;
     width: 100% !important;
     margin-right: 0;
     text-align: justify;
@@ -155,9 +150,5 @@
   .input__header__icon {
     text-align: center;
     display: inline-block;
-  }
-  .input__header__top__button-container {
-    margin-left: auto;
-    justify-self: flex-end;
   }
 }
