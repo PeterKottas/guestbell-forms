@@ -37,7 +37,7 @@
 
 .input__header__top {
   position: relative;
-  padding: 1rem 0.5rem;
+  padding: 1rem;
   background-color: $input-divider-color;
   position: relative;
   display: flex;
@@ -123,4 +123,10 @@
 
 .input__header__top--clickable {
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .input__header__top {
+    padding: 1rem 0.5rem;
+  }
 }
