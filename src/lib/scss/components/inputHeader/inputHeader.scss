@@ -4,6 +4,10 @@
   position: relative;
 }
 
+.input__header__icon {
+  margin-right: 0.5rem;
+}
+
 .input__header--hero {
   > .input__header__top {
     // min-height: 5.063rem;
@@ -14,9 +18,6 @@
       min-width: initial;
       margin-right: 1rem;
     }
-  }
-  .input__header__icon {
-    margin-right: 0.5rem;
   }
 }
 
@@ -30,16 +31,12 @@
     font-size: 100%;
     width: initial;
     min-width: initial;
-    margin-right: 1rem;
   }
   .input__header__top__header-container {
     padding: 0;
   }
   .input__header__top__button-container {
     padding: 0;
-  }
-  .input__header__icon {
-    margin-right: 1rem;
   }
 }
 
