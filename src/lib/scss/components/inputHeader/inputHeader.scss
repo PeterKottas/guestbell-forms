@@ -45,7 +45,7 @@
 
 .input__header__top {
   position: relative;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
   background-color: $input-divider-color;
   position: relative;
   display: flex;
@@ -102,7 +102,6 @@
   flex-wrap: nowrap;
   align-items: center;
   margin-left: auto;
-  // padding: 0.5rem 0;
   > div {
     margin-left: auto;
   }
@@ -146,9 +145,6 @@
       margin-bottom: 0;
     }
   }
-  .input__header__top {
-    padding-right: 0.5rem;
-  }
   .input__header__title {
     margin-bottom: 0.5rem;
     width: 100% !important;
@@ -162,7 +158,6 @@
     text-align: justify;
   }
   .input__header__icon {
-    // margin-bottom: 0.5rem;
     text-align: center;
     display: inline-block;
   }
