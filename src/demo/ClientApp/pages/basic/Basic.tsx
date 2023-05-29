@@ -363,7 +363,6 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                       ]}
                       shouldToggleCollapseOnHeaderClick={true}
                     >
-                      <InputHeader collapsible={true}>Test</InputHeader>
                       <RadioContainer title="Drinks">
                         <Radio
                           name="drink"

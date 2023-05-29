@@ -45,12 +45,13 @@
 
 .input__header__top {
   position: relative;
-  padding: 0 0.5rem;
+  padding: 1rem 0.5rem;
   background-color: $input-divider-color;
   position: relative;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  gap: 1rem;
   &.input__header__top--no-bg {
     background-color: transparent;
   }
@@ -63,7 +64,6 @@
   font-size: 115%;
   text-align: right;
   display: inline-block;
-  margin-right: 1rem;
   color: $input-text-color;
   > div {
     display: flex;
@@ -93,7 +93,6 @@
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
-  padding: 1rem 0;
 }
 
 .input__header__top__button-container {
