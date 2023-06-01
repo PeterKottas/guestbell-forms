@@ -1,3 +1,5 @@
+$border-color: $input-border-color;
+$border-color-dark: black;
 .bookingCalendar {
   display: flex;
   flex-direction: column;
@@ -13,9 +15,19 @@
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
   }
+  .bookingCalendar__laneHeaderContainer {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid $border-color;
+    border-right: 1px solid $border-color-dark;
+    box-shadow: none;
+  }
   .bookingCalendar__laneContainer--first,
   .bookingCalendar__laneHeaderContainer--first {
     padding-top: 1rem;
+  }
+  .bookingCalendar__laneHeaderContainer--first {
+    border-top: 1px solid $border-color;
   }
   .bookingCalendar__laneContainer--last,
   .bookingCalendar__laneHeaderContainer--last {
@@ -25,7 +37,13 @@
   .bookingCalendar__lanesHeaderContainer,
   .bookingCalendar__lanesHeaderHeaderContainer,
   .bookingCalendar__laneHeaderContainer {
-    box-shadow: 1px 0 0 0 rgba(black, 0.1);
+    box-shadow: 1px 0 0 0 $border-color;
+  }
+  .bookingCalendar__lanesHeaderHeaderContainer {
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid $border-color-dark;
   }
   .bookingCalendar__laneContainer--last {
     border-bottom: 1px solid $input-border-color;
@@ -35,7 +53,7 @@
   display: flex;
   flex-direction: row;
   z-index: 1;
-  min-height: 3rem;
+  min-height: 2rem;
 }
 .bookingCalendar__laneHeader {
   height: 100%;
@@ -109,7 +127,7 @@
   height: 100%;
   width: 0.5px;
   // transform: translateX(-50%);
-  background-color: black;
+  background-color: $border-color-dark;
   position: absolute;
 }
 
@@ -120,7 +138,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 1px 0 black;
+    box-shadow: 1px 0 $border-color-dark;
     &:last-of-type {
       box-shadow: none;
     }
@@ -136,7 +154,7 @@
     width: 100%;
     text-align: end;
     text-transform: none;
-    border-left: 1px solid rgba(black, 0.2);
+    border-left: 1px solid $border-color;
   }
   .bookingCalendar__lanesHeader__renderItem__button__mutedText {
     opacity: 0.8;
@@ -147,11 +165,15 @@
       margin-right: auto;
     }
   }
+  .bookingCalendar__item:first-of-type
+    .bookingCalendar__lanesHeader__renderItem__button {
+    border-left: none;
+  }
 }
 
 .bookingCalendar__controls {
   display: flex;
-  padding: 1rem;
+  padding: 1rem 0;
   padding-bottom: 0.5rem;
   align-items: center;
   .bookingCalendar__controls__monthLabel {
