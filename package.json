@@ -91,7 +91,7 @@
     "build": "yarn build:clean && yarn generate-d-ts && yarn transpile && yarn build:lib",
     "transpile": "babel ./src/lib --out-dir build --source-maps --copy-files --only **/*.ts,**/*.tsx --extensions .ts,.tsx --ignore **/*.d.ts && rimraf build/declarations && rimraf build/tsconfig.json",
     "version:patch": "npm version patch",
-    "push:git": "git push --tags origin main --quiet",
+    "push:git": "git push --tags origin master --quiet",
     "commit:build": "git add . && git commit -m \"Deploy commit\" --quiet && yarn push:git || true",
     "create:patch": "yarn version:patch && yarn push:git",
     "deploy": "yarn build && yarn build-storybook && yarn commit:build && npm publish && yarn create:patch"
