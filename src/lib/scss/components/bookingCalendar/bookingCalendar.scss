@@ -263,6 +263,8 @@ $border-color-dark: black;
   animation-duration: 0.2s;
   animation-name: fadeIn;
   user-select: none;
+  padding: 0.5rem;
+  overflow: hidden;
 }
 
 .bookingCalendar__selection--fadeout {

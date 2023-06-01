@@ -79,10 +79,10 @@ export function BookingCalendarItem<T extends BookingCalendarItemT>(
     width,
     BookingCalendarRenderItem = DefaultBookingCalendarRenderItem,
   } = props;
-  const style = React.useMemo(() => getItemPositionStyle(marginStart, width), [
-    marginStart,
-    width,
-  ]);
+  const style = React.useMemo(
+    () => getItemPositionStyle(marginStart, width),
+    [marginStart, width]
+  );
   return (
     <div
       className={classNames(
@@ -90,6 +90,7 @@ export function BookingCalendarItem<T extends BookingCalendarItemT>(
         className
       )}
       style={style}
+      data-id={props.item.id}
     >
       <BookingCalendarRenderItem {...props} />
     </div>

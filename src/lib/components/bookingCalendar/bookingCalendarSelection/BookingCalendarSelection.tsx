@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { bookingCalendarSelectionDefaultClasses } from './classes';
 
 export type BookingCalendarSelectionCoordinates = [number, number];
 export interface BookingCalendarSelectionData {
@@ -11,10 +12,13 @@ export interface BookingCalendarSelectionProps {
     origin: BookingCalendarSelectionCoordinates;
     target: BookingCalendarSelectionCoordinates;
   }) => void;
-  onSelected?: (data: {
-    origin: BookingCalendarSelectionCoordinates;
-    target: BookingCalendarSelectionCoordinates;
-  }) => void;
+  onSelected?: (
+    data: {
+      origin: BookingCalendarSelectionCoordinates;
+      target: BookingCalendarSelectionCoordinates;
+    },
+    e: React.MouseEvent<HTMLElement>
+  ) => void;
   dataRowsCount: number;
   minSelectionSize: number;
   children?: React.ReactNode;
@@ -116,10 +120,13 @@ export default class BookingCalendarSelection extends React.Component<
       if (distance < this.props.minSelectionSize) {
         return;
       }
-      this.props.onSelected?.({
-        origin: this.state.selectionBoxOrigin,
-        target: this.state.selectionBoxTarget,
-      });
+      this.props.onSelected?.(
+        {
+          origin: this.state.selectionBoxOrigin,
+          target: this.state.selectionBoxTarget,
+        },
+        evt
+      );
     }
   }
 
@@ -194,7 +201,7 @@ export default class BookingCalendarSelection extends React.Component<
     return (
       <div
         ref={this.containerRef}
-        className="bookingCalendar__selection__container"
+        className={bookingCalendarSelectionDefaultClasses.root}
         style={{
           zIndex: this.state.selectionBox ? 99999 : undefined,
           gridRowEnd: `span ${this.props.dataRowsCount}`,
@@ -206,11 +213,12 @@ export default class BookingCalendarSelection extends React.Component<
       >
         {boxVisible && this.state.selectionBox && (
           <div
-            className={`bookingCalendar__selection ${this.state.animation}`}
+            className={`${bookingCalendarSelectionDefaultClasses.selection} ${this.state.animation}`}
             style={baseStyle}
-          />
+          >
+            {this.props.children}
+          </div>
         )}
-        {this.props.children}
       </div>
     );
   }

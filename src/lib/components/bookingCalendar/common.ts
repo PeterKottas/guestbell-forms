@@ -3,6 +3,7 @@ import moment, { Moment, Duration } from 'moment';
 export interface BookingCalendarItemT {
   from: Moment;
   till: Moment;
+  id: string | number;
   /*
   Optional index that identifies the lane
   */

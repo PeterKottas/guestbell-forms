@@ -180,7 +180,8 @@ export function splitBookingsToLanes<T extends BookingCalendarItemT, TLaneData>(
   return lanes;
 }
 
-export function itemsOverlap<T extends BookingCalendarItemT>(a: T, b: T) {
+type Picked = Pick<BookingCalendarItemT, 'from' | 'till'>;
+export function itemsOverlap(a: Picked, b: Picked) {
   if (!a?.from || !a?.till || !b?.from || !b?.till) {
     return false;
   }
@@ -267,6 +268,7 @@ export const generateControlItems = (
       .clone()
       .add(subtract)
       .add(step.asMilliseconds() * (index + 1)),
+    id: index
   }));
 };
 

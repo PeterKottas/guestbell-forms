@@ -28,7 +28,10 @@ import {
   BookingCalendarLaneProps,
 } from './bookingCalendarLane/BookingCalendarLane';
 import moment, { Moment, Duration } from 'moment';
-import { BookingCalendarItemProps } from './bookingCalendarItem';
+import {
+  BookingCalendarItemProps,
+  bookingCalendarItemDefaultClasses,
+} from './bookingCalendarItem';
 import { BookingCalendarRenderItemProps } from './bookingCalendarRenderItem';
 import {
   BookingCalendarGrid as DefaultBookingCalendarGrid,
@@ -41,6 +44,7 @@ import {
 import {
   BookingCalendarLanesHeader as DefaultBookingCalendarLanesHeader,
   BookingCalendarLanesHeaderProps,
+  bookingCalendarLanesHeaderDefaultClasses,
 } from './bookingCalendarLanesHeader';
 import {
   BookingCalendarDatePicker as DefaultBookingCalendarDatePicker,
@@ -51,6 +55,8 @@ import useDimensions from 'react-cool-dimensions';
 import BookingCalendarSelection, {
   BookingCalendarSelectionData,
 } from './bookingCalendarSelection/BookingCalendarSelection';
+import { bookingCalendarLaneDefaultClasses } from './bookingCalendarLane';
+import { bookingCalendarSelectionDefaultClasses } from './bookingCalendarSelection/classes';
 
 export interface BookingCalendarProps<T extends BookingCalendarItemT, TLaneData>
   extends BookingCalendarClasses {
@@ -63,8 +69,6 @@ export interface BookingCalendarProps<T extends BookingCalendarItemT, TLaneData>
   step?: Duration;
   showZoomAllButton?: boolean;
   showGrid?: boolean;
-  showSelection?: boolean;
-  minSelectionSize?: number;
   gridAvailableSteps?: Duration[];
   goalGridWidthPx?: number;
   minLanesCount?: number;
@@ -76,6 +80,16 @@ export interface BookingCalendarProps<T extends BookingCalendarItemT, TLaneData>
 
   zoomLevels?: ZoomLevel[];
   filterBookingsToZoom?: (booking: T) => boolean;
+
+  showSelection?: boolean;
+  minSelectionSize?: number;
+  onSelection?: (
+    items: T[],
+    from: Moment,
+    till: Moment,
+    e: React.MouseEvent<HTMLElement>
+  ) => void;
+  selectionContent?: React.ReactNode;
 
   BookingCalendarItem?: React.ComponentType<BookingCalendarItemProps<T>>;
   BookingCalendarRenderItem?: React.ComponentType<
@@ -117,12 +131,14 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     step = defaultStep,
     showGrid = true,
     showSelection = true,
+    onSelection,
+    minSelectionSize = 10,
+    selectionContent,
     showZoomAllButton = true,
     gridAvailableSteps = defaultGridAvailableSteps,
     getMomentFormatFunction = defaultGetMomentFormatFunction,
     getNewMomentFunction = defaultGetNewMomentFunction,
     goalGridWidthPx = 60,
-    minSelectionSize = 10,
     minLanesCount,
     lanesSource,
     unmatchedLanesToFront = true,
@@ -166,26 +182,80 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
       ),
     [from, till, step, width, gridAvailableSteps, goalGridWidthPx]
   );
+  const containerRef = React.useRef<HTMLDivElement>();
   const onSelected = React.useCallback(
-    (data: BookingCalendarSelectionData) => {
+    (data: BookingCalendarSelectionData, e: React.MouseEvent<HTMLElement>) => {
       if (!from || !till || !width || !onRangeChange) {
         return;
       }
       const screenSpaceStartX = Math.min(data.origin[0], data.target[0]);
       const screenSpaceEndX = Math.max(data.origin[0], data.target[0]);
+      const screenSpaceStartY = Math.min(data.origin[1], data.target[1]);
+      const screenSpaceEndY = Math.max(data.origin[1], data.target[1]);
       const durationMs = till.valueOf() - from.valueOf();
       const toTimeSpace = (num: number) => (num / (width || 1)) * durationMs;
       const timeSpaceStart = from
         .clone()
         .add(toTimeSpace(screenSpaceStartX), 'ms');
       const timeSpaceEnd = from.clone().add(toTimeSpace(screenSpaceEndX), 'ms');
-      onRangeChange({ from: timeSpaceStart, till: timeSpaceEnd });
+      if (onSelection) {
+        const itemSelector = `.${bookingCalendarLaneDefaultClasses.className}:not(.${bookingCalendarLanesHeaderDefaultClasses.laneClassName}) > .${bookingCalendarItemDefaultClasses.className}`;
+        const allItems = Array.from(
+          containerRef?.current?.querySelectorAll(itemSelector)
+        );
+        const selectionAreaBB = containerRef?.current
+          ?.querySelector(`.${bookingCalendarSelectionDefaultClasses.root}`)
+          .getBoundingClientRect();
+        const selectedItems = allItems.filter((item) => {
+          const itemBB = item.getBoundingClientRect();
+          const itemLeft = itemBB.left - selectionAreaBB.left;
+          const itemTop = itemBB.top - selectionAreaBB.top;
+          const itemRight = itemBB.right - selectionAreaBB.left;
+          const itemBottom = itemBB.bottom - selectionAreaBB.top;
+          // check if at least one corner of the item is inside the screenSpace
+          return (
+            (screenSpaceStartX <= itemLeft &&
+              itemLeft <= screenSpaceEndX &&
+              screenSpaceStartY <= itemTop &&
+              itemTop <= screenSpaceEndY) ||
+            (screenSpaceStartX <= itemRight &&
+              itemRight <= screenSpaceEndX &&
+              screenSpaceStartY <= itemTop &&
+              itemTop <= screenSpaceEndY) ||
+            (screenSpaceStartX <= itemLeft &&
+              itemLeft <= screenSpaceEndX &&
+              screenSpaceStartY <= itemBottom &&
+              itemBottom <= screenSpaceEndY) ||
+            (screenSpaceStartX <= itemRight &&
+              itemRight <= screenSpaceEndX &&
+              screenSpaceStartY <= itemBottom &&
+              itemBottom <= screenSpaceEndY)
+          );
+        });
+        const selectedIds = selectedItems.map((item) =>
+          item.getAttribute('data-id')
+        );
+        onSelection(
+          bookings?.filter((b) => selectedIds.includes(b.id?.toString())),
+          timeSpaceStart,
+          timeSpaceEnd,
+          e
+        );
+      }
     },
-    [from, till, width, onRangeChange]
+    [
+      from,
+      till,
+      width,
+      onRangeChange,
+      onSelection,
+      onSelection ? bookings : null,
+    ]
   );
   return (
     <div
       className={classNames(bookingCalendarDefaultClasses.className, className)}
+      ref={containerRef}
     >
       <BookingCalendarControls<T>
         {...controlsClasses}
@@ -231,7 +301,9 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
             dataRowsCount={lanes.length}
             onSelected={onSelected}
             minSelectionSize={minSelectionSize}
-          />
+          >
+            {selectionContent}
+          </BookingCalendarSelection>
         )}
         <div
           className={classNames(

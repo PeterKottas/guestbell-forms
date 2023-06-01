@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "rootDir": "./src/lib",
+    "rootDir": ".",
     "outDir": "./dist",
     "declarationDir": "./dist/dts",
     "baseUrl": ".",

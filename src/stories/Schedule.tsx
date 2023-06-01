@@ -12,20 +12,21 @@ const generateBookingItemsBetweenDates = (
   from: Moment,
   till: Moment,
   count = 50
-) => {
+): BookingCalendarItemT[] => {
   const width = till.valueOf() - from.valueOf();
   const startMs = from.valueOf();
-  return new Array(count).fill(0).map(() => {
+  return new Array(count).fill(0).map((_, index) => {
     const _from = randomIntFromInterval(0, till.valueOf() - startMs) + startMs;
     const _width = randomIntFromInterval(width / 100, width / 50);
     return {
+      id: index,
       from: moment(_from),
       till: moment(_from).add(_width, 'ms'),
       laneKey:
         randomIntFromInterval(1, 3) === 1
           ? undefined
           : randomIntFromInterval(1, 3),
-    } as BookingCalendarItemT;
+    };
   });
 };
 
@@ -47,6 +48,15 @@ export const Schedule = () => {
     () => bookings.filter((b) => itemsOverlap(b, { from, till })),
     [from, till, bookings]
   );
+  const onSelection = React.useCallback(
+    (items: BookingCalendarItemT[], _from, _till, e) => {
+      console.log(items);
+      if (e.ctrlKey) {
+        setRange({ from: _from, till: _till });
+      }
+    },
+    []
+  );
   return (
     <div className="container">
       <BookingCalendar
@@ -55,6 +65,8 @@ export const Schedule = () => {
         till={till}
         step={duration(1, 'day')}
         onRangeChange={setRange}
+        onSelection={onSelection}
+        selectionContent={'Hold CTRL to zoom'}
         // lanesCount={3}
         lanesSource={new Array(3).fill(0).map((_, index) => ({
           laneKey: index,
