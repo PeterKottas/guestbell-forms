@@ -9,6 +9,10 @@ import {
   BookingCalendarItemT,
   defaultGetMomentFormatFunction,
   GetNewMomentFunctionType,
+  defaultGetNewMomentFunction,
+  defaultGridAvailableSteps,
+  GetMomentFormatFunctionType,
+  ZoomLevel,
 } from './common';
 import {
   BookingCalendarControls as DefaultBookingCalendarControls,
@@ -23,7 +27,7 @@ import {
   BookingCalendarLane as DefaultBookingCalendarLane,
   BookingCalendarLaneProps,
 } from './bookingCalendarLane/BookingCalendarLane';
-import { Moment, Duration, duration } from 'moment';
+import moment, { Moment, Duration } from 'moment';
 import { BookingCalendarItemProps } from './bookingCalendarItem';
 import { BookingCalendarRenderItemProps } from './bookingCalendarRenderItem';
 import {
@@ -42,12 +46,6 @@ import {
   BookingCalendarDatePicker as DefaultBookingCalendarDatePicker,
   BookingCalendarDatePickerProps,
 } from './bookingCalendarDatePicker';
-import {
-  defaultGetNewMomentFunction,
-  defaultGridAvailableSteps,
-  GetMomentFormatFunctionType,
-  ZoomLevel,
-} from '.';
 import { BookingCalendarTimeAxis } from './bookingCalendarTimeAxis/BookingCalendarTimeAxis';
 import useDimensions from 'react-cool-dimensions';
 import BookingCalendarSelection, {
@@ -99,7 +97,7 @@ export interface BookingCalendarProps<T extends BookingCalendarItemT, TLaneData>
     | React.ReactNode;
 }
 
-const defaultStep = duration(1, 'day');
+const defaultStep = moment.duration(1, 'day');
 
 export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
   props: BookingCalendarProps<T, TLaneData>

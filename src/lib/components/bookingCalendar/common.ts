@@ -1,4 +1,4 @@
-import moment, { Moment, Duration, duration } from 'moment';
+import moment, { Moment, Duration } from 'moment';
 
 export interface BookingCalendarItemT {
   from: Moment;
@@ -30,13 +30,7 @@ export const defaultGetMomentFormatFunction = (
   if (!date || !bestStep) {
     return undefined;
   }
-  if (
-    date.valueOf() ===
-    date
-      .clone()
-      .startOf('day')
-      .valueOf()
-  ) {
+  if (date.valueOf() === date.clone().startOf('day').valueOf()) {
     return 'MMM Do';
   }
   return 'h:mm a';
@@ -51,17 +45,17 @@ export const defaultGetNewMomentFunction = (date: Date) => {
 export type GetNewMomentFunctionType = typeof defaultGetNewMomentFunction;
 
 export const defaultGridAvailableSteps: Duration[] = [
-  duration(1, 'minute'),
-  duration(5, 'minute'),
-  duration(10, 'minute'),
-  duration(15, 'minute'),
-  duration(20, 'minute'),
-  duration(30, 'minute'),
-  duration(1, 'hour'),
-  duration(2, 'hour'),
-  duration(4, 'hour'),
-  duration(6, 'hour'),
-  duration(8, 'hour'),
-  duration(12, 'hour'),
-  duration(1, 'day'),
+  moment.duration(1, 'minute'),
+  moment.duration(5, 'minute'),
+  moment.duration(10, 'minute'),
+  moment.duration(15, 'minute'),
+  moment.duration(20, 'minute'),
+  moment.duration(30, 'minute'),
+  moment.duration(1, 'hour'),
+  moment.duration(2, 'hour'),
+  moment.duration(4, 'hour'),
+  moment.duration(6, 'hour'),
+  moment.duration(8, 'hour'),
+  moment.duration(12, 'hour'),
+  moment.duration(1, 'day'),
 ];

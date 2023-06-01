@@ -12,7 +12,7 @@ import {
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
 import TimeUtil from '../utils/TimeUtil';
-import { Duration, duration } from 'moment';
+import moment, { Duration } from 'moment';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import classNames from 'classnames';
 
@@ -31,10 +31,10 @@ export interface TimeState extends BaseInputState {
 }
 
 export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
-  public static defaultProps = (Object.assign({}, BaseInput.defaultProps, {
+  public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     type: 'time',
     placeholder: '',
-  }) as unknown) as TimeProps;
+  }) as unknown as TimeProps;
 
   constructor(props: TimeProps) {
     super(props);
@@ -265,10 +265,8 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
       num = 0;
     }
     if (!isNaN(num)) {
-      let newTime: Duration = duration(
-        this.props.time?.asMilliseconds?.() ?? 0,
-        'milliseconds'
-      )
+      let newTime: Duration = moment
+        .duration(this.props.time?.asMilliseconds?.() ?? 0, 'milliseconds')
         .subtract(this.props.time?.hours?.() ?? 0, 'hours')
         .add(num, 'hours');
       this.handleLimits(newTime);
@@ -281,10 +279,8 @@ export class TimeRaw extends BaseInput<TimeProps, TimeState, HTMLInputElement> {
       num = 0;
     }
     if (!isNaN(num)) {
-      let newTime: Duration = duration(
-        this.props.time?.asMilliseconds?.() ?? 0,
-        'milliseconds'
-      )
+      let newTime: Duration = moment
+        .duration(this.props.time?.asMilliseconds?.() ?? 0, 'milliseconds')
         .subtract(this.props.time?.minutes?.() ?? 0, 'minutes')
         .add(num, 'minutes');
       this.handleLimits(newTime);

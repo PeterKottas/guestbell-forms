@@ -177,7 +177,6 @@ $border-color-dark: black;
   padding-bottom: 0.5rem;
   align-items: center;
   .bookingCalendar__controls__monthLabel {
-    font-weight: bold;
     display: flex;
     align-items: center;
   }
@@ -193,6 +192,7 @@ $border-color-dark: black;
     margin-left: auto;
   }
   .bookingCalendar__controls__zoomLevelsButton {
+    text-transform: none;
     display: flex;
     align-items: center;
     svg {
@@ -207,6 +207,7 @@ $border-color-dark: black;
   .bookingCalendar__datePicker__button {
     height: 100%;
     width: 100%;
+    text-transform: none;
   }
 }
 

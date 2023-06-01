@@ -1,9 +1,7 @@
 {
   "cSpell.words": [
-    "Calment",
-    "Multiselect",
-    "Unmount",
     "autosize",
+    "Calment",
     "classname",
     "collapser",
     "datepicker",
@@ -13,6 +11,7 @@
     "fontsize",
     "gmail",
     "guestbell",
+    "Multiselect",
     "octo",
     "octocat",
     "onclickoutside",
@@ -20,8 +19,10 @@
     "readonly",
     "reusables",
     "submenu",
+    "svgr",
     "textfield",
     "transitionend",
-    "typechecks"
+    "typechecks",
+    "Unmount"
   ]
 }

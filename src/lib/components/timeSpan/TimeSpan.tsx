@@ -11,7 +11,7 @@ import {
   BaseInput,
 } from '../base/input/BaseInput';
 import { withFormContext } from '../form/withFormContext';
-import { Duration, duration } from 'moment';
+import moment, { Duration } from 'moment';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import classNames from 'classnames';
 
@@ -59,7 +59,7 @@ export interface TimeSpanProps extends BaseInputProps<HTMLInputElement> {
 
 export interface TimeSpanState extends BaseInputState {
   currentUnitText: string;
-  currentUnit: TimeSpanUnit;
+  currentUnit: TimeSpanUnit | undefined;
 }
 
 export class TimeSpanRaw extends BaseInput<
@@ -67,7 +67,7 @@ export class TimeSpanRaw extends BaseInput<
   TimeSpanState,
   HTMLInputElement
 > {
-  public static defaultProps = (Object.assign({}, BaseInput.defaultProps, {
+  public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
     type: 'time',
     placeholder: '',
     validUnits: allTimeSpanUnits,
@@ -91,8 +91,8 @@ export class TimeSpanRaw extends BaseInput<
           return '';
       }
     },
-    min: duration(0),
-  }) as unknown) as TimeSpanProps;
+    min: moment.duration(0),
+  }) as unknown as TimeSpanProps;
 
   constructor(props: TimeSpanProps) {
     super(props);
@@ -104,7 +104,7 @@ export class TimeSpanRaw extends BaseInput<
   public render() {
     const { timeSpan, validUnits, initialUnits, units: _units } = this.props;
     const units = _units || this.getUnits(timeSpan, validUnits, initialUnits);
-    const unitsArr = allUnits.filter(u => (units & u) !== 0).reverse();
+    const unitsArr = allUnits.filter((u) => (units & u) !== 0).reverse();
     return (
       <InputGroup
         title={this.props.title}
@@ -123,7 +123,7 @@ export class TimeSpanRaw extends BaseInput<
           }
           ref={this.containerRef}
         >
-          {unitsArr.map(unit => (
+          {unitsArr.map((unit) => (
             <div className="" key={unit}>
               <div className="timeSpan-input__arrows__container">
                 <button
@@ -300,10 +300,10 @@ export class TimeSpanRaw extends BaseInput<
         const moreThanMax = maxOfUnitMs < newOfUnitMs;
         const diff = newOfUnitMs - oldOfUnitMs;
         if (moreThanMax) {
-          this.handleLimits(duration(newOfUnitMs, 'millisecond'));
+          this.handleLimits(moment.duration(newOfUnitMs, 'millisecond'));
         } else {
           this.handleLimits(
-            duration(
+            moment.duration(
               (this.props.timeSpan?.asMilliseconds() || 0) + diff,
               'millisecond'
             )
@@ -323,7 +323,7 @@ export class TimeSpanRaw extends BaseInput<
     e.preventDefault();
     const unit: TimeSpanUnit = Number(e.currentTarget.dataset.unit);
     const diff = -1 * this.oneUnitInMs(unit);
-    const newDate = duration(
+    const newDate = moment.duration(
       (this.props.timeSpan?.asMilliseconds() || 0) + diff,
       'millisecond'
     );
@@ -346,7 +346,7 @@ export class TimeSpanRaw extends BaseInput<
     e.preventDefault();
     const unit: TimeSpanUnit = Number(e.currentTarget.dataset.unit);
     const diff = this.oneUnitInMs(unit);
-    const newDate = duration(
+    const newDate = moment.duration(
       (this.props.timeSpan?.asMilliseconds() || 0) + diff,
       'milliseconds'
     );

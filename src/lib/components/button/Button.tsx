@@ -176,9 +176,9 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
       this.props.onClick && this.props.onClick(e);
       if (this.props.disableAfterClickMs !== 0) {
         this.setState({ disabledAfterClick: true });
-        this.preventMultipleClickTimer = (setTimeout(() => {
+        this.preventMultipleClickTimer = setTimeout(() => {
           this.setState({ disabledAfterClick: false });
-        }, this.props.disableAfterClickMs) as unknown) as number;
+        }, this.props.disableAfterClickMs) as unknown as number;
       }
     }
   }

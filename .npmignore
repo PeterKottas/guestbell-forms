@@ -1,5 +1,4 @@
-/src
-/webpack
-/docs
-.env.bat
-/.vs
+.github
+.storybook
+.vscode
+docs

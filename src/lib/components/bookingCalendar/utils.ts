@@ -8,7 +8,10 @@ import {
   BookingCalendarItemWithOriginalIndexT,
 } from './common';
 
-export function groupBy<T>(items: T[], iterator: (item: T) => number | string) {
+export function groupBy<T>(
+  items: T[],
+  iterator: (item: T) => number | string
+): { [key: string | number]: T[] } {
   return items.reduce((obj, item) => {
     const key = iterator(item);
     if (!obj.hasOwnProperty(key)) {

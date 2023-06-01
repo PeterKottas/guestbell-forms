@@ -4,13 +4,7 @@ var isLocalBuild = process.env.NODE_ENV === 'local';
 const { merge } = require('webpack-merge');
 
 module.exports = merge(require('./webpack.config.base'), {
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-      },
-    }),
-  ],
+  plugins: [],
   externals: {
     react: 'react',
     'react-ink': 'react-ink',

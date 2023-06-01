@@ -19,12 +19,14 @@ export type FormValidationSummaryProps = {
   footer?: string | JSX.Element;
   Component?:
     | React.ComponentType<FormValidationSummaryComponentProps>
-    | React.StatelessComponent<FormValidationSummaryComponentProps>;
+    | React.FC<FormValidationSummaryComponentProps>;
 } & FormContextProps;
 
 export interface FormValidationSummaryState {}
 
-export const DefaultComponent: React.FC<FormValidationSummaryComponentProps> = props => (
+export const DefaultComponent: React.FC<FormValidationSummaryComponentProps> = (
+  props
+) => (
   <React.Fragment>
     {props.componentsWithErrors.map((component, index) => {
       return (
@@ -86,8 +88,8 @@ export class FormValidationSummaryRaw extends React.PureComponent<
   public render() {
     const componentsWithErrors = this.props.formContext
       ? Object.keys(this.props.formContext.components)
-          .map(key => this.props.formContext.components[key])
-          .filter(component => {
+          .map((key) => this.props.formContext.components[key])
+          .filter((component) => {
             if (!component.validation.isValid && !component.validation.name) {
               console.warn(
                 component,
@@ -116,6 +118,5 @@ export class FormValidationSummaryRaw extends React.PureComponent<
   }
 }
 
-export const FormValidationSummary = withFormContext<
-  FormValidationSummaryProps
->(FormValidationSummaryRaw);
+export const FormValidationSummary =
+  withFormContext<FormValidationSummaryProps>(FormValidationSummaryRaw);

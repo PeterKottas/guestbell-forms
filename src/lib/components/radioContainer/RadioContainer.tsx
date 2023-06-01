@@ -11,6 +11,7 @@ export interface RadioContainerProps extends ThemeContextProps {
   className?: string;
   title?: string;
   horizontal?: boolean;
+  children?: React.ReactNode;
 }
 
 export interface RadioContainerState {}

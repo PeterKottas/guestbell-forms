@@ -17,7 +17,7 @@ import {
 import { Button } from '../../button/Button';
 import { withFormContext } from '../../form/withFormContext';
 import classNames from 'classnames';
-import { Duration, duration } from 'moment';
+import moment, { Duration } from 'moment';
 import NumberInput from '../../numberInput/NumberInput';
 import { withThemeContext } from '../../themeProvider/withThemeContext';
 
@@ -136,7 +136,7 @@ export class OpeningHoursDayRaw extends BaseInput<
                             ].opens.clone()
                           : this.getTime(23, 59, true);
                       if (localIndex % 2 === 0) {
-                        nextTime = duration(
+                        nextTime = moment.duration(
                           Math.min.apply(null, [
                             this.getTime(23, 59, false).asMilliseconds(),
                             nextTime.asMilliseconds(),
@@ -171,7 +171,7 @@ export class OpeningHoursDayRaw extends BaseInput<
                         label={translations.capacity}
                         min={0}
                         number={item.capacity}
-                        onNumberChange={num =>
+                        onNumberChange={(num) =>
                           this.props.onOpeningHoursChange({
                             ...this.props.openingHours,
                             times: this.props.openingHours.times.map((t, i) =>
@@ -375,7 +375,8 @@ export class OpeningHoursDayRaw extends BaseInput<
     minutes: number,
     nextDay: boolean = false
   ): Duration {
-    let time = duration(0, 'millisecond')
+    let time = moment
+      .duration(0, 'millisecond')
       .add(hours, 'hours')
       .add(minutes, 'minutes');
     if (nextDay) {

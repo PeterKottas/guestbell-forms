@@ -5,9 +5,9 @@ import {
   BookingCalendarItemT,
   ZoomLevel,
 } from '../common';
-import { duration, Duration, Moment } from 'moment';
+import moment, { Duration, Moment } from 'moment';
 import { BookingCalendarControlsClasses } from './classes';
-import { bookingCalendarControlsDefaultClasses } from '.';
+import { bookingCalendarControlsDefaultClasses } from './classes';
 import { Button } from '../../button/Button';
 import * as LeftArrowLongIcon from 'material-design-icons/navigation/svg/production/ic_arrow_back_24px.svg';
 import * as LeftArrowIcon from 'material-design-icons/hardware/svg/production/ic_keyboard_arrow_left_24px.svg';
@@ -66,19 +66,19 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
     [from, till, onRangeChange]
   );
   const onBigStepLeftClick = React.useCallback(
-    onStepFactory(duration(-7, 'days')),
+    onStepFactory(moment.duration(-7, 'days')),
     [onStepFactory, till, from]
   );
   const onSmallStepLeftClick = React.useCallback(
-    onStepFactory(duration(-1, 'day')),
+    onStepFactory(moment.duration(-1, 'day')),
     [onStepFactory, step]
   );
   const onBigStepRightClick = React.useCallback(
-    onStepFactory(duration(7, 'days')),
+    onStepFactory(moment.duration(7, 'days')),
     [onStepFactory, till, from]
   );
   const onSmallStepRightClick = React.useCallback(
-    onStepFactory(duration(1, 'day')),
+    onStepFactory(moment.duration(1, 'day')),
     [onStepFactory, step]
   );
   const filteredItems = React.useMemo(

@@ -2,15 +2,16 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { BookingCalendarDateRange, BookingCalendarItemT } from '../common';
 import { Duration, Moment } from 'moment';
-import { BookingCalendarLanesHeaderClasses } from './classes';
+import {
+  BookingCalendarLanesHeaderClasses,
+  bookingCalendarLanesHeaderDefaultClasses,
+} from './classes';
 import { generateControlItems } from '../utils';
 import { BookingCalendarLane } from '../bookingCalendarLane';
 import { BookingCalendarLanesHeaderRenderItemFactory } from './BookingCalendarLanesHeaderRenderItem';
-import { bookingCalendarLanesHeaderDefaultClasses } from '.';
 
-export interface BookingCalendarLanesHeaderProps<
-  T extends BookingCalendarItemT
-> extends BookingCalendarLanesHeaderClasses {
+export interface BookingCalendarLanesHeaderProps<T extends BookingCalendarItemT>
+  extends BookingCalendarLanesHeaderClasses {
   step: Duration;
   from: Moment;
   till: Moment;

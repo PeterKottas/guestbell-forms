@@ -3,8 +3,8 @@ import * as React from 'react';
 import classNames from 'classnames';
 
 // Misc
-import * as MoreIcon from 'material-design-icons/navigation/svg/production/ic_more_vert_24px.svg';
-import * as PlusIcon from 'material-design-icons/hardware/svg/production/ic_keyboard_arrow_down_24px.svg';
+import MoreIcon from 'material-design-icons/navigation/svg/production/ic_more_vert_24px.svg';
+import PlusIcon from 'material-design-icons/hardware/svg/production/ic_keyboard_arrow_down_24px.svg';
 import { ButtonProps, Button, ButtonComponentProps } from '../button/Button';
 import guid from '../utils/Guid';
 import { Dropdown } from '../dropdown';
@@ -65,7 +65,7 @@ export interface InputHeaderState {
   inputHeaderContext: InputHeaderContextState;
 }
 
-const CollapseExpandButtonComponent: React.SFC<ButtonComponentProps> = (
+const CollapseExpandButtonComponent: React.FC<ButtonComponentProps> = (
   props
 ) => (
   <a className={props.className} onClick={props.onClick} href="#">
@@ -418,7 +418,6 @@ export class InputHeaderRaw
   ) {
     if (this.props.tooltip) {
       const Tippy = require('@tippy.js/react').default;
-
       return (
         <Tippy
           content={this.props.tooltip}

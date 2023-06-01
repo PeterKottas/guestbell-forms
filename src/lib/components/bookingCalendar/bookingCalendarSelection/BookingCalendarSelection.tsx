@@ -17,6 +17,7 @@ export interface BookingCalendarSelectionProps {
   }) => void;
   dataRowsCount: number;
   minSelectionSize: number;
+  children?: React.ReactNode;
 }
 
 export interface BookingCalendarSelectionState {
@@ -103,7 +104,7 @@ export default class BookingCalendarSelection extends React.Component<
         hold: false,
         animation: 'bookingCalendar__selection--fadeout',
       });
-      this.animationInProgress = (setTimeout(() => {
+      this.animationInProgress = setTimeout(() => {
         this.setState({
           selectionBox: false,
           animation: '',
@@ -111,7 +112,7 @@ export default class BookingCalendarSelection extends React.Component<
           selectionBoxTarget: [0, 0],
         });
         this.animationInProgress = null;
-      }, 300) as unknown) as number;
+      }, 300) as unknown as number;
       if (distance < this.props.minSelectionSize) {
         return;
       }

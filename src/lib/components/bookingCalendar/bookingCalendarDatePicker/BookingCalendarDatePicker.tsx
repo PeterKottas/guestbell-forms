@@ -9,6 +9,7 @@ import {
   BookingCalendarDateRange,
   BookingCalendarItemT,
   GetNewMomentFunctionType,
+  defaultGetNewMomentFunction,
 } from '../common';
 import { Button } from '../../button/Button';
 import * as EventIcon from 'material-design-icons/action/svg/production/ic_event_24px.svg';
@@ -18,7 +19,6 @@ try {
   DatePicker = undefined;
 }
 // import DatePicker from 'react-datepicker';
-import { defaultGetNewMomentFunction } from '..';
 
 export interface BookingCalendarDatePickerBaseProps<
   T extends BookingCalendarItemT
@@ -65,7 +65,7 @@ export function BookingCalendarDatePicker<T extends BookingCalendarItemT>(
         noShadow={true}
         onClick={onButtonClick}
       >
-        <EventIcon />
+        <EventIcon /> {from?.format('MMMM, YYYY')}
       </Button>
       <DatePicker
         ref={calendarRef}
@@ -88,9 +88,7 @@ export function BookingCalendarDatePicker<T extends BookingCalendarItemT>(
             onRangeChange({ from: dtm, till: validTill });
             setShownModal('end');
           } else {
-            let dtm = getNewMomentFunction(dt)
-              .startOf('day')
-              .add(1, 'day');
+            let dtm = getNewMomentFunction(dt).startOf('day').add(1, 'day');
             let validFrom = from.clone();
             if (dtm.isBefore(from)) {
               validFrom = dtm.clone().add(-1, 'day');

@@ -13,7 +13,7 @@
     "noUnusedLocals": true,
     "declaration": true,
     "lib": ["es7", "dom"],
-    "types": ["webpack-env", "node"]
+    "types": ["node"]
   },
   "exclude": ["bin", "node_modules"]
 }

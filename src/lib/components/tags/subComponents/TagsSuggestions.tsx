@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Tag } from '..';
-import { Button } from '../../..';
+import { Button } from '../../button';
 import Popper, { PopperProps } from '@mui/material/Popper';
 import classNames from 'classnames';
 

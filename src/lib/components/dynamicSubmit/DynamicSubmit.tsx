@@ -20,10 +20,10 @@ export enum DynamicSubmitMode {
 export type DynamicSubmitProps = Omit<SubmitProps, 'onClick'> & {
   onClick?: (
     e: React.MouseEvent<HTMLButtonElement>,
-    submitting?: () => void,
-    error?: () => void,
-    success?: () => void,
-    reset?: () => void
+    submitting: () => void,
+    error: () => void,
+    success: () => void,
+    reset: () => void
   ) => void;
   submittingChildren?: JSX.Element | string;
   errorChildren?: JSX.Element | string;

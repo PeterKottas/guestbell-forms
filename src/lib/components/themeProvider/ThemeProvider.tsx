@@ -7,9 +7,10 @@ import { ThemeContextProvider } from './ThemeContext';
 
 export interface ThemeProviderProps {
   theme: Theme;
+  children: React.ReactNode;
 }
 
-export const ThemeProvider: React.FC<ThemeProviderProps> = props => {
+export const ThemeProvider: React.FC<ThemeProviderProps> = (props) => {
   return (
     <ThemeContextProvider value={props.theme}>
       {props.children}

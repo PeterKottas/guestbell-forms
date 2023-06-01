@@ -31,6 +31,7 @@ import { withThemeContext } from '../../themeProvider/withThemeContext';
 
 export interface OpeningHoursSpecialDayObj extends OpeningHoursDayObj {
   date?: Date;
+  children?: React.ReactNode;
 }
 
 export interface OpeningHoursSpecialProps
@@ -48,6 +49,7 @@ const DAY_FORMAT = 'dd/M/yyyy';
 export class DateInput extends React.PureComponent<{
   value?: string;
   onClick?: () => void;
+  children?: React.ReactNode;
 }> {
   public render() {
     return (
@@ -168,8 +170,8 @@ export class OpeningHoursSpecialRaw extends BaseInput<
                 dateFormat={DAY_FORMAT}
                 onChange={this.dateChanged(index, day)}
                 excludeDates={this.props.days
-                  .filter(d => d.date)
-                  .map(a => a.date)}
+                  .filter((d) => d.date)
+                  .map((a) => a.date)}
                 withPortal={true}
                 minDate={new Date()}
               />
@@ -186,7 +188,7 @@ export class OpeningHoursSpecialRaw extends BaseInput<
   private handleDates() {
     const translations = this.getTranslations(defaultSpecialTranslations);
     const allDaysHaveDates =
-      !this.props.days || this.props.days.every(d => Boolean(d.date));
+      !this.props.days || this.props.days.every((d) => Boolean(d.date));
     if (allDaysHaveDates) {
       this.setValid();
     } else {
@@ -199,22 +201,19 @@ export class OpeningHoursSpecialRaw extends BaseInput<
       this.props.days.filter((d, indexInner) => indexInner !== index)
     );
 
-  private dateChanged = (index: number, day: OpeningHoursDayObj) => (
-    date: Date
-  ) => {
-    let days = this.props.days.slice(0);
-    days[index] = { ...day, date };
-    this.props.onDaysChange(days);
-  };
+  private dateChanged =
+    (index: number, day: OpeningHoursDayObj) => (date: Date) => {
+      let days = this.props.days.slice(0);
+      days[index] = { ...day, date };
+      this.props.onDaysChange(days);
+    };
 
-  private openingHoursChanged = (
-    index: number,
-    day: OpeningHoursDayObj
-  ) => openingHours => {
-    let days = this.props.days.slice(0);
-    days[index] = { ...day, ...openingHours };
-    this.props.onDaysChange(days);
-  };
+  private openingHoursChanged =
+    (index: number, day: OpeningHoursDayObj) => (openingHours) => {
+      let days = this.props.days.slice(0);
+      days[index] = { ...day, ...openingHours };
+      this.props.onDaysChange(days);
+    };
 }
 
 export const OpeningHoursSpecial = withThemeContext<

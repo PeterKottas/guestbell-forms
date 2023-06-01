@@ -56,7 +56,7 @@ export type TagsProps<T extends Tag = Tag> = {
   maxTagsSurpassedError?: string | JSX.Element;
   showSuggestions?: boolean;
   suggestionsLoadingComponent?: string | JSX.Element;
-  suggestionsEmptyComponent?: string | JSX.Element;
+  suggestionsEmptyComponent?: string | JSX.Element | null;
   waitingForMoreInputComponent?: string | JSX.Element;
   loadingDelayMs?: number;
   filterExistingTags?: (text: string, existingTags: T[]) => T[];

@@ -1,0 +1,6 @@
+{
+  // Comments are supported, like tsconfig.json
+  "entryPoints": ["src/lib/index.ts"],
+  "out": "api-docs",
+  "plugin": ["typedoc-plugin-markdown"]
+}

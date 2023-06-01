@@ -18,7 +18,7 @@ import { withFormContext } from '../form/withFormContext';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 
 export interface MoneyWithCurrency {
-  value: number;
+  value: number | undefined;
   currency: SelectValue;
 }
 
@@ -68,14 +68,14 @@ export class MoneyRaw extends BaseInput<
           : [],
       handleValueChangeEnabled: false,
     });
-    const forcedCurrencies = props.currencies.filter(c => c.forceSelected);
+    const forcedCurrencies = props.currencies.filter((c) => c.forceSelected);
     const missingForced = forcedCurrencies.filter(
-      c => !props.prices.find(p => p.currency.value === c.value)
+      (c) => !props.prices.find((p) => p.currency.value === c.value)
     );
     if (missingForced.length > 0) {
       props.onPricesChange(
         props.prices.concat(
-          missingForced.map(c => ({ currency: c, value: undefined }))
+          missingForced.map((c) => ({ currency: c, value: undefined }))
         )
       );
     }
@@ -103,7 +103,7 @@ export class MoneyRaw extends BaseInput<
           {this.props.prices &&
             this.props.prices.map((item, index) => {
               let currentCurrencies = this.props.currencies.filter(
-                c =>
+                (c) =>
                   this.props.prices.filter(
                     (priceCurrency, priceIndex) =>
                       priceIndex !== index &&
@@ -111,7 +111,7 @@ export class MoneyRaw extends BaseInput<
                   ).length === 0
               );
               const currency = this.props.currencies.find(
-                c => c.value === item.currency.value
+                (c) => c.value === item.currency.value
               );
               let retComponents = currentCurrencies.length ? (
                 <div key={index}>
@@ -150,33 +150,36 @@ export class MoneyRaw extends BaseInput<
                     onChange={this.onPriceChanged(index)}
                     type="number"
                   />
-                  {!this.props.disableDelete && this.props.prices.length > 0 && (
-                    <Button
-                      {...(this.props.id && {
-                        id:
-                          this.props.id + '-remove-button-' + index.toString(),
-                      })}
-                      blank={true}
-                      type="error"
-                      onClick={this.removePriceClick(index)}
-                      className="transform-rotate--45 line-height--0"
-                      buttonProps={{
-                        ...Button.defaultProps?.buttonProps,
-                        title:
-                          currency && currency.forceSelected
-                            ? translations.cannotRemoveDefaultCurrency
-                            : translations.removePrice,
-                      }}
-                      circular={true}
-                      disabled={currency && currency.forceSelected}
-                    >
-                      <PlusIcon />
-                    </Button>
-                  )}
+                  {!this.props.disableDelete &&
+                    this.props.prices.length > 0 && (
+                      <Button
+                        {...(this.props.id && {
+                          id:
+                            this.props.id +
+                            '-remove-button-' +
+                            index.toString(),
+                        })}
+                        blank={true}
+                        type="error"
+                        onClick={this.removePriceClick(index)}
+                        className="transform-rotate--45 line-height--0"
+                        buttonProps={{
+                          ...Button.defaultProps?.buttonProps,
+                          title:
+                            currency && currency.forceSelected
+                              ? translations.cannotRemoveDefaultCurrency
+                              : translations.removePrice,
+                        }}
+                        circular={true}
+                        disabled={currency && currency.forceSelected}
+                      >
+                        <PlusIcon />
+                      </Button>
+                    )}
                 </div>
               ) : null;
               unusedCurrencies = unusedCurrencies.filter(
-                c => c.value !== item.currency.value
+                (c) => c.value !== item.currency.value
               );
               return retComponents;
             })}
@@ -220,18 +223,16 @@ export class MoneyRaw extends BaseInput<
     );
   }
 
-  private onCurrencyChanged = (
-    index: number,
-    currentCurrencies: SelectValue[]
-  ) => e => {
-    let newPrices: MoneyWithCurrency[] = [].concat(this.props.prices);
-    newPrices[index].currency = currentCurrencies.filter(
-      cc => cc.value.toString() === e.target.value
-    )[0];
-    this.props.onPricesChange(newPrices);
-  };
+  private onCurrencyChanged =
+    (index: number, currentCurrencies: SelectValue[]) => (e) => {
+      let newPrices: MoneyWithCurrency[] = [].concat(this.props.prices);
+      newPrices[index].currency = currentCurrencies.filter(
+        (cc) => cc.value.toString() === e.target.value
+      )[0];
+      this.props.onPricesChange(newPrices);
+    };
 
-  private onTheFlightValidate = value => {
+  private onTheFlightValidate = (value: string) => {
     let num = Number(value);
     const parts = value.split('.');
     if (parts && parts.length > 1 && parts[parts.length - 1].length > 2) {
@@ -245,20 +246,19 @@ export class MoneyRaw extends BaseInput<
     }
   };
 
-  private onPriceChanged = (index: number) => (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    let newPrices: MoneyWithCurrency[] = [].concat(this.props.prices);
-    let str = e.target.value;
-    let num = Number(str);
-    if (!isNaN(num)) {
-      newPrices[index].value = num;
-    }
-    this.props.onPricesChange(newPrices);
-    if (!this.state.touched) {
-      this.touch();
-    }
-  };
+  private onPriceChanged =
+    (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      let newPrices: MoneyWithCurrency[] = [].concat(this.props.prices);
+      let str = e.target.value;
+      let num = Number(str);
+      if (!isNaN(num)) {
+        newPrices[index].value = num;
+      }
+      this.props.onPricesChange(newPrices);
+      if (!this.state.touched) {
+        this.touch();
+      }
+    };
 
   private removePriceClick = (index: number) => () => {
     const newPrices = this.props.prices.filter(
