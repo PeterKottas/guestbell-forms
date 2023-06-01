@@ -175,8 +175,14 @@ export default class BookingCalendarSelection extends React.Component<
   render() {
     const baseStyle: React.CSSProperties = {
       zIndex: 10,
-      left: this.state.selectionBoxOrigin[0],
-      top: this.state.selectionBoxOrigin[1],
+      left: Math.min(
+        this.state.selectionBoxOrigin[0],
+        this.state.selectionBoxTarget[0]
+      ),
+      top: Math.min(
+        this.state.selectionBoxOrigin[1],
+        this.state.selectionBoxTarget[1]
+      ),
       height: Math.abs(
         this.state.selectionBoxTarget[1] - this.state.selectionBoxOrigin[1] - 1
       ),
@@ -184,8 +190,8 @@ export default class BookingCalendarSelection extends React.Component<
         this.state.selectionBoxTarget[0] - this.state.selectionBoxOrigin[0] - 1
       ),
       userSelect: 'none',
-      transformOrigin: 'top left',
-      transform: this.handleTransformBox(),
+      // transformOrigin: 'top left',
+      // transform: this.handleTransformBox(),
     };
     const boxVisible =
       Math.sqrt(

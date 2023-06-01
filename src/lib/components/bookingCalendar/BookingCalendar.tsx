@@ -188,16 +188,14 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
       if (!from || !till || !width || !onRangeChange) {
         return;
       }
-      const screenSpaceStartX = Math.min(data.origin[0], data.target[0]);
-      const screenSpaceEndX = Math.max(data.origin[0], data.target[0]);
-      const screenSpaceStartY = Math.min(data.origin[1], data.target[1]);
-      const screenSpaceEndY = Math.max(data.origin[1], data.target[1]);
+      const selectionLeft = Math.min(data.origin[0], data.target[0]);
+      const selectionRight = Math.max(data.origin[0], data.target[0]);
+      const selectionTop = Math.min(data.origin[1], data.target[1]);
+      const selectionBottom = Math.max(data.origin[1], data.target[1]);
       const durationMs = till.valueOf() - from.valueOf();
       const toTimeSpace = (num: number) => (num / (width || 1)) * durationMs;
-      const timeSpaceStart = from
-        .clone()
-        .add(toTimeSpace(screenSpaceStartX), 'ms');
-      const timeSpaceEnd = from.clone().add(toTimeSpace(screenSpaceEndX), 'ms');
+      const timeSpaceStart = from.clone().add(toTimeSpace(selectionLeft), 'ms');
+      const timeSpaceEnd = from.clone().add(toTimeSpace(selectionRight), 'ms');
       if (onSelection) {
         const itemSelector = `.${bookingCalendarLaneDefaultClasses.className}:not(.${bookingCalendarLanesHeaderDefaultClasses.laneClassName}) > .${bookingCalendarItemDefaultClasses.className}`;
         const allItems = Array.from(
@@ -212,24 +210,12 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
           const itemTop = itemBB.top - selectionAreaBB.top;
           const itemRight = itemBB.right - selectionAreaBB.left;
           const itemBottom = itemBB.bottom - selectionAreaBB.top;
-          // check if at least one corner of the item is inside the screenSpace
+          // check if the item rectangle is contained or intersects or overlaps with the selection rectangle
           return (
-            (screenSpaceStartX <= itemLeft &&
-              itemLeft <= screenSpaceEndX &&
-              screenSpaceStartY <= itemTop &&
-              itemTop <= screenSpaceEndY) ||
-            (screenSpaceStartX <= itemRight &&
-              itemRight <= screenSpaceEndX &&
-              screenSpaceStartY <= itemTop &&
-              itemTop <= screenSpaceEndY) ||
-            (screenSpaceStartX <= itemLeft &&
-              itemLeft <= screenSpaceEndX &&
-              screenSpaceStartY <= itemBottom &&
-              itemBottom <= screenSpaceEndY) ||
-            (screenSpaceStartX <= itemRight &&
-              itemRight <= screenSpaceEndX &&
-              screenSpaceStartY <= itemBottom &&
-              itemBottom <= screenSpaceEndY)
+            itemLeft < selectionRight &&
+            itemRight > selectionLeft &&
+            itemTop < selectionBottom &&
+            itemBottom > selectionTop
           );
         });
         const selectedIds = selectedItems.map((item) =>
