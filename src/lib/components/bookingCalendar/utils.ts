@@ -44,6 +44,7 @@ export interface LaneData<T extends BookingCalendarItemT, TLaneData>
 export function splitBookingsToLanes<T extends BookingCalendarItemT, TLaneData>(
   bookings: T[],
   from: Moment,
+  till: Moment,
   minLanesCount: number,
   lanesSource: LaneSourceData<T, TLaneData>[] = [],
   unmatchedToFront = true
@@ -136,10 +137,12 @@ export function splitBookingsToLanes<T extends BookingCalendarItemT, TLaneData>(
   });*/
   }
   for (let index = 0; index < lanes.length; index++) {
-    const lane = lanes[index];
-    lanes[index].items = lane.items.sort(
-      (a, b) => a.from.valueOf() - b.from.valueOf()
-    );
+    const laneItems = lanes[index].items;
+    const normal = laneItems.filter((a) => a.till.valueOf() < till.valueOf());
+    normal.sort((a, b) => a.from.valueOf() - b.from.valueOf());
+    const atEnd = laneItems.filter((a) => a.till.valueOf() >= till.valueOf());
+    atEnd.sort((a, b) => a.from.valueOf() - b.from.valueOf());
+    lanes[index].items = [...normal, ...atEnd];
   }
   if (lanes.length < minLanesCount) {
     lanes = lanes.concat(
@@ -220,7 +223,7 @@ export function calculateItemsDimensions<T extends BookingCalendarItemT>(
         const end = endIsCut ? (endMs - startMs) / widthMs : realEnd;
         const realTill = endIsCut ? moment(endMs) : moment(item.till);
         const marginStart = start - lastEnd;
-        lastEnd = (item.till.valueOf() - startMs) / widthMs;
+        lastEnd = Math.min((item.till.valueOf() - startMs) / widthMs, 1);
         return {
           item,
           start,
@@ -268,7 +271,7 @@ export const generateControlItems = (
       .clone()
       .add(subtract)
       .add(step.asMilliseconds() * (index + 1)),
-    id: index
+    id: index,
   }));
 };
 

@@ -40,7 +40,7 @@ export function BookingCalendarLane<T extends BookingCalendarItemT>(
     BookingCalendarRenderItem,
   } = props;
   const calculatedItems = React.useMemo(
-    () => calculateItemsDimensions(items, from, till),
+    () => (items?.length ? calculateItemsDimensions(items, from, till) : []),
     [items, from, till]
   );
   return (

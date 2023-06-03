@@ -91,6 +91,8 @@ export interface BookingCalendarProps<T extends BookingCalendarItemT, TLaneData>
   ) => void;
   selectionContent?: React.ReactNode;
 
+  showHeader?: boolean;
+
   BookingCalendarItem?: React.ComponentType<BookingCalendarItemProps<T>>;
   BookingCalendarRenderItem?: React.ComponentType<
     BookingCalendarRenderItemProps<T>
@@ -130,6 +132,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     onRangeChange,
     step = defaultStep,
     showGrid = true,
+    showHeader = true,
     showSelection = true,
     onSelection,
     minSelectionSize = 10,
@@ -161,11 +164,12 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
       splitBookingsToLanes<T, TLaneData>(
         bookings,
         from,
+        till,
         minLanesCount,
         lanesSource,
         unmatchedLanesToFront
       ),
-    [bookings, from, minLanesCount, lanesSource, unmatchedLanesToFront]
+    [bookings, from, till, minLanesCount, lanesSource, unmatchedLanesToFront]
   );
   const { observe, entry } = useDimensions<HTMLDivElement>();
   const width = entry?.target?.scrollWidth ?? 0;
@@ -291,29 +295,33 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
             {selectionContent}
           </BookingCalendarSelection>
         )}
-        <div
-          className={classNames(
-            bookingCalendarDefaultClasses.lanesHeaderHeaderContainerClassName,
-            lanesHeaderHeaderContainerClassName
-          )}
-        >
-          {bookingCalendarTopLeftHeader}
-        </div>
-        <div
-          className={classNames(
-            bookingCalendarDefaultClasses.lanesHeaderContainerClassName,
-            lanesHeaderContainerClassName
-          )}
-          ref={observe}
-        >
-          <BookingCalendarLanesHeader<T>
-            {...controlsClasses}
-            from={from}
-            till={till}
-            onRangeChange={onRangeChange}
-            step={step}
-          />
-        </div>
+        {showHeader && (
+          <>
+            <div
+              className={classNames(
+                bookingCalendarDefaultClasses.lanesHeaderHeaderContainerClassName,
+                lanesHeaderHeaderContainerClassName
+              )}
+            >
+              {bookingCalendarTopLeftHeader}
+            </div>
+            <div
+              className={classNames(
+                bookingCalendarDefaultClasses.lanesHeaderContainerClassName,
+                lanesHeaderContainerClassName
+              )}
+              ref={observe}
+            >
+              <BookingCalendarLanesHeader<T>
+                {...controlsClasses}
+                from={from}
+                till={till}
+                onRangeChange={onRangeChange}
+                step={step}
+              />
+            </div>
+          </>
+        )}
 
         {lanes.map((lane, laneIndex) => {
           const LaneBookingCalendarLaneHeader =

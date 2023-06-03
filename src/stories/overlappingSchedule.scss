@@ -1,0 +1,10 @@
+.bookingCalendar__renderItem {
+  position: relative;
+  z-index: 2;
+}
+.overlapping__item {
+  background: black;
+  width: 100%;
+  z-index: 1;
+  transform: scaleY(0.8);
+}
