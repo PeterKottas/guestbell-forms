@@ -92,6 +92,7 @@ export interface BookingCalendarProps<T extends BookingCalendarItemT, TLaneData>
   selectionContent?: React.ReactNode;
 
   showHeader?: boolean;
+  showTimeAxis?: boolean;
 
   BookingCalendarItem?: React.ComponentType<BookingCalendarItemProps<T>>;
   BookingCalendarRenderItem?: React.ComponentType<
@@ -158,6 +159,9 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     bookingCalendarTopLeftHeader,
     filteringButton,
     children,
+  } = props;
+  const {
+    showTimeAxis = Boolean(bookings?.length) || Boolean(lanesSource?.length),
   } = props;
   const lanes = React.useMemo(
     () =>
@@ -379,13 +383,15 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
           );
         })}
         <div />
-        <div>
-          <BookingCalendarTimeAxis
-            items={gridItems}
-            bestStep={bestStep}
-            getMomentFormatFunction={getMomentFormatFunction}
-          />
-        </div>
+        {showTimeAxis && (
+          <div>
+            <BookingCalendarTimeAxis
+              items={gridItems}
+              bestStep={bestStep}
+              getMomentFormatFunction={getMomentFormatFunction}
+            />
+          </div>
+        )}
       </div>
       {children}
     </div>
