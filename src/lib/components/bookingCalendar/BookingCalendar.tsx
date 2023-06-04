@@ -292,7 +292,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
         )}
         {showSelection && (
           <BookingCalendarSelection
-            dataRowsCount={lanes.length}
+            dataRowsCount={lanes.length + (showTimeAxis ? 1 : 0)}
             onSelected={onSelected}
             minSelectionSize={minSelectionSize}
           >
