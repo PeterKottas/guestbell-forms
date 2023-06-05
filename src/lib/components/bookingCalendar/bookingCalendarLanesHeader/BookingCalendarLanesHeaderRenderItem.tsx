@@ -1,9 +1,10 @@
-import classNames from 'classnames';
 import * as React from 'react';
+import classNames from 'classnames';
 import { BookingCalendarRenderItemProps } from '../bookingCalendarRenderItem';
 import { bookingCalendarRenderItemDefaultClasses } from '../bookingCalendarRenderItem/classes';
 import { BookingCalendarItemT, BookingCalendarDateRange } from '../common';
 import { Button } from '../../button/Button';
+import moment from 'moment';
 
 export const BookingCalendarLanesHeaderRenderItemFactory = (
   onRangeChange: (range: BookingCalendarDateRange) => void
@@ -16,6 +17,9 @@ export const BookingCalendarLanesHeaderRenderItemFactory = (
       () => onRangeChange({ from: item.from, till: item.till }),
       [item]
     );
+    const isToday =
+      item.from.isSame(moment(), 'day') &&
+      item.till.diff(item.from, 'hours') === 24;
     return item ? (
       <div
         className={classNames(
@@ -24,7 +28,13 @@ export const BookingCalendarLanesHeaderRenderItemFactory = (
         )}
       >
         <Button
-          className="bookingCalendar__lanesHeader__renderItem__button"
+          className={classNames(
+            'bookingCalendar__lanesHeader__renderItem__button',
+            {
+              'bookingCalendar__lanesHeader__renderItem__button--today':
+                isToday,
+            }
+          )}
           noShadow={true}
           onClick={onClick}
           type="primary"

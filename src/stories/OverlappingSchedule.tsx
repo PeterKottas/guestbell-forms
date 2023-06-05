@@ -18,7 +18,7 @@ const generateBookingItemsBetweenDates = (
   const width = till.valueOf() - from.valueOf();
   const startMs = from.valueOf();
   const nonOverlappingCount = 10;
-  const laneCount = 5;
+  const laneCount = 6;
   let i = 0;
   return new Array(laneCount)
     .fill(0)
@@ -109,7 +109,7 @@ const generateBookingItemsBetweenDates = (
         : []),
     ])
     .reduce((acc, val) => acc.concat(val), [])
-    .filter((a) => a /*&&a?.laneKey === 1*/);
+    .filter((a) => a /* && a?.laneKey === 0*/);
 };
 
 export const Schedule = () => {
@@ -155,8 +155,8 @@ export const Schedule = () => {
         onRangeChange={setRange}
         onSelection={onSelection}
         selectionContent={'Hold CTRL to zoom'}
-        // lanesCount={3}
-        lanesSource={new Array(5).fill(0).map((_, index) => ({
+        // showHeader={false}
+        lanesSource={new Array(6).fill(0).map((_, index) => ({
           laneKey: index,
           data: { data: 'test' },
           rowClassName: 'test',

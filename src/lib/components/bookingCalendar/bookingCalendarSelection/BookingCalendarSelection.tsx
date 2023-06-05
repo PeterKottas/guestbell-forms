@@ -20,6 +20,7 @@ export interface BookingCalendarSelectionProps {
     e: React.MouseEvent<HTMLElement>
   ) => void;
   dataRowsCount: number;
+  firstDataRowIndex: number;
   minSelectionSize: number;
   children?: React.ReactNode;
 }
@@ -211,6 +212,7 @@ export default class BookingCalendarSelection extends React.Component<
         style={{
           zIndex: this.state.selectionBox ? 99999 : undefined,
           gridRowEnd: `span ${this.props.dataRowsCount}`,
+          gridRowStart: this.props.firstDataRowIndex,
         }}
         onMouseDown={this.handleMouseDown}
         onMouseUp={this.handleMouseUp}

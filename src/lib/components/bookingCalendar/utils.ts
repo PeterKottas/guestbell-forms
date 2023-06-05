@@ -223,14 +223,17 @@ export function calculateItemsDimensions<T extends BookingCalendarItemT>(
         const end = endIsCut ? (endMs - startMs) / widthMs : realEnd;
         const realTill = endIsCut ? moment(endMs) : moment(item.till);
         const marginStart = start - lastEnd;
-        lastEnd = Math.min((item.till.valueOf() - startMs) / widthMs, 1);
+        const width = end - start;
+        if (end > 0 && start < 1) {
+          lastEnd = Math.max(Math.min(realEnd, 1), 0);
+        }
         return {
           item,
           start,
           realStart,
           realFrom,
           startIsCut,
-          width: end - start,
+          width,
           end,
           realEnd,
           realTill,

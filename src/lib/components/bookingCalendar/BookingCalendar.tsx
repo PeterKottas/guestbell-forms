@@ -256,6 +256,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
       onSelection ? bookings : null,
     ]
   );
+  const firstDataRowIndex = showHeader ? 2 : 1;
   return (
     <div
       className={classNames(bookingCalendarDefaultClasses.className, className)}
@@ -295,13 +296,16 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
       >
         {showGrid && (
           <BookingCalendarGrid
+            firstDataRowIndex={firstDataRowIndex}
             items={gridItems}
             dataRowsCount={lanes.length}
             width={width}
+            containerRef={showHeader ? undefined : observe}
           />
         )}
         {showNowSection && (
           <BookingCalendarNowSection
+            firstDataRowIndex={firstDataRowIndex}
             from={from}
             till={till}
             dataRowsCount={lanes.length}
@@ -311,6 +315,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
         )}
         {showSelection && (
           <BookingCalendarSelection
+            firstDataRowIndex={firstDataRowIndex}
             dataRowsCount={lanes.length + (showTimeAxis ? 1 : 0)}
             onSelected={onSelected}
             minSelectionSize={minSelectionSize}
@@ -403,7 +408,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
         })}
         <div />
         {showTimeAxis && (
-          <div>
+          <div ref={showGrid || showGrid ? undefined : observe}>
             <BookingCalendarTimeAxis
               items={gridItems}
               bestStep={bestStep}

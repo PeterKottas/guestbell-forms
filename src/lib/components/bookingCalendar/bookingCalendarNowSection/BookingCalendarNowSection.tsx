@@ -9,6 +9,7 @@ import moment, { Moment } from 'moment';
 export interface BookingCalendarNowSectionProps
   extends BookingCalendarNowSectionClasses {
   dataRowsCount: number;
+  firstDataRowIndex: number;
   width: number;
   from: Moment;
   till: Moment;
@@ -24,6 +25,7 @@ export function BookingCalendarNowSection(
     areaBefore,
     now,
     dataRowsCount,
+    firstDataRowIndex,
     width,
     from,
     till,
@@ -31,10 +33,11 @@ export function BookingCalendarNowSection(
   } = props;
   const style = React.useMemo(
     () => ({
+      gridRowStart: firstDataRowIndex,
       gridRowEnd: `span ${dataRowsCount}`,
       ...(width ? { width: `${width}px` } : {}),
     }),
-    [dataRowsCount, width]
+    [dataRowsCount, width, firstDataRowIndex]
   );
   const widthMs = till.valueOf() - from.valueOf();
   const startMs = from.valueOf();
