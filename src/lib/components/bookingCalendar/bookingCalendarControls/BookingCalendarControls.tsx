@@ -100,6 +100,10 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
       }),
     [onRangeChange, step]
   );
+  const isTodayVisible = React.useMemo(
+    () => from.isBefore(moment()) && till.isAfter(moment()),
+    [from, till]
+  );
   const filteredItems = React.useMemo(
     () => items?.filter(filterBookingsToZoom),
     [filterBookingsToZoom, items]
@@ -235,9 +239,11 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
         <Button noShadow={true} onClick={onSmallStepLeftClick}>
           <LeftArrowIcon />
         </Button>
-        <Button noShadow={true} onClick={onTodayClick}>
-          <TodayIcon />
-        </Button>
+        {!isTodayVisible && (
+          <Button noShadow={true} onClick={onTodayClick}>
+            <TodayIcon />
+          </Button>
+        )}
         <Button noShadow={true} onClick={onSmallStepRightClick}>
           <RightArrowIcon />
         </Button>
