@@ -165,6 +165,11 @@ export class InputHeaderRaw
       this.props.collapsed !== undefined
         ? !this.props.collapsed
         : !this.state.collapsed;
+    const showButtons = Boolean(
+      this.props.mainButton ||
+        this.props.extraButtons?.length ||
+        this.props.collapsible
+    );
     return (
       <div
         className={
@@ -214,43 +219,45 @@ export class InputHeaderRaw
               {this.props.subTitle}
             </div>
           )}
-          <div
-            className="input__header__top__button-container"
-            onClick={this.mainButtonClick}
-          >
-            {this.props.mainButton && this.props.mainButton}
-            {this.props.extraButtons ? (
-              <Dropdown
-                header={
-                  <Button
-                    blank={true}
-                    circular={true}
-                    {...this.props.extraButtonsButtonProps}
-                  >
-                    <MoreIcon />
-                  </Button>
-                }
-                showArrow={false}
-                headerClassName={'line-height--0'}
-                className={''}
-              >
-                {this.renderExtraButtons()}
-              </Dropdown>
-            ) : null}
-            {this.props.collapsible && (
-              <Button
-                circular={true}
-                blank={true}
-                className={`input__header__collapse-button line-height--0 ${
-                  this.state.collapsed ? 'collapsed' : ''
-                }`}
-                {...this.props.collapseButtonsButtonProps}
-                onClick={this.toggleClick}
-              >
-                <PlusIcon />
-              </Button>
-            )}
-          </div>
+          {showButtons && (
+            <div
+              className="input__header__top__button-container"
+              onClick={this.mainButtonClick}
+            >
+              {this.props.mainButton && this.props.mainButton}
+              {this.props.extraButtons ? (
+                <Dropdown
+                  header={
+                    <Button
+                      blank={true}
+                      circular={true}
+                      {...this.props.extraButtonsButtonProps}
+                    >
+                      <MoreIcon />
+                    </Button>
+                  }
+                  showArrow={false}
+                  headerClassName={'line-height--0'}
+                  className={''}
+                >
+                  {this.renderExtraButtons()}
+                </Dropdown>
+              ) : null}
+              {this.props.collapsible && (
+                <Button
+                  circular={true}
+                  blank={true}
+                  className={`input__header__collapse-button line-height--0 ${
+                    this.state.collapsed ? 'collapsed' : ''
+                  }`}
+                  {...this.props.collapseButtonsButtonProps}
+                  onClick={this.toggleClick}
+                >
+                  <PlusIcon />
+                </Button>
+              )}
+            </div>
+          )}
           {this.props.showExpandAll &&
             Object.keys(this.state.inputHeaderContext.components).length > 0 &&
             this.renderCollapseExpandAll()}
