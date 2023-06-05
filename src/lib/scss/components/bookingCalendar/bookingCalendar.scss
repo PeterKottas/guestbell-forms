@@ -274,3 +274,31 @@ $border-color-dark: black;
   animation-name: fadeOut;
   animation-fill-mode: forwards;
 }
+
+.bookingCalendar__nowSection {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 100%;
+  pointer-events: none;
+  grid-column: 2;
+  grid-row-start: 2;
+  display: flex;
+}
+
+.bookingCalendar__nowSection__now {
+  width: 1px;
+  background-color: rgba(0, 0, 0, 0.35);
+  // create a dashed line
+  background-image: repeating-linear-gradient(
+    45deg,
+    white,
+    white 5px,
+    transparent 5px,
+    transparent 10px
+  );
+}
+
+.bookingCalendar__nowSection__before {
+  background-color: rgba(0, 0, 0, 0.075);
+}

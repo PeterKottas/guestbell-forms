@@ -32,7 +32,7 @@ const generateBookingItemsBetweenDates = (
 
 export const Schedule = () => {
   const [{ from, till }, setRange] = React.useState({
-    from: moment().startOf('day').subtract(0, 'day'),
+    from: moment().startOf('day').subtract(1, 'day'),
     till: moment().startOf('day').add(7, 'days'),
   });
 

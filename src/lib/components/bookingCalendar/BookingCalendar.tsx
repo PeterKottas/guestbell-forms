@@ -57,6 +57,10 @@ import BookingCalendarSelection, {
 } from './bookingCalendarSelection/BookingCalendarSelection';
 import { bookingCalendarLaneDefaultClasses } from './bookingCalendarLane';
 import { bookingCalendarSelectionDefaultClasses } from './bookingCalendarSelection/classes';
+import {
+  BookingCalendarNowSectionProps,
+  BookingCalendarNowSection as DefaultBookingCalendarNowSection,
+} from './bookingCalendarNowSection';
 
 export interface BookingCalendarProps<T extends BookingCalendarItemT, TLaneData>
   extends BookingCalendarClasses {
@@ -93,6 +97,8 @@ export interface BookingCalendarProps<T extends BookingCalendarItemT, TLaneData>
 
   showHeader?: boolean;
   showTimeAxis?: boolean;
+  showNowSection?: boolean;
+  alwaysShowNowSections?: boolean;
 
   BookingCalendarItem?: React.ComponentType<BookingCalendarItemProps<T>>;
   BookingCalendarRenderItem?: React.ComponentType<
@@ -112,6 +118,7 @@ export interface BookingCalendarProps<T extends BookingCalendarItemT, TLaneData>
   BookingCalendarDatePicker?:
     | React.ComponentType<BookingCalendarDatePickerProps<T>>
     | React.ReactNode;
+  BookingCalendarNowSection?: React.ComponentType<BookingCalendarNowSectionProps>;
 }
 
 const defaultStep = moment.duration(1, 'day');
@@ -135,6 +142,8 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     showGrid = true,
     showHeader = true,
     showSelection = true,
+    showNowSection = true,
+    alwaysShowNowSections = false,
     onSelection,
     minSelectionSize = 10,
     selectionContent,
@@ -156,6 +165,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     BookingCalendarLaneHeader = DefaultBookingCalendarLaneHeader,
     BookingCalendarLanesHeader = DefaultBookingCalendarLanesHeader,
     BookingCalendarDatePicker = DefaultBookingCalendarDatePicker,
+    BookingCalendarNowSection = DefaultBookingCalendarNowSection,
     bookingCalendarTopLeftHeader,
     filteringButton,
     children,
@@ -288,6 +298,15 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
             items={gridItems}
             dataRowsCount={lanes.length}
             width={width}
+          />
+        )}
+        {showNowSection && (
+          <BookingCalendarNowSection
+            from={from}
+            till={till}
+            dataRowsCount={lanes.length}
+            width={width}
+            alwaysShowSections={alwaysShowNowSections}
           />
         )}
         {showSelection && (
