@@ -15,6 +15,7 @@ import * as RightArrowLongIcon from 'material-design-icons/navigation/svg/produc
 import * as RightArrowIcon from 'material-design-icons/hardware/svg/production/ic_keyboard_arrow_right_24px.svg';
 import * as UnfoldLessIcon from 'material-design-icons/navigation/svg/production/ic_unfold_less_24px.svg';
 import * as DateRangeIcon from 'material-design-icons/action/svg/production/ic_date_range_24px.svg';
+import * as TodayIcon from 'material-design-icons/action/svg/production/ic_today_24px.svg';
 
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -57,6 +58,14 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
   if (!step || !from || !till) {
     return null;
   }
+  const selectedLevel = React.useMemo(
+    () =>
+      zoomLevels?.find(
+        (level) =>
+          till.valueOf() - from.valueOf() === level.step.asMilliseconds()
+      ),
+    [zoomLevels, till, from]
+  );
   const onStepFactory = React.useCallback(
     (_step: Duration) => () =>
       onRangeChange({
@@ -80,6 +89,16 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
   const onSmallStepRightClick = React.useCallback(
     onStepFactory(moment.duration(1, 'day')),
     [onStepFactory, step]
+  );
+  const onTodayClick = React.useCallback(
+    () =>
+      onRangeChange({
+        from: moment().startOf('day'),
+        till: moment()
+          .startOf('day')
+          .add(selectedLevel?.step ?? step),
+      }),
+    [onRangeChange, step]
   );
   const filteredItems = React.useMemo(
     () => items?.filter(filterBookingsToZoom),
@@ -113,14 +132,7 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const selectedLevel = React.useMemo(
-    () =>
-      zoomLevels?.find(
-        (level) =>
-          till.valueOf() - from.valueOf() === level.step.asMilliseconds()
-      ),
-    [zoomLevels, till, from]
-  );
+
   return (
     <div
       className={classNames(
@@ -222,6 +234,9 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
         </Button>
         <Button noShadow={true} onClick={onSmallStepLeftClick}>
           <LeftArrowIcon />
+        </Button>
+        <Button noShadow={true} onClick={onTodayClick}>
+          <TodayIcon />
         </Button>
         <Button noShadow={true} onClick={onSmallStepRightClick}>
           <RightArrowIcon />
