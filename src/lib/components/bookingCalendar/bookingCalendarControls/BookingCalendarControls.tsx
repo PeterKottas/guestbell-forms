@@ -100,7 +100,7 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
           .startOf('day')
           .add(selectedLevel?.step ?? step),
       }),
-    [onRangeChange, step]
+    [onRangeChange, step, getMoment]
   );
   const isTodayVisible = React.useMemo(
     () =>
