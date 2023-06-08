@@ -64,6 +64,8 @@ import {
 
 export interface BookingCalendarProps<T extends BookingCalendarItemT, TLaneData>
   extends BookingCalendarClasses {
+  getMoment?: () => Moment;
+
   bookings: T[];
   from: Moment;
   till: Moment;
@@ -127,6 +129,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
   props: BookingCalendarProps<T, TLaneData>
 ) {
   const {
+    getMoment = () => moment(),
     bookings,
     className,
     laneContainerClassName,
@@ -264,6 +267,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     >
       <BookingCalendarControls<T>
         {...controlsClasses}
+        getMoment={getMoment}
         items={bookings}
         from={from}
         till={till}

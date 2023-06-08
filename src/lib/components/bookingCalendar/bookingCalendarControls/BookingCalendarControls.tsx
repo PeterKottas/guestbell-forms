@@ -22,6 +22,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 export interface BookingCalendarControlsProps<T extends BookingCalendarItemT>
   extends BookingCalendarControlsClasses {
+  getMoment: () => Moment;
   items: T[];
   step: Duration;
   from: Moment;
@@ -38,6 +39,7 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
   props: BookingCalendarControlsProps<T>
 ) {
   const {
+    getMoment,
     className,
     monthLabelClassName,
     buttonsContainerClassName,
@@ -93,8 +95,8 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
   const onTodayClick = React.useCallback(
     () =>
       onRangeChange({
-        from: moment().startOf('day'),
-        till: moment()
+        from: getMoment().startOf('day'),
+        till: getMoment()
           .startOf('day')
           .add(selectedLevel?.step ?? step),
       }),
