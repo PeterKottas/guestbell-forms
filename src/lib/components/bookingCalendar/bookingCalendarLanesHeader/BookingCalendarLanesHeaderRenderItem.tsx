@@ -14,8 +14,8 @@ export const BookingCalendarLanesHeaderRenderItemFactory = (
   ) {
     const { item, className, startIsCut, endIsCut, realFrom, realTill } = props;
     const onClick = React.useCallback(
-      () => onRangeChange({ from: item.from, till: item.till }),
-      [item]
+      () => onRangeChange?.({ from: item.from, till: item.till }),
+      [item, onRangeChange]
     );
     const isToday =
       item.from.isSame(moment(), 'day') &&

@@ -102,6 +102,8 @@ export interface BookingCalendarProps<T extends BookingCalendarItemT, TLaneData>
   showNowSection?: boolean;
   alwaysShowNowSections?: boolean;
 
+  headersClickEnabled?: boolean;
+
   BookingCalendarItem?: React.ComponentType<BookingCalendarItemProps<T>>;
   BookingCalendarRenderItem?: React.ComponentType<
     BookingCalendarRenderItemProps<T>
@@ -171,6 +173,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
     BookingCalendarNowSection = DefaultBookingCalendarNowSection,
     bookingCalendarTopLeftHeader,
     filteringButton,
+    headersClickEnabled = true,
     children,
   } = props;
   const {
@@ -348,7 +351,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
                 {...controlsClasses}
                 from={from}
                 till={till}
-                onRangeChange={onRangeChange}
+                onRangeChange={headersClickEnabled ? onRangeChange : undefined}
                 step={step}
               />
             </div>
