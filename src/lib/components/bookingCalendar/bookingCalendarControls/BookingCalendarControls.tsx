@@ -44,7 +44,6 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
     monthLabelClassName,
     buttonsContainerClassName,
     zoomBookingsButtonClassName,
-    zoomLevelsContainerClassName,
     zoomLevelsButtonClassName,
     zoomLevelsButtonLabelClassName,
     zoomLevels,
@@ -158,57 +157,58 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
           {bookingCalendarDatePicker}
         </div>
       )}
-      {zoomLevels?.length > 0 && (
-        <div
-          className={classNames(
-            bookingCalendarControlsDefaultClasses.zoomLevelsContainerClassName,
-            zoomLevelsContainerClassName
-          )}
-        >
-          <Button
-            className={classNames(
-              bookingCalendarControlsDefaultClasses.zoomLevelsButtonClassName,
-              zoomLevelsButtonClassName
-            )}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-            onClick={handleClick}
-            noShadow={true}
-          >
-            <DateRangeIcon />
-            {selectedLevel ? (
-              <span
-                className={classNames(
-                  bookingCalendarControlsDefaultClasses.zoomLevelsButtonLabelClassName,
-                  zoomLevelsButtonLabelClassName
-                )}
-              >{` ${selectedLevel.label}`}</span>
-            ) : (
-              ''
-            )}
-          </Button>
-          <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-            {zoomLevels.map((level, index) => (
-              <MenuItem
-                data-level={index}
-                key={index}
-                onClick={() => {
-                  onRangeChange({
-                    from: from.clone().startOf('day'),
-                    till: from.clone().startOf('day').add(level.step),
-                  });
-                  setAnchorEl(null);
-                }}
-                selected={
-                  till.valueOf() - from.valueOf() ===
-                  level.step.asMilliseconds()
-                }
-              >
-                {level.label}
-              </MenuItem>
-            ))}
-          </Menu>
-          {/*zoomLevels.map((level, index) => (
+      <div
+        className={classNames(
+          bookingCalendarControlsDefaultClasses.buttonsContainerClassName,
+          buttonsContainerClassName
+        )}
+      >
+        {zoomLevels?.length > 0 && (
+          <>
+            <Button
+              className={classNames(
+                bookingCalendarControlsDefaultClasses.zoomLevelsButtonClassName,
+                zoomLevelsButtonClassName
+              )}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              onClick={handleClick}
+              noShadow={true}
+            >
+              <DateRangeIcon />
+              {selectedLevel ? (
+                <span
+                  className={classNames(
+                    bookingCalendarControlsDefaultClasses.zoomLevelsButtonLabelClassName,
+                    zoomLevelsButtonLabelClassName
+                  )}
+                >{` ${selectedLevel.label}`}</span>
+              ) : (
+                ''
+              )}
+            </Button>
+            <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+              {zoomLevels.map((level, index) => (
+                <MenuItem
+                  data-level={index}
+                  key={index}
+                  onClick={() => {
+                    onRangeChange({
+                      from: from.clone().startOf('day'),
+                      till: from.clone().startOf('day').add(level.step),
+                    });
+                    setAnchorEl(null);
+                  }}
+                  selected={
+                    till.valueOf() - from.valueOf() ===
+                    level.step.asMilliseconds()
+                  }
+                >
+                  {level.label}
+                </MenuItem>
+              ))}
+            </Menu>
+            {/*zoomLevels.map((level, index) => (
             <Button
               type={
                 till.valueOf() - from.valueOf() === level.step.asMilliseconds()
@@ -228,14 +228,8 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
               {level.label}
             </Button>
             ))*/}
-        </div>
-      )}
-      <div
-        className={classNames(
-          bookingCalendarControlsDefaultClasses.buttonsContainerClassName,
-          buttonsContainerClassName
+          </>
         )}
-      >
         <Button noShadow={true} onClick={onBigStepLeftClick}>
           <LeftArrowLongIcon />
         </Button>

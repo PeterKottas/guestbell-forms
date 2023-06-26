@@ -182,22 +182,15 @@ $border-color-dark: black;
     align-items: center;
   }
   .bookingCalendar__controls__buttonsContainer {
+    margin-left: auto;
   }
   .bookingCalendar__controls__zoomBookingsButton {
     svg {
       transform: rotate(90deg);
     }
   }
-  .bookingCalendar__controls__zoomLevelsContainer {
-    margin-left: auto;
-  }
   .bookingCalendar__controls__zoomLevelsButton {
     text-transform: none;
-    display: flex;
-    align-items: center;
-    svg {
-      margin-right: 0.5rem;
-    }
   }
 }
 
