@@ -165,12 +165,10 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
           )}
         >
           <Button
-            id="zoom-level-button"
             className={classNames(
               bookingCalendarControlsDefaultClasses.zoomLevelsButtonClassName,
               zoomLevelsButtonClassName
             )}
-            aria-controls={open ? 'zoom-level-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
             onClick={handleClick}
@@ -179,15 +177,7 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
             <DateRangeIcon />
             {selectedLevel ? ` ${selectedLevel.label}` : ''}
           </Button>
-          <Menu
-            id="zoom-level-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              'aria-labelledby': 'zoom-level-button',
-            }}
-          >
+          <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
             {zoomLevels.map((level, index) => (
               <MenuItem
                 data-level={index}
