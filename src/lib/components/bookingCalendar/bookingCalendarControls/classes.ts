@@ -5,6 +5,7 @@ export interface BookingCalendarControlsClasses {
   buttonsContainerClassName?: string;
   zoomBookingsButtonClassName?: string;
   zoomLevelsButtonClassName?: string;
+  zoomLevelsButtonLabelClassName?: string;
 }
 
 export const bookingCalendarControlsDefaultClasses: BookingCalendarControlsClasses =
@@ -17,4 +18,6 @@ export const bookingCalendarControlsDefaultClasses: BookingCalendarControlsClass
     zoomBookingsButtonClassName:
       'bookingCalendar__controls__zoomBookingsButton',
     zoomLevelsButtonClassName: 'bookingCalendar__controls__zoomLevelsButton',
+    zoomLevelsButtonLabelClassName:
+      'bookingCalendar__controls__zoomLevelsButton__label',
   };

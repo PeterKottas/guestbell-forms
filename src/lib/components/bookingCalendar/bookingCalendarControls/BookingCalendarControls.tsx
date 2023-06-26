@@ -46,6 +46,7 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
     zoomBookingsButtonClassName,
     zoomLevelsContainerClassName,
     zoomLevelsButtonClassName,
+    zoomLevelsButtonLabelClassName,
     zoomLevels,
     step,
     from,
@@ -175,7 +176,16 @@ export function BookingCalendarControls<T extends BookingCalendarItemT>(
             noShadow={true}
           >
             <DateRangeIcon />
-            {selectedLevel ? ` ${selectedLevel.label}` : ''}
+            {selectedLevel ? (
+              <span
+                className={classNames(
+                  bookingCalendarControlsDefaultClasses.zoomLevelsButtonLabelClassName,
+                  zoomLevelsButtonLabelClassName
+                )}
+              >{` ${selectedLevel.label}`}</span>
+            ) : (
+              ''
+            )}
           </Button>
           <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
             {zoomLevels.map((level, index) => (
