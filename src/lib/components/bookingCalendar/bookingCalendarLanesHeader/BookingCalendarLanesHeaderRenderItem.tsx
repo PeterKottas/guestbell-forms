@@ -20,6 +20,7 @@ export const BookingCalendarLanesHeaderRenderItemFactory = (
     const isToday =
       item.from.isSame(moment(), 'day') &&
       item.till.diff(item.from, 'hours') === 24;
+    const ButtonComponent = onRangeChange ? Button : 'div';
     return item ? (
       <div
         className={classNames(
@@ -27,7 +28,7 @@ export const BookingCalendarLanesHeaderRenderItemFactory = (
           className
         )}
       >
-        <Button
+        <ButtonComponent
           className={classNames(
             'bookingCalendar__lanesHeader__renderItem__button',
             {
@@ -35,9 +36,9 @@ export const BookingCalendarLanesHeaderRenderItemFactory = (
                 isToday,
             }
           )}
-          noShadow={true}
-          onClick={onClick}
-          type="primary"
+          {...(onRangeChange
+            ? { noShadow: true, onClick: onClick, type: 'primary' }
+            : {})}
         >
           {startIsCut || endIsCut ? (
             <>
@@ -57,7 +58,7 @@ export const BookingCalendarLanesHeaderRenderItemFactory = (
               </span>
             </>
           )}
-        </Button>
+        </ButtonComponent>
       </div>
     ) : null;
   };

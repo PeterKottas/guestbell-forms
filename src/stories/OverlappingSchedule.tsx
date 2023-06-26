@@ -166,6 +166,7 @@ export const Schedule = () => {
           { step: duration(1, 'week'), label: 'Week' },
         ]}
         BookingCalendarRenderItem={RenderItem}
+        headersClickEnabled={false}
       />
     </div>
   );
