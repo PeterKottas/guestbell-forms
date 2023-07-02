@@ -177,12 +177,12 @@ export default class BookingCalendarSelection extends React.Component<
     const baseStyle: React.CSSProperties = {
       zIndex: 10,
       left: Math.min(
-        this.state.selectionBoxOrigin[0],
-        this.state.selectionBoxTarget[0]
+        this.state.selectionBoxOrigin[0] - window.scrollX,
+        this.state.selectionBoxTarget[0] - window.scrollX
       ),
       top: Math.min(
-        this.state.selectionBoxOrigin[1],
-        this.state.selectionBoxTarget[1]
+        this.state.selectionBoxOrigin[1] - window.scrollY,
+        this.state.selectionBoxTarget[1] - window.scrollY
       ),
       height: Math.abs(
         this.state.selectionBoxTarget[1] - this.state.selectionBoxOrigin[1] - 1
