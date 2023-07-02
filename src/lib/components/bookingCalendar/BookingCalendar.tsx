@@ -339,6 +339,7 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
             firstDataRowIndex={firstDataRowIndex}
             dataRowsCount={lanes.length + (showTimeAxis ? 1 : 0)}
             onSelected={onSelected}
+            width={width}
             minSelectionSize={minSelectionSize}
           >
             {selectionContent}

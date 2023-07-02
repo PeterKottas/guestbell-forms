@@ -23,6 +23,7 @@ export interface BookingCalendarSelectionProps {
   firstDataRowIndex: number;
   minSelectionSize: number;
   children?: React.ReactNode;
+  width: number;
 }
 
 export interface BookingCalendarSelectionState {
@@ -174,6 +175,7 @@ export default class BookingCalendarSelection extends React.Component<
   }
 
   render() {
+    const { width } = this.props;
     const baseStyle: React.CSSProperties = {
       zIndex: 10,
       left: Math.min(
@@ -213,6 +215,7 @@ export default class BookingCalendarSelection extends React.Component<
           zIndex: this.state.selectionBox ? 99999 : undefined,
           gridRowEnd: `span ${this.props.dataRowsCount}`,
           gridRowStart: this.props.firstDataRowIndex,
+          ...(width ? { width: `${width}px` } : {}),
         }}
         onMouseDown={this.handleMouseDown}
         onMouseUp={this.handleMouseUp}
