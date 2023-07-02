@@ -214,10 +214,22 @@ export function BookingCalendar<T extends BookingCalendarItemT, TLaneData>(
       if (!from || !till || !width || !onRangeChange) {
         return;
       }
-      const selectionLeft = Math.min(data.origin[0], data.target[0]);
-      const selectionRight = Math.max(data.origin[0], data.target[0]);
-      const selectionTop = Math.min(data.origin[1], data.target[1]);
-      const selectionBottom = Math.max(data.origin[1], data.target[1]);
+      const selectionLeft = Math.min(
+        data.origin[0] - window.scrollX,
+        data.target[0] - window.scrollX
+      );
+      const selectionRight = Math.max(
+        data.origin[0] - window.scrollX,
+        data.target[0] - window.scrollX
+      );
+      const selectionTop = Math.min(
+        data.origin[1] - window.scrollY,
+        data.target[1] - window.scrollY
+      );
+      const selectionBottom = Math.max(
+        data.origin[1] - window.scrollY,
+        data.target[1] - window.scrollY
+      );
       const durationMs = till.valueOf() - from.valueOf();
       const toTimeSpace = (num: number) => (num / (width || 1)) * durationMs;
       const timeSpaceStart = from.clone().add(toTimeSpace(selectionLeft), 'ms');
