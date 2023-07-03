@@ -2,7 +2,9 @@
   background-color: $bg;
   fill: $fg;
   color: $fg;
-  &:not(.guestbell-btn--disabled):not(.guestbell-btn--blank):not(.guestbell-btn--outlined):not(.guestbell-btn--unobtrusive):hover {
+  &:not(.guestbell-btn--disabled):not(.guestbell-btn--blank):not(
+      .guestbell-btn--outlined
+    ):not(.guestbell-btn--unobtrusive):hover {
     background-color: darken($bg, 7%);
   }
   &:not(.guestbell-btn--disabled).guestbell-btn--outlined {
@@ -145,6 +147,9 @@
   }
   &.guestbell-btn-white {
     @include create-button-type($white-color, $input-text-color);
+  }
+  &.guestbell-btn-black {
+    @include create-button-type($black-color, $input-text-color--white);
   }
   &.guestbell-btn-info {
     @include create-button-type($info-color, $input-text-color--white);

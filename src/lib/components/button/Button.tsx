@@ -16,6 +16,7 @@ export type ButtonTypes =
   | 'info'
   | 'gray'
   | 'white'
+  | 'black'
   | 'none';
 
 export type ButtonComponentProps = {
