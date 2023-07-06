@@ -48,6 +48,13 @@ export type InputHeaderRawProps = React.PropsWithChildren<
     tooltip?: string | JSX.Element;
     tooltipProps?: TippyProps;
     stopsPropagation?: boolean;
+    /*something like div, span, button ...*/
+    ButtonsContainer?:
+      | React.ComponentType<{
+          className: string;
+          onClick: (e: React.MouseEvent<HTMLElement>) => void;
+        }>
+      | 'div';
   } & InputHeaderContextProps &
     ThemeContextProps
 >;
@@ -85,6 +92,7 @@ export class InputHeaderRaw
     noBg: false,
     shouldToggleCollapseOnHeaderClick: false,
     stopsPropagation: true,
+    ButtonsContainer: 'div',
   };
 
   public componentId = guid();
@@ -170,6 +178,7 @@ export class InputHeaderRaw
         this.props.extraButtons?.length ||
         this.props.collapsible
     );
+    const ButtonContainer = this.props.ButtonsContainer ?? 'div';
     return (
       <div
         className={
@@ -220,7 +229,7 @@ export class InputHeaderRaw
             </div>
           )}
           {showButtons && (
-            <div
+            <ButtonContainer
               className="input__header__top__button-container"
               onClick={this.mainButtonClick}
             >
@@ -256,7 +265,7 @@ export class InputHeaderRaw
                   <PlusIcon />
                 </Button>
               )}
-            </div>
+            </ButtonContainer>
           )}
           {this.props.showExpandAll &&
             Object.keys(this.state.inputHeaderContext.components).length > 0 &&
