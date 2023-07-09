@@ -281,6 +281,13 @@ export class MoneyRaw extends BaseInput<
     this.props.onPricesChange(
       this.props.prices.concat([{ value: 0, currency: unusedCurrencies[0] }])
     );
+    // we are going to focus the last input in the this.containerRef element after a timeout
+    setTimeout(() => {
+      const inputs = this.containerRef.current.querySelectorAll('input');
+      if (inputs && inputs.length) {
+        inputs[inputs.length - 1].focus();
+      }
+    }, 0);
     this.setValid();
     if (!this.state.touched) {
       this.touch();
