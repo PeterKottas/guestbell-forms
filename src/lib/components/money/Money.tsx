@@ -283,8 +283,8 @@ export class MoneyRaw extends BaseInput<
     );
     // we are going to focus the last input in the this.containerRef element after a timeout
     setTimeout(() => {
-      const inputs = this.containerRef.current.querySelectorAll('input');
-      if (inputs && inputs.length) {
+      const inputs = this.containerRef.current?.querySelectorAll('input');
+      if (inputs?.length) {
         inputs[inputs.length - 1].focus();
       }
     }, 0);
