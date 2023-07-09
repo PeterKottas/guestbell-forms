@@ -134,7 +134,9 @@ export class MoneyRaw extends BaseInput<
                       value={item.currency.value.toString()}
                     />
                   ) : (
-                    currentCurrencies?.[0]?.label
+                    <span className="money-input__currencyLabel">
+                      {currentCurrencies?.[0]?.label}
+                    </span>
                   )}
                   <Text
                     {...(this.props.id && {
