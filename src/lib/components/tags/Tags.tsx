@@ -23,10 +23,12 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Portal from '@mui/material/Portal';
 
 // Misc
-export type Tag = {
-  id: number | string;
+export type Tag<T extends number | string = number> = {
+  id: T;
   name: string;
 };
+
+export type ResourceTConstraint<IdT extends number | string> = { id: IdT };
 
 export const defaultTagsTranslations = {
   ...defaultBaseTranslations,
@@ -35,7 +37,10 @@ export const defaultTagsTranslations = {
 
 export type TagsTranslations = Partial<typeof defaultTagsTranslations>;
 
-export type TagsProps<T extends Tag = Tag> = {
+export type TagsProps<
+  IdT extends number | string = number,
+  T extends ResourceTConstraint<IdT> = Tag<IdT>
+> = {
   className?: string;
   tagsSuggestionsClassName?: string;
   disabled?: boolean;
@@ -67,10 +72,14 @@ export type TagsProps<T extends Tag = Tag> = {
   mobileVersionEnabled?: boolean;
   isLoading?: boolean;
   closeSuggestionsAfterCreate?: boolean;
-  SuggestionTag?: React.ComponentType<RenderSuggestionTagProps<T>>;
+  SuggestionTag?: React.ComponentType<RenderSuggestionTagProps<IdT, T>>;
+  getName?: (tag: T) => string;
 } & BaseInputProps<HTMLInputElement, TagsTranslations>;
 
-export interface TagsState<T extends Tag = Tag> extends BaseInputState {
+export interface TagsState<
+  IdT extends number | string = number,
+  T extends ResourceTConstraint<IdT> = Tag<IdT>
+> extends BaseInputState {
   textIsFocused: boolean;
   textErrors: ValidationError[];
   textIsValid: boolean;
@@ -88,9 +97,12 @@ const TagButtonComponent: React.FC<ButtonComponentProps> = (p) => (
   </a>
 );
 
-export class TagsRaw<T extends Tag = Tag> extends BaseInput<
-  TagsProps<T> & InjectedProps,
-  TagsState<T>,
+export class TagsRaw<
+  IdT extends number | string = number,
+  T extends ResourceTConstraint<IdT> = Tag<IdT>
+> extends BaseInput<
+  TagsProps<IdT, T> & InjectedProps,
+  TagsState<IdT, T>,
   HTMLInputElement,
   TagsTranslations
 > {
@@ -121,13 +133,14 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
     minLettersToFetch: 0,
     mobileVersionEnabled: true,
     closeSuggestionsAfterCreate: false,
+    getName: (tag) => tag.name,
   };
 
   private textRef: React.RefObject<TextRaw>;
   private suggestionsRef: React.RefObject<HTMLDivElement>;
   private isMobile: boolean = false;
 
-  constructor(props: TagsProps<T> & InjectedProps) {
+  constructor(props: TagsProps<IdT, T> & InjectedProps) {
     super(props);
     this.state = {
       ...this.state,
@@ -153,7 +166,7 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
     }
   }
 
-  public componentDidUpdate(oldProps: TagsProps & InjectedProps) {
+  public componentDidUpdate(oldProps: TagsProps<IdT, T> & InjectedProps) {
     if (
       oldProps.tags !== this.props.tags ||
       oldProps.validators !== this.props.validators ||
@@ -195,7 +208,7 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
     });
     if (this.props.addNewOnBlur && this.state.value) {
       const suggestions = this.getSuggestions();
-      const existing = suggestions.find((s) => s.name === this.state.value);
+      const existing = suggestions.find((s) => this.props.getName(s) === this.state.value);
       if (existing) {
         this.onSuggestionSelected(existing, suggestions.length === 1);
       } else if (this.props.allowNew) {
@@ -318,7 +331,7 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
                 />
                 {this.state.suggestionsVisible &&
                   this.props.showSuggestions && (
-                    <TagsSuggestions<T>
+                    <TagsSuggestions<IdT, T>
                       {...(this.props.id && {
                         id: this.props.id + '-text-input',
                       })}
@@ -349,11 +362,11 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
                         this.state.value !== '' &&
                         (!this.props.existingTags ||
                           !this.props.existingTags.find(
-                            (e) => e.name === this.state.value
+                            (e) => this.props.getName(e) === this.state.value
                           )) &&
                         (!this.state.fetchedExistingTags ||
                           !this.state.fetchedExistingTags.find(
-                            (e) => e.name === this.state.value
+                            (e) => this.props.getName(e) === this.state.value
                           )) &&
                         this.state.textIsValid && (
                           <Button
@@ -370,6 +383,7 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
                       }
                       SuggestionTag={this.props.SuggestionTag}
                       popperProps={this.props.popperProps}
+                      getName={this.props.getName}
                     />
                   )}
               </div>
@@ -442,7 +456,7 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
       e.stopPropagation();
       const existingTag =
         this.props.existingTags &&
-        this.props.existingTags.find((et) => et.name === this.state.value);
+        this.props.existingTags.find((et) => this.props.getName(et) === this.state.value);
       if (this.state.preselectedSuggestion !== undefined) {
         this.props.onTagsChanged(
           this.props.tags.concat(suggestions[this.state.preselectedSuggestion])
@@ -629,7 +643,7 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
   private renderTag(tag: T, index: number) {
     const body = (
       <>
-        {tag.name}
+        {this.props.getName(tag)}
         {!this.props.readOnly && (
           <Button
             {...(this.props.id && {
@@ -689,7 +703,12 @@ export class TagsRaw<T extends Tag = Tag> extends BaseInput<
 }
 
 interface TagsFinal {
-  <T extends Tag = Tag>(item: TagsProps<T>): React.ReactElement;
+  <
+    IdT extends number | string = number,
+    T extends ResourceTConstraint<IdT> = Tag<IdT>
+  >(
+    item: TagsProps<IdT, T>
+  ): React.ReactElement;
   defaultProps?: Partial<TagsProps>;
 }
 

@@ -1,10 +1,13 @@
 import * as React from 'react';
-import { Tag } from '..';
+import { ResourceTConstraint, Tag } from '..';
 import { Button } from '../../button';
 import Popper, { PopperProps } from '@mui/material/Popper';
 import classNames from 'classnames';
 
-export type RenderSuggestionTagProps<T extends Tag = Tag> = {
+export type RenderSuggestionTagProps<
+  IdT extends number | string = number,
+  T extends ResourceTConstraint<IdT> = Tag<IdT>
+> = {
   tag: T;
   index: number;
   id?: string;
@@ -12,7 +15,10 @@ export type RenderSuggestionTagProps<T extends Tag = Tag> = {
   isPreselected: boolean;
 };
 
-export type SuggestionsProps<T extends Tag = Tag> = {
+export type SuggestionsProps<
+  IdT extends number | string = number,
+  T extends ResourceTConstraint<IdT> = Tag<IdT>
+> = {
   className?: string;
   innerRef: React.RefObject<HTMLDivElement>;
   anchorEl: HTMLElement;
@@ -30,7 +36,8 @@ export type SuggestionsProps<T extends Tag = Tag> = {
   WaitingForMoreInputComponent?: string | JSX.Element;
   allowNew: boolean;
   popperProps?: Partial<PopperProps>;
-  SuggestionTag?: React.ComponentType<RenderSuggestionTagProps<T>>;
+  SuggestionTag?: React.ComponentType<RenderSuggestionTagProps<IdT, T>>;
+  getName: (tag: T) => string;
 };
 
 type InjectedProps = {};
@@ -42,13 +49,16 @@ const popperModifiers: PopperProps['modifiers'] = [
   },
 ];
 
-function DefaultSuggestionTag<T extends Tag = Tag>({
+function DefaultSuggestionTag<
+  IdT extends number | string = number,
+  T extends ResourceTConstraint<IdT> = Tag<IdT>
+>({
   index,
   tag,
   id,
   onClick,
   isPreselected,
-}: RenderSuggestionTagProps<T>) {
+}: RenderSuggestionTagProps<IdT, T>) {
   return (
     <li key={index}>
       <Button
@@ -62,15 +72,16 @@ function DefaultSuggestionTag<T extends Tag = Tag>({
         onClick={onClick}
         dropdown={true}
       >
-        {tag.name}
+        {this.props.getName(tag)}
       </Button>
     </li>
   );
 }
 
-function Suggestions<T extends Tag = Tag>(
-  props: SuggestionsProps<T> & InjectedProps
-) {
+function Suggestions<
+  IdT extends number | string = number,
+  T extends ResourceTConstraint<IdT> = Tag<IdT>
+>(props: SuggestionsProps<IdT, T> & InjectedProps) {
   const { onSelected } = props;
   const onSelectedFactory = React.useCallback(
     (tag: T, lastSelected: boolean) => (e: React.MouseEvent) => {
@@ -117,7 +128,7 @@ function Suggestions<T extends Tag = Tag>(
               )}
             {!props.isWaitingForMoreInput &&
               props.tags.map((tag, index) => (
-                <SuggestionTag
+                <SuggestionTag<IdT, T>
                   key={tag.id}
                   index={index}
                   tag={tag}
