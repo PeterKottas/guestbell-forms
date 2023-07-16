@@ -706,12 +706,14 @@ export class TagsRaw<
   };
 }
 
-interface TagsFinal<
-  IdT extends number | string = number,
-  T extends ResourceTConstraint<IdT> = Tag<IdT>
-> {
-  (item: TagsProps<IdT, T>): React.ReactElement;
-  defaultProps?: Partial<TagsProps<IdT, T>>;
+interface TagsFinal {
+  <
+    IdT extends number | string = number,
+    T extends ResourceTConstraint<IdT> = Tag<IdT>
+  >(
+    item: TagsProps<IdT, T>
+  ): React.ReactElement;
+  defaultProps?: Partial<TagsProps<any, any>>;
 }
 
 export const Tags = withThemeContext<TagsProps, InstanceType<typeof TagsRaw>>(
