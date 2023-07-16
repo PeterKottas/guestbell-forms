@@ -13,6 +13,7 @@ export type RenderSuggestionTagProps<
   id?: string;
   onClick: (e: React.MouseEvent<HTMLElement>) => void;
   isPreselected: boolean;
+  getName: (tag: T) => string;
 };
 
 export type SuggestionsProps<
@@ -58,6 +59,7 @@ function DefaultSuggestionTag<
   id,
   onClick,
   isPreselected,
+  getName,
 }: RenderSuggestionTagProps<IdT, T>) {
   return (
     <li key={index}>
@@ -72,7 +74,7 @@ function DefaultSuggestionTag<
         onClick={onClick}
         dropdown={true}
       >
-        {this.props.getName(tag)}
+        {getName(tag)}
       </Button>
     </li>
   );
@@ -138,6 +140,7 @@ function Suggestions<
                     props.preselectedSuggestion !== undefined &&
                     props.preselectedSuggestion === index
                   }
+                  getName={props.getName}
                 />
               ))}
             {props.EmptyComponent &&
