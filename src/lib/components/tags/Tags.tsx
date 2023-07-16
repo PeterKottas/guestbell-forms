@@ -208,7 +208,9 @@ export class TagsRaw<
     });
     if (this.props.addNewOnBlur && this.state.value) {
       const suggestions = this.getSuggestions();
-      const existing = suggestions.find((s) => this.props.getName(s) === this.state.value);
+      const existing = suggestions.find(
+        (s) => this.props.getName(s) === this.state.value
+      );
       if (existing) {
         this.onSuggestionSelected(existing, suggestions.length === 1);
       } else if (this.props.allowNew) {
@@ -456,7 +458,9 @@ export class TagsRaw<
       e.stopPropagation();
       const existingTag =
         this.props.existingTags &&
-        this.props.existingTags.find((et) => this.props.getName(et) === this.state.value);
+        this.props.existingTags.find(
+          (et) => this.props.getName(et) === this.state.value
+        );
       if (this.state.preselectedSuggestion !== undefined) {
         this.props.onTagsChanged(
           this.props.tags.concat(suggestions[this.state.preselectedSuggestion])
@@ -702,14 +706,12 @@ export class TagsRaw<
   };
 }
 
-interface TagsFinal {
-  <
-    IdT extends number | string = number,
-    T extends ResourceTConstraint<IdT> = Tag<IdT>
-  >(
-    item: TagsProps<IdT, T>
-  ): React.ReactElement;
-  defaultProps?: Partial<TagsProps>;
+interface TagsFinal<
+  IdT extends number | string = number,
+  T extends ResourceTConstraint<IdT> = Tag<IdT>
+> {
+  (item: TagsProps<IdT, T>): React.ReactElement;
+  defaultProps?: Partial<TagsProps<IdT, T>>;
 }
 
 export const Tags = withThemeContext<TagsProps, InstanceType<typeof TagsRaw>>(
