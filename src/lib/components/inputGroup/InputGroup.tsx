@@ -7,6 +7,7 @@ import {
 } from '../base/input/BaseInput';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import { ThemeContextProps } from '../themeProvider/ThemeContext';
+import classNames from 'classnames';
 
 // Misc
 
@@ -16,7 +17,10 @@ export type InputGroupProps = React.PropsWithChildren<
     'title' | 'className' | 'tooltip' | 'formContext'
   > &
     ThemeContextProps
->;
+> & {
+  bodyClassName?: string;
+  headerClassName?: string;
+};
 
 export interface InputGroupState extends BaseInputState {}
 
@@ -37,16 +41,27 @@ export class InputGroup extends BaseInput<
   public render() {
     return this.props.title ? (
       <div
-        className={
-          `inputGroup input__group__border ` +
-          (this.props.className ? this.props.className : '')
-        }
+        className={classNames(
+          'inputGroup input__group__border',
+          this.props.className
+        )}
       >
         {this.props.title && (
-          <div className="inputGroup__header">{this.renderTitle()}</div>
+          <div
+            className={classNames(
+              'inputGroup__header',
+              this.props.headerClassName
+            )}
+          >
+            {this.renderTitle()}
+          </div>
         )}
         {React.Children.count(this.props.children) > 0 && (
-          <div className="inputGroup__body">{this.props.children}</div>
+          <div
+            className={classNames('inputGroup__body', this.props.bodyClassName)}
+          >
+            {this.props.children}
+          </div>
         )}
       </div>
     ) : (
