@@ -556,6 +556,7 @@ export class TagsRaw<
           this.fetchExistingTags(finalValue);
         }
         this.handleErrors();
+        this.textRef.current?.focus();
       }
     );
   };
@@ -719,6 +720,7 @@ export class TagsRaw<
     this.props.onTagsChanged && this.props.onTagsChanged(newTags);
     this.handleErrors(newTags);
     // this.fetchExistingTags();
+    this.textRef.current?.focus();
   };
 }
 
