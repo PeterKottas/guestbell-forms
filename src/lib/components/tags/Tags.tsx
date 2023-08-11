@@ -33,6 +33,11 @@ export type ResourceTConstraint<IdT extends number | string> = { id: IdT };
 export const defaultTagsTranslations = {
   ...defaultBaseTranslations,
   addNew: 'Add new',
+  valueNotAddedError: 'You forgot to add tag',
+  maxTagsSurpassedError: 'Maximum number of tags surpassed',
+  waitingForMoreInputComponent: 'Waiting for more input...',
+  suggestionsEmptyComponent: 'No existing tags...',
+  suggestionsEmptyAllowNewComponent: 'Type to create...',
 };
 
 export type TagsTranslations = Partial<typeof defaultTagsTranslations>;
@@ -62,6 +67,7 @@ export type TagsProps<
   showSuggestions?: boolean;
   suggestionsLoadingComponent?: string | JSX.Element;
   suggestionsEmptyComponent?: string | JSX.Element | null;
+  suggestionsEmptyAllowNewComponent?: string | JSX.Element | null;
   waitingForMoreInputComponent?: string | JSX.Element;
   loadingDelayMs?: number;
   filterExistingTags?: (text: string, existingTags: T[]) => T[];
@@ -116,14 +122,10 @@ export class TagsRaw<
     onTagsChanged: () => undefined,
     onNewTagAdded: (newTagName) =>
       Promise.resolve({ name: newTagName, id: new Date().getTime() }),
-    valueNotAddedError: <span>You forgot to add tag</span>,
-    maxTagsSurpassedError: <span>Maximum number of tags surpassed</span>,
-    waitingForMoreInputComponent: <span>Waiting for more input...</span>,
     showSuggestions: true,
     suggestionsLoadingComponent: (
       <LinearProgress className="tags-input__suggestions__defaultLoading" />
     ),
-    suggestionsEmptyComponent: 'No existing tags...',
     loadingDelayMs: 0,
     filterExistingTags: (text, tags) =>
       tags.filter((tag) => tag.name && tag.name.toLowerCase().startsWith(text)),
@@ -349,9 +351,17 @@ export class TagsRaw<
                       }
                       LoadingComponent={this.props.suggestionsLoadingComponent}
                       isVisible={this.state.suggestionsVisible}
-                      EmptyComponent={this.props.suggestionsEmptyComponent}
+                      EmptyComponent={
+                        this.props.suggestionsEmptyComponent ??
+                        translations.suggestionsEmptyComponent
+                      }
+                      EmptyAllowNewComponent={
+                        this.props.suggestionsEmptyAllowNewComponent ??
+                        translations.suggestionsEmptyAllowNewComponent
+                      }
                       WaitingForMoreInputComponent={
-                        this.props.waitingForMoreInputComponent
+                        this.props.waitingForMoreInputComponent ??
+                        translations.waitingForMoreInputComponent
                       }
                       isWaitingForMoreInput={
                         this.state.value.length < this.props.minLettersToFetch
@@ -587,6 +597,7 @@ export class TagsRaw<
   };
 
   private getErrors(tags: T[]) {
+    const translations = this.getTranslations(defaultTagsTranslations);
     let errors = [];
     if (tags.length < this.props.maxTags) {
       errors = errors.concat(this.state.textErrors);
@@ -597,10 +608,14 @@ export class TagsRaw<
       );
     }
     if (this.state.value && this.props.allowNew && !this.state.textIsFocused) {
-      errors = errors.concat(this.props.valueNotAddedError);
+      errors = errors.concat(
+        this.props.valueNotAddedError ?? translations.maxTagsSurpassedError
+      );
     }
     if (this.props.maxTags < (this.props.tags && this.props.tags.length)) {
-      errors = errors.concat(this.props.maxTagsSurpassedError);
+      errors = errors.concat(
+        this.props.maxTagsSurpassedError ?? translations.maxTagsSurpassedError
+      );
     }
     return errors.filter((i) => i);
   }

@@ -33,6 +33,7 @@ export type SuggestionsProps<
   loading: boolean;
   LoadingComponent?: string | JSX.Element;
   EmptyComponent?: string | JSX.Element;
+  EmptyAllowNewComponent?: string | JSX.Element;
   AddNewTagComponent?: JSX.Element;
   WaitingForMoreInputComponent?: string | JSX.Element;
   allowNew: boolean;
@@ -150,6 +151,14 @@ function Suggestions<
               !props.loading && (
                 <li className="w-100 text-center p-2">
                   {props.EmptyComponent}
+                </li>
+              )}
+            {props.EmptyAllowNewComponent &&
+              props.tags.length === 0 &&
+              props.allowNew &&
+              !props.loading && (
+                <li className="w-100 text-center p-2">
+                  {props.EmptyAllowNewComponent}
                 </li>
               )}
           </ul>
