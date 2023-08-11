@@ -155,6 +155,7 @@ function Suggestions<
               )}
             {props.EmptyAllowNewComponent &&
               props.tags.length === 0 &&
+              props.value.length === 0 &&
               props.allowNew &&
               !props.loading && (
                 <li className="w-100 text-center p-2">
