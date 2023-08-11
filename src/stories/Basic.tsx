@@ -769,7 +769,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
                           title="Tags suggestions"
                           label="Choose or create tags"
                           fetchExistingTags={(startsWith) =>
-                            new Promise((resolve) =>
+                            new Promise<Tag[]>((resolve) =>
                               setTimeout(
                                 () =>
                                   resolve(
