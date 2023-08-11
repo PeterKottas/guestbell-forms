@@ -40,6 +40,7 @@ export type SuggestionsProps<
   popperProps?: Partial<PopperProps>;
   SuggestionTag?: React.ComponentType<RenderSuggestionTagProps<IdT, T>>;
   getName: (tag: T) => string;
+  textIsFocused?: boolean;
 };
 
 type InjectedProps = {};
@@ -157,6 +158,7 @@ function Suggestions<
               props.tags.length === 0 &&
               props.value.length === 0 &&
               props.allowNew &&
+              props.textIsFocused &&
               !props.loading && (
                 <li className="w-100 text-center p-2">
                   {props.EmptyAllowNewComponent}

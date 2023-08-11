@@ -396,6 +396,7 @@ export class TagsRaw<
                       SuggestionTag={this.props.SuggestionTag}
                       popperProps={this.props.popperProps}
                       getName={this.props.getName}
+                      textIsFocused={this.state.textIsFocused}
                     />
                   )}
               </div>
