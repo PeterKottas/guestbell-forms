@@ -729,7 +729,7 @@ interface TagsFinal {
     IdT extends number | string = number,
     T extends ResourceTConstraint<IdT> = Tag<IdT>
   >(
-    item: TagsProps<IdT, T>
+    item: TagsProps<IdT, T> & { ref?: React.Ref<TagsRaw<IdT, T>> }
   ): React.ReactElement;
   defaultProps?: Partial<TagsProps<any, any>>;
 }
