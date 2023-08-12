@@ -549,12 +549,12 @@ export class TagsRaw<
         textErrors: [],
       },
       () => {
-        if (
+        /*if (
           !this.props.maxTags ||
           this.props.tags.length + 1 < this.props.maxTags
         ) {
           this.fetchExistingTags(finalValue);
-        }
+        }*/
         this.handleErrors();
         this.textRef.current?.focus();
       }
