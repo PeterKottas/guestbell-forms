@@ -134,6 +134,7 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
         onClick={this.handleClick}
         buttonProps={{
           ...this.props.buttonProps,
+          disabled: this.props.disabled,
           tabIndex: !disabled ? this.props.buttonProps?.tabIndex : -1,
         }}
         className={btnClassName}
