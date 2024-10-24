@@ -7,6 +7,7 @@ import {
   FormComponentContextState,
   FormContextProvider,
   ComponentsDict,
+  FormComponentValidationContextStateBase,
 } from './FormContext';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import { ThemeContextProps } from '../themeProvider/ThemeContext';
@@ -68,8 +69,8 @@ export class Form extends React.PureComponent<FormProps, FormState> {
     ) {
       const componentsWithErrors = this.state.contextState
         ? Object.keys(this.state.contextState.components)
-            .map(key => this.state.contextState.components[key])
-            .filter(component => {
+            .map((key) => this.state.contextState.components[key])
+            .filter((component) => {
               if (!component.validation.isValid && !component.validation.name) {
                 console.warn(
                   component,
@@ -91,7 +92,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
       ...this.state.contextState.components,
       ...this.props.extraComponents,
     };
-    Object.keys(components).forEach(key => {
+    Object.keys(components).forEach((key) => {
       const component = components[key];
       component &&
         component.componentApi &&
@@ -105,7 +106,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
       ...this.state.contextState.components,
       ...this.props.extraComponents,
     };
-    Object.keys(components).forEach(key => {
+    Object.keys(components).forEach((key) => {
       const component = components[key];
       component &&
         component.componentApi &&
@@ -119,7 +120,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
       ...this.state.contextState.components,
       ...this.props.extraComponents,
     };
-    Object.keys(components).forEach(key => {
+    Object.keys(components).forEach((key) => {
       const component = components[key];
       component &&
         component.componentApi &&
@@ -133,7 +134,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
       ...this.state.contextState.components,
       ...this.props.extraComponents,
     };
-    Object.keys(components).forEach(key => {
+    Object.keys(components).forEach((key) => {
       const component = components[key];
       component &&
         component.componentApi &&
@@ -187,7 +188,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
     componentState: FormComponentContextState
   ) {
     if (componentId) {
-      this.setState(previousState => {
+      this.setState((previousState) => {
         let components = Object.assign(
           {},
           previousState.contextState.components
@@ -209,7 +210,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
 
   private unSubscribe(componentId: string) {
     if (componentId) {
-      this.setState(previousState => {
+      this.setState((previousState) => {
         let components = Object.assign(
           {},
           previousState.contextState.components
@@ -232,7 +233,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
     initialValid: boolean = true
   ): boolean {
     let isFormValid = initialValid;
-    Object.keys(components).forEach(key => {
+    Object.keys(components).forEach((key) => {
       const component = components[key];
       if (component && component.validation && !component.validation.isValid) {
         isFormValid = false;
@@ -243,18 +244,27 @@ export class Form extends React.PureComponent<FormProps, FormState> {
 
   private updateCallback(
     componentId: string,
-    componentState: FormComponentContextState
+    componentState: FormComponentValidationContextStateBase
   ) {
-    this.setState(previousState => {
+    this.setState((previousState) => {
       let components = Object.assign({}, previousState.contextState.components);
       const previousComponent = components[componentId];
+      if (
+        previousComponent.validation.isValid === componentState.isValid &&
+        previousComponent.validation.errors?.length ===
+          componentState.errors?.length &&
+        previousComponent.validation.errors?.every(
+          (error, index) => error === componentState.errors?.[index]
+        )
+      ) {
+        return previousState;
+      }
       if (componentState && previousComponent) {
         components[componentId] = {
           ...previousComponent,
-          ...componentState,
           validation: {
             ...previousComponent.validation,
-            ...componentState.validation,
+            ...componentState,
           },
         };
       }

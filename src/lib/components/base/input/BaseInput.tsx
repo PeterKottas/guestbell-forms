@@ -329,10 +329,8 @@ export class BaseInput<
         if (!this.props.ignoreContext) {
           this.props.formContext &&
             this.props.formContext.updateCallback(this.componentId, {
-              validation: {
-                isValid: true,
-                errors: [],
-              },
+              isValid: true,
+              errors: [],
             });
         }
       }
@@ -346,10 +344,8 @@ export class BaseInput<
         if (!this.props.ignoreContext) {
           this.props.formContext &&
             this.props.formContext.updateCallback(this.componentId, {
-              validation: {
-                isValid: false,
-                errors: errors,
-              },
+              isValid: false,
+              errors: errors,
             });
         }
       }
@@ -478,10 +474,8 @@ export class BaseInput<
       if (!props.ignoreContext) {
         props.formContext &&
           props.formContext.updateCallback(this.componentId, {
-            validation: {
-              isValid: isValid,
-              errors: errors,
-            },
+            isValid: isValid,
+            errors: errors,
           });
       }
     }

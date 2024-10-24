@@ -54,10 +54,8 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
       if (!this.props.ignoreContext) {
         this.props.formContext &&
           this.props.formContext.updateCallback(this.componentId, {
-            validation: {
-              isValid: res.isValid,
-              errors: res.errors,
-            },
+            isValid: res.isValid,
+            errors: res.errors,
           });
       }
     }

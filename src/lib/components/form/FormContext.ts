@@ -1,15 +1,19 @@
 import * as React from 'react';
 import { ValidationError, ComponentApi } from '../base/input';
-import { DeepPartial, PartialBy } from '../utils/Typescript';
+import { PartialBy } from '../utils/Typescript';
 
 export type OmitFormContext<P extends FormContextProps> = PartialBy<
   P,
   'formContext'
 >;
 
-export interface FormComponentValidationContextState {
+export interface FormComponentValidationContextStateBase {
   isValid: boolean;
   errors: ValidationError[];
+}
+
+export interface FormComponentValidationContextState
+  extends FormComponentValidationContextStateBase {
   name: JSX.Element | string;
 }
 
@@ -35,7 +39,7 @@ export interface FormContextState {
   isFormValid: boolean;
   updateCallback: (
     componentId: string,
-    newComponentState: DeepPartial<FormComponentContextState>
+    newComponentState: FormComponentValidationContextStateBase
   ) => void;
   disableComponents: () => void;
   enableComponents: () => void;

@@ -33,10 +33,8 @@ export class ExternalValidationComponentRaw extends BaseInput<
     };
     if (!this.props.ignoreContext && this.props.formContext) {
       this.props.formContext.updateCallback(this.componentId, {
-        validation: {
-          isValid: props.isValid,
-          errors: props.errors,
-        },
+        isValid: props.isValid,
+        errors: props.errors,
       });
     }
   }
@@ -51,10 +49,8 @@ export class ExternalValidationComponentRaw extends BaseInput<
     ) {
       if (!this.props.ignoreContext && this.props.formContext) {
         this.props.formContext.updateCallback(this.componentId, {
-          validation: {
-            isValid: this.props.isValid,
-            errors: this.props.errors,
-          },
+          isValid: this.props.isValid,
+          errors: this.props.errors,
         });
       }
     }
