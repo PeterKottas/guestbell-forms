@@ -250,6 +250,8 @@ export class Form extends React.PureComponent<FormProps, FormState> {
       let components = Object.assign({}, previousState.contextState.components);
       const previousComponent = components[componentId];
       if (
+        previousComponent &&
+        previousComponent.validation &&
         previousComponent.validation.isValid === componentState.isValid &&
         previousComponent.validation.errors?.length ===
           componentState.errors?.length &&
