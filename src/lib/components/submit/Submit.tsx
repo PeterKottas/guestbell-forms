@@ -7,10 +7,11 @@ import {
   defaultBaseTranslations,
 } from '../base/input/BaseInput';
 import { Button, ButtonProps } from '../button/Button';
-import { withFormContext } from '../form/withFormContext';
 import { FormValidationSummaryRaw } from './../form/FormValidationSummary';
 import SubmitValidationSummary from './subComponents/SubmitValidationSummary';
 import { withThemeContext } from '../themeProvider/withThemeContext';
+import { withFormValidationContext } from '../form/withFormValidationContext';
+import { FormValidationContextProps } from '../form/FormValidationContext';
 
 // Misc
 export const defaultSubmitTranslations = {
@@ -27,7 +28,7 @@ export type SubmitProps = BaseInputProps<never, SubmitTranslations> &
     validateForm?: boolean;
     disabledTitle?: string;
     showValidationSummaryTooltip?: boolean;
-  };
+  } & FormValidationContextProps;
 
 export interface SubmitState extends BaseInputState {}
 
@@ -70,7 +71,8 @@ export class SubmitRaw extends BaseInput<
           this.props.tooltip
             ? this.props.tooltip
             : this.props.showValidationSummaryTooltip &&
-              !this.props.formContext.isFormValid && (
+              this.props.formValidationContext &&
+              !this.props.formValidationContext.isFormValid && (
                 <FormValidationSummaryRaw
                   title={translations.hangOn}
                   footer={translations.needsFixing}
@@ -78,7 +80,7 @@ export class SubmitRaw extends BaseInput<
                   headerClassName="submitValidationSummary__header"
                   footerClassName="submitValidationSummary__footer"
                   Component={SubmitValidationSummary}
-                  formContext={this.props.formContext}
+                  formValidationContext={this.props.formValidationContext}
                 />
               )
         }
@@ -103,8 +105,8 @@ export class SubmitRaw extends BaseInput<
     const disabled = this.getDisabled();
     return disabled
       ? disabled
-      : this.props.validateForm && this.props.formContext
-      ? !this.props.formContext.isFormValid
+      : this.props.validateForm && this.props.formValidationContext
+      ? !this.props.formValidationContext.isFormValid
       : false;
   }
 }
@@ -112,6 +114,6 @@ export class SubmitRaw extends BaseInput<
 export const Submit = withThemeContext<
   SubmitProps,
   InstanceType<typeof SubmitRaw>
->(withFormContext<SubmitProps>(SubmitRaw), 'submit');
+>(withFormValidationContext<SubmitProps>(SubmitRaw), 'submit');
 
 export default Submit;

@@ -63,19 +63,22 @@ export interface ButtonState {
 }
 
 const DefaultButtonComponent: React.FC<ButtonComponentProps> = React.forwardRef(
-  (props, ref) => (
-    <button
-      ref={ref}
-      // tslint:disable-next-line:no-any
-      {...((props.buttonProps ? props.buttonProps : {}) as any)}
-      {...(props.id && { id: props.id })}
-      className={props.className}
-      onClick={props.onClick}
-      style={props.style}
-    >
-      {props.children}
-    </button>
-  )
+  (props, ref) => {
+    const { disabled, ...rest } = props.buttonProps ?? {};
+    return (
+      <button
+        ref={ref}
+        // tslint:disable-next-line:no-any
+        {...(rest as any)}
+        {...(props.id && { id: props.id })}
+        className={props.className}
+        onClick={props.onClick}
+        style={props.style}
+      >
+        {props.children}
+      </button>
+    );
+  }
 );
 
 export class Button extends React.PureComponent<ButtonProps, ButtonState> {

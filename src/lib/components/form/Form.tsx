@@ -4,13 +4,17 @@ import * as React from 'react';
 // Misc
 import {
   FormContextState,
-  FormComponentContextState,
   FormContextProvider,
   ComponentsDict,
-  FormComponentValidationContextStateBase,
 } from './FormContext';
 import { withThemeContext } from '../themeProvider/withThemeContext';
 import { ThemeContextProps } from '../themeProvider/ThemeContext';
+import {
+  FormComponentContextState,
+  FormComponentValidationContextStateBase,
+  FormValidationContextProvider,
+  FormValidationContextState,
+} from './FormValidationContext';
 
 export type FormProps = React.PropsWithChildren<
   ThemeContextProps & {
@@ -28,7 +32,8 @@ export type FormProps = React.PropsWithChildren<
 >;
 
 export interface FormState {
-  contextState: FormContextState;
+  formContext: FormContextState;
+  formValidationContext: FormValidationContextState;
 }
 
 export class Form extends React.PureComponent<FormProps, FormState> {
@@ -46,13 +51,15 @@ export class Form extends React.PureComponent<FormProps, FormState> {
     this.disableComponents = this.disableComponents.bind(this);
     this.enableComponents = this.enableComponents.bind(this);
     this.state = {
-      contextState: {
+      formContext: {
         subscribe: this.subscribe,
         unSubscribe: this.unSubscribe,
-        isFormValid: true,
         updateCallback: this.updateCallback,
         disableComponents: this.disableComponents,
         enableComponents: this.enableComponents,
+      },
+      formValidationContext: {
+        isFormValid: true,
         components: {},
       },
     };
@@ -64,12 +71,12 @@ export class Form extends React.PureComponent<FormProps, FormState> {
     snapshot?: any
   ): void {
     if (
-      this.state.contextState?.isFormValid !==
-      prevState?.contextState?.isFormValid
+      this.state.formValidationContext?.isFormValid !==
+      prevState?.formValidationContext?.isFormValid
     ) {
-      const componentsWithErrors = this.state.contextState
-        ? Object.keys(this.state.contextState.components)
-            .map((key) => this.state.contextState.components[key])
+      const componentsWithErrors = this.state.formContext
+        ? Object.keys(this.state.formValidationContext.components)
+            .map((key) => this.state.formValidationContext.components[key])
             .filter((component) => {
               if (!component.validation.isValid && !component.validation.name) {
                 console.warn(
@@ -81,7 +88,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
             })
         : [];
       this.props.onValidChanged?.(
-        this.state.contextState?.isFormValid,
+        this.state.formValidationContext?.isFormValid,
         componentsWithErrors
       );
     }
@@ -89,7 +96,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
 
   public disableComponents() {
     const components = {
-      ...this.state.contextState.components,
+      ...this.state.formValidationContext.components,
       ...this.props.extraComponents,
     };
     Object.keys(components).forEach((key) => {
@@ -103,7 +110,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
 
   public enableComponents() {
     const components = {
-      ...this.state.contextState.components,
+      ...this.state.formValidationContext.components,
       ...this.props.extraComponents,
     };
     Object.keys(components).forEach((key) => {
@@ -117,7 +124,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
 
   public touchAll() {
     const components = {
-      ...this.state.contextState.components,
+      ...this.state.formValidationContext.components,
       ...this.props.extraComponents,
     };
     Object.keys(components).forEach((key) => {
@@ -131,7 +138,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
 
   public unTouchAll() {
     const components = {
-      ...this.state.contextState.components,
+      ...this.state.formValidationContext.components,
       ...this.props.extraComponents,
     };
     Object.keys(components).forEach((key) => {
@@ -144,6 +151,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
   }
 
   public render() {
+    const validationContext = this.mergeContext();
     return (
       <this.props.component
         {...(this.props.id && { id: this.props.id })}
@@ -154,24 +162,26 @@ export class Form extends React.PureComponent<FormProps, FormState> {
         }`}
         onSubmit={this.onSubmit}
       >
-        <FormContextProvider value={this.mergeContext()}>
-          {this.props.children}
+        <FormContextProvider value={this.state.formContext}>
+          <FormValidationContextProvider value={validationContext}>
+            {this.props.children}
+          </FormValidationContextProvider>
         </FormContextProvider>
       </this.props.component>
     );
   }
 
-  private mergeContext(): FormContextState {
+  private mergeContext(): FormValidationContextState {
     if (!this.props.extraComponents) {
-      return this.state.contextState;
+      return this.state.formValidationContext;
     }
     const isFormValid =
-      this.state.contextState.isFormValid &&
+      this.state.formValidationContext.isFormValid &&
       this.getIsFormValid(this.props.extraComponents);
     return {
-      ...this.state.contextState,
+      ...this.state.formValidationContext,
       components: {
-        ...this.state.contextState.components,
+        ...this.state.formValidationContext.components,
         ...this.props.extraComponents,
       },
       isFormValid,
@@ -191,18 +201,19 @@ export class Form extends React.PureComponent<FormProps, FormState> {
       this.setState((previousState) => {
         let components = Object.assign(
           {},
-          previousState.contextState.components
+          previousState.formValidationContext.components
         );
         if (componentState) {
           components[componentId] = componentState;
         }
         let isFormValid = this.getIsFormValid(components);
         return {
-          contextState: {
-            ...previousState.contextState,
+          formValidationContext: {
+            ...previousState.formValidationContext,
             components,
             isFormValid,
           },
+          formContext: previousState.formContext,
         };
       });
     }
@@ -213,13 +224,14 @@ export class Form extends React.PureComponent<FormProps, FormState> {
       this.setState((previousState) => {
         let components = Object.assign(
           {},
-          previousState.contextState.components
+          previousState.formValidationContext.components
         );
         delete components[componentId];
         let isFormValid = this.getIsFormValid(components);
         return {
-          contextState: {
-            ...previousState.contextState,
+          formContext: previousState.formContext,
+          formValidationContext: {
+            ...previousState.formValidationContext,
             components,
             isFormValid,
           },
@@ -229,7 +241,7 @@ export class Form extends React.PureComponent<FormProps, FormState> {
   }
 
   private getIsFormValid(
-    components: ComponentsDict = this.state.contextState.components,
+    components: ComponentsDict = this.state.formValidationContext.components,
     initialValid: boolean = true
   ): boolean {
     let isFormValid = initialValid;
@@ -247,7 +259,10 @@ export class Form extends React.PureComponent<FormProps, FormState> {
     componentState: FormComponentValidationContextStateBase
   ) {
     this.setState((previousState) => {
-      let components = Object.assign({}, previousState.contextState.components);
+      let components = Object.assign(
+        {},
+        previousState.formValidationContext.components
+      );
       const previousComponent = components[componentId];
       if (
         previousComponent &&
@@ -272,11 +287,12 @@ export class Form extends React.PureComponent<FormProps, FormState> {
       }
       let isFormValid = this.getIsFormValid(components);
       return {
-        contextState: {
-          ...this.state.contextState,
+        formValidationContext: {
+          ...this.state.formValidationContext,
           components,
           isFormValid,
         },
+        formContext: previousState.formContext,
       };
     });
   }

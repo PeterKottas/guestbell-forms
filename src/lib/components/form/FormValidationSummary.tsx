@@ -1,11 +1,14 @@
 import * as React from 'react';
 import guid from '../utils/Guid';
-import { withFormContext } from './withFormContext';
-import { FormContextProps, FormComponentContextState } from './FormContext';
+import {
+  FormValidationContextProps,
+  FormComponentContextState,
+} from './FormValidationContext';
 import { Button } from './../button/Button';
 import classNames from 'classnames';
 
 import * as ArrowIcon from 'material-design-icons/maps/svg/production/ic_my_location_24px.svg';
+import { withFormValidationContext } from './withFormValidationContext';
 
 export interface FormValidationSummaryComponentProps {
   componentsWithErrors: FormComponentContextState[];
@@ -20,7 +23,7 @@ export type FormValidationSummaryProps = {
   Component?:
     | React.ComponentType<FormValidationSummaryComponentProps>
     | React.FC<FormValidationSummaryComponentProps>;
-} & FormContextProps;
+} & FormValidationContextProps;
 
 export interface FormValidationSummaryState {}
 
@@ -86,9 +89,9 @@ export class FormValidationSummaryRaw extends React.PureComponent<
   public componentId = guid();
 
   public render() {
-    const componentsWithErrors = this.props.formContext
-      ? Object.keys(this.props.formContext.components)
-          .map((key) => this.props.formContext.components[key])
+    const componentsWithErrors = this.props.formValidationContext
+      ? Object.keys(this.props.formValidationContext.components)
+          .map((key) => this.props.formValidationContext.components[key])
           .filter((component) => {
             if (!component.validation.isValid && !component.validation.name) {
               console.warn(
@@ -119,4 +122,6 @@ export class FormValidationSummaryRaw extends React.PureComponent<
 }
 
 export const FormValidationSummary =
-  withFormContext<FormValidationSummaryProps>(FormValidationSummaryRaw);
+  withFormValidationContext<FormValidationSummaryProps>(
+    FormValidationSummaryRaw
+  );
