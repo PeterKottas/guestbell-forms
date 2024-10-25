@@ -17,7 +17,6 @@ export function withFormValidationContext<P extends FormValidationContextProps>(
     return (
       <FormValidationContextConsumer>
         {(value) => {
-          console.log('value', value);
           return (
             <Component ref={ref} {...props} formValidationContext={value} />
           );

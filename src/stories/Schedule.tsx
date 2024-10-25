@@ -50,7 +50,6 @@ export const Schedule = () => {
   );
   const onSelection = React.useCallback(
     (items: BookingCalendarItemT[], _from, _till, e) => {
-      console.log(items);
       if (e.ctrlKey) {
         setRange({ from: _from, till: _till });
       }
