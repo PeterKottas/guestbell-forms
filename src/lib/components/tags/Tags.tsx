@@ -28,7 +28,7 @@ export type Tag<T extends number | string = number> = {
   name: string;
 };
 
-export type ResourceTConstraint<IdT extends number | string> = { id: IdT };
+export type ResourceTConstraint<IdT extends number | string> = { id?: IdT };
 
 export const defaultTagsTranslations = {
   ...defaultBaseTranslations,
@@ -50,6 +50,7 @@ export type TagsProps<
   tagsSuggestionsClassName?: string;
   disabled?: boolean;
   tags: T[];
+  getTagId?: (tag: T) => IdT;
   existingTags?: T[];
   fetchExistingTags?: (text: string) => Promise<T[]>;
   onTagsChanged: (newTags: T[]) => void;
@@ -367,6 +368,7 @@ export class TagsRaw<
                         this.state.value.length < this.props.minLettersToFetch
                       }
                       tags={suggestions}
+                      getTagId={this.props.getTagId}
                       onSelected={this.onSuggestionSelected}
                       value={this.state.value}
                       AddNewTagComponent={
@@ -655,7 +657,11 @@ export class TagsRaw<
       .filter(
         (tag) =>
           this.props.allowSameTagMultipleTimes ||
-          !this.props.tags.some((t) => t.id === tag.id)
+          !this.props.tags.some(
+            (t) =>
+              (t.id ?? this.props.getTagId?.(t)) ===
+              (tag.id ?? this.props.getTagId?.(tag))
+          )
       )
       .slice(0, this.props.maxSuggestions);
     return suggestions;
@@ -710,7 +716,11 @@ export class TagsRaw<
 
   private tagRemoveClick = (tag: T) => (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    const newTags = this.props.tags.filter((sv) => sv.id !== tag.id);
+    const newTags = this.props.tags.filter(
+      (sv) =>
+        (sv.id ?? this.props.getTagId?.(sv)) !==
+        (tag.id ?? this.props.getTagId?.(tag))
+    );
     /*if (newTags.length === 0) {
       setTimeout(() => this.focus(), 50);
     }

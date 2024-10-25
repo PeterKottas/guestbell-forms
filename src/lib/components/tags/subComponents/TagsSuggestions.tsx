@@ -28,6 +28,7 @@ export type SuggestionsProps<
   isVisible: boolean;
   isWaitingForMoreInput: boolean;
   tags: T[];
+  getTagId?: (tag: T) => IdT;
   onSelected: (tag: T, lastSelected: boolean) => void;
   value: string;
   loading: boolean;
@@ -133,7 +134,7 @@ function Suggestions<
             {!props.isWaitingForMoreInput &&
               props.tags.map((tag, index) => (
                 <SuggestionTag<IdT, T>
-                  key={tag.id}
+                  key={tag.id ?? this.props.getTagId?.(tag) ?? index}
                   index={index}
                   tag={tag}
                   onClick={onSelectedFactory(tag, props.tags.length === 1)}
