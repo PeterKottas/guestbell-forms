@@ -162,10 +162,7 @@ export class BaseInput<
   }
 
   public scrollTo() {
-    const domNode: HTMLDivElement = ReactDOM.findDOMNode(
-      (this.containerRef as React.RefObject<HTMLDivElement>).current
-    ) as HTMLDivElement;
-    domNode && domNode.scrollIntoView({ behavior: 'smooth' });
+    this.containerRef.current?.scrollIntoView?.({ behavior: 'smooth' });
   }
 
   public touch() {
