@@ -134,7 +134,11 @@ function Suggestions<
             {!props.isWaitingForMoreInput &&
               props.tags.map((tag, index) => (
                 <SuggestionTag<IdT, T>
-                  key={tag.id ?? this.props.getTagId?.(tag) ?? index}
+                  key={
+                    (tag as { id: IdT }).id ??
+                    this.props.getTagId?.(tag) ??
+                    index
+                  }
                   index={index}
                   tag={tag}
                   onClick={onSelectedFactory(tag, props.tags.length === 1)}

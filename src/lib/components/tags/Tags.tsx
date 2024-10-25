@@ -28,7 +28,7 @@ export type Tag<T extends number | string = number> = {
   name: string;
 };
 
-export type ResourceTConstraint<IdT extends number | string> = { id?: IdT };
+export type ResourceTConstraint<IdT extends number | string> = { id: IdT } | {};
 
 export const defaultTagsTranslations = {
   ...defaultBaseTranslations,
@@ -659,8 +659,8 @@ export class TagsRaw<
           this.props.allowSameTagMultipleTimes ||
           !this.props.tags.some(
             (t) =>
-              (t.id ?? this.props.getTagId?.(t)) ===
-              (tag.id ?? this.props.getTagId?.(tag))
+              ((t as { id: IdT }).id ?? this.props.getTagId?.(t)) ===
+              ((tag as { id: IdT }).id ?? this.props.getTagId?.(tag))
           )
       )
       .slice(0, this.props.maxSuggestions);
@@ -718,8 +718,8 @@ export class TagsRaw<
     e.stopPropagation();
     const newTags = this.props.tags.filter(
       (sv) =>
-        (sv.id ?? this.props.getTagId?.(sv)) !==
-        (tag.id ?? this.props.getTagId?.(tag))
+        ((sv as { id: IdT }).id ?? this.props.getTagId?.(sv)) !==
+        ((tag as { id: IdT }).id ?? this.props.getTagId?.(tag))
     );
     /*if (newTags.length === 0) {
       setTimeout(() => this.focus(), 50);
