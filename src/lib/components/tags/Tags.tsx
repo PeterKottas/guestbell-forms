@@ -81,7 +81,8 @@ export type TagsProps<
   closeSuggestionsAfterCreate?: boolean;
   SuggestionTag?: React.ComponentType<RenderSuggestionTagProps<IdT, T>>;
   getName?: (tag: T) => string;
-} & BaseInputProps<HTMLInputElement, TagsTranslations>;
+} & BaseInputProps<HTMLInputElement, TagsTranslations> &
+  (T extends { id: IdT } ? {} : { getTagId: (tag: T) => IdT });
 
 export interface TagsState<
   IdT extends number | string = number,
@@ -238,7 +239,9 @@ export class TagsRaw<
 
   public render() {
     const translations = this.getTranslations(defaultTagsTranslations);
-    const textProps = this.props.textProps ? this.props.textProps : {};
+    const textProps = this.props.textProps
+      ? this.props.textProps
+      : ({} as TextProps);
     const suggestions = this.getSuggestions();
     const showMobileVersion =
       this.props.mobileVersionEnabled &&
