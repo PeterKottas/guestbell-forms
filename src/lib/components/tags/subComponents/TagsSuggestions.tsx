@@ -135,9 +135,7 @@ function Suggestions<
               props.tags.map((tag, index) => (
                 <SuggestionTag<IdT, T>
                   key={
-                    (tag as { id: IdT }).id ??
-                    this.props.getTagId?.(tag) ??
-                    index
+                    (tag as { id: IdT }).id ?? props.getTagId?.(tag) ?? index
                   }
                   index={index}
                   tag={tag}
