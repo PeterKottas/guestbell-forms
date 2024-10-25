@@ -1,6 +1,5 @@
 ﻿// Libs
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import type { TippyProps } from '@tippy.js/react';
 
 // Misc
@@ -184,10 +183,7 @@ export class BaseInput<
 
   public focus() {
     if (this.inputRef) {
-      const domNode: HTMLElement = ReactDOM.findDOMNode(
-        (this.inputRef as React.RefObject<HTMLElement>).current
-      ) as HTMLElement;
-      domNode && domNode.focus();
+      this.inputRef.current?.focus?.();
     }
     this.props.onFocus?.();
     this.touch();
