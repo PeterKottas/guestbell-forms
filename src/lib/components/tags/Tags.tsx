@@ -610,19 +610,25 @@ export class TagsRaw<
       errors = errors.concat(this.state.textErrors);
     }
     if (this.state.value !== '' && tags.length === 0 && this.props.required) {
-      errors = errors.concat(
-        this.getTranslations(this.props.translations).required
-      );
+      errors = errors.concat(translations.required);
     }
-    if (this.state.value && this.props.allowNew && !this.state.textIsFocused) {
-      errors = errors.concat(
-        this.props.valueNotAddedError ?? translations.maxTagsSurpassedError
-      );
+    const valueNotAddedError =
+      this.props.valueNotAddedError ?? translations.valueNotAddedError;
+    if (
+      this.state.value &&
+      this.props.allowNew &&
+      !this.state.textIsFocused &&
+      valueNotAddedError
+    ) {
+      errors = errors.concat(valueNotAddedError);
     }
-    if (this.props.maxTags < (this.props.tags && this.props.tags.length)) {
-      errors = errors.concat(
-        this.props.maxTagsSurpassedError ?? translations.maxTagsSurpassedError
-      );
+    const maxTagsSurpassedError =
+      this.props.maxTagsSurpassedError ?? translations.maxTagsSurpassedError;
+    if (
+      this.props.maxTags < (this.props.tags && this.props.tags.length) &&
+      maxTagsSurpassedError
+    ) {
+      errors = errors.concat(maxTagsSurpassedError);
     }
     return errors.filter((i) => i);
   }
