@@ -39,7 +39,7 @@ export class InputGroup extends BaseInput<
   }
 
   public render() {
-    return this.props.title ? (
+    return this.props.title !== undefined ? (
       <div
         className={classNames(
           'inputGroup input__group__border',
