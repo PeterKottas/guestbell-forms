@@ -46,7 +46,7 @@ export class InputGroup extends BaseInput<
           this.props.className
         )}
       >
-        {this.props.title && (
+        {this.props.title != undefined && (
           <div
             className={classNames(
               'inputGroup__header',
