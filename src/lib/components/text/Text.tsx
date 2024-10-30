@@ -76,6 +76,7 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
       }
     }
     if (
+      (!Number.isNaN(prevProps.number) || !Number.isNaN(this.props.number)) &&
       (prevProps.number !== undefined || this.props.number !== undefined) &&
       this.props.number !== prevProps.number
     ) {

@@ -246,7 +246,7 @@ export class Basic extends React.PureComponent<BasicProps, BasicState> {
     ],
     multipleReadonly: false,
     textAreaText: '',
-    justNumber: 5,
+    justNumber: undefined,
     hideNumber: undefined,
   };
 
