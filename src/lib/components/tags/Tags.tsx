@@ -71,7 +71,11 @@ export type TagsProps<
   suggestionsEmptyAllowNewComponent?: string | JSX.Element | null;
   waitingForMoreInputComponent?: string | JSX.Element;
   loadingDelayMs?: number;
-  filterExistingTags?: (text: string, existingTags: T[]) => T[];
+  filterExistingTags?: (
+    text: string,
+    existingTags: T[],
+    selectedTags: T[]
+  ) => T[];
   allowSameTagMultipleTimes?: boolean;
   maxSuggestions?: number;
   popperProps?: Partial<PopperProps>;
@@ -660,7 +664,8 @@ export class TagsRaw<
       );
     const filteredTags = this.props.filterExistingTags(
       this.state.value ? this.state.value.toLowerCase() : '',
-      existingTags
+      existingTags,
+      this.props.tags
     );
     let suggestions = filteredTags
       .filter(
