@@ -85,6 +85,7 @@ export type TagsProps<
   closeSuggestionsAfterCreate?: boolean;
   SuggestionTag?: React.ComponentType<RenderSuggestionTagProps<IdT, T>>;
   getName?: (tag: T) => string;
+  showTags?: boolean;
 } & BaseInputProps<HTMLInputElement, TagsTranslations> &
   (T extends { id: IdT } ? {} : { getTagId: (tag: T) => IdT });
 
@@ -142,6 +143,7 @@ export class TagsRaw<
     mobileVersionEnabled: true,
     closeSuggestionsAfterCreate: false,
     getName: (tag) => tag.name,
+    showTags: true,
   };
 
   private textRef: React.RefObject<TextRaw>;
@@ -289,24 +291,26 @@ export class TagsRaw<
             {showMobileVersion && (
               <div className="tags-input__mobileBackdrop" />
             )}
-            <div className="tags-input__tags__wrapper">
-              {!showInput && showMobileVersion && LeaveMobileButton}
-              {this.props.tags && this.props.tags.length > 0 ? (
-                <div className="tags-input__tag__wrapper">
-                  {this.props.tags.map((item, index) =>
-                    this.renderTag(item, index)
-                  )}
-                </div>
-              ) : (
-                this.props.readOnly && (
+            {this.props.showTags && (
+              <div className="tags-input__tags__wrapper">
+                {!showInput && showMobileVersion && LeaveMobileButton}
+                {this.props.tags && this.props.tags.length > 0 ? (
                   <div className="tags-input__tag__wrapper">
-                    <div className="tags-input__tag">
-                      {this.props.readonlyEmptyPlaceholder}
-                    </div>
+                    {this.props.tags.map((item, index) =>
+                      this.renderTag(item, index)
+                    )}
                   </div>
-                )
-              )}
-            </div>
+                ) : (
+                  this.props.readOnly && (
+                    <div className="tags-input__tag__wrapper">
+                      <div className="tags-input__tag">
+                        {this.props.readonlyEmptyPlaceholder}
+                      </div>
+                    </div>
+                  )
+                )}
+              </div>
+            )}
             {showInput && (
               <div
                 className={
