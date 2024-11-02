@@ -30,6 +30,8 @@ export interface SelectProps extends BaseInputProps<HTMLSelectElement> {
   inputRef?: (input: HTMLSelectElement) => void;
   readOnly?: boolean;
   readonlyEmptyPlaceholder?: string;
+  after?: React.ReactNode;
+  before?: React.ReactNode;
 }
 
 export interface SelectState extends BaseInputState {}
@@ -82,8 +84,9 @@ export class SelectRaw extends BaseInput<
   public render() {
     const finalValues = this.props.multiple
       ? this.props.values.filter(
-          item =>
-            this.props.selectedValues.findIndex(t => t.value === item.value) < 0
+          (item) =>
+            this.props.selectedValues.findIndex((t) => t.value === item.value) <
+            0
         )
       : this.props.values;
     return (
@@ -105,6 +108,7 @@ export class SelectRaw extends BaseInput<
           }
           ref={this.containerRef}
         >
+          {this.props.before}
           {this.renderSelectedValues()}
           {finalValues.length > 0 &&
             ((this.props.multiple && !this.props.readOnly) ||
@@ -169,6 +173,7 @@ export class SelectRaw extends BaseInput<
                 )}
               </div>
             )}
+          {this.props.after}
         </div>
       </InputGroup>
     );
@@ -229,11 +234,11 @@ export class SelectRaw extends BaseInput<
   private handleChangeCustom(event: React.ChangeEvent<HTMLSelectElement>) {
     if (this.props.multiple) {
       let value = event.target.value;
-      let val = this.props.values.filter(item => item.value === value)[0];
+      let val = this.props.values.filter((item) => item.value === value)[0];
       if (!val) {
         if (!isNaN(Number(value))) {
           let valNumber = Number(value);
-          val = this.props.values.filter(item => item.value === valNumber)[0];
+          val = this.props.values.filter((item) => item.value === valNumber)[0];
         }
       }
       let newValues = this.props.selectedValues.concat(val);
@@ -258,12 +263,12 @@ export class SelectRaw extends BaseInput<
       }
     }
     if (this.props.customValidators) {
-      this.props.customValidators.forEach(customValidator => {
+      this.props.customValidators.forEach((customValidator) => {
         let validInner = false;
         validInner = customValidator.Validate(
           this.state?.value,
           this.props.required,
-          error => errors.push(error)
+          (error) => errors.push(error)
         );
         if (isValid && !validInner) {
           isValid = validInner;
@@ -279,7 +284,7 @@ export class SelectRaw extends BaseInput<
 
   private renderReadonly() {
     const value = this.props.values.filter(
-      item => item.value.toString() === this.state.value
+      (item) => item.value.toString() === this.state.value
     )[0];
     return value ? (value.label ? value.label : value.value) : '';
   }
@@ -319,7 +324,7 @@ export class SelectRaw extends BaseInput<
 
   private removeItemClick = (item: SelectValue) => () => {
     const newValues = this.props.selectedValues.filter(
-      sv => sv.value !== item.value
+      (sv) => sv.value !== item.value
     );
     this.handleValid(newValues);
     this.props.onSelectedValuesChange &&
