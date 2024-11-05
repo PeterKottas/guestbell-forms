@@ -76,9 +76,13 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
       }
     }
     if (
-      (!Number.isNaN(prevProps.number) || !Number.isNaN(this.props.number)) &&
-      (prevProps.number !== undefined || this.props.number !== undefined) &&
-      this.props.number !== prevProps.number
+      (this.props.onNumberChange &&
+        (!Number.isNaN(prevProps.number) || !Number.isNaN(this.props.number)) &&
+        (prevProps.number !== undefined || this.props.number !== undefined) &&
+        this.props.number !== prevProps.number) ||
+      prevProps.validators !== this.props.validators ||
+      prevProps.customValidators !== this.props.customValidators ||
+      prevProps.required !== this.props.required
     ) {
       this.handleValueChange(this.props.number?.toString() ?? '');
     }
