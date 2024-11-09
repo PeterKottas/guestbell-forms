@@ -185,6 +185,9 @@ export class TagsRaw<
     ) {
       this.handleErrors(this.props.tags);
     }
+    if (oldProps.tags !== this.props.tags && this.state.suggestionsVisible) {
+      this.fetchExistingTags();
+    }
   }
 
   public handleLeaveMobileClick() {
