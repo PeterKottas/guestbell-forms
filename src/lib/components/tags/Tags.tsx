@@ -52,7 +52,7 @@ export type TagsProps<
   tags: T[];
   getTagId?: (tag: T) => IdT;
   existingTags?: T[];
-  fetchExistingTags?: (text: string) => Promise<T[]>;
+  fetchExistingTags?: (text: string, tags: T[]) => Promise<T[]>;
   onTagsChanged: (newTags: T[]) => void;
   onNewTagAdded?: (newTagName: string) => Promise<T>;
   onTagClick?: (tag: T) => void;
@@ -650,13 +650,15 @@ export class TagsRaw<
         () => this.setState(() => ({ fetchingExistingTags: true })),
         this.props.loadingDelayMs
       );
-      this.props.fetchExistingTags(startsWith).then((fetchedExistingTags) => {
-        clearTimeout(timer);
-        this.setState(() => ({
-          fetchedExistingTags,
-          fetchingExistingTags: false,
-        }));
-      });
+      this.props
+        .fetchExistingTags(startsWith, this.props.tags)
+        .then((fetchedExistingTags) => {
+          clearTimeout(timer);
+          this.setState(() => ({
+            fetchedExistingTags,
+            fetchingExistingTags: false,
+          }));
+        });
     }
   }
 
