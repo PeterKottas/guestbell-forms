@@ -660,23 +660,30 @@ export class TagsRaw<
         () => this.setState(() => ({ fetchingExistingTags: true })),
         this.props.loadingDelayMs
       );
-      this.props
-        .fetchExistingTags(startsWith, this.props.tags)
-        .then((fetchedExistingTags) => {
-          if (fetchedExistingTags) {
+      const prom = this.props.fetchExistingTags(startsWith, this.props.tags);
+      if (prom) {
+        prom
+          .then((fetchedExistingTags) => {
+            if (fetchedExistingTags) {
+              clearTimeout(timer);
+              this.setState(() => ({
+                fetchedExistingTags,
+                fetchingExistingTags: false,
+              }));
+            }
+          })
+          .catch(() => {
             clearTimeout(timer);
             this.setState(() => ({
-              fetchedExistingTags,
               fetchingExistingTags: false,
             }));
-          }
-        })
-        .catch(() => {
-          clearTimeout(timer);
-          this.setState(() => ({
-            fetchingExistingTags: false,
-          }));
-        });
+          });
+      } else {
+        clearTimeout(timer);
+        this.setState(() => ({
+          fetchingExistingTags: false,
+        }));
+      }
     }
   }
 
