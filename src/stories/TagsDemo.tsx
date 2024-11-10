@@ -38,15 +38,19 @@ export function TagsDemo(props: TagsProps) {
     <Tags
       title="Tags suggestions"
       label="Choose or create tags"
-      fetchExistingTags={(startsWith) =>
-        new Promise<Tag[]>((resolve) =>
+      fetchExistingTags={(startsWith, tags) => {
+        return new Promise<Tag[]>((resolve) =>
           setTimeout(
             () =>
-              resolve(existingTags.filter((e) => e.name.includes(startsWith))),
+              resolve(
+                existingTags
+                  .filter((e) => e.name.includes(startsWith))
+                  .filter((e) => !tags.find((t) => t.id === e.id))
+              ),
             1000
           )
-        )
-      }
+        );
+      }}
       suggestionsEmptyComponent={'Not found'}
       tags={tags}
       onTagsChanged={setTags}

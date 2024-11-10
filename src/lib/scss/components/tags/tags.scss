@@ -12,26 +12,27 @@
   }
   .tags-input__tag {
     position: relative;
-    display: inline-flex;
-    align-items: center;
-    padding-left: 0.25rem;
     margin-right: 0.25rem;
-    margin-bottom: 0.125rem;
-    margin-top: 0.125rem;
     &.tags-input__tag-chip {
       border: 1px solid;
       border-radius: 1.5rem;
     }
   }
+  .tags-input__tag__removeButton {
+    margin-left: 2px;
+    svg {
+      vertical-align: -0.4rem;
+    }
+  }
   .tags-input__tags__wrapper {
     display: flex;
     align-items: center;
+    line-height: 1.75;
   }
   .tags-input__tag__wrapper {
-    display: inline-flex;
-    flex-wrap: wrap;
     padding-top: 0.25rem;
-    padding-bottom: 0.125rem;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
   }
   &.tags-input--readOnly {
     border-bottom-color: transparent !important;

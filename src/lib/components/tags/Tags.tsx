@@ -176,7 +176,10 @@ export class TagsRaw<
     }
   }
 
-  public componentDidUpdate(oldProps: TagsProps<IdT, T> & InjectedProps) {
+  public componentDidUpdate(
+    oldProps: TagsProps<IdT, T> & InjectedProps,
+    oldState: TagsState<IdT, T>
+  ) {
     if (
       oldProps.tags !== this.props.tags ||
       oldProps.validators !== this.props.validators ||
@@ -185,8 +188,14 @@ export class TagsRaw<
     ) {
       this.handleErrors(this.props.tags);
     }
-    if (oldProps.tags !== this.props.tags && this.state.suggestionsVisible) {
-      this.fetchExistingTags();
+    if (
+      this.state.suggestionsVisible &&
+      (oldProps.tags !== this.props.tags ||
+        oldProps.existingTags !== this.props.existingTags ||
+        this.state.value !== oldState.value ||
+        this.state.suggestionsVisible !== oldState.suggestionsVisible)
+    ) {
+      this.fetchExistingTags(this.state.value);
     }
   }
 
@@ -450,7 +459,6 @@ export class TagsRaw<
     if (!this.state.suggestionsVisible) {
       this.props.onSuggestionsOpened?.();
     }
-    this.fetchExistingTags(this.state.value);
     this.setState(
       () => ({ textIsFocused: true, suggestionsVisible: true, touched: true }),
       () => this.handleErrors()
@@ -493,13 +501,11 @@ export class TagsRaw<
           this.props.tags.concat(suggestions[this.state.preselectedSuggestion])
         );
         this.setState({ value: '', preselectedSuggestion: undefined }, () => {
-          this.fetchExistingTags();
           this.handleErrors();
         });
       } else if (existingTag) {
         this.props.onTagsChanged(this.props.tags.concat(existingTag));
         this.setState({ value: '' }, () => {
-          this.fetchExistingTags();
           this.handleErrors();
         });
       } else if (this.props.allowNew) {
@@ -537,13 +543,15 @@ export class TagsRaw<
         ? false
         : this.state.suggestionsVisible,
     });
+    const newTags = newTag
+      ? this.props.tags
+        ? this.props.tags.concat(newTag)
+        : [newTag]
+      : this.props.tags;
     if (newTag) {
-      this.props.onTagsChanged(
-        this.props.tags ? this.props.tags.concat(newTag) : [newTag]
-      );
+      this.props.onTagsChanged(newTags);
     }
     this.setState({ value: '', textErrors: [] }, () => {
-      this.fetchExistingTags();
       this.handleErrors();
     });
   };
@@ -602,7 +610,6 @@ export class TagsRaw<
       }),
       () => this.handleErrors()
     );
-    this.fetchExistingTags(e.target.value);
   };
 
   private handleErrors = (tags: T[] = this.props.tags) => {
@@ -656,9 +663,17 @@ export class TagsRaw<
       this.props
         .fetchExistingTags(startsWith, this.props.tags)
         .then((fetchedExistingTags) => {
+          if (fetchedExistingTags) {
+            clearTimeout(timer);
+            this.setState(() => ({
+              fetchedExistingTags,
+              fetchingExistingTags: false,
+            }));
+          }
+        })
+        .catch(() => {
           clearTimeout(timer);
           this.setState(() => ({
-            fetchedExistingTags,
             fetchingExistingTags: false,
           }));
         });
@@ -702,11 +717,11 @@ export class TagsRaw<
             circular={true}
             blank={true}
             onClick={this.tagRemoveClick(tag)}
-            className="ml-1 transform-rotate--45 line-height--0 p-0"
+            className="tags-input__tag__removeButton p-0"
             Component={TagButtonComponent}
             preventsDefault={false}
           >
-            <PlusIcon />
+            <PlusIcon className="transform-rotate--45" />
           </Button>
         )}
       </>
@@ -727,9 +742,9 @@ export class TagsRaw<
       );
     }
     return (
-      <div onClick={this.tagClick(tag)} className={className} key={index}>
+      <span onClick={this.tagClick(tag)} className={className} key={index}>
         {body}
-      </div>
+      </span>
     );
   }
 
