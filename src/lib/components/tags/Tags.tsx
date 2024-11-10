@@ -21,6 +21,7 @@ import { withThemeContext } from '../themeProvider/withThemeContext';
 import { PopperProps } from '@mui/material/Popper/Popper';
 import LinearProgress from '@mui/material/LinearProgress';
 import Portal from '@mui/material/Portal';
+import debounce from 'lodash.debounce';
 
 // Misc
 export type Tag<T extends number | string = number> = {
@@ -53,6 +54,10 @@ export type TagsProps<
   getTagId?: (tag: T) => IdT;
   existingTags?: T[];
   fetchExistingTags?: (text: string, tags: T[]) => Promise<T[]>;
+  fetchExistingTagsDebounceMs?: number;
+  fetchExistingTagsDebounceMaxMs?: number;
+  fetchExistingTagsDebounceLeading?: boolean;
+  fetchExistingTagsDebounceTrailing?: boolean;
   onTagsChanged: (newTags: T[]) => void;
   onNewTagAdded?: (newTagName: string) => Promise<T>;
   onTagClick?: (tag: T) => void;
@@ -144,6 +149,10 @@ export class TagsRaw<
     closeSuggestionsAfterCreate: false,
     getName: (tag) => tag.name,
     showTags: true,
+    fetchExistingTagsDebounceMs: 500,
+    fetchExistingTagsDebounceMaxMs: Number.MAX_SAFE_INTEGER,
+    fetchExistingTagsDebounceLeading: true,
+    fetchExistingTagsDebounceTrailing: true,
   };
 
   private textRef: React.RefObject<TextRaw>;
@@ -165,6 +174,15 @@ export class TagsRaw<
     this.suggestionsRef = React.createRef();
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.handleLeaveMobileClick = this.handleLeaveMobileClick.bind(this);
+    this.fetchExistingTags = debounce(
+      this.fetchExistingTags,
+      props.fetchExistingTagsDebounceMs,
+      {
+        maxWait: props.fetchExistingTagsDebounceMaxMs,
+        leading: props.fetchExistingTagsDebounceLeading,
+        trailing: props.fetchExistingTagsDebounceTrailing,
+      }
+    );
     if (props.mobileVersionEnabled) {
       this.isMobile = require('react-device-detect')?.isMobile;
     }
