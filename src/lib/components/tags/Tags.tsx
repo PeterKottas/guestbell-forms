@@ -92,6 +92,7 @@ export type TagsProps<
   getName?: (tag: T) => string;
   showTags?: boolean;
   showClearButton?: boolean;
+  placeholder?: string;
 } & BaseInputProps<HTMLInputElement, TagsTranslations> &
   (T extends { id: IdT } ? {} : { getTagId: (tag: T) => IdT });
 
@@ -314,7 +315,7 @@ export class TagsRaw<
               {
                 'tags-input--readOnly': this.props.readOnly,
                 'tags-input--hasPlaceholder':
-                  this.props.textProps && this.props.textProps.placeholder,
+                  this.props.placeholder || this.props.textProps?.placeholder,
                 'tags-input--mobile': showMobileVersion,
               }
             )}
@@ -353,6 +354,9 @@ export class TagsRaw<
                 <Text
                   showClearButton={this.props.showClearButton}
                   {...textProps}
+                  placeholder={
+                    this.props.placeholder || this.props.textProps?.placeholder
+                  }
                   {...(this.props.id && {
                     id: this.props.id + '-text-input',
                   })}
