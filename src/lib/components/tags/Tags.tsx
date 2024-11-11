@@ -344,7 +344,7 @@ export class TagsRaw<
             {showInput && (
               <div
                 className={
-                  'tags-input__tags__wrapper ' +
+                  'tags-input__text__wrapper ' +
                   (this.props.readOnly ? 'filled ' : '')
                 }
               >
