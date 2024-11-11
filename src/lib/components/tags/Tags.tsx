@@ -91,6 +91,7 @@ export type TagsProps<
   SuggestionTag?: React.ComponentType<RenderSuggestionTagProps<IdT, T>>;
   getName?: (tag: T) => string;
   showTags?: boolean;
+  showClearButton?: boolean;
 } & BaseInputProps<HTMLInputElement, TagsTranslations> &
   (T extends { id: IdT } ? {} : { getTagId: (tag: T) => IdT });
 
@@ -153,6 +154,7 @@ export class TagsRaw<
     fetchExistingTagsDebounceMaxMs: Number.MAX_SAFE_INTEGER,
     fetchExistingTagsDebounceLeading: true,
     fetchExistingTagsDebounceTrailing: true,
+    showClearButton: true,
   };
 
   private textRef: React.RefObject<TextRaw>;
@@ -349,7 +351,7 @@ export class TagsRaw<
                 }
               >
                 <Text
-                  showClearButton={true}
+                  showClearButton={this.props.showClearButton}
                   {...textProps}
                   {...(this.props.id && {
                     id: this.props.id + '-text-input',
