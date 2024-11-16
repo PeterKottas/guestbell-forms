@@ -279,11 +279,8 @@ export class BaseInput<
         validation: {
           isValid: this.state.isValid,
           errors: this.state.errors,
-          name: this.props.validationName
-            ? this.props.validationName
-            : this.props.title
-            ? this.props.title
-            : this.props.label,
+          name:
+            this.props.validationName || this.props.title || this.props.label,
         },
       });
     }
