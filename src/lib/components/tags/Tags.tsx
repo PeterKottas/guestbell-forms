@@ -93,7 +93,7 @@ export type TagsProps<
   showTags?: boolean;
   showClearButton?: boolean;
   placeholder?: string;
-  tagPreviewSeparator?: string;
+  tagsPreviewSeparator?: string;
 } & BaseInputProps<HTMLInputElement, TagsTranslations> &
   (T extends { id: IdT } ? {} : { getTagId: (tag: T) => IdT });
 
@@ -756,7 +756,9 @@ export class TagsRaw<
             <PlusIcon className="transform-rotate--45" />
           </Button>
         )}
-        {this.props.tagPreviewSeparator}
+        {index < (this.props.tags?.length ?? 1) - 1
+          ? this.props.tagsPreviewSeparator
+          : null}
       </>
     );
     const className = classNames('tags-input__tag', {
