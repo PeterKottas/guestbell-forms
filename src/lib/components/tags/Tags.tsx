@@ -94,6 +94,7 @@ export type TagsProps<
   showClearButton?: boolean;
   placeholder?: string;
   tagsPreviewSeparator?: string;
+  children?: React.ReactNode;
 } & BaseInputProps<HTMLInputElement, TagsTranslations> &
   (T extends { id: IdT } ? {} : { getTagId: (tag: T) => IdT });
 
@@ -345,6 +346,7 @@ export class TagsRaw<
                 )}
               </div>
             )}
+            {this.props.children}
             {showInput && (
               <div
                 className={
