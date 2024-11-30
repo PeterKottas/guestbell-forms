@@ -147,10 +147,9 @@ export class MoneyRaw extends BaseInput<
                     onTheFlightValidate={this.onTheFlightValidate}
                     placeholder={'0.00'}
                     className={'money-input__text m-0'}
-                    validators={['number']}
-                    value={item.value ? item.value.toString() : ''}
-                    onChange={this.onPriceChanged(index)}
-                    type="number"
+                    number={item.value}
+                    onNumberChange={this.onPriceChanged(index)}
+                    customValidators={this.props.customValidators}
                   />
                   {!this.props.disableDelete &&
                     this.props.prices.length > 0 && (
@@ -248,19 +247,16 @@ export class MoneyRaw extends BaseInput<
     }
   };
 
-  private onPriceChanged =
-    (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      let newPrices: MoneyWithCurrency[] = [].concat(this.props.prices);
-      let str = e.target.value;
-      let num = Number(str);
-      if (!isNaN(num)) {
-        newPrices[index].value = num;
-      }
-      this.props.onPricesChange(newPrices);
-      if (!this.state.touched) {
-        this.touch();
-      }
-    };
+  private onPriceChanged = (index: number) => (value: number) => {
+    let newPrices: MoneyWithCurrency[] = [].concat(this.props.prices);
+    if (!isNaN(value)) {
+      newPrices[index].value = value;
+    }
+    this.props.onPricesChange(newPrices);
+    if (!this.state.touched) {
+      this.touch();
+    }
+  };
 
   private removePriceClick = (index: number) => () => {
     const newPrices = this.props.prices.filter(
@@ -279,7 +275,9 @@ export class MoneyRaw extends BaseInput<
 
   private addPriceClick = (unusedCurrencies: SelectValue[]) => () => {
     this.props.onPricesChange(
-      this.props.prices.concat([{ value: 0, currency: unusedCurrencies[0] }])
+      this.props.prices.concat([
+        { value: undefined, currency: unusedCurrencies[0] },
+      ])
     );
     // we are going to focus the last input in the this.containerRef element after a timeout
     setTimeout(() => {
