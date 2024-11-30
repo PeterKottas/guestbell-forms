@@ -150,6 +150,11 @@ export class MoneyRaw extends BaseInput<
                     number={item.value}
                     onNumberChange={this.onPriceChanged(index)}
                     customValidators={this.props.customValidators}
+                    validationName={
+                      this.props.validationName
+                        ? `${this.props.validationName} (${currency?.label})`
+                        : currency?.label
+                    }
                   />
                   {!this.props.disableDelete &&
                     this.props.prices.length > 0 && (
