@@ -25,7 +25,7 @@ export class NumberValidator implements IBaseValidator {
         return false;
       }
       if (this.config.max !== undefined && num >= this.config.max) {
-        addError('Max: ' + (this.config.max - 1));
+        addError('Max: ' + this.config.max);
         return false;
       }
       if (
@@ -37,9 +37,9 @@ export class NumberValidator implements IBaseValidator {
       }
       if (
         this.config.maxInclusive !== undefined &&
-        num >= this.config.maxInclusive
+        num > this.config.maxInclusive
       ) {
-        addError('Max: ' + (this.config.maxInclusive - 1));
+        addError('Max: ' + this.config.maxInclusive);
         return false;
       }
       return true;
