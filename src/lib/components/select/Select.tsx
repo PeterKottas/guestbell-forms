@@ -32,6 +32,10 @@ export interface SelectProps extends BaseInputProps<HTMLSelectElement> {
   readonlyEmptyPlaceholder?: string;
   after?: React.ReactNode;
   before?: React.ReactNode;
+  filterExisting?: (
+    existing: SelectValue[],
+    selected: SelectValue[]
+  ) => SelectValue[];
 }
 
 export interface SelectState extends BaseInputState {}
@@ -83,11 +87,17 @@ export class SelectRaw extends BaseInput<
 
   public render() {
     const finalValues = this.props.multiple
-      ? this.props.values.filter(
-          (item) =>
-            this.props.selectedValues.findIndex((t) => t.value === item.value) <
-            0
-        )
+      ? this.props.filterExisting
+        ? this.props.filterExisting(
+            this.props.values,
+            this.props.selectedValues
+          )
+        : this.props.values.filter(
+            (item) =>
+              this.props.selectedValues.findIndex(
+                (t) => t.value === item.value
+              ) < 0
+          )
       : this.props.values;
     return (
       <InputGroup
