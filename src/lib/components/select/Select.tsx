@@ -311,7 +311,7 @@ export class SelectRaw extends BaseInput<
                   disabled={item.forceSelected}
                   circular={true}
                   blank={true}
-                  onClick={this.removeItemClick(item)}
+                  onClick={this.removeItemClick(item, index)}
                   className="ml-1 transform-rotate--45 line-height--0 p-0"
                 >
                   <PlusIcon />
@@ -332,10 +332,8 @@ export class SelectRaw extends BaseInput<
     ) : null;
   }
 
-  private removeItemClick = (item: SelectValue) => () => {
-    const newValues = this.props.selectedValues.filter(
-      (sv) => sv.value !== item.value
-    );
+  private removeItemClick = (_: SelectValue, index: number) => () => {
+    const newValues = this.props.selectedValues.filter((_, i) => i !== index);
     this.handleValid(newValues);
     this.props.onSelectedValuesChange &&
       this.props.onSelectedValuesChange(newValues);
