@@ -76,6 +76,7 @@ export class TextAreaRaw extends BaseInput<
             minRows={this.props.minRows}
             maxRows={this.props.maxRows}
             maxLength={this.props.maxLength}
+            onClick={this.props.onClick}
           />
           <span className="highlight" />
           <span className="bar" />
