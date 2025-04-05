@@ -29,7 +29,7 @@ export type InputHeaderRawProps = React.PropsWithChildren<
     title?: string | JSX.Element;
     icon?: string | JSX.Element;
     subTitle?: string | JSX.Element;
-    mainButton?: JSX.Element;
+    mainButton?: React.ReactNode;
     extraButtons?: JSX.Element[];
     collapsible?: boolean;
     collapsed?: boolean;
