@@ -53,6 +53,7 @@ export type InputHeaderRawProps = React.PropsWithChildren<
       | React.ComponentType<{
           className: string;
           onClick: (e: React.MouseEvent<HTMLElement>) => void;
+          children: React.ReactNode;
         }>
       | 'div';
   } & InputHeaderContextProps &
