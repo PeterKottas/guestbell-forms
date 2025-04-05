@@ -27,10 +27,7 @@ export interface TextProps extends BaseInputProps<HTMLInputElement> {
   after?: React.ReactNode;
   before?: React.ReactNode;
   sizeFromValue?: boolean;
-  onNumberChange?: (
-    number: number | null | undefined,
-    isValid: boolean
-  ) => void;
+  onNumberChange?: (number: number | undefined, isValid: boolean) => void;
   number?: number | null | undefined;
 }
 
