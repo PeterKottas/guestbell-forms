@@ -1,0 +1,78 @@
+@mixin create-button-type($bg, $fg, $disabled) {
+  background-color: $bg;
+  fill: $fg;
+  color: $fg;
+  &:not(.guestbell-btn--disabled):not(.guestbell-btn--blank):not(
+      .guestbell-btn--outlined
+    ):not(.guestbell-btn--unobtrusive):hover {
+    background-color: darken($bg, 7%);
+  }
+  &:not(.guestbell-btn--disabled).guestbell-btn--outlined {
+    box-shadow: inset 0 0 0 1px $bg !important;
+    color: $bg;
+    fill: $bg;
+    background-color: transparent;
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        color: $fg;
+        fill: $fg;
+        background-color: $bg;
+      }
+    }
+  }
+  &:not(.guestbell-btn--disabled).guestbell-btn--blank {
+    color: $bg;
+    fill: $bg;
+    background-color: transparent;
+    &:hover {
+      color: $fg;
+      fill: $fg;
+      background-color: rgba($bg, 0.5);
+    }
+  }
+  &.guestbell-btn--disabled {
+    background-color: $disabled;
+  }
+  &.guestbell-btn--disabled.guestbell-btn--outlined {
+    background-color: transparent;
+    box-shadow: inset 0 0 0 1px $disabled !important;
+    color: $disabled;
+    fill: $disabled;
+  }
+  &:not(.guestbell-btn--disabled).guestbell-btn--unobtrusive {
+    box-shadow: none;
+    background-color: transparent;
+    color: inherit;
+    fill: inherit;
+    &:hover {
+      color: $bg;
+      fill: $bg;
+      background-color: transparent;
+    }
+  }
+  &.guestbell-btn--disabled.guestbell-btn--unobtrusive {
+    color: $input-text-color;
+    background-color: transparent;
+    box-shadow: none;
+  }
+  &:not(.guestbell-btn--disabled).guestbell-btn--text {
+    box-shadow: none;
+    background-color: transparent;
+    color: $bg;
+    fill: $bg;
+    &:hover {
+      color: lighten($bg, 10);
+      fill: lighten($bg, 10);
+      background-color: transparent !important;
+    }
+  }
+  &.guestbell-btn--disabled.guestbell-btn--text {
+    color: $disabled;
+    background-color: transparent;
+    box-shadow: none;
+  }
+  &.guestbell-btn--disabled.guestbell-btn--blank {
+    background-color: transparent;
+    color: darken($bg, 20%);
+  }
+}
