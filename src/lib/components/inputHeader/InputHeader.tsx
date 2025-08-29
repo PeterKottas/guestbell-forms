@@ -50,14 +50,14 @@ export type InputHeaderRawProps = React.PropsWithChildren<
     stopsPropagation?: boolean;
     /*something like div, span, button ...*/
     ButtonsContainer?:
-      | React.ComponentType<{
-          className: string;
-          onClick: (e: React.MouseEvent<HTMLElement>) => void;
-          children: React.ReactNode;
-        }>
-      | 'div';
+    | React.ComponentType<{
+      className: string;
+      onClick: (e: React.MouseEvent<HTMLElement>) => void;
+      children: React.ReactNode;
+    }>
+    | 'div';
   } & InputHeaderContextProps &
-    ThemeContextProps
+  ThemeContextProps
 >;
 
 export type InputHeaderProps = OmitInputHeaderContext<InputHeaderRawProps>;
@@ -83,8 +83,7 @@ const CollapseExpandButtonComponent: React.FC<ButtonComponentProps> = (
 
 export class InputHeaderRaw
   extends React.PureComponent<InputHeaderRawProps, InputHeaderState>
-  implements InputHeaderApi
-{
+  implements InputHeaderApi {
   public static defaultProps: InputHeaderProps = {
     ignoreContext: false,
     showExpandAll: false,
@@ -138,35 +137,32 @@ export class InputHeaderRaw
   }
 
   public expand() {
-    this.props.collapsible &&
-      this.setState({ collapsed: false }, () => {
-        this.props.inputHeaderContext?.stateChanged?.();
-        this.props.onChange?.(true);
-        this.props.onExpanded?.();
-      });
+    this.setState({ collapsed: false }, () => {
+      this.props.inputHeaderContext?.stateChanged?.();
+      this.props.onChange?.(true);
+      this.props.onExpanded?.();
+    });
   }
 
   public collapse() {
-    this.props.collapsible &&
-      this.setState({ collapsed: true }, () => {
-        this.props.inputHeaderContext?.stateChanged?.();
-        this.props.onChange?.(false);
-        this.props.onCollapsed?.();
-      });
+    this.setState({ collapsed: true }, () => {
+      this.props.inputHeaderContext?.stateChanged?.();
+      this.props.onChange?.(false);
+      this.props.onCollapsed?.();
+    });
   }
 
   public toggle() {
-    this.props.collapsible &&
-      this.setState({ collapsed: !this.state.collapsed }, () => {
-        this.props.inputHeaderContext?.stateChanged?.();
-        this.props.onChange?.(this.state.collapsed);
-        if (this.state.collapsed) {
-          this.props.onCollapsed?.();
-        }
-        if (!this.state.collapsed) {
-          this.props.onExpanded?.();
-        }
-      });
+    this.setState({ collapsed: !this.state.collapsed }, () => {
+      this.props.inputHeaderContext?.stateChanged?.();
+      this.props.onChange?.(this.state.collapsed);
+      if (this.state.collapsed) {
+        this.props.onCollapsed?.();
+      }
+      if (!this.state.collapsed) {
+        this.props.onExpanded?.();
+      }
+    });
   }
 
   public render() {
@@ -176,8 +172,8 @@ export class InputHeaderRaw
         : !this.state.collapsed;
     const showButtons = Boolean(
       this.props.mainButton ||
-        this.props.extraButtons?.length ||
-        this.props.collapsible
+      this.props.extraButtons?.length ||
+      this.props.collapsible
     );
     const ButtonContainer = this.props.ButtonsContainer ?? 'div';
     return (
@@ -203,13 +199,13 @@ export class InputHeaderRaw
           )}
           role={
             this.props.collapsible &&
-            this.props.shouldToggleCollapseOnHeaderClick
+              this.props.shouldToggleCollapseOnHeaderClick
               ? 'button'
               : undefined
           }
           onClick={
             this.props.collapsible &&
-            this.props.shouldToggleCollapseOnHeaderClick
+              this.props.shouldToggleCollapseOnHeaderClick
               ? this.toggleClick
               : undefined
           }
@@ -257,9 +253,8 @@ export class InputHeaderRaw
                 <Button
                   circular={true}
                   blank={true}
-                  className={`input__header__collapse-button line-height--0 ${
-                    this.state.collapsed ? 'collapsed' : ''
-                  }`}
+                  className={`input__header__collapse-button line-height--0 ${this.state.collapsed ? 'collapsed' : ''
+                    }`}
                   {...this.props.collapseButtonsButtonProps}
                   onClick={this.toggleClick}
                 >
