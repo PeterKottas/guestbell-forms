@@ -13,7 +13,7 @@ export type DropdownProps = React.PropsWithChildren<
     className?: string;
     submenuClassName?: string;
     headerClassName?: string;
-    notificationCount?: number;
+    notificationCount?: React.ReactNode;
     // tslint:disable-next-line:no-any
     WrapperTag?: keyof JSX.IntrinsicElements;
     shouldHandleClick?: boolean;
@@ -109,7 +109,7 @@ export const Dropdown: React.FC<DropdownProps> = props => {
       <WrapperTag id={id ?? null} className={containerClassName}>
         <div role="button" className={headerClassNameAll} onClick={handleClick}>
           {header}
-          {notificationCount > 0 && (
+          {Boolean(notificationCount) && (
             <span className="guestbell__label-count">{notificationCount}</span>
           )}
         </div>
