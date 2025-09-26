@@ -4,6 +4,7 @@
   max-width: 37.5rem;
   border-bottom: 1px solid transparent;
   .select-input__select__wrapper {
+    display: flex;
     .select-input__select {
       color: $input-text-color;
       display: inline-block;

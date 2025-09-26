@@ -38,7 +38,7 @@ export interface SelectProps extends BaseInputProps<HTMLSelectElement> {
   ) => SelectValue[];
 }
 
-export interface SelectState extends BaseInputState {}
+export interface SelectState extends BaseInputState { }
 
 export class SelectRaw extends BaseInput<
   SelectProps,
@@ -58,8 +58,8 @@ export class SelectRaw extends BaseInput<
       ? props.defaultEmpty
         ? ''
         : props.values && props.values.length > 0
-        ? props.values[0]
-        : ''
+          ? props.values[0]
+          : ''
       : props.value;
     this.state = Object.assign(this.state, { value: val });
     this.handleChangeCustom = this.handleChangeCustom.bind(this);
@@ -89,15 +89,15 @@ export class SelectRaw extends BaseInput<
     const finalValues = this.props.multiple
       ? this.props.filterExisting
         ? this.props.filterExisting(
-            this.props.values,
-            this.props.selectedValues
-          )
+          this.props.values,
+          this.props.selectedValues
+        )
         : this.props.values.filter(
-            (item) =>
-              this.props.selectedValues.findIndex(
-                (t) => t.value === item.value
-              ) < 0
-          )
+          (item) =>
+            this.props.selectedValues.findIndex(
+              (t) => t.value === item.value
+            ) < 0
+        )
       : this.props.values;
     return (
       <InputGroup
@@ -118,14 +118,14 @@ export class SelectRaw extends BaseInput<
           }
           ref={this.containerRef}
         >
-          {this.props.before}
           {this.renderSelectedValues()}
           {finalValues.length > 0 &&
             ((this.props.multiple && !this.props.readOnly) ||
               !this.props.multiple) && (
               <div className="select-input__select__wrapper">
+                {this.props.before}
                 {(!this.props.multiple && !this.props.readOnly) ||
-                this.props.multiple ? (
+                  this.props.multiple ? (
                   <select
                     {...(this.props.id && {
                       id: this.props.id,
@@ -138,8 +138,8 @@ export class SelectRaw extends BaseInput<
                     className={
                       'select-input__select ' +
                       (this.state.value !== '' ||
-                      (this.props.selectedValues &&
-                        this.props.selectedValues.length > 0)
+                        (this.props.selectedValues &&
+                          this.props.selectedValues.length > 0)
                         ? 'filled'
                         : '')
                     }
@@ -166,8 +166,8 @@ export class SelectRaw extends BaseInput<
                     className={
                       'select-input__select ' +
                       (this.state.value !== '' ||
-                      (this.props.selectedValues &&
-                        this.props.selectedValues.length > 0)
+                        (this.props.selectedValues &&
+                          this.props.selectedValues.length > 0)
                         ? 'filled'
                         : '')
                     }
@@ -181,9 +181,9 @@ export class SelectRaw extends BaseInput<
                 {this.props.label && finalValues.length > 0 && (
                   <label>{this.renderLabel()}</label>
                 )}
+                {this.props.after}
               </div>
             )}
-          {this.props.after}
         </div>
       </InputGroup>
     );
