@@ -6,7 +6,7 @@ export class EmailValidator implements IBaseValidator {
     isRequired: boolean,
     addError: (error: string) => void
   ): boolean {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+    if (/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(value)) {
       return true;
     }
     addError('Invalid email');
