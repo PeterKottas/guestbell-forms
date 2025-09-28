@@ -19,6 +19,9 @@ export interface CheckboxProps extends BaseInputProps<HTMLInputElement> {
   type?: string;
   checked?: boolean;
   supportsIndeterminate?: boolean;
+  children?: React.ReactNode;
+  after?: React.ReactNode;
+  before?: React.ReactNode;
 }
 
 export interface CheckboxState extends BaseInputState {
@@ -52,7 +55,7 @@ export class CheckboxRaw extends BaseInput<
   public componentDidMount() {
     const finalIndeterminate = Boolean(
       this.props.supportsIndeterminate &&
-        typeof this.props.checked !== 'boolean'
+      typeof this.props.checked !== 'boolean'
     );
     if (
       typeof this.props.checked !== 'boolean' &&
@@ -91,7 +94,7 @@ export class CheckboxRaw extends BaseInput<
     }
     const finalIndeterminate = Boolean(
       this.props.supportsIndeterminate &&
-        typeof this.props.checked !== 'boolean'
+      typeof this.props.checked !== 'boolean'
     );
     if (
       this.props.supportsIndeterminate &&
@@ -130,7 +133,9 @@ export class CheckboxRaw extends BaseInput<
         tooltip={this.props.tooltip}
         className={this.props.inputGroupClassName}
       >
+        {this.props.children}
         <div className={containerClassName} ref={this.containerRef}>
+          {this.props.before}
           {this.props.title && !this.props.label && input}
           {!this.props.title && !this.props.label && this.renderTooltip(input)}
           {this.renderDefaultValidation()}
@@ -140,6 +145,7 @@ export class CheckboxRaw extends BaseInput<
               {this.renderLabel()}
             </label>
           )}
+          {this.props.after}
         </div>
       </InputGroup>
     );

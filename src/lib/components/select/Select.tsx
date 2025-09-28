@@ -36,6 +36,7 @@ export interface SelectProps extends BaseInputProps<HTMLSelectElement> {
     existing: SelectValue[],
     selected: SelectValue[]
   ) => SelectValue[];
+  children?: React.ReactNode;
 }
 
 export interface SelectState extends BaseInputState { }
@@ -118,6 +119,7 @@ export class SelectRaw extends BaseInput<
           }
           ref={this.containerRef}
         >
+          {this.props.children}
           {this.renderSelectedValues()}
           {finalValues.length > 0 &&
             ((this.props.multiple && !this.props.readOnly) ||

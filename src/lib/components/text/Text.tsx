@@ -29,9 +29,10 @@ export interface TextProps extends BaseInputProps<HTMLInputElement> {
   sizeFromValue?: boolean;
   onNumberChange?: (number: number | undefined, isValid: boolean) => void;
   number?: number | null | undefined;
+  children?: React.ReactNode;
 }
 
-export interface TextState extends BaseInputState {}
+export interface TextState extends BaseInputState { }
 
 export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
   public static defaultProps = Object.assign({}, BaseInput.defaultProps, {
@@ -111,12 +112,12 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
       >
         <div
           className={`input__base text-input ${this.getValidationClass()} 
-                    ${this.props.readOnly ? 'text-input--readOnly' : ''} ${
-            this.props.className ? this.props.className : ''
-          }`}
+                    ${this.props.readOnly ? 'text-input--readOnly' : ''} ${this.props.className ? this.props.className : ''
+            }`}
           onClick={this.containerClick}
           ref={this.containerRef}
         >
+          {this.props.children}
           <div className="text-input__textWrapper">
             {this.props.before}
             <input
