@@ -90,6 +90,7 @@ export type TagsProps<
   closeSuggestionsAfterCreate?: boolean;
   clearInputAfterPick?: boolean;
   closeSuggestionsAfterPick?: boolean;
+  focusAfterDeleteClick?: boolean;
   SuggestionTag?: React.ComponentType<RenderSuggestionTagProps<IdT, T>>;
   getName?: (tag: T) => string;
   showTags?: boolean;
@@ -162,6 +163,7 @@ export class TagsRaw<
     showClearButton: true,
     clearInputAfterPick: false,
     closeSuggestionsAfterPick: false,
+    focusAfterDeleteClick: false,
   };
 
   private textRef: React.RefObject<TextRaw>;
@@ -807,6 +809,9 @@ export class TagsRaw<
     );
     this.props.onTagsChanged && this.props.onTagsChanged(newTags);
     this.handleErrors(newTags);
+    if (this.props.focusAfterDeleteClick) {
+      this.textRef.current?.focus();
+    }
   };
 }
 
