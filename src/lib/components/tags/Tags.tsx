@@ -305,7 +305,7 @@ export class TagsRaw<
     const showInput = Boolean(
       (!this.props.maxTags ||
         this.props.maxTags > (this.props.tags && this.props.tags.length)) &&
-        !this.props.readOnly
+      !this.props.readOnly
     );
     return (
       <Portal container={document.body} disablePortal={!showMobileVersion}>
@@ -462,10 +462,10 @@ export class TagsRaw<
               <label
                 className={
                   this.state.value !== '' ||
-                  this.state.textIsFocused ||
-                  this.props.readOnly ||
-                  this.props.tags.length >= this.props.maxTags ||
-                  showMobileVersion
+                    this.state.textIsFocused ||
+                    this.props.readOnly ||
+                    this.props.tags.length >= this.props.maxTags ||
+                    showMobileVersion
                     ? 'label--focused'
                     : ''
                 }
@@ -550,16 +550,16 @@ export class TagsRaw<
           this.state.preselectedSuggestion === undefined
             ? suggestions.length - 1
             : this.state.preselectedSuggestion === 0
-            ? suggestions.length - 1
-            : this.state.preselectedSuggestion - 1;
+              ? suggestions.length - 1
+              : this.state.preselectedSuggestion - 1;
         this.setState({ preselectedSuggestion });
       } else if (e.key === 'ArrowDown') {
         const preselectedSuggestion =
           this.state.preselectedSuggestion === undefined
             ? 0
             : this.state.preselectedSuggestion === suggestions.length - 1
-            ? 0
-            : this.state.preselectedSuggestion + 1;
+              ? 0
+              : this.state.preselectedSuggestion + 1;
         this.setState({ preselectedSuggestion });
       } else {
         this.setState({ preselectedSuggestion: undefined });
@@ -593,7 +593,7 @@ export class TagsRaw<
     const isMax = newTags.length === this.props.maxTags;
     const finalValue =
       this.props.clearInputAfterPick ||
-      (!this.props.allowNew && !isMax && !lastSelected)
+        (!this.props.allowNew && !isMax && !lastSelected)
         ? this.state.value
         : '';
     this.setState(
@@ -601,8 +601,8 @@ export class TagsRaw<
         value: this.props.clearInputAfterPick ? '' : finalValue,
         suggestionsVisible:
           isMax ||
-          this.props.closeSuggestionsAfterCreate ||
-          this.props.closeSuggestionsAfterPick
+            this.props.closeSuggestionsAfterCreate ||
+            this.props.closeSuggestionsAfterPick
             ? false
             : this.state.suggestionsVisible,
         preselectedSuggestion: undefined,
