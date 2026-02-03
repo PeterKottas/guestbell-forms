@@ -593,20 +593,22 @@ export class TagsRaw<
     const newTags = this.props.tags.concat(tag);
     this.props.onTagsChanged(newTags);
     const isMax = newTags.length === this.props.maxTags;
-    const finalValue =
+    const value =
       this.props.clearInputAfterPick ||
-        (!this.props.allowNew && !isMax && !lastSelected)
-        ? this.state.value
-        : '';
+        isMax ||
+        lastSelected
+        ? ''
+        : this.state.value;
+    const shouldCloseSuggestions =
+      isMax ||
+      this.props.closeSuggestionsAfterCreate ||
+      this.props.closeSuggestionsAfterPick;
     this.setState(
       {
-        value: this.props.clearInputAfterPick ? '' : finalValue,
-        suggestionsVisible:
-          (isMax ||
-            this.props.closeSuggestionsAfterCreate ||
-            this.props.closeSuggestionsAfterPick)
-            ? false
-            : this.state.suggestionsVisible,
+        value,
+        suggestionsVisible: shouldCloseSuggestions
+          ? false
+          : this.state.suggestionsVisible,
         preselectedSuggestion: undefined,
         textErrors: [],
       },
@@ -615,10 +617,12 @@ export class TagsRaw<
           !this.props.maxTags ||
           this.props.tags.length + 1 < this.props.maxTags
         ) {
-          this.fetchExistingTags(finalValue);
+          this.fetchExistingTags(value);
         }*/
         this.handleErrors();
-        this.textRef.current?.focus();
+        if (!shouldCloseSuggestions) {
+          this.textRef.current?.focus();
+        }
       }
     );
   };
