@@ -805,16 +805,8 @@ export class TagsRaw<
         ((sv as { id: IdT }).id ?? this.props.getTagId?.(sv)) !==
         ((tag as { id: IdT }).id ?? this.props.getTagId?.(tag))
     );
-    /*if (newTags.length === 0) {
-      setTimeout(() => this.focus(), 50);
-    }
-    this.setState({
-      suggestionsVisible: false,
-    });*/
     this.props.onTagsChanged && this.props.onTagsChanged(newTags);
     this.handleErrors(newTags);
-    // this.fetchExistingTags();
-    this.textRef.current?.focus();
   };
 }
 
