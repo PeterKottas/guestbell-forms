@@ -602,9 +602,9 @@ export class TagsRaw<
       {
         value: this.props.clearInputAfterPick ? '' : finalValue,
         suggestionsVisible:
-          isMax ||
+          (isMax ||
             this.props.closeSuggestionsAfterCreate ||
-            this.props.closeSuggestionsAfterPick
+            this.props.closeSuggestionsAfterPick)
             ? false
             : this.state.suggestionsVisible,
         preselectedSuggestion: undefined,
