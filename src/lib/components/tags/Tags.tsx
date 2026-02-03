@@ -88,6 +88,8 @@ export type TagsProps<
   mobileVersionEnabled?: boolean;
   isLoading?: boolean;
   closeSuggestionsAfterCreate?: boolean;
+  clearInputAfterPick?: boolean;
+  closeSuggestionsAfterPick?: boolean;
   SuggestionTag?: React.ComponentType<RenderSuggestionTagProps<IdT, T>>;
   getName?: (tag: T) => string;
   showTags?: boolean;
@@ -158,6 +160,8 @@ export class TagsRaw<
     fetchExistingTagsDebounceLeading: true,
     fetchExistingTagsDebounceTrailing: true,
     showClearButton: true,
+    clearInputAfterPick: false,
+    closeSuggestionsAfterPick: false,
   };
 
   private textRef: React.RefObject<TextRaw>;
@@ -588,12 +592,17 @@ export class TagsRaw<
     this.props.onTagsChanged(newTags);
     const isMax = newTags.length === this.props.maxTags;
     const finalValue =
-      !this.props.allowNew && !isMax && !lastSelected ? this.state.value : '';
+      this.props.clearInputAfterPick ||
+      (!this.props.allowNew && !isMax && !lastSelected)
+        ? this.state.value
+        : '';
     this.setState(
       {
-        value: finalValue,
+        value: this.props.clearInputAfterPick ? '' : finalValue,
         suggestionsVisible:
-          isMax || this.props.closeSuggestionsAfterCreate
+          isMax ||
+          this.props.closeSuggestionsAfterCreate ||
+          this.props.closeSuggestionsAfterPick
             ? false
             : this.state.suggestionsVisible,
         preselectedSuggestion: undefined,
