@@ -2,3 +2,5 @@
 .storybook
 .vscode
 docs
+.env.bat
+.env.local

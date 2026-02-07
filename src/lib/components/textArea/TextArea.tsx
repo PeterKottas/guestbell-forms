@@ -25,7 +25,7 @@ export interface TextAreaProps extends BaseInputProps<HTMLTextAreaElement> {
   maxLength?: number;
 }
 
-export interface TextAreaState extends BaseInputState {}
+export interface TextAreaState extends BaseInputState { }
 
 export class TextAreaRaw extends BaseInput<
   TextAreaProps,
@@ -54,7 +54,7 @@ export class TextAreaRaw extends BaseInput<
         <div
           className={`input__base textArea-input ${this.getValidationClass()} 
                     ${this.props.readOnly ? 'textArea-input--readOnly' : ''} 
-                    ${this.props.className ? this.props.className : ''}`}
+                    ${this.props.className ? this.props.className : ''}${this.props.placeholder ? ' textArea-input--withPlaceholder' : ''}`}
           onClick={this.onContainerClick}
           ref={this.containerRef}
         >
