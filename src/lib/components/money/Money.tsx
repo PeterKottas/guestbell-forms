@@ -41,7 +41,7 @@ export interface MoneyProps extends BaseInputProps<never, MoneyTranslations> {
   disableDelete?: boolean;
 }
 
-export interface MoneyState extends BaseInputState {}
+export interface MoneyState extends BaseInputState { }
 
 export class MoneyRaw extends BaseInput<
   MoneyProps,
@@ -191,7 +191,7 @@ export class MoneyRaw extends BaseInput<
             })}
           {(this.props.allowMultiple ||
             (this.props.prices && !this.props.prices.length)) &&
-          unusedCurrencies.length ? (
+            unusedCurrencies.length ? (
             <Button
               blank={true}
               {...(this.props.id && {
@@ -218,7 +218,7 @@ export class MoneyRaw extends BaseInput<
           {this.props.label && (
             <label
               className={
-                this.props.prices && this.props.prices ? 'label--focused' : ''
+                this.props.prices && this.state.focused ? 'label--focused' : ''
               }
             >
               {this.renderLabel()}
