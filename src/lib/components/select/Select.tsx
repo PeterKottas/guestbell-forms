@@ -184,12 +184,12 @@ export class SelectRaw extends BaseInput<
                 <span className="highlight" />
                 <span className="bar" />
                 {this.renderDefaultValidation()}
-                {this.props.label && finalValues.length > 0 && (
-                  <label className={this.props.placeholder ? 'label--focused' : ''}>{this.renderLabel()}</label>
-                )}
                 {this.props.after}
               </div>
             )}
+          {this.props.label && (this.props.multiple || (finalValues.length > 0)) && (
+            <label className={this.props.placeholder ? 'label--focused' : ''}>{this.renderLabel()}</label>
+          )}
         </div>
       </InputGroup>
     );
