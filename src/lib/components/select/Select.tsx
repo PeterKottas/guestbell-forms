@@ -32,6 +32,7 @@ export interface SelectProps extends BaseInputProps<HTMLSelectElement> {
   readonlyEmptyPlaceholder?: string;
   after?: React.ReactNode;
   before?: React.ReactNode;
+  placeholder?: string;
   filterExisting?: (
     existing: SelectValue[],
     selected: SelectValue[]
@@ -177,11 +178,12 @@ export class SelectRaw extends BaseInput<
                     {this.renderReadonly()}
                   </span>
                 )}
+                {this.renderPlaceholder()}
                 <span className="highlight" />
                 <span className="bar" />
                 {this.renderDefaultValidation()}
                 {this.props.label && finalValues.length > 0 && (
-                  <label>{this.renderLabel()}</label>
+                  <label className={this.props.placeholder ? 'label--focused' : ''}>{this.renderLabel()}</label>
                 )}
                 {this.props.after}
               </div>
@@ -292,6 +294,21 @@ export class SelectRaw extends BaseInput<
     } else {
       this.setInvalid(errors);
     }
+  }
+
+  private renderPlaceholder() {
+    const hasValue = this.state.value !== '' ||
+      (this.props.selectedValues && this.props.selectedValues.length > 0);
+    
+    if (!this.props.placeholder || hasValue || this.state.focused) {
+      return null;
+    }
+
+    return (
+      <span className="select-input__placeholder">
+        {this.props.placeholder}
+      </span>
+    );
   }
 
   private renderReadonly() {

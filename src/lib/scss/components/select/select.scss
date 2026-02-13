@@ -5,6 +5,7 @@
   border-bottom: 1px solid transparent;
   .select-input__select__wrapper {
     display: flex;
+    position: relative;
     .select-input__select {
       color: $input-text-color;
       display: inline-block;
@@ -18,6 +19,15 @@
     }
     span.select-input__select {
       min-height: calc(1rem + 13px);
+    }
+    .select-input__placeholder {
+      position: absolute;
+      left: 5px;
+      top: 5px;
+      color: $input-label-color;
+      font-size: 18px;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
     }
   }
   &.input__base.multiple {
