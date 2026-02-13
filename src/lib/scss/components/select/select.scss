@@ -43,6 +43,14 @@
     .filled ~ label {
       color: $input-label-color !important;
     }
+    // When placeholder is present, keep label floating
+    select:focus ~ label.label--focused,
+    select ~ label.label--focused {
+      top: -1rem;
+      bottom: initial;
+      font-size: 14px;
+      color: $primary-color;
+    }
   }
   &:not(.readonly) {
     border-bottom: 1px solid $input-border-color;

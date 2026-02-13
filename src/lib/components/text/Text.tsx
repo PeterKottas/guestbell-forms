@@ -112,7 +112,7 @@ export class TextRaw extends BaseInput<TextProps, TextState, HTMLInputElement> {
       >
         <div
           className={`input__base text-input ${this.getValidationClass()} 
-                    ${this.props.readOnly ? 'text-input--readOnly' : ''} ${this.props.className ? this.props.className : ''
+                    ${this.props.readOnly ? 'text-input--readOnly' : ''} ${this.props.placeholder ? 'text-input--hasPlaceholder' : ''} ${this.props.className ? this.props.className : ''
             }`}
           onClick={this.containerClick}
           ref={this.containerRef}

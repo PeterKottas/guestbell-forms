@@ -116,7 +116,9 @@ export class SelectRaw extends BaseInput<
             ' ' +
             (this.props.readOnly ? 'readonly' : '') +
             ' ' +
-            (this.props.multiple ? 'multiple' : '')
+            (this.props.multiple ? 'multiple' : '') +
+            ' ' +
+            (this.props.placeholder ? 'select-input--hasPlaceholder' : '')
           }
           ref={this.containerRef}
         >
@@ -178,7 +180,7 @@ export class SelectRaw extends BaseInput<
                     {this.renderReadonly()}
                   </span>
                 )}
-                {this.renderPlaceholder()}
+                {this.renderPlaceholder(finalValues)}
                 <span className="highlight" />
                 <span className="bar" />
                 {this.renderDefaultValidation()}
@@ -296,12 +298,22 @@ export class SelectRaw extends BaseInput<
     }
   }
 
-  private renderPlaceholder() {
-    const hasValue = this.state.value !== '' ||
-      (this.props.selectedValues && this.props.selectedValues.length > 0);
-    
-    if (!this.props.placeholder || hasValue || this.state.focused) {
+  private renderPlaceholder(finalValues: SelectValue[]) {
+    if (!this.props.placeholder) {
       return null;
+    }
+
+    // For multiple select, show placeholder as long as there are options to pick
+    if (this.props.multiple) {
+      if (finalValues.length === 0 || this.state.focused) {
+        return null;
+      }
+    } else {
+      // For single select, hide when has value or focused
+      const hasValue = this.state.value !== '';
+      if (hasValue || this.state.focused) {
+        return null;
+      }
     }
 
     return (
