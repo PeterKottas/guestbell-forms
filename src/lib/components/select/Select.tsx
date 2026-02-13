@@ -188,7 +188,13 @@ export class SelectRaw extends BaseInput<
               </div>
             )}
           {this.props.label && (this.props.multiple || (finalValues.length > 0)) && (
-            <label className={this.props.placeholder ? 'label--focused' : ''}>{this.renderLabel()}</label>
+            <label className={
+              this.props.placeholder ||
+                (!this.props.multiple && this.state.value !== '') ||
+                (this.props.multiple && finalValues.length === 0)
+                ? 'label--focused'
+                : ''
+            }>{this.renderLabel()}</label>
           )}
         </div>
       </InputGroup>
