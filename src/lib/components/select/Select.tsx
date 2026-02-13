@@ -305,13 +305,13 @@ export class SelectRaw extends BaseInput<
 
     // For multiple select, show placeholder as long as there are options to pick
     if (this.props.multiple) {
-      if (finalValues.length === 0 || this.state.focused) {
+      if (finalValues.length === 0) {
         return null;
       }
     } else {
-      // For single select, hide when has value or focused
+      // For single select, hide when has value
       const hasValue = this.state.value !== '';
-      if (hasValue || this.state.focused) {
+      if (hasValue) {
         return null;
       }
     }
